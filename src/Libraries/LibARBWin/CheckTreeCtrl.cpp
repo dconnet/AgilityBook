@@ -45,18 +45,19 @@ wxIMPLEMENT_CLASS(CCheckTreeCtrl, CTreeCtrl)
 DEFINE_EVENT_TYPE(wxEVT_COMMAND_TREE_CHECK_CHANGED)
 
 
-CCheckTreeCtrl::CCheckTreeCtrl(
-		wxWindow* pParent,
-		const wxPoint& pos,
-		const wxSize& size)
+CCheckTreeCtrl::CCheckTreeCtrl(wxWindow* pParent, const wxPoint& pos, const wxSize& size)
 	: CTreeCtrl()
 	, m_stateList()
 	, m_stateNone(-1)
 	, m_stateUnChecked(-1)
 	, m_stateChecked(-1)
 {
-	CTreeCtrl::Create(pParent, wxID_ANY, pos, size,
-		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_NO_LINES|wxTR_SINGLE);
+	CTreeCtrl::Create(
+		pParent,
+		wxID_ANY,
+		pos,
+		size,
+		wxTR_FULL_ROW_HIGHLIGHT | wxTR_HAS_BUTTONS | wxTR_HIDE_ROOT | wxTR_LINES_AT_ROOT | wxTR_NO_LINES | wxTR_SINGLE);
 	Bind(wxEVT_LEFT_DOWN, &CCheckTreeCtrl::OnClick, this);
 	Bind(wxEVT_KEY_DOWN, &CCheckTreeCtrl::OnKeyDown, this);
 
@@ -87,9 +88,7 @@ CCheckTreeCtrl::~CCheckTreeCtrl()
 }
 
 
-void CCheckTreeCtrl::ShowCheckbox(
-		wxTreeItemId hItem,
-		bool bShow)
+void CCheckTreeCtrl::ShowCheckbox(wxTreeItemId hItem, bool bShow)
 {
 	if (IsCheckVisible(hItem) && !bShow)
 	{
@@ -115,10 +114,7 @@ bool CCheckTreeCtrl::GetChecked(wxTreeItemId hItem)
 }
 
 
-bool CCheckTreeCtrl::SetChecked(
-		wxTreeItemId hItem,
-		bool bChecked,
-		bool bCascade)
+bool CCheckTreeCtrl::SetChecked(wxTreeItemId hItem, bool bChecked, bool bCascade)
 {
 	if (IsCheckVisible(hItem))
 	{
@@ -170,9 +166,7 @@ void CCheckTreeCtrl::CheckParentCheck(wxTreeItemId hItem)
 
 
 // Cascade to children (don't do hItem)
-int CCheckTreeCtrl::Cascade(
-		wxTreeItemId hItem,
-		bool bChecked)
+int CCheckTreeCtrl::Cascade(wxTreeItemId hItem, bool bChecked)
 {
 	if (!hItem.IsOk())
 		return 0;
@@ -203,7 +197,7 @@ void CCheckTreeCtrl::OnClick(wxMouseEvent& evt)
 {
 	int flags = 0;
 	wxTreeItemId item = HitTest(evt.GetPosition(), flags);
-	if (item.IsOk() && (flags & (wxTREE_HITTEST_ONITEMICON|wxTREE_HITTEST_ONITEMSTATEICON)))
+	if (item.IsOk() && (flags & (wxTREE_HITTEST_ONITEMICON | wxTREE_HITTEST_ONITEMSTATEICON)))
 	{
 		bool bChecked = !GetChecked(item);
 		SetChecked(item, bChecked);
@@ -219,16 +213,16 @@ void CCheckTreeCtrl::OnKeyDown(wxKeyEvent& evt)
 	{
 	case WXK_SPACE:
 	case WXK_NUMPAD_SPACE:
+	{
+		wxTreeItemId hItem = GetSelection();
+		if (hItem.IsOk() && IsCheckVisible(hItem))
 		{
-			wxTreeItemId hItem = GetSelection();
-			if (hItem.IsOk() && IsCheckVisible(hItem))
-			{
-				bool bChecked = !GetChecked(hItem);
-				SetChecked(hItem, bChecked);
-				SendDispInfo(hItem);
-			}
+			bool bChecked = !GetChecked(hItem);
+			SetChecked(hItem, bChecked);
+			SendDispInfo(hItem);
 		}
-		break;
+	}
+	break;
 	}
 	evt.Skip();
 }

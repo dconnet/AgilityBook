@@ -38,12 +38,14 @@
 
 namespace
 {
-	class ARBMetaData_concrete : public ARBMetaData
+class ARBMetaData_concrete : public ARBMetaData
+{
+public:
+	ARBMetaData_concrete()
 	{
-	public:
-		ARBMetaData_concrete() {}
-	};
+	}
 };
+}; // namespace
 
 
 ARBMetaDataPtr ARBMetaData::MetaData()
@@ -131,10 +133,12 @@ ARBDogNotes& ARBDogNotes::operator=(ARBDogNotes&& rhs)
 
 bool ARBDogNotes::operator==(ARBDogNotes const& rhs) const
 {
+	// clang-format off
 	return m_Faults == rhs.m_Faults
 		&& m_CRCD == rhs.m_CRCD
 		&& m_CRCDMeta == rhs.m_CRCDMeta
 		&& m_Note == rhs.m_Note;
+	// clang-format on
 }
 
 
@@ -156,10 +160,10 @@ size_t ARBDogNotes::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 
 
 bool ARBDogNotes::Load(
-		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfig const& inConfig,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_NOTES)
@@ -198,7 +202,7 @@ bool ARBDogNotes::Load(
 		}
 	}
 	// Fix a bug where clearing the metadata still encoded an empty string.
-	if (inVersion < ARBVersion(12,9))
+	if (inVersion < ARBVersion(12, 9))
 	{
 		ARBMetaDataPtr data = ARBMetaData::MetaData();
 		if (!BinaryData::Decode(m_CRCDMeta, data->m_Data))
@@ -219,10 +223,7 @@ bool ARBDogNotes::Save(ElementNodePtr const& ioTree) const
 	assert(ioTree);
 	if (!ioTree)
 		return false;
-	if (0 < m_Faults.size()
-	|| 0 < m_CRCD.length()
-	|| 0 < m_CRCDMeta.length()
-	|| 0 < m_Note.length())
+	if (0 < m_Faults.size() || 0 < m_CRCD.length() || 0 < m_CRCDMeta.length() || 0 < m_Note.length())
 	{
 		ElementNodePtr notes = ioTree->AddElementNode(TREE_NOTES);
 		for (ARBDogFaultList::const_iterator iter = m_Faults.begin(); iter != m_Faults.end(); ++iter)

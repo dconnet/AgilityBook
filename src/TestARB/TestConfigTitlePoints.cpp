@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBConfigTitlePoints.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -34,8 +34,8 @@ TEST_CASE("ConfigTitlePoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBConfigTitlePointsPtr New();
-		//	static ARBConfigTitlePointsPtr New(double inPoints, double inFaults);
+			//	static ARBConfigTitlePointsPtr New();
+			//	static ARBConfigTitlePointsPtr New(double inPoints, double inFaults);
 		}
 	}
 
@@ -45,7 +45,7 @@ TEST_CASE("ConfigTitlePoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigTitlePointsPtr Clone() const;
+			//	ARBConfigTitlePointsPtr Clone() const;
 		}
 	}
 
@@ -55,7 +55,7 @@ TEST_CASE("ConfigTitlePoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigTitlePoints& operator=(ARBConfigTitlePoints const& rhs);
+			//	ARBConfigTitlePoints& operator=(ARBConfigTitlePoints const& rhs);
 		}
 	}
 
@@ -65,8 +65,8 @@ TEST_CASE("ConfigTitlePoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBConfigTitlePoints const& rhs) const;
-		//	bool operator!=(ARBConfigTitlePoints const& rhs) const
+			//	bool operator==(ARBConfigTitlePoints const& rhs) const;
+			//	bool operator!=(ARBConfigTitlePoints const& rhs) const
 		}
 	}
 
@@ -76,7 +76,7 @@ TEST_CASE("ConfigTitlePoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const;
+			//	virtual std::wstring GetGenericName() const;
 		}
 	}
 
@@ -86,11 +86,11 @@ TEST_CASE("ConfigTitlePoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback,
-		//			ARBConfigLifetimePointsList& ioLifetimePoints);
+			//	bool Load(
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback,
+			//			ARBConfigLifetimePointsList& ioLifetimePoints);
 		}
 	}
 
@@ -100,7 +100,7 @@ TEST_CASE("ConfigTitlePoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 }
@@ -113,11 +113,11 @@ TEST_CASE("ConfigTitlePointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback,
-		//			ARBConfigLifetimePointsList& ioLifetimePoints);
+			//	bool Load(
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback,
+			//			ARBConfigLifetimePointsList& ioLifetimePoints);
 		}
 	}
 
@@ -127,7 +127,7 @@ TEST_CASE("ConfigTitlePointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void sort();
+			//	void sort();
 		}
 	}
 
@@ -137,7 +137,7 @@ TEST_CASE("ConfigTitlePointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	double GetTitlePoints(double inFaults) const;
+			//	double GetTitlePoints(double inFaults) const;
 		}
 	}
 
@@ -147,9 +147,9 @@ TEST_CASE("ConfigTitlePointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindTitlePoints(
-		//			double inFaults,
-		//			ARBConfigTitlePointsPtr* outPoints = nullptr) const;
+			//	bool FindTitlePoints(
+			//			double inFaults,
+			//			ARBConfigTitlePointsPtr* outPoints = nullptr) const;
 		}
 	}
 
@@ -159,11 +159,11 @@ TEST_CASE("ConfigTitlePointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddTitlePoints(
-		//			double inPoints,
-		//			double inFaults,
-		//			ARBConfigTitlePointsPtr* outPoints = nullptr);
-		//	bool DeleteTitlePoints(double inFaults);
+			//	bool AddTitlePoints(
+			//			double inPoints,
+			//			double inFaults,
+			//			ARBConfigTitlePointsPtr* outPoints = nullptr);
+			//	bool DeleteTitlePoints(double inFaults);
 		}
 	}
 }

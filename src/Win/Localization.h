@@ -29,42 +29,150 @@ public:
 	CLocalization();
 	bool Load();
 
-	std::wstring UnknownVersion() const override			{return m_UnknownVersion;}
-	std::wstring WarningNewerDoc() const override			{return m_WarningNewerDoc;}
-	std::wstring InvalidDocStructure() const override		{return m_InvalidDocStructure;}
-	std::wstring InvalidFileFormat() const override			{return m_InvalidFileFormat;}
-	std::wstring InvalidFileMissingAttrib() const override	{return m_InvalidFileMissingAttrib;}
-	std::wstring InvalidFileBadAttrib() const override		{return m_InvalidFileBadAttrib;}
-	std::wstring InvalidDate() const override				{return m_InvalidDate;}
-	std::wstring InvalidDivLevel() const override			{return m_InvalidDivLevel;}
-	std::wstring InvalidEventName() const override			{return m_InvalidEventName;}
-	std::wstring InvalidRoot() const override				{return m_InvalidRoot;}
-	std::wstring MissingConfig() const override				{return m_MissingConfig;}
-	std::wstring InvalidConfig() const override				{return m_InvalidConfig;}
-	std::wstring InvalidVenueConfig() const override		{return m_InvalidVenueConfig;}
-	std::wstring InvalidDivName() const override			{return m_InvalidDivName;}
-	std::wstring InvalidVenueName() const override			{return m_InvalidVenueName;}
-	std::wstring InvalidLifetimeName() const override		{return m_InvalidLifetimeName;}
-	std::wstring InvalidOtherPtsName() const override		{return m_InvalidOtherPtsName;}
-	std::wstring InvalidMultiqName() const override			{return m_InvalidMultiqName;}
-	std::wstring InvalidMultiqConversion() const override	{return m_InvalidMultiqConversion;}
-	std::wstring InvalidEvent() const override				{return m_InvalidEvent;}
-	std::wstring InvalidTitle() const override				{return m_InvalidTitle;}
-	std::wstring ValidValues() const override				{return m_ValidValues;}
-	std::wstring ValidValuesBool() const override			{return m_ValidValuesBool;}
-	std::wstring CalendarTentative() const override			{return m_CalendarTentative;}
-	std::wstring CalendarPast() const override				{return m_CalendarPast;}
-	std::wstring CalendarNotEntered() const override		{return m_CalendarNotEntered;}
-	std::wstring CalendarEntered() const override			{return m_CalendarEntered;}
-	std::wstring CalendarPending() const override			{return m_CalendarPending;}
-	std::wstring CalendarPlanning() const override			{return m_CalendarPlanning;}
-	std::wstring CalendarStatusN() const override			{return m_CalendarStatusN;}
-	std::wstring CalendarStatusE() const override			{return m_CalendarStatusE;}
-	std::wstring CalendarStatusO() const override			{return m_CalendarStatusO;}
-	std::wstring CalendarStatusP() const override			{return m_CalendarStatusP;}
-	std::wstring CalendarOpens() const override				{return m_CalendarOpens;}
-	std::wstring CalendarDraw() const override				{return m_CalendarDraw;}
-	std::wstring CalendarCloses() const override			{return m_CalendarCloses;}
+	std::wstring UnknownVersion() const override
+	{
+		return m_UnknownVersion;
+	}
+	std::wstring WarningNewerDoc() const override
+	{
+		return m_WarningNewerDoc;
+	}
+	std::wstring InvalidDocStructure() const override
+	{
+		return m_InvalidDocStructure;
+	}
+	std::wstring InvalidFileFormat() const override
+	{
+		return m_InvalidFileFormat;
+	}
+	std::wstring InvalidFileMissingAttrib() const override
+	{
+		return m_InvalidFileMissingAttrib;
+	}
+	std::wstring InvalidFileBadAttrib() const override
+	{
+		return m_InvalidFileBadAttrib;
+	}
+	std::wstring InvalidDate() const override
+	{
+		return m_InvalidDate;
+	}
+	std::wstring InvalidDivLevel() const override
+	{
+		return m_InvalidDivLevel;
+	}
+	std::wstring InvalidEventName() const override
+	{
+		return m_InvalidEventName;
+	}
+	std::wstring InvalidRoot() const override
+	{
+		return m_InvalidRoot;
+	}
+	std::wstring MissingConfig() const override
+	{
+		return m_MissingConfig;
+	}
+	std::wstring InvalidConfig() const override
+	{
+		return m_InvalidConfig;
+	}
+	std::wstring InvalidVenueConfig() const override
+	{
+		return m_InvalidVenueConfig;
+	}
+	std::wstring InvalidDivName() const override
+	{
+		return m_InvalidDivName;
+	}
+	std::wstring InvalidVenueName() const override
+	{
+		return m_InvalidVenueName;
+	}
+	std::wstring InvalidLifetimeName() const override
+	{
+		return m_InvalidLifetimeName;
+	}
+	std::wstring InvalidOtherPtsName() const override
+	{
+		return m_InvalidOtherPtsName;
+	}
+	std::wstring InvalidMultiqName() const override
+	{
+		return m_InvalidMultiqName;
+	}
+	std::wstring InvalidMultiqConversion() const override
+	{
+		return m_InvalidMultiqConversion;
+	}
+	std::wstring InvalidEvent() const override
+	{
+		return m_InvalidEvent;
+	}
+	std::wstring InvalidTitle() const override
+	{
+		return m_InvalidTitle;
+	}
+	std::wstring ValidValues() const override
+	{
+		return m_ValidValues;
+	}
+	std::wstring ValidValuesBool() const override
+	{
+		return m_ValidValuesBool;
+	}
+	std::wstring CalendarTentative() const override
+	{
+		return m_CalendarTentative;
+	}
+	std::wstring CalendarPast() const override
+	{
+		return m_CalendarPast;
+	}
+	std::wstring CalendarNotEntered() const override
+	{
+		return m_CalendarNotEntered;
+	}
+	std::wstring CalendarEntered() const override
+	{
+		return m_CalendarEntered;
+	}
+	std::wstring CalendarPending() const override
+	{
+		return m_CalendarPending;
+	}
+	std::wstring CalendarPlanning() const override
+	{
+		return m_CalendarPlanning;
+	}
+	std::wstring CalendarStatusN() const override
+	{
+		return m_CalendarStatusN;
+	}
+	std::wstring CalendarStatusE() const override
+	{
+		return m_CalendarStatusE;
+	}
+	std::wstring CalendarStatusO() const override
+	{
+		return m_CalendarStatusO;
+	}
+	std::wstring CalendarStatusP() const override
+	{
+		return m_CalendarStatusP;
+	}
+	std::wstring CalendarOpens() const override
+	{
+		return m_CalendarOpens;
+	}
+	std::wstring CalendarDraw() const override
+	{
+		return m_CalendarDraw;
+	}
+	std::wstring CalendarCloses() const override
+	{
+		return m_CalendarCloses;
+	}
 
 	std::wstring UpdateCalSites(int nNew, int nUpdated, int nSkipped) const override;
 	std::wstring UpdateFaults(int nNew, int nSkipped) const override;
@@ -91,122 +199,131 @@ public:
 	std::wstring UpdateSubnameRuns(int nRuns, std::wstring const& inRunsMsg) const override;
 
 	std::wstring ActionDeleteCalPlugin(std::wstring const& name) const override;
-	std::wstring ActionRenameOtherPoints(
-			std::wstring const& oldName,
-			std::wstring const& newName,
-			int nChanges) const override;
-	std::wstring ActionPreDeleteOtherPoints(
-			std::wstring const& name,
-			int nChanges) const override;
+	std::wstring ActionRenameOtherPoints(std::wstring const& oldName, std::wstring const& newName, int nChanges)
+		const override;
+	std::wstring ActionPreDeleteOtherPoints(std::wstring const& name, int nChanges) const override;
 	std::wstring ActionDeleteOtherPoints(std::wstring const& name) const override;
-	std::wstring ActionRenameVenue(
-			std::wstring const& oldName,
-			std::wstring const& newName,
-			int nChanges) const override;
-	std::wstring ActionPreDeleteVenue(
-			std::wstring const& name,
-			int nChanges) const override;
+	std::wstring ActionRenameVenue(std::wstring const& oldName, std::wstring const& newName, int nChanges)
+		const override;
+	std::wstring ActionPreDeleteVenue(std::wstring const& name, int nChanges) const override;
 	std::wstring ActionDeleteVenue(std::wstring const& name) const override;
 	std::wstring ActionRenameMultiQ(
-			std::wstring const& venue,
-			std::wstring const& oldName,
-			std::wstring const& newName,
-			int nChanges) const override;
-	std::wstring ActionPreDeleteMultiQ(
-			std::wstring const& venue,
-			std::wstring const& name,
-			int nChanges) const override;
-	std::wstring ActionDeleteMultiQ(
-			std::wstring const& venue,
-			std::wstring const& name) const override;
+		std::wstring const& venue,
+		std::wstring const& oldName,
+		std::wstring const& newName,
+		int nChanges) const override;
+	std::wstring ActionPreDeleteMultiQ(std::wstring const& venue, std::wstring const& name, int nChanges)
+		const override;
+	std::wstring ActionDeleteMultiQ(std::wstring const& venue, std::wstring const& name) const override;
 	std::wstring ActionRenameDivision(
-			std::wstring const& venue,
-			std::wstring const& oldName,
-			std::wstring const& newName,
-			int nChanges) const override;
-	std::wstring ActionPreDeleteDivision(
-			std::wstring const& venue,
-			std::wstring const& name,
-			int nChanges) const override;
-	std::wstring ActionDeleteDivision(
-			std::wstring const& venue,
-			std::wstring const& name) const override;
+		std::wstring const& venue,
+		std::wstring const& oldName,
+		std::wstring const& newName,
+		int nChanges) const override;
+	std::wstring ActionPreDeleteDivision(std::wstring const& venue, std::wstring const& name, int nChanges)
+		const override;
+	std::wstring ActionDeleteDivision(std::wstring const& venue, std::wstring const& name) const override;
 	std::wstring ActionRenameLevel(
-			std::wstring const& venue,
-			std::wstring const& oldName,
-			std::wstring const& newName,
-			int nChanges) const override;
-	std::wstring ActionPreDeleteLevel(
-			std::wstring const& venue,
-			std::wstring const& name,
-			int nChanges) const override;
-	std::wstring ActionDeleteLevel(
-			std::wstring const& venue,
-			std::wstring const& name) const override;
+		std::wstring const& venue,
+		std::wstring const& oldName,
+		std::wstring const& newName,
+		int nChanges) const override;
+	std::wstring ActionPreDeleteLevel(std::wstring const& venue, std::wstring const& name, int nChanges) const override;
+	std::wstring ActionDeleteLevel(std::wstring const& venue, std::wstring const& name) const override;
 	std::wstring ActionRenameTitle(
-			std::wstring const& venue,
-			std::wstring const& oldName,
-			std::wstring const& newName,
-			int nChanges) const override;
-	std::wstring ActionPreDeleteTitle(
-			std::wstring const& venue,
-			std::wstring const& name,
-			int nChanges) const override;
-	std::wstring ActionDeleteTitle(
-			std::wstring const& venue,
-			std::wstring const& name) const override;
+		std::wstring const& venue,
+		std::wstring const& oldName,
+		std::wstring const& newName,
+		int nChanges) const override;
+	std::wstring ActionPreDeleteTitle(std::wstring const& venue, std::wstring const& name, int nChanges) const override;
+	std::wstring ActionDeleteTitle(std::wstring const& venue, std::wstring const& name) const override;
 	std::wstring ActionRenameEvent(
-			std::wstring const& venue,
-			std::wstring const& oldName,
-			std::wstring const& newName,
-			int nChanges) const override;
-	std::wstring ActionPreDeleteEvent(
-			std::wstring const& venue,
-			std::wstring const& name,
-			int nChanges) const override;
-	std::wstring ActionDeleteEvent(
-			std::wstring const& venue,
-			std::wstring const& name) const override;
+		std::wstring const& venue,
+		std::wstring const& oldName,
+		std::wstring const& newName,
+		int nChanges) const override;
+	std::wstring ActionPreDeleteEvent(std::wstring const& venue, std::wstring const& name, int nChanges) const override;
+	std::wstring ActionDeleteEvent(std::wstring const& venue, std::wstring const& name) const override;
 	std::wstring ActionRenameLifetimeName(
-			std::wstring const& venue,
-			std::wstring const& oldName,
-			std::wstring const& newName,
-			int nEventChanges) const override;
-	std::wstring ActionDeleteLifetimeName(
-			std::wstring const& venue,
-			std::wstring const& name,
-			int nEventChanges) const override;
+		std::wstring const& venue,
+		std::wstring const& oldName,
+		std::wstring const& newName,
+		int nEventChanges) const override;
+	std::wstring ActionDeleteLifetimeName(std::wstring const& venue, std::wstring const& name, int nEventChanges)
+		const override;
 
 	std::wstring TitlePointsNameFormat(double points, double faults) const override;
 	std::wstring LifetimePointsNameWithSpeedPointsFormat(double faults) const override;
 	std::wstring LifetimePointsNameFormat(double points, double faults) const override;
 	std::wstring PlacementPointsNameFormat(double points, short place) const override;
 
-	std::wstring ScoreStyleUnknown() const override			{return m_ScoreStyleUnknown;}
-	std::wstring ScoreStyleFaultsTime() const override		{return m_ScoreStyleFaultsTime;}
-	std::wstring ScoreStyleFaults100Time() const override	{return m_ScoreStyleFaults100Time;}
-	std::wstring ScoreStyleFaults200Time() const override	{return m_ScoreStyleFaults200Time;}
-	std::wstring ScoreStyleOCScoreTime() const override		{return m_ScoreStyleOCScoreTime;}
-	std::wstring ScoreStyleScoreTime() const override		{return m_ScoreStyleScoreTime;}
-	std::wstring ScoreStyleTimePlusFaults() const override	{return m_ScoreStyleTimePlusFaults;}
-	std::wstring ScoreStyleTimeNoPlaces() const override	{return m_ScoreStyleTimeNoPlaces;}
+	std::wstring ScoreStyleUnknown() const override
+	{
+		return m_ScoreStyleUnknown;
+	}
+	std::wstring ScoreStyleFaultsTime() const override
+	{
+		return m_ScoreStyleFaultsTime;
+	}
+	std::wstring ScoreStyleFaults100Time() const override
+	{
+		return m_ScoreStyleFaults100Time;
+	}
+	std::wstring ScoreStyleFaults200Time() const override
+	{
+		return m_ScoreStyleFaults200Time;
+	}
+	std::wstring ScoreStyleOCScoreTime() const override
+	{
+		return m_ScoreStyleOCScoreTime;
+	}
+	std::wstring ScoreStyleScoreTime() const override
+	{
+		return m_ScoreStyleScoreTime;
+	}
+	std::wstring ScoreStyleTimePlusFaults() const override
+	{
+		return m_ScoreStyleTimePlusFaults;
+	}
+	std::wstring ScoreStyleTimeNoPlaces() const override
+	{
+		return m_ScoreStyleTimeNoPlaces;
+	}
 
-	std::wstring ExistingPointsOther() const override		{return m_ExistingPointsOther;}
-	std::wstring ExistingPointsLifetime() const override	{return m_ExistingPointsLifetime;}
-	std::wstring ExistingPointsRun() const override			{return m_ExistingPointsRun;}
-	std::wstring ExistingPointsSpeed() const override		{return m_ExistingPointsSpeed;}
-	std::wstring ExistingPointsMQ() const override			{return m_ExistingPointsMQ;}
-	std::wstring ExistingPointsSQ() const override			{return m_ExistingPointsSQ;}
+	std::wstring ExistingPointsOther() const override
+	{
+		return m_ExistingPointsOther;
+	}
+	std::wstring ExistingPointsLifetime() const override
+	{
+		return m_ExistingPointsLifetime;
+	}
+	std::wstring ExistingPointsRun() const override
+	{
+		return m_ExistingPointsRun;
+	}
+	std::wstring ExistingPointsSpeed() const override
+	{
+		return m_ExistingPointsSpeed;
+	}
+	std::wstring ExistingPointsMQ() const override
+	{
+		return m_ExistingPointsMQ;
+	}
+	std::wstring ExistingPointsSQ() const override
+	{
+		return m_ExistingPointsSQ;
+	}
 
 	std::wstring ErrorInvalidDocStructure(wchar_t const* const inMsg) const override;
 	std::wstring ErrorMissingAttribute(
-			wchar_t const* const inElement,
-			wchar_t const* const inAttrib,
-			wchar_t const* const inMsg = nullptr) const override;
+		wchar_t const* const inElement,
+		wchar_t const* const inAttrib,
+		wchar_t const* const inMsg = nullptr) const override;
 	std::wstring ErrorInvalidAttributeValue(
-			wchar_t const* const inElement,
-			wchar_t const* const inAttrib,
-			wchar_t const* const inMsg = nullptr) const override;
+		wchar_t const* const inElement,
+		wchar_t const* const inAttrib,
+		wchar_t const* const inMsg = nullptr) const override;
 
 private:
 	std::wstring m_UnknownVersion;

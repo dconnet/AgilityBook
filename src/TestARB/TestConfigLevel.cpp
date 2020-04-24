@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBConfigLevel.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -34,7 +34,7 @@ TEST_CASE("ConfigLevel")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBConfigLevelPtr New();
+			//	static ARBConfigLevelPtr New();
 		}
 	}
 
@@ -44,7 +44,7 @@ TEST_CASE("ConfigLevel")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigLevelPtr Clone() const;
+			//	ARBConfigLevelPtr Clone() const;
 		}
 	}
 
@@ -54,7 +54,7 @@ TEST_CASE("ConfigLevel")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigLevel& operator=(ARBConfigLevel const& rhs);
+			//	ARBConfigLevel& operator=(ARBConfigLevel const& rhs);
 		}
 	}
 
@@ -64,8 +64,8 @@ TEST_CASE("ConfigLevel")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBConfigLevel const& rhs) const;
-		//	bool operator!=(ARBConfigLevel const& rhs) const
+			//	bool operator==(ARBConfigLevel const& rhs) const;
+			//	bool operator!=(ARBConfigLevel const& rhs) const
 		}
 	}
 
@@ -75,7 +75,7 @@ TEST_CASE("ConfigLevel")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void clear();
+			//	void clear();
 		}
 	}
 
@@ -85,7 +85,7 @@ TEST_CASE("ConfigLevel")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const
+			//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -95,10 +95,10 @@ TEST_CASE("ConfigLevel")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -108,7 +108,7 @@ TEST_CASE("ConfigLevel")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 
@@ -118,10 +118,10 @@ TEST_CASE("ConfigLevel")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Update(
-		//			int indent,
-		//			ARBConfigLevelPtr inLevelNew,
-		//			std::wstring& ioInfo);
+			//	bool Update(
+			//			int indent,
+			//			ARBConfigLevelPtr inLevelNew,
+			//			std::wstring& ioInfo);
 		}
 	}
 }
@@ -134,10 +134,10 @@ TEST_CASE("ConfigLevelList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -147,9 +147,9 @@ TEST_CASE("ConfigLevelList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool VerifyLevel(
-		//			std::wstring const& inName,
-		//			bool inAllowWildCard = true) const;
+			//	bool VerifyLevel(
+			//			std::wstring const& inName,
+			//			bool inAllowWildCard = true) const;
 		}
 	}
 
@@ -159,9 +159,9 @@ TEST_CASE("ConfigLevelList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindLevel(
-		//			std::wstring const& inName,
-		//			ARBConfigLevelPtr* outLevel = nullptr);
+			//	bool FindLevel(
+			//			std::wstring const& inName,
+			//			ARBConfigLevelPtr* outLevel = nullptr);
 		}
 	}
 
@@ -171,9 +171,9 @@ TEST_CASE("ConfigLevelList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindSubLevel(
-		//			std::wstring const& inName,
-		//			ARBConfigLevelPtr* outLevel = nullptr) const;
+			//	bool FindSubLevel(
+			//			std::wstring const& inName,
+			//			ARBConfigLevelPtr* outLevel = nullptr) const;
 		}
 	}
 
@@ -183,17 +183,17 @@ TEST_CASE("ConfigLevelList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddLevel(
-		//			std::wstring const& inName,
-		//			ARBConfigLevelPtr* outLevel = nullptr);
-		//	bool AddLevel(ARBConfigLevelPtr inLevel);
-		//	bool DeleteLevel(
-		//			std::wstring const& inDiv,
-		//			std::wstring const& inName,
-		//			ARBConfigEventList& ioEvents);
-		//	bool DeleteSubLevel(
-		//			std::wstring const& inName,
-		//			bool& outLevelModified);
+			//	bool AddLevel(
+			//			std::wstring const& inName,
+			//			ARBConfigLevelPtr* outLevel = nullptr);
+			//	bool AddLevel(ARBConfigLevelPtr inLevel);
+			//	bool DeleteLevel(
+			//			std::wstring const& inDiv,
+			//			std::wstring const& inName,
+			//			ARBConfigEventList& ioEvents);
+			//	bool DeleteSubLevel(
+			//			std::wstring const& inName,
+			//			bool& outLevelModified);
 		}
 	}
 }

@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBConfigDivision.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -54,7 +54,7 @@ TEST_CASE("ConfigDivision")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigDivision& operator=(ARBConfigDivision const& rhs);
+			//	ARBConfigDivision& operator=(ARBConfigDivision const& rhs);
 		}
 	}
 
@@ -64,8 +64,8 @@ TEST_CASE("ConfigDivision")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBConfigDivision const& rhs) const;
-		//	bool operator!=(ARBConfigDivision const& rhs) const
+			//	bool operator==(ARBConfigDivision const& rhs) const;
+			//	bool operator!=(ARBConfigDivision const& rhs) const
 		}
 	}
 
@@ -75,7 +75,7 @@ TEST_CASE("ConfigDivision")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void clear();
+			//	void clear();
 		}
 	}
 
@@ -85,7 +85,7 @@ TEST_CASE("ConfigDivision")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const
+			//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -95,11 +95,11 @@ TEST_CASE("ConfigDivision")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfigVenue& ioVenue,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfigVenue& ioVenue,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -109,7 +109,7 @@ TEST_CASE("ConfigDivision")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 
@@ -119,10 +119,10 @@ TEST_CASE("ConfigDivision")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Update(
-		//			int indent,
-		//			ARBConfigDivisionPtr inDivNew,
-		//			std::wstring& ioInfo);
+			//	bool Update(
+			//			int indent,
+			//			ARBConfigDivisionPtr inDivNew,
+			//			std::wstring& ioInfo);
 		}
 	}
 }
@@ -135,11 +135,11 @@ TEST_CASE("ConfigDivisionList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfigVenue& ioVenue,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfigVenue& ioVenue,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -149,7 +149,7 @@ TEST_CASE("ConfigDivisionList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void ReorderBy(ARBConfigDivisionList const& inList);
+			//	void ReorderBy(ARBConfigDivisionList const& inList);
 			// Make sure the target config has a division that the source config does not
 		}
 	}
@@ -160,9 +160,9 @@ TEST_CASE("ConfigDivisionList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool VerifyLevel(
-		//			std::wstring const& inDiv,
-		//			std::wstring const& inLevel) const;
+			//	bool VerifyLevel(
+			//			std::wstring const& inDiv,
+			//			std::wstring const& inLevel) const;
 		}
 	}
 
@@ -172,9 +172,9 @@ TEST_CASE("ConfigDivisionList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindDivision(
-		//			std::wstring const& inDiv,
-		//			ARBConfigDivisionPtr* outDiv = nullptr) const;
+			//	bool FindDivision(
+			//			std::wstring const& inDiv,
+			//			ARBConfigDivisionPtr* outDiv = nullptr) const;
 		}
 	}
 
@@ -184,13 +184,13 @@ TEST_CASE("ConfigDivisionList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddDivision(
-		//			std::wstring const& inDiv,
-		//			ARBConfigDivisionPtr* outDiv = nullptr);
-		//	bool AddDivision(ARBConfigDivisionPtr inDiv);
-		//	int DeleteDivision(
-		//			std::wstring const& inDiv,
-		//			ARBConfigEventList& ioEvents);
+			//	bool AddDivision(
+			//			std::wstring const& inDiv,
+			//			ARBConfigDivisionPtr* outDiv = nullptr);
+			//	bool AddDivision(ARBConfigDivisionPtr inDiv);
+			//	int DeleteDivision(
+			//			std::wstring const& inDiv,
+			//			ARBConfigEventList& ioEvents);
 		}
 	}
 }

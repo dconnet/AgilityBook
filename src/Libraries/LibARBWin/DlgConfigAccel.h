@@ -23,9 +23,9 @@ class CReportListCtrl;
 
 struct KeyCodeMapping
 {
-	int wxCode; // WXK code
+	int wxCode;             // WXK code
 	const wchar_t* special; // wxGetTranslation name
-	bool bHasMenuSupport; // Is special string recognized in menus
+	bool bHasMenuSupport;   // Is special string recognized in menus
 };
 
 
@@ -33,14 +33,14 @@ class CDlgConfigAccel : public wxDialog
 {
 public:
 	CDlgConfigAccel(
-			std::unordered_map<int, std::wstring> const& menuIds,
-			std::vector<CMenuHelper::ItemAccel> const& accelData,
-			std::vector<CMenuHelper::ItemAccel> const& accelDataDefaults,
-			bool bAllowDups,
-			std::vector<CMenuHelper::ItemData> const& menuItems,
-			std::unordered_map<int, KeyCodeMapping> const& keyMap,
-			wxWindow* pParent,
-			std::wstring caption = std::wstring());
+		std::unordered_map<int, std::wstring> const& menuIds,
+		std::vector<CMenuHelper::ItemAccel> const& accelData,
+		std::vector<CMenuHelper::ItemAccel> const& accelDataDefaults,
+		bool bAllowDups,
+		std::vector<CMenuHelper::ItemData> const& menuItems,
+		std::unordered_map<int, KeyCodeMapping> const& keyMap,
+		wxWindow* pParent,
+		std::wstring caption = std::wstring());
 
 	bool GetAccelData(std::vector<CMenuHelper::ItemAccel>& accelData);
 
@@ -67,7 +67,12 @@ private:
 		CMenuHelper::ItemData const* m_data;
 		std::wstring m_path;
 		std::wstring m_item;
-		MenuData() : m_data(nullptr), m_path(), m_item() {}
+		MenuData()
+			: m_data(nullptr)
+			, m_path()
+			, m_item()
+		{
+		}
 	};
 	std::vector<MenuData> m_menuItems;
 	std::vector<CMenuHelper::ItemAccel> m_accelData;

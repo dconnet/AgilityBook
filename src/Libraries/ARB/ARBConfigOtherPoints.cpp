@@ -30,10 +30,10 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-#define OTHERPTS_COUNT_ALL			L"All"
-#define OTHERPTS_COUNT_ALLBYEVENT	L"AllByEvent"
-#define OTHERPTS_COUNT_LEVEL		L"Level"
-#define OTHERPTS_COUNT_LEVELBYEVENT	L"LevelByEvent"
+#define OTHERPTS_COUNT_ALL          L"All"
+#define OTHERPTS_COUNT_ALLBYEVENT   L"AllByEvent"
+#define OTHERPTS_COUNT_LEVEL        L"Level"
+#define OTHERPTS_COUNT_LEVELBYEVENT L"LevelByEvent"
 
 void ARBConfigOtherPoints::GetTallyValidValues(std::vector<std::wstring>& outValues)
 {
@@ -48,16 +48,18 @@ void ARBConfigOtherPoints::GetTallyValidValues(std::vector<std::wstring>& outVal
 
 namespace
 {
-	class ARBConfigOtherPoints_concrete : public ARBConfigOtherPoints
+class ARBConfigOtherPoints_concrete : public ARBConfigOtherPoints
+{
+public:
+	ARBConfigOtherPoints_concrete()
 	{
-	public:
-		ARBConfigOtherPoints_concrete() {}
-		ARBConfigOtherPoints_concrete(ARBConfigOtherPoints const& rhs)
-			: ARBConfigOtherPoints(rhs)
-		{
-		}
-	};
+	}
+	ARBConfigOtherPoints_concrete(ARBConfigOtherPoints const& rhs)
+		: ARBConfigOtherPoints(rhs)
+	{
+	}
 };
+}; // namespace
 
 
 ARBConfigOtherPointsPtr ARBConfigOtherPoints::New()
@@ -132,10 +134,12 @@ ARBConfigOtherPoints& ARBConfigOtherPoints::operator=(ARBConfigOtherPoints&& rhs
 
 bool ARBConfigOtherPoints::operator==(ARBConfigOtherPoints const& rhs) const
 {
+	// clang-format off
 	return m_Name == rhs.m_Name
 		&& m_Tally == rhs.m_Tally
 		&& m_Desc == rhs.m_Desc
 		&& m_Default == rhs.m_Default;
+	// clang-format on
 }
 
 
@@ -148,24 +152,19 @@ void ARBConfigOtherPoints::clear()
 }
 
 
-bool ARBConfigOtherPoints::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBConfigOtherPoints::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_OTHERPTS)
 		return false;
-	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_OTHERPTS_NAME, m_Name)
-	|| 0 == m_Name.length())
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_OTHERPTS_NAME, m_Name) || 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_NAME));
 		return false;
 	}
 	inTree->GetAttrib(ATTRIB_OTHERPTS_DEFAULT, m_Default);
 	std::wstring attrib;
-	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_OTHERPTS_COUNT, attrib)
-	|| 0 == attrib.length())
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_OTHERPTS_COUNT, attrib) || 0 == attrib.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT));
 		return false;
@@ -188,7 +187,8 @@ bool ARBConfigOtherPoints::Load(
 		msg += OTHERPTS_COUNT_LEVEL;
 		msg += L", ";
 		msg += OTHERPTS_COUNT_LEVELBYEVENT;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT, msg.c_str()));
+		ioCallback.LogMessage(
+			Localization()->ErrorInvalidAttributeValue(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT, msg.c_str()));
 		return false;
 	}
 	m_Desc = inTree->GetValue();
@@ -227,9 +227,9 @@ bool ARBConfigOtherPoints::Save(ElementNodePtr const& ioTree) const
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigOtherPointsList::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	ARBConfigOtherPointsPtr thing(ARBConfigOtherPoints::New());
 	if (!thing->Load(inTree, inVersion, ioCallback))
@@ -250,9 +250,7 @@ bool ARBConfigOtherPointsList::VerifyOtherPoints(std::wstring const& inName) con
 }
 
 
-bool ARBConfigOtherPointsList::FindOtherPoints(
-		std::wstring const& inName,
-		ARBConfigOtherPointsPtr* outPoints) const
+bool ARBConfigOtherPointsList::FindOtherPoints(std::wstring const& inName, ARBConfigOtherPointsPtr* outPoints) const
 {
 	if (outPoints)
 		outPoints->reset();

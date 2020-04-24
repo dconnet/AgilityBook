@@ -51,7 +51,7 @@
 #if !defined(SORT_DIGITSASNUMBERS)
 // Only defined when: (WINVER >= _WIN32_WINNT_WIN7)
 // Note: Move to CompareStringEx once XP support is dropped
-#define SORT_DIGITSASNUMBERS      0x00000008  // use digits as numbers sort method
+#define SORT_DIGITSASNUMBERS 0x00000008 // use digits as numbers sort method
 #endif
 
 #else
@@ -121,7 +121,7 @@ std::string stringA(wxMemoryOutputStream const& inStr)
 	if (inStr.IsOk())
 	{
 		size_t len = static_cast<size_t>(inStr.GetLength());
-		auto buffer = std::vector<char>(len+1);
+		auto buffer = std::vector<char>(len + 1);
 		inStr.CopyTo(buffer.data(), len);
 		buffer[len] = 0;
 		str = std::string(buffer.data(), len);
@@ -150,7 +150,7 @@ std::string stringA(wchar_t const* const inStr, size_t inLen)
 			::WideCharToMultiByte(CP_UTF8, 0, inStr, static_cast<int>(inLen), ansistr, bytes, nullptr, nullptr);
 			ansistr[bytes] = 0;
 			str = std::string(ansistr, bytes);
-			delete [] ansistr;
+			delete[] ansistr;
 		}
 		else
 		{
@@ -186,15 +186,15 @@ std::string stringA(std::wstring const& inStr)
 #endif
 		if (0 < nNeeded)
 		{
-			char *ansistr = new char[nNeeded+1];
+			char* ansistr = new char[nNeeded + 1];
 #if defined(ARB_HAS_SECURE_MBS_WCS)
-			wcstombs_s(nullptr, ansistr, nNeeded+1, inStr.c_str(), _TRUNCATE);
+			wcstombs_s(nullptr, ansistr, nNeeded + 1, inStr.c_str(), _TRUNCATE);
 #else
 			wcstombs(ansistr, inStr.c_str(), nNeeded);
 #endif
 			ansistr[nNeeded] = nullptr;
 			str = ansistr;
-			delete [] ansistr;
+			delete[] ansistr;
 		}
 #endif
 	}
@@ -220,7 +220,7 @@ std::wstring stringW(char const* const inStr, size_t inLen)
 			::MultiByteToWideChar(CP_UTF8, 0, inStr, static_cast<int>(inLen), unicodestr, chars);
 			unicodestr[chars] = 0;
 			str = unicodestr;
-			delete [] unicodestr;
+			delete[] unicodestr;
 		}
 		else
 		{
@@ -256,15 +256,15 @@ std::wstring stringW(std::string const& inStr)
 #endif
 		if (0 < nNeeded)
 		{
-			wchar_t *unicodestr = new wchar_t[nNeeded+1];
+			wchar_t* unicodestr = new wchar_t[nNeeded + 1];
 #if defined(ARB_HAS_SECURE_MBS_WCS)
-			mbstowcs_s(nullptr, unicodestr, nNeeded+1, inStr.c_str(), _TRUNCATE);
+			mbstowcs_s(nullptr, unicodestr, nNeeded + 1, inStr.c_str(), _TRUNCATE);
 #else
 			mbstowcs(unicodestr, inStr.c_str(), nNeeded);
 #endif
 			unicodestr[nNeeded] = nullptr;
 			str = unicodestr;
-			delete [] unicodestr;
+			delete[] unicodestr;
 		}
 #endif
 	}
@@ -519,7 +519,7 @@ bool CanCompareDigits()
 {
 #if defined(WIN32) && (_WIN32_IE >= _WIN32_IE_IE55) && (WINVER < _WIN32_WINNT_WIN7)
 	return true;
-#else 
+#else
 	return UseCompareString();
 #endif
 }
@@ -534,7 +534,13 @@ int CompareNoCase(std::wstring const& inStr1, std::wstring const& inStr2)
 	// WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP
 	if (UseCompareString())
 	{
-		switch (CompareStringW(LOCALE_USER_DEFAULT, NORM_IGNORECASE | SORT_DIGITSASNUMBERS, inStr1.c_str(), static_cast<int>(inStr1.length()), inStr2.c_str(), static_cast<int>(inStr2.length())))
+		switch (CompareStringW(
+			LOCALE_USER_DEFAULT,
+			NORM_IGNORECASE | SORT_DIGITSASNUMBERS,
+			inStr1.c_str(),
+			static_cast<int>(inStr1.length()),
+			inStr2.c_str(),
+			static_cast<int>(inStr2.length())))
 		{
 		case CSTR_LESS_THAN:
 			return -1;
@@ -651,7 +657,7 @@ std::wstring TrimRight(std::wstring const& inStr, wchar_t toTrim)
 std::string ToLower(std::string const& inStr)
 {
 	std::string out(inStr);
-	std::for_each(out.begin(), out.end(), [](char& ch) {ch = std::tolower(ch, std::locale::classic());});
+	std::for_each(out.begin(), out.end(), [](char& ch) { ch = std::tolower(ch, std::locale::classic()); });
 	return out;
 }
 
@@ -659,7 +665,7 @@ std::string ToLower(std::string const& inStr)
 std::wstring ToLower(std::wstring const& inStr)
 {
 	std::wstring out(inStr);
-	std::for_each(out.begin(), out.end(), [](wchar_t& ch) {ch = std::tolower(ch, std::locale::classic());});
+	std::for_each(out.begin(), out.end(), [](wchar_t& ch) { ch = std::tolower(ch, std::locale::classic()); });
 	return out;
 }
 
@@ -667,7 +673,7 @@ std::wstring ToLower(std::wstring const& inStr)
 std::string ToUpper(std::string const& inStr)
 {
 	std::string out(inStr);
-	std::for_each(out.begin(), out.end(), [](char& ch) {ch = std::toupper(ch, std::locale::classic());});
+	std::for_each(out.begin(), out.end(), [](char& ch) { ch = std::toupper(ch, std::locale::classic()); });
 	return out;
 }
 
@@ -675,16 +681,13 @@ std::string ToUpper(std::string const& inStr)
 std::wstring ToUpper(std::wstring const& inStr)
 {
 	std::wstring out(inStr);
-	std::for_each(out.begin(), out.end(), [](wchar_t& ch) {ch = std::toupper(ch, std::locale::classic());});
+	std::for_each(out.begin(), out.end(), [](wchar_t& ch) { ch = std::toupper(ch, std::locale::classic()); });
 	return out;
 }
 
 
-template <typename T, typename S> T ReplaceImpl(
-		T const& format,
-		T const& inStr,
-		T const& inReplace,
-		T const& inReplaceWith)
+template <typename T, typename S>
+T ReplaceImpl(T const& format, T const& inStr, T const& inReplace, T const& inReplaceWith)
 {
 	if (inReplace.empty())
 		return inStr;
@@ -701,7 +704,7 @@ template <typename T, typename S> T ReplaceImpl(
 			}
 			if (!inReplaceWith.empty())
 				fmt::format_to(str, format, inReplaceWith);
-			text = text.substr(pos+inReplace.length(), T::npos);
+			text = text.substr(pos + inReplace.length(), T::npos);
 		}
 		else
 		{
@@ -713,36 +716,28 @@ template <typename T, typename S> T ReplaceImpl(
 }
 
 
-std::string Replace(
-		std::string const& inStr,
-		std::string const& inReplace,
-		std::string const& inReplaceWith)
+std::string Replace(std::string const& inStr, std::string const& inReplace, std::string const& inReplaceWith)
 {
 	return ReplaceImpl<std::string, fmt::memory_buffer>("{}", inStr, inReplace, inReplaceWith);
 }
 
 
-std::wstring Replace(
-		std::wstring const& inStr,
-		std::wstring const& inReplace,
-		std::wstring const& inReplaceWith)
+std::wstring Replace(std::wstring const& inStr, std::wstring const& inReplace, std::wstring const& inReplaceWith)
 {
 	return ReplaceImpl<std::wstring, fmt::wmemory_buffer>(L"{}", inStr, inReplace, inReplaceWith);
 }
 
 
 // Using IEC binary prefixes
-std::wstring FormatBytes(
-		double inSize,
-		int inPrec,
-		ByteSizeStyle inSizeStyle)
+std::wstring FormatBytes(double inSize, int inPrec, ByteSizeStyle inSizeStyle)
 {
 	// byte, kilo, mega, giga, tera, peta, exa, zetta, yotta
 	// Note: bronto, geop are next. Don't know the binary units, or the abbrev
-	static wchar_t const * const sc_unitsSI[]     = {L" B", L" kB",  L" MB",  L" GB",  L" TB",  L" PB",  L" EB", L"ZB", L"YB"};
+	static wchar_t const* const sc_unitsSI[] = {L" B", L" kB", L" MB", L" GB", L" TB", L" PB", L" EB", L"ZB", L"YB"};
 	// byte, kibi, mebi, gibi, tebi, pebi, exbi, zebi, yobi
-	static wchar_t const * const sc_unitsBinary[] = {L" B", L" KiB", L" MiB", L" GiB", L" TiB", L" PiB", L" EiB", L"ZiB", L"YiB"};
-	static wchar_t const * const sc_unitsTrue[]   = {L" B", L" KB",  L" MB",  L" GB",  L" TB",  L" PB",  L" EB", L"ZB", L"YB"};
+	static wchar_t const* const sc_unitsBinary[]
+		= {L" B", L" KiB", L" MiB", L" GiB", L" TiB", L" PiB", L" EiB", L"ZiB", L"YiB"};
+	static wchar_t const* const sc_unitsTrue[] = {L" B", L" KB", L" MB", L" GB", L" TB", L" PB", L" EB", L"ZB", L"YB"};
 	static const struct
 	{
 		wchar_t const* const* units;
@@ -771,7 +766,9 @@ std::wstring FormatBytes(
 	int index = 0;
 	if (std::abs(inSize) != 0.0)
 	{
-		index = std::min(static_cast<int>(log(inSize) / log(sc_units[unitIndex].base)), static_cast<int>(sc_units[unitIndex].numUnits) - 1);
+		index = std::min(
+			static_cast<int>(log(inSize) / log(sc_units[unitIndex].base)),
+			static_cast<int>(sc_units[unitIndex].numUnits) - 1);
 		inSize /= pow(sc_units[unitIndex].base, index);
 	}
 	std::wstring form(sc_units[unitIndex].units[index]);
@@ -780,4 +777,4 @@ std::wstring FormatBytes(
 	return val;
 }
 
-};
+}; // namespace StringUtil

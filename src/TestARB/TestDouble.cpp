@@ -132,10 +132,12 @@ static void RunDblTests(bool bUseLocale)
 		wchar_t const* expected; // No matter the locale, these should always be the same.
 		wchar_t const* format;
 	} tests[] = {
+		// clang-format off
 		{42.34, 0, L"42.34", L"{:g}"},
 		{42.0,  0, L"42",    L"{:g}"},
 		{42.34, 1, L"42.3",  L"{:.{}f}"},
 		{42.0,  1, L"42.0",  L"{:.{}f}"},
+		// clang-format on
 	};
 
 	for (auto& test : tests)

@@ -36,12 +36,13 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-namespace {
-	constexpr unsigned int MaxLineLength = 76;
+namespace
+{
+constexpr unsigned int MaxLineLength = 76;
 }
 
-static char const base64chars[64] =
-{
+static char const base64chars[64] = {
+	// clang-format off
 	'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', // 0-7
 	'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', // 8
 	'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', // 16
@@ -50,12 +51,13 @@ static char const base64chars[64] =
 	'o', 'p', 'q', 'r', 's', 't', 'u', 'v', // 40
 	'w', 'x', 'y', 'z', '0', '1', '2', '3', // 48
 	'4', '5', '6', '7', '8', '9', '+', '/'  // 56
+	// clang-format on
 };
 
 #define SKIP '\202'
 
-static char const base64map[] =
-{
+static char const base64map[] = {
+	// clang-format off
 	SKIP, SKIP, SKIP, SKIP, SKIP, SKIP, SKIP, SKIP,
 	SKIP, SKIP, SKIP, SKIP, SKIP, SKIP, SKIP, SKIP,
 	SKIP, SKIP, SKIP, SKIP, SKIP, SKIP, SKIP, SKIP,
@@ -88,6 +90,7 @@ static char const base64map[] =
 	SKIP, SKIP, SKIP, SKIP, SKIP, SKIP, SKIP, SKIP,
 	SKIP, SKIP, SKIP, SKIP, SKIP, SKIP, SKIP, SKIP,
 	SKIP, SKIP, SKIP, SKIP, SKIP, SKIP, SKIP, SKIP
+	// clang-format on
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -97,9 +100,7 @@ ARBBase64::ARBBase64()
 }
 
 
-bool ARBBase64::Decode(
-		std::wstring const& inBase64,
-		std::vector<unsigned char>& outBinData)
+bool ARBBase64::Decode(std::wstring const& inBase64, std::vector<unsigned char>& outBinData)
 {
 	outBinData.clear();
 	size_t outBytes = 0;
@@ -184,9 +185,7 @@ bool ARBBase64::Decode(
 }
 
 
-bool ARBBase64::Encode(
-		std::vector<unsigned char> const& inBinData,
-		std::wstring& outData)
+bool ARBBase64::Encode(std::vector<unsigned char> const& inBinData, std::wstring& outData)
 {
 	outData.clear();
 	if (inBinData.empty())

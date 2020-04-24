@@ -74,14 +74,15 @@ typedef std::shared_ptr<CDlgDogRefRunData> CDlgDogRefRunDataPtr;
 class CDlgRun : public wxDialog
 {
 	friend class CLinkDropTarget;
+
 public:
 	CDlgRun(
-			CAgilityBookDoc* pDoc,
-			ARBDogPtr const& inDog,
-			ARBDogTrialPtr const& inTrial,
-			ARBDogRunPtr const& inRun,
-			wxWindow* pParent = nullptr,
-			int iSelectPage = 0);
+		CAgilityBookDoc* pDoc,
+		ARBDogPtr const& inDog,
+		ARBDogTrialPtr const& inTrial,
+		ARBDogRunPtr const& inRun,
+		wxWindow* pParent = nullptr,
+		int iSelectPage = 0);
 
 private:
 	CDlgDogVenueData* GetVenueData(int index) const;
@@ -162,18 +163,18 @@ private:
 	double m_SCT;
 	wxStaticText* m_textYardsReqOpeningPts;
 	CTextCtrl* m_ctrlYardsReqOpeningPts;
-		//CStatic m_ctrlOpeningText;
-		//CEdit m_ctrlOpening;
-		short m_Opening;
-		//CStatic m_ctrlYardsText;
-		//CEdit m_ctrlYards;
-		double m_Yards;
+	//CStatic m_ctrlOpeningText;
+	//CEdit m_ctrlOpening;
+	short m_Opening;
+	//CStatic m_ctrlYardsText;
+	//CEdit m_ctrlYards;
+	double m_Yards;
 	wxStaticText* m_textMinYPSClosingTime;
 	CTextCtrl* m_ctrlMinYPSClosingTime;
-		//CStatic m_ctrlSCT2Text;
-		//CEdit m_ctrlSCT2;
-		double m_SCT2;
-		//CStatic m_ctrlMinYPSText;
+	//CStatic m_ctrlSCT2Text;
+	//CEdit m_ctrlSCT2;
+	double m_SCT2;
+	//CStatic m_ctrlMinYPSText;
 	wxStaticText* m_ctrlClosingText;
 	CTextCtrl* m_ctrlClosing;
 	short m_Closing;
@@ -188,16 +189,16 @@ private:
 	short m_Faults;
 	wxStaticText* m_textYPSOpeningPts;
 	CTextCtrl* m_ctrlYPSOpeningPts;
-		//CStatic m_ctrlOpenText;
-		//CEdit m_ctrlOpen;
-		short m_Open;
-		//CStatic m_ctrlYPSText;
+	//CStatic m_ctrlOpenText;
+	//CEdit m_ctrlOpen;
+	short m_Open;
+	//CStatic m_ctrlYPSText;
 	wxStaticText* m_textClosingPtsTotalFaults;
 	CTextCtrl* m_ctrlClosingPtsTotalFaults;
-		//CStatic m_ctrlCloseText;
-		//CEdit m_ctrlClose;
-		short m_Close;
-		//CStatic m_ctrlTotalFaultsText;
+	//CStatic m_ctrlCloseText;
+	//CEdit m_ctrlClose;
+	short m_Close;
+	//CStatic m_ctrlTotalFaultsText;
 	wxStaticText* m_ctrlObstaclesPSText;
 	CTextCtrl* m_ctrlObstaclesPS;
 	wxStaticText* m_textPlace;

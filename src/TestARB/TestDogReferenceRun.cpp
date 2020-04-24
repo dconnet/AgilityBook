@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBDogReferenceRun.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -34,7 +34,7 @@ TEST_CASE("DogReferenceRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBDogReferenceRunPtr New();
+			//	static ARBDogReferenceRunPtr New();
 		}
 	}
 
@@ -44,7 +44,7 @@ TEST_CASE("DogReferenceRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogReferenceRunPtr Clone() const;
+			//	ARBDogReferenceRunPtr Clone() const;
 		}
 	}
 
@@ -54,7 +54,7 @@ TEST_CASE("DogReferenceRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogReferenceRun& operator=(ARBDogReferenceRun const& rhs);
+			//	ARBDogReferenceRun& operator=(ARBDogReferenceRun const& rhs);
 		}
 	}
 
@@ -64,8 +64,8 @@ TEST_CASE("DogReferenceRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBDogReferenceRun const& rhs) const;
-		//	bool operator!=(ARBDogReferenceRun const& rhs) const
+			//	bool operator==(ARBDogReferenceRun const& rhs) const;
+			//	bool operator!=(ARBDogReferenceRun const& rhs) const
 		}
 	}
 
@@ -75,7 +75,7 @@ TEST_CASE("DogReferenceRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const
+			//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -85,11 +85,11 @@ TEST_CASE("DogReferenceRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig const& inConfig,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig const& inConfig,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -99,7 +99,7 @@ TEST_CASE("DogReferenceRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 }
@@ -112,11 +112,11 @@ TEST_CASE("DogReferenceRunList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig const& inConfig,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig const& inConfig,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -126,8 +126,8 @@ TEST_CASE("DogReferenceRunList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddReferenceRun(ARBDogReferenceRunPtr inRef);
-		//	bool DeleteReferenceRun(ARBDogReferenceRunPtr inRef);
+			//	bool AddReferenceRun(ARBDogReferenceRunPtr inRef);
+			//	bool DeleteReferenceRun(ARBDogReferenceRunPtr inRef);
 		}
 	}
 }

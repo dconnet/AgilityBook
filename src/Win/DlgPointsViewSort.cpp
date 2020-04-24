@@ -62,41 +62,53 @@ CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
 
 	// Controls (these are done first to control tab order)
 
-	wxStaticText* text1 = new wxStaticText(this, wxID_ANY,
-		_("IDC_POINTS_VIEW_SORT_C1"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* text1
+		= new wxStaticText(this, wxID_ANY, _("IDC_POINTS_VIEW_SORT_C1"), wxDefaultPosition, wxDefaultSize, 0);
 	text1->Wrap(-1);
 
-	m_ctrlPrimary = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr,
-		wxCB_DROPDOWN|wxCB_READONLY);
+	m_ctrlPrimary = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_READONLY);
 	m_ctrlPrimary->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgPointsViewSort::OnSelchangePrimary, this);
 	m_ctrlPrimary->SetHelpText(_("HIDC_POINTS_VIEW_SORT_C1"));
 	m_ctrlPrimary->SetToolTip(_("HIDC_POINTS_VIEW_SORT_C1"));
 
-	wxStaticText* text2 = new wxStaticText(this, wxID_ANY,
-		_("IDC_POINTS_VIEW_SORT_C2"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* text2
+		= new wxStaticText(this, wxID_ANY, _("IDC_POINTS_VIEW_SORT_C2"), wxDefaultPosition, wxDefaultSize, 0);
 	text2->Wrap(-1);
 
-	m_ctrlSecondary = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr,
-		wxCB_DROPDOWN|wxCB_READONLY);
+	m_ctrlSecondary = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_READONLY);
 	m_ctrlSecondary->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgPointsViewSort::OnSelchangeSecondary, this);
 	m_ctrlSecondary->SetHelpText(_("HIDC_POINTS_VIEW_SORT_C2"));
 	m_ctrlSecondary->SetToolTip(_("HIDC_POINTS_VIEW_SORT_C2"));
 
-	wxStaticText* text3 = new wxStaticText(this, wxID_ANY,
-		_("IDC_POINTS_VIEW_SORT_C3"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* text3
+		= new wxStaticText(this, wxID_ANY, _("IDC_POINTS_VIEW_SORT_C3"), wxDefaultPosition, wxDefaultSize, 0);
 	text3->Wrap(-1);
 
-	m_ctrlTertiary = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr,
-		wxCB_DROPDOWN|wxCB_READONLY);
+	m_ctrlTertiary = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_READONLY);
 	m_ctrlTertiary->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgPointsViewSort::OnSelchangeTertiary, this);
 	m_ctrlTertiary->SetHelpText(_("HIDC_POINTS_VIEW_SORT_C3"));
 	m_ctrlTertiary->SetToolTip(_("HIDC_POINTS_VIEW_SORT_C3"));
@@ -147,9 +159,8 @@ void CDlgPointsViewSort::UpdateControls()
 	if (m_ctrlOk)
 	{
 		bool bEnable = false;
-		if (wxNOT_FOUND != m_ctrlPrimary->GetSelection()
-		&& wxNOT_FOUND != m_ctrlSecondary->GetSelection()
-		&& wxNOT_FOUND != m_ctrlTertiary->GetSelection())
+		if (wxNOT_FOUND != m_ctrlPrimary->GetSelection() && wxNOT_FOUND != m_ctrlSecondary->GetSelection()
+			&& wxNOT_FOUND != m_ctrlTertiary->GetSelection())
 		{
 			bEnable = true;
 		}
@@ -158,10 +169,7 @@ void CDlgPointsViewSort::UpdateControls()
 }
 
 
-static int AddItem(
-		wxComboBox* ctrl,
-		ARBPointsViewSort item,
-		ARBPointsViewSort inSelect)
+static int AddItem(wxComboBox* ctrl, ARBPointsViewSort item, ARBPointsViewSort inSelect)
 {
 	int idx = -1;
 	wxString str;
@@ -217,14 +225,11 @@ void CDlgPointsViewSort::FillSecondary()
 void CDlgPointsViewSort::FillTertiary()
 {
 	m_ctrlTertiary->Clear();
-	if (m_Primary != ARBPointsViewSort::Division
-	&& m_Secondary != ARBPointsViewSort::Division)
+	if (m_Primary != ARBPointsViewSort::Division && m_Secondary != ARBPointsViewSort::Division)
 		AddItem(m_ctrlTertiary, ARBPointsViewSort::Division, m_Tertiary);
-	if (m_Primary != ARBPointsViewSort::Level
-	&& m_Secondary != ARBPointsViewSort::Level)
+	if (m_Primary != ARBPointsViewSort::Level && m_Secondary != ARBPointsViewSort::Level)
 		AddItem(m_ctrlTertiary, ARBPointsViewSort::Level, m_Tertiary);
-	if (m_Primary != ARBPointsViewSort::Event
-	&& m_Secondary != ARBPointsViewSort::Event)
+	if (m_Primary != ARBPointsViewSort::Event && m_Secondary != ARBPointsViewSort::Event)
 		AddItem(m_ctrlTertiary, ARBPointsViewSort::Event, m_Tertiary);
 	UpdateControls();
 }

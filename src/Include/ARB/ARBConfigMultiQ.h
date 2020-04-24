@@ -79,10 +79,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfigVenue const& inVenue,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfigVenue const& inVenue,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -98,9 +98,7 @@ public:
 	 * @param outRuns Runs that were removed from inRuns.
 	 * @return There is a match.
 	 */
-	bool Match(
-			std::vector<ARBDogRunPtr> const& inRuns,
-			std::vector<ARBDogRunPtr>& outRuns) const;
+	bool Match(std::vector<ARBDogRunPtr> const& inRuns, std::vector<ARBDogRunPtr>& outRuns) const;
 
 	/**
 	 * Rename a division.
@@ -108,9 +106,7 @@ public:
 	 * @param inNewDiv New division name.
 	 * @return Number of ARBConfigScoring items updated.
 	 */
-	int RenameDivision(
-			std::wstring const& inOldDiv,
-			std::wstring const& inNewDiv);
+	int RenameDivision(std::wstring const& inOldDiv, std::wstring const& inNewDiv);
 
 	/**
 	 * Delete a division.
@@ -126,10 +122,7 @@ public:
 	 * @param inNewLevel New level name.
 	 * @return Number of ARBConfigScoring items updated.
 	 */
-	int RenameLevel(
-			std::wstring const& inDiv,
-			std::wstring const& inOldLevel,
-			std::wstring const& inNewLevel);
+	int RenameLevel(std::wstring const& inDiv, std::wstring const& inOldLevel, std::wstring const& inNewLevel);
 
 	/**
 	 * Delete a level.
@@ -144,9 +137,7 @@ public:
 	 * @param inNewEvent New event name.
 	 * @return Number of ARBConfigScoring items updated.
 	 */
-	int RenameEvent(
-			std::wstring const& inOldEvent,
-			std::wstring const& inNewEvent);
+	int RenameEvent(std::wstring const& inOldEvent, std::wstring const& inNewEvent);
 
 	/**
 	 * Delete an event.
@@ -162,10 +153,7 @@ public:
 	 * @param inEvent Event.
 	 * @return Whether object was added.
 	 */
-	bool AddItem(
-			std::wstring const& inDiv,
-			std::wstring const& inLevel,
-			std::wstring const& inEvent);
+	bool AddItem(std::wstring const& inDiv, std::wstring const& inLevel, std::wstring const& inEvent);
 
 	/**
 	 * Remove an item.
@@ -174,10 +162,7 @@ public:
 	 * @param inEvent Event.
 	 * @return Whether object was removed.
 	 */
-	bool RemoveItem(
-			std::wstring const& inDiv,
-			std::wstring const& inLevel,
-			std::wstring const& inEvent);
+	bool RemoveItem(std::wstring const& inDiv, std::wstring const& inLevel, std::wstring const& inEvent);
 
 	/**
 	 * Remove all configuration items.
@@ -223,11 +208,7 @@ public:
 	{
 		return m_Items.size();
 	}
-	bool GetItem(
-			size_t inIndex,
-			std::wstring& outDivision,
-			std::wstring& outLevel,
-			std::wstring& outEvent) const;
+	bool GetItem(size_t inIndex, std::wstring& outDivision, std::wstring& outLevel, std::wstring& outEvent) const;
 
 private:
 	struct MultiQItem
@@ -274,10 +255,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfigVenue const& inVenue,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfigVenue const& inVenue,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Find a MultiQ by name.
@@ -285,19 +266,15 @@ public:
 	 * @param inUseShortName Search by shortname instead of longname.
 	 * @param outMultiQ Pointer to object, NULL if not found.
 	 */
-	bool FindMultiQ(
-			std::wstring const& inName,
-			bool inUseShortName = false,
-			ARBConfigMultiQPtr* outMultiQ = nullptr) const;
+	bool FindMultiQ(std::wstring const& inName, bool inUseShortName = false, ARBConfigMultiQPtr* outMultiQ = nullptr)
+		const;
 
 	/**
 	 * Find a MultiQ by value.
 	 * @param inMultiQ Multi-Q definition to find
 	 * @param outMultiQ Pointer to object, NULL if not found.
 	 */
-	bool FindMultiQ(
-			ARBConfigMultiQ const& inMultiQ,
-			ARBConfigMultiQPtr* outMultiQ = nullptr) const;
+	bool FindMultiQ(ARBConfigMultiQ const& inMultiQ, ARBConfigMultiQPtr* outMultiQ = nullptr) const;
 
 	/**
 	 * Rename a division.
@@ -305,9 +282,7 @@ public:
 	 * @param inNewDiv New division name.
 	 * @return Number of ARBConfigScoring items updated.
 	 */
-	int RenameDivision(
-			std::wstring const& inOldDiv,
-			std::wstring const& inNewDiv);
+	int RenameDivision(std::wstring const& inOldDiv, std::wstring const& inNewDiv);
 
 	/**
 	 * Delete a division.
@@ -323,10 +298,7 @@ public:
 	 * @param inNewLevel New level name.
 	 * @return Number of ARBConfigScoring items updated.
 	 */
-	int RenameLevel(
-			std::wstring const& inDiv,
-			std::wstring const& inOldLevel,
-			std::wstring const& inNewLevel);
+	int RenameLevel(std::wstring const& inDiv, std::wstring const& inOldLevel, std::wstring const& inNewLevel);
 
 	/**
 	 * Delete a level.
@@ -341,9 +313,7 @@ public:
 	 * @param inNewEvent New event name.
 	 * @return Number of ARBConfigScoring items updated.
 	 */
-	int RenameEvent(
-			std::wstring const& inOldEvent,
-			std::wstring const& inNewEvent);
+	int RenameEvent(std::wstring const& inOldEvent, std::wstring const& inNewEvent);
 
 	/**
 	 * Delete an event.

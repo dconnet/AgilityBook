@@ -32,20 +32,16 @@ public:
 	CStatusBarHelper(size_t nColumns);
 
 	bool Initialize(wxStatusBar* statusbar);
-	size_t size() const { return m_Widths.size(); }
+	size_t size() const
+	{
+		return m_Widths.size();
+	}
 
-	bool Update(
-			wxFrame* frame,
-			int nCol,
-			wxString const& text);
-	bool Update(
-			wxFrame* frame,
-			std::vector<wxString> const& text);
+	bool Update(wxFrame* frame, int nCol, wxString const& text);
+	bool Update(wxFrame* frame, std::vector<wxString> const& text);
 
 private:
 	std::vector<int> m_Widths;
 
-	void SetStatusBarWidths(
-			wxStatusBar* statusbar,
-			int nColumn);
+	void SetStatusBarWidths(wxStatusBar* statusbar, int nColumn);
 };

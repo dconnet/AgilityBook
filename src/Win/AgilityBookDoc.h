@@ -37,8 +37,8 @@
 
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARBCommon/ARBTypes.h"
-#include <set>
 #include <wx/docview.h>
+#include <set>
 class CAgilityBookCalendarListView;
 class CAgilityBookCalendarView;
 class CAgilityBookTrainingView;
@@ -51,19 +51,20 @@ struct CVenueFilter;
 
 // UpdateAllViews() hints: Only the view bits can be or'd. Each item is
 // considered a single event (consider all views as one)
-#define UPDATE_VIEW_MASK			0x00ff
-#define UPDATE_CALENDAR_VIEW		0x0001
-#define UPDATE_TRAINING_VIEW		0x0002
-#define UPDATE_POINTS_VIEW			0x0004
-#define UPDATE_RUNS_VIEW			0x0008
-#define UPDATE_RUNS_SELECTION_VIEW	0x0010
-#define UPDATE_TREE_VIEW			0x0020
-#define UPDATE_ALL_VIEW				(UPDATE_CALENDAR_VIEW|UPDATE_TRAINING_VIEW|UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW)
-#define UPDATE_CONFIG				0x0100
-#define UPDATE_OPTIONS				0x0200
-#define UPDATE_NEW_TRIAL			0x0300
-#define UPDATE_LANG_CHANGE			0x0400
-#define UPDATE_CUSTOMIZE			0x0500
+#define UPDATE_VIEW_MASK           0x00ff
+#define UPDATE_CALENDAR_VIEW       0x0001
+#define UPDATE_TRAINING_VIEW       0x0002
+#define UPDATE_POINTS_VIEW         0x0004
+#define UPDATE_RUNS_VIEW           0x0008
+#define UPDATE_RUNS_SELECTION_VIEW 0x0010
+#define UPDATE_TREE_VIEW           0x0020
+#define UPDATE_CONFIG              0x0100
+#define UPDATE_OPTIONS             0x0200
+#define UPDATE_NEW_TRIAL           0x0300
+#define UPDATE_LANG_CHANGE         0x0400
+#define UPDATE_CUSTOMIZE           0x0500
+#define UPDATE_ALL_VIEW \
+	(UPDATE_CALENDAR_VIEW | UPDATE_TRAINING_VIEW | UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW)
 
 class CUpdateHint : public wxObject
 {
@@ -82,7 +83,11 @@ public:
 	{
 		return m_Hint == val;
 	}
-	ARBBasePtr GetObj() const	{return m_pObj;}
+	ARBBasePtr GetObj() const
+	{
+		return m_pObj;
+	}
+
 private:
 	unsigned int m_Hint;
 	ARBBasePtr m_pObj;
@@ -115,7 +120,10 @@ public:
 	void SetCurrentDog(ARBDogPtr const& inDog, bool bSuppressHints = false);
 	ARBDogTrialPtr GetCurrentTrial() const;
 	ARBDogRunPtr GetCurrentRun() const;
-	ARBAgilityRecordBook& Book()			{return m_Records;}
+	ARBAgilityRecordBook& Book()
+	{
+		return m_Records;
+	}
 
 	bool EditDog(ARBDogPtr const& inDog, int nPage = 0);
 	bool AddTitle(ARBDogPtr const& inDog);
@@ -124,26 +132,24 @@ public:
 	bool EditRun(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTrial, ARBDogRunPtr const& inRun);
 	bool DeleteRuns(std::vector<ARBDogRunPtr> const& inRuns, bool bSilent = false);
 
-	bool CreateTrialFromCalendar(
-			ARBCalendar const& cal,
-			CTabView* pTabView);
+	bool CreateTrialFromCalendar(ARBCalendar const& cal, CTabView* pTabView);
 	bool SetCalenderDate(ARBDate const& date);
 	void SortDates();
 	bool ImportConfiguration(ARBConfig& update);
 	bool ImportConfiguration(bool bUseDefault);
 
 	bool ImportARBCalEntry(
-			ARBCalendarList const& listCal,
-			long& nAdded,
-			long& nUpdated,
-			long& nDuplicate,
-			long& nSkipped);
+		ARBCalendarList const& listCal,
+		long& nAdded,
+		long& nUpdated,
+		long& nDuplicate,
+		long& nSkipped);
 	bool ImportARBTrainingEntry(
-			ARBTrainingList const& listLog,
-			long& nAdded,
-			long& nUpdated,
-			long& nDuplicate,
-			long& nSkipped);
+		ARBTrainingList const& listLog,
+		long& nAdded,
+		long& nUpdated,
+		long& nDuplicate,
+		long& nSkipped);
 
 	bool ImportARBRunData(ElementNodePtr const& inTree, wxWindow* pParent);
 	bool ImportARBCalData(ElementNodePtr const& inTree, wxWindow* pParent);
@@ -157,22 +163,11 @@ public:
 	 *       object!
 	 */
 	bool ResetVisibility();
-	bool ResetVisibility(
-			std::vector<CVenueFilter>& venues,
-			ARBDogPtr const& inDog);
-	bool ResetVisibility(
-			std::vector<CVenueFilter>& venues,
-			ARBDogTrialPtr const& inTrial);
-	bool ResetVisibility(
-			std::vector<CVenueFilter>& venues,
-			ARBDogTrialPtr const& inTrial,
-			ARBDogRunPtr const& inRun);
-	bool ResetVisibility(
-			std::vector<CVenueFilter>& venues,
-			ARBDogTitlePtr const& inTitle);
-	bool ResetVisibility(
-			std::set<std::wstring>& names,
-			ARBTrainingPtr const& inTraining);
+	bool ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogPtr const& inDog);
+	bool ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrialPtr const& inTrial);
+	bool ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrialPtr const& inTrial, ARBDogRunPtr const& inRun);
+	bool ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTitlePtr const& inTitle);
+	bool ResetVisibility(std::set<std::wstring>& names, ARBTrainingPtr const& inTraining);
 
 	bool ShowPointsAsHtml(bool bHtml);
 	void BackupFile(wxString const& lpszPathName);
@@ -181,6 +176,7 @@ public:
 
 	CAgilityBookTreeView* GetTreeView() const;
 	CAgilityBookRunsView* GetRunsView() const;
+
 private:
 	CAgilityBookCalendarListView* GetCalendarListView() const;
 	CAgilityBookCalendarView* GetCalendarView() const;

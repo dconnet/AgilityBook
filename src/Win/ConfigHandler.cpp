@@ -33,10 +33,7 @@
 #endif
 
 
-bool CConfigHandler::LoadWxFile(
-		std::wstring const& zipFile,
-		std::wstring const& archiveFile,
-		std::ostream& outData)
+bool CConfigHandler::LoadWxFile(std::wstring const& zipFile, std::wstring const& archiveFile, std::ostream& outData)
 {
 	CLibArchive archive(zipFile);
 	return archive.ExtractFile(archiveFile, outData);

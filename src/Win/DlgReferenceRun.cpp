@@ -49,13 +49,13 @@ wxEND_EVENT_TABLE()
 
 
 CDlgReferenceRun::CDlgReferenceRun(
-		CAgilityBookDoc* pDoc,
-		ARBDogRunPtr const& inRun,
-		std::set<std::wstring> const& inHeights,
-		std::set<std::wstring> const& inNames,
-		std::set<std::wstring> const& inBreeds,
-		ARBDogReferenceRunPtr const& inRef,
-		wxWindow* pParent)
+	CAgilityBookDoc* pDoc,
+	ARBDogRunPtr const& inRun,
+	std::set<std::wstring> const& inHeights,
+	std::set<std::wstring> const& inNames,
+	std::set<std::wstring> const& inBreeds,
+	ARBDogReferenceRunPtr const& inRef,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_Run(inRun)
@@ -73,7 +73,13 @@ CDlgReferenceRun::CDlgReferenceRun(
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDD_REF_RUN"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		_("IDD_REF_RUN"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	if (m_Points.empty())
 		m_Points = L"0";
@@ -89,63 +95,73 @@ CDlgReferenceRun::CDlgReferenceRun(
 
 	// Controls (these are done first to control tab order)
 
-	wxStaticText* textPlace = new wxStaticText(this, wxID_ANY,
-		_("IDC_REFRUN_PLACE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textPlace
+		= new wxStaticText(this, wxID_ANY, _("IDC_REFRUN_PLACE"), wxDefaultPosition, wxDefaultSize, 0);
 	textPlace->Wrap(-1);
 
-	CTextCtrl* ctrlPlace = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 25), -1), 0,
+	CTextCtrl* ctrlPlace = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 25), -1),
+		0,
 		CGenericValidator(&m_Place));
 	ctrlPlace->SetHelpText(_("HIDC_REFRUN_PLACE"));
 	ctrlPlace->SetToolTip(_("HIDC_REFRUN_PLACE"));
 
-	wxStaticText* textQ = new wxStaticText(this, wxID_ANY,
-		_("IDC_REFRUN_Q"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textQ = new wxStaticText(this, wxID_ANY, _("IDC_REFRUN_Q"), wxDefaultPosition, wxDefaultSize, 0);
 	textQ->Wrap(-1);
 
-	CQualifyingComboBox* ctrlQ = new CQualifyingComboBox(this, m_Ref,
-		CQualifyingValidator(&m_Q));
+	CQualifyingComboBox* ctrlQ = new CQualifyingComboBox(this, m_Ref, CQualifyingValidator(&m_Q));
 	ctrlQ->SetHelpText(_("HIDC_REFRUN_Q"));
 	ctrlQ->SetToolTip(_("HIDC_REFRUN_Q"));
 
-	wxStaticText* textTime = new wxStaticText(this, wxID_ANY,
-		_("IDC_REFRUN_TIME"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textTime
+		= new wxStaticText(this, wxID_ANY, _("IDC_REFRUN_TIME"), wxDefaultPosition, wxDefaultSize, 0);
 	textTime->Wrap(-1);
 
-	m_ctrlTime = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 35), -1), 0,
+	m_ctrlTime = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 35), -1),
+		0,
 		CGenericValidator(&m_Time));
 	m_ctrlTime->Bind(wxEVT_COMMAND_TEXT_UPDATED, &CDlgReferenceRun::OnEnChangeRefRunTime, this);
 	m_ctrlTime->SetHelpText(_("HIDC_REFRUN_TIME"));
 	m_ctrlTime->SetToolTip(_("HIDC_REFRUN_TIME"));
 
-	wxStaticText* textYPS = new wxStaticText(this, wxID_ANY,
-		_("IDC_REFRUN_YPS"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textYPS = new wxStaticText(this, wxID_ANY, _("IDC_REFRUN_YPS"), wxDefaultPosition, wxDefaultSize, 0);
 	textYPS->Wrap(-1);
 
-	m_ctrlYPS = new wxStaticText(this, wxID_ANY,
-		strYPS.c_str(), wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 25), -1),
-		wxALIGN_CENTRE|wxSTATIC_BORDER);
+	m_ctrlYPS = new wxStaticText(
+		this,
+		wxID_ANY,
+		strYPS.c_str(),
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 25), -1),
+		wxALIGN_CENTRE | wxSTATIC_BORDER);
 	m_ctrlYPS->Wrap(-1);
 
-	wxStaticText* textScore = new wxStaticText(this, wxID_ANY,
-		_("IDC_REFRUN_POINTS"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textScore
+		= new wxStaticText(this, wxID_ANY, _("IDC_REFRUN_POINTS"), wxDefaultPosition, wxDefaultSize, 0);
 	textScore->Wrap(-1);
 
-	CTextCtrl* ctrlScore = new CTextCtrl(this, wxID_ANY, wxString(),
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 25), -1), 0,
+	CTextCtrl* ctrlScore = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxString(),
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 25), -1),
+		0,
 		CTrimValidator(&m_Points, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlScore->SetHelpText(_("HIDC_REFRUN_POINTS"));
 	ctrlScore->SetToolTip(_("HIDC_REFRUN_POINTS"));
 
-	wxStaticText* textHt = new wxStaticText(this, wxID_ANY,
-		_("IDC_REFRUN_HEIGHT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textHt
+		= new wxStaticText(this, wxID_ANY, _("IDC_REFRUN_HEIGHT"), wxDefaultPosition, wxDefaultSize, 0);
 	textHt->Wrap(-1);
 
 	wxArrayString choices;
@@ -155,17 +171,21 @@ CDlgReferenceRun::CDlgReferenceRun(
 		choices.Add(StringUtil::stringWX(*iter));
 	}
 	choices.Sort();
-	wxComboBox* ctrlHt = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1),
-		choices, wxCB_DROPDOWN|wxCB_SORT,
+	wxComboBox* ctrlHt = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 30), -1),
+		choices,
+		wxCB_DROPDOWN | wxCB_SORT,
 		CTrimValidator(&m_Height, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlHt->SetHelpText(_("HIDC_REFRUN_HEIGHT"));
 	ctrlHt->SetToolTip(_("HIDC_REFRUN_HEIGHT"));
 	ctrlHt->AutoComplete(choices);
 
-	wxStaticText* textName = new wxStaticText(this, wxID_ANY,
-		_("IDC_REFRUN_NAME"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textName
+		= new wxStaticText(this, wxID_ANY, _("IDC_REFRUN_NAME"), wxDefaultPosition, wxDefaultSize, 0);
 	textName->Wrap(-1);
 
 	choices.Clear();
@@ -174,17 +194,21 @@ CDlgReferenceRun::CDlgReferenceRun(
 		choices.Add(StringUtil::stringWX(*iter));
 	}
 	choices.Sort();
-	wxComboBox* ctrlName = new wxComboBox(this, wxID_ANY,
-		wxEmptyString, wxDefaultPosition, wxDefaultSize,
-		choices, wxCB_DROPDOWN|wxCB_SORT,
+	wxComboBox* ctrlName = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		choices,
+		wxCB_DROPDOWN | wxCB_SORT,
 		CTrimValidator(&m_Name, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlName->SetHelpText(_("HIDC_REFRUN_NAME"));
 	ctrlName->SetToolTip(_("HIDC_REFRUN_NAME"));
 	ctrlName->AutoComplete(choices);
 
-	wxStaticText* textBreed = new wxStaticText(this, wxID_ANY,
-		_("IDC_REFRUN_BREED"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textBreed
+		= new wxStaticText(this, wxID_ANY, _("IDC_REFRUN_BREED"), wxDefaultPosition, wxDefaultSize, 0);
 	textBreed->Wrap(-1);
 
 	choices.Clear();
@@ -193,21 +217,30 @@ CDlgReferenceRun::CDlgReferenceRun(
 		choices.Add(StringUtil::stringWX(*iter));
 	}
 	choices.Sort();
-	wxComboBox* ctrlBreed = new wxComboBox(this, wxID_ANY, wxString(),
-		wxDefaultPosition, wxDefaultSize,
-		choices, wxCB_DROPDOWN|wxCB_SORT,
+	wxComboBox* ctrlBreed = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxString(),
+		wxDefaultPosition,
+		wxDefaultSize,
+		choices,
+		wxCB_DROPDOWN | wxCB_SORT,
 		CTrimValidator(&m_Breed, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlBreed->SetHelpText(_("HIDC_REFRUN_BREED"));
 	ctrlBreed->SetToolTip(_("HIDC_REFRUN_BREED"));
 	ctrlBreed->AutoComplete(choices);
 
-	wxStaticText* textNotes = new wxStaticText(this, wxID_ANY,
-		_("IDC_REFRUN_NOTES"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textNotes
+		= new wxStaticText(this, wxID_ANY, _("IDC_REFRUN_NOTES"), wxDefaultPosition, wxDefaultSize, 0);
 	textNotes->Wrap(-1);
 
-	CSpellCheckCtrl* ctrlNotes = new CSpellCheckCtrl(this, wxID_ANY, wxString(),
-		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_X(this, 35)), 0,
+	CSpellCheckCtrl* ctrlNotes = new CSpellCheckCtrl(
+		this,
+		wxID_ANY,
+		wxString(),
+		wxDefaultPosition,
+		wxSize(-1, wxDLG_UNIT_X(this, 35)),
+		0,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlNotes->SetHelpText(_("HIDC_REFRUN_NOTES"));
 	ctrlNotes->SetToolTip(_("HIDC_REFRUN_NOTES"));

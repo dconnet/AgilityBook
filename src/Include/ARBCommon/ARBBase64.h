@@ -31,6 +31,7 @@
 class ARBCOMMON_API ARBBase64
 {
 	ARBBase64();
+
 public:
 	/**
 	 * Decode a base64 string.
@@ -38,9 +39,7 @@ public:
 	 * @param outBinData Decoded buffer
 	 * @return Success
 	 */
-	static bool Decode(
-			std::wstring const& inBase64,
-			std::vector<unsigned char>& outBinData);
+	static bool Decode(std::wstring const& inBase64, std::vector<unsigned char>& outBinData);
 
 	/**
 	 * Encode data
@@ -48,7 +47,5 @@ public:
 	 * @param outData Encoded data
 	 * @return Success
 	 */
-	static bool Encode(
-			std::vector<unsigned char> const& inBinData,
-			std::wstring& outData);
+	static bool Encode(std::vector<unsigned char> const& inBinData, std::wstring& outData);
 };

@@ -15,11 +15,11 @@
  */
 
 #include "stdafx.h"
-#include "DlgAssignColumns.h"
 #include "NamedColumns.h"
 
 #include "AgilityBook.h"
 #include "AgilityBookOptions.h"
+#include "DlgAssignColumns.h"
 #include "RegItems.h"
 
 #include "ARB/ARBAgilityRecordBook.h"
@@ -51,7 +51,11 @@ CNamedColumns::CNamedColumns(CAgilityBookOptions::ColumnOrder eOrder)
 		data.configName = wxConfig::Get()->Read(name + CFG_CI_CONFIG_NAME, wxEmptyString);
 		for (size_t i = 0; i < IO_TYPE_MAX; ++i)
 		{
-			CDlgAssignColumns::GetColumnOrder(m_eOrder, i, fmt::format(L"{}{}", name, data.configName), data.m_Columns[i]);
+			CDlgAssignColumns::GetColumnOrder(
+				m_eOrder,
+				i,
+				fmt::format(L"{}{}", name, data.configName),
+				data.m_Columns[i]);
 		}
 		m_Configs.push_back(data);
 	}
@@ -93,15 +97,18 @@ void CNamedColumns::Save()
 		}
 	}
 	int index = 0;
-	for (std::vector<CNamedColumnsData>::iterator iConfig = m_Configs.begin();
-		iConfig != m_Configs.end();
-		++index, ++iConfig)
+	for (std::vector<CNamedColumnsData>::iterator iConfig = m_Configs.begin(); iConfig != m_Configs.end();
+		 ++index, ++iConfig)
 	{
 		wxString name(CFG_CI_KEY_CONFIG(index));
 		wxConfig::Get()->Write(name + CFG_CI_CONFIG_NAME, (*iConfig).configName.c_str());
 		for (size_t i = 0; i < IO_TYPE_MAX; ++i)
 		{
-			CDlgAssignColumns::SetColumnOrder(m_eOrder, i, fmt::format(L"{}{}", name, (*iConfig).configName), (*iConfig).m_Columns[i]);
+			CDlgAssignColumns::SetColumnOrder(
+				m_eOrder,
+				i,
+				fmt::format(L"{}{}", name, (*iConfig).configName),
+				(*iConfig).m_Columns[i]);
 		}
 	}
 	m_numConfigs = nConfigs;
@@ -109,12 +116,9 @@ void CNamedColumns::Save()
 }
 
 
-std::vector<CNamedColumns::CNamedColumnsData>::iterator
-CNamedColumns::FindConfig(std::wstring const& inName)
+std::vector<CNamedColumns::CNamedColumnsData>::iterator CNamedColumns::FindConfig(std::wstring const& inName)
 {
-	for (std::vector<CNamedColumnsData>::iterator i = m_Configs.begin();
-		i != m_Configs.end();
-		++i)
+	for (std::vector<CNamedColumnsData>::iterator i = m_Configs.begin(); i != m_Configs.end(); ++i)
 	{
 		if ((*i).configName == inName)
 			return i;
@@ -129,9 +133,7 @@ size_t CNamedColumns::GetAllConfigNames(std::vector<std::wstring>& outNames) con
 	if (0 < m_Configs.size())
 	{
 		outNames.reserve(m_Configs.size());
-		for (std::vector<CNamedColumnsData>::const_iterator i = m_Configs.begin();
-			i != m_Configs.end();
-			++i)
+		for (std::vector<CNamedColumnsData>::const_iterator i = m_Configs.begin(); i != m_Configs.end(); ++i)
 		{
 			outNames.push_back((*i).configName);
 		}
@@ -194,9 +196,7 @@ void CNamedColumns::ResetDefault(int idxType)
 }
 
 
-void CNamedColumns::SetColumn(
-		int idxType,
-		std::vector<long> const& columns)
+void CNamedColumns::SetColumn(int idxType, std::vector<long> const& columns)
 {
 	m_Columns[idxType].clear();
 	m_Columns[idxType] = columns;

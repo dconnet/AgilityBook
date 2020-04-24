@@ -32,11 +32,12 @@ typedef std::shared_ptr<CDlgFindLinksData> CDlgFindLinksDataPtr;
 class CDlgFindLinks : public wxDialog
 {
 public:
-	CDlgFindLinks(
-			ARBDogList& inDogs,
-			wxWindow* pParent = nullptr);
+	CDlgFindLinks(ARBDogList& inDogs, wxWindow* pParent = nullptr);
 
-	size_t GetNumLinks() const		{return m_Data.size();}
+	size_t GetNumLinks() const
+	{
+		return m_Data.size();
+	}
 
 private:
 	CDlgFindLinksDataPtr GetItemLinkData(long item);

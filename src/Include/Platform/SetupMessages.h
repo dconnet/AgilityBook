@@ -25,11 +25,11 @@
 
 #ifdef USE_WXWIDGETS
 #include <wx/version.h>
-#pragma message ( "Compiling with wxWidgets " wxVERSION_NUM_DOT_STRING )
+#pragma message("Compiling with wxWidgets " wxVERSION_NUM_DOT_STRING)
 #endif
 
 
 #ifdef USE_POCO
 #include "Poco/Version.h"
-#pragma message ( "Compiling with POCO " STRING(POCO_VERSION) )
+#pragma message("Compiling with POCO " STRING(POCO_VERSION))
 #endif

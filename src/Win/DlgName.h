@@ -20,22 +20,15 @@
 class CDlgName : public wxDialog
 {
 public:
-	CDlgName(
-			std::wstring const& name,
-			wxWindow* pParent = nullptr);
-	CDlgName(
-			std::wstring const& name,
-			wxString const& caption,
-			wxWindow* pParent = nullptr);
+	CDlgName(std::wstring const& name, wxWindow* pParent = nullptr);
+	CDlgName(std::wstring const& name, wxString const& caption, wxWindow* pParent = nullptr);
 
 	std::wstring Name() const;
 
 private:
 	wxString m_Name;
 
-	bool Create(
-			wxString const& caption,
-			wxWindow* pParent = nullptr);
+	bool Create(wxString const& caption, wxWindow* pParent = nullptr);
 
 	DECLARE_ON_INIT()
 };

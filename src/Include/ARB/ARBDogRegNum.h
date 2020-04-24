@@ -76,10 +76,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfig const& inConfig,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -159,10 +159,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfig const& inConfig,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Sort registration numbers by name.
@@ -182,9 +182,7 @@ public:
 	 * @param inNewVenue New venue name.
 	 * @return Number of items updated.
 	 */
-	int RenameVenue(
-			std::wstring const& inOldVenue,
-			std::wstring const& inNewVenue);
+	int RenameVenue(std::wstring const& inOldVenue, std::wstring const& inNewVenue);
 
 	/**
 	 * Delete a venue.
@@ -199,9 +197,7 @@ public:
 	 * @param outRegNum Pointer to found object.
 	 * @return Whether the object was found.
 	 */
-	bool FindRegNum(
-			std::wstring const& inVenue,
-			ARBDogRegNumPtr* outRegNum = nullptr) const;
+	bool FindRegNum(std::wstring const& inVenue, ARBDogRegNumPtr* outRegNum = nullptr) const;
 
 	/**
 	 * Add a registration number, duplicates are allowed.
@@ -210,10 +206,7 @@ public:
 	 * @param outRegNum Pointer to new object.
 	 * @return Whether the object was added.
 	 */
-	bool AddRegNum(
-			std::wstring const& inVenue,
-			std::wstring const& inNumber,
-			ARBDogRegNumPtr* outRegNum = nullptr);
+	bool AddRegNum(std::wstring const& inVenue, std::wstring const& inNumber, ARBDogRegNumPtr* outRegNum = nullptr);
 
 	/**
 	 * Add a registration number, duplicates are allowed.
@@ -228,7 +221,5 @@ public:
 	 * @param inNumber Registration number.
 	 * @return Number of objects deleted.
 	 */
-	int DeleteRegNum(
-			std::wstring const& inVenue,
-			std::wstring const& inNumber);
+	int DeleteRegNum(std::wstring const& inVenue, std::wstring const& inNumber);
 };

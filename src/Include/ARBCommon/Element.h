@@ -48,9 +48,9 @@ enum class ARBElementType
  */
 enum class ARBAttribLookup
 {
-	NotFound,	///< Attribute was not found.
-	Invalid,	///< Attribute's value is not valid for data type.
-	Found		///< Attribute was found.
+	NotFound, ///< Attribute was not found.
+	Invalid,  ///< Attribute's value is not valid for data type.
+	Found     ///< Attribute was found.
 };
 
 
@@ -134,9 +134,7 @@ public:
 	 * @param inValue New value for this element.
 	 * @param inPrec Precision, trailing zeros are trimmed unless prec=2, then they are only trimmed if all zero.
 	 */
-	virtual void SetValue(
-			double inValue,
-			int inPrec = 2) = 0;
+	virtual void SetValue(double inValue, int inPrec = 2) = 0;
 };
 
 
@@ -184,10 +182,7 @@ public:
 	 * @param outValue Value of the attribute.
 	 * @return Result of lookup.
 	 */
-	ARBAttribLookup GetNthAttrib(
-			int inIndex,
-			std::wstring& outName,
-			std::wstring& outValue) const;
+	ARBAttribLookup GetNthAttrib(int inIndex, std::wstring& outName, std::wstring& outValue) const;
 
 	/**
 	 * Get the value of an attribute.
@@ -195,33 +190,15 @@ public:
 	 * @param outValue Value of attribute
 	 * @return Result of lookup.
 	 */
-	ARBAttribLookup GetAttrib(
-			std::wstring const& inName,
-			std::wstring& outValue) const;
-	ARBAttribLookup GetAttrib(
-			std::wstring const& inName,
-			ARBVersion& outValue) const;
-	ARBAttribLookup GetAttrib(
-			std::wstring const& inName,
-			ARBDate& outValue) const;
-	ARBAttribLookup GetAttrib(
-			std::wstring const& inName,
-			bool& outValue) const;
-	ARBAttribLookup GetAttrib(
-			std::wstring const& inName,
-			short& outValue) const;
-	ARBAttribLookup GetAttrib(
-			std::wstring const& inName,
-			unsigned short& outValue) const;
-	ARBAttribLookup GetAttrib(
-			std::wstring const& inName,
-			long& outValue) const;
-	ARBAttribLookup GetAttrib(
-			std::wstring const& inName,
-			unsigned long& outValue) const;
-	ARBAttribLookup GetAttrib(
-			std::wstring const& inName,
-			double& outValue) const;
+	ARBAttribLookup GetAttrib(std::wstring const& inName, std::wstring& outValue) const;
+	ARBAttribLookup GetAttrib(std::wstring const& inName, ARBVersion& outValue) const;
+	ARBAttribLookup GetAttrib(std::wstring const& inName, ARBDate& outValue) const;
+	ARBAttribLookup GetAttrib(std::wstring const& inName, bool& outValue) const;
+	ARBAttribLookup GetAttrib(std::wstring const& inName, short& outValue) const;
+	ARBAttribLookup GetAttrib(std::wstring const& inName, unsigned short& outValue) const;
+	ARBAttribLookup GetAttrib(std::wstring const& inName, long& outValue) const;
+	ARBAttribLookup GetAttrib(std::wstring const& inName, unsigned long& outValue) const;
+	ARBAttribLookup GetAttrib(std::wstring const& inName, double& outValue) const;
 
 	/**
 	 * Add an attribute.
@@ -230,33 +207,15 @@ public:
 	 * @return This always returns true.
 	 * @post If inName already exists, the previous value will be overwritten.
 	 */
-	bool AddAttrib(
-			std::wstring const& inName,
-			std::wstring const& inValue);
-	bool AddAttrib(
-			std::wstring const& inName,
-			wchar_t const* const inValue);
-	bool AddAttrib(
-			std::wstring const& inName,
-			ARBVersion const& inValue);
-	bool AddAttrib(
-			std::wstring const& inName,
-			ARBDate const& inValue);
-	bool AddAttrib(
-			std::wstring const& inName,
-			bool inValue);
-	bool AddAttrib(
-			std::wstring const& inName,
-			short inValue);
-	bool AddAttrib(
-			std::wstring const& inName,
-			unsigned short inValue);
-	bool AddAttrib(
-			std::wstring const& inName,
-			long inValue);
-	bool AddAttrib(
-			std::wstring const& inName,
-			unsigned long inValue);
+	bool AddAttrib(std::wstring const& inName, std::wstring const& inValue);
+	bool AddAttrib(std::wstring const& inName, wchar_t const* const inValue);
+	bool AddAttrib(std::wstring const& inName, ARBVersion const& inValue);
+	bool AddAttrib(std::wstring const& inName, ARBDate const& inValue);
+	bool AddAttrib(std::wstring const& inName, bool inValue);
+	bool AddAttrib(std::wstring const& inName, short inValue);
+	bool AddAttrib(std::wstring const& inName, unsigned short inValue);
+	bool AddAttrib(std::wstring const& inName, long inValue);
+	bool AddAttrib(std::wstring const& inName, unsigned long inValue);
 
 	/**
 	 * Add an attribute.
@@ -266,10 +225,7 @@ public:
 	 * @return This always returns true.
 	 * @post If inName already exists, the previous value will be overwritten.
 	 */
-	bool AddAttrib(
-			std::wstring const& inName,
-			double inValue,
-			int inPrec = 2);
+	bool AddAttrib(std::wstring const& inName, double inValue, int inPrec = 2);
 
 	/**
 	 * Remove an attribute.
@@ -333,9 +289,7 @@ public:
 	 * @param inAt Add the new element at the specified location.
 	 * @return The new element.
 	 */
-	ElementNodePtr AddElementNode(
-			std::wstring const& inName,
-			int inAt = -1);
+	ElementNodePtr AddElementNode(std::wstring const& inName, int inAt = -1);
 
 	/**
 	 * Add an element.
@@ -346,9 +300,7 @@ public:
 	 * @param inAt Add the new element at the specified location.
 	 * @return The new element.
 	 */
-	ElementTextPtr AddElementText(
-			std::wstring const& inText,
-			int inAt = -1);
+	ElementTextPtr AddElementText(std::wstring const& inText, int inAt = -1);
 
 	/**
 	 * Remove the specified element.
@@ -368,9 +320,7 @@ public:
 	 * @param inStartFrom Start the search from this location.
 	 * @return Index of the first element to match the search.
 	 */
-	int FindElement(
-			std::wstring const& inName,
-			int inStartFrom = 0) const;
+	int FindElement(std::wstring const& inName, int inStartFrom = 0) const;
 
 	/**
 	 * Search for the specified element, depth.
@@ -382,10 +332,10 @@ public:
 	 * @note This will not test the calling element, only it's children.
 	 */
 	bool FindElementDeep(
-			ElementNode const*& outParentNode,
-			int& outElementIndex,
-			std::wstring const& inName,
-			std::wstring const* inValue = nullptr) const;
+		ElementNode const*& outParentNode,
+		int& outElementIndex,
+		std::wstring const& inName,
+		std::wstring const* inValue = nullptr) const;
 
 	/**
 	 * Populate this element from the given stream.
@@ -393,9 +343,7 @@ public:
 	 * @param ioErrMsg Accumulated error messages.
 	 * @return Whether file loaded successfully.
 	 */
-	bool LoadXML(
-			std::istream& inStream,
-			fmt::wmemory_buffer& ioErrMsg);
+	bool LoadXML(std::istream& inStream, fmt::wmemory_buffer& ioErrMsg);
 
 	/**
 	 * Populate this element from the given buffer.
@@ -404,10 +352,7 @@ public:
 	 * @param ioErrMsg Accumulated error messages.
 	 * @return Whether file loaded successfully.
 	 */
-	bool LoadXML(
-			char const* inData,
-			size_t nData,
-			fmt::wmemory_buffer& ioErrMsg);
+	bool LoadXML(char const* inData, size_t nData, fmt::wmemory_buffer& ioErrMsg);
 
 	/**
 	 * Populate this element from the given file.
@@ -415,9 +360,7 @@ public:
 	 * @param ioErrMsg Accumulated error messages.
 	 * @return Whether file loaded successfully.
 	 */
-	bool LoadXML(
-			wchar_t const* inFileName,
-			fmt::wmemory_buffer& ioErrMsg);
+	bool LoadXML(wchar_t const* inFileName, fmt::wmemory_buffer& ioErrMsg);
 
 	/**
 	 * Save this element to the given output stream.
@@ -434,9 +377,7 @@ public:
 	 * @retval true Tree successfully written.
 	 * @retval false Tree failed to save.
 	 */
-	bool SaveXML(
-			std::ostream& outStream,
-			std::string const& inDTD) const;
+	bool SaveXML(std::ostream& outStream, std::string const& inDTD) const;
 
 	/**
 	 * Save this element to the given file.
@@ -453,9 +394,7 @@ public:
 	 * @retval true Tree successfully written.
 	 * @retval false Tree failed to save.
 	 */
-	bool SaveXML(
-			std::wstring const& outFile,
-			std::string const& inDTD) const;
+	bool SaveXML(std::wstring const& outFile, std::string const& inDTD) const;
 
 protected:
 	void RemoveAllTextNodes();

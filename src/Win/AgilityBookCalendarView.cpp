@@ -60,9 +60,9 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-#define WEEKS_PER_PAGE		6
+#define WEEKS_PER_PAGE 6
 // In dlgunits
-#define DAY_TEXT_INSET		1
+#define DAY_TEXT_INSET 1
 
 
 class CAgilityBookCalendar : public wxWindow
@@ -70,31 +70,38 @@ class CAgilityBookCalendar : public wxWindow
 	DECLARE_CLASS(CAgilityBookCalendar)
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookCalendar)
 public:
-	CAgilityBookCalendar(
-			CAgilityBookCalendarView* parentView,
-			CBasePanel* parentOfView,
-			wxWindow* parent);
+	CAgilityBookCalendar(CAgilityBookCalendarView* parentView, CBasePanel* parentOfView, wxWindow* parent);
 	~CAgilityBookCalendar();
 
 	int GetDayHeight();
 
 	void OnDraw(wxDC* pDC);
 
-	ARBDate CurrentDate() const		{return m_Current;}
-	ARBDate FirstDate() const		{return m_First;}
-	ARBDate LastDate() const		{return m_Last;}
+	ARBDate CurrentDate() const
+	{
+		return m_Current;
+	}
+	ARBDate FirstDate() const
+	{
+		return m_First;
+	}
+	ARBDate LastDate() const
+	{
+		return m_Last;
+	}
 	ARBDate FirstDayOfWeek(ARBDate const& inDate) const;
 	ARBDate LastDayOfWeek(ARBDate const& inDate) const;
 	ARBDate FirstDayOfVisibleMonth() const;
 
-	bool SetCurrentDate(
-			ARBDate const& date,
-			bool bEnsureVisible);
+	bool SetCurrentDate(ARBDate const& date, bool bEnsureVisible);
 
 	void Activate(bool activate);
 	void RefreshCurrentDate();
 
-	int NumEvents() const		{return static_cast<int>(m_Calendar.size());}
+	int NumEvents() const
+	{
+		return static_cast<int>(m_Calendar.size());
+	}
 
 	void OnClick(wxPoint pt);
 	void OnWheel(int wheel);
@@ -112,32 +119,27 @@ public:
 
 private:
 	void GetWorkingAreas(
-			wxDC* pDC,
-			wxRect& outHeader,
-			wxRect& outDaysOfWeek,
-			wxRect& outCalendar,
-			int& outDayWidth,
-			int& outDayHeight,
-			bool bIsPrinting);
-	size_t GetEntriesOn(
-			ARBDate const& date,
-			std::vector<ARBCalendarPtr>& entries,
-			bool bGetHidden) const;
+		wxDC* pDC,
+		wxRect& outHeader,
+		wxRect& outDaysOfWeek,
+		wxRect& outCalendar,
+		int& outDayWidth,
+		int& outDayHeight,
+		bool bIsPrinting);
+	size_t GetEntriesOn(ARBDate const& date, std::vector<ARBCalendarPtr>& entries, bool bGetHidden) const;
 	wxRect GetDateRect(ARBDate const& date);
-	void GetDateFromPoint(
-			wxPoint pt,
-			ARBDate& date);
+	void GetDateFromPoint(wxPoint pt, ARBDate& date);
 
 	CAgilityBookCalendarView* m_parentView;
 	CBasePanel* m_parentPanel;
 	std::vector<long> m_Columns;
 	std::vector<ARBCalendarPtr> m_Calendar;
 	std::vector<ARBCalendarPtr> m_CalendarHidden;
-	ARBDate m_First;	///< First date, adjusted to Mon of that week.
-	ARBDate m_Last;		///< Last trial date.
+	ARBDate m_First; ///< First date, adjusted to Mon of that week.
+	ARBDate m_Last;  ///< Last trial date.
 	int m_nMonths;
-	int m_nCurOffset;	// Used during printing.
-	ARBDate m_Current;	///< Currently selected date.
+	int m_nCurOffset;  // Used during printing.
+	ARBDate m_Current; ///< Currently selected date.
 	wxFont m_fontMonthPrint;
 	wxFont m_fontTextPrint;
 	wxFont m_fontMonth;
@@ -163,9 +165,9 @@ wxEND_EVENT_TABLE()
 
 
 CAgilityBookCalendar::CAgilityBookCalendar(
-		CAgilityBookCalendarView* parentView,
-		CBasePanel* parentOfView,
-		wxWindow* parent)
+	CAgilityBookCalendarView* parentView,
+	CBasePanel* parentOfView,
+	wxWindow* parent)
 	: m_parentView(parentView)
 	, m_parentPanel(parentOfView)
 	, m_Columns()
@@ -181,7 +183,12 @@ CAgilityBookCalendar::CAgilityBookCalendar(
 	, m_fontMonth()
 	, m_fontText()
 {
-	if (!wxWindow::Create(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER | wxWANTS_CHARS | wxFULL_REPAINT_ON_RESIZE))
+	if (!wxWindow::Create(
+			parent,
+			wxID_ANY,
+			wxDefaultPosition,
+			wxDefaultSize,
+			wxNO_BORDER | wxWANTS_CHARS | wxFULL_REPAINT_ON_RESIZE))
 		return;
 	SetBackgroundStyle(wxBG_STYLE_CUSTOM);
 	SetInitialSize(wxDefaultSize);
@@ -238,7 +245,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 		// Figure out which month we're on.
 		ARBDate curMonth = FirstDayOfVisibleMonth();
 		curMonth = LastDayOfWeek(curMonth);
-		std::wstring str = fmt::format(L"{} {}", m_Months[curMonth.GetMonth()-1].c_str(), curMonth.GetYear());
+		std::wstring str = fmt::format(L"{} {}", m_Months[curMonth.GetMonth() - 1].c_str(), curMonth.GetYear());
 
 		wxRect rHeader;
 		wxRect rWeekDays;
@@ -255,7 +262,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 			pDC->SetFont(m_fontMonth);
 		{
 			wxDCClipper clip(*pDC, rHeader);
-			pDC->DrawLabel(StringUtil::stringWX(str), rHeader, wxALIGN_TOP|wxALIGN_CENTRE_HORIZONTAL);
+			pDC->DrawLabel(StringUtil::stringWX(str), rHeader, wxALIGN_TOP | wxALIGN_CENTRE_HORIZONTAL);
 		}
 
 		if (bIsPrinting)
@@ -353,7 +360,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 				str = fmt::format(L"{}", day.GetDay());
 				{
 					wxDCClipper clip(*pDC, rect);
-					pDC->DrawLabel(StringUtil::stringWX(str), rect, wxALIGN_TOP|wxALIGN_RIGHT);
+					pDC->DrawLabel(StringUtil::stringWX(str), rect, wxALIGN_TOP | wxALIGN_RIGHT);
 				}
 
 				// Display entries
@@ -406,14 +413,12 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 						// (That whole foreground/background thing)
 						if (m_Current != day)
 						{
-							if (CAgilityBookOptions::ViewAllCalendarOpening()
-							&& pCal->GetOpeningDate() == day)
+							if (CAgilityBookOptions::ViewAllCalendarOpening() && pCal->GetOpeningDate() == day)
 							{
 								bReset = true;
 								pDC->SetTextForeground(clrOpening);
 							}
-							else if (CAgilityBookOptions::ViewAllCalendarClosing()
-							&& pCal->GetClosingDate() == day)
+							else if (CAgilityBookOptions::ViewAllCalendarClosing() && pCal->GetClosingDate() == day)
 							{
 								bReset = true;
 								pDC->SetTextForeground(clrClosing);
@@ -423,24 +428,27 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 								bReset = true;
 								pDC->SetTextForeground(clrPast);
 							}
-							else switch (pCal->GetEntered())
+							else
 							{
-							case ARBCalendarEntry::Not:
-								bReset = true;
-								pDC->SetTextForeground(clrNotEntered);
-								break;
-							case ARBCalendarEntry::Planning:
-								bReset = true;
-								pDC->SetTextForeground(clrPlanning);
-								break;
-							case ARBCalendarEntry::Pending:
-								bReset = true;
-								pDC->SetTextForeground(clrPending);
-								break;
-							case ARBCalendarEntry::Entered:
-								bReset = true;
-								pDC->SetTextForeground(clrEntered);
-								break;
+								switch (pCal->GetEntered())
+								{
+								case ARBCalendarEntry::Not:
+									bReset = true;
+									pDC->SetTextForeground(clrNotEntered);
+									break;
+								case ARBCalendarEntry::Planning:
+									bReset = true;
+									pDC->SetTextForeground(clrPlanning);
+									break;
+								case ARBCalendarEntry::Pending:
+									bReset = true;
+									pDC->SetTextForeground(clrPending);
+									break;
+								case ARBCalendarEntry::Entered:
+									bReset = true;
+									pDC->SetTextForeground(clrEntered);
+									break;
+								}
 							}
 						}
 						wxDCClipper clip(*pDC, r);
@@ -463,16 +471,16 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 		// Vertical lines
 		for (iDay = 1; iDay < 7; ++iDay)
 		{
-			pDC->DrawLine(
-				rCalendar.x + iDay * width, rWeekDays.y,
-				rCalendar.x + iDay * width, rCalendar.GetBottom());
+			pDC->DrawLine(rCalendar.x + iDay * width, rWeekDays.y, rCalendar.x + iDay * width, rCalendar.GetBottom());
 		}
 		// Horizontal lines
 		for (iWeek = 1; iWeek < WEEKS_PER_PAGE; ++iWeek)
 		{
 			pDC->DrawLine(
-				rCalendar.x, rCalendar.y + iWeek * height,
-				rCalendar.GetRight(), rCalendar.y + iWeek * height);
+				rCalendar.x,
+				rCalendar.y + iWeek * height,
+				rCalendar.GetRight(),
+				rCalendar.y + iWeek * height);
 		}
 
 		pDC->SetFont(wxNullFont);
@@ -523,9 +531,7 @@ ARBDate CAgilityBookCalendar::FirstDayOfVisibleMonth() const
 }
 
 
-bool CAgilityBookCalendar::SetCurrentDate(
-		ARBDate const& date,
-		bool bEnsureVisible)
+bool CAgilityBookCalendar::SetCurrentDate(ARBDate const& date, bool bEnsureVisible)
 {
 	bool bSet = false;
 	ARBDate dateFirstVisible = FirstDayOfWeek(m_First);
@@ -536,8 +542,7 @@ bool CAgilityBookCalendar::SetCurrentDate(
 	// It appears letting the end date run free is ok.
 	// However, freeing the start date doesn't work as well.
 	// The date changes, but the calendar won't scroll up.
-	if (date != m_Current
-	&& dateFirstVisible <= date /*&& date <= dateLastVisible*/)
+	if (date != m_Current && dateFirstVisible <= date /*&& date <= dateLastVisible*/)
 	{
 		bSet = true;
 		// Invalidate the current date.
@@ -557,7 +562,8 @@ bool CAgilityBookCalendar::SetCurrentDate(
 				ARBDate dateBottom = dateTop + WEEKS_PER_PAGE * 7 - 1;
 				if (!m_Current.isBetween(dateTop, dateBottom))
 				{
-					m_nCurOffset = (m_Current.GetYear() - m_First.GetYear()) * 12 + m_Current.GetMonth() - m_First.GetMonth();
+					m_nCurOffset
+						= (m_Current.GetYear() - m_First.GetYear()) * 12 + m_Current.GetMonth() - m_First.GetMonth();
 					Refresh();
 					bInvalidate = false;
 				}
@@ -630,8 +636,7 @@ void CAgilityBookCalendar::OnCopy()
 	if (!clpData.isOkay())
 		return;
 
-	static const wchar_t* scColumns[] =
-	{
+	static const wchar_t* scColumns[] = {
 		arbT("IDS_COL_START_DATE"),
 		arbT("IDS_COL_END_DATE"),
 		arbT("IDS_COL_VENUE"),
@@ -642,17 +647,17 @@ void CAgilityBookCalendar::OnCopy()
 		arbT("IDS_COL_NOTES"),
 	};
 	constexpr int scNumColumns = sizeof(scColumns) / sizeof(scColumns[0]);
-#define COL_START_DATE	0
-#define COL_END_DATE	1
-#define COL_VENUE		2
-#define COL_LOCATION	3
-#define COL_CLUB		4
-#define COL_OPENS		5
-#define COL_CLOSES		6
-#define COL_NOTES		7
+#define COL_START_DATE 0
+#define COL_END_DATE   1
+#define COL_VENUE      2
+#define COL_LOCATION   3
+#define COL_CLUB       4
+#define COL_OPENS      5
+#define COL_CLOSES     6
+#define COL_NOTES      7
 
 	int index = 0;
-	size_t maxLen[scNumColumns] = { 0 };
+	size_t maxLen[scNumColumns] = {0};
 	std::wstring columns[scNumColumns];
 	for (index = 0; index < scNumColumns; ++index)
 	{
@@ -696,17 +701,26 @@ void CAgilityBookCalendar::OnCopy()
 	const std::wstring opencloseSep2(L" - ");
 
 	// The header
-	std::wstring data = fmt::format(fmtspec,
+	std::wstring data = fmt::format(
+		fmtspec,
 		col1,
-		columns[COL_START_DATE], maxLen[COL_START_DATE],
-		columns[COL_END_DATE], maxLen[COL_END_DATE],
-		columns[COL_VENUE], maxLen[COL_VENUE],
-		columns[COL_LOCATION], maxLen[COL_LOCATION],
-		columns[COL_CLUB], maxLen[COL_CLUB],
-		columns[COL_OPENS], maxLen[COL_OPENS],
+		columns[COL_START_DATE],
+		maxLen[COL_START_DATE],
+		columns[COL_END_DATE],
+		maxLen[COL_END_DATE],
+		columns[COL_VENUE],
+		maxLen[COL_VENUE],
+		columns[COL_LOCATION],
+		maxLen[COL_LOCATION],
+		columns[COL_CLUB],
+		maxLen[COL_CLUB],
+		columns[COL_OPENS],
+		maxLen[COL_OPENS],
 		opencloseSep,
-		columns[COL_CLOSES], maxLen[COL_CLOSES],
-		columns[COL_NOTES], maxLen[COL_NOTES]);
+		columns[COL_CLOSES],
+		maxLen[COL_CLOSES],
+		columns[COL_NOTES],
+		maxLen[COL_NOTES]);
 	data = StringUtil::TrimRight(data) + L"\n";
 
 	// The data
@@ -726,17 +740,26 @@ void CAgilityBookCalendar::OnCopy()
 		if (cal->IsTentative())
 			tentative = L"? ";
 		assert(col1.length() == tentative.length());
-		std::wstring str = fmt::format(fmtspec,
+		std::wstring str = fmt::format(
+			fmtspec,
 			tentative.c_str(),
-			items[COL_START_DATE], maxLen[COL_START_DATE],
-			items[COL_END_DATE], maxLen[COL_END_DATE],
-			items[COL_VENUE], maxLen[COL_VENUE],
-			items[COL_LOCATION], maxLen[COL_LOCATION],
-			items[COL_CLUB], maxLen[COL_CLUB],
-			items[COL_OPENS], maxLen[COL_OPENS],
+			items[COL_START_DATE],
+			maxLen[COL_START_DATE],
+			items[COL_END_DATE],
+			maxLen[COL_END_DATE],
+			items[COL_VENUE],
+			maxLen[COL_VENUE],
+			items[COL_LOCATION],
+			maxLen[COL_LOCATION],
+			items[COL_CLUB],
+			maxLen[COL_CLUB],
+			items[COL_OPENS],
+			maxLen[COL_OPENS],
 			(0 < items[COL_OPENS].length() || 0 < items[COL_CLOSES].length()) ? opencloseSep2 : opencloseSep,
-			items[COL_CLOSES], maxLen[COL_CLOSES],
-			items[COL_NOTES], maxLen[COL_NOTES]);
+			items[COL_CLOSES],
+			maxLen[COL_CLOSES],
+			items[COL_NOTES],
+			maxLen[COL_NOTES]);
 		data += StringUtil::TrimRight(str) + L"\n";
 	}
 	clpData.AddData(data);
@@ -839,9 +862,8 @@ void CAgilityBookCalendar::LoadData(CAgilityBookDoc* pDoc)
 	std::vector<ARBCalendarPtr> entered;
 	if (bHide)
 		pDoc->Book().GetCalendar().GetAllEntered(entered);
-	for (ARBCalendarList::iterator iter = pDoc->Book().GetCalendar().begin();
-		iter != pDoc->Book().GetCalendar().end();
-		++iter)
+	for (ARBCalendarList::iterator iter = pDoc->Book().GetCalendar().begin(); iter != pDoc->Book().GetCalendar().end();
+		 ++iter)
 	{
 		ARBCalendarPtr pCal = (*iter);
 		if (pCal->IsFiltered())
@@ -855,12 +877,11 @@ void CAgilityBookCalendar::LoadData(CAgilityBookDoc* pDoc)
 		if (!bSuppress && bHide)
 		{
 			for (std::vector<ARBCalendarPtr>::const_iterator iterE = entered.begin();
-				!bSuppress && iterE != entered.end();
-				++iterE)
+				 !bSuppress && iterE != entered.end();
+				 ++iterE)
 			{
 				ARBCalendarPtr pEntered = (*iterE);
-				if (pCal != pEntered
-				&& pCal->IsRangeOverlapped(pEntered->GetStartDate(), pEntered->GetEndDate()))
+				if (pCal != pEntered && pCal->IsRangeOverlapped(pEntered->GetStartDate(), pEntered->GetEndDate()))
 				{
 					bSuppress = true;
 				}
@@ -872,19 +893,15 @@ void CAgilityBookCalendar::LoadData(CAgilityBookDoc* pDoc)
 		{
 			bool bAdd = false;
 			ARBDate f, l;
-			if (filter.ViewNotEntered()
-			|| filter.ViewPlanning()
-			|| filter.ViewEntered())
+			if (filter.ViewNotEntered() || filter.ViewPlanning() || filter.ViewEntered())
 			{
 				bAdd = true;
 				f = pCal->GetStartDate();
 				l = pCal->GetEndDate();
 			}
-			if (ARBCalendarEntry::Planning == pCal->GetEntered()
-			&& filter.ViewPlanning())
+			if (ARBCalendarEntry::Planning == pCal->GetEntered() && filter.ViewPlanning())
 			{
-				if (CAgilityBookOptions::ViewAllCalendarOpening()
-				&& pCal->GetOpeningDate().IsValid())
+				if (CAgilityBookOptions::ViewAllCalendarOpening() && pCal->GetOpeningDate().IsValid())
 				{
 					bAdd = true;
 					if (!f.IsValid() || pCal->GetOpeningDate() < f)
@@ -892,8 +909,7 @@ void CAgilityBookCalendar::LoadData(CAgilityBookDoc* pDoc)
 					if (!l.IsValid() || pCal->GetOpeningDate() > l)
 						l = pCal->GetOpeningDate();
 				}
-				if (CAgilityBookOptions::ViewAllCalendarClosing()
-				&& pCal->GetClosingDate().IsValid())
+				if (CAgilityBookOptions::ViewAllCalendarClosing() && pCal->GetClosingDate().IsValid())
 				{
 					bAdd = true;
 					if (!f.IsValid() || pCal->GetClosingDate() < f)
@@ -970,13 +986,13 @@ void CAgilityBookCalendar::LoadColumns()
 
 
 void CAgilityBookCalendar::GetWorkingAreas(
-		wxDC* pDC,
-		wxRect& outHeader,
-		wxRect& outDaysOfWeek,
-		wxRect& outCalendar,
-		int& outDayWidth,
-		int& outDayHeight,
-		bool bIsPrinting)
+	wxDC* pDC,
+	wxRect& outHeader,
+	wxRect& outDaysOfWeek,
+	wxRect& outCalendar,
+	int& outDayWidth,
+	int& outDayHeight,
+	bool bIsPrinting)
 {
 	wxFont oldFont = pDC->GetFont();
 
@@ -1036,42 +1052,35 @@ void CAgilityBookCalendar::GetWorkingAreas(
 }
 
 
-size_t CAgilityBookCalendar::GetEntriesOn(
-		ARBDate const& date,
-		std::vector<ARBCalendarPtr>& entries,
-		bool bGetHidden) const
+size_t CAgilityBookCalendar::GetEntriesOn(ARBDate const& date, std::vector<ARBCalendarPtr>& entries, bool bGetHidden)
+	const
 {
 	entries.clear();
 	CCalendarViewFilter filter = CFilterOptions::Options().FilterCalendarView();
-	for (std::vector<ARBCalendarPtr>::const_iterator iter = m_Calendar.begin();
-		iter != m_Calendar.end();
-		++iter)
+	for (std::vector<ARBCalendarPtr>::const_iterator iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 	{
 		ARBCalendarPtr pCal = *iter;
 		if (pCal->InRange(date)
-		&& ((ARBCalendarEntry::Not == pCal->GetEntered() && filter.ViewNotEntered())
-		|| (ARBCalendarEntry::Planning == pCal->GetEntered() && filter.ViewPlanning())
-		|| ((ARBCalendarEntry::Pending == pCal->GetEntered() || ARBCalendarEntry::Entered == pCal->GetEntered())
-		&& filter.ViewEntered())))
+			&& ((ARBCalendarEntry::Not == pCal->GetEntered() && filter.ViewNotEntered())
+				|| (ARBCalendarEntry::Planning == pCal->GetEntered() && filter.ViewPlanning())
+				|| ((ARBCalendarEntry::Pending == pCal->GetEntered() || ARBCalendarEntry::Entered == pCal->GetEntered())
+					&& filter.ViewEntered())))
 		{
 			entries.push_back((*iter));
 		}
 		// Only show opening/closing dates if we're planning on entering
-		else if (ARBCalendarEntry::Planning == pCal->GetEntered()
-		&& filter.ViewPlanning())
+		else if (ARBCalendarEntry::Planning == pCal->GetEntered() && filter.ViewPlanning())
 		{
-			if ((CAgilityBookOptions::ViewAllCalendarOpening()
-			&& pCal->GetOpeningDate() == date)
-			|| (CAgilityBookOptions::ViewAllCalendarClosing()
-			&& pCal->GetClosingDate() == date))
+			if ((CAgilityBookOptions::ViewAllCalendarOpening() && pCal->GetOpeningDate() == date)
+				|| (CAgilityBookOptions::ViewAllCalendarClosing() && pCal->GetClosingDate() == date))
 				entries.push_back((*iter));
 		}
 	}
 	if (bGetHidden)
 	{
 		for (std::vector<ARBCalendarPtr>::const_iterator iter = m_CalendarHidden.begin();
-			iter != m_CalendarHidden.end();
-			++iter)
+			 iter != m_CalendarHidden.end();
+			 ++iter)
 		{
 			if ((*iter)->InRange(date))
 				entries.push_back((*iter));
@@ -1088,14 +1097,14 @@ size_t CAgilityBookCalendar::GetEntriesOn(
 wxRect CAgilityBookCalendar::GetDateRect(ARBDate const& date)
 {
 	if (!date.IsValid())
-		return wxRect(0,0,0,0);
+		return wxRect(0, 0, 0, 0);
 
 	ARBDate visible1 = FirstDayOfVisibleMonth();
 	ARBDate visible2(visible1);
 	visible2 += WEEKS_PER_PAGE * 7 - 1;
 
 	if (!date.isBetween(visible1, visible2))
-		return wxRect(0,0,0,0);
+		return wxRect(0, 0, 0, 0);
 
 	int span = date - visible1;
 	int x = span % 7;
@@ -1113,9 +1122,7 @@ wxRect CAgilityBookCalendar::GetDateRect(ARBDate const& date)
 }
 
 
-void CAgilityBookCalendar::GetDateFromPoint(
-		wxPoint pt,
-		ARBDate& date)
+void CAgilityBookCalendar::GetDateFromPoint(wxPoint pt, ARBDate& date)
 {
 	date.clear();
 
@@ -1205,9 +1212,7 @@ wxBEGIN_EVENT_TABLE(CAgilityBookCalendarView, CAgilityBookBaseExtraView)
 wxEND_EVENT_TABLE()
 
 
-CAgilityBookCalendarView::CAgilityBookCalendarView(
-		CTabView* pTabView,
-		wxDocument* doc)
+CAgilityBookCalendarView::CAgilityBookCalendarView(CTabView* pTabView, wxDocument* doc)
 	: CAgilityBookBaseExtraView(pTabView, doc)
 	, m_Ctrl(nullptr)
 	, m_bTracking(false)
@@ -1223,14 +1228,14 @@ CAgilityBookCalendarView::~CAgilityBookCalendarView()
 
 
 bool CAgilityBookCalendarView::Create(
-		CBasePanel* parentView,
-		wxWindow* parentCtrl,
-		wxDocument* doc,
-		long flags,
-		wxSizer* sizer,
-		int proportion,
-		int sizerFlags,
-		int border)
+	CBasePanel* parentView,
+	wxWindow* parentCtrl,
+	wxDocument* doc,
+	long flags,
+	wxSizer* sizer,
+	int proportion,
+	int sizerFlags,
+	int border)
 {
 	m_Ctrl = new CAgilityBookCalendar(this, parentView, parentCtrl);
 	m_Ctrl->Bind(wxEVT_LEFT_DOWN, &CAgilityBookCalendarView::OnCtrlMouseEvent, this);
@@ -1285,9 +1290,7 @@ ARBDate CAgilityBookCalendarView::GetCurrentDate() const
 }
 
 
-bool CAgilityBookCalendarView::SetCurrentDate(
-		ARBDate const& date,
-		bool bEnsureVisible)
+bool CAgilityBookCalendarView::SetCurrentDate(ARBDate const& date, bool bEnsureVisible)
 {
 	return m_Ctrl ? m_Ctrl->SetCurrentDate(date, bEnsureVisible) : false;
 }
@@ -1326,18 +1329,13 @@ bool CAgilityBookCalendarView::AllowStatusContext(int field) const
 }
 
 
-bool CAgilityBookCalendarView::OnCreate(
-		wxDocument* doc,
-		long flags)
+bool CAgilityBookCalendarView::OnCreate(wxDocument* doc, long flags)
 {
 	return true;
 }
 
 
-void CAgilityBookCalendarView::DoActivateView(
-		bool activate,
-		wxView* activeView,
-		wxView* deactiveView)
+void CAgilityBookCalendarView::DoActivateView(bool activate, wxView* activeView, wxView* deactiveView)
 {
 	if (m_Ctrl)
 	{
@@ -1355,9 +1353,7 @@ void CAgilityBookCalendarView::OnDraw(wxDC* dc)
 }
 
 
-void CAgilityBookCalendarView::OnUpdate(
-		wxView* sender,
-		wxObject* inHint)
+void CAgilityBookCalendarView::OnUpdate(wxView* sender, wxObject* inHint)
 {
 	STACK_TRACE(stack, L"CAgilityBookCalendarView::OnUpdate");
 
@@ -1366,13 +1362,11 @@ void CAgilityBookCalendarView::OnUpdate(
 	CUpdateHint* hint = nullptr;
 	if (inHint)
 		hint = wxDynamicCast(inHint, CUpdateHint);
-	if (!hint || hint->IsSet(UPDATE_CALENDAR_VIEW)
-	|| hint->IsEqual(UPDATE_OPTIONS))
+	if (!hint || hint->IsSet(UPDATE_CALENDAR_VIEW) || hint->IsEqual(UPDATE_OPTIONS))
 	{
 		LoadData();
 	}
-	else if (hint && (hint->IsEqual(UPDATE_CUSTOMIZE)
-	|| hint->IsEqual(UPDATE_LANG_CHANGE)))
+	else if (hint && (hint->IsEqual(UPDATE_CUSTOMIZE) || hint->IsEqual(UPDATE_LANG_CHANGE)))
 	{
 		m_Ctrl->LoadColumns();
 	}
@@ -1686,10 +1680,10 @@ void CAgilityBookCalendarView::OnViewCmd(wxCommandEvent& evt)
 		m_Ctrl->OnCreateEntry(GetDocument());
 		break;
 	case ID_VIEW_CUSTOMIZE:
-		{
-			CDlgAssignColumns dlg(CAgilityBookOptions::eView, m_Ctrl, GetDocument(), IO_TYPE_VIEW_CALENDAR);
-			dlg.ShowModal();
-		}
-		break;
+	{
+		CDlgAssignColumns dlg(CAgilityBookOptions::eView, m_Ctrl, GetDocument(), IO_TYPE_VIEW_CALENDAR);
+		dlg.ShowModal();
+	}
+	break;
 	}
 }

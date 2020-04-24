@@ -313,10 +313,10 @@ TEST_CASE("Element")
 		{
 			std::stringstream data;
 			data << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-				<< "<Test attrib='a'>\n"
-					<< "<ele>Content</ele>\n"
-					<< "<ele ele='2'>More content</ele>"
-				<< "</Test>";
+				 << "<Test attrib='a'>\n"
+				 << "<ele>Content</ele>\n"
+				 << "<ele ele='2'>More content</ele>"
+				 << "</Test>";
 
 			fmt::wmemory_buffer errMsg;
 			ElementNodePtr tree(ElementNode::New());

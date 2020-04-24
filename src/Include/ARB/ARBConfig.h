@@ -58,6 +58,7 @@ class ARB_API ARBConfig
 	// accomplished via the Update() method.
 	ARBConfig& operator=(ARBConfig const& rhs) = delete;
 	ARBConfig& operator=(ARBConfig&& rhs) = delete;
+
 public:
 	ARBConfig();
 	~ARBConfig();
@@ -84,10 +85,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool LoadFault(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool LoadFault(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Load an OtherPoint object.
@@ -99,10 +97,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool LoadOtherPoints(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool LoadOtherPoints(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Load the configuration.
@@ -112,10 +107,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -144,9 +136,7 @@ public:
 	 * @param inTitle Name of title.
 	 * @return Nice name (longname) of a title.
 	 */
-	std::wstring GetTitleNiceName(
-			std::wstring const& inVenue,
-			std::wstring const& inTitle) const;
+	std::wstring GetTitleNiceName(std::wstring const& inVenue, std::wstring const& inTitle) const;
 
 	/**
 	 * Convenience function to get the complete name of a title.
@@ -154,9 +144,7 @@ public:
 	 * @param bAbbrevFirst List Name before or after Longname.
 	 * @return Complete name of title (name + longname).
 	 */
-	std::wstring GetTitleCompleteName(
-			ARBDogTitlePtr const& inTitle,
-			bool bAbbrevFirst = true) const;
+	std::wstring GetTitleCompleteName(ARBDogTitlePtr const& inTitle, bool bAbbrevFirst = true) const;
 
 	/**
 	 * Update this configuration from inConfigNew.
@@ -165,10 +153,7 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(
-			int indent,
-			ARBConfig const& inConfigNew,
-			fmt::wmemory_buffer& ioInfo);
+	bool Update(int indent, ARBConfig const& inConfigNew, fmt::wmemory_buffer& ioInfo);
 
 	/*
 	 * Getters.

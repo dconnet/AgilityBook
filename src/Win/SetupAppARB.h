@@ -15,5 +15,5 @@
  */
 
 
-#define ARB_CONFIG_ENTRY	L"Agility Record Book"
-#define ARB_CONFIG_INFO		L"AgilityBook.info"
+#define ARB_CONFIG_ENTRY L"Agility Record Book"
+#define ARB_CONFIG_INFO  L"AgilityBook.info"

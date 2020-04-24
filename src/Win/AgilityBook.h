@@ -43,9 +43,7 @@ public:
 	void AutoCheckConfiguration(CAgilityBookDoc* pDoc);
 	void UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outClose);
 
-	void SetMessageText(
-			std::wstring const& msg,
-			bool bFiltered);
+	void SetMessageText(std::wstring const& msg, bool bFiltered);
 	void SetMessageText2(std::wstring const& msg);
 
 	wxPrintDialogData* GetPrintData();
@@ -55,7 +53,10 @@ public:
 
 protected:
 	static std::unique_ptr<CMenuHelper> CreateMenus();
-	wxString GetReportName() const override { return L"AgilityBook"; }
+	wxString GetReportName() const override
+	{
+		return L"AgilityBook";
+	}
 
 	bool OnInit() override;
 	int OnExit() override;
@@ -71,15 +72,8 @@ protected:
 	void OnSetLanguage(wxLanguage langId) override;
 
 	// IImageManagerCallback interface
-	bool OnCreateBitmap(
-			const wxArtID& id,
-			const wxArtClient& client,
-			const wxSize& size,
-			wxBitmap& outBmp) override;
-	bool OnCreateIconBundle(
-			const wxArtID& id,
-			const wxArtClient& client,
-			wxIconBundle& outIcon) override;
+	bool OnCreateBitmap(const wxArtID& id, const wxArtClient& client, const wxSize& size, wxBitmap& outBmp) override;
+	bool OnCreateIconBundle(const wxArtID& id, const wxArtClient& client, wxIconBundle& outIcon) override;
 
 	bool InitLanguage() override;
 

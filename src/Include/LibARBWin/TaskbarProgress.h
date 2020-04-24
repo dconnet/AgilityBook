@@ -26,11 +26,11 @@
 typedef void* HWND;
 typedef enum
 {
-	TBPF_NOPROGRESS	= 0,
-	TBPF_INDETERMINATE	= 0x1,
-	TBPF_NORMAL	= 0x2,
-	TBPF_ERROR	= 0x4,
-	TBPF_PAUSED	= 0x8
+	TBPF_NOPROGRESS = 0,
+	TBPF_INDETERMINATE = 0x1,
+	TBPF_NORMAL = 0x2,
+	TBPF_ERROR = 0x4,
+	TBPF_PAUSED = 0x8
 } TBPFLAG;
 typedef unsigned int ULONGLONG;
 #endif
@@ -42,7 +42,10 @@ class ARBWIN_API CTaskbarProgress
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CTaskbarProgress)
 protected:
-	CTaskbarProgress() {}
+	CTaskbarProgress()
+	{
+	}
+
 public:
 	static CTaskbarProgressPtr Get(HWND hwnd);
 	virtual ~CTaskbarProgress();

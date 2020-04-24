@@ -86,19 +86,17 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback,
-			std::wstring const& inItemName);
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback,
+		std::wstring const& inItemName);
 
 	/**
 	 * Save a items entry
 	 * @param ioTree Parent element.
 	 * @param inItemName Name of collection being saved.
 	 */
-	bool Save(
-			ElementNodePtr const& ioTree,
-			std::wstring const& inItemName) const;
+	bool Save(ElementNodePtr const& ioTree, std::wstring const& inItemName) const;
 
 	/*
 	 * Getters/setters.
@@ -142,6 +140,7 @@ private:
 class ARB_API ARBInfoItemList : public ARBVectorNoSave<ARBInfoItemPtr>
 {
 	ARBInfoItemList() = delete;
+
 public:
 	/**
 	 * Construct a club/judge/location info object.
@@ -150,7 +149,9 @@ public:
 	ARBInfoItemList(std::wstring const& inItemName);
 	ARBInfoItemList(ARBInfoItemList const& rhs);
 	ARBInfoItemList(ARBInfoItemList&& rhs);
-	~ARBInfoItemList() {}
+	~ARBInfoItemList()
+	{
+	}
 	ARBInfoItemList& operator=(ARBInfoItemList const& rhs);
 	ARBInfoItemList& operator=(ARBInfoItemList&& rhs);
 
@@ -167,10 +168,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a items entry
@@ -189,9 +187,7 @@ public:
 	 * @param inVisibleOnly Only get the visible names.
 	 * @return Number of items in list.
 	 */
-	size_t GetAllItems(
-			std::set<std::wstring>& outNames,
-			bool inVisibleOnly) const;
+	size_t GetAllItems(std::set<std::wstring>& outNames, bool inVisibleOnly) const;
 
 	/**
 	 * Remove entries from list that are in use but have no associated comments.
@@ -205,9 +201,7 @@ public:
 	 * @param outItem Found item.
 	 * @return Whether the object was found.
 	 */
-	bool FindItem(
-			std::wstring const& inName,
-			ARBInfoItemPtr* outItem = nullptr) const;
+	bool FindItem(std::wstring const& inName, ARBInfoItemPtr* outItem = nullptr) const;
 
 	/**
 	 * Add a new item.
@@ -215,9 +209,7 @@ public:
 	 * @param outItem New object, NULL if name already exists or is empty.
 	 * @return Whether object was added.
 	 */
-	bool AddItem(
-			std::wstring const& inItem,
-			ARBInfoItemPtr* outItem = nullptr);
+	bool AddItem(std::wstring const& inItem, ARBInfoItemPtr* outItem = nullptr);
 
 	/**
 	 * Add a new item.

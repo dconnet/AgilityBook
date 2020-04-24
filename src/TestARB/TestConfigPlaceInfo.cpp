@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBConfigPlaceInfo.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -34,8 +34,8 @@ TEST_CASE("ConfigPlaceInfo")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBConfigPlaceInfoPtr New();
-		//	static ARBConfigPlaceInfoPtr New(short inPlace, double inValue, bool bMustQ);
+			//	static ARBConfigPlaceInfoPtr New();
+			//	static ARBConfigPlaceInfoPtr New(short inPlace, double inValue, bool bMustQ);
 		}
 	}
 
@@ -45,7 +45,7 @@ TEST_CASE("ConfigPlaceInfo")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigPlaceInfoPtr Clone() const;
+			//	ARBConfigPlaceInfoPtr Clone() const;
 		}
 	}
 
@@ -55,7 +55,7 @@ TEST_CASE("ConfigPlaceInfo")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigPlaceInfo& operator=(ARBConfigPlaceInfo const& rhs);
+			//	ARBConfigPlaceInfo& operator=(ARBConfigPlaceInfo const& rhs);
 		}
 	}
 
@@ -65,8 +65,8 @@ TEST_CASE("ConfigPlaceInfo")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBConfigPlaceInfo const& rhs) const;
-		//	bool operator!=(ARBConfigPlaceInfo const& rhs) const
+			//	bool operator==(ARBConfigPlaceInfo const& rhs) const;
+			//	bool operator!=(ARBConfigPlaceInfo const& rhs) const
 		}
 	}
 
@@ -76,7 +76,7 @@ TEST_CASE("ConfigPlaceInfo")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const;
+			//	virtual std::wstring GetGenericName() const;
 		}
 	}
 
@@ -86,10 +86,10 @@ TEST_CASE("ConfigPlaceInfo")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -99,7 +99,7 @@ TEST_CASE("ConfigPlaceInfo")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 }
@@ -112,10 +112,10 @@ TEST_CASE("ConfigPlaceInfoList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -125,7 +125,7 @@ TEST_CASE("ConfigPlaceInfoList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void sort();
+			//	void sort();
 		}
 	}
 
@@ -135,7 +135,7 @@ TEST_CASE("ConfigPlaceInfoList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool GetPlaceInfo(short inPlace, double &outValue) const;
+			//	bool GetPlaceInfo(short inPlace, double &outValue) const;
 		}
 	}
 
@@ -145,9 +145,9 @@ TEST_CASE("ConfigPlaceInfoList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindPlaceInfo(
-		//			short inPlace,
-		//			ARBConfigPlaceInfoPtr* outPlace = nullptr) const;
+			//	bool FindPlaceInfo(
+			//			short inPlace,
+			//			ARBConfigPlaceInfoPtr* outPlace = nullptr) const;
 		}
 	}
 
@@ -157,12 +157,12 @@ TEST_CASE("ConfigPlaceInfoList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddPlaceInfo(
-		//			short inPlace,
-		//			double inValue,
-		//			bool inMustQ,
-		//			ARBConfigPlaceInfoPtr* outPlace = nullptr);
-		//	bool DeletePlaceInfo(short inPlace);
+			//	bool AddPlaceInfo(
+			//			short inPlace,
+			//			double inValue,
+			//			bool inMustQ,
+			//			ARBConfigPlaceInfoPtr* outPlace = nullptr);
+			//	bool DeletePlaceInfo(short inPlace);
 		}
 	}
 }

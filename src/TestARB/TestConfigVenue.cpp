@@ -21,8 +21,8 @@
 
 #include "ConfigHandler.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBConfigVenue.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -37,7 +37,7 @@ TEST_CASE("ConfigVenue")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBConfigVenuePtr New();
+			//	static ARBConfigVenuePtr New();
 		}
 	}
 
@@ -47,7 +47,7 @@ TEST_CASE("ConfigVenue")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigVenuePtr Clone() const;
+			//	ARBConfigVenuePtr Clone() const;
 		}
 	}
 
@@ -57,7 +57,7 @@ TEST_CASE("ConfigVenue")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigVenue& operator=(ARBConfigVenue const& rhs);
+			//	ARBConfigVenue& operator=(ARBConfigVenue const& rhs);
 		}
 	}
 
@@ -67,8 +67,8 @@ TEST_CASE("ConfigVenue")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBConfigVenue const& rhs) const;
-		//	bool operator!=(ARBConfigVenue const& rhs) const
+			//	bool operator==(ARBConfigVenue const& rhs) const;
+			//	bool operator!=(ARBConfigVenue const& rhs) const
 		}
 	}
 
@@ -78,7 +78,7 @@ TEST_CASE("ConfigVenue")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void clear();
+			//	void clear();
 		}
 	}
 
@@ -88,7 +88,7 @@ TEST_CASE("ConfigVenue")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const
+			//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -98,11 +98,11 @@ TEST_CASE("ConfigVenue")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig& ioConfig,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig& ioConfig,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -112,7 +112,7 @@ TEST_CASE("ConfigVenue")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 
@@ -122,10 +122,10 @@ TEST_CASE("ConfigVenue")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Update(
-		//			int indent,
-		//			ARBConfigVenuePtr inVenueNew,
-		//			std::wstring& ioInfo);
+			//	bool Update(
+			//			int indent,
+			//			ARBConfigVenuePtr inVenueNew,
+			//			std::wstring& ioInfo);
 		}
 	}
 }
@@ -138,11 +138,11 @@ TEST_CASE("ConfigVenueList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig& ioConfig,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig& ioConfig,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -152,7 +152,7 @@ TEST_CASE("ConfigVenueList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void sort();
+			//	void sort();
 		}
 	}
 
@@ -162,7 +162,7 @@ TEST_CASE("ConfigVenueList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool VerifyVenue(std::wstring const& inVenue) const
+			//	bool VerifyVenue(std::wstring const& inVenue) const
 		}
 	}
 
@@ -172,10 +172,10 @@ TEST_CASE("ConfigVenueList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool VerifyMultiQ(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inMultiQ,
-		//			bool inUseShortName = false) const;
+			//	bool VerifyMultiQ(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inMultiQ,
+			//			bool inUseShortName = false) const;
 		}
 	}
 
@@ -185,10 +185,10 @@ TEST_CASE("ConfigVenueList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool VerifyLevel(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inDivision,
-		//			std::wstring const& inLevel) const;
+			//	bool VerifyLevel(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inDivision,
+			//			std::wstring const& inLevel) const;
 		}
 	}
 
@@ -198,12 +198,12 @@ TEST_CASE("ConfigVenueList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool VerifyEvent(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inDivision,
-		//			std::wstring const& inLevel,
-		//			std::wstring const& inEvent,
-		//			ARBDate const& inDate) const;
+			//	bool VerifyEvent(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inDivision,
+			//			std::wstring const& inLevel,
+			//			std::wstring const& inEvent,
+			//			ARBDate const& inDate) const;
 		}
 	}
 
@@ -228,10 +228,10 @@ TEST_CASE("ConfigVenueList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindTitle(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inTitle,
-		//			ARBConfigTitlePtr* outTitle = nullptr) const;
+			//	bool FindTitle(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inTitle,
+			//			ARBConfigTitlePtr* outTitle = nullptr) const;
 		}
 	}
 
@@ -241,7 +241,7 @@ TEST_CASE("ConfigVenueList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool DeleteTitle(std::wstring const& inTitle);
+			//	bool DeleteTitle(std::wstring const& inTitle);
 		}
 	}
 
@@ -251,9 +251,9 @@ TEST_CASE("ConfigVenueList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindVenue(
-		//			std::wstring const& inVenue,
-		//			ARBConfigVenuePtr* outVenue = nullptr) const;
+			//	bool FindVenue(
+			//			std::wstring const& inVenue,
+			//			ARBConfigVenuePtr* outVenue = nullptr) const;
 		}
 	}
 
@@ -263,14 +263,14 @@ TEST_CASE("ConfigVenueList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindEvent(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inEvent,
-		//			std::wstring const& inDivision,
-		//			std::wstring const& inLevel,
-		//			ARBDate const& inDate,
-		//			ARBConfigEventPtr* outEvent = nullptr,
-		//			ARBConfigScoringPtr* outScoring = nullptr) const;
+			//	bool FindEvent(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inEvent,
+			//			std::wstring const& inDivision,
+			//			std::wstring const& inLevel,
+			//			ARBDate const& inDate,
+			//			ARBConfigEventPtr* outEvent = nullptr,
+			//			ARBConfigScoringPtr* outScoring = nullptr) const;
 		}
 	}
 
@@ -280,11 +280,11 @@ TEST_CASE("ConfigVenueList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddVenue(
-		//			std::wstring const& inVenue,
-		//			ARBConfigVenuePtr* outVenue = nullptr);
-		//	bool AddVenue(ARBConfigVenuePtr inVenue);
-		//	int DeleteVenue(std::wstring const& inVenue);
+			//	bool AddVenue(
+			//			std::wstring const& inVenue,
+			//			ARBConfigVenuePtr* outVenue = nullptr);
+			//	bool AddVenue(ARBConfigVenuePtr inVenue);
+			//	int DeleteVenue(std::wstring const& inVenue);
 		}
 	}
 }

@@ -43,21 +43,30 @@ public:
 	// Must use callback to enable catalogs.
 	// Embedding language MO files is only supported on Windows.
 	CLanguageManager(
-			ILanguageCallback* pCallback,
+		ILanguageCallback* pCallback,
 #if defined(WIN32)
-			bool bEmbedded
+		bool bEmbedded
 #else
-			bool bEmbedded = false
+		bool bEmbedded = false
 #endif
-			);
+	);
 
 	bool InitLanguage();
 
-	std::wstring CurrentLanguage() const		{return m_dirLoadedLang;}
-	wxLanguage CurrentLanguageId() const		{return m_CurLang;}
+	std::wstring CurrentLanguage() const
+	{
+		return m_dirLoadedLang;
+	}
+	wxLanguage CurrentLanguageId() const
+	{
+		return m_CurLang;
+	}
 	wxLanguage GetDefaultLanguage() const;
 	wxString GetDefaultCatalogName() const;
-	wxString GetDefaultLanguageDir() const		{return m_dirLangDefault;}
+	wxString GetDefaultLanguageDir() const
+	{
+		return m_dirLangDefault;
+	}
 
 	bool SelectLanguage(wxWindow* parent = nullptr);
 	wxLanguage SelectLang(wxWindow* parent = nullptr);
@@ -68,7 +77,7 @@ private:
 	ILanguageCallback* m_pCallback;
 	wxLanguage m_CurLang;
 	wxString m_dirLangDefault;
-	wxString m_dirLang; /// Where the en/fr/etc directories are located
+	wxString m_dirLang;           /// Where the en/fr/etc directories are located
 	std::wstring m_dirLoadedLang; /// 'en'/'fr' etc
 	std::unique_ptr<wxLocale> m_locale;
 };

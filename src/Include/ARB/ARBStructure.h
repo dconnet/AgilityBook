@@ -28,6 +28,7 @@
  * Defines that are indented are the valid values for the attribute that
  * was just defined.
  */
+// clang-format off
 #define TREE_BOOK							L"AgilityBook"
 #define TREE_CALENDAR						L"Calendar"
 #define TREE_TRAINING						L"Training"
@@ -275,9 +276,10 @@
 #define ATTRIB_REF_RUN_PLACE				L"Place"
 #define ATTRIB_REF_RUN_TIME					L"Time"
 #define ATTRIB_REF_RUN_HEIGHT				L"Height"
+// clang-format on
 
 /*
  * These defines list any special values.
  */
-#define WILDCARD_DIVISION		L"*"
-#define WILDCARD_LEVEL			L"*"
+#define WILDCARD_DIVISION L"*"
+#define WILDCARD_LEVEL    L"*"

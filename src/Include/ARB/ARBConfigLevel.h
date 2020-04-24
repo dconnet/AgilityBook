@@ -83,10 +83,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -103,10 +100,7 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(
-			int indent,
-			ARBConfigLevelPtr const& inLevelNew,
-			std::wstring& ioInfo);
+	bool Update(int indent, ARBConfigLevelPtr const& inLevelNew, std::wstring& ioInfo);
 
 	/*
 	 * Getters/setters.
@@ -158,10 +152,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Reorder the list based on 'inList'
@@ -176,9 +167,7 @@ public:
 	 * @param inAllowWildCard Do we allow wildcards during verification?
 	 * @return Whether there is a level that matches.
 	 */
-	bool VerifyLevel(
-			std::wstring const& inName,
-			bool inAllowWildCard = true) const;
+	bool VerifyLevel(std::wstring const& inName, bool inAllowWildCard = true) const;
 
 	/**
 	 * Find a level.
@@ -186,9 +175,7 @@ public:
 	 * @param outLevel Pointer to object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindLevel(
-			std::wstring const& inName,
-			ARBConfigLevelPtr* outLevel = nullptr) const;
+	bool FindLevel(std::wstring const& inName, ARBConfigLevelPtr* outLevel = nullptr) const;
 
 	/**
 	 * Find a level, only looks at leaf nodes.
@@ -197,9 +184,7 @@ public:
 	 * @param outLevel Pointer to object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindSubLevel(
-			std::wstring const& inName,
-			ARBConfigLevelPtr* outLevel = nullptr) const;
+	bool FindSubLevel(std::wstring const& inName, ARBConfigLevelPtr* outLevel = nullptr) const;
 
 	/**
 	 * Add a level.
@@ -207,9 +192,7 @@ public:
 	 * @param outLevel Pointer to new object, NULL if name already exists or is empty.
 	 * @return Whether the object was added.
 	 */
-	bool AddLevel(
-			std::wstring const& inName,
-			ARBConfigLevelPtr* outLevel = nullptr);
+	bool AddLevel(std::wstring const& inName, ARBConfigLevelPtr* outLevel = nullptr);
 
 	/**
 	 * Add a level.
@@ -225,10 +208,7 @@ public:
 	 * @param ioEvents List of events to be updated.
 	 * @return Whether level was deleted or not.
 	 */
-	bool DeleteLevel(
-			std::wstring const& inDiv,
-			std::wstring const& inName,
-			ARBConfigEventList& ioEvents);
+	bool DeleteLevel(std::wstring const& inDiv, std::wstring const& inName, ARBConfigEventList& ioEvents);
 
 	/**
 	 * Delete a sublevel.
@@ -237,7 +217,5 @@ public:
 	 * @return Whether a sublevel was deleted.
 	 * @post Deleting a sublevel may cause the parent level name to change.
 	 */
-	bool DeleteSubLevel(
-			std::wstring const& inName,
-			bool& outLevelModified);
+	bool DeleteSubLevel(std::wstring const& inName, bool& outLevelModified);
 };

@@ -36,7 +36,9 @@
 /**
  * Titles a dog has earned.
  */
-class ARB_API ARBDogTitle : public ARBBase, protected ARBTitleInstance
+class ARB_API ARBDogTitle
+	: public ARBBase
+	, protected ARBTitleInstance
 {
 protected:
 	ARBDogTitle();
@@ -80,10 +82,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfig const& inConfig,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -142,10 +144,7 @@ public:
 	{
 		return m_MultipleSeparator;
 	}
-	void SetName(
-			std::wstring const& inName,
-			short inInstance,
-			ARBConfigTitlePtr const& inConfigTitle);
+	void SetName(std::wstring const& inName, short inInstance, ARBConfigTitlePtr const& inConfigTitle);
 	void Rename(std::wstring const& inName)
 	{
 		m_Name = inName;
@@ -202,10 +201,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfig const& inConfig,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Sort the list by date.
@@ -226,10 +225,7 @@ public:
 	 * @param inTitle Name of title.
 	 * @param outTitle Pointer to found title.
 	 */
-	bool FindTitle(
-			std::wstring const& inVenue,
-			std::wstring const& inTitle,
-			ARBDogTitlePtr* outTitle = nullptr) const;
+	bool FindTitle(std::wstring const& inVenue, std::wstring const& inTitle, ARBDogTitlePtr* outTitle = nullptr) const;
 
 	/**
 	 * Find the maximum instance of a title
@@ -238,9 +234,9 @@ public:
 	 * @param outMissing Return a list of missing instances.
 	 */
 	short FindMaxInstance(
-			std::wstring const& inVenue,
-			std::wstring const& inTitle,
-			std::vector<short>* outMissing = nullptr) const;
+		std::wstring const& inVenue,
+		std::wstring const& inTitle,
+		std::vector<short>* outMissing = nullptr) const;
 
 	/**
 	 * Rename a venue, rename any dependent objects.
@@ -248,9 +244,7 @@ public:
 	 * @param inNewVenue New venue name.
 	 * @return Number of items changed.
 	 */
-	int RenameVenue(
-			std::wstring const& inOldVenue,
-			std::wstring const& inNewVenue);
+	int RenameVenue(std::wstring const& inOldVenue, std::wstring const& inNewVenue);
 
 	/**
 	 * Delete a venue, remove any dependent objects.
@@ -266,9 +260,7 @@ public:
 	 * @param inTitle Title to tally.
 	 * @return Number of objects.
 	 */
-	int NumTitlesInUse(
-			std::wstring const& inVenue,
-			std::wstring const& inTitle) const;
+	int NumTitlesInUse(std::wstring const& inVenue, std::wstring const& inTitle) const;
 
 	/**
 	 * Rename a title, rename any dependent objects.
@@ -277,10 +269,7 @@ public:
 	 * @param inNewTitle New title name.
 	 * @return Number of items changed.
 	 */
-	int RenameTitle(
-			std::wstring const& inVenue,
-			std::wstring const& inOldTitle,
-			std::wstring const& inNewTitle);
+	int RenameTitle(std::wstring const& inVenue, std::wstring const& inOldTitle, std::wstring const& inNewTitle);
 
 	/**
 	 * Add a title.
@@ -295,7 +284,5 @@ public:
 	 * @param inTitle Title being deleted.
 	 * @return Was it removed?
 	 */
-	bool DeleteTitle(
-			ARBConfigVenuePtr const& inVenue,
-			ARBDogTitlePtr const& inTitle);
+	bool DeleteTitle(ARBConfigVenuePtr const& inVenue, ARBDogTitlePtr const& inTitle);
 };

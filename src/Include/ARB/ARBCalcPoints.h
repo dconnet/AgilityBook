@@ -64,20 +64,23 @@ public:
 	/**
 	 * Allow ARBConfigTitlePoints to create items.
 	 */
-	virtual bool AllowConfiguration() const	{return false;}
+	virtual bool AllowConfiguration() const
+	{
+		return false;
+	}
 
 	/**
 	 * Get the number of points, assumes run is a Q.
 	 */
 	virtual double GetPoints(
-			double inPoints,
-			double inTime,
-			double inSCT,
-			short inPlace,
-			short inClass,
-			ARBDate date, // For USDAA
-			bool isTourney // For USDAA
-			) const = 0;
+		double inPoints,
+		double inTime,
+		double inSCT,
+		short inPlace,
+		short inClass,
+		ARBDate date,  // For USDAA
+		bool isTourney // For USDAA
+	) const = 0;
 };
 
 
@@ -89,17 +92,23 @@ class ARB_API ARBCalcPointsNormal : public ARBCalcPoints
 public:
 	static ARBCalcPointsNormalPtr New();
 	ARBCalcPointsNormal();
-	ARBPointsType GetType() const override {return ARBPointsType::Normal;}
+	ARBPointsType GetType() const override
+	{
+		return ARBPointsType::Normal;
+	}
 	std::wstring GetGenericName(double points, double faults) const override;
-	bool AllowConfiguration() const override {return true;}
+	bool AllowConfiguration() const override
+	{
+		return true;
+	}
 	double GetPoints(
-			double inPoints,
-			double inTime,
-			double inSCT,
-			short inPlace,
-			short inClass,
-			ARBDate date,
-			bool isTourney) const override;
+		double inPoints,
+		double inTime,
+		double inSCT,
+		short inPlace,
+		short inClass,
+		ARBDate date,
+		bool isTourney) const override;
 };
 
 
@@ -111,16 +120,19 @@ class ARB_API ARBCalcPointsT2B : public ARBCalcPoints
 public:
 	static ARBCalcPointsT2BPtr New();
 	ARBCalcPointsT2B();
-	ARBPointsType GetType() const override {return ARBPointsType::T2B;}
+	ARBPointsType GetType() const override
+	{
+		return ARBPointsType::T2B;
+	}
 	std::wstring GetGenericName(double points, double faults) const override;
 	double GetPoints(
-			double inPoints,
-			double inTime,
-			double inSCT,
-			short inPlace,
-			short inClass,
-			ARBDate date,
-			bool isTourney) const override;
+		double inPoints,
+		double inTime,
+		double inSCT,
+		short inPlace,
+		short inClass,
+		ARBDate date,
+		bool isTourney) const override;
 };
 
 
@@ -132,16 +144,19 @@ class ARB_API ARBCalcPointsUKI : public ARBCalcPoints
 public:
 	static ARBCalcPointsUKIPtr New();
 	ARBCalcPointsUKI();
-	ARBPointsType GetType() const override {return ARBPointsType::UKI;}
+	ARBPointsType GetType() const override
+	{
+		return ARBPointsType::UKI;
+	}
 	std::wstring GetGenericName(double points, double faults) const override;
 	double GetPoints(
-			double inPoints,
-			double inTime,
-			double inSCT,
-			short inPlace,
-			short inClass,
-			ARBDate date,
-			bool isTourney) const override;
+		double inPoints,
+		double inTime,
+		double inSCT,
+		short inPlace,
+		short inClass,
+		ARBDate date,
+		bool isTourney) const override;
 };
 
 
@@ -153,14 +168,17 @@ class ARB_API ARBCalcPointsTop10USDAA : public ARBCalcPoints
 public:
 	static ARBCalcPointsTop10USDAAPtr New();
 	ARBCalcPointsTop10USDAA();
-	ARBPointsType GetType() const override {return ARBPointsType::Top10USDAA;}
+	ARBPointsType GetType() const override
+	{
+		return ARBPointsType::Top10USDAA;
+	}
 	std::wstring GetGenericName(double points, double faults) const override;
 	double GetPoints(
-			double inPoints,
-			double inTime,
-			double inSCT,
-			short inPlace,
-			short inClass,
-			ARBDate date,
-			bool isTourney) const override;
+		double inPoints,
+		double inTime,
+		double inSCT,
+		short inPlace,
+		short inClass,
+		ARBDate date,
+		bool isTourney) const override;
 };

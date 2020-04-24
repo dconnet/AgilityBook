@@ -23,6 +23,7 @@
 #include "LibARBWin/RegItemsBase.h"
 
 
+// clang-format off
 //Calendar
 #define CFG_KEY_CALENDAR				L"Calendar"
 //	DW CloseColor
@@ -389,3 +390,5 @@ inline wxString CFG_SELECTION_DOG(int n)
 //Unknown
 #define CFG_KEY_UNKNOWN					L"Unknown"
 //	ST col[n] (CFG_COL_BASENAME)
+
+// clang-format on

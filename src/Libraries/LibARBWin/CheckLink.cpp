@@ -28,9 +28,7 @@
 #endif
 
 
-bool CheckLink(
-		std::wstring const& inLink,
-		wxWindow* parent)
+bool CheckLink(std::wstring const& inLink, wxWindow* parent)
 {
 	bool bOk = false;
 	if (0 < inLink.length())

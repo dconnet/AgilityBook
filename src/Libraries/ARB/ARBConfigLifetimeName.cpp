@@ -31,16 +31,18 @@
 
 namespace
 {
-	class ARBConfigLifetimeName_concrete : public ARBConfigLifetimeName
+class ARBConfigLifetimeName_concrete : public ARBConfigLifetimeName
+{
+public:
+	ARBConfigLifetimeName_concrete()
 	{
-	public:
-		ARBConfigLifetimeName_concrete() {}
-		ARBConfigLifetimeName_concrete(ARBConfigLifetimeName const& rhs)
-			: ARBConfigLifetimeName(rhs)
-		{
-		}
-	};
+	}
+	ARBConfigLifetimeName_concrete(ARBConfigLifetimeName const& rhs)
+		: ARBConfigLifetimeName(rhs)
+	{
+	}
 };
+}; // namespace
 
 
 ARBConfigLifetimeNamePtr ARBConfigLifetimeName::New()
@@ -101,9 +103,9 @@ bool ARBConfigLifetimeName::operator==(ARBConfigLifetimeName const& rhs) const
 
 
 bool ARBConfigLifetimeName::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_VENUE_LIFETIMENAMES)
@@ -128,9 +130,9 @@ bool ARBConfigLifetimeName::Save(ElementNodePtr const& ioTree) const
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigLifetimeNameList::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	ARBConfigLifetimeNamePtr thing(ARBConfigLifetimeName::New());
 	if (!thing->Load(inTree, inVersion, ioCallback))
@@ -151,9 +153,8 @@ bool ARBConfigLifetimeNameList::VerifyLifetimeName(std::wstring const& inName) c
 }
 
 
-bool ARBConfigLifetimeNameList::FindLifetimeName(
-		std::wstring const& inName,
-		ARBConfigLifetimeNamePtr* outLifetimeName) const
+bool ARBConfigLifetimeNameList::FindLifetimeName(std::wstring const& inName, ARBConfigLifetimeNamePtr* outLifetimeName)
+	const
 {
 	if (outLifetimeName)
 		outLifetimeName->reset();
@@ -170,9 +171,7 @@ bool ARBConfigLifetimeNameList::FindLifetimeName(
 }
 
 
-bool ARBConfigLifetimeNameList::AddLifetimeName(
-		std::wstring const& inName,
-		ARBConfigLifetimeNamePtr* outLifetimeName)
+bool ARBConfigLifetimeNameList::AddLifetimeName(std::wstring const& inName, ARBConfigLifetimeNamePtr* outLifetimeName)
 {
 	if (outLifetimeName)
 		outLifetimeName->reset();

@@ -37,16 +37,18 @@
 
 namespace
 {
-	class ARBDogRegNum_concrete : public ARBDogRegNum
+class ARBDogRegNum_concrete : public ARBDogRegNum
+{
+public:
+	ARBDogRegNum_concrete()
 	{
-	public:
-		ARBDogRegNum_concrete() {}
-		ARBDogRegNum_concrete(ARBDogRegNum const& rhs)
-			: ARBDogRegNum(rhs)
-		{
-		}
-	};
+	}
+	ARBDogRegNum_concrete(ARBDogRegNum const& rhs)
+		: ARBDogRegNum(rhs)
+	{
+	}
 };
+}; // namespace
 
 
 ARBDogRegNumPtr ARBDogRegNum::New()
@@ -126,11 +128,13 @@ ARBDogRegNum& ARBDogRegNum::operator=(ARBDogRegNum&& rhs)
 
 bool ARBDogRegNum::operator==(ARBDogRegNum const& rhs) const
 {
+	// clang-format off
 	return m_Venue == rhs.m_Venue
 		&& m_Number == rhs.m_Number
 		&& m_Height == rhs.m_Height
 		&& m_bReceived == rhs.m_bReceived
 		&& m_Note == rhs.m_Note;
+	// clang-format on
 }
 
 
@@ -152,36 +156,33 @@ size_t ARBDogRegNum::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 
 
 bool ARBDogRegNum::Load(
-		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfig const& inConfig,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_REG_NUM)
 		return false;
-	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_REG_NUM_VENUE, m_Venue)
-	|| 0 == m_Venue.length())
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_REG_NUM_VENUE, m_Venue) || 0 == m_Venue.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE));
 		return false;
 	}
 
-	if (inVersion == ARBVersion(1,0))
+	if (inVersion == ARBVersion(1, 0))
 	{
-		if (ARBAttribLookup::Found != inTree->GetAttrib(L"Number", m_Number)
-		|| 0 == m_Number.length())
+		if (ARBAttribLookup::Found != inTree->GetAttrib(L"Number", m_Number) || 0 == m_Number.length())
 		{
 			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_REG_NUM, L"Number"));
 			return false;
 		}
 	}
-	else if (inVersion < ARBVersion(9,0))
+	else if (inVersion < ARBVersion(9, 0))
 		m_Number = inTree->GetValue();
 	else
 	{
-		if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_REG_NUM_NUMBER, m_Number)
-		|| 0 == m_Number.length())
+		if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_REG_NUM_NUMBER, m_Number) || 0 == m_Number.length())
 		{
 			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_REG_NUM, ATTRIB_REG_NUM_NUMBER));
 			return false;
@@ -194,7 +195,10 @@ bool ARBDogRegNum::Load(
 
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_REG_NUM_RECEIVED, m_bReceived))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_RECEIVED, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
+			TREE_REG_NUM,
+			ATTRIB_REG_NUM_RECEIVED,
+			Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 
@@ -202,7 +206,8 @@ bool ARBDogRegNum::Load(
 	{
 		std::wstring msg(Localization()->InvalidVenueName());
 		msg += m_Venue;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE, msg.c_str()));
+		ioCallback.LogMessage(
+			Localization()->ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE, msg.c_str()));
 		return false;
 	}
 
@@ -230,10 +235,10 @@ bool ARBDogRegNum::Save(ElementNodePtr const& ioTree) const
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBDogRegNumList::Load(
-		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfig const& inConfig,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	ARBDogRegNumPtr thing(ARBDogRegNum::New());
 	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
@@ -247,12 +252,9 @@ void ARBDogRegNumList::sort()
 {
 	if (2 > size())
 		return;
-	std::stable_sort(begin(), end(),
-		[](ARBDogRegNumPtr const& one, ARBDogRegNumPtr const& two)
-		{
-			return StringUtil::CompareNoCase(one->GetVenue(), two->GetVenue()) < 0;
-		}
-	);
+	std::stable_sort(begin(), end(), [](ARBDogRegNumPtr const& one, ARBDogRegNumPtr const& two) {
+		return StringUtil::CompareNoCase(one->GetVenue(), two->GetVenue()) < 0;
+	});
 }
 
 
@@ -268,9 +270,7 @@ int ARBDogRegNumList::NumRegNumsInVenue(std::wstring const& inVenue) const
 }
 
 
-int ARBDogRegNumList::RenameVenue(
-		std::wstring const& inOldVenue,
-		std::wstring const& inNewVenue)
+int ARBDogRegNumList::RenameVenue(std::wstring const& inOldVenue, std::wstring const& inNewVenue)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -289,7 +289,7 @@ int ARBDogRegNumList::DeleteVenue(std::wstring const& inVenue)
 {
 	std::wstring venue(inVenue);
 	int count = 0;
-	for (iterator iter = begin(); iter != end(); )
+	for (iterator iter = begin(); iter != end();)
 	{
 		if ((*iter)->GetVenue() == venue)
 		{
@@ -303,9 +303,7 @@ int ARBDogRegNumList::DeleteVenue(std::wstring const& inVenue)
 }
 
 
-bool ARBDogRegNumList::FindRegNum(
-		std::wstring const& inVenue,
-		ARBDogRegNumPtr* outRegNum) const
+bool ARBDogRegNumList::FindRegNum(std::wstring const& inVenue, ARBDogRegNumPtr* outRegNum) const
 {
 	if (outRegNum)
 		outRegNum->reset();
@@ -322,10 +320,7 @@ bool ARBDogRegNumList::FindRegNum(
 }
 
 
-bool ARBDogRegNumList::AddRegNum(
-		std::wstring const& inVenue,
-		std::wstring const& inNumber,
-		ARBDogRegNumPtr* outRegNum)
+bool ARBDogRegNumList::AddRegNum(std::wstring const& inVenue, std::wstring const& inNumber, ARBDogRegNumPtr* outRegNum)
 {
 	ARBDogRegNumPtr pRegNum(ARBDogRegNum::New());
 	pRegNum->SetVenue(inVenue);
@@ -349,14 +344,12 @@ bool ARBDogRegNumList::AddRegNum(ARBDogRegNumPtr const& inRegNum)
 }
 
 
-int ARBDogRegNumList::DeleteRegNum(
-		std::wstring const& inVenue,
-		std::wstring const& inNumber)
+int ARBDogRegNumList::DeleteRegNum(std::wstring const& inVenue, std::wstring const& inNumber)
 {
 	std::wstring venue(inVenue);
 	std::wstring number(inNumber);
 	int count = 0;
-	for (iterator iter = begin(); iter != end(); )
+	for (iterator iter = begin(); iter != end();)
 	{
 		if ((*iter)->GetVenue() == venue && (*iter)->GetNumber() == number)
 		{

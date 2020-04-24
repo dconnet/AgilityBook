@@ -26,7 +26,7 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
- // Copy test from gdicmn.h for wxBITMAP_PNG
+// Copy test from gdicmn.h for wxBITMAP_PNG
 #if !((defined(__WINDOWS__) && wxUSE_WXDIB) || defined(__WXOSX__))
 #include "images/AccConfirm_png.c"
 #include "images/AccNone_png.c"
@@ -36,24 +36,24 @@
 #include "images/AgilityBook32_png.c"
 #include "images/AgilityBook48_png.c"
 #include "images/CalEmpty_png.c"
-#include "images/calendar_png.c"
-#include "images/CalEntered_png.c"
 #include "images/CalEnteredTentative_png.c"
-#include "images/CalPending_png.c"
+#include "images/CalEntered_png.c"
 #include "images/CalPendingTentative_png.c"
-#include "images/CalPlan_png.c"
+#include "images/CalPending_png.c"
 #include "images/CalPlanTentative_png.c"
+#include "images/CalPlan_png.c"
 #include "images/CalTentative_png.c"
+#include "images/HdrDown_png.c"
+#include "images/HdrUp_png.c"
+#include "images/NoteAdded_png.c"
+#include "images/NoteNoteAdded_png.c"
+#include "images/NoteNote_png.c"
+#include "images/Note_png.c"
+#include "images/calendar_png.c"
 #include "images/checked_png.c"
 #include "images/crcd_png.c"
 #include "images/dog_png.c"
-#include "images/HdrDown_png.c"
-#include "images/HdrUp_png.c"
 #include "images/hidden_png.c"
-#include "images/Note_png.c"
-#include "images/NoteAdded_png.c"
-#include "images/NoteNote_png.c"
-#include "images/NoteNoteAdded_png.c"
 #include "images/points_png.c"
 #include "images/run_png.c"
 #include "images/title_hidden_have_png.c"
@@ -100,11 +100,11 @@
 
 
 bool CImageHelper::DoCreateBitmap(
-		wxWindow const* pWindow,
-		const wxArtID& id,
-		const wxArtClient& client,
-		const wxSize& size,
-		wxBitmap& outBmp)
+	wxWindow const* pWindow,
+	const wxArtID& id,
+	const wxArtClient& client,
+	const wxSize& size,
+	wxBitmap& outBmp)
 {
 #ifdef _DEBUG
 	bool bCheckBmp = true;
@@ -254,7 +254,7 @@ bool CImageHelper::DoCreateBitmap(
 		LOAD_BITMAP_PNG(pWindow, NoteAdded, outBmp);
 	else if (id == ImageMgrInfoNoteNoteAdded)
 		LOAD_BITMAP_PNG(pWindow, NoteNoteAdded, outBmp);
-	
+
 	else if (id == ImageMgrAbout)
 		LOAD_BITMAP_PNG(pWindow, toolbarAbout, outBmp);
 	else if (id == ImageMgrCopy)
@@ -279,6 +279,7 @@ bool CImageHelper::DoCreateBitmap(
 	else
 	{
 #ifdef _DEBUG
+		// clang-format off
 		if (id == wxART_FILE_SAVE_AS
 		|| id == wxART_INFORMATION
 		|| id == wxART_PRINT
@@ -294,6 +295,7 @@ bool CImageHelper::DoCreateBitmap(
 		else
 			assert(0);
 		bCheckBmp = false;
+		// clang-format on
 #endif
 	}
 
@@ -308,17 +310,21 @@ bool CImageHelper::DoCreateBitmap(
 
 
 bool CImageHelper::DoCreateIconBundle(
-		wxWindow const* pWindow,
-		const wxArtID& id,
-		const wxArtClient& client,
-		wxIconBundle& outIcon)
+	wxWindow const* pWindow,
+	const wxArtID& id,
+	const wxArtClient& client,
+	wxIconBundle& outIcon)
 {
 	if (id == ImageMgrAppBundle)
 	{
-		outIcon.AddIcon(CImageManager::Get()->GetIcon(ImageMgrApp, wxART_OTHER, ImageHelper::GetScaledSize(pWindow, 16)));
-		outIcon.AddIcon(CImageManager::Get()->GetIcon(ImageMgrApp, wxART_MESSAGE_BOX, ImageHelper::GetScaledSize(pWindow, 32)));
-		outIcon.AddIcon(CImageManager::Get()->GetIcon(ImageMgrApp48, wxART_OTHER, ImageHelper::GetScaledSize(pWindow, 48)));
-		outIcon.AddIcon(CImageManager::Get()->GetIcon(ImageMgrApp256, wxART_OTHER, ImageHelper::GetScaledSize(pWindow, 256)));
+		outIcon.AddIcon(
+			CImageManager::Get()->GetIcon(ImageMgrApp, wxART_OTHER, ImageHelper::GetScaledSize(pWindow, 16)));
+		outIcon.AddIcon(
+			CImageManager::Get()->GetIcon(ImageMgrApp, wxART_MESSAGE_BOX, ImageHelper::GetScaledSize(pWindow, 32)));
+		outIcon.AddIcon(
+			CImageManager::Get()->GetIcon(ImageMgrApp48, wxART_OTHER, ImageHelper::GetScaledSize(pWindow, 48)));
+		outIcon.AddIcon(
+			CImageManager::Get()->GetIcon(ImageMgrApp256, wxART_OTHER, ImageHelper::GetScaledSize(pWindow, 256)));
 		return true;
 	}
 	return false;

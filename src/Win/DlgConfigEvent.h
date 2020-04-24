@@ -35,10 +35,10 @@ class CDlgConfigEvent : public wxDialog
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgConfigEvent)
 public:
 	CDlgConfigEvent(
-			bool bNewEntry,
-			ARBConfigVenuePtr const& inVenue,
-			ARBConfigEventPtr const& inEvent,
-			wxWindow* pParent = nullptr);
+		bool bNewEntry,
+		ARBConfigVenuePtr const& inVenue,
+		ARBConfigEventPtr const& inEvent,
+		wxWindow* pParent = nullptr);
 	~CDlgConfigEvent();
 
 	void GetFixups(std::vector<ARBConfigActionPtr>& ioFixups);

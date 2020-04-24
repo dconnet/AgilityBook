@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBDogTrial.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -34,8 +34,8 @@ TEST_CASE("DogTrial")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBDogTrialPtr New();
-		//	static ARBDogTrialPtr New(ARBCalendar const& inCal);
+			//	static ARBDogTrialPtr New();
+			//	static ARBDogTrialPtr New(ARBCalendar const& inCal);
 		}
 	}
 
@@ -45,7 +45,7 @@ TEST_CASE("DogTrial")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogTrialPtr Clone() const;
+			//	ARBDogTrialPtr Clone() const;
 		}
 	}
 
@@ -55,7 +55,7 @@ TEST_CASE("DogTrial")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogTrial& operator=(ARBDogTrial const& rhs);
+			//	ARBDogTrial& operator=(ARBDogTrial const& rhs);
 		}
 	}
 
@@ -65,8 +65,8 @@ TEST_CASE("DogTrial")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBDogTrial const& rhs) const;
-		//	bool operator!=(ARBDogTrial const& rhs) const
+			//	bool operator==(ARBDogTrial const& rhs) const;
+			//	bool operator!=(ARBDogTrial const& rhs) const
 		}
 	}
 
@@ -76,7 +76,7 @@ TEST_CASE("DogTrial")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const
+			//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -86,11 +86,11 @@ TEST_CASE("DogTrial")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig const& inConfig,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig const& inConfig,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -100,7 +100,7 @@ TEST_CASE("DogTrial")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 
@@ -110,7 +110,7 @@ TEST_CASE("DogTrial")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void SetMultiQs(ARBConfig const& inConfig);
+			//	void SetMultiQs(ARBConfig const& inConfig);
 		}
 	}
 
@@ -120,10 +120,10 @@ TEST_CASE("DogTrial")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	short GetSpeedPoints(
-		//			ARBConfig const& inConfig,
-		//			std::wstring const& inDiv,
-		//			std::wstring const& inLevel) const;
+			//	short GetSpeedPoints(
+			//			ARBConfig const& inConfig,
+			//			std::wstring const& inDiv,
+			//			std::wstring const& inLevel) const;
 		}
 	}
 
@@ -133,7 +133,7 @@ TEST_CASE("DogTrial")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool HasVenue(std::wstring const& inVenue) const;
+			//	bool HasVenue(std::wstring const& inVenue) const;
 		}
 	}
 }
@@ -146,11 +146,11 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig const& inConfig,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig const& inConfig,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -169,7 +169,7 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void sort(bool inDescending);
+			//	void sort(bool inDescending);
 		}
 	}
 
@@ -179,7 +179,7 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int NumTrialsInVenue(std::wstring const& inVenue) const;
+			//	int NumTrialsInVenue(std::wstring const& inVenue) const;
 		}
 	}
 
@@ -189,9 +189,9 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameVenue(
-		//			std::wstring const& inOldVenue,
-		//			std::wstring const& inNewVenue);
+			//	int RenameVenue(
+			//			std::wstring const& inOldVenue,
+			//			std::wstring const& inNewVenue);
 		}
 	}
 
@@ -201,7 +201,7 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteVenue(std::wstring const& inVenue);
+			//	int DeleteVenue(std::wstring const& inVenue);
 		}
 	}
 
@@ -211,7 +211,7 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int NumOtherPointsInUse(std::wstring const& inOther) const;
+			//	int NumOtherPointsInUse(std::wstring const& inOther) const;
 		}
 	}
 
@@ -221,9 +221,9 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameOtherPoints(
-		//			std::wstring const& inOldOther,
-		//			std::wstring const& inNewOther);
+			//	int RenameOtherPoints(
+			//			std::wstring const& inOldOther,
+			//			std::wstring const& inNewOther);
 		}
 	}
 
@@ -233,7 +233,7 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteOtherPoints(std::wstring const& inOther);
+			//	int DeleteOtherPoints(std::wstring const& inOther);
 		}
 	}
 
@@ -243,10 +243,10 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int NumMultiHostedTrialsInDivision(
-		//			ARBConfig const& inConfig,
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inDiv) const;
+			//	int NumMultiHostedTrialsInDivision(
+			//			ARBConfig const& inConfig,
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inDiv) const;
 		}
 	}
 
@@ -256,9 +256,9 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int NumRunsInDivision(
-		//			ARBConfigVenuePtr inVenue,
-		//			std::wstring const& inDiv) const;
+			//	int NumRunsInDivision(
+			//			ARBConfigVenuePtr inVenue,
+			//			std::wstring const& inDiv) const;
 		}
 	}
 
@@ -268,10 +268,10 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameDivision(
-		//			ARBConfigVenuePtr inVenue,
-		//			std::wstring const& inOldDiv,
-		//			std::wstring const& inNewDiv);
+			//	int RenameDivision(
+			//			ARBConfigVenuePtr inVenue,
+			//			std::wstring const& inOldDiv,
+			//			std::wstring const& inNewDiv);
 		}
 	}
 
@@ -281,10 +281,10 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteDivision(
-		//			ARBConfig const& inConfig,
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inDiv);
+			//	int DeleteDivision(
+			//			ARBConfig const& inConfig,
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inDiv);
 		}
 	}
 
@@ -294,10 +294,10 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int NumLevelsInUse(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inDiv,
-		//			std::wstring const& inLevel) const;
+			//	int NumLevelsInUse(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inDiv,
+			//			std::wstring const& inLevel) const;
 		}
 	}
 
@@ -307,11 +307,11 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameLevel(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inDiv,
-		//			std::wstring const& inOldLevel,
-		//			std::wstring const& inNewLevel);
+			//	int RenameLevel(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inDiv,
+			//			std::wstring const& inOldLevel,
+			//			std::wstring const& inNewLevel);
 		}
 	}
 
@@ -321,10 +321,10 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteLevel(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inDiv,
-		//			std::wstring const& inLevel);
+			//	int DeleteLevel(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inDiv,
+			//			std::wstring const& inLevel);
 		}
 	}
 
@@ -334,9 +334,9 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int NumEventsInUse(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inEvent) const;
+			//	int NumEventsInUse(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inEvent) const;
 		}
 	}
 
@@ -346,10 +346,10 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameEvent(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inOldEvent,
-		//			std::wstring const& inNewEvent);
+			//	int RenameEvent(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inOldEvent,
+			//			std::wstring const& inNewEvent);
 		}
 	}
 
@@ -359,9 +359,9 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteEvent(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inEvent);
+			//	int DeleteEvent(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inEvent);
 		}
 	}
 
@@ -371,7 +371,7 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddTrial(ARBDogTrialPtr inTrial);
+			//	bool AddTrial(ARBDogTrialPtr inTrial);
 		}
 	}
 
@@ -381,7 +381,7 @@ TEST_CASE("DogTrialList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool DeleteTrial(ARBDogTrialPtr inTrial);
+			//	bool DeleteTrial(ARBDogTrialPtr inTrial);
 		}
 	}
 }

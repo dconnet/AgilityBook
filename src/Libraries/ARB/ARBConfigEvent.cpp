@@ -45,7 +45,9 @@
 class ARBConfigEvent_concrete : public ARBConfigEvent
 {
 public:
-	ARBConfigEvent_concrete() {}
+	ARBConfigEvent_concrete()
+	{
+	}
 	ARBConfigEvent_concrete(ARBConfigEvent const& rhs)
 		: ARBConfigEvent(rhs)
 	{
@@ -131,25 +133,26 @@ ARBConfigEvent& ARBConfigEvent::operator=(ARBConfigEvent&& rhs)
 
 bool ARBConfigEvent::operator==(ARBConfigEvent const& rhs) const
 {
+	// clang-format off
 	return m_Name == rhs.m_Name
 		&& m_ShortName == rhs.m_ShortName
 		&& m_Desc == rhs.m_Desc
 		&& m_bHasPartner == rhs.m_bHasPartner
 		&& m_Scoring == rhs.m_Scoring;
+	// clang-format on
 }
 
 
 bool ARBConfigEvent::Load(
-		ARBConfigDivisionList const& inDivisions,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfigDivisionList const& inDivisions,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_EVENT)
 		return false;
-	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_EVENT_NAME, m_Name)
-	|| 0 == m_Name.length())
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_EVENT_NAME, m_Name) || 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_EVENT, ATTRIB_EVENT_NAME));
 		return false;
@@ -158,7 +161,10 @@ bool ARBConfigEvent::Load(
 
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HASPARTNER, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
+			TREE_EVENT,
+			ATTRIB_EVENT_HASPARTNER,
+			Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 
@@ -169,13 +175,19 @@ bool ARBConfigEvent::Load(
 		// Introduced in file version 8.6. Moved in 15.0
 		if (ARBAttribLookup::Invalid == inTree->GetAttrib(L"hasTable", bTable))
 		{
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EVENT, L"hasTable", Localization()->ValidValuesBool().c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
+				TREE_EVENT,
+				L"hasTable",
+				Localization()->ValidValuesBool().c_str()));
 			return false;
 		}
 
 		if (ARBAttribLookup::Invalid == inTree->GetAttrib(L"hasSubNames", bHasSubNames))
 		{
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EVENT, L"hasSubNames", Localization()->ValidValuesBool().c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
+				TREE_EVENT,
+				L"hasSubNames",
+				Localization()->ValidValuesBool().c_str()));
 			return false;
 		}
 	}
@@ -244,15 +256,12 @@ bool ARBConfigEvent::Save(ElementNodePtr const& ioTree) const
 }
 
 
-bool ARBConfigEvent::Update(
-		int indent,
-		ARBConfigEventPtr const& inEventNew,
-		std::wstring& ioInfo)
+bool ARBConfigEvent::Update(int indent, ARBConfigEventPtr const& inEventNew, std::wstring& ioInfo)
 {
 	std::wstring info;
 
 	std::wstring indentBuffer, indentName;
-	for (int i = 0; i < indent-1; ++i)
+	for (int i = 0; i < indent - 1; ++i)
 		indentName += L"   ";
 	indentBuffer = indentName + L"   ";
 	indentName += L"-";
@@ -286,8 +295,7 @@ bool ARBConfigEvent::Update(
 			bool bFound = false;
 			for (iter2 = inEventNew->GetScorings().begin(); iter2 != inEventNew->GetScorings().end(); ++iter2)
 			{
-				if ((*iter1)->GetDivision() == (*iter2)->GetDivision()
-				&& (*iter1)->GetLevel() == (*iter2)->GetLevel())
+				if ((*iter1)->GetDivision() == (*iter2)->GetDivision() && (*iter1)->GetLevel() == (*iter2)->GetLevel())
 				{
 					bFound = true;
 					if (*(*iter1) == *(*iter2))
@@ -306,8 +314,7 @@ bool ARBConfigEvent::Update(
 			bool bFound = false;
 			for (iter1 = GetScorings().begin(); iter1 != GetScorings().end(); ++iter1)
 			{
-				if ((*iter1)->GetDivision() == (*iter2)->GetDivision()
-				&& (*iter1)->GetLevel() == (*iter2)->GetLevel())
+				if ((*iter1)->GetDivision() == (*iter2)->GetDivision() && (*iter1)->GetLevel() == (*iter2)->GetLevel())
 				{
 					bFound = true;
 					break;
@@ -337,10 +344,10 @@ bool ARBConfigEvent::Update(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigEventList::Load(
-		ARBConfigDivisionList const& inDivisions,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfigDivisionList const& inDivisions,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	ARBConfigEventPtr thing(ARBConfigEvent::New());
 	if (!thing->Load(inDivisions, inTree, inVersion, ioCallback))
@@ -356,9 +363,7 @@ void ARBConfigEventList::ReorderBy(ARBConfigEventList const& inList)
 	{
 		ARBConfigEventList tmp;
 		tmp.reserve(size());
-		for (ARBConfigEventList::const_iterator i = inList.begin();
-			i != inList.end();
-			++i)
+		for (ARBConfigEventList::const_iterator i = inList.begin(); i != inList.end(); ++i)
 		{
 			ARBConfigEventPtr evt;
 			if (FindEvent((*i)->GetName(), &evt))
@@ -377,10 +382,10 @@ void ARBConfigEventList::ReorderBy(ARBConfigEventList const& inList)
 
 
 bool ARBConfigEventList::VerifyEvent(
-		std::wstring const& inEvent,
-		std::wstring const& inDivision,
-		std::wstring const& inLevel,
-		ARBDate const& inDate) const
+	std::wstring const& inEvent,
+	std::wstring const& inDivision,
+	std::wstring const& inLevel,
+	ARBDate const& inDate) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -392,12 +397,12 @@ bool ARBConfigEventList::VerifyEvent(
 
 
 bool ARBConfigEventList::FindEvent(
-		std::wstring const& inEvent,
-		std::wstring const& inDivision,
-		std::wstring const& inLevel,
-		ARBDate const& inDate,
-		ARBConfigEventPtr* outEvent,
-		ARBConfigScoringPtr* outScoring) const
+	std::wstring const& inEvent,
+	std::wstring const& inDivision,
+	std::wstring const& inLevel,
+	ARBDate const& inDate,
+	ARBConfigEventPtr* outEvent,
+	ARBConfigScoringPtr* outScoring) const
 {
 	if (outScoring)
 		outScoring->reset();
@@ -417,15 +422,14 @@ bool ARBConfigEventList::FindEvent(
 }
 
 
-int ARBConfigEventList::RenameDivision(
-		std::wstring const& inOldDiv,
-		std::wstring const& inNewDiv)
+int ARBConfigEventList::RenameDivision(std::wstring const& inOldDiv, std::wstring const& inNewDiv)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		for (ARBConfigScoringList::iterator iterScore = (*iter)->GetScorings().begin();
-			iterScore != (*iter)->GetScorings().end(); ++iterScore)
+			 iterScore != (*iter)->GetScorings().end();
+			 ++iterScore)
 		{
 			if ((*iterScore)->GetDivision() == inOldDiv)
 			{
@@ -445,7 +449,7 @@ int ARBConfigEventList::DeleteDivision(std::wstring const& inDiv)
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		for (ARBConfigScoringList::iterator iterScore = (*iter)->GetScorings().begin();
-			iterScore != (*iter)->GetScorings().end(); )
+			 iterScore != (*iter)->GetScorings().end();)
 		{
 			if ((*iterScore)->GetDivision() == div)
 			{
@@ -461,19 +465,19 @@ int ARBConfigEventList::DeleteDivision(std::wstring const& inDiv)
 
 
 int ARBConfigEventList::RenameLevel(
-		std::wstring const& inOldDiv,
-		std::wstring const& inOldLevel,
-		std::wstring const& inNewLevel)
+	std::wstring const& inOldDiv,
+	std::wstring const& inOldLevel,
+	std::wstring const& inNewLevel)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		for (ARBConfigScoringList::iterator iterScore = (*iter)->GetScorings().begin();
-			iterScore != (*iter)->GetScorings().end(); ++iterScore)
+			 iterScore != (*iter)->GetScorings().end();
+			 ++iterScore)
 		{
 			if ((*iterScore)->GetLevel() == inOldLevel
-			&& ((*iterScore)->GetDivision() == WILDCARD_DIVISION
-			|| (*iterScore)->GetDivision() == inOldDiv))
+				&& ((*iterScore)->GetDivision() == WILDCARD_DIVISION || (*iterScore)->GetDivision() == inOldDiv))
 			{
 				++count;
 				(*iterScore)->SetLevel(inNewLevel);
@@ -484,20 +488,17 @@ int ARBConfigEventList::RenameLevel(
 }
 
 
-int ARBConfigEventList::DeleteLevel(
-		std::wstring const& inDiv,
-		std::wstring const& inLevel)
+int ARBConfigEventList::DeleteLevel(std::wstring const& inDiv, std::wstring const& inLevel)
 {
 	std::wstring level(inLevel);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		for (ARBConfigScoringList::iterator iterScore = (*iter)->GetScorings().begin();
-			iterScore != (*iter)->GetScorings().end(); )
+			 iterScore != (*iter)->GetScorings().end();)
 		{
 			if ((*iterScore)->GetLevel() == level
-			&& ((*iterScore)->GetDivision() == WILDCARD_DIVISION
-			|| (*iterScore)->GetDivision() == inDiv))
+				&& ((*iterScore)->GetDivision() == WILDCARD_DIVISION || (*iterScore)->GetDivision() == inDiv))
 			{
 				++count;
 				iterScore = (*iter)->GetScorings().erase(iterScore);
@@ -510,18 +511,18 @@ int ARBConfigEventList::DeleteLevel(
 }
 
 
-int ARBConfigEventList::RenameLifetimeName(
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+int ARBConfigEventList::RenameLifetimeName(std::wstring const& inOldName, std::wstring const& inNewName)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		for (ARBConfigScoringList::iterator iterScore = (*iter)->GetScorings().begin();
-			iterScore != (*iter)->GetScorings().end(); ++iterScore)
+			 iterScore != (*iter)->GetScorings().end();
+			 ++iterScore)
 		{
 			for (ARBConfigLifetimePointsList::iterator iterPoints = (*iterScore)->GetLifetimePoints().begin();
-				iterPoints != (*iterScore)->GetLifetimePoints().end(); ++iterPoints)
+				 iterPoints != (*iterScore)->GetLifetimePoints().end();
+				 ++iterPoints)
 			{
 				if ((*iterPoints)->GetName() == inOldName)
 				{
@@ -541,10 +542,11 @@ int ARBConfigEventList::DeleteLifetimeName(std::wstring const& inName)
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		for (ARBConfigScoringList::iterator iterScore = (*iter)->GetScorings().begin();
-			iterScore != (*iter)->GetScorings().end(); ++iterScore)
+			 iterScore != (*iter)->GetScorings().end();
+			 ++iterScore)
 		{
 			for (ARBConfigLifetimePointsList::iterator iterPoints = (*iterScore)->GetLifetimePoints().begin();
-				iterPoints != (*iterScore)->GetLifetimePoints().end(); )
+				 iterPoints != (*iterScore)->GetLifetimePoints().end();)
 			{
 				if ((*iterPoints)->GetName() == inName)
 				{
@@ -560,9 +562,7 @@ int ARBConfigEventList::DeleteLifetimeName(std::wstring const& inName)
 }
 
 
-bool ARBConfigEventList::FindEvent(
-		std::wstring const& inEvent,
-		ARBConfigEventPtr* outEvent) const
+bool ARBConfigEventList::FindEvent(std::wstring const& inEvent, ARBConfigEventPtr* outEvent) const
 {
 	if (outEvent)
 		outEvent->reset();
@@ -581,9 +581,7 @@ bool ARBConfigEventList::FindEvent(
 
 bool ARBConfigEventList::AddEvent(ARBConfigEventPtr const& inEvent)
 {
-	if (!inEvent
-	|| 0 == inEvent->GetName().length()
-	|| FindEvent(inEvent->GetName()))
+	if (!inEvent || 0 == inEvent->GetName().length() || FindEvent(inEvent->GetName()))
 		return false;
 	push_back(inEvent);
 	return true;

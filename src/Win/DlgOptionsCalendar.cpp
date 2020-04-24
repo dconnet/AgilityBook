@@ -99,78 +99,100 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 
 	wxStaticBox* boxCalList = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_CAL_LIST"));
 
-	wxCheckBox* ctrlWarnOpen = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* ctrlWarnOpen = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_OPT_CAL_WARN_OPENNEAR"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bOpeningNear));
 	ctrlWarnOpen->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgOptionsCalendar::OnCalNear, this);
 	ctrlWarnOpen->SetHelpText(_("HIDC_OPT_CAL_WARN_OPENNEAR"));
 	ctrlWarnOpen->SetToolTip(_("HIDC_OPT_CAL_WARN_OPENNEAR"));
 
-	m_ctrlOpeningNear = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
+	m_ctrlOpeningNear = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 30), -1),
+		0,
 		wxGenericValidator(&m_nOpeningNear));
 	m_ctrlOpeningNear->SetHelpText(_("HIDC_OPT_CAL_OPENNEAR"));
 	m_ctrlOpeningNear->SetToolTip(_("HIDC_OPT_CAL_OPENNEAR"));
 
-	wxStaticText* textOpen = new wxStaticText(this, wxID_ANY,
-		_("IDC_OPT_CAL_OPENNEAR"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textOpen
+		= new wxStaticText(this, wxID_ANY, _("IDC_OPT_CAL_OPENNEAR"), wxDefaultPosition, wxDefaultSize, 0);
 	textOpen->Wrap(-1);
 
-	m_ctrlOpeningNearColor = new wxStaticText(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(10, 10)), wxSUNKEN_BORDER);
+	m_ctrlOpeningNearColor = new wxStaticText(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(10, 10)),
+		wxSUNKEN_BORDER);
 	m_ctrlOpeningNearColor->Wrap(-1);
 	m_ctrlOpeningNearColor->SetBackgroundColour(m_OpeningNear);
 
-	m_ctrlOpeningNearSet = new wxButton(this, wxID_ANY,
-		_("IDC_OPT_CAL_COLOR_OPENNEAR_SET"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlOpeningNearSet
+		= new wxButton(this, wxID_ANY, _("IDC_OPT_CAL_COLOR_OPENNEAR_SET"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlOpeningNearSet->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgOptionsCalendar::OnCalColorOpeningNear, this);
 	m_ctrlOpeningNearSet->SetHelpText(_("HIDC_OPT_CAL_COLOR_OPENNEAR_SET"));
 	m_ctrlOpeningNearSet->SetToolTip(_("HIDC_OPT_CAL_COLOR_OPENNEAR_SET"));
 
-	wxCheckBox* ctrlWarnClose = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* ctrlWarnClose = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_OPT_CAL_WARN_CLOSENEAR"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bClosingNear));
 	ctrlWarnClose->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgOptionsCalendar::OnCalNear, this);
 	ctrlWarnClose->SetHelpText(_("HIDC_OPT_CAL_WARN_CLOSENEAR"));
 	ctrlWarnClose->SetToolTip(_("HIDC_OPT_CAL_WARN_CLOSENEAR"));
 
-	m_ctrlClosingNear = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
+	m_ctrlClosingNear = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 30), -1),
+		0,
 		wxGenericValidator(&m_nClosingNear));
 	m_ctrlClosingNear->SetHelpText(_("HIDC_OPT_CAL_CLOSENEAR"));
 	m_ctrlClosingNear->SetToolTip(_("HIDC_OPT_CAL_CLOSENEAR"));
 
-	wxStaticText* textClose = new wxStaticText(this, wxID_ANY,
-		_("IDC_OPT_CAL_CLOSENEAR"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textClose
+		= new wxStaticText(this, wxID_ANY, _("IDC_OPT_CAL_CLOSENEAR"), wxDefaultPosition, wxDefaultSize, 0);
 	textClose->Wrap(-1);
 
-	m_ctrlClosingNearColor = new wxStaticText(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(10, 10)), wxSUNKEN_BORDER);
+	m_ctrlClosingNearColor = new wxStaticText(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(10, 10)),
+		wxSUNKEN_BORDER);
 	m_ctrlClosingNearColor->Wrap(-1);
 	m_ctrlClosingNearColor->SetBackgroundColour(m_ClosingNear);
 
-	m_ctrlClosingNearSet = new wxButton(this, wxID_ANY,
-		_("IDC_OPT_CAL_COLOR_CLOSENEAR_SET"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlClosingNearSet
+		= new wxButton(this, wxID_ANY, _("IDC_OPT_CAL_COLOR_CLOSENEAR_SET"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlClosingNearSet->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgOptionsCalendar::OnCalColorClosingNear, this);
 	m_ctrlClosingNearSet->SetHelpText(_("HIDC_OPT_CAL_COLOR_CLOSENEAR_SET"));
 	m_ctrlClosingNearSet->SetToolTip(_("HIDC_OPT_CAL_COLOR_CLOSENEAR_SET"));
 
 	wxStaticBox* boxCalView = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_CAL_VIEW"));
 
-	wxStaticText* textDOW = new wxStaticText(this, wxID_ANY,
-		_("IDC_OPT_CAL_DAY_OF_WEEK"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textDOW
+		= new wxStaticText(this, wxID_ANY, _("IDC_OPT_CAL_DAY_OF_WEEK"), wxDefaultPosition, wxDefaultSize, 0);
 	textDOW->Wrap(-1);
 
 	assert(static_cast<size_t>(ARBDayOfWeek::Sunday) == 0);
-	wxString choicesDOW[] =
-	{
+	wxString choicesDOW[] = {
 		_("Sunday"),
 		_("Monday"),
 		_("Tuesday"),
@@ -180,72 +202,90 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 		_("Saturday"),
 	};
 	int numChoicesDOW = sizeof(choicesDOW) / sizeof(choicesDOW[0]);
-	m_ctrlDayOfWeek = new wxChoice(this, wxID_ANY,
-		wxDefaultPosition, wxDefaultSize,
-		numChoicesDOW, choicesDOW, 0);
+	m_ctrlDayOfWeek = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, numChoicesDOW, choicesDOW, 0);
 	m_ctrlDayOfWeek->SetSelection(static_cast<int>(CAgilityBookOptions::GetFirstDayOfWeek()));
 	m_ctrlDayOfWeek->SetHelpText(_("HIDC_OPT_CAL_DAY_OF_WEEK"));
 	m_ctrlDayOfWeek->SetToolTip(_("HIDC_OPT_CAL_DAY_OF_WEEK"));
 
-	wxCheckBox* ctrlAutoDel = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* ctrlAutoDel = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_OPT_CAL_AUTO_DELETE"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bAutoDelete));
 	ctrlAutoDel->SetHelpText(_("HIDC_OPT_CAL_AUTO_DELETE"));
 	ctrlAutoDel->SetToolTip(_("HIDC_OPT_CAL_AUTO_DELETE"));
 
-	wxCheckBox* ctrlHide = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* ctrlHide = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_OPT_CAL_HIDE_OLD"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bHideOld));
 	ctrlHide->SetHelpText(_("HIDC_OPT_CAL_HIDE_OLD"));
 	ctrlHide->SetToolTip(_("HIDC_OPT_CAL_HIDE_OLD"));
 
-	wxStaticText* textPast1 = new wxStaticText(this, wxID_ANY,
-		_("IDC_OPT_CAL_OLD_ENTRY_DAYS"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textPast1
+		= new wxStaticText(this, wxID_ANY, _("IDC_OPT_CAL_OLD_ENTRY_DAYS"), wxDefaultPosition, wxDefaultSize, 0);
 	textPast1->Wrap(-1);
 
-	CTextCtrl* ctrlPast = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), 0,
+	CTextCtrl* ctrlPast = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 20), -1),
+		0,
 		wxGenericValidator(&m_Days));
 	ctrlPast->SetHelpText(_("HIDC_OPT_CAL_OLD_ENTRY_DAYS"));
 	ctrlPast->SetToolTip(_("HIDC_OPT_CAL_OLD_ENTRY_DAYS"));
 
-	wxStaticText* textPast2 = new wxStaticText(this, wxID_ANY,
-		_("IDC_OPT_CAL_OLD_ENTRY_DAYS2"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textPast2
+		= new wxStaticText(this, wxID_ANY, _("IDC_OPT_CAL_OLD_ENTRY_DAYS2"), wxDefaultPosition, wxDefaultSize, 0);
 	textPast2->Wrap(-1);
 
-	wxCheckBox* ctrlHideEntered = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* ctrlHideEntered = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_OPT_CAL_HIDE_OVERLAP"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bHideOverlapping));
 	ctrlHideEntered->SetHelpText(_("HIDC_OPT_CAL_HIDE_OVERLAP"));
 	ctrlHideEntered->SetToolTip(_("HIDC_OPT_CAL_HIDE_OVERLAP"));
 
-	wxCheckBox* ctrlViewOpen = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* ctrlViewOpen = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_OPT_CAL_OPENING"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bOpening));
 	ctrlViewOpen->SetHelpText(_("HIDC_OPT_CAL_OPENING"));
 	ctrlViewOpen->SetToolTip(_("HIDC_OPT_CAL_OPENING"));
 
-	wxCheckBox* ctrlViewClose = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* ctrlViewClose = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_OPT_CAL_CLOSING"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bClosing));
 	ctrlViewClose->SetHelpText(_("HIDC_OPT_CAL_CLOSING"));
 	ctrlViewClose->SetToolTip(_("HIDC_OPT_CAL_CLOSING"));
 
-	wxStaticText* textCalEntry = new wxStaticText(this, wxID_ANY,
-		_("IDC_OPT_CAL_ENTRIES"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textCalEntry
+		= new wxStaticText(this, wxID_ANY, _("IDC_OPT_CAL_ENTRIES"), wxDefaultPosition, wxDefaultSize, 0);
 	textCalEntry->Wrap(-1);
 
-	m_ctrlCalEntries = new wxChoice(this, wxID_ANY,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr, 0);
+	m_ctrlCalEntries = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, nullptr, 0);
 	m_ctrlCalEntries->Bind(wxEVT_COMMAND_CHOICE_SELECTED, &CDlgOptionsCalendar::OnSelchangeCalEntries, this);
 	m_ctrlCalEntries->SetHelpText(_("HIDC_OPT_CAL_ENTRIES"));
 	m_ctrlCalEntries->SetToolTip(_("HIDC_OPT_CAL_ENTRIES"));
@@ -255,27 +295,32 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 	}
 	m_ctrlCalEntries->SetSelection(0);
 
-	m_ctrlColor = new wxStaticText(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(10, 10)), wxSUNKEN_BORDER);
+	m_ctrlColor = new wxStaticText(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(10, 10)),
+		wxSUNKEN_BORDER);
 	m_ctrlColor->Wrap(-1);
 	SetCalColor();
 
-	wxButton* btnColor = new wxButton(this, wxID_ANY,
-		_("IDC_OPT_CAL_COLOR_SET"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* btnColor = new wxButton(this, wxID_ANY, _("IDC_OPT_CAL_COLOR_SET"), wxDefaultPosition, wxDefaultSize, 0);
 	btnColor->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgOptionsCalendar::OnCalColors, this);
 	btnColor->SetHelpText(_("HIDC_OPT_CAL_COLOR_SET"));
 	btnColor->SetToolTip(_("HIDC_OPT_CAL_COLOR_SET"));
 
-	m_ctrlCalView = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		wxTE_MULTILINE|wxTE_READONLY|wxTE_RICH2);
+	m_ctrlCalView = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxTE_MULTILINE | wxTE_READONLY | wxTE_RICH2);
 	m_ctrlCalView->SetFont(m_fontCalView);
 	SetRichText();
 
-	wxButton* ctrlFont = new wxButton(this, wxID_ANY,
-		_("IDC_OPT_CAL_FONT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* ctrlFont = new wxButton(this, wxID_ANY, _("IDC_OPT_CAL_FONT"), wxDefaultPosition, wxDefaultSize, 0);
 	ctrlFont->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgOptionsCalendar::OnFontCalView, this);
 	ctrlFont->SetHelpText(_("HIDC_OPT_CAL_FONT"));
 	ctrlFont->SetToolTip(_("HIDC_OPT_CAL_FONT"));
@@ -386,9 +431,7 @@ void CDlgOptionsCalendar::Save()
 
 	CAgilityBookOptions::SetCalendarOpeningNearColor(m_OpeningNear);
 	CAgilityBookOptions::SetCalendarClosingNearColor(m_ClosingNear);
-	for (std::vector<tColorInfo>::iterator iColor = m_CalColors.begin();
-		iColor != m_CalColors.end();
-		++iColor)
+	for (std::vector<tColorInfo>::iterator iColor = m_CalColors.begin(); iColor != m_CalColors.end(); ++iColor)
 	{
 		CAgilityBookOptions::SetCalendarColor((*iColor).first, (*iColor).second);
 	}
@@ -415,9 +458,7 @@ static std::wstring ForDisplay(std::wstring const& text)
 }
 
 
-std::wstring CDlgOptionsCalendar::GetCalText(
-		ARBCalColorItem type,
-		bool bForDisplay) const
+std::wstring CDlgOptionsCalendar::GetCalText(ARBCalColorItem type, bool bForDisplay) const
 {
 	std::wstring text;
 	switch (type)
@@ -494,9 +535,7 @@ void CDlgOptionsCalendar::SetRichText()
 	endLines.push_back(0);
 
 	std::wstring data;
-	for (std::vector<tColorInfo>::iterator iColor = m_CalColors.begin();
-		iColor != m_CalColors.end();
-		++iColor)
+	for (std::vector<tColorInfo>::iterator iColor = m_CalColors.begin(); iColor != m_CalColors.end(); ++iColor)
 	{
 		data += GetCalText((*iColor).first, true);
 		data += L"\n";
@@ -508,8 +547,8 @@ void CDlgOptionsCalendar::SetRichText()
 	for (size_t i = 1; i < endLines.size(); ++i)
 	{
 		wxTextAttr style;
-		style.SetTextColour(m_CalColors[i-1].second);
-		m_ctrlCalView->SetStyle(endLines[i-1], endLines[i], style);
+		style.SetTextColour(m_CalColors[i - 1].second);
+		m_ctrlCalView->SetStyle(endLines[i - 1], endLines[i], style);
 	}
 }
 

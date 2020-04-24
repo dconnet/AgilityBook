@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBConfigScoring.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -34,7 +34,7 @@ TEST_CASE("ConfigScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static std::wstring GetScoringStyleStr(ARBScoringStyle inStyle);
+			//	static std::wstring GetScoringStyleStr(ARBScoringStyle inStyle);
 		}
 	}
 
@@ -44,7 +44,7 @@ TEST_CASE("ConfigScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBConfigScoringPtr New();
+			//	static ARBConfigScoringPtr New();
 		}
 	}
 
@@ -54,7 +54,7 @@ TEST_CASE("ConfigScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigScoringPtr Clone() const;
+			//	ARBConfigScoringPtr Clone() const;
 		}
 	}
 
@@ -64,7 +64,7 @@ TEST_CASE("ConfigScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigScoring& operator=(ARBConfigScoring const& rhs);
+			//	ARBConfigScoring& operator=(ARBConfigScoring const& rhs);
 		}
 	}
 
@@ -74,8 +74,8 @@ TEST_CASE("ConfigScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBConfigScoring const& rhs) const;
-		//	bool operator!=(ARBConfigScoring const& rhs) const
+			//	bool operator==(ARBConfigScoring const& rhs) const;
+			//	bool operator!=(ARBConfigScoring const& rhs) const
 		}
 	}
 
@@ -85,7 +85,7 @@ TEST_CASE("ConfigScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const
+			//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -95,11 +95,11 @@ TEST_CASE("ConfigScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfigDivisionList const& inDivisions,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfigDivisionList const& inDivisions,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -109,7 +109,7 @@ TEST_CASE("ConfigScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 
@@ -119,7 +119,7 @@ TEST_CASE("ConfigScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool IsValidOn(ARBDate inDate) const
+			//	bool IsValidOn(ARBDate inDate) const
 		}
 	}
 }
@@ -132,11 +132,11 @@ TEST_CASE("ConfigScoringList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfigDivisionList const& inDivisions,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfigDivisionList const& inDivisions,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -146,12 +146,12 @@ TEST_CASE("ConfigScoringList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	size_t FindAllEvents(
-		//			std::wstring const& inDivision,
-		//			std::wstring const& inLevel,
-		//			ARBDate const& inDate,
-		//			bool inTitlePoints,
-		//			ARBVector<ARBConfigScoringPtr>& outList) const;
+			//	size_t FindAllEvents(
+			//			std::wstring const& inDivision,
+			//			std::wstring const& inLevel,
+			//			ARBDate const& inDate,
+			//			bool inTitlePoints,
+			//			ARBVector<ARBConfigScoringPtr>& outList) const;
 		}
 	}
 
@@ -161,11 +161,11 @@ TEST_CASE("ConfigScoringList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindEvent(
-		//			std::wstring const& inDivision,
-		//			std::wstring const& inLevel,
-		//			ARBDate const& inDate,
-		//			ARBConfigScoringPtr* outEvent = nullptr) const;
+			//	bool FindEvent(
+			//			std::wstring const& inDivision,
+			//			std::wstring const& inLevel,
+			//			ARBDate const& inDate,
+			//			ARBConfigScoringPtr* outEvent = nullptr) const;
 		}
 	}
 
@@ -175,10 +175,10 @@ TEST_CASE("ConfigScoringList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool VerifyEvent(
-		//			std::wstring const& inDivision,
-		//			std::wstring const& inLevel,
-		//			ARBDate const& inDate) const;
+			//	bool VerifyEvent(
+			//			std::wstring const& inDivision,
+			//			std::wstring const& inLevel,
+			//			ARBDate const& inDate) const;
 		}
 	}
 
@@ -188,7 +188,7 @@ TEST_CASE("ConfigScoringList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigScoringPtr AddScoring();
+			//	ARBConfigScoringPtr AddScoring();
 		}
 	}
 }

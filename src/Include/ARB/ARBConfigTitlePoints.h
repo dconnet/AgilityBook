@@ -36,20 +36,14 @@ class ARB_API ARBConfigTitlePoints : public ARBBase
 {
 protected:
 	ARBConfigTitlePoints();
-	ARBConfigTitlePoints(
-			double inPoints,
-			double inFaults,
-			ARBPointsType inType);
+	ARBConfigTitlePoints(double inPoints, double inFaults, ARBPointsType inType);
 	ARBConfigTitlePoints(ARBConfigTitlePoints const& rhs);
 	ARBConfigTitlePoints(ARBConfigTitlePoints&& rhs);
 
 public:
 	~ARBConfigTitlePoints();
 	static ARBConfigTitlePointsPtr New();
-	static ARBConfigTitlePointsPtr New(
-			double inPoints,
-			double inFaults,
-			ARBPointsType inType);
+	static ARBConfigTitlePointsPtr New(double inPoints, double inFaults, ARBPointsType inType);
 	ARBConfigTitlePointsPtr Clone() const;
 
 	ARBConfigTitlePoints& operator=(ARBConfigTitlePoints const& rhs);
@@ -87,10 +81,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback,
-			ARBConfigLifetimePointsList& ioLifetimePoints);
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback,
+		ARBConfigLifetimePointsList& ioLifetimePoints);
 
 	/**
 	 * Save a document.
@@ -142,10 +136,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback,
-			ARBConfigLifetimePointsList& ioLifetimePoints);
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback,
+		ARBConfigLifetimePointsList& ioLifetimePoints);
 
 	/**
 	 * Sort the title point objects by faults.
@@ -181,13 +175,13 @@ public:
 	 * @return Number of titling points.
 	 */
 	double GetTitlePoints(
-			double inFaults,
-			double inTime,
-			double inSCT,
-			short inPlace,
-			short inClass,
-			ARBDate inDate,
-			bool isTourney) const;
+		double inFaults,
+		double inTime,
+		double inSCT,
+		short inPlace,
+		short inClass,
+		ARBDate inDate,
+		bool isTourney) const;
 
 	/**
 	 * Find a title points object.
@@ -195,9 +189,7 @@ public:
 	 * @param outPoints Pointer to found object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindTitlePoints(
-			double inFaults,
-			ARBConfigTitlePointsPtr* outPoints = nullptr) const;
+	bool FindTitlePoints(double inFaults, ARBConfigTitlePointsPtr* outPoints = nullptr) const;
 
 	/**
 	 * Add an object.
@@ -206,10 +198,7 @@ public:
 	 * @param outPoints Pointer to new object, NULL if it already exists.
 	 * @return Whether the object was added.
 	 */
-	bool AddTitlePoints(
-			double inPoints,
-			double inFaults,
-			ARBConfigTitlePointsPtr* outPoints = nullptr);
+	bool AddTitlePoints(double inPoints, double inFaults, ARBConfigTitlePointsPtr* outPoints = nullptr);
 
 	/**
 	 * Delete an object.
@@ -217,7 +206,5 @@ public:
 	 * @param inFaults Delete object with the given faults.
 	 * @return Whether object was deleted.
 	 */
-	bool DeleteTitlePoints(
-			ARBPointsType inType,
-			double inFaults);
+	bool DeleteTitlePoints(ARBPointsType inType, double inFaults);
 };

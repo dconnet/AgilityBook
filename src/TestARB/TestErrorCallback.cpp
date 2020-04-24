@@ -31,7 +31,8 @@ class ErrorCallback : public ARBErrorCallback
 public:
 	std::wstring m_Msg;
 
-	ErrorCallback(fmt::wmemory_buffer& inMsg) : ARBErrorCallback(inMsg)
+	ErrorCallback(fmt::wmemory_buffer& inMsg)
+		: ARBErrorCallback(inMsg)
 	{
 	}
 

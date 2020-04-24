@@ -20,9 +20,9 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB_Q.h"
 #include "ARBBase.h"
 #include "ARBTypes2.h"
+#include "ARB_Q.h"
 #include "LibwxARB.h"
 
 
@@ -76,10 +76,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfig const& inConfig,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -186,10 +186,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfig const& inConfig,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Add a reference run.

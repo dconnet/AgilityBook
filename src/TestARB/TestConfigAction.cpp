@@ -21,8 +21,8 @@
 
 #include "TestARB.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBConfigAction.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -33,20 +33,38 @@
 class ActionCallbackStop : public IConfigActionCallback
 {
 public:
-	ActionCallbackStop() {}
-	void PreDelete(std::wstring const& inMsg) override {}
-	void PostDelete(std::wstring const& inMsg) const override {}
-	bool CanContinue() const	 override {return false;}
+	ActionCallbackStop()
+	{
+	}
+	void PreDelete(std::wstring const& inMsg) override
+	{
+	}
+	void PostDelete(std::wstring const& inMsg) const override
+	{
+	}
+	bool CanContinue() const override
+	{
+		return false;
+	}
 };
 
 
 class ActionCallbackContinue : public IConfigActionCallback
 {
 public:
-	ActionCallbackContinue() {}
-	void PreDelete(std::wstring const& inMsg) override {}
-	void PostDelete(std::wstring const& inMsg) const override {}
-	bool CanContinue() const	 override {return true;}
+	ActionCallbackContinue()
+	{
+	}
+	void PreDelete(std::wstring const& inMsg) override
+	{
+	}
+	void PostDelete(std::wstring const& inMsg) const override
+	{
+	}
+	bool CanContinue() const override
+	{
+		return true;
+	}
 };
 
 

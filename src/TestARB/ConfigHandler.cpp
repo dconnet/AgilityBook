@@ -37,10 +37,7 @@
 #endif
 
 
-bool CConfigHandler::LoadWxFile(
-		std::wstring const& zipFile,
-		std::wstring const& archiveFile,
-		std::ostream& outData)
+bool CConfigHandler::LoadWxFile(std::wstring const& zipFile, std::wstring const& archiveFile, std::ostream& outData)
 {
 	CLibArchive archive(zipFile);
 	return archive.ExtractFile(archiveFile, outData);
@@ -61,7 +58,8 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 
 #if defined(__WXWINDOWS__)
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	std::wstring datafile = StringUtil::stringW(GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat");
+	std::wstring datafile
+		= StringUtil::stringW(GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat");
 #else
 #ifdef WIN32
 	wchar_t fileName[MAX_PATH];
@@ -86,7 +84,8 @@ std::string CConfigHandler::LoadDTD() const
 {
 #if defined(__WXWINDOWS__)
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	std::wstring datafile = StringUtil::stringW(GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat");
+	std::wstring datafile
+		= StringUtil::stringW(GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat");
 #else
 #ifdef WIN32
 	wchar_t fileName[MAX_PATH];

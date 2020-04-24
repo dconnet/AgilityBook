@@ -28,11 +28,11 @@ class CDlgClub : public wxDialog
 {
 public:
 	CDlgClub(
-			CAgilityBookDoc* pDoc,
-			ARBDogClubList& inClubs,
-			ARBDogClubPtr const& inClub,
-			bool bShowCoSanction,
-			wxWindow* pParent = nullptr);
+		CAgilityBookDoc* pDoc,
+		ARBDogClubList& inClubs,
+		ARBDogClubPtr const& inClub,
+		bool bShowCoSanction,
+		wxWindow* pParent = nullptr);
 
 	ARBDogClubPtr AddClub(ARBDogClubList& clubs) const;
 

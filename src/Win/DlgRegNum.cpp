@@ -43,10 +43,10 @@ wxEND_EVENT_TABLE()
 
 // If inRegNum is NULL, we're creating a new entry. Otherwise, we're editing an existing.
 CDlgRegNum::CDlgRegNum(
-		ARBConfig const& config,
-		ARBDogRegNumList& regnums,
-		ARBDogRegNumPtr const& inRegNum,
-		wxWindow* pParent)
+	ARBConfig const& config,
+	ARBDogRegNumList& regnums,
+	ARBDogRegNumPtr const& inRegNum,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_RegNums(regnums)
 	, m_pRegNum(inRegNum)
@@ -59,7 +59,13 @@ CDlgRegNum::CDlgRegNum(
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDD_REG_NUM"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		_("IDD_REG_NUM"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	if (m_pRegNum)
 	{
@@ -72,49 +78,62 @@ CDlgRegNum::CDlgRegNum(
 
 	// Controls (these are done first to control tab order)
 
-	wxStaticText* textVenue = new wxStaticText(this, wxID_ANY,
-		_("IDC_REGNUM_VENUES"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textVenue
+		= new wxStaticText(this, wxID_ANY, _("IDC_REGNUM_VENUES"), wxDefaultPosition, wxDefaultSize, 0);
 	textVenue->Wrap(-1);
 
-	m_ctrlVenues = new CVenueComboBox(this,
-		config.GetVenues(), m_Venue, false,
-		wxGenericValidator(&m_Venue));
+	m_ctrlVenues = new CVenueComboBox(this, config.GetVenues(), m_Venue, false, wxGenericValidator(&m_Venue));
 	m_ctrlVenues->SetHelpText(_("HIDC_REGNUM_VENUES"));
 	m_ctrlVenues->SetToolTip(_("HIDC_REGNUM_VENUES"));
 
-	wxStaticText* textRegNum = new wxStaticText(this, wxID_ANY,
-		_("IDC_REGNUM_REG_NUM"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textRegNum
+		= new wxStaticText(this, wxID_ANY, _("IDC_REGNUM_REG_NUM"), wxDefaultPosition, wxDefaultSize, 0);
 	textRegNum->Wrap(-1);
 
-	CTextCtrl* ctrlRegNum = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(60, -1)), 0,
+	CTextCtrl* ctrlRegNum = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(60, -1)),
+		0,
 		CTrimValidator(&m_RegNum));
 	ctrlRegNum->SetHelpText(_("HIDC_REGNUM_REG_NUM"));
 	ctrlRegNum->SetToolTip(_("HIDC_REGNUM_REG_NUM"));
 
-	wxStaticText* textHeight = new wxStaticText(this, wxID_ANY,
-		_("IDC_REGNUM_HEIGHT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textHeight
+		= new wxStaticText(this, wxID_ANY, _("IDC_REGNUM_HEIGHT"), wxDefaultPosition, wxDefaultSize, 0);
 	textHeight->Wrap(-1);
 
-	CTextCtrl* ctrlHeight = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(30, -1)), 0,
+	CTextCtrl* ctrlHeight = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(30, -1)),
+		0,
 		CTrimValidator(&m_Height, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlHeight->SetHelpText(_("HIDC_REGNUM_HEIGHT"));
 	ctrlHeight->SetToolTip(_("HIDC_REGNUM_HEIGHT"));
 
-	wxCheckBox* checkReceived = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* checkReceived = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_REGNUM_RECEIVED"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bReceived));
 	checkReceived->SetHelpText(_("HIDC_REGNUM_RECEIVED"));
 	checkReceived->SetToolTip(_("HIDC_REGNUM_RECEIVED"));
 
-	CSpellCheckCtrl* ctrlDesc = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(200, 50)),
-		wxTE_MULTILINE|wxTE_WORDWRAP,
+	CSpellCheckCtrl* ctrlDesc = new CSpellCheckCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(200, 50)),
+		wxTE_MULTILINE | wxTE_WORDWRAP,
 		CTrimValidator(&m_Note, TRIMVALIDATOR_TRIM_RIGHT));
 	ctrlDesc->SetHelpText(_("HIDC_REGNUM_NOTE"));
 	ctrlDesc->SetToolTip(_("HIDC_REGNUM_NOTE"));
@@ -151,7 +170,7 @@ CDlgRegNum::CDlgRegNum(
 	GetSizer()->Fit(this);
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
-	
+
 	IMPLEMENT_ON_INIT(CDlgRegNum, m_ctrlVenues)
 }
 

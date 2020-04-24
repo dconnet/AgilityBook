@@ -39,13 +39,9 @@ public:
 	~CVersionNum()
 	{
 	}
-	CVersionNum(
-			unsigned short inMajor,
-			unsigned short inMinor,
-			unsigned short inDot,
-			unsigned short inBuild)
+	CVersionNum(unsigned short inMajor, unsigned short inMinor, unsigned short inDot, unsigned short inBuild)
 		: m_Valid(true)
-		, m_Version({ inMajor, inMinor, inDot, inBuild })
+		, m_Version({inMajor, inMinor, inDot, inBuild})
 	{
 	}
 	CVersionNum(std::wstring const& inVer)
@@ -88,29 +84,40 @@ public:
 	 */
 	bool Parse(std::wstring const& inVer);
 
-	void Assign(
-			unsigned short inMajor,
-			unsigned short inMinor,
-			unsigned short inDot,
-			unsigned short inBuild)
+	void Assign(unsigned short inMajor, unsigned short inMinor, unsigned short inDot, unsigned short inBuild)
 	{
 		m_Valid = (inMajor > 0 || inMinor > 0 || inDot > 0 || inBuild > 0);
-		m_Version = { inMajor, inMinor, inDot, inBuild };
+		m_Version = {inMajor, inMinor, inDot, inBuild};
 	}
 
 	/**
 	 * Equality is based solely on the version number, not any language aspects.
 	 */
-	bool operator==(CVersionNum const& rhs) const { return m_Version == rhs.m_Version; }
-	bool operator<(CVersionNum const& rhs) const { return m_Version < rhs.m_Version; }
-	bool operator<=(CVersionNum const& rhs) const { return operator==(rhs) || rhs.operator>(*this); }
-	bool operator>(CVersionNum const& rhs) const { return m_Version > rhs.m_Version; }
-	bool operator>=(CVersionNum const& rhs) const { return operator==(rhs) || rhs.operator<(*this); }
+	bool operator==(CVersionNum const& rhs) const
+	{
+		return m_Version == rhs.m_Version;
+	}
+	bool operator<(CVersionNum const& rhs) const
+	{
+		return m_Version < rhs.m_Version;
+	}
+	bool operator<=(CVersionNum const& rhs) const
+	{
+		return operator==(rhs) || rhs.operator>(*this);
+	}
+	bool operator>(CVersionNum const& rhs) const
+	{
+		return m_Version > rhs.m_Version;
+	}
+	bool operator>=(CVersionNum const& rhs) const
+	{
+		return operator==(rhs) || rhs.operator<(*this);
+	}
 
 	void clear()
 	{
 		m_Valid = false;
-		m_Version = { 0, 0, 0, 0 };
+		m_Version = {0, 0, 0, 0};
 	}
 
 	bool Valid() const

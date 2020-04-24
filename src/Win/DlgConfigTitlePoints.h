@@ -18,8 +18,8 @@
  * 2004-10-06 Removed ARB classes so it could be used to lifetime pts.
  */
 
-#include "ARB/ARBTypes2.h"
 #include "ARB/ARBCalcPoints.h"
+#include "ARB/ARBTypes2.h"
 class CTextCtrl;
 
 
@@ -39,25 +39,46 @@ class CDlgConfigTitlePoints : public wxDialog
 
 public:
 	CDlgConfigTitlePoints(
-			ARBConfigVenuePtr const& inVenue,
-			double inValue, // Faults or Place
-			double inPoints,
-			ARBTitlePointType inType,
-			ARBPointsType inTypeNormal,
-			wxWindow* pParent = nullptr);
+		ARBConfigVenuePtr const& inVenue,
+		double inValue, // Faults or Place
+		double inPoints,
+		ARBTitlePointType inType,
+		ARBPointsType inTypeNormal,
+		wxWindow* pParent = nullptr);
 
 	CDlgConfigTitlePoints(
-			ARBConfigVenuePtr const& inVenue,
-			ARBConfigLifetimePointsPtr const& inLifetime,
-			wxWindow* pParent = nullptr);
+		ARBConfigVenuePtr const& inVenue,
+		ARBConfigLifetimePointsPtr const& inLifetime,
+		wxWindow* pParent = nullptr);
 
-	double Faults() const				{return m_Faults;}
-	short Place() const					{return m_Place;}
-	bool UseSpeedPts() const			{return m_bSpeed;}
-	double Points() const				{return m_Points;}
-	wxString LifetimeName() const		{return m_LifetimeName;}
-	ARBTitlePointType Type() const		{return m_Type;}
-	ARBPointsType TypeNormal() const	{return m_TypeNormal;}
+	double Faults() const
+	{
+		return m_Faults;
+	}
+	short Place() const
+	{
+		return m_Place;
+	}
+	bool UseSpeedPts() const
+	{
+		return m_bSpeed;
+	}
+	double Points() const
+	{
+		return m_Points;
+	}
+	wxString LifetimeName() const
+	{
+		return m_LifetimeName;
+	}
+	ARBTitlePointType Type() const
+	{
+		return m_Type;
+	}
+	ARBPointsType TypeNormal() const
+	{
+		return m_TypeNormal;
+	}
 
 private:
 	ARBConfigVenuePtr m_Venue;

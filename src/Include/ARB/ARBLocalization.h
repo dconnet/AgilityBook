@@ -40,8 +40,12 @@ class ARB_API IARBLocalization
 	DECLARE_NO_COPY_IMPLEMENTED(IARBLocalization)
 public:
 	static void Init(IARBLocalization const* pLocalization);
-	IARBLocalization() {}
-	virtual ~IARBLocalization() {}
+	IARBLocalization()
+	{
+	}
+	virtual ~IARBLocalization()
+	{
+	}
 
 	// Used when loading data.
 	virtual std::wstring UnknownVersion() const = 0;
@@ -70,7 +74,7 @@ public:
 	virtual std::wstring CalendarTentative() const = 0;
 	virtual std::wstring CalendarPast() const = 0;
 	virtual std::wstring CalendarNotEntered() const = 0;
-	virtual std::wstring CalendarEntered() const	 = 0;
+	virtual std::wstring CalendarEntered() const = 0;
 	virtual std::wstring CalendarPending() const = 0;
 	virtual std::wstring CalendarPlanning() const = 0;
 	virtual std::wstring CalendarStatusN() const = 0;
@@ -108,91 +112,63 @@ public:
 
 	// Used in ARBConfigAction.cpp
 	virtual std::wstring ActionDeleteCalPlugin(std::wstring const& name) const = 0;
-	virtual std::wstring ActionRenameOtherPoints(
-			std::wstring const& oldName,
-			std::wstring const& newName,
-			int nChanges) const = 0;
-	virtual std::wstring ActionPreDeleteOtherPoints(
-			std::wstring const& name,
-			int nChanges) const = 0;
+	virtual std::wstring ActionRenameOtherPoints(std::wstring const& oldName, std::wstring const& newName, int nChanges)
+		const = 0;
+	virtual std::wstring ActionPreDeleteOtherPoints(std::wstring const& name, int nChanges) const = 0;
 	virtual std::wstring ActionDeleteOtherPoints(std::wstring const& name) const = 0;
-	virtual std::wstring ActionRenameVenue(
-			std::wstring const& oldName,
-			std::wstring const& newName,
-			int nChanges) const = 0;
-	virtual std::wstring ActionPreDeleteVenue(
-			std::wstring const& name,
-			int nChanges) const = 0;
+	virtual std::wstring ActionRenameVenue(std::wstring const& oldName, std::wstring const& newName, int nChanges)
+		const = 0;
+	virtual std::wstring ActionPreDeleteVenue(std::wstring const& name, int nChanges) const = 0;
 	virtual std::wstring ActionDeleteVenue(std::wstring const& name) const = 0;
 	virtual std::wstring ActionRenameMultiQ(
-			std::wstring const& venue,
-			std::wstring const& oldName,
-			std::wstring const& newName,
-			int nChanges) const = 0;
-	virtual std::wstring ActionPreDeleteMultiQ(
-			std::wstring const& venue,
-			std::wstring const& name,
-			int nChanges) const = 0;
-	virtual std::wstring ActionDeleteMultiQ(
-			std::wstring const& venue,
-			std::wstring const& name) const = 0;
+		std::wstring const& venue,
+		std::wstring const& oldName,
+		std::wstring const& newName,
+		int nChanges) const = 0;
+	virtual std::wstring ActionPreDeleteMultiQ(std::wstring const& venue, std::wstring const& name, int nChanges)
+		const = 0;
+	virtual std::wstring ActionDeleteMultiQ(std::wstring const& venue, std::wstring const& name) const = 0;
 	virtual std::wstring ActionRenameDivision(
-			std::wstring const& venue,
-			std::wstring const& oldName,
-			std::wstring const& newName,
-			int nChanges) const = 0;
-	virtual std::wstring ActionPreDeleteDivision(
-			std::wstring const& venue,
-			std::wstring const& name,
-			int nChanges) const = 0;
-	virtual std::wstring ActionDeleteDivision(
-			std::wstring const& venue,
-			std::wstring const& name) const = 0;
+		std::wstring const& venue,
+		std::wstring const& oldName,
+		std::wstring const& newName,
+		int nChanges) const = 0;
+	virtual std::wstring ActionPreDeleteDivision(std::wstring const& venue, std::wstring const& name, int nChanges)
+		const = 0;
+	virtual std::wstring ActionDeleteDivision(std::wstring const& venue, std::wstring const& name) const = 0;
 	virtual std::wstring ActionRenameLevel(
-			std::wstring const& venue,
-			std::wstring const& oldName,
-			std::wstring const& newName,
-			int nChanges) const = 0;
-	virtual std::wstring ActionPreDeleteLevel(
-			std::wstring const& venue,
-			std::wstring const& name,
-			int nChanges) const = 0;
-	virtual std::wstring ActionDeleteLevel(
-			std::wstring const& venue,
-			std::wstring const& name) const = 0;
+		std::wstring const& venue,
+		std::wstring const& oldName,
+		std::wstring const& newName,
+		int nChanges) const = 0;
+	virtual std::wstring ActionPreDeleteLevel(std::wstring const& venue, std::wstring const& name, int nChanges)
+		const = 0;
+	virtual std::wstring ActionDeleteLevel(std::wstring const& venue, std::wstring const& name) const = 0;
 	virtual std::wstring ActionRenameTitle(
-			std::wstring const& venue,
-			std::wstring const& oldName,
-			std::wstring const& newName,
-			int nChanges) const = 0;
-	virtual std::wstring ActionPreDeleteTitle(
-			std::wstring const& venue,
-			std::wstring const& name,
-			int nChanges) const = 0;
-	virtual std::wstring ActionDeleteTitle(
-			std::wstring const& venue,
-			std::wstring const& name) const = 0;
+		std::wstring const& venue,
+		std::wstring const& oldName,
+		std::wstring const& newName,
+		int nChanges) const = 0;
+	virtual std::wstring ActionPreDeleteTitle(std::wstring const& venue, std::wstring const& name, int nChanges)
+		const = 0;
+	virtual std::wstring ActionDeleteTitle(std::wstring const& venue, std::wstring const& name) const = 0;
 	virtual std::wstring ActionRenameEvent(
-			std::wstring const& venue,
-			std::wstring const& oldName,
-			std::wstring const& newName,
-			int nChanges) const = 0;
-	virtual std::wstring ActionPreDeleteEvent(
-			std::wstring const& venue,
-			std::wstring const& name,
-			int nChanges) const = 0;
-	virtual std::wstring ActionDeleteEvent(
-			std::wstring const& venue,
-			std::wstring const& name) const = 0;
+		std::wstring const& venue,
+		std::wstring const& oldName,
+		std::wstring const& newName,
+		int nChanges) const = 0;
+	virtual std::wstring ActionPreDeleteEvent(std::wstring const& venue, std::wstring const& name, int nChanges)
+		const = 0;
+	virtual std::wstring ActionDeleteEvent(std::wstring const& venue, std::wstring const& name) const = 0;
 	virtual std::wstring ActionRenameLifetimeName(
-			std::wstring const& venue,
-			std::wstring const& oldName,
-			std::wstring const& newName,
-			int nEventChanges) const = 0;
+		std::wstring const& venue,
+		std::wstring const& oldName,
+		std::wstring const& newName,
+		int nEventChanges) const = 0;
 	virtual std::wstring ActionDeleteLifetimeName(
-			std::wstring const& venue,
-			std::wstring const& name,
-			int nEventChanges) const = 0;
+		std::wstring const& venue,
+		std::wstring const& name,
+		int nEventChanges) const = 0;
 
 	// Used in ARBConfigTitlePoints.cpp
 	virtual std::wstring TitlePointsNameFormat(double points, double faults) const = 0;
@@ -239,9 +215,9 @@ public:
 	 * @return Message with newline.
 	 */
 	virtual std::wstring ErrorMissingAttribute(
-			wchar_t const* const inElement,
-			wchar_t const* const inAttrib,
-			wchar_t const* const inMsg = nullptr) const = 0;
+		wchar_t const* const inElement,
+		wchar_t const* const inAttrib,
+		wchar_t const* const inMsg = nullptr) const = 0;
 
 	/**
 	 * Return an error message about an invalid value in an attribute.
@@ -252,9 +228,9 @@ public:
 	 * @return Message with newline.
 	 */
 	virtual std::wstring ErrorInvalidAttributeValue(
-			wchar_t const* const inElement,
-			wchar_t const* const inAttrib,
-			wchar_t const* const inMsg = nullptr) const = 0;
+		wchar_t const* const inElement,
+		wchar_t const* const inAttrib,
+		wchar_t const* const inMsg = nullptr) const = 0;
 };
 
 

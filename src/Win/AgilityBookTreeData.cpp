@@ -96,9 +96,7 @@ std::vector<long> const& CAgilityBookTreeData::GetRunColumns() const
 
 ////////////////////////////////////////////////////////////////////////////
 
-CAgilityBookTreeDataDog::CAgilityBookTreeDataDog(
-		CAgilityBookTreeView* pTree,
-		ARBDogPtr const& inDog)
+CAgilityBookTreeDataDog::CAgilityBookTreeDataDog(CAgilityBookTreeView* pTree, ARBDogPtr const& inDog)
 	: CAgilityBookTreeData(pTree)
 	, m_pDog(inDog)
 {
@@ -141,7 +139,7 @@ std::wstring CAgilityBookTreeDataDog::OnNeedText() const
 				if (m_pDog->GetDeceased().IsValid())
 					m_pDog->GetDeceased().GetDate(current);
 				wxTimeSpan age = current - dob;
-				fmt::format_to(str, _("IDS_YEARS").wx_str(), ARBDouble::ToString(age.GetDays()/365.0, 1));
+				fmt::format_to(str, _("IDS_YEARS").wx_str(), ARBDouble::ToString(age.GetDays() / 365.0, 1));
 			}
 			break;
 		}
@@ -201,7 +199,11 @@ bool CAgilityBookTreeDataDog::DoDelete(bool bSilent)
 {
 	bool bModified = false;
 	if (bSilent
-	|| wxYES == wxMessageBox(_("IDS_DELETE_DOG_DATA"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
+		|| wxYES
+			   == wxMessageBox(
+				   _("IDS_DELETE_DOG_DATA"),
+				   wxMessageBoxCaptionStr,
+				   wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
 	{
 		CAgilityBookDoc* pDoc = m_pTree->GetDocument();
 		if (GetId().IsOk() && pDoc->Book().GetDogs().DeleteDog(m_pDog))
@@ -221,9 +223,7 @@ bool CAgilityBookTreeDataDog::DoDelete(bool bSilent)
 
 /////////////////////////////////////////////////////////////////////////////
 
-CAgilityBookTreeDataTrial::CAgilityBookTreeDataTrial(
-		CAgilityBookTreeView* pTree,
-		ARBDogTrialPtr const& inTrial)
+CAgilityBookTreeDataTrial::CAgilityBookTreeDataTrial(CAgilityBookTreeView* pTree, ARBDogTrialPtr const& inTrial)
 	: CAgilityBookTreeData(pTree)
 	, m_pTrial(inTrial)
 	, m_idxIcon(-1)
@@ -299,7 +299,7 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 			{
 				if (bNeedSpace)
 				{
-					if (IO_TREE_TRIAL_END == GetTrialColumns()[idx-1])
+					if (IO_TREE_TRIAL_END == GetTrialColumns()[idx - 1])
 						fmt::format_to(str, L"-");
 					else
 						fmt::format_to(str, L" ");
@@ -313,7 +313,7 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 			{
 				if (bNeedSpace)
 				{
-					if (IO_TREE_TRIAL_START == GetTrialColumns()[idx-1])
+					if (IO_TREE_TRIAL_START == GetTrialColumns()[idx - 1])
 						fmt::format_to(str, L"-");
 					else
 						fmt::format_to(str, L" ");
@@ -332,21 +332,21 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 			bNeedSpace = true;
 			break;
 		case IO_TREE_TRIAL_CLUB:
-			{
-				if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
-					fmt::format_to(str, L" ");
-				fmt::format_to(str, L"{}", m_pTrial->GetClubs().GetClubList(true));
-				bNeedSpace = true;
-			}
-			break;
+		{
+			if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
+				fmt::format_to(str, L" ");
+			fmt::format_to(str, L"{}", m_pTrial->GetClubs().GetClubList(true));
+			bNeedSpace = true;
+		}
+		break;
 		case IO_TREE_TRIAL_VENUE:
-			{
-				if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
-					fmt::format_to(str, L" ");
-				fmt::format_to(str, L"{}", m_pTrial->GetClubs().GetClubList(false));
-				bNeedSpace = true;
-			}
-			break;
+		{
+			if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
+				fmt::format_to(str, L" ");
+			fmt::format_to(str, L"{}", m_pTrial->GetClubs().GetClubList(false));
+			bNeedSpace = true;
+		}
+		break;
 		case IO_TREE_TRIAL_LOCATION:
 			if (!m_pTrial->GetLocation().empty())
 			{
@@ -435,9 +435,7 @@ bool CAgilityBookTreeDataTrial::DoDelete(bool bSilent)
 
 /////////////////////////////////////////////////////////////////////////////
 
-CAgilityBookTreeDataRun::CAgilityBookTreeDataRun(
-		CAgilityBookTreeView* pTree,
-		ARBDogRunPtr const& inRun)
+CAgilityBookTreeDataRun::CAgilityBookTreeDataRun(CAgilityBookTreeView* pTree, ARBDogRunPtr const& inRun)
 	: CAgilityBookTreeData(pTree)
 	, m_pRun(inRun)
 {
@@ -542,33 +540,34 @@ std::wstring CAgilityBookTreeDataRun::OnNeedText() const
 			fmt::format_to(str, L"{}", m_pRun->GetDate().GetString());
 			break;
 		case IO_TREE_RUN_Q:
+		{
+			std::wstring q;
+			if (m_pRun->GetQ().Qualified())
 			{
-				std::wstring q;
-				if (m_pRun->GetQ().Qualified())
+				std::vector<ARBConfigMultiQPtr> multiQs;
+				if (0 < m_pRun->GetMultiQs(multiQs))
 				{
-					std::vector<ARBConfigMultiQPtr> multiQs;
-					if (0 < m_pRun->GetMultiQs(multiQs))
+					for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin(); iMultiQ != multiQs.end();
+						 ++iMultiQ)
 					{
-						for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin(); iMultiQ != multiQs.end(); ++iMultiQ)
-						{
-							if (!q.empty())
-								q += L"/";
-							q += (*iMultiQ)->GetShortName();
-						}
-					}
-					if (Q::SuperQ == m_pRun->GetQ())
-					{
-						std::wstring tmp(StringUtil::stringW(_("IDS_SQ")));
 						if (!q.empty())
 							q += L"/";
-						q += tmp;
+						q += (*iMultiQ)->GetShortName();
 					}
 				}
-				if (q.empty())
-					q = m_pRun->GetQ().str();
-				fmt::format_to(str, L"{}", q);
+				if (Q::SuperQ == m_pRun->GetQ())
+				{
+					std::wstring tmp(StringUtil::stringW(_("IDS_SQ")));
+					if (!q.empty())
+						q += L"/";
+					q += tmp;
+				}
 			}
-			break;
+			if (q.empty())
+				q = m_pRun->GetQ().str();
+			fmt::format_to(str, L"{}", q);
+		}
+		break;
 		case IO_TREE_RUN_EVENT:
 			if (m_pRun->GetSubName().empty())
 				fmt::format_to(str, L"{}", m_pRun->GetEvent());
@@ -613,7 +612,10 @@ bool CAgilityBookTreeDataRun::DoCopy()
 		{
 			wxBusyCursor wait;
 			ElementNodePtr tree(ElementNode::New(CLIPDATA));
-			GetRun()->Save(tree, nullptr, m_pTree->GetDocument()->Book().GetConfig()); // copy/paste: title points don't matter
+			GetRun()->Save(
+				tree,
+				nullptr,
+				m_pTree->GetDocument()->Book().GetConfig()); // copy/paste: title points don't matter
 			clpData.AddData(ARBClipFormat::Run, tree);
 			clpData.AddData(m_pTree->GetPrintLine(GetId()));
 			clpData.CommitData();
@@ -643,5 +645,5 @@ bool CAgilityBookTreeDataRun::DoDelete(bool bSilent)
 {
 	if (!GetRun())
 		return false;
-	return m_pTree->GetDocument()->DeleteRuns({ GetRun() }, bSilent);
+	return m_pTree->GetDocument()->DeleteRuns({GetRun()}, bSilent);
 }

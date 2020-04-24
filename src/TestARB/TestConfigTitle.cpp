@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBConfigTitle.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -34,7 +34,7 @@ TEST_CASE("ConfigTitle")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBConfigTitlePtr New();
+			//	static ARBConfigTitlePtr New();
 		}
 	}
 
@@ -44,7 +44,7 @@ TEST_CASE("ConfigTitle")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigTitlePtr Clone() const;
+			//	ARBConfigTitlePtr Clone() const;
 		}
 	}
 
@@ -54,7 +54,7 @@ TEST_CASE("ConfigTitle")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigTitle& operator=(ARBConfigTitle const& rhs);
+			//	ARBConfigTitle& operator=(ARBConfigTitle const& rhs);
 		}
 	}
 
@@ -64,8 +64,8 @@ TEST_CASE("ConfigTitle")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBConfigTitle const& rhs) const;
-		//	bool operator!=(ARBConfigTitle const& rhs) const
+			//	bool operator==(ARBConfigTitle const& rhs) const;
+			//	bool operator!=(ARBConfigTitle const& rhs) const
 		}
 	}
 
@@ -75,7 +75,7 @@ TEST_CASE("ConfigTitle")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void clear();
+			//	void clear();
 		}
 	}
 
@@ -85,7 +85,7 @@ TEST_CASE("ConfigTitle")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const
+			//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -95,10 +95,10 @@ TEST_CASE("ConfigTitle")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -108,7 +108,7 @@ TEST_CASE("ConfigTitle")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 
@@ -118,7 +118,7 @@ TEST_CASE("ConfigTitle")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool IsValidOn(ARBDate inDate) const
+			//	bool IsValidOn(ARBDate inDate) const
 		}
 	}
 
@@ -128,7 +128,7 @@ TEST_CASE("ConfigTitle")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	std::wstring const& GetNiceName() const
+			//	std::wstring const& GetNiceName() const
 		}
 	}
 
@@ -138,11 +138,11 @@ TEST_CASE("ConfigTitle")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	std::wstring GetCompleteName(
-		//			short inInstance = 0,
-		//			bool bShowInstance = false,
-		//			bool bAbbrevFirst = true,
-		//			bool bAddDates = false) const;
+			//	std::wstring GetCompleteName(
+			//			short inInstance = 0,
+			//			bool bShowInstance = false,
+			//			bool bAbbrevFirst = true,
+			//			bool bAddDates = false) const;
 		}
 	}
 }
@@ -155,11 +155,11 @@ TEST_CASE("ConfigTitleList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback,
-		//			bool inCheckDups = false);
+			//	bool Load(
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback,
+			//			bool inCheckDups = false);
 		}
 	}
 
@@ -169,7 +169,7 @@ TEST_CASE("ConfigTitleList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void ReorderBy(ARBConfigTitleList const& inList);
+			//	void ReorderBy(ARBConfigTitleList const& inList);
 			// Make sure the target config has a title that the source config does not
 		}
 	}
@@ -180,12 +180,12 @@ TEST_CASE("ConfigTitleList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindTitleCompleteName(
-		//			std::wstring const& inName,
-		//			short inInstance,
-		//			bool bShowInstance,
-		//			bool bAbbrevFirst = true,
-		//			ARBConfigTitlePtr* outTitle = nullptr) const;
+			//	bool FindTitleCompleteName(
+			//			std::wstring const& inName,
+			//			short inInstance,
+			//			bool bShowInstance,
+			//			bool bAbbrevFirst = true,
+			//			ARBConfigTitlePtr* outTitle = nullptr) const;
 		}
 	}
 
@@ -195,9 +195,9 @@ TEST_CASE("ConfigTitleList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindTitle(
-		//			std::wstring const& inName,
-		//			ARBConfigTitlePtr* outTitle = nullptr) const;
+			//	bool FindTitle(
+			//			std::wstring const& inName,
+			//			ARBConfigTitlePtr* outTitle = nullptr) const;
 		}
 	}
 
@@ -207,11 +207,11 @@ TEST_CASE("ConfigTitleList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddTitle(
-		//			std::wstring const& inName,
-		//			ARBConfigTitlePtr* outTitle = nullptr);
-		//	bool AddTitle(ARBConfigTitlePtr inTitle);
-		//	bool DeleteTitle(std::wstring const& inName);
+			//	bool AddTitle(
+			//			std::wstring const& inName,
+			//			ARBConfigTitlePtr* outTitle = nullptr);
+			//	bool AddTitle(ARBConfigTitlePtr inTitle);
+			//	bool DeleteTitle(std::wstring const& inName);
 		}
 	}
 }

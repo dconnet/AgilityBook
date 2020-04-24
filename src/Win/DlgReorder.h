@@ -27,15 +27,12 @@ class wxTreeEvent;
 class CDlgReorder : public wxDialog
 {
 public:
+	CDlgReorder(CAgilityBookDoc* pDoc, ARBDogList* dogs, wxWindow* pParent = nullptr);
 	CDlgReorder(
-			CAgilityBookDoc* pDoc,
-			ARBDogList* dogs,
-			wxWindow* pParent = nullptr);
-	CDlgReorder(
-			CAgilityBookDoc* pDoc,
-			ARBDogTrialPtr const& inTrial,
-			ARBDogRunPtr const& inRun,
-			wxWindow* pParent = nullptr);
+		CAgilityBookDoc* pDoc,
+		ARBDogTrialPtr const& inTrial,
+		ARBDogRunPtr const& inRun,
+		wxWindow* pParent = nullptr);
 
 private:
 	CAgilityBookDoc* m_pDoc;

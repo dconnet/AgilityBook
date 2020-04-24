@@ -41,7 +41,10 @@ public:
 		m_filenames.push_back(m_filename);
 	}
 
-	wxString FileName() const { return m_filename; }
+	wxString FileName() const
+	{
+		return m_filename;
+	}
 
 	~SetFiles()
 	{
@@ -121,7 +124,7 @@ public:
 						return false;
 					continue;
 				}
-				wxTextFile file(m_filenames[i-1]);
+				wxTextFile file(m_filenames[i - 1]);
 				if (!file.Open())
 					return false;
 #pragma PRAGMA_TODO("Validity test that files renamed properly")

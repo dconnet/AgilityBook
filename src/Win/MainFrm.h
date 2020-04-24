@@ -22,11 +22,11 @@
 #include <wx/dnd.h>
 #include <wx/docview.h>
 
-#define STATUS_INFO			0
-#define STATUS_DOG			1
-#define STATUS_STATUS		2
-#define STATUS_FILTERED		3
-#define NUM_STATUS_FIELDS	4
+#define STATUS_INFO       0
+#define STATUS_DOG        1
+#define STATUS_STATUS     2
+#define STATUS_FILTERED   3
+#define NUM_STATUS_FIELDS 4
 
 
 #if wxUSE_DRAG_AND_DROP
@@ -38,10 +38,8 @@ public:
 		: m_docMgr(docMgr)
 	{
 	}
-	bool OnDropFiles(
-			wxCoord x,
-			wxCoord y,
-			wxArrayString const& filenames) override;
+	bool OnDropFiles(wxCoord x, wxCoord y, wxArrayString const& filenames) override;
+
 private:
 	wxDocManager* m_docMgr;
 };
@@ -56,9 +54,7 @@ public:
 	CMainFrame(wxDocManager* manager);
 	~CMainFrame();
 
-	void SetMessageText(
-			std::wstring const& msg,
-			bool bFiltered);
+	void SetMessageText(std::wstring const& msg, bool bFiltered);
 	void SetMessageText2(std::wstring const& msg);
 
 private:

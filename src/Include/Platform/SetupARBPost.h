@@ -35,9 +35,9 @@
 // For _() usage when used indirectly.
 // poedit is configured to also look for these.
 #if defined(UNICODE) || defined(_UNICODE)
-#define arbT(x)	L##x
+#define arbT(x) L##x
 #else
-#define arbT(x)	x
+#define arbT(x) x
 #endif
 
 #if !defined(_MSC_VER)
@@ -88,7 +88,7 @@
 // Copied from WinUser.h for Win8.1 DPI per-monitor support
 #ifdef WIN32
 #ifndef WM_DPICHANGED
-#define WM_DPICHANGED		0x02E0
+#define WM_DPICHANGED 0x02E0
 #endif
 #endif
 
@@ -96,6 +96,7 @@
 // we're just not going to deal with at this time.
 #ifdef _MSC_VER
 
+// clang-format off
 #pragma warning (disable : 26415) // Smart pointer parameter '<var>' is used only to access contained pointer. Use T* or T& instead (r.30).
 #pragma warning (disable : 26418) // Shared pointer parameter '<var>' is not copied or moved. Use T* or T& instead (r.36).
 #pragma warning (disable : 26426) // Global initializer calls a non-constexpr function '<val>' (i.22).
@@ -117,5 +118,6 @@
 #pragma warning (disable : 26486) // Don't pass a pointer that may be invalid to a function. ... (lifetime.1).
 #pragma warning (disable : 26489) // Don't dereference a pointer that may be invalid: '<var>'. '<var>' may have been invalidated at line <line> (lifetime.1).
 #pragma warning (disable : 26496) // The variable '<var>' is assigned only once, mark it as const (con.4).
+// clang-format on
 
 #endif

@@ -23,13 +23,19 @@ class CDlgConfigPlaceInfo : public wxDialog
 {
 public:
 	CDlgConfigPlaceInfo(
-			std::vector<short> const& inExistingPlaces,
-			short inPlace,
-			double inValue,
-			wxWindow* pParent = nullptr);
+		std::vector<short> const& inExistingPlaces,
+		short inPlace,
+		double inValue,
+		wxWindow* pParent = nullptr);
 
-	short GetPlace() const		{return m_Place;}
-	double GetValue() const		{return m_Value;}
+	short GetPlace() const
+	{
+		return m_Place;
+	}
+	double GetValue() const
+	{
+		return m_Value;
+	}
 
 private:
 	short m_Place;

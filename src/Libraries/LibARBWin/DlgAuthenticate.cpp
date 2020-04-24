@@ -32,10 +32,10 @@
 
 
 CDlgAuthenticate::CDlgAuthenticate(
-		std::wstring const& userName,
-		wxWindow* parent,
-		std::wstring caption,
-		std::wstring message)
+	std::wstring const& userName,
+	wxWindow* parent,
+	std::wstring caption,
+	std::wstring message)
 	: wxDialog()
 	, m_Name(userName.c_str())
 {
@@ -51,20 +51,28 @@ CDlgAuthenticate::CDlgAuthenticate(
 		textMsg->Wrap(-1);
 	}
 
-	wxStaticText* textUserName = new wxStaticText(this, wxID_ANY, _("User Name"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textUserName = new wxStaticText(this, wxID_ANY, _("User Name"), wxDefaultPosition, wxDefaultSize, 0);
 	textUserName->Wrap(-1);
 
-	CTextCtrl* ctrlUsername = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(100, -1)), 0,
+	CTextCtrl* ctrlUsername = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(100, -1)),
+		0,
 		wxGenericValidator(&m_Name));
 
-	wxStaticText* textPassword = new wxStaticText(this, wxID_ANY, _("Password"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textPassword = new wxStaticText(this, wxID_ANY, _("Password"), wxDefaultPosition, wxDefaultSize, 0);
 	textPassword->Wrap(-1);
 
-	CTextCtrl* ctrlPassword = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(100, -1)), wxTE_PASSWORD,
+	CTextCtrl* ctrlPassword = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(100, -1)),
+		wxTE_PASSWORD,
 		wxGenericValidator(&m_Password));
 
 	// Sizers

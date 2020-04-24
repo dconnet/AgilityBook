@@ -17,8 +17,8 @@
  */
 
 #include "ARBCommon/ARBTypes.h"
-#include <map>
 #include <wx/wizard.h>
+#include <map>
 class CDlgPageEncode;
 
 
@@ -27,14 +27,20 @@ class CDlgARBHelp : public wxWizard
 public:
 	CDlgARBHelp();
 
-	wxWizardPageSimple* GetFirstPage() const	{return m_firstPage;}
+	wxWizardPageSimple* GetFirstPage() const
+	{
+		return m_firstPage;
+	}
 
 	void AddSysInfo(std::wstring const& inData);
 	void AddRegistryInfo(wchar_t const* inData);
 	void SetARBFileStatus(std::wstring const& inFileName, bool bInclude = true);
 
 	typedef std::map<std::wstring, bool> FileMap;
-	FileMap const& GetARBFiles() const			{return m_IncFile;}
+	FileMap const& GetARBFiles() const
+	{
+		return m_IncFile;
+	}
 
 	std::wstring GetEncodedData();
 

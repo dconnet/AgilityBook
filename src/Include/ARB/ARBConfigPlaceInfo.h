@@ -74,10 +74,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -134,10 +131,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Sort the point objects by place.
@@ -150,7 +144,7 @@ public:
 	 * @param outValue Value of placement.
 	 * @return inPlace has a value.`
 	 */
-	bool GetPlaceInfo(short inPlace, double &outValue) const;
+	bool GetPlaceInfo(short inPlace, double& outValue) const;
 
 	/**
 	 * Find a points object.
@@ -158,9 +152,7 @@ public:
 	 * @param outPlace Pointer to found object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindPlaceInfo(
-			short inPlace,
-			ARBConfigPlaceInfoPtr* outPlace = nullptr) const;
+	bool FindPlaceInfo(short inPlace, ARBConfigPlaceInfoPtr* outPlace = nullptr) const;
 
 	/**
 	 * Add an object.
@@ -170,11 +162,7 @@ public:
 	 * @param outPlace Pointer to new object, NULL if it already exists.
 	 * @return Whether the object was added.
 	 */
-	bool AddPlaceInfo(
-			short inPlace,
-			double inValue,
-			bool inMustQ,
-			ARBConfigPlaceInfoPtr* outPlace = nullptr);
+	bool AddPlaceInfo(short inPlace, double inValue, bool inMustQ, ARBConfigPlaceInfoPtr* outPlace = nullptr);
 
 	/**
 	 * Delete an object.

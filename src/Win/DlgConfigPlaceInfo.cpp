@@ -24,8 +24,8 @@
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/Validators.h"
 #include "LibARBWin/Widgets.h"
-#include <algorithm>
 #include <wx/valgen.h>
+#include <algorithm>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -36,15 +36,16 @@
 class CPlaceValidator : public CGenericValidator
 {
 public:
-	CPlaceValidator(
-			std::vector<short> const& existingPlaces,
-			short* val)
+	CPlaceValidator(std::vector<short> const& existingPlaces, short* val)
 		: CGenericValidator(val)
 		, m_ExistingPlaces(existingPlaces)
 		, m_origPlace(*val)
 	{
 	}
-	wxObject *Clone() const override {return new CPlaceValidator(*this);}
+	wxObject* Clone() const override
+	{
+		return new CPlaceValidator(*this);
+	}
 
 	bool Validate(wxWindow* parent) override;
 
@@ -86,7 +87,10 @@ public:
 		, m_origValue(*val)
 	{
 	}
-	wxObject *Clone() const override {return new CValueValidator(*this);}
+	wxObject* Clone() const override
+	{
+		return new CValueValidator(*this);
+	}
 
 	bool Validate(wxWindow* parent) override;
 
@@ -115,10 +119,10 @@ bool CValueValidator::Validate(wxWindow* parent)
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigPlaceInfo::CDlgConfigPlaceInfo(
-		std::vector<short> const& inExistingPlaces,
-		short inPlace,
-		double inValue,
-		wxWindow* pParent)
+	std::vector<short> const& inExistingPlaces,
+	short inPlace,
+	double inValue,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_Place(inPlace)
 	, m_Value(inValue)
@@ -129,32 +133,31 @@ CDlgConfigPlaceInfo::CDlgConfigPlaceInfo(
 
 	// Controls (these are done first to control tab order)
 
-	wxStaticText* textNote = new wxStaticText(this, wxID_ANY,
-		_("IDD_CONFIG_PLACEINFO_TEXT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textNote
+		= new wxStaticText(this, wxID_ANY, _("IDD_CONFIG_PLACEINFO_TEXT"), wxDefaultPosition, wxDefaultSize, 0);
 	textNote->Wrap(wxDLG_UNIT_X(this, 150));
 
-	wxStaticText* textPlace = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_PLACEINFO_PLACE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textPlace
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_PLACEINFO_PLACE"), wxDefaultPosition, wxDefaultSize, 0);
 	textPlace->Wrap(-1);
 
-	CTextCtrl* ctrlPlace = new CTextCtrl(this, wxID_ANY,
+	CTextCtrl* ctrlPlace = new CTextCtrl(
+		this,
+		wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		CPlaceValidator(inExistingPlaces, &m_Place));
 	ctrlPlace->SetHelpText(_("HIDC_CONFIG_PLACEINFO_PLACE"));
 	ctrlPlace->SetToolTip(_("HIDC_CONFIG_PLACEINFO_PLACE"));
 
-	wxStaticText* textValue = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_PLACEINFO_VALUE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textValue
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_PLACEINFO_VALUE"), wxDefaultPosition, wxDefaultSize, 0);
 	textValue->Wrap(-1);
 
-	CTextCtrl* ctrlValue = new CTextCtrl(this, wxID_ANY,
-		wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
-		CValueValidator(&m_Value));
+	CTextCtrl* ctrlValue
+		= new CTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, CValueValidator(&m_Value));
 	ctrlValue->SetHelpText(_("HIDC_CONFIG_PLACEINFO_VALUE"));
 	ctrlValue->SetToolTip(_("HIDC_CONFIG_PLACEINFO_VALUE"));
 

@@ -21,8 +21,8 @@
  * 2004-12-19 Added Location/Club note information.
  */
 
-#include "ARB/ARBTypes2.h"
 #include "ARB/ARBDogClub.h"
+#include "ARB/ARBTypes2.h"
 #include "ARBCommon/ARBDate.h"
 class CAgilityBookDoc;
 class CNoteButton;
@@ -36,12 +36,12 @@ class wxTextUrlEvent;
 class CDlgTrial : public wxDialog
 {
 public:
-	CDlgTrial(
-			CAgilityBookDoc* pDoc,
-			ARBDogTrialPtr const& inTrial,
-			wxWindow* pParent = nullptr);
+	CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrialPtr const& inTrial, wxWindow* pParent = nullptr);
 
-	bool RunsWereDeleted() const		{return m_bRunsDeleted;}
+	bool RunsWereDeleted() const
+	{
+		return m_bRunsDeleted;
+	}
 
 private:
 	wxDatePickerCtrl* m_ctrlStart;
@@ -68,10 +68,7 @@ private:
 
 private:
 	ARBDogClubPtr GetClubData(long index) const;
-	void UpdateNotes(
-			wxString const& location,
-			bool bLocation,
-			bool bClub);
+	void UpdateNotes(wxString const& location, bool bLocation, bool bClub);
 	void ListLocations();
 	void ListClubs(ARBDogClubPtr const* inClub = nullptr);
 	void EditClub();

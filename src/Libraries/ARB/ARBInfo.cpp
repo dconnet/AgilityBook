@@ -87,9 +87,7 @@ ARBInfo& ARBInfo::operator=(ARBInfo&& rhs)
 
 bool ARBInfo::operator==(ARBInfo const& rhs) const
 {
-	return m_ClubInfo == rhs.m_ClubInfo
-		&& m_JudgeInfo == rhs.m_JudgeInfo
-		&& m_LocationInfo == rhs.m_LocationInfo;
+	return m_ClubInfo == rhs.m_ClubInfo && m_JudgeInfo == rhs.m_JudgeInfo && m_LocationInfo == rhs.m_LocationInfo;
 }
 
 
@@ -101,10 +99,7 @@ void ARBInfo::clear()
 }
 
 
-bool ARBInfo::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBInfo::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_INFO)

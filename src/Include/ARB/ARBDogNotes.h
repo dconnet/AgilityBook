@@ -37,12 +37,16 @@ class ARB_API ARBMetaData
 	DECLARE_NO_COPY_IMPLEMENTED(ARBMetaData)
 protected:
 	ARBMetaData();
+
 public:
 	static ARBMetaDataPtr MetaData();
 	void Clear();
 	~ARBMetaData();
 
-	std::vector<unsigned char> const& data() const	{return m_Data;}
+	std::vector<unsigned char> const& data() const
+	{
+		return m_Data;
+	}
 
 private:
 	std::vector<unsigned char> m_Data;
@@ -85,10 +89,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfig const& inConfig,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.

@@ -24,10 +24,7 @@ class CAgilityBookDoc;
 class CDlgSelectDog : public wxDialog
 {
 public:
-	CDlgSelectDog(
-			CAgilityBookDoc* pDoc,
-			std::vector<ARBDogPtr>& outDogs,
-			wxWindow* pParent = nullptr);
+	CDlgSelectDog(CAgilityBookDoc* pDoc, std::vector<ARBDogPtr>& outDogs, wxWindow* pParent = nullptr);
 
 	int ShowModal() override;
 

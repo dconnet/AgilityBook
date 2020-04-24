@@ -44,14 +44,14 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-#define ENTRY_NOT		L"N"
-#define ENTRY_ENTERED	L"E"
-#define ENTRY_PENDING	L"O"
-#define ENTRY_PLANNING	L"P"
+#define ENTRY_NOT      L"N"
+#define ENTRY_ENTERED  L"E"
+#define ENTRY_PENDING  L"O"
+#define ENTRY_PLANNING L"P"
 
-#define ACCOM_NONE		L"N"
-#define ACCOM_TODO		L"T"
-#define ACCOM_CONFIRMED	L"C"
+#define ACCOM_NONE      L"N"
+#define ACCOM_TODO      L"T"
+#define ACCOM_CONFIRMED L"C"
 
 /////////////////////////////////////////////////////////////////////////////
 // Static functions (for iCalendar/vCalender)
@@ -61,9 +61,7 @@
 class ARBiCal : public ICalendar
 {
 public:
-	ARBiCal(
-			std::ostream& ioStream,
-			int inVersion);
+	ARBiCal(std::ostream& ioStream, int inVersion);
 	~ARBiCal()
 	{
 		Write("END:VCALENDAR\r\n");
@@ -119,15 +117,9 @@ private:
 	void Write(char inVal);
 	void Write(char const* const inVal);
 	void Write(std::string const& inVal);
-	void Write(
-			char const* const inVal,
-			ARBDate inDate,
-			bool inStartOfDay);
+	void Write(char const* const inVal, ARBDate inDate, bool inStartOfDay);
 	void WriteSafeChar(std::string const& inText);
-	void WriteText(
-			char const* const inToken,
-			std::wstring const& inText,
-			bool bQuotedPrint);
+	void WriteText(char const* const inToken, std::wstring const& inText, bool bQuotedPrint);
 
 	std::ostream& m_ioStream;
 	int m_Version;
@@ -137,9 +129,7 @@ private:
 typedef std::shared_ptr<ARBiCal> ARBiCalPtr;
 
 
-ARBiCal::ARBiCal(
-		std::ostream& ioStream,
-		int inVersion)
+ARBiCal::ARBiCal(std::ostream& ioStream, int inVersion)
 	: m_ioStream(ioStream)
 	, m_Version(inVersion)
 {
@@ -183,10 +173,7 @@ void ARBiCal::Write(std::string const& inVal)
 }
 
 
-void ARBiCal::Write(
-			char const* const inVal,
-			ARBDate inDate,
-			bool inStartOfDay)
+void ARBiCal::Write(char const* const inVal, ARBDate inDate, bool inStartOfDay)
 {
 	if (inVal)
 	{
@@ -210,20 +197,17 @@ void ARBiCal::Write(
 
 void ARBiCal::WriteSafeChar(std::string const& inText)
 {
-	for (std::string::const_iterator iter = inText.begin();
-		iter != inText.end();
-		++iter)
+	for (std::string::const_iterator iter = inText.begin(); iter != inText.end(); ++iter)
 	{
 		unsigned char c = *iter;
 		// See the RFC...
-		if ((0x21 <= c && c <= 0x7e) // ASCII
-		|| (0x80 <= c && c <= 0xf8) // NON-US-ASCII
-		|| 0x20 == c || 0x09 == c) // WSP
+		if ((0x21 <= c && c <= 0x7e)    // ASCII
+			|| (0x80 <= c && c <= 0xf8) // NON-US-ASCII
+			|| 0x20 == c || 0x09 == c)  // WSP
 		{
 			if (1 == m_Version && '=' == c)
 				Write("=3D");
-			else if (1 < m_Version
-			&& (';' == c || ',' == c || '\\' == c))
+			else if (1 < m_Version && (';' == c || ',' == c || '\\' == c))
 				Write('\\');
 			else
 				Write(c);
@@ -241,10 +225,7 @@ void ARBiCal::WriteSafeChar(std::string const& inText)
 }
 
 
-void ARBiCal::WriteText(
-		char const* const inToken,
-		std::wstring const& inText,
-		bool bQuotedPrint)
+void ARBiCal::WriteText(char const* const inToken, std::wstring const& inText, bool bQuotedPrint)
 {
 	if (0 < inText.length())
 	{
@@ -289,7 +270,8 @@ void ARBiCal::DoDTSTAMP()
 #else
 		struct tm* pTime = localtime(&t);
 #endif
-		std::string buffer = fmt::format("DTSTAMP:{:04}{:02}{:02}T{:02}{:02}{:02}\r\n",
+		std::string buffer = fmt::format(
+			"DTSTAMP:{:04}{:02}{:02}T{:02}{:02}{:02}\r\n",
 			pTime->tm_year + 1900,
 			pTime->tm_mon + 1,
 			pTime->tm_mday,
@@ -311,9 +293,7 @@ ICalendar::~ICalendar()
 }
 
 
-ICalendarPtr ICalendar::iCalendarBegin(
-		std::ostream& ioStream,
-		int inVersion)
+ICalendarPtr ICalendar::iCalendarBegin(std::ostream& ioStream, int inVersion)
 {
 	ICalendarPtr pCal;
 	if (1 == inVersion || 2 == inVersion)
@@ -326,7 +306,9 @@ ICalendarPtr ICalendar::iCalendarBegin(
 class ARBCalendar_concrete : public ARBCalendar
 {
 public:
-	ARBCalendar_concrete() {}
+	ARBCalendar_concrete()
+	{
+	}
 	ARBCalendar_concrete(ARBCalendar const& rhs)
 		: ARBCalendar(rhs)
 	{
@@ -466,6 +448,7 @@ ARBCalendar& ARBCalendar::operator=(ARBCalendar&& rhs)
 
 bool ARBCalendar::operator==(ARBCalendar const& rhs) const
 {
+	// clang-format off
 	return m_DateStart == rhs.m_DateStart
 		&& m_DateEnd == rhs.m_DateEnd
 		&& m_DateOpening == rhs.m_DateOpening
@@ -482,6 +465,7 @@ bool ARBCalendar::operator==(ARBCalendar const& rhs) const
 		&& m_PremiumURL == rhs.m_PremiumURL
 		&& m_OnlineURL == rhs.m_OnlineURL
 		&& m_Note == rhs.m_Note;
+	// clang-format on
 }
 
 
@@ -586,10 +570,7 @@ size_t ARBCalendar::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 }
 
 
-bool ARBCalendar::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBCalendar::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_CALENDAR)
@@ -602,13 +583,13 @@ bool ARBCalendar::Load(
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_CALENDAR, ATTRIB_CAL_START));
 		return false;
 	case ARBAttribLookup::Invalid:
-		{
-			std::wstring attrib;
-			inTree->GetAttrib(ATTRIB_CAL_START, attrib);
-			std::wstring msg(Localization()->InvalidDate());
-			msg += attrib;
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_START, msg.c_str()));
-		}
+	{
+		std::wstring attrib;
+		inTree->GetAttrib(ATTRIB_CAL_START, attrib);
+		std::wstring msg(Localization()->InvalidDate());
+		msg += attrib;
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_START, msg.c_str()));
+	}
 		return false;
 	}
 
@@ -620,14 +601,14 @@ bool ARBCalendar::Load(
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_CALENDAR, ATTRIB_CAL_END));
 		return false;
 	case ARBAttribLookup::Invalid:
-		{
-			std::wstring attrib;
-			inTree->GetAttrib(ATTRIB_CAL_END, attrib);
-			std::wstring msg(Localization()->InvalidDate());
-			msg += attrib;
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_END, msg.c_str()));
-			return false;
-		}
+	{
+		std::wstring attrib;
+		inTree->GetAttrib(ATTRIB_CAL_END, attrib);
+		std::wstring msg(Localization()->InvalidDate());
+		msg += attrib;
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_END, msg.c_str()));
+	}
+		return false;
 	}
 
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_CAL_OPENING, m_DateOpening))
@@ -636,7 +617,8 @@ bool ARBCalendar::Load(
 		inTree->GetAttrib(ATTRIB_CAL_OPENING, attrib);
 		std::wstring msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_OPENING, msg.c_str()));
+		ioCallback.LogMessage(
+			Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_OPENING, msg.c_str()));
 		return false;
 	}
 
@@ -656,13 +638,17 @@ bool ARBCalendar::Load(
 		inTree->GetAttrib(ATTRIB_CAL_CLOSING, attrib);
 		std::wstring msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_CLOSING, msg.c_str()));
+		ioCallback.LogMessage(
+			Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_CLOSING, msg.c_str()));
 		return false;
 	}
 
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_CAL_MAYBE, m_bTentative))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_MAYBE, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
+			TREE_CALENDAR,
+			ATTRIB_CAL_MAYBE,
+			Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 
@@ -670,7 +656,7 @@ bool ARBCalendar::Load(
 	inTree->GetAttrib(ATTRIB_CAL_CLUB, m_Club);
 	inTree->GetAttrib(ATTRIB_CAL_VENUE, m_Venue);
 
-	if (inVersion == ARBVersion(1,0))
+	if (inVersion == ARBVersion(1, 0))
 	{
 		std::wstring attrib;
 		if (ARBAttribLookup::Found == inTree->GetAttrib(L"PlanOn", attrib))
@@ -681,7 +667,7 @@ bool ARBCalendar::Load(
 				m_eEntered = ARBCalendarEntry::Not;
 		}
 	}
-	else if (inVersion >= ARBVersion(2,0))
+	else if (inVersion >= ARBVersion(2, 0))
 	{
 		std::wstring attrib;
 		if (ARBAttribLookup::Found == inTree->GetAttrib(ATTRIB_CAL_ENTERED, attrib))
@@ -702,7 +688,8 @@ bool ARBCalendar::Load(
 				msg += ENTRY_PLANNING;
 				msg += L", ";
 				msg += ENTRY_NOT;
-				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ENTERED, msg.c_str()));
+				ioCallback.LogMessage(
+					Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ENTERED, msg.c_str()));
 				return false;
 			}
 		}
@@ -723,7 +710,8 @@ bool ARBCalendar::Load(
 				msg += ACCOM_TODO;
 				msg += L", ";
 				msg += ACCOM_CONFIRMED;
-				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ACCOMMODATION, msg.c_str()));
+				ioCallback.LogMessage(
+					Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ACCOMMODATION, msg.c_str()));
 				return false;
 			}
 		}
@@ -835,15 +823,24 @@ void ARBCalendar::iCalendar(ICalendarPtr inIoStream, int inAlarm) const
 		}
 		if (m_DateClosing.IsValid())
 		{
-			fmt::format_to(str, L"{}{} ", Localization()->CalendarCloses(), m_DateClosing.GetString(ARBDateFormat::ISO));
+			fmt::format_to(
+				str,
+				L"{}{} ",
+				Localization()->CalendarCloses(),
+				m_DateClosing.GetString(ARBDateFormat::ISO));
 		}
 		fmt::format_to(str, L"{}", GetNote());
 		ioStream->DoDESCRIPTION(fmt::to_string(str));
 	}
 	if (ARBCalendarEntry::Planning == m_eEntered && m_DateOpening.IsValid())
+	{
 		inAlarm += m_DateStart - m_DateOpening;
-	if (ARBCalendarEntry::Planning == m_eEntered || ARBCalendarEntry::Pending == m_eEntered || ARBCalendarEntry::Entered == m_eEntered)
+	}
+	if (ARBCalendarEntry::Planning == m_eEntered || ARBCalendarEntry::Pending == m_eEntered
+		|| ARBCalendarEntry::Entered == m_eEntered)
+	{
 		ioStream->DoAlarm(inAlarm);
+	}
 	ioStream->EndEvent();
 }
 
@@ -856,10 +853,12 @@ bool ARBCalendar::IsMatch(ARBCalendarPtr const& inCal, bool inMatchExact) const
 		return *inCal == *this;
 	else
 	{
+		// clang-format off
 		return m_DateStart == inCal->GetStartDate()
 			&& m_DateEnd == inCal->GetEndDate()
 			&& m_Venue == inCal->GetVenue()
 			&& m_Club == inCal->GetClub();
+		// clang-format on
 	}
 }
 
@@ -939,10 +938,7 @@ bool ARBCalendar::Update(ARBCalendarPtr const& inCal)
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool ARBCalendarList::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBCalendarList::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	ARBCalendarPtr thing(ARBCalendar::New());
 	if (!thing->Load(inTree, inVersion, ioCallback))
@@ -956,12 +952,9 @@ void ARBCalendarList::sort()
 {
 	if (2 > size())
 		return;
-	std::stable_sort(begin(), end(),
-		[](ARBCalendarPtr const& one, ARBCalendarPtr const& two)
-		{
-			return one->GetStartDate() < two->GetStartDate();
-		}
-	);
+	std::stable_sort(begin(), end(), [](ARBCalendarPtr const& one, ARBCalendarPtr const& two) {
+		return one->GetStartDate() < two->GetStartDate();
+	});
 }
 
 
@@ -971,8 +964,7 @@ size_t ARBCalendarList::GetAllEntered(std::vector<ARBCalendarPtr>& outEntered) c
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		ARBCalendarPtr pCal = (*iter);
-		if (ARBCalendarEntry::Pending == pCal->GetEntered()
-		|| ARBCalendarEntry::Entered == pCal->GetEntered())
+		if (ARBCalendarEntry::Pending == pCal->GetEntered() || ARBCalendarEntry::Entered == pCal->GetEntered())
 			outEntered.push_back(pCal);
 	}
 	return outEntered.size();
@@ -984,7 +976,7 @@ int ARBCalendarList::TrimEntries(ARBDate const& inDate)
 	int trimmed = 0;
 	if (inDate.IsValid())
 	{
-		for (iterator iter = begin(); iter != end(); )
+		for (iterator iter = begin(); iter != end();)
 		{
 			if ((*iter)->IsBefore(inDate))
 			{
@@ -1000,10 +992,7 @@ int ARBCalendarList::TrimEntries(ARBDate const& inDate)
 }
 
 
-bool ARBCalendarList::FindCalendar(
-		ARBCalendarPtr const& inCal,
-		bool inMatchExact,
-		ARBCalendarPtr* outCal) const
+bool ARBCalendarList::FindCalendar(ARBCalendarPtr const& inCal, bool inMatchExact, ARBCalendarPtr* outCal) const
 {
 	if (outCal)
 		outCal->reset();

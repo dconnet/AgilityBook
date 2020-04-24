@@ -31,16 +31,18 @@
 
 namespace
 {
-	class ARBConfigMultiQ_concrete : public ARBConfigMultiQ
+class ARBConfigMultiQ_concrete : public ARBConfigMultiQ
+{
+public:
+	ARBConfigMultiQ_concrete()
 	{
-	public:
-		ARBConfigMultiQ_concrete() {}
-		ARBConfigMultiQ_concrete(ARBConfigMultiQ const& rhs)
-			: ARBConfigMultiQ(rhs)
-		{
-		}
-	};
+	}
+	ARBConfigMultiQ_concrete(ARBConfigMultiQ const& rhs)
+		: ARBConfigMultiQ(rhs)
+	{
+	}
 };
+}; // namespace
 
 
 ARBConfigMultiQPtr ARBConfigMultiQ::New()
@@ -120,19 +122,21 @@ ARBConfigMultiQ& ARBConfigMultiQ::operator=(ARBConfigMultiQ&& rhs)
 
 bool ARBConfigMultiQ::operator==(ARBConfigMultiQ const& rhs) const
 {
+	// clang-format off
 	return m_Name == rhs.m_Name
 		&& m_ShortName == rhs.m_ShortName
 		&& m_ValidFrom == rhs.m_ValidFrom
 		&& m_ValidTo == rhs.m_ValidTo
 		&& m_Items == rhs.m_Items;
+	// clang-format on
 }
 
 
 bool ARBConfigMultiQ::Load(
-		ARBConfigVenue const& inVenue,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfigVenue const& inVenue,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_MULTIQ)
@@ -153,7 +157,8 @@ bool ARBConfigMultiQ::Load(
 		inTree->GetAttrib(ATTRIB_MULTIQ_VALID_FROM, attrib);
 		std::wstring msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_MULTIQ, ATTRIB_MULTIQ_VALID_FROM, msg.c_str()));
+		ioCallback.LogMessage(
+			Localization()->ErrorInvalidAttributeValue(TREE_MULTIQ, ATTRIB_MULTIQ_VALID_FROM, msg.c_str()));
 		return false;
 	}
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_MULTIQ_VALID_TO, m_ValidTo))
@@ -162,7 +167,8 @@ bool ARBConfigMultiQ::Load(
 		inTree->GetAttrib(ATTRIB_MULTIQ_VALID_TO, attrib);
 		std::wstring msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_MULTIQ, ATTRIB_MULTIQ_VALID_TO, msg.c_str()));
+		ioCallback.LogMessage(
+			Localization()->ErrorInvalidAttributeValue(TREE_MULTIQ, ATTRIB_MULTIQ_VALID_TO, msg.c_str()));
 		return false;
 	}
 
@@ -176,21 +182,23 @@ bool ARBConfigMultiQ::Load(
 			MultiQItem item;
 			// Read the data.
 			if (ARBAttribLookup::Found != element->GetAttrib(ATTRIB_MULTIQ_ITEM_DIV, item.m_Div)
-			|| 0 == item.m_Div.length())
+				|| 0 == item.m_Div.length())
 			{
 				ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_DIV));
 				return false;
 			}
 			if (ARBAttribLookup::Found != element->GetAttrib(ATTRIB_MULTIQ_ITEM_LEVEL, item.m_Level)
-			|| 0 == item.m_Level.length())
+				|| 0 == item.m_Level.length())
 			{
-				ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_LEVEL));
+				ioCallback.LogMessage(
+					Localization()->ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_LEVEL));
 				return false;
 			}
 			if (ARBAttribLookup::Found != element->GetAttrib(ATTRIB_MULTIQ_ITEM_EVENT, item.m_Event)
-			|| 0 == item.m_Event.length())
+				|| 0 == item.m_Event.length())
 			{
-				ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_EVENT));
+				ioCallback.LogMessage(
+					Localization()->ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_EVENT));
 				return false;
 			}
 
@@ -200,7 +208,8 @@ bool ARBConfigMultiQ::Load(
 			{
 				std::wstring msg(Localization()->InvalidDivName());
 				msg += item.m_Div;
-				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_DIV, msg.c_str()));
+				ioCallback.LogMessage(
+					Localization()->ErrorInvalidAttributeValue(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_DIV, msg.c_str()));
 				return false;
 			}
 
@@ -212,7 +221,10 @@ bool ARBConfigMultiQ::Load(
 				msg += item.m_Div;
 				msg += L"/";
 				msg += item.m_Level;
-				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_LEVEL, msg.c_str()));
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
+					TREE_MULTIQ_ITEM,
+					ATTRIB_MULTIQ_ITEM_LEVEL,
+					msg.c_str()));
 				return false;
 			}
 			pDiv.reset();
@@ -228,7 +240,10 @@ bool ARBConfigMultiQ::Load(
 				msg += item.m_Level;
 				msg += L"/";
 				msg += item.m_Event;
-				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_EVENT, msg.c_str()));
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
+					TREE_MULTIQ_ITEM,
+					ATTRIB_MULTIQ_ITEM_EVENT,
+					msg.c_str()));
 				return false;
 			}
 
@@ -264,9 +279,7 @@ bool ARBConfigMultiQ::Save(ElementNodePtr const& ioTree) const
 
 
 // Note, this is only called from ARBDogTrial
-bool ARBConfigMultiQ::Match(
-		std::vector<ARBDogRunPtr> const& inRuns,
-		std::vector<ARBDogRunPtr>& outRuns) const
+bool ARBConfigMultiQ::Match(std::vector<ARBDogRunPtr> const& inRuns, std::vector<ARBDogRunPtr>& outRuns) const
 {
 	outRuns.clear();
 	if (inRuns.size() < m_Items.size())
@@ -276,9 +289,7 @@ bool ARBConfigMultiQ::Match(
 	std::vector<bool> bItems;
 	std::vector<ARBDogRunPtr> runs(inRuns);
 	bItems.insert(bItems.begin(), m_Items.size(), false);
-	for (std::vector<ARBDogRunPtr>::iterator iterR = runs.begin();
-		iterR != runs.end();
-		++iterR)
+	for (std::vector<ARBDogRunPtr>::iterator iterR = runs.begin(); iterR != runs.end(); ++iterR)
 	{
 		if (m_ValidFrom.IsValid() && (*iterR)->GetDate() < m_ValidFrom)
 			continue;
@@ -287,9 +298,8 @@ bool ARBConfigMultiQ::Match(
 		int idx = 0;
 		for (std::set<MultiQItem>::const_iterator iter = m_Items.begin(); iter != m_Items.end(); ++idx, ++iter)
 		{
-			if ((*iter).m_Div == (*iterR)->GetDivision()
-			&& (*iter).m_Level == (*iterR)->GetLevel()
-			&& (*iter).m_Event == (*iterR)->GetEvent())
+			if ((*iter).m_Div == (*iterR)->GetDivision() && (*iter).m_Level == (*iterR)->GetLevel()
+				&& (*iter).m_Event == (*iterR)->GetEvent())
 			{
 				bItems[idx] = true;
 			}
@@ -303,9 +313,7 @@ bool ARBConfigMultiQ::Match(
 	if (nMatch == m_Items.size())
 	{
 		bOk = true;
-		for (std::vector<ARBDogRunPtr>::iterator iterR = runs.begin();
-			iterR != runs.end();
-			)
+		for (std::vector<ARBDogRunPtr>::iterator iterR = runs.begin(); iterR != runs.end();)
 		{
 			bool bInc = true;
 			if (m_ValidFrom.IsValid() && (*iterR)->GetDate() < m_ValidFrom)
@@ -315,9 +323,8 @@ bool ARBConfigMultiQ::Match(
 			int idx = 0;
 			for (std::set<MultiQItem>::const_iterator iter = m_Items.begin(); iter != m_Items.end(); ++idx, ++iter)
 			{
-				if ((*iter).m_Div == (*iterR)->GetDivision()
-				&& (*iter).m_Level == (*iterR)->GetLevel()
-				&& (*iter).m_Event == (*iterR)->GetEvent())
+				if ((*iter).m_Div == (*iterR)->GetDivision() && (*iter).m_Level == (*iterR)->GetLevel()
+					&& (*iter).m_Event == (*iterR)->GetEvent())
 				{
 					bInc = false;
 					outRuns.push_back(*iterR);
@@ -333,14 +340,12 @@ bool ARBConfigMultiQ::Match(
 }
 
 
-int ARBConfigMultiQ::RenameDivision(
-		std::wstring const& inOldDiv,
-		std::wstring const& inNewDiv)
+int ARBConfigMultiQ::RenameDivision(std::wstring const& inOldDiv, std::wstring const& inNewDiv)
 {
 	if (inOldDiv == inNewDiv)
 		return 0;
 	int count = 0;
-	for (std::set<MultiQItem>::iterator iter = m_Items.begin(); iter != m_Items.end(); )
+	for (std::set<MultiQItem>::iterator iter = m_Items.begin(); iter != m_Items.end();)
 	{
 		if ((*iter).m_Div == inOldDiv)
 		{
@@ -361,7 +366,7 @@ int ARBConfigMultiQ::RenameDivision(
 int ARBConfigMultiQ::DeleteDivision(std::wstring const& inDiv)
 {
 	int count = 0;
-	for (std::set<MultiQItem>::iterator iter = m_Items.begin(); iter != m_Items.end(); )
+	for (std::set<MultiQItem>::iterator iter = m_Items.begin(); iter != m_Items.end();)
 	{
 		if ((*iter).m_Div == inDiv)
 		{
@@ -380,17 +385,16 @@ int ARBConfigMultiQ::DeleteDivision(std::wstring const& inDiv)
 
 
 int ARBConfigMultiQ::RenameLevel(
-		std::wstring const& inDiv,
-		std::wstring const& inOldLevel,
-		std::wstring const& inNewLevel)
+	std::wstring const& inDiv,
+	std::wstring const& inOldLevel,
+	std::wstring const& inNewLevel)
 {
 	if (inOldLevel == inNewLevel)
 		return 0;
 	int count = 0;
 	for (std::set<MultiQItem>::iterator iter = m_Items.begin(); iter != m_Items.end(); ++iter)
 	{
-		if ((*iter).m_Div == inDiv
-		&& (*iter).m_Level == inOldLevel)
+		if ((*iter).m_Div == inDiv && (*iter).m_Level == inOldLevel)
 		{
 			MultiQItem item = *iter;
 			item.m_Level = inNewLevel;
@@ -407,7 +411,7 @@ int ARBConfigMultiQ::RenameLevel(
 int ARBConfigMultiQ::DeleteLevel(std::wstring const& inLevel)
 {
 	int count = 0;
-	for (std::set<MultiQItem>::iterator iter = m_Items.begin(); iter != m_Items.end(); )
+	for (std::set<MultiQItem>::iterator iter = m_Items.begin(); iter != m_Items.end();)
 	{
 		if ((*iter).m_Level == inLevel)
 		{
@@ -425,9 +429,7 @@ int ARBConfigMultiQ::DeleteLevel(std::wstring const& inLevel)
 }
 
 
-int ARBConfigMultiQ::RenameEvent(
-		std::wstring const& inOldEvent,
-		std::wstring const& inNewEvent)
+int ARBConfigMultiQ::RenameEvent(std::wstring const& inOldEvent, std::wstring const& inNewEvent)
 {
 	if (inOldEvent == inNewEvent)
 		return 0;
@@ -451,7 +453,7 @@ int ARBConfigMultiQ::RenameEvent(
 int ARBConfigMultiQ::DeleteEvent(std::wstring const& inEvent)
 {
 	int count = 0;
-	for (std::set<MultiQItem>::iterator iter = m_Items.begin(); iter != m_Items.end(); )
+	for (std::set<MultiQItem>::iterator iter = m_Items.begin(); iter != m_Items.end();)
 	{
 		if ((*iter).m_Event == inEvent)
 		{
@@ -469,10 +471,7 @@ int ARBConfigMultiQ::DeleteEvent(std::wstring const& inEvent)
 }
 
 
-bool ARBConfigMultiQ::AddItem(
-		std::wstring const& inDiv,
-		std::wstring const& inLevel,
-		std::wstring const& inEvent)
+bool ARBConfigMultiQ::AddItem(std::wstring const& inDiv, std::wstring const& inLevel, std::wstring const& inEvent)
 {
 	bool bInserted = false;
 	if (0 < inDiv.length() && 0 < inLevel.length() && 0 < inEvent.length())
@@ -487,10 +486,7 @@ bool ARBConfigMultiQ::AddItem(
 }
 
 
-bool ARBConfigMultiQ::RemoveItem(
-		std::wstring const& inDiv,
-		std::wstring const& inLevel,
-		std::wstring const& inEvent)
+bool ARBConfigMultiQ::RemoveItem(std::wstring const& inDiv, std::wstring const& inLevel, std::wstring const& inEvent)
 {
 	bool bRemoved = false;
 	if (0 < inDiv.length() && 0 < inLevel.length() && 0 < inEvent.length())
@@ -522,11 +518,8 @@ bool ARBConfigMultiQ::RemoveAllItems()
 }
 
 
-bool ARBConfigMultiQ::GetItem(
-		size_t inIndex,
-		std::wstring& outDivision,
-		std::wstring& outLevel,
-		std::wstring& outEvent) const
+bool ARBConfigMultiQ::GetItem(size_t inIndex, std::wstring& outDivision, std::wstring& outLevel, std::wstring& outEvent)
+	const
 {
 	if (inIndex >= m_Items.size())
 		return false;
@@ -545,10 +538,10 @@ bool ARBConfigMultiQ::GetItem(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigMultiQList::Load(
-		ARBConfigVenue const& inVenue,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfigVenue const& inVenue,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	ARBConfigMultiQPtr thing(ARBConfigMultiQ::New());
 	if (!thing->Load(inVenue, inTree, inVersion, ioCallback))
@@ -558,17 +551,15 @@ bool ARBConfigMultiQList::Load(
 }
 
 
-bool ARBConfigMultiQList::FindMultiQ(
-		std::wstring const& inName,
-		bool inUseShortName,
-		ARBConfigMultiQPtr* outMultiQ) const
+bool ARBConfigMultiQList::FindMultiQ(std::wstring const& inName, bool inUseShortName, ARBConfigMultiQPtr* outMultiQ)
+	const
 {
 	if (outMultiQ)
 		outMultiQ->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((!inUseShortName && *iter && (*iter)->GetName() == inName)
-		|| (inUseShortName && *iter && (*iter)->GetShortName() == inName))
+			|| (inUseShortName && *iter && (*iter)->GetShortName() == inName))
 		{
 			if (outMultiQ)
 				*outMultiQ = *iter;
@@ -579,9 +570,7 @@ bool ARBConfigMultiQList::FindMultiQ(
 }
 
 
-bool ARBConfigMultiQList::FindMultiQ(
-	ARBConfigMultiQ const& inMultiQ,
-	ARBConfigMultiQPtr* outMultiQ) const
+bool ARBConfigMultiQList::FindMultiQ(ARBConfigMultiQ const& inMultiQ, ARBConfigMultiQPtr* outMultiQ) const
 {
 	if (outMultiQ)
 		outMultiQ->reset();
@@ -598,9 +587,7 @@ bool ARBConfigMultiQList::FindMultiQ(
 }
 
 
-int ARBConfigMultiQList::RenameDivision(
-		std::wstring const& inOldDiv,
-		std::wstring const& inNewDiv)
+int ARBConfigMultiQList::RenameDivision(std::wstring const& inOldDiv, std::wstring const& inNewDiv)
 {
 	if (inOldDiv == inNewDiv)
 		return 0;
@@ -625,9 +612,9 @@ int ARBConfigMultiQList::DeleteDivision(std::wstring const& inDiv)
 
 
 int ARBConfigMultiQList::RenameLevel(
-		std::wstring const& inDiv,
-		std::wstring const& inOldLevel,
-		std::wstring const& inNewLevel)
+	std::wstring const& inDiv,
+	std::wstring const& inOldLevel,
+	std::wstring const& inNewLevel)
 {
 	if (inOldLevel == inNewLevel)
 		return 0;
@@ -651,9 +638,7 @@ int ARBConfigMultiQList::DeleteLevel(std::wstring const& inLevel)
 }
 
 
-int ARBConfigMultiQList::RenameEvent(
-		std::wstring const& inOldEvent,
-		std::wstring const& inNewEvent)
+int ARBConfigMultiQList::RenameEvent(std::wstring const& inOldEvent, std::wstring const& inNewEvent)
 {
 	if (inOldEvent == inNewEvent)
 		return 0;
@@ -679,8 +664,7 @@ int ARBConfigMultiQList::DeleteEvent(std::wstring const& inEvent)
 
 bool ARBConfigMultiQList::AddMultiQ(ARBConfigMultiQPtr const& inMultiQ)
 {
-	if (!inMultiQ
-	|| FindMultiQ(*inMultiQ))
+	if (!inMultiQ || FindMultiQ(*inMultiQ))
 		return false;
 	push_back(inMultiQ);
 	return true;

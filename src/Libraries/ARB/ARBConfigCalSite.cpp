@@ -32,7 +32,9 @@
 class ARBConfigCalSite_concrete : public ARBConfigCalSite
 {
 public:
-	ARBConfigCalSite_concrete() {}
+	ARBConfigCalSite_concrete()
+	{
+	}
 	ARBConfigCalSite_concrete(ARBConfigCalSite const& rhs)
 		: ARBConfigCalSite(rhs)
 	{
@@ -121,19 +123,18 @@ ARBConfigCalSite& ARBConfigCalSite::operator=(ARBConfigCalSite&& rhs)
 
 bool ARBConfigCalSite::operator==(ARBConfigCalSite const& rhs) const
 {
+	// clang-format off
 	return m_Name == rhs.m_Name
 		&& m_Desc == rhs.m_Desc
 		&& m_urlSearch == rhs.m_urlSearch
 		&& m_urlHelp == rhs.m_urlHelp
 		&& m_Locations == rhs.m_Locations
 		&& m_Venues == rhs.m_Venues;
+	// clang-format on
 }
 
 
-bool ARBConfigCalSite::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBConfigCalSite::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_CALSITE)
@@ -227,17 +228,15 @@ bool ARBConfigCalSite::Save(ElementNodePtr const& ioTree) const
 
 
 std::wstring ARBConfigCalSite::GetFormattedURL(
-		std::vector<std::wstring> const& inLocCodes,
-		std::vector<std::wstring> const& inVenueCodes) const
+	std::vector<std::wstring> const& inLocCodes,
+	std::vector<std::wstring> const& inVenueCodes) const
 {
 	std::wstring url(m_urlSearch);
 	std::wstring::size_type pos = url.find(L"!L!");
 	if (pos != std::wstring::npos)
 	{
 		std::wstring codes;
-		for (std::vector<std::wstring>::const_iterator i = inLocCodes.begin();
-			i != inLocCodes.end();
-			++i)
+		for (std::vector<std::wstring>::const_iterator i = inLocCodes.begin(); i != inLocCodes.end(); ++i)
 		{
 			if (!codes.empty())
 				codes += L"+";
@@ -249,9 +248,7 @@ std::wstring ARBConfigCalSite::GetFormattedURL(
 	if (pos != std::wstring::npos)
 	{
 		std::wstring codes;
-		for (std::vector<std::wstring>::const_iterator i = inVenueCodes.begin();
-			i != inVenueCodes.end();
-			++i)
+		for (std::vector<std::wstring>::const_iterator i = inVenueCodes.begin(); i != inVenueCodes.end(); ++i)
 		{
 			if (!codes.empty())
 				codes += L"+";
@@ -344,10 +341,7 @@ bool ARBConfigCalSite::RemoveAllVenueCodes()
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool ARBConfigCalSiteList::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBConfigCalSiteList::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	ARBConfigCalSitePtr thing(ARBConfigCalSite::New());
 	if (!thing->Load(inTree, inVersion, ioCallback))
@@ -361,18 +355,13 @@ void ARBConfigCalSiteList::sort()
 {
 	if (2 > size())
 		return;
-	std::stable_sort(begin(), end(),
-		[](ARBConfigCalSitePtr const& one, ARBConfigCalSitePtr const& two)
-		{
-			return StringUtil::CompareNoCase(one->GetName(), two->GetName()) < 0;
-		}
-	);
+	std::stable_sort(begin(), end(), [](ARBConfigCalSitePtr const& one, ARBConfigCalSitePtr const& two) {
+		return StringUtil::CompareNoCase(one->GetName(), two->GetName()) < 0;
+	});
 }
 
 
-bool ARBConfigCalSiteList::FindSite(
-		std::wstring const& inSite,
-		ARBConfigCalSitePtr* outSite) const
+bool ARBConfigCalSiteList::FindSite(std::wstring const& inSite, ARBConfigCalSitePtr* outSite) const
 {
 	if (outSite)
 		outSite->reset();
@@ -389,9 +378,7 @@ bool ARBConfigCalSiteList::FindSite(
 }
 
 
-bool ARBConfigCalSiteList::AddSite(
-		std::wstring const& inSite,
-		ARBConfigCalSitePtr* outSite)
+bool ARBConfigCalSiteList::AddSite(std::wstring const& inSite, ARBConfigCalSitePtr* outSite)
 {
 	if (outSite)
 		outSite->reset();

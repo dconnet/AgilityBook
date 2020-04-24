@@ -47,9 +47,7 @@ wxBEGIN_EVENT_TABLE(CDlgConfigLifetimeName, wxDialog)
 wxEND_EVENT_TABLE()
 
 
-CDlgConfigLifetimeName::CDlgConfigLifetimeName(
-		ARBConfigVenuePtr const& inVenue,
-		wxWindow* pParent)
+CDlgConfigLifetimeName::CDlgConfigLifetimeName(ARBConfigVenuePtr const& inVenue, wxWindow* pParent)
 	: wxDialog()
 	, m_Venue(inVenue)
 	, m_bCheckOldName(false)
@@ -61,9 +59,9 @@ CDlgConfigLifetimeName::CDlgConfigLifetimeName(
 
 
 CDlgConfigLifetimeName::CDlgConfigLifetimeName(
-		ARBConfigVenuePtr const& inVenue,
-		std::wstring const& inName,
-		wxWindow* pParent)
+	ARBConfigVenuePtr const& inVenue,
+	std::wstring const& inName,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_Venue(inVenue)
 	, m_bCheckOldName(true)
@@ -78,12 +76,23 @@ void CDlgConfigLifetimeName::InitDlg(wxWindow* pParent)
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDD_CONFIG_LIFETIMENAME"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		_("IDD_CONFIG_LIFETIMENAME"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
 
-	CTextCtrl* ctrlName = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(50, -1)), 0,
+	CTextCtrl* ctrlName = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(50, -1)),
+		0,
 		CTrimValidator(&m_Name, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlName->SetHelpText(_("HIDC_CONFIG_LIFETIME_NAME"));
 	ctrlName->SetToolTip(_("HIDC_CONFIG_LIFETIME_NAME"));

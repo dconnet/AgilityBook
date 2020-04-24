@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBConfigOtherPoints.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -34,7 +34,7 @@ TEST_CASE("ConfigOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static void GetTallyValidValues(std::vector<std::wstring>& outValues);
+			//	static void GetTallyValidValues(std::vector<std::wstring>& outValues);
 		}
 	}
 
@@ -44,7 +44,7 @@ TEST_CASE("ConfigOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBConfigOtherPointsPtr New();
+			//	static ARBConfigOtherPointsPtr New();
 		}
 	}
 
@@ -54,7 +54,7 @@ TEST_CASE("ConfigOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigOtherPointsPtr Clone() const;
+			//	ARBConfigOtherPointsPtr Clone() const;
 		}
 	}
 
@@ -64,7 +64,7 @@ TEST_CASE("ConfigOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigOtherPoints& operator=(ARBConfigOtherPoints const& rhs);
+			//	ARBConfigOtherPoints& operator=(ARBConfigOtherPoints const& rhs);
 		}
 	}
 
@@ -74,8 +74,8 @@ TEST_CASE("ConfigOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBConfigOtherPoints const& rhs) const;
-		//	bool operator!=(ARBConfigOtherPoints const& rhs) const
+			//	bool operator==(ARBConfigOtherPoints const& rhs) const;
+			//	bool operator!=(ARBConfigOtherPoints const& rhs) const
 		}
 	}
 
@@ -85,7 +85,7 @@ TEST_CASE("ConfigOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void clear();
+			//	void clear();
 		}
 	}
 
@@ -95,7 +95,7 @@ TEST_CASE("ConfigOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const
+			//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -105,10 +105,10 @@ TEST_CASE("ConfigOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -118,7 +118,7 @@ TEST_CASE("ConfigOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 }
@@ -131,10 +131,10 @@ TEST_CASE("ConfigOtherPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -144,7 +144,7 @@ TEST_CASE("ConfigOtherPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool VerifyOtherPoints(std::wstring const& inName) const;
+			//	bool VerifyOtherPoints(std::wstring const& inName) const;
 		}
 	}
 
@@ -154,9 +154,9 @@ TEST_CASE("ConfigOtherPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindOtherPoints(
-		//			std::wstring const& inName,
-		//			ARBConfigOtherPointsPtr* outPoints = nullptr) const;
+			//	bool FindOtherPoints(
+			//			std::wstring const& inName,
+			//			ARBConfigOtherPointsPtr* outPoints = nullptr) const;
 		}
 	}
 
@@ -166,8 +166,8 @@ TEST_CASE("ConfigOtherPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddOtherPoints(ARBConfigOtherPointsPtr inOther);
-		//	bool DeleteOtherPoints(std::wstring const& inName);
+			//	bool AddOtherPoints(ARBConfigOtherPointsPtr inOther);
+			//	bool DeleteOtherPoints(std::wstring const& inName);
 		}
 	}
 }

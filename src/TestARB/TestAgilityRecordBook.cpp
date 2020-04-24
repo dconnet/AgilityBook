@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -46,7 +46,7 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBAgilityRecordBook();
+			//	ARBAgilityRecordBook();
 		}
 	}
 
@@ -56,7 +56,7 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void clear();
+			//	void clear();
 		}
 	}
 
@@ -66,18 +66,18 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//		ElementNodePtr inTree,
-		//		bool inCalendar,
-		//		bool inTraining,
-		//		bool inConfig,
-		//		bool inInfo,
-		//		bool inDogs,
-		//		ARBErrorCallback& ioCallback);
-		//	bool Load(ElementNodePtr inTree, ARBErrorCallback& ioCallback)
-		//	{
-		//		return Load(inTree, true, true, true, true, true, ioCallback);
-		//	}
+			//	bool Load(
+			//		ElementNodePtr inTree,
+			//		bool inCalendar,
+			//		bool inTraining,
+			//		bool inConfig,
+			//		bool inInfo,
+			//		bool inDogs,
+			//		ARBErrorCallback& ioCallback);
+			//	bool Load(ElementNodePtr inTree, ARBErrorCallback& ioCallback)
+			//	{
+			//		return Load(inTree, true, true, true, true, true, ioCallback);
+			//	}
 		}
 	}
 
@@ -87,14 +87,14 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(
-		//		ElementNodePtr outTree,
-		//		std::wstring const& inPgmVer,
-		//		bool inCalendar,
-		//		bool inTraining,
-		//		bool inConfig,
-		//		bool inInfo,
-		//		bool inDogs) const;
+			//	bool Save(
+			//		ElementNodePtr outTree,
+			//		std::wstring const& inPgmVer,
+			//		bool inCalendar,
+			//		bool inTraining,
+			//		bool inConfig,
+			//		bool inInfo,
+			//		bool inDogs) const;
 		}
 	}
 
@@ -104,7 +104,7 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void Default();
+			//	void Default();
 		}
 	}
 
@@ -114,11 +114,11 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Update(
-		//			int indent,
-		//			ARBConfig const& inConfigNew,
-		//			std::wstring& ioInfo,
-		//			IConfigActionCallback& ioCallBack);
+			//	bool Update(
+			//			int indent,
+			//			ARBConfig const& inConfigNew,
+			//			std::wstring& ioInfo,
+			//			IConfigActionCallback& ioCallBack);
 		}
 	}
 
@@ -128,10 +128,10 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	size_t GetAllClubNames(
-		//			std::set<std::wstring>& outClubs,
-		//			bool bInfo,
-		//			bool bVisibleOnly) const;
+			//	size_t GetAllClubNames(
+			//			std::set<std::wstring>& outClubs,
+			//			bool bInfo,
+			//			bool bVisibleOnly) const;
 		}
 	}
 
@@ -141,10 +141,10 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	size_t GetAllTrialLocations(
-		//			std::set<std::wstring>& outLocations,
-		//			bool bInfo,
-		//			bool bVisibleOnly) const;
+			//	size_t GetAllTrialLocations(
+			//			std::set<std::wstring>& outLocations,
+			//			bool bInfo,
+			//			bool bVisibleOnly) const;
 		}
 	}
 
@@ -154,10 +154,10 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	size_t GetAllEventSubNames(
-		//			std::wstring const& inVenue,
-		//			ARBConfigEventPtr inEvent,
-		//			std::set<std::wstring>& outNames) const;
+			//	size_t GetAllEventSubNames(
+			//			std::wstring const& inVenue,
+			//			ARBConfigEventPtr inEvent,
+			//			std::set<std::wstring>& outNames) const;
 		}
 	}
 
@@ -167,7 +167,7 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	size_t GetAllHeights(std::set<std::wstring>& outHeights) const;
+			//	size_t GetAllHeights(std::set<std::wstring>& outHeights) const;
 		}
 	}
 
@@ -177,7 +177,7 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	size_t GetAllCallNames(std::set<std::wstring>& outNames) const;
+			//	size_t GetAllCallNames(std::set<std::wstring>& outNames) const;
 		}
 	}
 
@@ -187,7 +187,7 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	size_t GetAllBreeds(std::set<std::wstring>& outBreeds) const;
+			//	size_t GetAllBreeds(std::set<std::wstring>& outBreeds) const;
 		}
 	}
 
@@ -197,10 +197,10 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	size_t GetAllJudges(
-		//			std::set<std::wstring>& outJudges,
-		//			bool bInfo,
-		//			bool bVisibleOnly) const;
+			//	size_t GetAllJudges(
+			//			std::set<std::wstring>& outJudges,
+			//			bool bInfo,
+			//			bool bVisibleOnly) const;
 		}
 	}
 
@@ -210,7 +210,7 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	size_t GetAllHandlers(std::set<std::wstring>& outHandlers) const;
+			//	size_t GetAllHandlers(std::set<std::wstring>& outHandlers) const;
 		}
 	}
 
@@ -220,9 +220,9 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void GetAllPartners(
-		//			std::set<std::wstring>& outPartners,
-		//			std::set<std::wstring>& outDogs) const;
+			//	void GetAllPartners(
+			//			std::set<std::wstring>& outPartners,
+			//			std::set<std::wstring>& outDogs) const;
 		}
 	}
 
@@ -232,7 +232,7 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	size_t GetAllFaultTypes(std::set<std::wstring>& outFaults) const;
+			//	size_t GetAllFaultTypes(std::set<std::wstring>& outFaults) const;
 		}
 	}
 }

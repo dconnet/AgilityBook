@@ -42,7 +42,9 @@
 class ARBConfigDivision_concrete : public ARBConfigDivision
 {
 public:
-	ARBConfigDivision_concrete() {}
+	ARBConfigDivision_concrete()
+	{
+	}
 	ARBConfigDivision_concrete(ARBConfigDivision const& rhs)
 		: ARBConfigDivision(rhs)
 	{
@@ -118,9 +120,7 @@ ARBConfigDivision& ARBConfigDivision::operator=(ARBConfigDivision&& rhs)
 
 bool ARBConfigDivision::operator==(ARBConfigDivision const& rhs) const
 {
-	return m_Name == rhs.m_Name
-		&& m_ShortName == rhs.m_ShortName
-		&& m_Levels == rhs.m_Levels;
+	return m_Name == rhs.m_Name && m_ShortName == rhs.m_ShortName && m_Levels == rhs.m_Levels;
 }
 
 
@@ -133,16 +133,15 @@ void ARBConfigDivision::clear()
 
 
 bool ARBConfigDivision::Load(
-		ARBConfigVenue& ioVenue,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfigVenue& ioVenue,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_DIVISION)
 		return false;
-	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_DIVISION_NAME, m_Name)
-	|| 0 == m_Name.length())
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_DIVISION_NAME, m_Name) || 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_DIVISION, ATTRIB_DIVISION_NAME));
 		return false;
@@ -160,7 +159,7 @@ bool ARBConfigDivision::Load(
 		}
 		else if (element->GetName() == TREE_TITLES)
 		{
-			if (inVersion < ARBVersion(12,0))
+			if (inVersion < ARBVersion(12, 0))
 			{
 				ioVenue.GetTitles().Load(element, inVersion, ioCallback, true);
 			}
@@ -185,15 +184,12 @@ bool ARBConfigDivision::Save(ElementNodePtr const& ioTree) const
 }
 
 
-bool ARBConfigDivision::Update(
-		int indent,
-		ARBConfigDivisionPtr const& inDivNew,
-		std::wstring& ioInfo)
+bool ARBConfigDivision::Update(int indent, ARBConfigDivisionPtr const& inDivNew, std::wstring& ioInfo)
 {
 	std::wstring info;
 
 	std::wstring indentBuffer, indentName;
-	for (int i = 0; i < indent-1; ++i)
+	for (int i = 0; i < indent - 1; ++i)
 		indentName += L"   ";
 	indentBuffer = indentName + L"   ";
 	indentName += L"-";
@@ -212,8 +208,8 @@ bool ARBConfigDivision::Update(
 		std::wstring info2;
 		int nChanged = 0, nAdded = 0, nSkipped = 0;
 		for (ARBConfigLevelList::const_iterator iterLevel = inDivNew->GetLevels().begin();
-			iterLevel != inDivNew->GetLevels().end();
-			++iterLevel)
+			 iterLevel != inDivNew->GetLevels().end();
+			 ++iterLevel)
 		{
 			ARBConfigLevelPtr pLevel;
 			if (GetLevels().FindLevel((*iterLevel)->GetName(), &pLevel))
@@ -222,7 +218,7 @@ bool ARBConfigDivision::Update(
 					++nSkipped;
 				else
 				{
-					if (pLevel->Update(indent+1, *iterLevel, info2))
+					if (pLevel->Update(indent + 1, *iterLevel, info2))
 						++nChanged;
 				}
 			}
@@ -265,10 +261,10 @@ bool ARBConfigDivision::Update(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigDivisionList::Load(
-		ARBConfigVenue& ioVenue,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfigVenue& ioVenue,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	ARBConfigDivisionPtr thing(ARBConfigDivision::New());
 	if (!thing->Load(ioVenue, inTree, inVersion, ioCallback))
@@ -284,9 +280,7 @@ void ARBConfigDivisionList::ReorderBy(ARBConfigDivisionList const& inList)
 	{
 		ARBConfigDivisionList tmp;
 		tmp.reserve(size());
-		for (ARBConfigDivisionList::const_iterator i = inList.begin();
-			i != inList.end();
-			++i)
+		for (ARBConfigDivisionList::const_iterator i = inList.begin(); i != inList.end(); ++i)
 		{
 			ARBConfigDivisionPtr div;
 			if (FindDivision((*i)->GetName(), &div))
@@ -304,9 +298,7 @@ void ARBConfigDivisionList::ReorderBy(ARBConfigDivisionList const& inList)
 }
 
 
-bool ARBConfigDivisionList::VerifyLevel(
-		std::wstring const& inDiv,
-		std::wstring const& inLevel) const
+bool ARBConfigDivisionList::VerifyLevel(std::wstring const& inDiv, std::wstring const& inLevel) const
 {
 	// Wildcards are only used in the ARBConfigScoring object.
 	bool bWildCard = (inDiv == WILDCARD_DIVISION);
@@ -324,9 +316,7 @@ bool ARBConfigDivisionList::VerifyLevel(
 }
 
 
-bool ARBConfigDivisionList::FindDivision(
-		std::wstring const& inDiv,
-		ARBConfigDivisionPtr* outDiv) const
+bool ARBConfigDivisionList::FindDivision(std::wstring const& inDiv, ARBConfigDivisionPtr* outDiv) const
 {
 	if (outDiv)
 		outDiv->reset();
@@ -343,9 +333,7 @@ bool ARBConfigDivisionList::FindDivision(
 }
 
 
-bool ARBConfigDivisionList::AddDivision(
-		std::wstring const& inDiv,
-		ARBConfigDivisionPtr* outDiv)
+bool ARBConfigDivisionList::AddDivision(std::wstring const& inDiv, ARBConfigDivisionPtr* outDiv)
 {
 	if (outDiv)
 		outDiv->reset();
@@ -364,18 +352,14 @@ bool ARBConfigDivisionList::AddDivision(
 
 bool ARBConfigDivisionList::AddDivision(ARBConfigDivisionPtr const& inDiv)
 {
-	if (!inDiv
-	|| 0 == inDiv->GetName().length()
-	|| FindDivision(inDiv->GetName()))
+	if (!inDiv || 0 == inDiv->GetName().length() || FindDivision(inDiv->GetName()))
 		return false;
 	push_back(inDiv);
 	return true;
 }
 
 
-int ARBConfigDivisionList::DeleteDivision(
-		std::wstring const& inDiv,
-		ARBConfigEventList& ioEvents)
+int ARBConfigDivisionList::DeleteDivision(std::wstring const& inDiv, ARBConfigEventList& ioEvents)
 {
 	std::wstring div(inDiv);
 	for (iterator iter = begin(); iter != end(); ++iter)

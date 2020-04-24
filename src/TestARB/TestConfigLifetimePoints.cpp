@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBConfigLifetimePoints.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -34,8 +34,8 @@ TEST_CASE("ConfigLifetimePoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBConfigLifetimePointsPtr New();
-		//	static ARBConfigLifetimePointsPtr New(double inPoints, double inFaults);
+			//	static ARBConfigLifetimePointsPtr New();
+			//	static ARBConfigLifetimePointsPtr New(double inPoints, double inFaults);
 		}
 	}
 
@@ -45,7 +45,7 @@ TEST_CASE("ConfigLifetimePoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigLifetimePointsPtr Clone() const;
+			//	ARBConfigLifetimePointsPtr Clone() const;
 		}
 	}
 
@@ -55,7 +55,7 @@ TEST_CASE("ConfigLifetimePoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
+			//	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
 		}
 	}
 
@@ -65,8 +65,8 @@ TEST_CASE("ConfigLifetimePoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBConfigLifetimePoints const& rhs) const;
-		//	bool operator!=(ARBConfigLifetimePoints const& rhs) const
+			//	bool operator==(ARBConfigLifetimePoints const& rhs) const;
+			//	bool operator!=(ARBConfigLifetimePoints const& rhs) const
 		}
 	}
 
@@ -76,7 +76,7 @@ TEST_CASE("ConfigLifetimePoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const;
+			//	virtual std::wstring GetGenericName() const;
 		}
 	}
 
@@ -86,10 +86,10 @@ TEST_CASE("ConfigLifetimePoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -99,7 +99,7 @@ TEST_CASE("ConfigLifetimePoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 }
@@ -112,10 +112,10 @@ TEST_CASE("ConfigLifetimePointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -125,7 +125,7 @@ TEST_CASE("ConfigLifetimePointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void sort();
+			//	void sort();
 		}
 	}
 
@@ -135,7 +135,7 @@ TEST_CASE("ConfigLifetimePointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	double GetLifetimePoints(double inFaults) const;
+			//	double GetLifetimePoints(double inFaults) const;
 		}
 	}
 
@@ -145,9 +145,9 @@ TEST_CASE("ConfigLifetimePointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindLifetimePoints(
-		//			double inFaults,
-		//			ARBConfigLifetimePointsPtr* outPoints = nullptr) const;
+			//	bool FindLifetimePoints(
+			//			double inFaults,
+			//			ARBConfigLifetimePointsPtr* outPoints = nullptr) const;
 		}
 	}
 
@@ -157,11 +157,11 @@ TEST_CASE("ConfigLifetimePointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddLifetimePoints(
-		//			double inPoints,
-		//			double inFaults,
-		//			ARBConfigLifetimePointsPtr* outPoints = nullptr);
-		//	bool DeleteLifetimePoints(double inFaults);
+			//	bool AddLifetimePoints(
+			//			double inPoints,
+			//			double inFaults,
+			//			ARBConfigLifetimePointsPtr* outPoints = nullptr);
+			//	bool DeleteLifetimePoints(double inFaults);
 		}
 	}
 }

@@ -28,10 +28,7 @@ class wxListEvent;
 class CDlgConfigMultiQ : public wxDialog
 {
 public:
-	CDlgConfigMultiQ(
-			ARBConfigVenuePtr const& inVenue,
-			ARBConfigMultiQPtr const& inMultiQ,
-			wxWindow* pParent = nullptr);
+	CDlgConfigMultiQ(ARBConfigVenuePtr const& inVenue, ARBConfigMultiQPtr const& inMultiQ, wxWindow* pParent = nullptr);
 
 private:
 	void UpdateControls();
@@ -44,10 +41,10 @@ private:
 	wxString m_ShortName;
 	bool m_bFrom;
 	wxDatePickerCtrl* m_ctrlDateFrom;
-	ARBDate	m_DateFrom;
-	bool	m_bTo;
+	ARBDate m_DateFrom;
+	bool m_bTo;
 	wxDatePickerCtrl* m_ctrlDateTo;
-	ARBDate	m_DateTo;
+	ARBDate m_DateTo;
 	CTextCtrl* m_ctrlName;
 	CListCtrl* m_ctrlItems;
 	wxButton* m_ctrlEdit;

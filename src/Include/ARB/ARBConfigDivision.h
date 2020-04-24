@@ -87,10 +87,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfigVenue& ioVenue,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfigVenue& ioVenue,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -107,10 +107,7 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(
-			int indent,
-			ARBConfigDivisionPtr const& inDivNew,
-			std::wstring& ioInfo);
+	bool Update(int indent, ARBConfigDivisionPtr const& inDivNew, std::wstring& ioInfo);
 
 	/*
 	 * Getters/setters.
@@ -164,10 +161,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfigVenue& ioVenue,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfigVenue& ioVenue,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Reorder the list based on 'inList'
@@ -181,9 +178,7 @@ public:
 	 * @param inLevel Level to verify.
 	 * @return Level exists.
 	 */
-	bool VerifyLevel(
-			std::wstring const& inDiv,
-			std::wstring const& inLevel) const;
+	bool VerifyLevel(std::wstring const& inDiv, std::wstring const& inLevel) const;
 
 	/**
 	 * Find the named division.
@@ -191,9 +186,7 @@ public:
 	 * @param outDiv Pointer to found object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindDivision(
-			std::wstring const& inDiv,
-			ARBConfigDivisionPtr* outDiv = nullptr) const;
+	bool FindDivision(std::wstring const& inDiv, ARBConfigDivisionPtr* outDiv = nullptr) const;
 
 	/**
 	 * Add a division.
@@ -201,9 +194,7 @@ public:
 	 * @param outDiv Pointer to new object, NULL if name already exists or is empty.
 	 * @return Whether the object was added.
 	 */
-	bool AddDivision(
-			std::wstring const& inDiv,
-			ARBConfigDivisionPtr* outDiv = nullptr);
+	bool AddDivision(std::wstring const& inDiv, ARBConfigDivisionPtr* outDiv = nullptr);
 
 	/**
 	 * Add a division.
@@ -218,7 +209,5 @@ public:
 	 * @param ioEvents List of events to be updated.
 	 * @return Number of divisions deleted (0 or 1).
 	 */
-	int DeleteDivision(
-			std::wstring const& inDiv,
-			ARBConfigEventList& ioEvents);
+	int DeleteDivision(std::wstring const& inDiv, ARBConfigEventList& ioEvents);
 };

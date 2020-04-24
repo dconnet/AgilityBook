@@ -27,9 +27,7 @@
  * @param inRawData String to sanitize
  * @param bConvertCR Convert \n to html-breaks.
  */
-ARBCOMMON_API std::wstring SanitizeStringForHTML(
-		std::wstring const& inRawData,
-		bool bConvertCR = true);
+ARBCOMMON_API std::wstring SanitizeStringForHTML(std::wstring const& inRawData, bool bConvertCR = true);
 
 
 /**

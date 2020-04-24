@@ -38,9 +38,7 @@
 class CNameValidator : public CTrimValidator
 {
 public:
-	CNameValidator(
-			CDlgConfigOtherPoints* dlg,
-			wxString* valPtr)
+	CNameValidator(CDlgConfigOtherPoints* dlg, wxString* valPtr)
 		: CTrimValidator(valPtr)
 		, m_Dlg(dlg)
 	{
@@ -77,22 +75,21 @@ bool CNameValidator::Validate(wxWindow* parent)
 
 namespace
 {
-	static struct
-	{
-		wchar_t const* idDesc;
-		ARBOtherPointsTally tally;
-	} const sc_Tally[] =
-	{
-		{arbT("IDS_OTHERPTS_ALL"), ARBOtherPointsTally::All},
-		{arbT("IDS_OTHERPTS_EVENT"), ARBOtherPointsTally::AllByEvent},
-		{arbT("IDS_OTHERPTS_LEVEL"), ARBOtherPointsTally::Level},
-		{arbT("IDS_OTHERPTS_EVENT_LEVEL"), ARBOtherPointsTally::LevelByEvent}
-	};
-	constexpr int sc_numTally = sizeof(sc_Tally) / sizeof(sc_Tally[0]);
-}
+static struct
+{
+	wchar_t const* idDesc;
+	ARBOtherPointsTally tally;
+} const sc_Tally[] = {
+	{arbT("IDS_OTHERPTS_ALL"), ARBOtherPointsTally::All},
+	{arbT("IDS_OTHERPTS_EVENT"), ARBOtherPointsTally::AllByEvent},
+	{arbT("IDS_OTHERPTS_LEVEL"), ARBOtherPointsTally::Level},
+	{arbT("IDS_OTHERPTS_EVENT_LEVEL"), ARBOtherPointsTally::LevelByEvent},
+};
+constexpr int sc_numTally = sizeof(sc_Tally) / sizeof(sc_Tally[0]);
+} // namespace
 
 
-class DlgConfigOtherPointData : public wxClientData 
+class DlgConfigOtherPointData : public wxClientData
 {
 public:
 	DlgConfigOtherPointData(ARBOtherPointsTally tally)
@@ -110,9 +107,9 @@ wxEND_EVENT_TABLE()
 
 
 CDlgConfigOtherPoints::CDlgConfigOtherPoints(
-		ARBConfig& config,
-		ARBConfigOtherPointsPtr const& inOther,
-		wxWindow* pParent)
+	ARBConfig& config,
+	ARBConfigOtherPointsPtr const& inOther,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_Config(config)
 	, m_pOther(inOther)
@@ -123,30 +120,44 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDD_CONFIG_OTHERPOINTS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		_("IDD_CONFIG_OTHERPOINTS"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
 
-	wxStaticText* textName = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_OTHER_NAME"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textName
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_OTHER_NAME"), wxDefaultPosition, wxDefaultSize, 0);
 	textName->Wrap(-1);
 
-	CTextCtrl* ctrlName = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+	CTextCtrl* ctrlName = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		CNameValidator(this, &m_Name));
 	ctrlName->SetHelpText(_("HIDC_CONFIG_OTHER_NAME"));
 	ctrlName->SetToolTip(_("HIDC_CONFIG_OTHER_NAME"));
 
-	wxStaticText* textTally = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_OTHER_TALLY"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textTally
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_OTHER_TALLY"), wxDefaultPosition, wxDefaultSize, 0);
 	textTally->Wrap(-1);
 
-	m_ctrlTally = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr,
-		wxCB_DROPDOWN|wxCB_READONLY|wxCB_SORT);
+	m_ctrlTally = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_READONLY | wxCB_SORT);
 	for (int index = 0; index < sc_numTally; ++index)
 	{
 		wxString desc = wxGetTranslation(sc_Tally[index].idDesc);
@@ -158,25 +169,32 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 	m_ctrlTally->SetHelpText(_("HIDC_CONFIG_OTHER_TALLY"));
 	m_ctrlTally->SetToolTip(_("HIDC_CONFIG_OTHER_TALLY"));
 
-	wxStaticText* textPoints = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_OTHER_DEFAULT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textPoints
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_OTHER_DEFAULT"), wxDefaultPosition, wxDefaultSize, 0);
 	textPoints->Wrap(-1);
 
-	CTextCtrl* ctrlPoints = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
+	CTextCtrl* ctrlPoints = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 30), -1),
+		0,
 		CGenericValidator(&m_Default));
 	ctrlPoints->SetHelpText(_("HIDC_CONFIG_OTHER_DEFAULT"));
 	ctrlPoints->SetToolTip(_("HIDC_CONFIG_OTHER_DEFAULT"));
 
-	wxStaticText* textDesc = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_OTHER_DESC"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textDesc
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_OTHER_DESC"), wxDefaultPosition, wxDefaultSize, 0);
 	textDesc->Wrap(-1);
 
-	CSpellCheckCtrl* ctrlDesc = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(120, 60)),
-		wxTE_MULTILINE|wxTE_WORDWRAP,
+	CSpellCheckCtrl* ctrlDesc = new CSpellCheckCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(120, 60)),
+		wxTE_MULTILINE | wxTE_WORDWRAP,
 		CTrimValidator(&m_Desc, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlDesc->SetHelpText(_("HIDC_CONFIG_OTHER_DESC"));
 	ctrlDesc->SetToolTip(_("HIDC_CONFIG_OTHER_DESC"));
@@ -223,8 +241,7 @@ DEFINE_ON_INIT(CDlgConfigOtherPoints)
 
 bool CDlgConfigOtherPoints::IsNameOkay(std::wstring const& name) const
 {
-	if (m_pOther->GetName() != name
-	&& m_Config.GetOtherPoints().FindOtherPoints(name))
+	if (m_pOther->GetName() != name && m_Config.GetOtherPoints().FindOtherPoints(name))
 	{
 		return false;
 	}

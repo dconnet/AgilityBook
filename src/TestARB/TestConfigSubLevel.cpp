@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBConfigSubLevel.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -34,7 +34,7 @@ TEST_CASE("ConfigSubLevel")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBConfigSubLevelPtr New();
+			//	static ARBConfigSubLevelPtr New();
 		}
 	}
 
@@ -44,7 +44,7 @@ TEST_CASE("ConfigSubLevel")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigSubLevelPtr Clone() const;
+			//	ARBConfigSubLevelPtr Clone() const;
 		}
 	}
 
@@ -54,7 +54,7 @@ TEST_CASE("ConfigSubLevel")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigSubLevel& operator=(ARBConfigSubLevel const& rhs);
+			//	ARBConfigSubLevel& operator=(ARBConfigSubLevel const& rhs);
 		}
 	}
 
@@ -64,8 +64,8 @@ TEST_CASE("ConfigSubLevel")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBConfigSubLevel const& rhs) const;
-		//	bool operator!=(ARBConfigSubLevel const& rhs) const
+			//	bool operator==(ARBConfigSubLevel const& rhs) const;
+			//	bool operator!=(ARBConfigSubLevel const& rhs) const
 		}
 	}
 
@@ -75,7 +75,7 @@ TEST_CASE("ConfigSubLevel")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const
+			//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -85,10 +85,10 @@ TEST_CASE("ConfigSubLevel")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -98,7 +98,7 @@ TEST_CASE("ConfigSubLevel")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 }
@@ -111,10 +111,10 @@ TEST_CASE("ConfigSubLevelList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -124,7 +124,7 @@ TEST_CASE("ConfigSubLevelList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindSubLevel(std::wstring const& inName) const;
+			//	bool FindSubLevel(std::wstring const& inName) const;
 		}
 	}
 
@@ -134,10 +134,10 @@ TEST_CASE("ConfigSubLevelList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddSubLevel(
-		//			std::wstring const& inName,
-		//			ARBConfigSubLevelPtr* outLevel = nullptr);
-		//	bool DeleteSubLevel(std::wstring const& inName);
+			//	bool AddSubLevel(
+			//			std::wstring const& inName,
+			//			ARBConfigSubLevelPtr* outLevel = nullptr);
+			//	bool DeleteSubLevel(std::wstring const& inName);
 		}
 	}
 }

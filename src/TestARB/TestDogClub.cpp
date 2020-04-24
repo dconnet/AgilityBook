@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBDogClub.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -34,7 +34,7 @@ TEST_CASE("DogClub")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBDogClubPtr New();
+			//	static ARBDogClubPtr New();
 		}
 	}
 
@@ -44,7 +44,7 @@ TEST_CASE("DogClub")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogClubPtr Clone() const;
+			//	ARBDogClubPtr Clone() const;
 		}
 	}
 
@@ -54,7 +54,7 @@ TEST_CASE("DogClub")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogClub& operator=(ARBDogClub const& rhs);
+			//	ARBDogClub& operator=(ARBDogClub const& rhs);
 		}
 	}
 
@@ -64,8 +64,8 @@ TEST_CASE("DogClub")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBDogClub const& rhs) const;
-		//	bool operator!=(ARBDogClub const& rhs) const
+			//	bool operator==(ARBDogClub const& rhs) const;
+			//	bool operator!=(ARBDogClub const& rhs) const
 		}
 	}
 
@@ -75,7 +75,7 @@ TEST_CASE("DogClub")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const
+			//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -85,11 +85,11 @@ TEST_CASE("DogClub")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig const& inConfig,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig const& inConfig,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -99,7 +99,7 @@ TEST_CASE("DogClub")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 }
@@ -112,11 +112,11 @@ TEST_CASE("DogClubList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig const& inConfig,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig const& inConfig,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -135,7 +135,7 @@ TEST_CASE("DogClubList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool GetPrimaryClub(ARBDogClubPtr* outClub = nullptr) const;
+			//	bool GetPrimaryClub(ARBDogClubPtr* outClub = nullptr) const;
 		}
 	}
 
@@ -145,7 +145,7 @@ TEST_CASE("DogClubList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	std::wstring GetPrimaryClubName() const;
+			//	std::wstring GetPrimaryClubName() const;
 		}
 	}
 
@@ -155,7 +155,7 @@ TEST_CASE("DogClubList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	std::wstring GetPrimaryClubVenue() const;
+			//	std::wstring GetPrimaryClubVenue() const;
 		}
 	}
 
@@ -165,15 +165,15 @@ TEST_CASE("DogClubList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindEvent(
-		//			ARBConfig const& inConfig,
-		//			std::wstring const& inEvent,
-		//			std::wstring const& inDivision,
-		//			std::wstring const& inLevel,
-		//			ARBDate const& inDate,
-		//			ARBErrorCallback& ioCallback,
-		//			ARBConfigEventPtr* outEvent = nullptr,
-		//			ARBConfigScoringPtr* outScoring = nullptr) const;
+			//	bool FindEvent(
+			//			ARBConfig const& inConfig,
+			//			std::wstring const& inEvent,
+			//			std::wstring const& inDivision,
+			//			std::wstring const& inLevel,
+			//			ARBDate const& inDate,
+			//			ARBErrorCallback& ioCallback,
+			//			ARBConfigEventPtr* outEvent = nullptr,
+			//			ARBConfigScoringPtr* outScoring = nullptr) const;
 		}
 	}
 
@@ -183,9 +183,9 @@ TEST_CASE("DogClubList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindVenue(
-		//			std::wstring const& inVenue,
-		//			ARBDogClubPtr* outClub = nullptr) const;
+			//	bool FindVenue(
+			//			std::wstring const& inVenue,
+			//			ARBDogClubPtr* outClub = nullptr) const;
 		}
 	}
 
@@ -195,13 +195,13 @@ TEST_CASE("DogClubList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddClub(
-		//			std::wstring const& inName,
-		//			std::wstring const& inVenue,
-		//			ARBDogClubPtr* outClub = nullptr);
-		//	bool DeleteClub(
-		//			std::wstring const& inName,
-		//			std::wstring const& inVenue);
+			//	bool AddClub(
+			//			std::wstring const& inName,
+			//			std::wstring const& inVenue,
+			//			ARBDogClubPtr* outClub = nullptr);
+			//	bool DeleteClub(
+			//			std::wstring const& inName,
+			//			std::wstring const& inVenue);
 		}
 	}
 }

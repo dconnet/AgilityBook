@@ -25,8 +25,8 @@
 #include "AgilityBookCalendarView.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookPointsView.h"
-#include "AgilityBookTrainingView.h"
 #include "AgilityBookRunsView.h"
+#include "AgilityBookTrainingView.h"
 #include "AgilityBookTreeView.h"
 #include "CommonView.h"
 #include "RegItems.h"
@@ -43,10 +43,10 @@
 
 // Default splitter widths.
 // Note: These are in normalized pixels. So they work in hi-dpi.
-#define DEFAULT_RUN_WIDTH	200L
-#define MIN_RUN_WIDTH		100L
-#define DEFAULT_CAL_WIDTH	300L
-#define MIN_CAL_WIDTH		100L
+#define DEFAULT_RUN_WIDTH 200L
+#define MIN_RUN_WIDTH     100L
+#define DEFAULT_CAL_WIDTH 300L
+#define MIN_CAL_WIDTH     100L
 
 
 CBasePanel::CBasePanel(wxWindow* parent, std::wstring const& helpText)
@@ -117,11 +117,11 @@ void CBasePanel::DetachViews()
 /////////////////////////////////////////////////////////////////////////////
 
 CAgilityBookPanelRuns::CAgilityBookPanelRuns(
-		CTabView* pTabView,
-		wxWindow *parent,
-		wxDocument* doc,
-		long flags,
-		std::vector<CAgilityBookBaseExtraView*> const& inViews)
+	CTabView* pTabView,
+	wxWindow* parent,
+	wxDocument* doc,
+	long flags,
+	std::vector<CAgilityBookBaseExtraView*> const& inViews)
 	: CBasePanel(parent, StringUtil::stringW(_("PanelRuns")))
 	, m_bInit(false)
 	, m_splitter(nullptr)
@@ -163,7 +163,7 @@ CAgilityBookPanelRuns::CAgilityBookPanelRuns(
 
 	m_splitter->SplitVertically(panel1, panel2);
 
-	wxBoxSizer *sizerPanel = new wxBoxSizer(wxVERTICAL);
+	wxBoxSizer* sizerPanel = new wxBoxSizer(wxVERTICAL);
 	sizerPanel->Add(m_splitter, 1, wxEXPAND, 0);
 	SetSizer(sizerPanel);
 }
@@ -192,17 +192,17 @@ void CAgilityBookPanelRuns::SplitterOnIdle(wxIdleEvent&)
 /////////////////////////////////////////////////////////////////////////////
 
 CAgilityBookPanelPoints::CAgilityBookPanelPoints(
-		CTabView* pTabView,
-		wxWindow* parent,
-		wxDocument* doc,
-		long flags,
-		std::vector<CAgilityBookBaseExtraView*> const& inViews)
+	CTabView* pTabView,
+	wxWindow* parent,
+	wxDocument* doc,
+	long flags,
+	std::vector<CAgilityBookBaseExtraView*> const& inViews)
 	: CBasePanel(parent, StringUtil::stringW(_("PanelPoints")))
 {
 	m_views = inViews;
 	bool bAttachViews = m_views.empty();
 
-	wxBoxSizer *sizerPanel = new wxBoxSizer(wxVERTICAL);
+	wxBoxSizer* sizerPanel = new wxBoxSizer(wxVERTICAL);
 
 	if (bAttachViews)
 	{
@@ -217,11 +217,11 @@ CAgilityBookPanelPoints::CAgilityBookPanelPoints(
 /////////////////////////////////////////////////////////////////////////////
 
 CAgilityBookPanelCalendar::CAgilityBookPanelCalendar(
-		CTabView* pTabView,
-		wxWindow* parent,
-		wxDocument* doc,
-		long flags,
-		std::vector<CAgilityBookBaseExtraView*> const& inViews)
+	CTabView* pTabView,
+	wxWindow* parent,
+	wxDocument* doc,
+	long flags,
+	std::vector<CAgilityBookBaseExtraView*> const& inViews)
 	: CBasePanel(parent, StringUtil::stringW(_("PanelCal")))
 	, m_bInit(false)
 	, m_splitter(nullptr)
@@ -261,7 +261,7 @@ CAgilityBookPanelCalendar::CAgilityBookPanelCalendar(
 
 	m_splitter->SplitVertically(panel1, panel2);
 
-	wxBoxSizer *sizerPanel = new wxBoxSizer(wxVERTICAL);
+	wxBoxSizer* sizerPanel = new wxBoxSizer(wxVERTICAL);
 	sizerPanel->Add(m_splitter, 1, wxEXPAND, 0);
 	SetSizer(sizerPanel);
 }
@@ -290,17 +290,17 @@ void CAgilityBookPanelCalendar::SplitterOnIdle(wxIdleEvent&)
 /////////////////////////////////////////////////////////////////////////////
 
 CAgilityBookPanelTraining::CAgilityBookPanelTraining(
-		CTabView* pTabView,
-		wxWindow* parent,
-		wxDocument* doc,
-		long flags,
-		std::vector<CAgilityBookBaseExtraView*> const& inViews)
+	CTabView* pTabView,
+	wxWindow* parent,
+	wxDocument* doc,
+	long flags,
+	std::vector<CAgilityBookBaseExtraView*> const& inViews)
 	: CBasePanel(parent, StringUtil::stringW(_("PanelTraining")))
 {
 	m_views = inViews;
 	bool bAttachViews = m_views.empty();
 
-	wxBoxSizer *sizerPanel = new wxBoxSizer(wxVERTICAL);
+	wxBoxSizer* sizerPanel = new wxBoxSizer(wxVERTICAL);
 	if (bAttachViews)
 	{
 		CAgilityBookBaseExtraView* pView = new CAgilityBookTrainingView(pTabView, doc);

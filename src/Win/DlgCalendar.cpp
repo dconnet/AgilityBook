@@ -42,9 +42,9 @@
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/RichEditCtrl2.h"
 #include "LibARBWin/Validators.h"
-#include <set>
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
+#include <set>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -56,10 +56,7 @@ wxBEGIN_EVENT_TABLE(CDlgCalendar, wxDialog)
 wxEND_EVENT_TABLE()
 
 
-CDlgCalendar::CDlgCalendar(
-		ARBCalendarPtr const& inCal,
-		CAgilityBookDoc* pDoc,
-		wxWindow* pParent)
+CDlgCalendar::CDlgCalendar(ARBCalendarPtr const& inCal, CAgilityBookDoc* pDoc, wxWindow* pParent)
 	: wxDialog()
 	, m_pCal(inCal)
 	, m_pDoc(pDoc)
@@ -137,91 +134,127 @@ CDlgCalendar::CDlgCalendar(
 
 	// Controls (these are done first to control tab order)
 
-	wxStaticText* textStart = new wxStaticText(this, wxID_ANY,
-		_("IDC_CAL_DATE_START"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textStart
+		= new wxStaticText(this, wxID_ANY, _("IDC_CAL_DATE_START"), wxDefaultPosition, wxDefaultSize, 0);
 	textStart->Wrap(-1);
 
-	wxDatePickerCtrl* ctrlStart = new wxDatePickerCtrl(this, wxID_ANY, wxDefaultDateTime,
-		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
+	wxDatePickerCtrl* ctrlStart = new wxDatePickerCtrl(
+		this,
+		wxID_ANY,
+		wxDefaultDateTime,
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDP_DROPDOWN | wxDP_SHOWCENTURY,
 		CGenericValidator(&m_dateStart));
 	ctrlStart->Bind(wxEVT_DATE_CHANGED, &CDlgCalendar::OnDatetimechangeStart, this);
 	ctrlStart->SetHelpText(_("HIDC_CAL_DATE_START"));
 	ctrlStart->SetToolTip(_("HIDC_CAL_DATE_START"));
 
-	wxStaticText* textEnd = new wxStaticText(this, wxID_ANY,
-		_("IDC_CAL_DATE_END"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textEnd
+		= new wxStaticText(this, wxID_ANY, _("IDC_CAL_DATE_END"), wxDefaultPosition, wxDefaultSize, 0);
 	textEnd->Wrap(-1);
 
-	m_ctrlEnd = new wxDatePickerCtrl(this, wxID_ANY, wxDefaultDateTime,
-		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
+	m_ctrlEnd = new wxDatePickerCtrl(
+		this,
+		wxID_ANY,
+		wxDefaultDateTime,
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDP_DROPDOWN | wxDP_SHOWCENTURY,
 		CGenericValidator(&m_dateEnd));
 	m_ctrlEnd->SetHelpText(_("HIDC_CAL_DATE_END"));
 	m_ctrlEnd->SetToolTip(_("HIDC_CAL_DATE_END"));
 
-	wxCheckBox* ctrlTentative = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* ctrlTentative = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_CAL_TENTATIVE"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bTentative));
 	ctrlTentative->SetHelpText(_("HIDC_CAL_TENTATIVE"));
 	ctrlTentative->SetToolTip(_("HIDC_CAL_TENTATIVE"));
 
-	wxStaticText* textOpens = new wxStaticText(this, wxID_ANY,
-		_("IDC_CAL_DATE_OPENS"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textOpens
+		= new wxStaticText(this, wxID_ANY, _("IDC_CAL_DATE_OPENS"), wxDefaultPosition, wxDefaultSize, 0);
 	textOpens->Wrap(-1);
 
-	m_ctrlOpens = new wxDatePickerCtrl(this, wxID_ANY, wxDefaultDateTime,
-		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
+	m_ctrlOpens = new wxDatePickerCtrl(
+		this,
+		wxID_ANY,
+		wxDefaultDateTime,
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDP_DROPDOWN | wxDP_SHOWCENTURY,
 		CGenericValidator(&m_dateOpens));
 	m_ctrlOpens->SetHelpText(_("HIDC_CAL_DATE_OPENS"));
 	m_ctrlOpens->SetToolTip(_("HIDC_CAL_DATE_OPENS"));
 	m_ctrlOpens->Enable(!m_bOpeningUnknown);
 
-	wxCheckBox* ctrlOpensUnknown = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* ctrlOpensUnknown = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_CAL_DATE_OPENS_UNKNOWN"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bOpeningUnknown));
 	ctrlOpensUnknown->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgCalendar::OnDateOpensUnknown, this);
 	ctrlOpensUnknown->SetHelpText(_("HIDC_CAL_DATE_OPENS_UNKNOWN"));
 	ctrlOpensUnknown->SetToolTip(_("HIDC_CAL_DATE_OPENS_UNKNOWN"));
 
-	wxStaticText* textDraws = new wxStaticText(this, wxID_ANY,
-		_("IDC_CAL_DATE_DRAWS"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textDraws
+		= new wxStaticText(this, wxID_ANY, _("IDC_CAL_DATE_DRAWS"), wxDefaultPosition, wxDefaultSize, 0);
 	textDraws->Wrap(-1);
 
-	m_ctrlDraws = new wxDatePickerCtrl(this, wxID_ANY, wxDefaultDateTime,
-		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
+	m_ctrlDraws = new wxDatePickerCtrl(
+		this,
+		wxID_ANY,
+		wxDefaultDateTime,
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDP_DROPDOWN | wxDP_SHOWCENTURY,
 		CGenericValidator(&m_dateDraws));
 	m_ctrlDraws->SetHelpText(_("HIDC_CAL_DATE_DRAWS"));
 	m_ctrlDraws->SetToolTip(_("HIDC_CAL_DATE_DRAWS"));
 	m_ctrlDraws->Enable(!m_bDrawingUnknown);
 
-	wxCheckBox* ctrDrawsUnknown = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* ctrDrawsUnknown = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_CAL_DATE_DRAWS_UNKNOWN"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bDrawingUnknown));
 	ctrDrawsUnknown->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgCalendar::OnDateDrawsUnknown, this);
 	ctrDrawsUnknown->SetHelpText(_("HIDC_CAL_DATE_DRAWS_UNKNOWN"));
 	ctrDrawsUnknown->SetToolTip(_("HIDC_CAL_DATE_DRAWS_UNKNOWN"));
 
-	wxStaticText* textCloses = new wxStaticText(this, wxID_ANY,
-		_("IDC_CAL_DATE_CLOSES"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textCloses
+		= new wxStaticText(this, wxID_ANY, _("IDC_CAL_DATE_CLOSES"), wxDefaultPosition, wxDefaultSize, 0);
 	textCloses->Wrap(-1);
 
-	m_ctrlCloses = new wxDatePickerCtrl(this, wxID_ANY, wxDefaultDateTime,
-		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
+	m_ctrlCloses = new wxDatePickerCtrl(
+		this,
+		wxID_ANY,
+		wxDefaultDateTime,
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDP_DROPDOWN | wxDP_SHOWCENTURY,
 		CGenericValidator(&m_dateCloses));
 	m_ctrlCloses->SetHelpText(_("HIDC_CAL_DATE_CLOSES"));
 	m_ctrlCloses->SetToolTip(_("HIDC_CAL_DATE_CLOSES"));
 	m_ctrlCloses->Enable(!m_bClosingUnknown);
 
-	wxCheckBox* ctrlClosesUnknown = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* ctrlClosesUnknown = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_CAL_DATE_CLOSES_UNKNOWN"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bClosingUnknown));
 	ctrlClosesUnknown->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgCalendar::OnDateClosesUnknown, this);
 	ctrlClosesUnknown->SetHelpText(_("HIDC_CAL_DATE_CLOSES_UNKNOWN"));
@@ -229,30 +262,26 @@ CDlgCalendar::CDlgCalendar(
 
 	wxStaticBox* boxEntry = new wxStaticBox(this, wxID_ANY, _("IDC_CAL_ENTER"));
 
-	m_ctrlEntryNot = new wxRadioButton(this, wxID_ANY,
-		_("IDC_CAL_ENTER_NOT"),
-		wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
+	m_ctrlEntryNot
+		= new wxRadioButton(this, wxID_ANY, _("IDC_CAL_ENTER_NOT"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
 	m_ctrlEntryNot->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CDlgCalendar::OnCalEntry, this);
 	m_ctrlEntryNot->SetHelpText(_("HIDC_CAL_ENTER_NOT"));
 	m_ctrlEntryNot->SetToolTip(_("HIDC_CAL_ENTER_NOT"));
 
-	m_ctrlEntryPlan = new wxRadioButton(this, wxID_ANY,
-		_("IDC_CAL_ENTER_PLANNING"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlEntryPlan
+		= new wxRadioButton(this, wxID_ANY, _("IDC_CAL_ENTER_PLANNING"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlEntryPlan->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CDlgCalendar::OnCalEntry, this);
 	m_ctrlEntryPlan->SetHelpText(_("HIDC_CAL_ENTER_PLANNING"));
 	m_ctrlEntryPlan->SetToolTip(_("HIDC_CAL_ENTER_PLANNING"));
 
-	m_ctrlEntryPending = new wxRadioButton(this, wxID_ANY,
-		_("IDC_CAL_ENTER_PENDING"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlEntryPending
+		= new wxRadioButton(this, wxID_ANY, _("IDC_CAL_ENTER_PENDING"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlEntryPending->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CDlgCalendar::OnCalEntry, this);
 	m_ctrlEntryPending->SetHelpText(_("HIDC_CAL_ENTER_PENDING"));
 	m_ctrlEntryPending->SetToolTip(_("HIDC_CAL_ENTER_PENDING"));
 
-	m_ctrlEntryEntered = new wxRadioButton(this, wxID_ANY,
-		_("IDC_CAL_ENTER_ENTERED"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlEntryEntered
+		= new wxRadioButton(this, wxID_ANY, _("IDC_CAL_ENTER_ENTERED"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlEntryEntered->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CDlgCalendar::OnCalEntry, this);
 	m_ctrlEntryEntered->SetHelpText(_("HIDC_CAL_ENTER_ENTERED"));
 	m_ctrlEntryEntered->SetToolTip(_("HIDC_CAL_ENTER_ENTERED"));
@@ -273,17 +302,21 @@ CDlgCalendar::CDlgCalendar(
 		break;
 	}
 
-	m_ctrlOnlineUrlEntry = new wxButton(this, wxID_ANY,
-		_("IDC_CAL_ONLINE_ENTRY"),
-		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	m_ctrlOnlineUrlEntry
+		= new wxButton(this, wxID_ANY, _("IDC_CAL_ONLINE_ENTRY"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
 	m_ctrlOnlineUrlEntry->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendar::OnOnlineEntry, this);
 	m_ctrlOnlineUrlEntry->SetHelpText(_("HIDC_CAL_ONLINE_ENTRY"));
 	m_ctrlOnlineUrlEntry->SetToolTip(_("HIDC_CAL_ONLINE_ENTRY"));
 	if (ARBCalendarEntry::Planning != m_pCal->GetEntered() || m_OnlineUrl.empty())
 		m_ctrlOnlineUrlEntry->Enable(false);
 
-	m_ctrlOnlineUrl = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+	m_ctrlOnlineUrl = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		CTrimValidator(&m_OnlineUrl, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlOnlineUrl->Bind(wxEVT_COMMAND_TEXT_UPDATED, &CDlgCalendar::OnEnChangeCalOnlineUrl, this);
 	m_ctrlOnlineUrl->SetHelpText(_("HIDC_CAL_ONLINE_URL"));
@@ -291,23 +324,19 @@ CDlgCalendar::CDlgCalendar(
 
 	wxStaticBox* boxAccom = new wxStaticBox(this, wxID_ANY, _("IDC_CAL_ACCOM"));
 
-	m_ctrlAccomNot = new wxRadioButton(this, wxID_ANY,
-		_("IDC_CAL_ACCOM_NONE"),
-		wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
+	m_ctrlAccomNot
+		= new wxRadioButton(this, wxID_ANY, _("IDC_CAL_ACCOM_NONE"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
 	m_ctrlAccomNot->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CDlgCalendar::OnAccommodation, this);
 	m_ctrlAccomNot->SetHelpText(_("HIDC_CAL_ACCOM_NONE"));
 	m_ctrlAccomNot->SetToolTip(_("HIDC_CAL_ACCOM_NONE"));
 
-	m_ctrlAccomNeeded = new wxRadioButton(this, wxID_ANY,
-		_("IDC_CAL_ACCOM_NEEDED"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlAccomNeeded
+		= new wxRadioButton(this, wxID_ANY, _("IDC_CAL_ACCOM_NEEDED"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlAccomNeeded->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CDlgCalendar::OnAccommodation, this);
 	m_ctrlAccomNeeded->SetHelpText(_("HIDC_CAL_ACCOM_NEEDED"));
 	m_ctrlAccomNeeded->SetToolTip(_("HIDC_CAL_ACCOM_NEEDED"));
 
-	m_ctrlAccomMade = new wxRadioButton(this, wxID_ANY,
-		_("IDC_CAL_ACCOM_MADE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlAccomMade = new wxRadioButton(this, wxID_ANY, _("IDC_CAL_ACCOM_MADE"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlAccomMade->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CDlgCalendar::OnAccommodation, this);
 	m_ctrlAccomMade->SetHelpText(_("HIDC_CAL_ACCOM_MADE"));
 	m_ctrlAccomMade->SetToolTip(_("HIDC_CAL_ACCOM_MADE"));
@@ -326,49 +355,61 @@ CDlgCalendar::CDlgCalendar(
 		break;
 	}
 
-	m_ctrlConfirmation = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+	m_ctrlConfirmation = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		CTrimValidator(&m_Confirmation, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlConfirmation->SetHelpText(_("HIDC_CAL_ACCOM_CONFIRMATION"));
 	m_ctrlConfirmation->SetToolTip(_("HIDC_CAL_ACCOM_CONFIRMATION"));
 	m_ctrlConfirmation->Enable(ARBAccommodations::Confirmed == m_pCal->GetAccommodation());
 
-	m_ctrlPremiumEntry = new wxButton(this, wxID_ANY,
-		_("IDC_CAL_PREMIUM_ENTRY"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlPremiumEntry = new wxButton(this, wxID_ANY, _("IDC_CAL_PREMIUM_ENTRY"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlPremiumEntry->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendar::OnPremiumEntry, this);
 	m_ctrlPremiumEntry->SetHelpText(_("HIDC_CAL_PREMIUM_ENTRY"));
 	m_ctrlPremiumEntry->SetToolTip(_("HIDC_CAL_PREMIUM_ENTRY"));
 	if (m_PremiumUrl.empty())
 		m_ctrlPremiumEntry->Enable(false);
 
-	m_ctrlPremiumUrl = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+	m_ctrlPremiumUrl = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		CTrimValidator(&m_PremiumUrl, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlPremiumUrl->Bind(wxEVT_COMMAND_TEXT_UPDATED, &CDlgCalendar::OnEnChangeCalPremiumUrl, this);
 	m_ctrlPremiumUrl->SetHelpText(_("HIDC_CAL_PREMIUM_URL"));
 	m_ctrlPremiumUrl->SetToolTip(_("HIDC_CAL_PREMIUM_URL"));
 
-	m_ctrlEMailSec = new wxButton(this, wxID_ANY,
-		_("IDC_CAL_EMAIL_SEC"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlEMailSec = new wxButton(this, wxID_ANY, _("IDC_CAL_EMAIL_SEC"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlEMailSec->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendar::OnEmailSec, this);
 	m_ctrlEMailSec->SetHelpText(_("HIDC_CAL_EMAIL_SEC"));
 	m_ctrlEMailSec->SetToolTip(_("HIDC_CAL_EMAIL_SEC"));
 	if (m_EMailSecAddr.empty())
 		m_ctrlEMailSec->Enable(false);
 
-	m_ctrlEMailSecAddr = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr, wxCB_DROPDOWN|wxCB_SORT,
+	m_ctrlEMailSecAddr = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_SORT,
 		CTrimValidator(&m_EMailSecAddr, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlEMailSecAddr->Bind(wxEVT_COMMAND_TEXT_UPDATED, &CDlgCalendar::OnEnChangeCalEmailSecAddr, this);
 	m_ctrlEMailSecAddr->SetHelpText(_("HIDC_CAL_EMAIL_SEC_ADDR"));
 	m_ctrlEMailSecAddr->SetToolTip(_("HIDC_CAL_EMAIL_SEC_ADDR"));
 	std::set<std::wstring> addrs;
 	for (ARBCalendarList::const_iterator iCal = m_pDoc->Book().GetCalendar().begin();
-		iCal != m_pDoc->Book().GetCalendar().end();
-		++iCal)
+		 iCal != m_pDoc->Book().GetCalendar().end();
+		 ++iCal)
 	{
 		addrs.insert((*iCal)->GetSecEmail());
 	}
@@ -384,24 +425,31 @@ CDlgCalendar::CDlgCalendar(
 	}
 	m_ctrlEMailSecAddr->AutoComplete(choices);
 
-	wxStaticText* textVenue = new wxStaticText(this, wxID_ANY,
-		_("IDC_CAL_VENUE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textVenue = new wxStaticText(this, wxID_ANY, _("IDC_CAL_VENUE"), wxDefaultPosition, wxDefaultSize, 0);
 	textVenue->Wrap(-1);
 
-	m_ctrlVenue = new CVenueComboBox(this, m_pDoc->Book().GetConfig().GetVenues(), m_Venue, false,
-		CTrimValidator(&m_Venue, TRIMVALIDATOR_TRIM_BOTH), true);
+	m_ctrlVenue = new CVenueComboBox(
+		this,
+		m_pDoc->Book().GetConfig().GetVenues(),
+		m_Venue,
+		false,
+		CTrimValidator(&m_Venue, TRIMVALIDATOR_TRIM_BOTH),
+		true);
 	m_ctrlVenue->SetHelpText(_("HIDC_CAL_VENUE"));
 	m_ctrlVenue->SetToolTip(_("HIDC_CAL_VENUE"));
 
-	wxStaticText* textClub = new wxStaticText(this, wxID_ANY,
-		_("IDC_CAL_CLUB"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textClub = new wxStaticText(this, wxID_ANY, _("IDC_CAL_CLUB"), wxDefaultPosition, wxDefaultSize, 0);
 	textClub->Wrap(-1);
 
-	m_ctrlClub = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr, wxCB_DROPDOWN|wxCB_SORT,
+	m_ctrlClub = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_SORT,
 		CTrimValidator(&m_Club, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlClub->Bind(wxEVT_COMMAND_TEXT_UPDATED, &CDlgCalendar::OnSelchangeClub, this);
 	m_ctrlClub->SetHelpText(_("HIDC_CAL_CLUB"));
@@ -412,19 +460,29 @@ CDlgCalendar::CDlgCalendar(
 	m_ctrlClubNotes->SetHelpText(_("HIDC_CAL_CLUB_NOTES"));
 	m_ctrlClubNotes->SetToolTip(_("HIDC_CAL_CLUB_NOTES"));
 
-	m_ctrlClubInfo = new CRichEditCtrl2(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, 35)), true);
+	m_ctrlClubInfo = new CRichEditCtrl2(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(-1, wxDLG_UNIT_Y(this, 35)),
+		true);
 	m_ctrlClubInfo->SetHelpText(_("HIDC_CAL_CLUB_NOTE"));
 	m_ctrlClubInfo->SetToolTip(_("HIDC_CAL_CLUB_NOTE"));
 
-	wxStaticText* textLocation = new wxStaticText(this, wxID_ANY,
-		_("IDC_CAL_LOCATION"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textLocation
+		= new wxStaticText(this, wxID_ANY, _("IDC_CAL_LOCATION"), wxDefaultPosition, wxDefaultSize, 0);
 	textLocation->Wrap(-1);
 
-	m_ctrlLocation = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr, wxCB_DROPDOWN|wxCB_SORT,
+	m_ctrlLocation = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_SORT,
 		CTrimValidator(&m_Location, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlLocation->Bind(wxEVT_COMMAND_TEXT_UPDATED, &CDlgCalendar::OnSelchangeLocation, this);
 	m_ctrlLocation->SetHelpText(_("HIDC_CAL_LOCATION"));
@@ -435,18 +493,26 @@ CDlgCalendar::CDlgCalendar(
 	m_ctrlLocationNotes->SetHelpText(_("HIDC_CAL_LOCATION_NOTES"));
 	m_ctrlLocationNotes->SetToolTip(_("HIDC_CAL_LOCATION_NOTES"));
 
-	m_ctrlLocationInfo = new CRichEditCtrl2(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, 60)), true);
+	m_ctrlLocationInfo = new CRichEditCtrl2(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(-1, wxDLG_UNIT_Y(this, 60)),
+		true);
 	m_ctrlLocationInfo->SetHelpText(_("HIDC_CAL_LOCATION_NOTE"));
 	m_ctrlLocationInfo->SetToolTip(_("HIDC_CAL_LOCATION_NOTE"));
 
-	wxStaticText* textNotes = new wxStaticText(this, wxID_ANY,
-		_("IDC_CAL_NOTES"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textNotes = new wxStaticText(this, wxID_ANY, _("IDC_CAL_NOTES"), wxDefaultPosition, wxDefaultSize, 0);
 	textNotes->Wrap(-1);
 
-	CSpellCheckCtrl* ctrlNotes = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, 40)), wxTE_MULTILINE,
+	CSpellCheckCtrl* ctrlNotes = new CSpellCheckCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(-1, wxDLG_UNIT_Y(this, 40)),
+		wxTE_MULTILINE,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlNotes->SetHelpText(_("HIDC_CAL_NOTES"));
 	ctrlNotes->SetToolTip(_("HIDC_CAL_NOTES"));
@@ -843,7 +909,11 @@ void CDlgCalendar::OnOk(wxCommandEvent& evt)
 	today -= CAgilityBookOptions::DaysTillEntryIsPast();
 	if (CAgilityBookOptions::AutoDeleteCalendarEntries() && m_dateEnd < today)
 	{
-		if (wxYES != wxMessageBox(_("IDS_AUTODELETE_CAL"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_WARNING))
+		if (wxYES
+			!= wxMessageBox(
+				_("IDS_AUTODELETE_CAL"),
+				wxMessageBoxCaptionStr,
+				wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_WARNING))
 			return;
 	}
 

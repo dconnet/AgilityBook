@@ -77,10 +77,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfig const& inConfig,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Perform any fix ups - specifically, co-sanctioning.
@@ -88,9 +88,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool PostLoad(
-			ARBDogClubList const& clubList,
-			ARBErrorCallback& ioCallback);
+	bool PostLoad(ARBDogClubList const& clubList, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -157,10 +155,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfig const& inConfig,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Perform any fix ups - specifically, co-sanctioning.
@@ -181,9 +179,7 @@ public:
 	 * @param outClub Pointer to first club.
 	 * @return Whether there is a primary club.
 	 */
-	bool GetPrimaryClub(
-			std::wstring const& inVenue,
-			ARBDogClubPtr* outClub = nullptr) const;
+	bool GetPrimaryClub(std::wstring const& inVenue, ARBDogClubPtr* outClub = nullptr) const;
 
 	/**
 	 * Get the list of all clubs.
@@ -218,9 +214,7 @@ public:
 	 * @param outIndex Direct index of club.
 	 * @return If club was found.
 	 */
-	bool FindClubIndex(
-			ARBDogClubPtr const& inClub,
-			size_t& outIndex) const;
+	bool FindClubIndex(ARBDogClubPtr const& inClub, size_t& outIndex) const;
 
 	/**
 	 * Find a club
@@ -229,10 +223,7 @@ public:
 	 * @param outClub Found club.
 	 * @return Whether the club was found.
 	 */
-	bool FindClub(
-			std::wstring const& inName,
-			std::wstring const& inVenue,
-			ARBDogClubPtr* outClub = nullptr) const;
+	bool FindClub(std::wstring const& inName, std::wstring const& inVenue, ARBDogClubPtr* outClub = nullptr) const;
 
 	/**
 	 * Find the first scoring style to match.
@@ -248,14 +239,14 @@ public:
 	 * @return Whether an event was found.
 	 */
 	bool FindEvent(
-			ARBConfig const& inConfig,
-			std::wstring const& inEvent,
-			std::wstring const& inDivision,
-			std::wstring const& inLevel,
-			ARBDate const& inDate,
-			ARBErrorCallback& ioCallback,
-			ARBConfigEventPtr* outEvent = nullptr,
-			ARBConfigScoringPtr* outScoring = nullptr) const;
+		ARBConfig const& inConfig,
+		std::wstring const& inEvent,
+		std::wstring const& inDivision,
+		std::wstring const& inLevel,
+		ARBDate const& inDate,
+		ARBErrorCallback& ioCallback,
+		ARBConfigEventPtr* outEvent = nullptr,
+		ARBConfigScoringPtr* outScoring = nullptr) const;
 
 	/**
 	 * Find a club that uses the specified venue.
@@ -263,9 +254,7 @@ public:
 	 * @param outClub Found club.
 	 * @return Whether the club was found.
 	 */
-	bool FindVenue(
-			std::wstring const& inVenue,
-			ARBDogClubPtr* outClub = nullptr) const;
+	bool FindVenue(std::wstring const& inVenue, ARBDogClubPtr* outClub = nullptr) const;
 
 	/**
 	 * Add a club.
@@ -274,10 +263,7 @@ public:
 	 * @param outClub Added club.
 	 * @return Whether the club was added.
 	 */
-	bool AddClub(
-			std::wstring const& inName,
-			std::wstring const& inVenue,
-			ARBDogClubPtr* outClub = nullptr);
+	bool AddClub(std::wstring const& inName, std::wstring const& inVenue, ARBDogClubPtr* outClub = nullptr);
 
 	/**
 	 * Delete a club.
@@ -285,7 +271,5 @@ public:
 	 * @param inVenue Venue of club.
 	 * @return Whether club was deleted.
 	 */
-	bool DeleteClub(
-			std::wstring const& inName,
-			std::wstring const& inVenue);
+	bool DeleteClub(std::wstring const& inName, std::wstring const& inVenue);
 };

@@ -42,6 +42,7 @@ public:
 	{
 	}
 	bool Search(CDlgFind* pDlg) const override;
+
 private:
 	CAgilityBookTrainingView* m_pView;
 };
@@ -51,26 +52,28 @@ class CAgilityBookTrainingView : public CAgilityBookBaseExtraView
 {
 	friend class CAgilityBookTrainingViewData;
 	friend class CFindTraining;
-	friend int wxCALLBACK CompareTraining(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo);
+	friend int wxCALLBACK
+	CompareTraining(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo);
 	DECLARE_CLASS(CAgilityBookTrainingView)
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookTrainingView)
 
 public:
-	CAgilityBookTrainingView(
-			CTabView* pTabView,
-			wxDocument* doc);
+	CAgilityBookTrainingView(CTabView* pTabView, wxDocument* doc);
 	~CAgilityBookTrainingView();
 
 	bool Create(
-			CBasePanel* parentView,
-			wxWindow* parentCtrl,
-			wxDocument* doc,
-			long flags,
-			wxSizer* sizer,
-			int proportion = 0,
-			int sizerFlags = 0,
-			int border = 0) override;
-	wxWindow* GetControl() override		{return m_Ctrl;}
+		CBasePanel* parentView,
+		wxWindow* parentCtrl,
+		wxDocument* doc,
+		long flags,
+		wxSizer* sizer,
+		int proportion = 0,
+		int sizerFlags = 0,
+		int border = 0) override;
+	wxWindow* GetControl() override
+	{
+		return m_Ctrl;
+	}
 	void DetachView() override;
 
 	void SetCurrentDate(ARBDate const& inDate);
@@ -80,17 +83,10 @@ public:
 	bool GetMessage2(std::wstring& msg) const override;
 	bool AllowStatusContext(int field) const override;
 
-	bool OnCreate(
-			wxDocument* doc,
-			long flags) override;
-	void DoActivateView(
-			bool activate,
-			wxView* activeView,
-			wxView* deactiveView) override;
+	bool OnCreate(wxDocument* doc, long flags) override;
+	void DoActivateView(bool activate, wxView* activeView, wxView* deactiveView) override;
 	void OnDraw(wxDC* dc) override;
-	void OnUpdate(
-			wxView* sender,
-			wxObject* inHint = nullptr) override;
+	void OnUpdate(wxView* sender, wxObject* inHint = nullptr) override;
 
 	void GetPrintLine(long item, std::vector<std::wstring>& line) const;
 
@@ -110,8 +106,12 @@ private:
 	public:
 		CSortColumn(std::vector<long>& inColumns);
 		void Initialize();
-		long GetColumn() const		{return m_iCol;}
+		long GetColumn() const
+		{
+			return m_iCol;
+		}
 		void SetColumn(long iCol);
+
 	private:
 		long LookupColumn(long iCol) const;
 		std::vector<long>& m_Columns;

@@ -32,11 +32,7 @@ class wxBitmapComboBox;
 class CDlgInfoNote : public wxDialog
 {
 public:
-	CDlgInfoNote(
-			CAgilityBookDoc* pDoc,
-			ARBInfoType inType,
-			std::wstring const& inSelect,
-			wxWindow* pParent = nullptr);
+	CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstring const& inSelect, wxWindow* pParent = nullptr);
 
 	std::wstring CurrentSelection() const;
 
@@ -83,7 +79,9 @@ private:
 			, m_bHasData(std::move(rhs.m_bHasData))
 		{
 		}
-		~NameInfo() {}
+		~NameInfo()
+		{
+		}
 		NameInfo& operator=(NameInfo const& rhs)
 		{
 			if (this != &rhs)

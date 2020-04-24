@@ -76,10 +76,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -121,10 +118,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Find a fault.
@@ -132,9 +126,7 @@ public:
 	 * @param outFault Pointer to found object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindFault(
-			std::wstring const& inName,
-			ARBConfigFaultPtr* outFault = nullptr) const;
+	bool FindFault(std::wstring const& inName, ARBConfigFaultPtr* outFault = nullptr) const;
 
 	/**
 	 * Add a fault.
@@ -142,9 +134,7 @@ public:
 	 * @param outFault Pointer to object, NULL if name already exists or is empty.
 	 * @return Whether the fault was added.
 	 */
-	bool AddFault(
-			std::wstring const& inName,
-			ARBConfigFaultPtr* outFault = nullptr);
+	bool AddFault(std::wstring const& inName, ARBConfigFaultPtr* outFault = nullptr);
 
 	/**
 	 * Delete the fault.

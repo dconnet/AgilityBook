@@ -46,18 +46,18 @@
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/RichEditCtrl2.h"
 #include "LibARBWin/Validators.h"
-#include <set>
 #include <wx/datectrl.h>
 #include <wx/valgen.h>
+#include <set>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
 
-#define DEF_TRIAL_NOTES_HEIGHT	35
-#define DEF_CLUB_WIDTH			180
-#define DEF_CLUB_HEIGHT			50
-#define DEF_NOTE_WIDTH			95
+#define DEF_TRIAL_NOTES_HEIGHT 35
+#define DEF_CLUB_WIDTH         180
+#define DEF_CLUB_HEIGHT        50
+#define DEF_NOTE_WIDTH         95
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -65,11 +65,18 @@ class CListTrialData : public CListData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CListTrialData)
 public:
-	CListTrialData(ARBDogClubPtr const& inClub) : m_Club(inClub) {}
+	CListTrialData(ARBDogClubPtr const& inClub)
+		: m_Club(inClub)
+	{
+	}
 	std::wstring OnNeedText(long iCol) const override;
-	ARBDogClubPtr GetClub() const	{return m_Club;}
+	ARBDogClubPtr GetClub() const
+	{
+		return m_Club;
+	}
+
 private:
-	ARBDogClubPtr	m_Club;
+	ARBDogClubPtr m_Club;
 };
 typedef std::shared_ptr<CListTrialData> CListTrialDataPtr;
 
@@ -104,10 +111,7 @@ wxBEGIN_EVENT_TABLE(CDlgTrial, wxDialog)
 wxEND_EVENT_TABLE()
 
 
-CDlgTrial::CDlgTrial(
-		CAgilityBookDoc* pDoc,
-		ARBDogTrialPtr const& inTrial,
-		wxWindow* pParent)
+CDlgTrial::CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrialPtr const& inTrial, wxWindow* pParent)
 	: wxDialog()
 	, m_dateStart(inTrial->GetStartDate())
 	, m_Verified(inTrial->IsVerified())
@@ -128,10 +132,13 @@ CDlgTrial::CDlgTrial(
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY,
-			StringUtil::stringWX(pDoc->AddDogToCaption(StringUtil::stringW(_("IDD_TRIAL")))),
-			wxDefaultPosition, wxDefaultSize,
-			wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		StringUtil::stringWX(pDoc->AddDogToCaption(StringUtil::stringW(_("IDD_TRIAL")))),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	m_pTrial->GetClubs().Clone(m_Clubs);
 
@@ -147,48 +154,65 @@ CDlgTrial::CDlgTrial(
 
 	// Controls (these are done first to control tab order)
 
-	wxStaticText* textStart = new wxStaticText(this, wxID_ANY,
-		_("IDC_TRIAL_DATE_START"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textStart
+		= new wxStaticText(this, wxID_ANY, _("IDC_TRIAL_DATE_START"), wxDefaultPosition, wxDefaultSize, 0);
 	textStart->Wrap(-1);
 
-	m_ctrlStart = new wxDatePickerCtrl(this, wxID_ANY, wxDefaultDateTime,
-		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
+	m_ctrlStart = new wxDatePickerCtrl(
+		this,
+		wxID_ANY,
+		wxDefaultDateTime,
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDP_DROPDOWN | wxDP_SHOWCENTURY,
 		CGenericValidator(&m_dateStart));
 	m_ctrlStart->SetHelpText(_("HIDC_TRIAL_DATE_START"));
 	m_ctrlStart->SetToolTip(_("HIDC_TRIAL_DATE_START"));
 	if (0 < m_pTrial->GetRuns().size())
 		m_ctrlStart->Enable(false);
 
-	wxCheckBox* checkVerified = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* checkVerified = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_TRIAL_VERIFIED"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_Verified));
 	checkVerified->SetHelpText(_("HIDC_TRIAL_VERIFIED"));
 	checkVerified->SetToolTip(_("HIDC_TRIAL_VERIFIED"));
 
-	wxStaticText* textLocation = new wxStaticText(this, wxID_ANY,
-		_("IDC_TRIAL_LOCATION"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textLocation
+		= new wxStaticText(this, wxID_ANY, _("IDC_TRIAL_LOCATION"), wxDefaultPosition, wxDefaultSize, 0);
 	textLocation->Wrap(-1);
 
-	m_ctrlLocation = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr,
-		wxCB_DROPDOWN|wxCB_SORT,
-		CTrimValidator(&m_Location), _("IDS_ENTER_NAME"));
+	m_ctrlLocation = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_SORT,
+		CTrimValidator(&m_Location),
+		_("IDS_ENTER_NAME"));
 	m_ctrlLocation->Bind(wxEVT_COMMAND_TEXT_UPDATED, &CDlgTrial::OnEnChangeLocation, this);
 	m_ctrlLocation->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgTrial::OnSelchangeLocation, this);
 	m_ctrlLocation->SetHelpText(_("HIDC_TRIAL_LOCATION"));
 	m_ctrlLocation->SetToolTip(_("HIDC_TRIAL_LOCATION"));
 
-	wxStaticText* textNotes = new wxStaticText(this, wxID_ANY,
-		_("IDC_TRIAL_NOTES"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textNotes
+		= new wxStaticText(this, wxID_ANY, _("IDC_TRIAL_NOTES"), wxDefaultPosition, wxDefaultSize, 0);
 	textNotes->Wrap(-1);
 
-	CSpellCheckCtrl* ctrlTrialNotes = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, DEF_TRIAL_NOTES_HEIGHT)), wxTE_MULTILINE,
+	CSpellCheckCtrl* ctrlTrialNotes = new CSpellCheckCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(-1, wxDLG_UNIT_Y(this, DEF_TRIAL_NOTES_HEIGHT)),
+		wxTE_MULTILINE,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlTrialNotes->SetHelpText(_("HIDC_TRIAL_NOTES"));
 	ctrlTrialNotes->SetToolTip(_("HIDC_TRIAL_NOTES"));
@@ -198,59 +222,60 @@ CDlgTrial::CDlgTrial(
 	m_ctrlLocationNotes->SetHelpText(_("HIDC_TRIAL_LOCATION_NOTES"));
 	m_ctrlLocationNotes->SetToolTip(_("HIDC_TRIAL_LOCATION_NOTES"));
 
-	wxStaticText* noteLocationNotes = new wxStaticText(this, wxID_ANY,
-		_("IDC_TRIAL_LOCATION_INFO"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* noteLocationNotes
+		= new wxStaticText(this, wxID_ANY, _("IDC_TRIAL_LOCATION_INFO"), wxDefaultPosition, wxDefaultSize, 0);
 	noteLocationNotes->Wrap(-1);
 
-	m_ctrlLocationInfo = new CRichEditCtrl2(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, DEF_NOTE_WIDTH), -1), true);
+	m_ctrlLocationInfo = new CRichEditCtrl2(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, DEF_NOTE_WIDTH), -1),
+		true);
 	m_ctrlLocationInfo->SetHelpText(_("HIDC_TRIAL_LOCATION_INFO"));
 	m_ctrlLocationInfo->SetToolTip(_("HIDC_TRIAL_LOCATION_INFO"));
 
-	wxStaticText* textClub = new wxStaticText(this, wxID_ANY,
-		_("IDC_TRIAL_CLUBS"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textClub
+		= new wxStaticText(this, wxID_ANY, _("IDC_TRIAL_CLUBS"), wxDefaultPosition, wxDefaultSize, 0);
 	textClub->Wrap(-1);
 
-	wxButton* btnNew = new wxButton(this, wxID_ANY,
-		_("IDC_TRIAL_CLUB_NEW"),
-		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	wxButton* btnNew
+		= new wxButton(this, wxID_ANY, _("IDC_TRIAL_CLUB_NEW"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
 	btnNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgTrial::OnClubNew, this);
 	btnNew->SetHelpText(_("HIDC_TRIAL_CLUB_NEW"));
 	btnNew->SetToolTip(_("HIDC_TRIAL_CLUB_NEW"));
 
-	m_ctrlEdit = new wxButton(this, wxID_ANY,
-		_("IDC_TRIAL_CLUB_EDIT"),
-		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	m_ctrlEdit
+		= new wxButton(this, wxID_ANY, _("IDC_TRIAL_CLUB_EDIT"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
 	m_ctrlEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgTrial::OnClubEdit, this);
 	m_ctrlEdit->SetHelpText(_("HIDC_TRIAL_CLUB_EDIT"));
 	m_ctrlEdit->SetToolTip(_("HIDC_TRIAL_CLUB_EDIT"));
 
-	m_ctrlDelete = new wxButton(this, wxID_ANY,
-		_("IDC_TRIAL_CLUB_DELETE"),
-		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	m_ctrlDelete
+		= new wxButton(this, wxID_ANY, _("IDC_TRIAL_CLUB_DELETE"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
 	m_ctrlDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgTrial::OnClubDelete, this);
 	m_ctrlDelete->SetHelpText(_("HIDC_TRIAL_CLUB_DELETE"));
 	m_ctrlDelete->SetToolTip(_("HIDC_TRIAL_CLUB_DELETE"));
 
-	m_ctrlUp = new wxButton(this, wxID_ANY,
-		_("IDC_TRIAL_CLUB_UP"),
-		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	m_ctrlUp = new wxButton(this, wxID_ANY, _("IDC_TRIAL_CLUB_UP"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
 	m_ctrlUp->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgTrial::OnClubMoveUp, this);
 	m_ctrlUp->SetHelpText(_("HIDC_TRIAL_CLUB_UP"));
 	m_ctrlUp->SetToolTip(_("HIDC_TRIAL_CLUB_UP"));
 
-	m_ctrlDn = new wxButton(this, wxID_ANY,
-		_("IDC_TRIAL_CLUB_DOWN"),
-		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	m_ctrlDn = new wxButton(this, wxID_ANY, _("IDC_TRIAL_CLUB_DOWN"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
 	m_ctrlDn->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgTrial::OnClubMoveDown, this);
 	m_ctrlDn->SetHelpText(_("HIDC_TRIAL_CLUB_DOWN"));
 	m_ctrlDn->SetToolTip(_("HIDC_TRIAL_CLUB_DOWN"));
 
-	m_ctrlClubs = new CReportListCtrl(this,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(DEF_CLUB_WIDTH, DEF_CLUB_HEIGHT)),
-		true, CReportListCtrl::SortHeader::NoSort, true, false);
+	m_ctrlClubs = new CReportListCtrl(
+		this,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(DEF_CLUB_WIDTH, DEF_CLUB_HEIGHT)),
+		true,
+		CReportListCtrl::SortHeader::NoSort,
+		true,
+		false);
 	m_ctrlClubs->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgTrial::OnItemSelectedClubs, this);
 	m_ctrlClubs->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgTrial::OnItemActivatedClubs, this);
 	m_ctrlClubs->Bind(wxEVT_KEY_DOWN, &CDlgTrial::OnKeydownClubs, this);
@@ -262,13 +287,17 @@ CDlgTrial::CDlgTrial(
 	m_ctrlClubNotes->SetHelpText(_("HIDC_TRIAL_CLUB_NOTES"));
 	m_ctrlClubNotes->SetToolTip(_("HIDC_TRIAL_CLUB_NOTES"));
 
-	wxStaticText* textClubNotes = new wxStaticText(this, wxID_ANY,
-		_("IDC_TRIAL_CLUB_INFO"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textClubNotes
+		= new wxStaticText(this, wxID_ANY, _("IDC_TRIAL_CLUB_INFO"), wxDefaultPosition, wxDefaultSize, 0);
 	textClubNotes->Wrap(-1);
 
-	m_ctrlClubInfo = new CRichEditCtrl2(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, DEF_NOTE_WIDTH), -1), true);
+	m_ctrlClubInfo = new CRichEditCtrl2(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, DEF_NOTE_WIDTH), -1),
+		true);
 	m_ctrlClubInfo->SetHelpText(_("HIDC_TRIAL_CLUB_INFO"));
 	m_ctrlClubInfo->SetToolTip(_("HIDC_TRIAL_CLUB_INFO"));
 
@@ -374,10 +403,7 @@ ARBDogClubPtr CDlgTrial::GetClubData(long index) const
 }
 
 
-void CDlgTrial::UpdateNotes(
-		wxString const& location,
-		bool bLocation,
-		bool bClub)
+void CDlgTrial::UpdateNotes(wxString const& location, bool bLocation, bool bClub)
 {
 	if (bLocation)
 	{
@@ -443,7 +469,7 @@ void CDlgTrial::ListClubs(ARBDogClubPtr const* inClub)
 	if (1 == m_ctrlClubs->GetItemCount())
 		m_ctrlClubs->Select(0);
 	int nColumns = m_ctrlClubs->GetColumnCount();
-	for (int i = 0; i < nColumns ; ++i)
+	for (int i = 0; i < nColumns; ++i)
 		m_ctrlClubs->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
 }
 
@@ -591,16 +617,14 @@ void CDlgTrial::OnClubDelete(wxCommandEvent& evt)
 		ARBDogClubPtr pCoSanction = m_Clubs.FindCoSanctioningClub(pClub);
 		if (pCoSanction)
 		{
-			for (ARBDogRunList::iterator iterRun = m_pTrial->GetRuns().begin();
-				iterRun != m_pTrial->GetRuns().end();
-				++iterRun)
+			for (ARBDogRunList::iterator iterRun = m_pTrial->GetRuns().begin(); iterRun != m_pTrial->GetRuns().end();
+				 ++iterRun)
 			{
 				ARBDogClubPtr pRunClub = (*iterRun)->GetClub();
 				if (!pRunClub)
 					continue;
 				ARBDogClubPtr pClub2;
-				if (m_Clubs.FindClub(pRunClub->GetName(), pRunClub->GetVenue(), &pClub2)
-				&& pClub2 == pClub)
+				if (m_Clubs.FindClub(pRunClub->GetName(), pRunClub->GetVenue(), &pClub2) && pClub2 == pClub)
 				{
 					m_bFixup = true;
 					(*iterRun)->SetClub(pCoSanction);
@@ -669,7 +693,8 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 			newVenues.insert(pClub->GetVenue());
 		}
 		bool bAllThere = true;
-		for (std::set<std::wstring>::iterator iterVenues = oldVenues.begin(); iterVenues != oldVenues.end(); ++iterVenues)
+		for (std::set<std::wstring>::iterator iterVenues = oldVenues.begin(); iterVenues != oldVenues.end();
+			 ++iterVenues)
 		{
 			if (newVenues.end() == newVenues.find((*iterVenues)))
 			{
@@ -680,20 +705,20 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 		if (!bAllThere)
 		{
 			int nDelete = 0;
-			for (ARBDogRunList::iterator iterRun = m_pTrial->GetRuns().begin();
-				iterRun != m_pTrial->GetRuns().end();
-				++iterRun)
+			for (ARBDogRunList::iterator iterRun = m_pTrial->GetRuns().begin(); iterRun != m_pTrial->GetRuns().end();
+				 ++iterRun)
 			{
 				ARBDogRunPtr pRun = *iterRun;
 				bool bFound = false;
-				for (std::set<std::wstring>::iterator iterVenues = newVenues.begin(); iterVenues != newVenues.end(); ++iterVenues)
+				for (std::set<std::wstring>::iterator iterVenues = newVenues.begin(); iterVenues != newVenues.end();
+					 ++iterVenues)
 				{
 					if (m_pDoc->Book().GetConfig().GetVenues().FindEvent(
-						(*iterVenues),
-						pRun->GetEvent(),
-						pRun->GetDivision(),
-						pRun->GetLevel(),
-						pRun->GetDate()))
+							(*iterVenues),
+							pRun->GetEvent(),
+							pRun->GetDivision(),
+							pRun->GetLevel(),
+							pRun->GetDate()))
 					{
 						bFound = true;
 						break;
@@ -706,9 +731,9 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 			}
 			if (0 < nDelete)
 			{
-				std::wstring msg = fmt::format(_("IDS_CONFIG_DELETE_RUNS").wx_str(),
-					m_pTrial->GetRuns().size());
-				if (wxYES != wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_WARNING))
+				std::wstring msg = fmt::format(_("IDS_CONFIG_DELETE_RUNS").wx_str(), m_pTrial->GetRuns().size());
+				if (wxYES
+					!= wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_WARNING))
 					return;
 				m_pTrial->GetRuns().clear();
 				m_bRunsDeleted = true;
@@ -738,9 +763,8 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 		ARBDogClubPtr pCoSanction = m_Clubs.FindCoSanctioningClub(pNewPrimary);
 		if (pCoSanction)
 		{
-			for (ARBDogRunList::iterator iterRun = m_pTrial->GetRuns().begin();
-				iterRun != m_pTrial->GetRuns().end();
-				++iterRun)
+			for (ARBDogRunList::iterator iterRun = m_pTrial->GetRuns().begin(); iterRun != m_pTrial->GetRuns().end();
+				 ++iterRun)
 			{
 				ARBDogClubPtr pRunClub = (*iterRun)->GetClub();
 				if (!pRunClub)
@@ -780,8 +804,8 @@ void CDlgTrial::OnCancel(wxCommandEvent& evt)
 			if (pCoSanction)
 			{
 				for (ARBDogRunList::iterator iterRun = m_pTrial->GetRuns().begin();
-					iterRun != m_pTrial->GetRuns().end();
-					++iterRun)
+					 iterRun != m_pTrial->GetRuns().end();
+					 ++iterRun)
 				{
 					ARBDogClubPtr pRunClub = (*iterRun)->GetClub();
 					if (!pRunClub)

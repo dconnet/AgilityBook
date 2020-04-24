@@ -121,7 +121,7 @@ TEST_CASE("Date")
 		{
 			ARBDate d(1999, 3, 2);
 #if !defined(__WXWINDOWS__)
-#pragma PRAGMA_TODO(need non-wx support in libarb - currently it asserts)
+#pragma PRAGMA_TODO(need non - wx support in libarb - currently it asserts)
 #else
 			{
 #if defined(__WXWINDOWS__)
@@ -219,7 +219,7 @@ TEST_CASE("Date")
 
 
 #if !defined(__WXWINDOWS__)
-#pragma PRAGMA_TODO(need non-wx support in libarb - currently it asserts)
+#pragma PRAGMA_TODO(need non - wx support in libarb - currently it asserts)
 #else
 	SECTION("FromStringUK")
 	{
@@ -240,7 +240,7 @@ TEST_CASE("Date")
 
 
 #if !defined(__WXWINDOWS__)
-#pragma PRAGMA_TODO(need non-wx support in libarb - currently it asserts)
+#pragma PRAGMA_TODO(need non - wx support in libarb - currently it asserts)
 #else
 	SECTION("FromStringUS")
 	{
@@ -310,7 +310,7 @@ TEST_CASE("Date")
 	{
 		if (!g_bMicroTest)
 		{
-			ARBDate d1(2010, 6, 1); // A date in DST
+			ARBDate d1(2010, 6, 1);  // A date in DST
 			ARBDate d2(2010, 12, 1); // A date not.
 			time_t t1;
 			d1.GetDate(t1);

@@ -30,8 +30,8 @@
 #include "DlgConfigMultiQ.h"
 #include "DlgConfigOtherPoints.h"
 #include "DlgConfigTitle.h"
-#include "DlgConfigure.h"
 #include "DlgConfigVenue.h"
+#include "DlgConfigure.h"
 #include "DlgName.h"
 #include "DlgReorder.h"
 
@@ -138,9 +138,7 @@ std::wstring CDlgConfigureDataOtherPoints::OnNeedText(int iColumn) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgConfigureDataDivision::CDlgConfigureDataDivision(
-		CDlgConfigVenue* pDlg,
-		ARBConfigDivisionPtr const& inDiv)
+CDlgConfigureDataDivision::CDlgConfigureDataDivision(CDlgConfigVenue* pDlg, ARBConfigDivisionPtr const& inDiv)
 	: CDlgConfigureDataBase(pDlg)
 	, m_Div(inDiv)
 {
@@ -161,9 +159,8 @@ std::wstring CDlgConfigureDataDivision::OnNeedText(int iColumn) const
 
 void CDlgConfigureDataDivision::AddSubItems()
 {
-	for (ARBConfigLevelList::iterator iterLevel = m_Div->GetLevels().begin();
-		iterLevel != m_Div->GetLevels().end();
-		++iterLevel)
+	for (ARBConfigLevelList::iterator iterLevel = m_Div->GetLevels().begin(); iterLevel != m_Div->GetLevels().end();
+		 ++iterLevel)
 	{
 		CDlgConfigureDataLevel* pLevData = new CDlgConfigureDataLevel(m_pDlg, m_Div, *iterLevel);
 		m_pDlg->m_ctrlItems->AppendItem(GetId(), StringUtil::stringWX(pLevData->OnNeedText()), -1, -1, pLevData);
@@ -194,7 +191,9 @@ bool CDlgConfigureDataDivision::DoAdd()
 			if (m_Div->GetLevels().AddLevel(name, &pNewLevel))
 			{
 				CDlgConfigureDataLevel* pData = new CDlgConfigureDataLevel(m_pDlg, m_Div, pNewLevel);
-				wxTreeItemId level = m_pDlg->m_ctrlItems->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+				wxTreeItemId level
+					= m_pDlg->m_ctrlItems
+						  ->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
 				m_pDlg->m_ctrlItems->SelectItem(level);
 				added = true;
 			}
@@ -207,9 +206,14 @@ bool CDlgConfigureDataDivision::DoEdit()
 {
 	std::wstring oldName = m_Div->GetName();
 	std::wstring name(oldName);
-	if (0 < m_pDlg->m_Book.GetDogs().NumMultiHostedTrialsInDivision(m_pDlg->m_Book.GetConfig(), m_pDlg->m_pVenue->GetName(), name))
+	if (0 < m_pDlg->m_Book.GetDogs()
+				.NumMultiHostedTrialsInDivision(m_pDlg->m_Book.GetConfig(), m_pDlg->m_pVenue->GetName(), name))
 	{
-		if (wxYES != wxMessageBox(_("IDS_CHANGEDIV_ISSUES"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_EXCLAMATION))
+		if (wxYES
+			!= wxMessageBox(
+				_("IDS_CHANGEDIV_ISSUES"),
+				wxMessageBoxCaptionStr,
+				wxYES_NO | wxCENTRE | wxICON_EXCLAMATION))
 			return false;
 	}
 	bool bEdited = false;
@@ -232,7 +236,8 @@ bool CDlgConfigureDataDivision::DoEdit()
 				m_Div->SetName(name);
 				m_pDlg->m_pVenue->GetEvents().RenameDivision(oldName, name);
 				m_pDlg->m_pVenue->GetMultiQs().RenameDivision(oldName, name);
-				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameDivision::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
+				m_pDlg->m_DlgFixup.push_back(
+					ARBConfigActionRenameDivision::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
 				RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
 				bEdited = true;
 			}
@@ -267,9 +272,9 @@ CDlgConfigureDataBase* CDlgConfigureDataDivision::DoMove(bool bUp)
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataLevel::CDlgConfigureDataLevel(
-		CDlgConfigVenue* pDlg,
-		ARBConfigDivisionPtr const& inDiv,
-		ARBConfigLevelPtr const& inLevel)
+	CDlgConfigVenue* pDlg,
+	ARBConfigDivisionPtr const& inDiv,
+	ARBConfigLevelPtr const& inLevel)
 	: CDlgConfigureDataBase(pDlg)
 	, m_Division(inDiv)
 	, m_Level(inLevel)
@@ -294,11 +299,13 @@ void CDlgConfigureDataLevel::AddSubItems()
 	if (0 < m_Level->GetSubLevels().size())
 	{
 		for (ARBConfigSubLevelList::iterator iterSubLevel = m_Level->GetSubLevels().begin();
-			iterSubLevel != m_Level->GetSubLevels().end();
-			++iterSubLevel)
+			 iterSubLevel != m_Level->GetSubLevels().end();
+			 ++iterSubLevel)
 		{
-			CDlgConfigureDataSubLevel* pSubLevelData = new CDlgConfigureDataSubLevel(m_pDlg, m_Division, m_Level, *iterSubLevel);
-			m_pDlg->m_ctrlItems->AppendItem(GetId(), StringUtil::stringWX(pSubLevelData->OnNeedText()), -1, -1, pSubLevelData);
+			CDlgConfigureDataSubLevel* pSubLevelData
+				= new CDlgConfigureDataSubLevel(m_pDlg, m_Division, m_Level, *iterSubLevel);
+			m_pDlg->m_ctrlItems
+				->AppendItem(GetId(), StringUtil::stringWX(pSubLevelData->OnNeedText()), -1, -1, pSubLevelData);
 			pSubLevelData->AddSubItems();
 		}
 	}
@@ -326,8 +333,11 @@ bool CDlgConfigureDataLevel::DoAdd()
 			ARBConfigSubLevelPtr pNewSubLevel;
 			if (m_Level->GetSubLevels().AddSubLevel(name, &pNewSubLevel))
 			{
-				CDlgConfigureDataSubLevel* pData = new CDlgConfigureDataSubLevel(m_pDlg, m_Division, m_Level, pNewSubLevel);
-				wxTreeItemId level = m_pDlg->m_ctrlItems->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+				CDlgConfigureDataSubLevel* pData
+					= new CDlgConfigureDataSubLevel(m_pDlg, m_Division, m_Level, pNewSubLevel);
+				wxTreeItemId level
+					= m_pDlg->m_ctrlItems
+						  ->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
 				pData->AddSubItems();
 				m_pDlg->m_ctrlItems->SelectItem(level);
 				added = true;
@@ -348,9 +358,16 @@ bool CDlgConfigureDataLevel::DoEdit()
 	// sublevels, the level name isn't allowed to be used for an event.
 	if (0 == m_Level->GetSubLevels().size())
 	{
-		if (0 < m_pDlg->m_Book.GetDogs().NumMultiHostedTrialsInDivision(m_pDlg->m_Book.GetConfig(), m_pDlg->m_pVenue->GetName(), m_Division->GetName()))
+		if (0 < m_pDlg->m_Book.GetDogs().NumMultiHostedTrialsInDivision(
+				m_pDlg->m_Book.GetConfig(),
+				m_pDlg->m_pVenue->GetName(),
+				m_Division->GetName()))
 		{
-			if (wxYES != wxMessageBox(_("IDS_CHANGELEVEL_ISSUES"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_EXCLAMATION))
+			if (wxYES
+				!= wxMessageBox(
+					_("IDS_CHANGELEVEL_ISSUES"),
+					wxMessageBoxCaptionStr,
+					wxYES_NO | wxCENTRE | wxICON_EXCLAMATION))
 				return false;
 		}
 	}
@@ -384,17 +401,15 @@ bool CDlgConfigureDataLevel::DoEdit()
 				m_Level->SetName(name);
 				if (0 == m_Level->GetSubLevels().size())
 				{
-					m_pDlg->m_pVenue->GetEvents().RenameLevel(
-						m_Division->GetName(),
-						oldName, name);
-					m_pDlg->m_pVenue->GetMultiQs().RenameLevel(
-						m_Division->GetName(),
-						oldName, name);
+					m_pDlg->m_pVenue->GetEvents().RenameLevel(m_Division->GetName(), oldName, name);
+					m_pDlg->m_pVenue->GetMultiQs().RenameLevel(m_Division->GetName(), oldName, name);
 				}
-				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameLevel::NewLevel(0,
+				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameLevel::NewLevel(
+					0,
 					m_pDlg->m_pVenue->GetName(),
 					m_Division->GetName(),
-					oldName, m_Level->GetName()));
+					oldName,
+					m_Level->GetName()));
 				RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
 				bEdited = true;
 			}
@@ -410,10 +425,8 @@ bool CDlgConfigureDataLevel::DoDelete()
 	if (m_Division->GetLevels().DeleteLevel(m_Division->GetName(), level, m_pDlg->m_pVenue->GetEvents()))
 	{
 		m_pDlg->m_pVenue->GetMultiQs().DeleteLevel(level);
-		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteLevel::NewLevel(0,
-			m_pDlg->m_pVenue->GetName(),
-			m_Division->GetName(),
-			level));
+		m_pDlg->m_DlgFixup.push_back(
+			ARBConfigActionDeleteLevel::NewLevel(0, m_pDlg->m_pVenue->GetName(), m_Division->GetName(), level));
 		m_pDlg->m_ctrlItems->Delete(GetId());
 		return true;
 	}
@@ -431,10 +444,10 @@ CDlgConfigureDataBase* CDlgConfigureDataLevel::DoMove(bool bUp)
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataSubLevel::CDlgConfigureDataSubLevel(
-		CDlgConfigVenue* pDlg,
-		ARBConfigDivisionPtr const& inDiv,
-		ARBConfigLevelPtr const& inLevel,
-		ARBConfigSubLevelPtr const& inSubLevel)
+	CDlgConfigVenue* pDlg,
+	ARBConfigDivisionPtr const& inDiv,
+	ARBConfigLevelPtr const& inLevel,
+	ARBConfigSubLevelPtr const& inSubLevel)
 	: CDlgConfigureDataBase(pDlg)
 	, m_Division(inDiv)
 	, m_Level(inLevel)
@@ -461,9 +474,16 @@ bool CDlgConfigureDataSubLevel::DoEdit()
 	bool done = false;
 	std::wstring oldName = m_SubLevel->GetName();
 	std::wstring name(oldName);
-	if (0 < m_pDlg->m_Book.GetDogs().NumMultiHostedTrialsInDivision(m_pDlg->m_Book.GetConfig(), m_pDlg->m_pVenue->GetName(), m_Division->GetName()))
+	if (0 < m_pDlg->m_Book.GetDogs().NumMultiHostedTrialsInDivision(
+			m_pDlg->m_Book.GetConfig(),
+			m_pDlg->m_pVenue->GetName(),
+			m_Division->GetName()))
 	{
-		if (wxYES != wxMessageBox(_("IDS_CHANGESUBLEVEL_ISSUES"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_EXCLAMATION))
+		if (wxYES
+			!= wxMessageBox(
+				_("IDS_CHANGESUBLEVEL_ISSUES"),
+				wxMessageBoxCaptionStr,
+				wxYES_NO | wxCENTRE | wxICON_EXCLAMATION))
 			return false;
 	}
 	while (!done)
@@ -483,14 +503,14 @@ bool CDlgConfigureDataSubLevel::DoEdit()
 				}
 				m_SubLevel->SetName(name);
 				// No need to fix ARBConfigEventList cause we don't do sublevel names in events.
-				m_pDlg->m_pVenue->GetMultiQs().RenameLevel(
-					m_Division->GetName(),
-					oldName, m_SubLevel->GetName());
-				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameLevel::NewSubLevel(0,
+				m_pDlg->m_pVenue->GetMultiQs().RenameLevel(m_Division->GetName(), oldName, m_SubLevel->GetName());
+				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameLevel::NewSubLevel(
+					0,
 					m_pDlg->m_pVenue->GetName(),
 					m_Division->GetName(),
 					m_Level->GetName(),
-					oldName, m_SubLevel->GetName()));
+					oldName,
+					m_SubLevel->GetName()));
 				RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
 				bEdited = true;
 			}
@@ -511,10 +531,12 @@ bool CDlgConfigureDataSubLevel::DoDelete()
 		// Note, if deleting the sublevel caused the level's name
 		// to change, just leave it. It causes more trouble to
 		// try modifing the name to the old sublevel name.
-		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteLevel::NewSubLevel(0,
+		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteLevel::NewSubLevel(
+			0,
 			m_pDlg->m_pVenue->GetName(),
 			m_Division->GetName(),
-			level, subLevel));
+			level,
+			subLevel));
 		m_pDlg->m_ctrlItems->Delete(GetId());
 		return true;
 	}
@@ -531,9 +553,7 @@ CDlgConfigureDataBase* CDlgConfigureDataSubLevel::DoMove(bool bUp)
 
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgConfigureDataTitle::CDlgConfigureDataTitle(
-		CDlgConfigVenue* pDlg,
-		ARBConfigTitlePtr const& inTitle)
+CDlgConfigureDataTitle::CDlgConfigureDataTitle(CDlgConfigVenue* pDlg, ARBConfigTitlePtr const& inTitle)
 	: CDlgConfigureDataBase(pDlg)
 	, m_Title(inTitle)
 {
@@ -577,10 +597,15 @@ bool CDlgConfigureDataTitle::DoEdit()
 					bool bInUse = true;
 					if (0 < nTitles)
 					{
-						if (wxYES == wxMessageBox(_("IDS_NAME_IN_USE_MERGE"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_EXCLAMATION))
+						if (wxYES
+							== wxMessageBox(
+								_("IDS_NAME_IN_USE_MERGE"),
+								wxMessageBoxCaptionStr,
+								wxYES_NO | wxCENTRE | wxICON_EXCLAMATION))
 						{
 							bInUse = false;
-							m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameTitle::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
+							m_pDlg->m_DlgFixup.push_back(
+								ARBConfigActionRenameTitle::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
 							if (m_pDlg->m_pVenue->GetTitles().DeleteTitle(oldName))
 							{
 								m_pDlg->m_ctrlItems->Delete(GetId());
@@ -591,7 +616,10 @@ bool CDlgConfigureDataTitle::DoEdit()
 					if (bInUse)
 					{
 						done = false;
-						wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+						wxMessageBox(
+							_("IDS_NAME_IN_USE"),
+							wxMessageBoxCaptionStr,
+							wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					}
 					continue;
 				}
@@ -602,7 +630,8 @@ bool CDlgConfigureDataTitle::DoEdit()
 			if (name != oldName || longname != oldLongName)
 			{
 				if (name != oldName)
-					m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameTitle::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
+					m_pDlg->m_DlgFixup.push_back(
+						ARBConfigActionRenameTitle::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
 				RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
 			}
 			bEdited = true;
@@ -617,7 +646,8 @@ bool CDlgConfigureDataTitle::DoDelete()
 	std::wstring title = m_Title->GetName();
 	if (m_pDlg->m_pVenue->GetTitles().DeleteTitle(title))
 	{
-		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteTitle::New(0, m_pDlg->m_pVenue->GetName(), std::wstring(), title, std::wstring()));
+		m_pDlg->m_DlgFixup.push_back(
+			ARBConfigActionDeleteTitle::New(0, m_pDlg->m_pVenue->GetName(), std::wstring(), title, std::wstring()));
 		m_pDlg->m_ctrlItems->Delete(GetId());
 		return true;
 	}
@@ -641,7 +671,12 @@ bool CDlgConfigureDataTitle::DoCopy()
 	if (m_pDlg->m_pVenue->GetTitles().AddTitle(title))
 	{
 		CDlgConfigureDataTitle* pData = new CDlgConfigureDataTitle(m_pDlg, title);
-		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(
+			m_pDlg->m_ctrlItems->GetItemParent(GetId()),
+			StringUtil::stringWX(pData->OnNeedText()),
+			-1,
+			-1,
+			pData);
 		pData->AddSubItems();
 		m_pDlg->m_ctrlItems->SelectItem(id);
 		bAdded = true;
@@ -659,9 +694,7 @@ CDlgConfigureDataBase* CDlgConfigureDataTitle::DoMove(bool bUp)
 
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgConfigureDataEvent::CDlgConfigureDataEvent(
-		CDlgConfigVenue* pDlg,
-		ARBConfigEventPtr const& inEvent)
+CDlgConfigureDataEvent::CDlgConfigureDataEvent(CDlgConfigVenue* pDlg, ARBConfigEventPtr const& inEvent)
 	: CDlgConfigureDataBase(pDlg)
 	, m_Event(inEvent)
 {
@@ -723,7 +756,12 @@ bool CDlgConfigureDataEvent::DoCopy()
 	if (m_pDlg->m_pVenue->GetEvents().AddEvent(pEvent))
 	{
 		CDlgConfigureDataEvent* pData = new CDlgConfigureDataEvent(m_pDlg, pEvent);
-		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(
+			m_pDlg->m_ctrlItems->GetItemParent(GetId()),
+			StringUtil::stringWX(pData->OnNeedText()),
+			-1,
+			-1,
+			pData);
 		pData->AddSubItems();
 		m_pDlg->m_ctrlItems->SelectItem(id);
 		bAdded = true;
@@ -742,8 +780,8 @@ CDlgConfigureDataBase* CDlgConfigureDataEvent::DoMove(bool bUp)
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataLifetimeName::CDlgConfigureDataLifetimeName(
-		CDlgConfigVenue* pDlg,
-		ARBConfigLifetimeNamePtr const& inName)
+	CDlgConfigVenue* pDlg,
+	ARBConfigLifetimeNamePtr const& inName)
 	: CDlgConfigureDataBase(pDlg)
 	, m_pName(inName)
 {
@@ -779,7 +817,8 @@ bool CDlgConfigureDataLifetimeName::DoEdit()
 		{
 			m_pName->SetName(name);
 			m_pDlg->m_pVenue->GetEvents().RenameLifetimeName(oldName, name);
-			m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameLifetimeName::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
+			m_pDlg->m_DlgFixup.push_back(
+				ARBConfigActionRenameLifetimeName::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
 			RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
 			bEdited = true;
 		}
@@ -814,7 +853,12 @@ bool CDlgConfigureDataLifetimeName::DoCopy()
 	if (m_pDlg->m_pVenue->GetLifetimeNames().AddLifetimeName(name, &lifetimename))
 	{
 		CDlgConfigureDataLifetimeName* pData = new CDlgConfigureDataLifetimeName(m_pDlg, lifetimename);
-		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(
+			m_pDlg->m_ctrlItems->GetItemParent(GetId()),
+			StringUtil::stringWX(pData->OnNeedText()),
+			-1,
+			-1,
+			pData);
 		pData->AddSubItems();
 		m_pDlg->m_ctrlItems->SelectItem(id);
 		bAdded = true;
@@ -832,9 +876,7 @@ CDlgConfigureDataBase* CDlgConfigureDataLifetimeName::DoMove(bool bUp)
 
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgConfigureDataMultiQ::CDlgConfigureDataMultiQ(
-		CDlgConfigVenue* pDlg,
-		ARBConfigMultiQPtr const& inMultiq)
+CDlgConfigureDataMultiQ::CDlgConfigureDataMultiQ(CDlgConfigVenue* pDlg, ARBConfigMultiQPtr const& inMultiq)
 	: CDlgConfigureDataBase(pDlg)
 	, m_MultiQ(inMultiq)
 {
@@ -866,7 +908,8 @@ bool CDlgConfigureDataMultiQ::DoEdit()
 		{
 			std::wstring name = m_MultiQ->GetName();
 			if (name != oldName)
-				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameMultiQ::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
+				m_pDlg->m_DlgFixup.push_back(
+					ARBConfigActionRenameMultiQ::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
 			RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
 			bEdited = true;
 		}
@@ -901,7 +944,12 @@ bool CDlgConfigureDataMultiQ::DoCopy()
 	if (m_pDlg->m_pVenue->GetMultiQs().AddMultiQ(multiq))
 	{
 		CDlgConfigureDataMultiQ* pData = new CDlgConfigureDataMultiQ(m_pDlg, multiq);
-		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(
+			m_pDlg->m_ctrlItems->GetItemParent(GetId()),
+			StringUtil::stringWX(pData->OnNeedText()),
+			-1,
+			-1,
+			pData);
 		pData->AddSubItems();
 		m_pDlg->m_ctrlItems->SelectItem(id);
 		bAdded = true;

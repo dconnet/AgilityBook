@@ -25,8 +25,8 @@
 
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
-#include <sstream>
 #include <wx/mstream.h>
+#include <sstream>
 
 #ifdef _DEBUG
 #include <assert.h>
@@ -43,16 +43,24 @@ static wxDataFormat GetClipboardFormat(ARBClipFormat fmt)
 {
 	switch (fmt)
 	{
-	case ARBClipFormat::None:		return wxDataFormat(wxDF_INVALID);
-	case ARBClipFormat::Dog:		return wxDataFormat(L"ARB-Dog");
-	case ARBClipFormat::Trial:		return wxDataFormat(L"ARB-Trial");
-	case ARBClipFormat::Run:		return wxDataFormat(L"ARB-Run");
-	case ARBClipFormat::Calendar:	return wxDataFormat(L"ARB-Cal");
-	case ARBClipFormat::iCalendar:	return wxDataFormat(L"+//ISBN 1-887687-00-9::versit::PDI//vCalendar");
-	case ARBClipFormat::Log:		return wxDataFormat(L"ARB-Log");
+	case ARBClipFormat::None:
+		return wxDataFormat(wxDF_INVALID);
+	case ARBClipFormat::Dog:
+		return wxDataFormat(L"ARB-Dog");
+	case ARBClipFormat::Trial:
+		return wxDataFormat(L"ARB-Trial");
+	case ARBClipFormat::Run:
+		return wxDataFormat(L"ARB-Run");
+	case ARBClipFormat::Calendar:
+		return wxDataFormat(L"ARB-Cal");
+	case ARBClipFormat::iCalendar:
+		return wxDataFormat(L"+//ISBN 1-887687-00-9::versit::PDI//vCalendar");
+	case ARBClipFormat::Log:
+		return wxDataFormat(L"ARB-Log");
 	// Not using wxDT_HTML aince OLE is defined which causes the wx code that
 	// "supports" html copying to not be invoked. So we do it.
-	case ARBClipFormat::Html:		return wxDataFormat(L"HTML Format");
+	case ARBClipFormat::Html:
+		return wxDataFormat(L"HTML Format");
 	}
 	// 'enum class' handles all cases via the switch above
 	return wxDataFormat(wxDF_INVALID);
@@ -109,9 +117,7 @@ bool CClipboardDataReader::IsFormatAvailable(ARBClipFormat clpFmt)
 }
 
 
-bool CClipboardDataReader::GetData(
-		ARBClipFormat clpFmt,
-		ElementNodePtr const& outTree)
+bool CClipboardDataReader::GetData(ARBClipFormat clpFmt, ElementNodePtr const& outTree)
 {
 	outTree->clear();
 	if (!wxTheClipboard->IsSupported(GetClipboardFormat(clpFmt)) || !Open())
@@ -131,7 +137,10 @@ bool CClipboardDataReader::GetData(
 	}
 	if (!bOk && 0 < err.size())
 	{
-		wxMessageBox(StringUtil::stringWX(fmt::to_string(err)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+		wxMessageBox(
+			StringUtil::stringWX(fmt::to_string(err)),
+			wxMessageBoxCaptionStr,
+			wxOK | wxCENTRE | wxICON_EXCLAMATION);
 	}
 	return bOk;
 }
@@ -226,9 +235,7 @@ CClipboardDataWriter::~CClipboardDataWriter()
 }
 
 
-bool CClipboardDataWriter::AddData(
-		ARBClipFormat clpFmt,
-		ElementNodePtr const& inTree)
+bool CClipboardDataWriter::AddData(ARBClipFormat clpFmt, ElementNodePtr const& inTree)
 {
 	if (!m_bOkay)
 		return false;
@@ -243,9 +250,7 @@ bool CClipboardDataWriter::AddData(
 }
 
 
-bool CClipboardDataWriter::AddData(
-		ARBClipFormat clpFmt,
-		std::wstring const& inData)
+bool CClipboardDataWriter::AddData(ARBClipFormat clpFmt, std::wstring const& inData)
 {
 	if (ARBClipFormat::Html == clpFmt)
 	{
@@ -273,7 +278,10 @@ bool CClipboardDataWriter::AddData(
 #endif
 			fmt::memory_buffer out;
 			fmt::format_to(out, "Version:0.9\r\nStartHTML:{:08d}\r\n", lenHeader);
-			fmt::format_to(out, "EndHTML:{:08d}\r\n", lenHeader + lenStartHtml + lenStartFragment + lenData + lenEndFragment + lenEndHtml);
+			fmt::format_to(
+				out,
+				"EndHTML:{:08d}\r\n",
+				lenHeader + lenStartHtml + lenStartFragment + lenData + lenEndFragment + lenEndHtml);
 			fmt::format_to(out, "StartFragment:{:08d}\r\n", lenHeader + lenStartHtml + lenStartFragment);
 			fmt::format_to(out, "EndFragment:{:08d}\r\n", lenHeader + lenStartHtml + lenStartFragment + lenData);
 #ifdef _DEBUG

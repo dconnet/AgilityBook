@@ -38,26 +38,16 @@ class ARB_API ARBConfigLifetimePoints : public ARBBase
 {
 protected:
 	ARBConfigLifetimePoints();
-	ARBConfigLifetimePoints(
-			std::wstring const& name,
-			double inPoints,
-			double inFaults);
-	ARBConfigLifetimePoints(
-			std::wstring const& name,
-			double inFaults);
+	ARBConfigLifetimePoints(std::wstring const& name, double inPoints, double inFaults);
+	ARBConfigLifetimePoints(std::wstring const& name, double inFaults);
 	ARBConfigLifetimePoints(ARBConfigLifetimePoints const& rhs);
 	ARBConfigLifetimePoints(ARBConfigLifetimePoints&& rhs);
 
 public:
 	~ARBConfigLifetimePoints();
 	static ARBConfigLifetimePointsPtr New();
-	static ARBConfigLifetimePointsPtr New(
-			std::wstring const& name,
-			double inPoints,
-			double inFaults);
-	static ARBConfigLifetimePointsPtr New(
-			std::wstring const& name,
-			double inFaults);
+	static ARBConfigLifetimePointsPtr New(std::wstring const& name, double inPoints, double inFaults);
+	static ARBConfigLifetimePointsPtr New(std::wstring const& name, double inFaults);
 	ARBConfigLifetimePointsPtr Clone() const;
 
 	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
@@ -93,10 +83,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -168,10 +155,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Sort the lifetime point objects by faults.
@@ -185,10 +169,7 @@ public:
 	 * @param inSpeedPts Number of speed points, if applicable.
 	 * @return Number of lifetime titling points.
 	 */
-	double GetLifetimePoints(
-			std::wstring const& inName,
-			double inFaults,
-			short inSpeedPts) const;
+	double GetLifetimePoints(std::wstring const& inName, double inFaults, short inSpeedPts) const;
 
 	/**
 	 * Find a points object.
@@ -198,9 +179,9 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindLifetimePoints(
-			std::wstring const& inName,
-			double inFaults,
-			ARBConfigLifetimePointsPtr* outPoints = nullptr) const;
+		std::wstring const& inName,
+		double inFaults,
+		ARBConfigLifetimePointsPtr* outPoints = nullptr) const;
 
 	/**
 	 * Add an object.
@@ -212,11 +193,11 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddLifetimePoints(
-			std::wstring const& inName,
-			bool inUseSpeedPts,
-			double inPoints,
-			double inFaults,
-			ARBConfigLifetimePointsPtr* outPoints = nullptr);
+		std::wstring const& inName,
+		bool inUseSpeedPts,
+		double inPoints,
+		double inFaults,
+		ARBConfigLifetimePointsPtr* outPoints = nullptr);
 
 	/**
 	 * Delete a lifetime name object.
@@ -224,7 +205,5 @@ public:
 	 * @param inFaults Delete object with the given faults.
 	 * @return Whether object was deleted.
 	 */
-	bool DeleteLifetimePoints(
-			std::wstring const& inName,
-			double inFaults);
+	bool DeleteLifetimePoints(std::wstring const& inName, double inFaults);
 };

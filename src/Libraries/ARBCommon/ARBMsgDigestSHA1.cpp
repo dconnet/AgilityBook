@@ -33,6 +33,8 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+// clang-format off
+
 // Turn off a bunch of static analysis messages.
 #ifdef _MSC_VER
 #pragma warning (disable : 6386) // Buffer overrun while writing to '<var>' : the writable size is '<size>' bytes, but '<var>' bytes might be written.
@@ -748,6 +750,7 @@ unsigned SHA1::CircularShift(int bits, unsigned word)
     return ((word << bits) & 0xFFFFFFFF) | ((word & 0xFFFFFFFF) >> (32-bits));
 }
 
+// clang-format on
 /////////////////////////////////////////////////////////////////////////////
 
 static std::wstring ConvertDigest(const unsigned int digest[5])
@@ -762,9 +765,7 @@ static std::wstring ConvertDigest(const unsigned int digest[5])
 
 // Note, error checking of arguments handled in ARBMsgDigest::Compute
 
-std::wstring ARBMsgDigestComputeSHA1(
-		std::istream& inFile,
-		size_t* outSize)
+std::wstring ARBMsgDigestComputeSHA1(std::istream& inFile, size_t* outSize)
 {
 	SHA1 sha;
 	sha.Reset();

@@ -44,13 +44,13 @@
 #include "LibARBWin/DlgProgress.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/ReadHttp.h"
-#include <map>
-#include <vector>
 #include <wx/dir.h>
 #include <wx/dynlib.h>
 #include <wx/file.h>
 #include <wx/statline.h>
 #include <wx/stdpaths.h>
+#include <map>
+#include <vector>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -58,14 +58,10 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-static size_t TranslateCodeMap(
-		std::map<std::wstring, std::wstring> const& inMap,
-		std::vector<std::wstring>& outKeys)
+static size_t TranslateCodeMap(std::map<std::wstring, std::wstring> const& inMap, std::vector<std::wstring>& outKeys)
 {
 	outKeys.clear();
-	for (std::map<std::wstring, std::wstring>::const_iterator iMap = inMap.begin();
-		iMap != inMap.end();
-		++iMap)
+	for (std::map<std::wstring, std::wstring>::const_iterator iMap = inMap.begin(); iMap != inMap.end(); ++iMap)
 	{
 		outKeys.push_back(iMap->first);
 	}
@@ -104,25 +100,43 @@ class CalSiteData
 {
 	// Copy semantics don't work well with our cleanup code!
 	DECLARE_NO_COPY_IMPLEMENTED(CalSiteData);
+
 public:
 	CalSiteData(ICalendarSitePtr pSite);
 	~CalSiteData();
 
 	void Connect();
 
-	bool isValid() const					{return !!m_pSite;}
+	bool isValid() const
+	{
+		return !!m_pSite;
+	}
 	void Unload(bool bPermanently = false);
 
-	std::wstring GetID() const				{return m_pSite->GetID();}
-	std::wstring GetName() const			{return m_pSite->GetName();}
-	std::wstring GetDescription() const		{return m_pSite->GetDescription();}
+	std::wstring GetID() const
+	{
+		return m_pSite->GetID();
+	}
+	std::wstring GetName() const
+	{
+		return m_pSite->GetName();
+	}
+	std::wstring GetDescription() const
+	{
+		return m_pSite->GetDescription();
+	}
 	std::map<std::wstring, std::wstring> const& QueryLocationCodes() const
-		{return m_LocCodes;}
+	{
+		return m_LocCodes;
+	}
 	std::map<std::wstring, std::wstring> const& QueryVenueCodes() const
-		{return m_VenueCodes;}
-	std::string Process(IProgressMeter *progress,
-			std::vector<std::wstring> const& inLocationCodes,
-			std::vector<std::wstring> const& inVenueCodes);
+	{
+		return m_VenueCodes;
+	}
+	std::string Process(
+		IProgressMeter* progress,
+		std::vector<std::wstring> const& inLocationCodes,
+		std::vector<std::wstring> const& inVenueCodes);
 
 private:
 	ICalendarSitePtr m_pSite;
@@ -141,10 +155,7 @@ class CSortCheckTreeCtrl;
 class CDlgCalendarPlugins : public wxDialog
 {
 public:
-	CDlgCalendarPlugins(
-			CAgilityBookDoc* pDoc,
-			std::vector<CalSiteDataPtr>& directAccess,
-			wxWindow* pParent = nullptr);
+	CDlgCalendarPlugins(CAgilityBookDoc* pDoc, std::vector<CalSiteDataPtr>& directAccess, wxWindow* pParent = nullptr);
 
 private:
 	void UpdateControls();
@@ -316,8 +327,7 @@ void CalSiteData::Connect()
 	m_id = m_pSite->GetID();
 	m_LocCodes.clear();
 	m_VenueCodes.clear();
-	if (!m_pSite->GetVersion(m_Version)
-	|| !CAgilityBookOptions::IsCalSiteVisible(m_id, m_Version))
+	if (!m_pSite->GetVersion(m_Version) || !CAgilityBookOptions::IsCalSiteVisible(m_id, m_Version))
 	{
 		Unload(true);
 	}
@@ -338,9 +348,10 @@ void CalSiteData::Unload(bool bPermanently)
 }
 
 
-std::string CalSiteData::Process(IProgressMeter *progress,
-		std::vector<std::wstring> const& inLocationCodes,
-		std::vector<std::wstring> const& inVenueCodes)
+std::string CalSiteData::Process(
+	IProgressMeter* progress,
+	std::vector<std::wstring> const& inLocationCodes,
+	std::vector<std::wstring> const& inVenueCodes)
 {
 	return m_pSite->Process(inLocationCodes, inVenueCodes, progress);
 }
@@ -388,8 +399,12 @@ class CPluginBase : public CTreeData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CPluginBase)
 public:
-	CPluginBase() {}
-	~CPluginBase() {}
+	CPluginBase()
+	{
+	}
+	~CPluginBase()
+	{
+	}
 
 	virtual std::wstring GetDesc() const = 0;
 };
@@ -398,24 +413,51 @@ public:
 class CPluginData : public CPluginBase
 {
 public:
-	CPluginData() {}
+	CPluginData()
+	{
+	}
 	virtual wxString GetSortName() const = 0;
-	std::wstring OnNeedText() const override		{return m_Name;}
-	std::wstring GetDesc() const override			{return m_Desc;}
-	virtual std::string Process(IProgressMeter *progress) = 0;
+	std::wstring OnNeedText() const override
+	{
+		return m_Name;
+	}
+	std::wstring GetDesc() const override
+	{
+		return m_Desc;
+	}
+	virtual std::string Process(IProgressMeter* progress) = 0;
 	virtual bool HasQueryDetails() const = 0;
-	virtual bool CanEdit() const					{return false;}
-	virtual bool Edit(wxWindow* pParent)			{return false;}
-	virtual bool CanDelete() const					{return false;}
-	virtual bool Delete()							{return false;}
+	virtual bool CanEdit() const
+	{
+		return false;
+	}
+	virtual bool Edit(wxWindow* pParent)
+	{
+		return false;
+	}
+	virtual bool CanDelete() const
+	{
+		return false;
+	}
+	virtual bool Delete()
+	{
+		return false;
+	}
 	virtual std::map<std::wstring, std::wstring> const& QueryLocationCodes() const = 0;
 	virtual std::map<std::wstring, std::wstring> const& QueryVenueCodes() const = 0;
-	virtual std::vector<std::wstring>& LocationCodes()	{return m_LocationCodes;}
-	virtual std::vector<std::wstring>& VenueCodes()		{return m_VenueCodes;}
+	virtual std::vector<std::wstring>& LocationCodes()
+	{
+		return m_LocationCodes;
+	}
+	virtual std::vector<std::wstring>& VenueCodes()
+	{
+		return m_VenueCodes;
+	}
 	virtual bool isValid() const = 0;
 	virtual bool Enable() = 0;
 	virtual bool CanDisable() const = 0;
 	virtual void Disable() = 0;
+
 protected:
 	std::wstring m_Name;
 	std::wstring m_Desc;
@@ -439,18 +481,27 @@ public:
 		TranslateCodeMap(QueryVenueCodes(), m_VenueCodes);
 	}
 
-	wxString GetSortName() const override		{return wxString(L"C") + m_Name.c_str();}
+	wxString GetSortName() const override
+	{
+		return wxString(L"C") + m_Name.c_str();
+	}
 
-	std::string Process(IProgressMeter *progress) override;
+	std::string Process(IProgressMeter* progress) override;
 
 	bool HasQueryDetails() const override
 	{
 		return 1 < m_Site->LocationCodes().size() || 1 < m_Site->VenueCodes().size();
 	}
 
-	bool CanEdit() const override		{return true;}
+	bool CanEdit() const override
+	{
+		return true;
+	}
 	bool Edit(wxWindow* pParent) override;
-	bool CanDelete() const override		{return true;}
+	bool CanDelete() const override
+	{
+		return true;
+	}
 	bool Delete() override;
 
 	std::map<std::wstring, std::wstring> const& QueryLocationCodes() const override
@@ -492,7 +543,7 @@ private:
 };
 
 
-std::string CPluginConfigData::Process(IProgressMeter *progress)
+std::string CPluginConfigData::Process(IProgressMeter* progress)
 {
 	std::wstring url = m_Site->GetFormattedURL(m_LocationCodes, m_VenueCodes);
 	progress->SetMessage(url.c_str());
@@ -547,9 +598,12 @@ public:
 		TranslateCodeMap(QueryVenueCodes(), m_VenueCodes);
 	}
 
-	wxString GetSortName() const override	{return wxString(L"D") + m_Name.c_str();}
+	wxString GetSortName() const override
+	{
+		return wxString(L"D") + m_Name.c_str();
+	}
 
-	std::string Process(IProgressMeter *progress) override
+	std::string Process(IProgressMeter* progress) override
 	{
 		return m_CalData->Process(progress, m_LocationCodes, m_VenueCodes);
 	}
@@ -569,7 +623,10 @@ public:
 		return m_CalData->QueryVenueCodes();
 	}
 
-	bool isValid() const override		{return m_CalData->isValid();}
+	bool isValid() const override
+	{
+		return m_CalData->isValid();
+	}
 
 	bool Enable() override
 	{
@@ -624,7 +681,8 @@ public:
 	CPluginCalData(ARBCalendarPtr const& inCal)
 		: m_Cal(inCal)
 	{
-		m_Name = fmt::format(L"{} {}: {} {} {}",
+		m_Name = fmt::format(
+			L"{} {}: {} {} {}",
 			m_Cal->GetStartDate().GetString(),
 			m_Cal->GetEndDate().GetString(),
 			m_Cal->GetVenue(),
@@ -650,9 +708,18 @@ public:
 		m_Desc = fmt::to_string(desc);
 	}
 
-	std::wstring OnNeedText() const override	{return m_Name;}
-	std::wstring GetDesc() const override		{return m_Desc;}
-	ARBCalendarPtr CalEntry() const				{return m_Cal;}
+	std::wstring OnNeedText() const override
+	{
+		return m_Name;
+	}
+	std::wstring GetDesc() const override
+	{
+		return m_Desc;
+	}
+	ARBCalendarPtr CalEntry() const
+	{
+		return m_Cal;
+	}
 
 private:
 	ARBCalendarPtr m_Cal;
@@ -665,10 +732,7 @@ private:
 class CSortCheckTreeCtrl : public CCheckTreeCtrl
 {
 public:
-	CSortCheckTreeCtrl(
-			wxWindow* pParent,
-			const wxPoint& pos = wxDefaultPosition,
-			const wxSize& size = wxDefaultSize)
+	CSortCheckTreeCtrl(wxWindow* pParent, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize)
 		: CCheckTreeCtrl(pParent, pos, size)
 	{
 	}
@@ -677,9 +741,7 @@ public:
 };
 
 
-int CSortCheckTreeCtrl::OnCompareItems(
-		const wxTreeItemId& item1,
-		const wxTreeItemId& item2)
+int CSortCheckTreeCtrl::OnCompareItems(const wxTreeItemId& item1, const wxTreeItemId& item2)
 {
 	CPluginData* pData1 = dynamic_cast<CPluginData*>(GetItemData(item1));
 	CPluginData* pData2 = dynamic_cast<CPluginData*>(GetItemData(item2));
@@ -694,9 +756,9 @@ int CSortCheckTreeCtrl::OnCompareItems(
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgCalendarPlugins::CDlgCalendarPlugins(
-		CAgilityBookDoc* pDoc,
-		std::vector<CalSiteDataPtr>& directAccess,
-		wxWindow* pParent)
+	CAgilityBookDoc* pDoc,
+	std::vector<CalSiteDataPtr>& directAccess,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlPlugins(nullptr)
 	, m_ctrlDetails(nullptr)
@@ -709,7 +771,13 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	, m_pDoc(pDoc)
 	, m_DirectAccess(directAccess)
 {
-	Create(pParent, wxID_ANY, _("IDD_CALENDAR_PLUGINS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		_("IDD_CALENDAR_PLUGINS"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
 
@@ -720,85 +788,69 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	m_ctrlPlugins->SetHelpText(_("HIDC_PLUGIN_TREE"));
 	m_ctrlPlugins->SetToolTip(_("HIDC_PLUGIN_TREE"));
 
-	m_ctrlDetails = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, 40)),
-		wxTE_MULTILINE|wxTE_READONLY|wxTE_WORDWRAP);
+	m_ctrlDetails = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(-1, wxDLG_UNIT_Y(this, 40)),
+		wxTE_MULTILINE | wxTE_READONLY | wxTE_WORDWRAP);
 	m_ctrlDetails->SetBackgroundColour(GetBackgroundColour());
 	m_ctrlDetails->SetHelpText(_("HIDC_PLUGIN_DETAILS"));
 	m_ctrlDetails->SetToolTip(_("HIDC_PLUGIN_DETAILS"));
 
-	m_ctrlRead = new wxButton(this, wxID_ANY,
-		_("IDC_PLUGIN_READ"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlRead = new wxButton(this, wxID_ANY, _("IDC_PLUGIN_READ"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlRead->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarPlugins::OnPluginRead, this);
 	m_ctrlRead->SetHelpText(_("HIDC_PLUGIN_READ"));
 	m_ctrlRead->SetToolTip(_("HIDC_PLUGIN_READ"));
 
-	m_ctrlAdd = new wxButton(this, wxID_ANY,
-		_("IDC_PLUGIN_ADD"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlAdd = new wxButton(this, wxID_ANY, _("IDC_PLUGIN_ADD"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlAdd->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarPlugins::OnPluginAddCalEntry, this);
 	m_ctrlAdd->SetHelpText(_("HIDC_PLUGIN_ADD"));
 	m_ctrlAdd->SetToolTip(_("HIDC_PLUGIN_ADD"));
 
-	m_ctrlEnable = new wxButton(this, wxID_ANY,
-		_("IDC_PLUGIN_ENABLE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlEnable = new wxButton(this, wxID_ANY, _("IDC_PLUGIN_ENABLE"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlEnable->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarPlugins::OnPluginEnable, this);
 	m_ctrlEnable->SetHelpText(_("HIDC_PLUGIN_ENABLE"));
 	m_ctrlEnable->SetToolTip(_("HIDC_PLUGIN_ENABLE"));
 
-	m_ctrlQuery = new wxButton(this, wxID_ANY,
-		_("IDC_PLUGIN_QUERYDETAILS"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlQuery = new wxButton(this, wxID_ANY, _("IDC_PLUGIN_QUERYDETAILS"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlQuery->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarPlugins::OnPluginQueryDetails, this);
 	m_ctrlQuery->SetHelpText(_("HIDC_PLUGIN_QUERYDETAILS"));
 	m_ctrlQuery->SetToolTip(_("HIDC_PLUGIN_QUERYDETAILS"));
 
-	wxButton* btnNew = new wxButton(this, wxID_ANY,
-		_("IDC_PLUGIN_NEW"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* btnNew = new wxButton(this, wxID_ANY, _("IDC_PLUGIN_NEW"), wxDefaultPosition, wxDefaultSize, 0);
 	btnNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarPlugins::OnPluginNew, this);
 	btnNew->SetHelpText(_("HIDC_PLUGIN_NEW"));
 	btnNew->SetToolTip(_("HIDC_PLUGIN_NEW"));
 
-	m_ctrlEdit = new wxButton(this, wxID_ANY,
-		_("IDC_PLUGIN_EDIT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlEdit = new wxButton(this, wxID_ANY, _("IDC_PLUGIN_EDIT"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarPlugins::OnPluginEdit, this);
 	m_ctrlEdit->SetHelpText(_("HIDC_PLUGIN_EDIT"));
 	m_ctrlEdit->SetToolTip(_("HIDC_PLUGIN_EDIT"));
 
-	m_ctrlDelete = new wxButton(this, wxID_ANY,
-		_("IDC_PLUGIN_DELETE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlDelete = new wxButton(this, wxID_ANY, _("IDC_PLUGIN_DELETE"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarPlugins::OnPluginDelete, this);
 	m_ctrlDelete->SetHelpText(_("HIDC_PLUGIN_DELETE"));
 	m_ctrlDelete->SetToolTip(_("HIDC_PLUGIN_DELETE"));
 
-	wxButton* btnClose = new wxButton(this, wxID_CANCEL,
-		_("IDC_PLUGIN_CLOSE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* btnClose = new wxButton(this, wxID_CANCEL, _("IDC_PLUGIN_CLOSE"), wxDefaultPosition, wxDefaultSize, 0);
 
 	wxTreeItemId root = m_ctrlPlugins->AddRoot(L"root");
 	for (ARBConfigCalSiteList::const_iterator iConfig = m_pDoc->Book().GetConfig().GetCalSites().begin();
-		iConfig != m_pDoc->Book().GetConfig().GetCalSites().end();
-		++iConfig)
+		 iConfig != m_pDoc->Book().GetConfig().GetCalSites().end();
+		 ++iConfig)
 	{
 		CPluginConfigData* pData = new CPluginConfigData(m_pDoc, *iConfig);
-		wxTreeItemId hItem = m_ctrlPlugins->AppendItem(root,
-			StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+		wxTreeItemId hItem = m_ctrlPlugins->AppendItem(root, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
 		m_ctrlPlugins->ShowCheckbox(hItem, true);
 		m_ctrlPlugins->SetChecked(hItem, true, false);
 	}
 
-	for (std::vector<CalSiteDataPtr>::iterator i = m_DirectAccess.begin();
-		i != m_DirectAccess.end();
-		++i)
+	for (std::vector<CalSiteDataPtr>::iterator i = m_DirectAccess.begin(); i != m_DirectAccess.end(); ++i)
 	{
 		CPluginDllData* pData = new CPluginDllData(*i);
-		wxTreeItemId hItem = m_ctrlPlugins->AppendItem(root,
-			StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+		wxTreeItemId hItem = m_ctrlPlugins->AppendItem(root, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
 		m_ctrlPlugins->ShowCheckbox(hItem, (*i)->isValid());
 		if ((*i)->isValid())
 			m_ctrlPlugins->SetChecked(hItem, true, false);
@@ -819,18 +871,24 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	sizerBtns->Add(m_ctrlAdd, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
 	sizerBtns->Add(
 		new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL),
-		0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+		0,
+		wxEXPAND | wxBOTTOM,
+		wxDLG_UNIT_X(this, 3));
 	sizerBtns->Add(m_ctrlEnable, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
 	sizerBtns->Add(m_ctrlQuery, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
 	sizerBtns->Add(
 		new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL),
-		0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+		0,
+		wxEXPAND | wxBOTTOM,
+		wxDLG_UNIT_X(this, 3));
 	sizerBtns->Add(btnNew, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
 	sizerBtns->Add(m_ctrlEdit, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
 	sizerBtns->Add(m_ctrlDelete, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
 	sizerBtns->Add(
 		new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL),
-		0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+		0,
+		wxEXPAND | wxBOTTOM,
+		wxDLG_UNIT_X(this, 3));
 	sizerBtns->Add(0, 0, 1, wxEXPAND, 0);
 	sizerBtns->Add(btnClose, 0, 0, 0);
 
@@ -852,16 +910,14 @@ void CDlgCalendarPlugins::UpdateControls()
 	int nCalItems = 0;
 	wxTreeItemId hItem;
 	wxTreeItemIdValue cookie;
-	for (hItem = m_ctrlPlugins->GetFirstChild(m_ctrlPlugins->GetRootItem(), cookie);
-		hItem.IsOk();
-		hItem = m_ctrlPlugins->GetNextChild(m_ctrlPlugins->GetRootItem(), cookie))
+	for (hItem = m_ctrlPlugins->GetFirstChild(m_ctrlPlugins->GetRootItem(), cookie); hItem.IsOk();
+		 hItem = m_ctrlPlugins->GetNextChild(m_ctrlPlugins->GetRootItem(), cookie))
 	{
 		if (m_ctrlPlugins->GetChecked(hItem))
 			++nChecked;
 		wxTreeItemIdValue cookie2;
-		for (wxTreeItemId hCal = m_ctrlPlugins->GetFirstChild(hItem, cookie2);
-			hCal.IsOk();
-			hCal = m_ctrlPlugins->GetNextChild(hItem, cookie2))
+		for (wxTreeItemId hCal = m_ctrlPlugins->GetFirstChild(hItem, cookie2); hCal.IsOk();
+			 hCal = m_ctrlPlugins->GetNextChild(hItem, cookie2))
 		{
 			if (m_ctrlPlugins->GetChecked(hCal))
 				++nCalItems;
@@ -933,9 +989,8 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 	int nEntries = 0;
 	wxTreeItemId hItem;
 	wxTreeItemIdValue cookie;
-	for (hItem = m_ctrlPlugins->GetFirstChild(m_ctrlPlugins->GetRootItem(), cookie);
-		hItem.IsOk();
-		hItem = m_ctrlPlugins->GetNextChild(m_ctrlPlugins->GetRootItem(), cookie))
+	for (hItem = m_ctrlPlugins->GetFirstChild(m_ctrlPlugins->GetRootItem(), cookie); hItem.IsOk();
+		 hItem = m_ctrlPlugins->GetNextChild(m_ctrlPlugins->GetRootItem(), cookie))
 	{
 		if (m_ctrlPlugins->GetChecked(hItem))
 			++nEntries;
@@ -943,9 +998,8 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 
 	CProgressMeter progress(nEntries, this);
 
-	for (hItem = m_ctrlPlugins->GetFirstChild(m_ctrlPlugins->GetRootItem(), cookie);
-		hItem.IsOk();
-		hItem = m_ctrlPlugins->GetNextChild(m_ctrlPlugins->GetRootItem(), cookie))
+	for (hItem = m_ctrlPlugins->GetFirstChild(m_ctrlPlugins->GetRootItem(), cookie); hItem.IsOk();
+		 hItem = m_ctrlPlugins->GetNextChild(m_ctrlPlugins->GetRootItem(), cookie))
 	{
 		if (m_ctrlPlugins->GetChecked(hItem))
 		{
@@ -976,14 +1030,23 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 						{
 							if (0 < err.m_ErrMsg.size())
 							{
-								wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+								wxMessageBox(
+									StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
+									wxMessageBoxCaptionStr,
+									wxOK | wxCENTRE | wxICON_INFORMATION);
 								progress.SetForegroundWindow();
 							}
-							for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
+							for (ARBCalendarList::iterator iter = book.GetCalendar().begin();
+								 iter != book.GetCalendar().end();
+								 ++iter)
 							{
 								CPluginCalData* pCalData = new CPluginCalData(*iter);
-								wxTreeItemId hCalItem = m_ctrlPlugins->AppendItem(pData->GetId(),
-									StringUtil::stringWX(pCalData->OnNeedText()), -1, -1, pCalData);
+								wxTreeItemId hCalItem = m_ctrlPlugins->AppendItem(
+									pData->GetId(),
+									StringUtil::stringWX(pCalData->OnNeedText()),
+									-1,
+									-1,
+									pCalData);
 								m_ctrlPlugins->ShowCheckbox(hCalItem, true);
 								++nInserted;
 							}
@@ -1027,14 +1090,12 @@ void CDlgCalendarPlugins::OnPluginAddCalEntry(wxCommandEvent& evt)
 	int nUpdated = 0;
 	wxTreeItemId hItem;
 	wxTreeItemIdValue cookie;
-	for (hItem = m_ctrlPlugins->GetFirstChild(m_ctrlPlugins->GetRootItem(), cookie);
-		hItem.IsOk();
-		hItem = m_ctrlPlugins->GetNextChild(m_ctrlPlugins->GetRootItem(), cookie))
+	for (hItem = m_ctrlPlugins->GetFirstChild(m_ctrlPlugins->GetRootItem(), cookie); hItem.IsOk();
+		 hItem = m_ctrlPlugins->GetNextChild(m_ctrlPlugins->GetRootItem(), cookie))
 	{
 		wxTreeItemIdValue cookie2;
-		for (wxTreeItemId hCal = m_ctrlPlugins->GetFirstChild(hItem, cookie2);
-			hCal.IsOk();
-			hCal = m_ctrlPlugins->GetNextChild(hItem, cookie2))
+		for (wxTreeItemId hCal = m_ctrlPlugins->GetFirstChild(hItem, cookie2); hCal.IsOk();
+			 hCal = m_ctrlPlugins->GetNextChild(hItem, cookie2))
 		{
 			if (m_ctrlPlugins->GetChecked(hCal))
 			{
@@ -1108,8 +1169,10 @@ void CDlgCalendarPlugins::OnPluginQueryDetails(wxCommandEvent& evt)
 		{
 			CDlgCalendarQueryDetail dlg(
 				m_pDoc->Book().GetConfig(),
-				pData->QueryLocationCodes(), pData->LocationCodes(),
-				pData->QueryVenueCodes(), pData->VenueCodes(),
+				pData->QueryLocationCodes(),
+				pData->LocationCodes(),
+				pData->QueryVenueCodes(),
+				pData->VenueCodes(),
 				this);
 			if (wxID_OK == dlg.ShowModal())
 			{
@@ -1130,8 +1193,9 @@ void CDlgCalendarPlugins::OnPluginNew(wxCommandEvent& evt)
 		m_pDoc->Book().GetConfig().GetCalSites().AddSite(site);
 		m_pDoc->Modify(true);
 		CPluginConfigData* pData = new CPluginConfigData(m_pDoc, site);
-		wxTreeItemId hItem = m_ctrlPlugins->AppendItem(m_ctrlPlugins->GetRootItem(),
-			StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+		wxTreeItemId hItem
+			= m_ctrlPlugins
+				  ->AppendItem(m_ctrlPlugins->GetRootItem(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
 		m_ctrlPlugins->ShowCheckbox(hItem, true);
 		m_ctrlPlugins->SetChecked(hItem, true, false);
 		m_ctrlPlugins->SelectItem(hItem);
@@ -1173,10 +1237,7 @@ CCalendarSites::~CCalendarSites()
 }
 
 
-bool CCalendarSites::FindEntries(
-		CAgilityBookDoc* pDoc,
-		ARBCalendarList& inCalendar,
-		wxWindow* pParent)
+bool CCalendarSites::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, wxWindow* pParent)
 {
 	if (!pDoc->OnSaveModified())
 		return false;

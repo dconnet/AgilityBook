@@ -19,16 +19,16 @@
 
 #include "LibwxARBWin.h"
 
+#include <wx/artprov.h>
 #include <unordered_map>
 #include <vector>
-#include <wx/artprov.h>
 class wxFrame;
 
 // MENU_SEP/MENU_ITEM/MENU_MRU are mutually exclusive
-#define MENU_SEP	0x01	///< Menu separator
-#define MENU_ITEM	0x02	///< Menu item
-#define MENU_MRU	0x04	///< MRU item, can only be one
-#define MENU_HELP	0x08	///< Top-level Help item, can only be one
+#define MENU_SEP  0x01 ///< Menu separator
+#define MENU_ITEM 0x02 ///< Menu item
+#define MENU_MRU  0x04 ///< MRU item, can only be one
+#define MENU_HELP 0x08 ///< Top-level Help item, can only be one
 
 
 class ARBWIN_API CMenuHelper
@@ -39,15 +39,15 @@ public:
 	{
 		// When reading the array of ItemData, it is assumed that all items of
 		// a given menuId are grouped together.
-		int menuId;				///< Menu id, 0 is main menu. all others are program defined
-		unsigned int flags;		///< Above defines
-		int id;					///< 0: Separator or Menu root
-		wxItemKind kind;		///< Check/radio/normal button (or menu)
-		size_t menuLevel;		///< Menu indent level, not used in toolbar
-		wchar_t const* toolbar;	///< Toolbar text
-		wchar_t const* menu;	///< Menu text
-		wchar_t const* help;	///< Tooltip help (and status help)
-		char const* artId;		///< Toolbar/menu bitmap artid (wxArtId/wxString)
+		int menuId;             ///< Menu id, 0 is main menu. all others are program defined
+		unsigned int flags;     ///< Above defines
+		int id;                 ///< 0: Separator or Menu root
+		wxItemKind kind;        ///< Check/radio/normal button (or menu)
+		size_t menuLevel;       ///< Menu indent level, not used in toolbar
+		wchar_t const* toolbar; ///< Toolbar text
+		wchar_t const* menu;    ///< Menu text
+		wchar_t const* help;    ///< Tooltip help (and status help)
+		char const* artId;      ///< Toolbar/menu bitmap artid (wxArtId/wxString)
 		ItemData()
 			: menuId(0)
 			, flags(0)
@@ -60,7 +60,16 @@ public:
 			, artId(nullptr)
 		{
 		}
-		ItemData(int _menuId, unsigned int _flags, int _id, wxItemKind _kind, size_t _menuLevel, wchar_t const* _toolbar, wchar_t const* _menu, wchar_t const* _help, char const* _artId)
+		ItemData(
+			int _menuId,
+			unsigned int _flags,
+			int _id,
+			wxItemKind _kind,
+			size_t _menuLevel,
+			wchar_t const* _toolbar,
+			wchar_t const* _menu,
+			wchar_t const* _help,
+			char const* _artId)
 			: menuId(_menuId)
 			, flags(_flags)
 			, id(_id)
@@ -76,8 +85,8 @@ public:
 
 	struct ItemAccel
 	{
-		int key; // Unique value, must remain stable since it's stored
-		int id; // menu id, not stored (values could change)
+		int key;     // Unique value, must remain stable since it's stored
+		int id;      // menu id, not stored (values could change)
 		int keyCode; // wxKeyCode: if 0, not set
 		bool bCtrl;
 		bool bAlt;
@@ -106,12 +115,8 @@ public:
 		ItemAccel& operator=(ItemAccel&& rhs) = default;
 		bool operator==(ItemAccel const& rhs) const
 		{
-			return key == rhs.key
-				&& id == rhs.id
-				&& keyCode == rhs.keyCode
-				&& bCtrl == rhs.bCtrl
-				&& bAlt == rhs.bAlt
-				&& bShift == rhs.bShift;
+			return key == rhs.key && id == rhs.id && keyCode == rhs.keyCode && bCtrl == rhs.bCtrl && bAlt == rhs.bAlt
+				   && bShift == rhs.bShift;
 		}
 		bool operator!=(ItemAccel const& rhs) const
 		{
@@ -131,12 +136,12 @@ public:
 	// bAllowDups: Allow an accelerator to be duped to different IDs.
 	// It's up to the user context to determine what to do...
 	CMenuHelper(
-			std::vector<CMenuHelper::ItemData> const& menuItems,
-			std::vector<CMenuHelper::ItemAccel> const& accels,
-			std::vector<int> const& toolbarItems,
-			std::unordered_map<int, std::wstring> const& menuIds,
-			bool doTranslation = false,
-			bool bAllowDups = false); // Accelerator dups
+		std::vector<CMenuHelper::ItemData> const& menuItems,
+		std::vector<CMenuHelper::ItemAccel> const& accels,
+		std::vector<int> const& toolbarItems,
+		std::unordered_map<int, std::wstring> const& menuIds,
+		bool doTranslation = false,
+		bool bAllowDups = false); // Accelerator dups
 	~CMenuHelper();
 
 	static long ToBitmask(ItemAccel const& accel);
@@ -146,38 +151,32 @@ public:
 	void SaveAccelerators();
 
 	// If pParent is null, the parent window is the frame
-	bool ConfigureAccelerators(
-			wxFrame* pFrame,
-			wxWindow* pParent = nullptr);
+	bool ConfigureAccelerators(wxFrame* pFrame, wxWindow* pParent = nullptr);
 
-	void CreateMenu(
-			wxFrame* pFrame,
-			wxMenu* mruMenu = nullptr);
+	void CreateMenu(wxFrame* pFrame, wxMenu* mruMenu = nullptr);
 
-	wxMenu* CreatePopupMenu(
-			wxWindow* pWindow,
-			int menuId);
+	wxMenu* CreatePopupMenu(wxWindow* pWindow, int menuId);
 
 	void UpdateMenu(bool bLoadAccelerators = true);
 
 protected:
 	void DoMenuItem(
-			wxWindow* pWindow,
-			wxMenu* menu,
-			int id,
-			wxString const& label,
-			wxString const& desc,
-			wxArtID const& artId = wxArtID());
+		wxWindow* pWindow,
+		wxMenu* menu,
+		int id,
+		wxString const& label,
+		wxString const& desc,
+		wxArtID const& artId = wxArtID());
 
 	void DoMenuItem(
-			wxWindow* pWindow,
-			wxMenu* menu,
-			int id,
-			wxString const& label,
-			wxString const& desc,
-			wxItemKind kind,
-			wxMenu* subMenu,
-			wxArtID const& artId = wxArtID());
+		wxWindow* pWindow,
+		wxMenu* menu,
+		int id,
+		wxString const& label,
+		wxString const& desc,
+		wxItemKind kind,
+		wxMenu* subMenu,
+		wxArtID const& artId = wxArtID());
 
 private:
 	struct TranslationData
@@ -231,19 +230,17 @@ private:
 	};
 
 	wxString GetAccelString(std::vector<ItemAccel> const& accelData, int id);
-	int TranslateId(
-			int id,
-			std::vector<ItemAccel> const& defAccelItems);
+	int TranslateId(int id, std::vector<ItemAccel> const& defAccelItems);
 	void CreateAccelTable(wxFrame* pFrame);
 
 	void Menu(
-			wxWindow* pWindow,
-			int menuId,
-			MenuHandle& handle,
-			size_t& index,
-			size_t level,
-			wxMenu* mruMenu,
-			bool& mruAdded);
+		wxWindow* pWindow,
+		int menuId,
+		MenuHandle& handle,
+		size_t& index,
+		size_t level,
+		wxMenu* mruMenu,
+		bool& mruAdded);
 
 	void DoSubMenu(wxMenu const* parent, MenuHandle const& handle);
 

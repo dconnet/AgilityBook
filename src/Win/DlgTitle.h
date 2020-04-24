@@ -29,22 +29,23 @@ class CDlgTitle : public wxDialog
 {
 public:
 	CDlgTitle(
-			ARBConfig const& config,
-			ARBDogTitleList& titles,
-			ARBDogTitlePtr const& inTitle,
-			wxWindow* pParent = nullptr);
+		ARBConfig const& config,
+		ARBDogTitleList& titles,
+		ARBDogTitlePtr const& inTitle,
+		wxWindow* pParent = nullptr);
 
 	// Returns existing title or the newly created one.
-	ARBDogTitlePtr GetNewTitle() const	{return m_newTitle;}
+	ARBDogTitlePtr GetNewTitle() const
+	{
+		return m_newTitle;
+	}
 
 private:
 	ARBConfigTitlePtr GetTitleData(int index) const;
 	ARBDate GetDate();
 	void FillTitles(bool bIniting = false);
 	void FillTitleInfo();
-	short GetInstance(
-			ARBConfigTitlePtr const& inTitle,
-			std::vector<short>* outMissing = nullptr) const;
+	short GetInstance(ARBConfigTitlePtr const& inTitle, std::vector<short>* outMissing = nullptr) const;
 
 	ARBDogTitleList& m_Titles;
 	ARBDogTitlePtr m_pTitle;

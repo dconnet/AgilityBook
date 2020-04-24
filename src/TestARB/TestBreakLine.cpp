@@ -37,9 +37,7 @@ void GetFields(std::vector<std::wstring>& fields)
 }
 
 
-bool VerifyFields(
-		std::vector<std::wstring> const& fields1,
-		std::vector<std::wstring> const& fields2)
+bool VerifyFields(std::vector<std::wstring> const& fields1, std::vector<std::wstring> const& fields2)
 {
 	if (fields1.size() != fields2.size())
 		return false;

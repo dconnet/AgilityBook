@@ -28,9 +28,7 @@ class CBasePanel : public wxPanel
 	DECLARE_NO_COPY_IMPLEMENTED(CBasePanel)
 
 public:
-	CBasePanel(
-			wxWindow* parent,
-			std::wstring const& helpText);
+	CBasePanel(wxWindow* parent, std::wstring const& helpText);
 	~CBasePanel();
 
 	void ActivateView();
@@ -54,11 +52,11 @@ class CAgilityBookPanelRuns : public CBasePanel
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookPanelRuns)
 public:
 	CAgilityBookPanelRuns(
-			CTabView* pTabView,
-			wxWindow* parent,
-			wxDocument* doc,
-			long flags,
-			std::vector<CAgilityBookBaseExtraView*> const& inViews);
+		CTabView* pTabView,
+		wxWindow* parent,
+		wxDocument* doc,
+		long flags,
+		std::vector<CAgilityBookBaseExtraView*> const& inViews);
 	~CAgilityBookPanelRuns();
 
 private:
@@ -72,11 +70,11 @@ class CAgilityBookPanelPoints : public CBasePanel
 {
 public:
 	CAgilityBookPanelPoints(
-			CTabView* pTabView,
-			wxWindow* parent,
-			wxDocument* doc,
-			long flags,
-			std::vector<CAgilityBookBaseExtraView*> const& inViews);
+		CTabView* pTabView,
+		wxWindow* parent,
+		wxDocument* doc,
+		long flags,
+		std::vector<CAgilityBookBaseExtraView*> const& inViews);
 };
 
 
@@ -85,11 +83,11 @@ class CAgilityBookPanelCalendar : public CBasePanel
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookPanelCalendar)
 public:
 	CAgilityBookPanelCalendar(
-			CTabView* pTabView,
-			wxWindow* parent,
-			wxDocument* doc,
-			long flags,
-			std::vector<CAgilityBookBaseExtraView*> const& inViews);
+		CTabView* pTabView,
+		wxWindow* parent,
+		wxDocument* doc,
+		long flags,
+		std::vector<CAgilityBookBaseExtraView*> const& inViews);
 	~CAgilityBookPanelCalendar();
 
 private:
@@ -103,9 +101,9 @@ class CAgilityBookPanelTraining : public CBasePanel
 {
 public:
 	CAgilityBookPanelTraining(
-			CTabView* pTabView,
-			wxWindow* parent,
-			wxDocument* doc,
-			long flags,
-			std::vector<CAgilityBookBaseExtraView*> const& inViews);
+		CTabView* pTabView,
+		wxWindow* parent,
+		wxDocument* doc,
+		long flags,
+		std::vector<CAgilityBookBaseExtraView*> const& inViews);
 };

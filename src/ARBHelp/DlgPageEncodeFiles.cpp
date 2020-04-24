@@ -31,20 +31,20 @@ CDlgPageEncodeFiles::CDlgPageEncodeFiles(CDlgARBHelp* pParent)
 	, m_Parent(pParent)
 	, m_ctrlList(nullptr)
 {
-	wxStaticText* text1 = new wxStaticText(this, wxID_ANY,
+	wxStaticText* text1 = new wxStaticText(
+		this,
+		wxID_ANY,
 		L"Check the files you would like to be sent",
-		wxDefaultPosition, wxDefaultSize, 0);
+		wxDefaultPosition,
+		wxDefaultSize,
+		0);
 
-	m_ctrlList = new wxCheckListBox(this, wxID_ANY,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr, 0);
+	m_ctrlList = new wxCheckListBox(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, nullptr, 0);
 
-	wxButton* btnAll = new wxButton(this, wxID_ANY, L"Check All",
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* btnAll = new wxButton(this, wxID_ANY, L"Check All", wxDefaultPosition, wxDefaultSize, 0);
 	btnAll->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgPageEncodeFiles::OnCheckAll, this);
 
-	wxButton* btnNone = new wxButton(this, wxID_ANY, L"Uncheck All",
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* btnNone = new wxButton(this, wxID_ANY, L"Uncheck All", wxDefaultPosition, wxDefaultSize, 0);
 	btnNone->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgPageEncodeFiles::OnCheckNone, this);
 
 	// Sizers
@@ -89,9 +89,8 @@ void CDlgPageEncodeFiles::OnCheckNone(wxCommandEvent& evt)
 bool CDlgPageEncodeFiles::TransferDataToWindow()
 {
 	m_ctrlList->Clear();
-	for (CDlgARBHelp::FileMap::const_iterator i = m_Parent->GetARBFiles().begin();
-		i != m_Parent->GetARBFiles().end();
-		++i)
+	for (CDlgARBHelp::FileMap::const_iterator i = m_Parent->GetARBFiles().begin(); i != m_Parent->GetARBFiles().end();
+		 ++i)
 	{
 		int idx = m_ctrlList->Append((*i).first.c_str());
 		m_ctrlList->Check(idx, (*i).second);

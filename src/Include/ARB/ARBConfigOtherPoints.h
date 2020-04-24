@@ -30,10 +30,10 @@
  */
 enum class ARBOtherPointsTally
 {
-	All,			///< Accumulate all runs together.
-	AllByEvent,		///< Separate runs by event.
-	Level,			///< Separate runs by level.
-	LevelByEvent	///< Separate runs by event and level.
+	All,         ///< Accumulate all runs together.
+	AllByEvent,  ///< Separate runs by event.
+	Level,       ///< Separate runs by level.
+	LevelByEvent ///< Separate runs by event and level.
 };
 
 
@@ -96,10 +96,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -168,10 +165,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Verify the name exists.
@@ -186,9 +180,7 @@ public:
 	 * @param outPoints Pointer to object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindOtherPoints(
-			std::wstring const& inName,
-			ARBConfigOtherPointsPtr* outPoints = nullptr) const;
+	bool FindOtherPoints(std::wstring const& inName, ARBConfigOtherPointsPtr* outPoints = nullptr) const;
 
 	/**
 	 * Add an otherpoints object.

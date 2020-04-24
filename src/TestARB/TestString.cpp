@@ -68,7 +68,8 @@ TEST_CASE("String")
 		if (!g_bMicroTest)
 		{
 			// http://www.ftrain.com/unicode/#65275
-			wchar_t w = 0xFEFB; // In courier new, Arabic Ligature Lam With Alef Isolated Form (see 'Character Map' program)
+			wchar_t w
+				= 0xFEFB; // In courier new, Arabic Ligature Lam With Alef Isolated Form (see 'Character Map' program)
 			std::wstring s(1, w);
 			std::string s2 = StringUtil::stringA(s);
 			REQUIRE(s.length() == 1);
@@ -277,12 +278,9 @@ TEST_CASE("String")
 				items.push_back(L"10a");
 				items.push_back(L"2a");
 
-				std::stable_sort(items.begin(), items.end(),
-					[](std::wstring const& one, std::wstring const& two)
-					{
-						return StringUtil::CompareNoCase(one, two) < 0;
-					}
-					);
+				std::stable_sort(items.begin(), items.end(), [](std::wstring const& one, std::wstring const& two) {
+					return StringUtil::CompareNoCase(one, two) < 0;
+				});
 
 				REQUIRE(items[0] == L"1a");
 				REQUIRE(items[1] == L"2a");
@@ -305,12 +303,9 @@ TEST_CASE("String")
 				items.push_back(L"2a");
 				items.push_back(L"a");
 
-				std::stable_sort(items.begin(), items.end(),
-					[](std::wstring const& one, std::wstring const& two)
-					{
-						return StringUtil::CompareNoCase(one, two) < 0;
-					}
-					);
+				std::stable_sort(items.begin(), items.end(), [](std::wstring const& one, std::wstring const& two) {
+					return StringUtil::CompareNoCase(one, two) < 0;
+				});
 
 				REQUIRE(items[0] == L"2a");
 				REQUIRE(items[1] == L"a");
@@ -338,12 +333,9 @@ TEST_CASE("String")
 
 				// Note: Ignore case simply means "bob" == "Bob".
 				// It does not mean that lower case sorts before (or after) upper case.
-				std::stable_sort(items.begin(), items.end(),
-					[](std::wstring const& one, std::wstring const& two)
-					{
-						return StringUtil::CompareNoCase(one, two) < 0;
-					}
-					);
+				std::stable_sort(items.begin(), items.end(), [](std::wstring const& one, std::wstring const& two) {
+					return StringUtil::CompareNoCase(one, two) < 0;
+				});
 
 				REQUIRE(items[0] == L"2a");
 				REQUIRE(items[1] == L"a");
@@ -354,5 +346,4 @@ TEST_CASE("String")
 			}
 		}
 	}
-
 }

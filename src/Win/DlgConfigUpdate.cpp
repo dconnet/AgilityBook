@@ -57,32 +57,31 @@ CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)
 
 	// Controls (these are done first to control tab order)
 
-	m_radioDefault = new wxRadioButton(this, wxID_ANY,
+	m_radioDefault = new wxRadioButton(
+		this,
+		wxID_ANY,
 		_("IDC_CONFIG_UPDATE_DEFAULT"),
-		wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxRB_GROUP);
 	m_radioDefault->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CDlgConfigUpdate::OnUpdateDefault, this);
 	m_radioDefault->SetHelpText(_("HIDC_CONFIG_UPDATE_DEFAULT"));
 	m_radioDefault->SetToolTip(_("HIDC_CONFIG_UPDATE_DEFAULT"));
 
-	m_radioExisting = new wxRadioButton(this, wxID_ANY,
-		_("IDC_CONFIG_UPDATE_EXISTING"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_radioExisting
+		= new wxRadioButton(this, wxID_ANY, _("IDC_CONFIG_UPDATE_EXISTING"), wxDefaultPosition, wxDefaultSize, 0);
 	m_radioExisting->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CDlgConfigUpdate::OnUpdateExisting, this);
 	m_radioExisting->SetHelpText(_("HIDC_CONFIG_UPDATE_EXISTING"));
 	m_radioExisting->SetToolTip(_("HIDC_CONFIG_UPDATE_EXISTING"));
 
 	m_radioDefault->SetValue(true);
 
-	m_btnPick = new wxButton(this, wxID_ANY,
-		_("IDC_CONFIG_UPDATE_NAME"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_btnPick = new wxButton(this, wxID_ANY, _("IDC_CONFIG_UPDATE_NAME"), wxDefaultPosition, wxDefaultSize, 0);
 	m_btnPick->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigUpdate::OnName, this);
 	m_btnPick->SetHelpText(_("HIDC_CONFIG_UPDATE_NAME"));
 	m_btnPick->SetToolTip(_("HIDC_CONFIG_UPDATE_NAME"));
 
-	m_FileName = new CTextCtrl(this, wxID_ANY,
-		wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_FileName = new CTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
 	m_FileName->SetHelpText(_("HIDC_CONFIG_UPDATE_FILENAME"));
 	m_FileName->SetToolTip(_("HIDC_CONFIG_UPDATE_FILENAME"));
 
@@ -150,11 +149,17 @@ bool CDlgConfigUpdate::LoadConfig(wchar_t const* pFile)
 		if (!m_Book.Load(tree, false, false, true, false, false, err))
 		{
 			if (0 < err.m_ErrMsg.size())
-				wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+				wxMessageBox(
+					StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
+					wxMessageBoxCaptionStr,
+					wxOK | wxCENTRE | wxICON_WARNING);
 			return false;
 		}
 		else if (0 < err.m_ErrMsg.size())
-			wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+			wxMessageBox(
+				StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
+				wxMessageBoxCaptionStr,
+				wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	return true;
 }
@@ -189,12 +194,13 @@ void CDlgConfigUpdate::OnUpdateExisting(wxCommandEvent& evt)
 
 void CDlgConfigUpdate::OnName(wxCommandEvent& evt)
 {
-	wxFileDialog file(this,
-			L"", // caption
-			L"", // default dir
-			m_FileName->GetValue(),
-			_("IDS_FILEEXT_FILTER_ARB"),
-			wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+	wxFileDialog file(
+		this,
+		L"", // caption
+		L"", // default dir
+		m_FileName->GetValue(),
+		_("IDS_FILEEXT_FILTER_ARB"),
+		wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 	if (wxID_OK == file.ShowModal())
 	{
 		m_FileName->SetValue(file.GetPath());

@@ -53,7 +53,7 @@
 // 1900: VC14.0 Visual Studio 2015
 //
 // https://blogs.msdn.microsoft.com/vcblog/2016/10/05/visual-c-compiler-version/
-// > Starting with VS "15" Preview 5, the Visual C++ Team is monotonically updating the value of the built-in preprocessor macro _MSC_VER at every Visual C++ toolset update. 
+// > Starting with VS "15" Preview 5, the Visual C++ Team is monotonically updating the value of the built-in preprocessor macro _MSC_VER at every Visual C++ toolset update.
 //
 // 1910: VC14.1 Visual Studio 2017
 // 1911: VC14.11 Visual Studio 2017 version 15.3
@@ -72,11 +72,11 @@
 // _M_IA64: Defined for Itanium processor family
 
 #if _MSC_VER < 1910
-	#error pre-VC141 is not supported.
+#error pre-VC141 is not supported.
 #endif // End VC-elifs
 
 #ifndef VC_EXTRALEAN
-	#define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
+#define VC_EXTRALEAN // Exclude rarely-used stuff from Windows headers
 #endif
 
 // Minimum system
@@ -91,13 +91,13 @@
 // Unless overridden, target Win7 by default.
 #ifndef NTDDI_VERSION
 #define NTDDI_VERSION NTDDI_WIN7
-#define _WIN32_WINNT 0x601
+#define _WIN32_WINNT  0x601
 #endif
 #include <sdkddkver.h>
 
 // Error checking (no support for pre-Win7)
 #if WINVER < 0x0601
-	#error Minimum supported OS is Windows 7.
+#error Minimum supported OS is Windows 7.
 #endif
 
 #else // _WIN32
@@ -115,12 +115,12 @@
 
 // These are needed in order to generate a decent pragma message
 #define STRING2(x) #x
-#define STRING(x) STRING2(x)
+#define STRING(x)  STRING2(x)
 //#pragma message ( __FILE__ "(" STRING(__LINE__) ") : message" )
-#define FILE_LINE __FILE__ "(" STRING(__LINE__) ") : "
-#define PRAGMA_MESSAGE(x) message( FILE_LINE #x )
-#define PRAGMA_TODO(x) message( FILE_LINE "TODO: " #x )
-#define PRAGMA_FIXME(x) message( FILE_LINE "FIXME: " #x )
+#define FILE_LINE         __FILE__ "(" STRING(__LINE__) ") : "
+#define PRAGMA_MESSAGE(x) message(FILE_LINE #x)
+#define PRAGMA_TODO(x)    message(FILE_LINE "TODO: " #x)
+#define PRAGMA_FIXME(x)   message(FILE_LINE "FIXME: " #x)
 
 
 // MSVC Note: you must pass "/Zc:__cplusplus" in VS2017 so the macro gets set
@@ -140,15 +140,15 @@
 
 
 #define DECLARE_NO_ASSIGN_IMPLEMENTED(cls) \
-	private: \
-		cls& operator=(cls const&) = delete; \
-		cls& operator=(cls&&) = delete;
+private: \
+	cls& operator=(cls const&) = delete; \
+	cls& operator=(cls&&) = delete;
 #define DECLARE_NO_COPY_IMPLEMENTED(cls) \
-	private: \
-		cls(cls const&) = delete; \
-		cls(cls&&) = delete; \
-		cls& operator=(cls const&) = delete; \
-		cls& operator=(cls&&) = delete;
+private: \
+	cls(cls const&) = delete; \
+	cls(cls&&) = delete; \
+	cls& operator=(cls const&) = delete; \
+	cls& operator=(cls&&) = delete;
 
 
 // Compiler configuration (moved to SetupARBPost.h)

@@ -71,18 +71,25 @@
 class CAgilityBookCalendarListViewData : public CListData
 {
 public:
-	CAgilityBookCalendarListViewData(
-			CAgilityBookCalendarListView* pView,
-			ARBCalendarPtr const& inCal)
+	CAgilityBookCalendarListViewData(CAgilityBookCalendarListView* pView, ARBCalendarPtr const& inCal)
 		: m_pView(pView)
 		, m_pCal(inCal)
 	{
 	}
 
-	bool CanEdit() const			{return true;}
-	bool CanDelete() const			{return true;}
+	bool CanEdit() const
+	{
+		return true;
+	}
+	bool CanDelete() const
+	{
+		return true;
+	}
 
-	ARBCalendarPtr GetCalendar()	{return m_pCal;}
+	ARBCalendarPtr GetCalendar()
+	{
+		return m_pCal;
+	}
 	std::wstring OnNeedText(long iCol) const override;
 	void OnNeedListItem(long iCol, wxListItem& info) const override;
 
@@ -178,17 +185,20 @@ void CAgilityBookCalendarListViewData::OnNeedListItem(long iCol, wxListItem& inf
 		{
 			if (ARBCalendarEntry::Not == m_pCal->GetEntered())
 				idxImage = m_pView->m_Ctrl->ImageEmpty();
-			else switch (m_pCal->GetAccommodation())
+			else
 			{
-			case ARBAccommodations::None:
-				idxImage = m_pView->m_imgAccomNone;
-				break;
-			case ARBAccommodations::Todo:
-				idxImage = m_pView->m_imgAccomTodo;
-				break;
-			case ARBAccommodations::Confirmed:
-				idxImage = m_pView->m_imgAccomConfirm;
-				break;
+				switch (m_pCal->GetAccommodation())
+				{
+				case ARBAccommodations::None:
+					idxImage = m_pView->m_imgAccomNone;
+					break;
+				case ARBAccommodations::Todo:
+					idxImage = m_pView->m_imgAccomTodo;
+					break;
+				case ARBAccommodations::Confirmed:
+					idxImage = m_pView->m_imgAccomConfirm;
+					break;
+				}
 			}
 		}
 		if (0 <= idxImage)
@@ -214,9 +224,8 @@ bool CAgilityBookCalendarListViewData::HighlightOpeningNear(long iCol) const
 {
 	bool bHighlight = false;
 	int nearDays = CAgilityBookOptions::CalendarOpeningNear();
-	if (0 <= iCol && 0 <= nearDays
-	&& ARBCalendarEntry::Planning == m_pCal->GetEntered()
-	&& m_pCal->GetOpeningDate().IsValid())
+	if (0 <= iCol && 0 <= nearDays && ARBCalendarEntry::Planning == m_pCal->GetEntered()
+		&& m_pCal->GetOpeningDate().IsValid())
 	{
 		ARBDate today = ARBDate::Today();
 		// If 'interval' is less than 0, then the date has passed.
@@ -224,9 +233,7 @@ bool CAgilityBookCalendarListViewData::HighlightOpeningNear(long iCol) const
 		if (interval <= nearDays)
 		{
 			bHighlight = true;
-			if (0 > interval
-			&& m_pCal->GetClosingDate().IsValid()
-			&& m_pCal->GetClosingDate() < today)
+			if (0 > interval && m_pCal->GetClosingDate().IsValid() && m_pCal->GetClosingDate() < today)
 				bHighlight = false;
 		}
 	}
@@ -238,9 +245,8 @@ bool CAgilityBookCalendarListViewData::HighlightClosingNear(long iCol) const
 {
 	bool bHighlight = false;
 	int nearDays = CAgilityBookOptions::CalendarClosingNear();
-	if (0 <= iCol && 0 <= nearDays
-	&& ARBCalendarEntry::Planning == m_pCal->GetEntered()
-	&& m_pCal->GetClosingDate().IsValid())
+	if (0 <= iCol && 0 <= nearDays && ARBCalendarEntry::Planning == m_pCal->GetEntered()
+		&& m_pCal->GetClosingDate().IsValid())
 	{
 		// If 'interval' is less than 0, then the date has passed.
 		long interval = m_pCal->GetClosingDate() - ARBDate::Today();
@@ -291,7 +297,7 @@ void CAgilityBookCalendarListView::CSortColumn::SetColumn(long iCol)
 		neg = -1;
 		col = iCol * -1;
 	}
-	long realCol = m_Columns[col-1] * neg;
+	long realCol = m_Columns[col - 1] * neg;
 	wxConfig::Get()->Write(CFG_SORTING_CALENDAR, realCol);
 }
 
@@ -303,7 +309,7 @@ long CAgilityBookCalendarListView::CSortColumn::LookupColumn(long iCol) const
 	{
 		if (m_Columns[i] == iCol)
 		{
-			return static_cast<long>(i+1);
+			return static_cast<long>(i + 1);
 		}
 	}
 	return -1;
@@ -315,7 +321,8 @@ struct CalListSortInfo : public SortInfo
 	CAgilityBookCalendarListView* pThis;
 
 	CalListSortInfo(CAgilityBookCalendarListView* This, int nCol)
-		: SortInfo(nCol), pThis(This)
+		: SortInfo(nCol)
+		, pThis(This)
 	{
 	}
 };
@@ -327,11 +334,13 @@ int wxCALLBACK CompareCalendar(CListDataPtr const& item1, CListDataPtr const& it
 
 	if (0 == pInfo->nCol)
 		return 0;
-	CAgilityBookCalendarListViewDataPtr pItem1 = std::dynamic_pointer_cast<CAgilityBookCalendarListViewData, CListData>(item1);
-	CAgilityBookCalendarListViewDataPtr pItem2 = std::dynamic_pointer_cast<CAgilityBookCalendarListViewData, CListData>(item2);
+	CAgilityBookCalendarListViewDataPtr pItem1
+		= std::dynamic_pointer_cast<CAgilityBookCalendarListViewData, CListData>(item1);
+	CAgilityBookCalendarListViewDataPtr pItem2
+		= std::dynamic_pointer_cast<CAgilityBookCalendarListViewData, CListData>(item2);
 	int nRet = 0;
 	int iCol = std::abs(pInfo->nCol);
-	switch (pInfo->pThis->m_Columns[iCol-1])
+	switch (pInfo->pThis->m_Columns[iCol - 1])
 	{
 	case IO_CAL_START_DATE:
 		if (pItem1->GetCalendar()->GetStartDate() < pItem2->GetCalendar()->GetStartDate())
@@ -355,39 +364,39 @@ int wxCALLBACK CompareCalendar(CListDataPtr const& item1, CListDataPtr const& it
 		nRet = StringUtil::CompareNoCase(pItem1->GetCalendar()->GetVenue(), pItem2->GetCalendar()->GetVenue());
 		break;
 	case IO_CAL_OPENS:
+	{
+		bool bOk1 = pItem1->GetCalendar()->GetOpeningDate().IsValid();
+		bool bOk2 = pItem2->GetCalendar()->GetOpeningDate().IsValid();
+		if (bOk1 && bOk2)
 		{
-			bool bOk1 = pItem1->GetCalendar()->GetOpeningDate().IsValid();
-			bool bOk2 = pItem2->GetCalendar()->GetOpeningDate().IsValid();
-			if (bOk1 && bOk2)
-			{
-				if (pItem1->GetCalendar()->GetOpeningDate() < pItem2->GetCalendar()->GetOpeningDate())
-					nRet = -1;
-				else if (pItem1->GetCalendar()->GetOpeningDate() > pItem2->GetCalendar()->GetOpeningDate())
-					nRet = 1;
-			}
-			else if (bOk1)
-				nRet = 1;
-			else if (bOk2)
+			if (pItem1->GetCalendar()->GetOpeningDate() < pItem2->GetCalendar()->GetOpeningDate())
 				nRet = -1;
+			else if (pItem1->GetCalendar()->GetOpeningDate() > pItem2->GetCalendar()->GetOpeningDate())
+				nRet = 1;
 		}
-		break;
+		else if (bOk1)
+			nRet = 1;
+		else if (bOk2)
+			nRet = -1;
+	}
+	break;
 	case IO_CAL_CLOSES:
+	{
+		bool bOk1 = pItem1->GetCalendar()->GetClosingDate().IsValid();
+		bool bOk2 = pItem2->GetCalendar()->GetClosingDate().IsValid();
+		if (bOk1 && bOk2)
 		{
-			bool bOk1 = pItem1->GetCalendar()->GetClosingDate().IsValid();
-			bool bOk2 = pItem2->GetCalendar()->GetClosingDate().IsValid();
-			if (bOk1 && bOk2)
-			{
-				if (pItem1->GetCalendar()->GetClosingDate() < pItem2->GetCalendar()->GetClosingDate())
-					nRet = -1;
-				else if (pItem1->GetCalendar()->GetClosingDate() > pItem2->GetCalendar()->GetClosingDate())
-					nRet = 1;
-			}
-			else if (bOk1)
-				nRet = 1;
-			else if (bOk2)
+			if (pItem1->GetCalendar()->GetClosingDate() < pItem2->GetCalendar()->GetClosingDate())
 				nRet = -1;
+			else if (pItem1->GetCalendar()->GetClosingDate() > pItem2->GetCalendar()->GetClosingDate())
+				nRet = 1;
 		}
-		break;
+		else if (bOk1)
+			nRet = 1;
+		else if (bOk2)
+			nRet = -1;
+	}
+	break;
 	case IO_CAL_NOTES:
 		nRet = StringUtil::CompareNoCase(pItem1->GetCalendar()->GetNote(), pItem2->GetCalendar()->GetNote());
 		break;
@@ -501,9 +510,7 @@ wxEND_EVENT_TABLE()
 
 
 #include "Platform/arbWarningPush.h"
-CAgilityBookCalendarListView::CAgilityBookCalendarListView(
-		CTabView* pTabView,
-		wxDocument* doc)
+CAgilityBookCalendarListView::CAgilityBookCalendarListView(CTabView* pTabView, wxDocument* doc)
 	: CAgilityBookBaseExtraView(pTabView, doc)
 	, m_Ctrl(nullptr)
 	, m_imgTentative(-1)
@@ -531,14 +538,14 @@ CAgilityBookCalendarListView::~CAgilityBookCalendarListView()
 
 
 bool CAgilityBookCalendarListView::Create(
-		CBasePanel* parentView,
-		wxWindow* parentCtrl,
-		wxDocument* doc,
-		long flags,
-		wxSizer* sizer,
-		int proportion,
-		int sizerFlags,
-		int border)
+	CBasePanel* parentView,
+	wxWindow* parentCtrl,
+	wxDocument* doc,
+	long flags,
+	wxSizer* sizer,
+	int proportion,
+	int sizerFlags,
+	int border)
 {
 	m_Ctrl = new CReportListCtrl(parentCtrl, false);
 	m_Ctrl->Bind(wxEVT_SET_FOCUS, &CAgilityBookCalendarListView::OnCtrlSetFocus, this);
@@ -629,19 +636,14 @@ bool CAgilityBookCalendarListView::AllowStatusContext(int field) const
 }
 
 
-bool CAgilityBookCalendarListView::OnCreate(
-		wxDocument* doc,
-		long flags)
+bool CAgilityBookCalendarListView::OnCreate(wxDocument* doc, long flags)
 {
 	SetupColumns();
 	return true;
 }
 
 
-void CAgilityBookCalendarListView::DoActivateView(
-		bool activate,
-		wxView* activeView,
-		wxView* deactiveView)
+void CAgilityBookCalendarListView::DoActivateView(bool activate, wxView* activeView, wxView* deactiveView)
 {
 	if (m_Ctrl && activate && wxWindow::DoFindFocus() != m_Ctrl)
 		m_Ctrl->SetFocus();
@@ -653,17 +655,14 @@ void CAgilityBookCalendarListView::OnDraw(wxDC* dc)
 }
 
 
-void CAgilityBookCalendarListView::OnUpdate(
-		wxView* sender,
-		wxObject* inHint)
+void CAgilityBookCalendarListView::OnUpdate(wxView* sender, wxObject* inHint)
 {
 	STACK_TRACE(stack, L"CAgilityBookCalendarListView::OnUpdate");
 
 	CUpdateHint* hint = nullptr;
 	if (inHint)
 		hint = wxDynamicCast(inHint, CUpdateHint);
-	if (!hint || hint->IsSet(UPDATE_CALENDAR_VIEW)
-	|| hint->IsEqual(UPDATE_OPTIONS))
+	if (!hint || hint->IsSet(UPDATE_CALENDAR_VIEW) || hint->IsEqual(UPDATE_OPTIONS))
 	{
 		LoadData();
 	}
@@ -675,9 +674,7 @@ void CAgilityBookCalendarListView::OnUpdate(
 }
 
 
-void CAgilityBookCalendarListView::GetPrintLine(
-		long item,
-		std::vector<std::wstring>& line) const
+void CAgilityBookCalendarListView::GetPrintLine(long item, std::vector<std::wstring>& line) const
 {
 	if (m_Ctrl)
 		m_Ctrl->GetPrintLine(item, line);
@@ -748,34 +745,33 @@ void CAgilityBookCalendarListView::LoadData()
 		GetDocument()->Book().GetCalendar().GetAllEntered(entered);
 	CCalendarViewFilter filter = CFilterOptions::Options().FilterCalendarView();
 	for (ARBCalendarList::iterator iter = GetDocument()->Book().GetCalendar().begin();
-	iter != GetDocument()->Book().GetCalendar().end();
-	++iter)
+		 iter != GetDocument()->Book().GetCalendar().end();
+		 ++iter)
 	{
 		ARBCalendarPtr pCal = (*iter);
 		if (pCal->IsFiltered())
 			continue;
 		// Additional filtering
 		if (!((ARBCalendarEntry::Not == pCal->GetEntered() && filter.ViewNotEntered())
-		|| (ARBCalendarEntry::Planning == pCal->GetEntered() && filter.ViewPlanning())
-		|| ((ARBCalendarEntry::Pending == pCal->GetEntered() || ARBCalendarEntry::Entered == pCal->GetEntered())
-		&& filter.ViewEntered())))
+			  || (ARBCalendarEntry::Planning == pCal->GetEntered() && filter.ViewPlanning())
+			  || ((ARBCalendarEntry::Pending == pCal->GetEntered() || ARBCalendarEntry::Entered == pCal->GetEntered())
+				  && filter.ViewEntered())))
 			continue;
 		if (!bViewAll)
 		{
 			if (pCal->IsBefore(today))
 				continue;
 		}
-		if (bHide && !(ARBCalendarEntry::Pending == pCal->GetEntered()
-		|| ARBCalendarEntry::Entered == pCal->GetEntered()))
+		if (bHide
+			&& !(ARBCalendarEntry::Pending == pCal->GetEntered() || ARBCalendarEntry::Entered == pCal->GetEntered()))
 		{
 			bool bSuppress = false;
 			for (std::vector<ARBCalendarPtr>::const_iterator iterE = entered.begin();
-			!bSuppress && iterE != entered.end();
-			++iterE)
+				 !bSuppress && iterE != entered.end();
+				 ++iterE)
 			{
 				ARBCalendarPtr pEntered = (*iterE);
-				if (pCal != pEntered
-				&& pCal->IsRangeOverlapped(pEntered->GetStartDate(), pEntered->GetEndDate()))
+				if (pCal != pEntered && pCal->IsRangeOverlapped(pEntered->GetStartDate(), pEntered->GetEndDate()))
 				{
 					bSuppress = true;
 				}
@@ -793,11 +789,9 @@ void CAgilityBookCalendarListView::LoadData()
 		if (pCurCal)
 		{
 			if (*pCurCal == *pCal
-			|| (pCurCal->GetStartDate() == pCal->GetStartDate()
-			&& pCurCal->GetEndDate() == pCal->GetEndDate()
-			&& pCurCal->GetLocation() == pCal->GetLocation()
-			&& pCurCal->GetClub() == pCal->GetClub()
-			&& pCurCal->GetVenue() == pCal->GetVenue()))
+				|| (pCurCal->GetStartDate() == pCal->GetStartDate() && pCurCal->GetEndDate() == pCal->GetEndDate()
+					&& pCurCal->GetLocation() == pCal->GetLocation() && pCurCal->GetClub() == pCal->GetClub()
+					&& pCurCal->GetVenue() == pCal->GetVenue()))
 			{
 				m_Ctrl->Select(index, true);
 			}
@@ -934,24 +928,24 @@ void CAgilityBookCalendarListView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		break;
 	case wxID_DELETE:
 	case ID_AGILITY_DELETE_CALENDAR:
+	{
+		bool bEnable = false;
+		std::vector<long> indices;
+		if (0 < m_Ctrl->GetSelection(indices))
 		{
-			bool bEnable = false;
-			std::vector<long> indices;
-			if (0 < m_Ctrl->GetSelection(indices))
+			for (std::vector<long>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
 			{
-				for (std::vector<long>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+				CAgilityBookCalendarListViewDataPtr pData = GetItemCalData(*iter);
+				if (pData && pData->CanDelete())
 				{
-					CAgilityBookCalendarListViewDataPtr pData = GetItemCalData(*iter);
-					if (pData && pData->CanDelete())
-					{
-						bEnable = true;
-						break;
-					}
+					bEnable = true;
+					break;
 				}
 			}
-			evt.Enable(bEnable);
 		}
-		break;
+		evt.Enable(bEnable);
+	}
+	break;
 	case ID_AGILITY_EXPORT_CALENDAR:
 		evt.Enable(0 < m_Ctrl->GetSelectedItemCount());
 		break;
@@ -977,46 +971,47 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 		break;
 
 	case wxID_DUPLICATE:
+	{
+		std::vector<long> indices;
+		if (0 < m_Ctrl->GetSelection(indices))
 		{
-			std::vector<long> indices;
-			if (0 < m_Ctrl->GetSelection(indices))
+			std::vector<CAgilityBookCalendarListViewDataPtr> items;
+			for (std::vector<long>::iterator iterData = indices.begin(); iterData != indices.end(); ++iterData)
 			{
-				std::vector<CAgilityBookCalendarListViewDataPtr> items;
-				for (std::vector<long>::iterator iterData = indices.begin(); iterData != indices.end(); ++iterData)
-				{
-					CAgilityBookCalendarListViewDataPtr pData = GetItemCalData(*iterData);
-					if (pData)
-						items.push_back(pData);
-				}
-				int nNewIsNotVisible = 0;
-				for (std::vector<CAgilityBookCalendarListViewDataPtr>::iterator iter = items.begin(); iter != items.end(); ++iter)
-				{
-					// We need to warn the user if the duplicated entry is not visible.
-					// This will happen if the source is marked as entered and they have
-					// selected the option to hide dates.
-					ARBCalendarPtr cal = (*iter)->GetCalendar()->Clone();
-					if (((*iter)->GetCalendar()->GetEntered() == ARBCalendarEntry::Pending
-					|| (*iter)->GetCalendar()->GetEntered() == ARBCalendarEntry::Entered)
+				CAgilityBookCalendarListViewDataPtr pData = GetItemCalData(*iterData);
+				if (pData)
+					items.push_back(pData);
+			}
+			int nNewIsNotVisible = 0;
+			for (std::vector<CAgilityBookCalendarListViewDataPtr>::iterator iter = items.begin(); iter != items.end();
+				 ++iter)
+			{
+				// We need to warn the user if the duplicated entry is not visible.
+				// This will happen if the source is marked as entered and they have
+				// selected the option to hide dates.
+				ARBCalendarPtr cal = (*iter)->GetCalendar()->Clone();
+				if (((*iter)->GetCalendar()->GetEntered() == ARBCalendarEntry::Pending
+					 || (*iter)->GetCalendar()->GetEntered() == ARBCalendarEntry::Entered)
 					&& CAgilityBookOptions::HideOverlappingCalendarEntries())
-					{
-						++nNewIsNotVisible;
-					}
-					cal->SetEntered(ARBCalendarEntry::Not);
-					GetDocument()->Book().GetCalendar().AddCalendar(cal);
-				}
-				GetDocument()->Book().GetCalendar().sort();
-				LoadData();
-				GetDocument()->Modify(true);
-				CUpdateHint hint(UPDATE_CALENDAR_VIEW);
-				GetDocument()->UpdateAllViews(this, &hint);
-				if (0 < nNewIsNotVisible)
 				{
-					std::wstring msg = fmt::format(_("IDS_NOT_VISIBLE").wx_str(), nNewIsNotVisible);
-					wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+					++nNewIsNotVisible;
 				}
+				cal->SetEntered(ARBCalendarEntry::Not);
+				GetDocument()->Book().GetCalendar().AddCalendar(cal);
+			}
+			GetDocument()->Book().GetCalendar().sort();
+			LoadData();
+			GetDocument()->Modify(true);
+			CUpdateHint hint(UPDATE_CALENDAR_VIEW);
+			GetDocument()->UpdateAllViews(this, &hint);
+			if (0 < nNewIsNotVisible)
+			{
+				std::wstring msg = fmt::format(_("IDS_NOT_VISIBLE").wx_str(), nNewIsNotVisible);
+				wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 			}
 		}
-		break;
+	}
+	break;
 
 	case wxID_CUT:
 		OnCmd(wxID_COPY);
@@ -1024,238 +1019,239 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 		break;
 
 	case wxID_COPY:
+	{
+		std::vector<long> indices;
+		if (0 < m_Ctrl->GetSelection(indices))
 		{
-			std::vector<long> indices;
-			if (0 < m_Ctrl->GetSelection(indices))
+			CClipboardDataWriter clpData;
+			if (!clpData.isOkay())
+				return true;
+
+			std::wstring data;
+			std::wstring html;
+			CClipboardDataTable table(data, html);
+
+			// Take care of the header, but only if more than one line is selected.
+			if (1 < indices.size() || indices.size() == static_cast<size_t>(m_Ctrl->GetItemCount()))
 			{
-				CClipboardDataWriter clpData;
-				if (!clpData.isOkay())
-					return true;
-
-				std::wstring data;
-				std::wstring html;
-				CClipboardDataTable table(data, html);
-
-				// Take care of the header, but only if more than one line is selected.
-				if (1 < indices.size()
-				|| indices.size() == static_cast<size_t>(m_Ctrl->GetItemCount()))
+				std::vector<std::wstring> line;
+				GetPrintLine(-1, line);
+				table.StartLine();
+				for (int i = 0; i < static_cast<int>(line.size()); ++i)
 				{
-					std::vector<std::wstring> line;
-					GetPrintLine(-1, line);
-					table.StartLine();
-					for (int i = 0; i < static_cast<int>(line.size()); ++i)
-					{
-						table.Cell(i, line[i]);
-					}
-					table.EndLine();
+					table.Cell(i, line[i]);
 				}
-
-				std::stringstream iCal;
-				ElementNodePtr tree(ElementNode::New(CLIPDATA));
-
-				// Now all the data.
-				int nWarning = CAgilityBookOptions::CalendarOpeningNear();
-				ICalendarPtr iCalendar = ICalendar::iCalendarBegin(iCal, 2);
-				for (std::vector<long>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
-				{
-					CAgilityBookCalendarListViewDataPtr pData = GetItemCalData(*iter);
-					if (pData)
-					{
-						pData->GetCalendar()->Save(tree);
-						pData->GetCalendar()->iCalendar(iCalendar, nWarning);
-					}
-					std::vector<std::wstring> line;
-					GetPrintLine((*iter), line);
-					table.StartLine();
-					for (int i = 0; i < static_cast<int>(line.size()); ++i)
-					{
-						table.Cell(i, line[i]);
-					}
-					table.EndLine();
-				}
-				iCalendar.reset();
-
-				clpData.AddData(ARBClipFormat::Calendar, tree);
-				clpData.AddData(table);
-				clpData.AddData(ARBClipFormat::iCalendar, StringUtil::stringW(iCal.str()));
-				clpData.CommitData();
+				table.EndLine();
 			}
+
+			std::stringstream iCal;
+			ElementNodePtr tree(ElementNode::New(CLIPDATA));
+
+			// Now all the data.
+			int nWarning = CAgilityBookOptions::CalendarOpeningNear();
+			ICalendarPtr iCalendar = ICalendar::iCalendarBegin(iCal, 2);
+			for (std::vector<long>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+			{
+				CAgilityBookCalendarListViewDataPtr pData = GetItemCalData(*iter);
+				if (pData)
+				{
+					pData->GetCalendar()->Save(tree);
+					pData->GetCalendar()->iCalendar(iCalendar, nWarning);
+				}
+				std::vector<std::wstring> line;
+				GetPrintLine((*iter), line);
+				table.StartLine();
+				for (int i = 0; i < static_cast<int>(line.size()); ++i)
+				{
+					table.Cell(i, line[i]);
+				}
+				table.EndLine();
+			}
+			iCalendar.reset();
+
+			clpData.AddData(ARBClipFormat::Calendar, tree);
+			clpData.AddData(table);
+			clpData.AddData(ARBClipFormat::iCalendar, StringUtil::stringW(iCal.str()));
+			clpData.CommitData();
 		}
-		break;
+	}
+	break;
 
 	case wxID_PASTE:
+	{
+		bool bLoaded = false;
+		ElementNodePtr tree(ElementNode::New());
+		CClipboardDataReader clpData;
+		if (clpData.GetData(ARBClipFormat::Calendar, tree))
 		{
-			bool bLoaded = false;
-			ElementNodePtr tree(ElementNode::New());
-			CClipboardDataReader clpData;
-			if (clpData.GetData(ARBClipFormat::Calendar, tree))
+			if (CLIPDATA == tree->GetName())
 			{
-				if (CLIPDATA == tree->GetName())
+				for (int i = 0; i < tree->GetElementCount(); ++i)
 				{
-					for (int i = 0; i < tree->GetElementCount(); ++i)
+					ElementNodePtr element = tree->GetElementNode(i);
+					if (!element)
+						continue;
+					if (element->GetName() == TREE_CALENDAR)
 					{
-						ElementNodePtr element = tree->GetElementNode(i);
-						if (!element)
-							continue;
-						if (element->GetName() == TREE_CALENDAR)
+						ARBCalendarPtr pCal(ARBCalendar::New());
+						CErrorCallback err;
+						if (pCal->Load(element, ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 						{
-							ARBCalendarPtr pCal(ARBCalendar::New());
-							CErrorCallback err;
-							if (pCal->Load(element, ARBAgilityRecordBook::GetCurrentDocVersion(), err))
-							{
-								bLoaded = true;
-								GetDocument()->Book().GetCalendar().AddCalendar(pCal);
-							}
+							bLoaded = true;
+							GetDocument()->Book().GetCalendar().AddCalendar(pCal);
 						}
 					}
 				}
 			}
-			clpData.Close();
-			if (bLoaded)
-			{
-				GetDocument()->Book().GetCalendar().sort();
-				LoadData();
-				GetDocument()->Modify(true);
-				CUpdateHint hint(UPDATE_CALENDAR_VIEW);
-				GetDocument()->UpdateAllViews(this, &hint);
-			}
 		}
-		break;
+		clpData.Close();
+		if (bLoaded)
+		{
+			GetDocument()->Book().GetCalendar().sort();
+			LoadData();
+			GetDocument()->Modify(true);
+			CUpdateHint hint(UPDATE_CALENDAR_VIEW);
+			GetDocument()->UpdateAllViews(this, &hint);
+		}
+	}
+	break;
 
 	case wxID_SELECTALL:
 		m_Ctrl->SelectAll();
 		break;
 
 	case wxID_FIND:
-		{
-			CDlgFind dlg(m_Callback, m_Ctrl);
-			dlg.ShowModal();
-		}
-		break;
+	{
+		CDlgFind dlg(m_Callback, m_Ctrl);
+		dlg.ShowModal();
+	}
+	break;
 
 	case ID_EDIT_FIND_NEXT:
-		{
-			m_Callback.SearchDown(true);
-			if (m_Callback.Text().empty())
-				OnCmd(wxID_FIND);
-			else
-				m_Callback.Search(nullptr);
-		}
-		break;
+	{
+		m_Callback.SearchDown(true);
+		if (m_Callback.Text().empty())
+			OnCmd(wxID_FIND);
+		else
+			m_Callback.Search(nullptr);
+	}
+	break;
 
 	case ID_EDIT_FIND_PREVIOUS:
-		{
-			m_Callback.SearchDown(false);
-			if (m_Callback.Text().empty())
-				OnCmd(wxID_FIND);
-			else
-				m_Callback.Search(nullptr);
-		}
-		break;
+	{
+		m_Callback.SearchDown(false);
+		if (m_Callback.Text().empty())
+			OnCmd(wxID_FIND);
+		else
+			m_Callback.Search(nullptr);
+	}
+	break;
 
 	case ID_AGILITY_EDIT_CALENDAR:
+	{
+		CAgilityBookCalendarListViewDataPtr pData = GetItemCalData(m_Ctrl->GetFirstSelected());
+		if (pData && pData->CanEdit())
 		{
-			CAgilityBookCalendarListViewDataPtr pData = GetItemCalData(m_Ctrl->GetFirstSelected());
-			if (pData && pData->CanEdit())
+			ARBDate oldDate = pData->GetCalendar()->GetStartDate();
+			CDlgCalendar dlg(pData->GetCalendar(), GetDocument());
+			if (wxID_OK == dlg.ShowModal())
 			{
-				ARBDate oldDate = pData->GetCalendar()->GetStartDate();
-				CDlgCalendar dlg(pData->GetCalendar(), GetDocument());
-				if (wxID_OK == dlg.ShowModal())
+				if (CAgilityBookOptions::AutoDeleteCalendarEntries()
+					&& pData->GetCalendar()->GetEndDate() < ARBDate::Today())
 				{
-					if (CAgilityBookOptions::AutoDeleteCalendarEntries() && pData->GetCalendar()->GetEndDate() < ARBDate::Today())
-					{
-						ARBDate today(ARBDate::Today());
-						today -= CAgilityBookOptions::DaysTillEntryIsPast();
-						GetDocument()->Book().GetCalendar().TrimEntries(today);
-					}
-					GetDocument()->Book().GetCalendar().sort();
-					if (oldDate != pData->GetCalendar()->GetStartDate())
-					{
-						GetDocument()->SetCalenderDate(pData->GetCalendar()->GetStartDate());
-					}
-					LoadData();
-					GetDocument()->Modify(true);
-					CUpdateHint hint(UPDATE_CALENDAR_VIEW);
-					GetDocument()->UpdateAllViews(this, &hint);
+					ARBDate today(ARBDate::Today());
+					today -= CAgilityBookOptions::DaysTillEntryIsPast();
+					GetDocument()->Book().GetCalendar().TrimEntries(today);
 				}
+				GetDocument()->Book().GetCalendar().sort();
+				if (oldDate != pData->GetCalendar()->GetStartDate())
+				{
+					GetDocument()->SetCalenderDate(pData->GetCalendar()->GetStartDate());
+				}
+				LoadData();
+				GetDocument()->Modify(true);
+				CUpdateHint hint(UPDATE_CALENDAR_VIEW);
+				GetDocument()->UpdateAllViews(this, &hint);
 			}
 		}
-		break;
+	}
+	break;
 
 	case wxID_DELETE:
 	case ID_AGILITY_DELETE_CALENDAR:
+	{
+		std::vector<long> indices;
+		if (0 < m_Ctrl->GetSelection(indices))
 		{
-			std::vector<long> indices;
-			if (0 < m_Ctrl->GetSelection(indices))
+			std::vector<CAgilityBookCalendarListViewDataPtr> items;
+			for (std::vector<long>::iterator iterData = indices.begin(); iterData != indices.end(); ++iterData)
 			{
-				std::vector<CAgilityBookCalendarListViewDataPtr> items;
-				for (std::vector<long>::iterator iterData = indices.begin(); iterData != indices.end(); ++iterData)
-				{
-					CAgilityBookCalendarListViewDataPtr pData = GetItemCalData(*iterData);
-					if (pData && pData->CanDelete())
-						items.push_back(pData);
-				}
-				for (std::vector<CAgilityBookCalendarListViewDataPtr>::iterator iter = items.begin(); iter != items.end(); ++iter)
-				{
-					GetDocument()->Book().GetCalendar().DeleteCalendar((*iter)->GetCalendar());
-				}
-				if (0 < items.size())
-				{
-					LoadData();
-					long index = indices[0];
-					if (index >= m_Ctrl->GetItemCount())
-						index = m_Ctrl->GetItemCount() - 1;
-					m_Ctrl->SetSelection(index);
-					GetDocument()->Modify(true);
-					CUpdateHint hint(UPDATE_CALENDAR_VIEW);
-					GetDocument()->UpdateAllViews(this, &hint);
-				}
+				CAgilityBookCalendarListViewDataPtr pData = GetItemCalData(*iterData);
+				if (pData && pData->CanDelete())
+					items.push_back(pData);
+			}
+			for (std::vector<CAgilityBookCalendarListViewDataPtr>::iterator iter = items.begin(); iter != items.end();
+				 ++iter)
+			{
+				GetDocument()->Book().GetCalendar().DeleteCalendar((*iter)->GetCalendar());
+			}
+			if (0 < items.size())
+			{
+				LoadData();
+				long index = indices[0];
+				if (index >= m_Ctrl->GetItemCount())
+					index = m_Ctrl->GetItemCount() - 1;
+				m_Ctrl->SetSelection(index);
+				GetDocument()->Modify(true);
+				CUpdateHint hint(UPDATE_CALENDAR_VIEW);
+				GetDocument()->UpdateAllViews(this, &hint);
 			}
 		}
-		break;
+	}
+	break;
 
 	case ID_AGILITY_EXPORT_CALENDAR:
+	{
+		std::vector<long> indices;
+		if (0 < m_Ctrl->GetSelection(indices))
 		{
-			std::vector<long> indices;
-			if (0 < m_Ctrl->GetSelection(indices))
+			std::vector<ARBCalendarPtr> items;
+			for (std::vector<long>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
 			{
-				std::vector<ARBCalendarPtr> items;
-				for (std::vector<long>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+				CAgilityBookCalendarListViewDataPtr pData = GetItemCalData(*iter);
+				if (pData)
 				{
-					CAgilityBookCalendarListViewDataPtr pData = GetItemCalData(*iter);
-					if (pData)
-					{
-						ARBCalendarPtr pCal = pData->GetCalendar();
-						items.push_back(pCal);
-					}
+					ARBCalendarPtr pCal = pData->GetCalendar();
+					items.push_back(pCal);
 				}
-				std::vector<ARBCalendarPtr>* exportItems = nullptr;
-				if (0 < items.size())
-					exportItems = &items;
-				new CWizard(GetDocument(), exportItems);
 			}
+			std::vector<ARBCalendarPtr>* exportItems = nullptr;
+			if (0 < items.size())
+				exportItems = &items;
+			new CWizard(GetDocument(), exportItems);
 		}
-		break;
+	}
+	break;
 
 	case ID_AGILITY_CREATEENTRY_CALENDAR:
+	{
+		if (0 == GetDocument()->Book().GetDogs().size())
+			return true;
+		CAgilityBookCalendarListViewDataPtr pData = GetItemCalData(m_Ctrl->GetFirstSelected());
+		if (pData)
 		{
-			if (0 == GetDocument()->Book().GetDogs().size())
-				return true;
-			CAgilityBookCalendarListViewDataPtr pData = GetItemCalData(m_Ctrl->GetFirstSelected());
-			if (pData)
-			{
-				ARBCalendarPtr pCal = pData->GetCalendar();
-				GetDocument()->CreateTrialFromCalendar(*pCal, m_pTabView);
-			}
+			ARBCalendarPtr pCal = pData->GetCalendar();
+			GetDocument()->CreateTrialFromCalendar(*pCal, m_pTabView);
 		}
-		break;
+	}
+	break;
 
 	case ID_VIEW_CUSTOMIZE:
-		{
-			CDlgAssignColumns dlg(CAgilityBookOptions::eView, m_Ctrl, GetDocument(), IO_TYPE_VIEW_CALENDAR_LIST);
-			dlg.ShowModal();
-		}
-		break;
+	{
+		CDlgAssignColumns dlg(CAgilityBookOptions::eView, m_Ctrl, GetDocument(), IO_TYPE_VIEW_CALENDAR_LIST);
+		dlg.ShowModal();
+	}
+	break;
 	}
 	return bHandled;
 }

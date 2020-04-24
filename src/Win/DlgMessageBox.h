@@ -27,7 +27,7 @@ public:
 
 
 extern int AfxMessageBox2(
-		wxString const& inText,
-		long inFlags = wxOK, //wxOK, wxCANCEL, wxYES, wxNO, wxHELP, wxNO_DEFAULT
-		IMessageBoxCallback* inCallback = nullptr,
-		wxWindow* inParent = nullptr);
+	wxString const& inText,
+	long inFlags = wxOK, //wxOK, wxCANCEL, wxYES, wxNO, wxHELP, wxNO_DEFAULT
+	IMessageBoxCallback* inCallback = nullptr,
+	wxWindow* inParent = nullptr);

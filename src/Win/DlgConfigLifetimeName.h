@@ -22,16 +22,14 @@ class CDlgConfigLifetimeName : public wxDialog
 {
 public:
 	// New
-	CDlgConfigLifetimeName(
-			ARBConfigVenuePtr const& inVenue,
-			wxWindow* pParent = nullptr);
+	CDlgConfigLifetimeName(ARBConfigVenuePtr const& inVenue, wxWindow* pParent = nullptr);
 	// Existing
-	CDlgConfigLifetimeName(
-		ARBConfigVenuePtr const& inVenue,
-		std::wstring const& inName,
-		wxWindow* pParent = nullptr);
+	CDlgConfigLifetimeName(ARBConfigVenuePtr const& inVenue, std::wstring const& inName, wxWindow* pParent = nullptr);
 
-	std::wstring GetLifetimeName() const	{return m_NewName;}
+	std::wstring GetLifetimeName() const
+	{
+		return m_NewName;
+	}
 
 private:
 	void InitDlg(wxWindow* pParent);
@@ -42,7 +40,6 @@ private:
 	std::wstring m_NewName;
 
 protected:
-
 	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);

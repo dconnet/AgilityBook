@@ -41,9 +41,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-std::wstring SanitizeStringForHTML(
-		std::wstring const& inRawData,
-		bool bConvertCR)
+std::wstring SanitizeStringForHTML(std::wstring const& inRawData, bool bConvertCR)
 {
 	std::wstring::size_type pos = inRawData.find_first_of(L"&<>");
 	if (std::wstring::npos == pos && bConvertCR)
@@ -67,7 +65,7 @@ std::wstring SanitizeStringForHTML(
 		case L'\r':
 			if (bConvertCR)
 			{
-				if (nChar + 1 < inRawData.length() && '\n' == inRawData[nChar+1])
+				if (nChar + 1 < inRawData.length() && '\n' == inRawData[nChar + 1])
 					continue;
 				else
 					fmt::format_to(data, L"{}", L"<br/>");
@@ -105,11 +103,11 @@ bool GetOSInfo(int& verMajor, int& verMinor)
 	std::wstring kernel(L"kernel32.dll");
 	DWORD dwHandle;
 	DWORD dwLen = GetFileVersionInfoSize(kernel.c_str(), &dwHandle);
-	if (!dwLen) 
+	if (!dwLen)
 		return false;
 
 	void* lpData = malloc(dwLen);
-	if (!lpData) 
+	if (!lpData)
 		return false;
 
 	if (!GetFileVersionInfo(kernel.c_str(), dwHandle, dwLen, lpData))
@@ -122,7 +120,7 @@ bool GetOSInfo(int& verMajor, int& verMinor)
 	VS_FIXEDFILEINFO* pFileInfo = nullptr;
 	if (VerQueryValue(lpData, L"\\", (void**)&pFileInfo, &BufLen))
 	{
-		verMajor= HIWORD(pFileInfo->dwFileVersionMS);
+		verMajor = HIWORD(pFileInfo->dwFileVersionMS);
 		verMinor = LOWORD(pFileInfo->dwFileVersionMS);
 		//*BuildNumber = HIWORD(pFileInfo->dwFileVersionLS);
 		//*RevisionNumber = LOWORD(pFileInfo->dwFileVersionLS);
@@ -153,18 +151,19 @@ bool CheckOS(DWORD dwMajor, DWORD dwMinor, int op)
 	osvi.wServicePackMajor = 0;
 	osvi.wServicePackMinor = 0;
 
-#pragma warning (push)
+#pragma warning(push)
 // warning C4244: 'argument' : conversion from 'int' to 'BYTE', possible loss of data
-#pragma warning (disable : 4244)
+#pragma warning(disable : 4244)
 	VER_SET_CONDITION(dwlConditionMask, VER_MAJORVERSION, op);
 	VER_SET_CONDITION(dwlConditionMask, VER_MINORVERSION, op);
 	VER_SET_CONDITION(dwlConditionMask, VER_SERVICEPACKMAJOR, op);
 	VER_SET_CONDITION(dwlConditionMask, VER_SERVICEPACKMINOR, op);
-#pragma warning (pop)
+#pragma warning(pop)
 
-	return !!VerifyVersionInfo(&osvi, 
-			VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR | VER_SERVICEPACKMINOR,
-			dwlConditionMask);
+	return !!VerifyVersionInfo(
+		&osvi,
+		VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR | VER_SERVICEPACKMINOR,
+		dwlConditionMask);
 }
 
 #endif
@@ -226,8 +225,8 @@ static short RomanToShort(std::wstring number)
 
 std::wstring ShortToRoman(short value)
 {
-	static const wchar_t* romanDigits[9][4] =
-	{
+	static const wchar_t* romanDigits[9][4] = {
+		// clang-format off
 		{L"M",    L"C",    L"X",    L"I"   },
 		{L"MM",   L"CC",   L"XX",   L"II"  },
 		{L"MMM",  L"CCC",  L"XXX",  L"III" },
@@ -237,6 +236,7 @@ std::wstring ShortToRoman(short value)
 		{nullptr, L"DCC",  L"LXX",  L"VII" },
 		{nullptr, L"DCCC", L"LXXX", L"VIII"},
 		{nullptr, L"CM",   L"XC",   L"IX"  }
+		// clang-format on
 	};
 	fmt::wmemory_buffer result;
 	for (int index = 0; index < 4; ++index)

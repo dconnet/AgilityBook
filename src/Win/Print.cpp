@@ -57,10 +57,7 @@ enum class RingBinder
 
 /////////////////////////////////////////////////////////////////////////////
 
-CPrintPreview::CPrintPreview(
-		wxPrintout* printout,
-		wxPrintout* printoutForPrinting,
-		wxPrintDialogData* data)
+CPrintPreview::CPrintPreview(wxPrintout* printout, wxPrintout* printoutForPrinting, wxPrintDialogData* data)
 	: wxPrintPreview(printout, printoutForPrinting, data)
 {
 }
@@ -87,19 +84,21 @@ bool CPrintPreview::Print(bool interactive)
 class CPrintRuns : public wxPrintout
 {
 public:
-	CPrintRuns(
-			ARBConfig const* inConfig,
-			std::vector<RunInfo> const& inRuns);
+	CPrintRuns(ARBConfig const* inConfig, std::vector<RunInfo> const& inRuns);
 
 	// Sets SetUserScale and m_OneInch (returns oneinch)
 	double ComputeScaling();
 
 	bool HasPage(int page) override;
-	void GetPageInfo(int *minPage, int *maxPage, int *pageFrom, int *pageTo) override;
+	void GetPageInfo(int* minPage, int* maxPage, int* pageFrom, int* pageTo) override;
 	bool OnPrintPage(int pageNum) override;
 
 private:
-	std::wstring GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTrial, ARBDogRunPtr const& inRun, int code);
+	std::wstring GetFieldText(
+		ARBDogPtr const& inDog,
+		ARBDogTrialPtr const& inTrial,
+		ARBDogRunPtr const& inRun,
+		int code);
 	void PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect);
 
 	double m_OneInch;
@@ -112,9 +111,7 @@ private:
 };
 
 
-CPrintRuns::CPrintRuns(
-		ARBConfig const* inConfig,
-		std::vector<RunInfo> const& inRuns)
+CPrintRuns::CPrintRuns(ARBConfig const* inConfig, std::vector<RunInfo> const& inRuns)
 	: wxPrintout(_("IDS_RUNS"))
 	, m_OneInch(0.0)
 	, m_config(inConfig)
@@ -159,7 +156,7 @@ bool CPrintRuns::HasPage(int page)
 }
 
 
-void CPrintRuns::GetPageInfo(int *minPage, int *maxPage, int *pageFrom, int *pageTo)
+void CPrintRuns::GetPageInfo(int* minPage, int* maxPage, int* pageFrom, int* pageTo)
 {
 	int nRuns = static_cast<int>(m_runs.size());
 	int nPages = 1;
@@ -204,123 +201,122 @@ void CPrintRuns::GetPageInfo(int *minPage, int *maxPage, int *pageFrom, int *pag
 }
 
 
-#define CODE_DOG		0
-#define CODE_DATE		1
-#define CODE_VENUE		2
-#define CODE_CLUB		3
-#define CODE_DIV		4
-#define CODE_LOCATION	5
-#define CODE_HEIGHT		6
-#define CODE_JUDGE		7
-#define CODE_HANDLER	8
-#define CODE_CONDITIONS	9
-#define CODE_Q			10
-#define CODE_SCT		11
-#define CODE_YARDS		12
-#define CODE_OPEN		13
-#define CODE_TIME		14
-#define CODE_OBSTACLES	15
-#define CODE_FAULTS		16
-#define CODE_SCORE		17
-#define CODE_PLACE		18
-#define CODE_INCLASS	19
-#define CODE_QD			20
-#define CODE_OTHER		21
-#define CODE_COMMENTS	22
-#define CODE_REFPLACE1	23
-#define CODE_REFQ1		24
-#define CODE_REFTIME1	25
-#define CODE_REFSCORE1	26
-#define CODE_REFHT1		27
-#define CODE_REF1		28
-#define CODE_REFPLACE2	29
-#define CODE_REFQ2		30
-#define CODE_REFTIME2	31
-#define CODE_REFSCORE2	32
-#define CODE_REFHT2		33
-#define CODE_REF2		34
-#define CODE_REFPLACE3	35
-#define CODE_REFQ3		36
-#define CODE_REFTIME3	37
-#define CODE_REFSCORE3	38
-#define CODE_REFHT3		39
-#define CODE_REF3		40
-#define CODE_REFPLACE4	41
-#define CODE_REFQ4		42
-#define CODE_REFTIME4	43
-#define CODE_REFSCORE4	44
-#define CODE_REFHT4		45
-#define CODE_REF4		46
+#define CODE_DOG        0
+#define CODE_DATE       1
+#define CODE_VENUE      2
+#define CODE_CLUB       3
+#define CODE_DIV        4
+#define CODE_LOCATION   5
+#define CODE_HEIGHT     6
+#define CODE_JUDGE      7
+#define CODE_HANDLER    8
+#define CODE_CONDITIONS 9
+#define CODE_Q          10
+#define CODE_SCT        11
+#define CODE_YARDS      12
+#define CODE_OPEN       13
+#define CODE_TIME       14
+#define CODE_OBSTACLES  15
+#define CODE_FAULTS     16
+#define CODE_SCORE      17
+#define CODE_PLACE      18
+#define CODE_INCLASS    19
+#define CODE_QD         20
+#define CODE_OTHER      21
+#define CODE_COMMENTS   22
+#define CODE_REFPLACE1  23
+#define CODE_REFQ1      24
+#define CODE_REFTIME1   25
+#define CODE_REFSCORE1  26
+#define CODE_REFHT1     27
+#define CODE_REF1       28
+#define CODE_REFPLACE2  29
+#define CODE_REFQ2      30
+#define CODE_REFTIME2   31
+#define CODE_REFSCORE2  32
+#define CODE_REFHT2     33
+#define CODE_REF2       34
+#define CODE_REFPLACE3  35
+#define CODE_REFQ3      36
+#define CODE_REFTIME3   37
+#define CODE_REFSCORE3  38
+#define CODE_REFHT3     39
+#define CODE_REF3       40
+#define CODE_REFPLACE4  41
+#define CODE_REFQ4      42
+#define CODE_REFTIME4   43
+#define CODE_REFSCORE4  44
+#define CODE_REFHT4     45
+#define CODE_REF4       46
 
 namespace
 {
-	// Make sure these are ordered by the aboves codes
-	static const wchar_t* sc_codes[] =
-	{
-		arbT("IDS_COL_DOG"),
-		arbT("IDS_COL_DATE"),
-		arbT("IDS_COL_VENUE"),
-		arbT("IDS_COL_CLUB"),
-		arbT("IDS_COL_DIV_LVL_EVT"),
-		arbT("IDS_COL_LOCATION"),
-		arbT("IDS_COL_HEIGHT"),
-		arbT("IDS_COL_JUDGE"),
-		arbT("IDS_COL_HANDLER"),
-		arbT("IDS_COL_CONDITIONS"),
-		arbT("IDS_COL_Q"),
-		arbT("IDS_COL_SCT"),
-		arbT("IDS_COL_YARDS"),
-		arbT("IDS_COL_OPEN_CLOSE"),
-		arbT("IDS_COL_TIME"),
-		arbT("IDS_COL_OBSTACLES"),
-		arbT("IDS_COL_FAULTS"),
-		arbT("IDS_COL_SCORE"),
-		arbT("IDS_COL_PLACE"),
-		arbT("IDS_COL_IN_CLASS"),
-		arbT("IDS_COL_Q_D"),
-		arbT("IDS_COL_OTHERPOINTS"),
-		arbT("IDS_COL_COMMENTS"),
-		arbT("IDS_COL_PLACE"),
-		arbT("IDS_COL_Q"),
-		arbT("IDS_COL_TIME"),
-		arbT("IDS_COL_SCORE"),
-		arbT("IDS_COL_HEIGHT"),
-		arbT("IDS_COL_NAME_BREED_NOTE"),
-		arbT("IDS_COL_PLACE"),
-		arbT("IDS_COL_Q"),
-		arbT("IDS_COL_TIME"),
-		arbT("IDS_COL_SCORE"),
-		arbT("IDS_COL_HEIGHT"),
-		arbT("IDS_COL_NAME_BREED_NOTE"),
-		arbT("IDS_COL_PLACE"),
-		arbT("IDS_COL_Q"),
-		arbT("IDS_COL_TIME"),
-		arbT("IDS_COL_SCORE"),
-		arbT("IDS_COL_HEIGHT"),
-		arbT("IDS_COL_NAME_BREED_NOTE"),
-		arbT("IDS_COL_PLACE"),
-		arbT("IDS_COL_Q"),
-		arbT("IDS_COL_TIME"),
-		arbT("IDS_COL_SCORE"),
-		arbT("IDS_COL_HEIGHT"),
-		arbT("IDS_COL_NAME_BREED_NOTE"),
-	};
-#define FOR_TIME	0x1
-#define FOR_PTS		0x2
-#define FOR_BOTH	0x3
-	static const struct
-	{
-		unsigned char type;
-		int line;
-		int box;
-		int colspan; // number of boxes to span
-		int rowspan;
-		bool bContinuation;
-		int code;
-		bool bWorkBreak;
-		unsigned int fmt;
-	} sc_lines[] =
-	{
+// Make sure these are ordered by the aboves codes
+static const wchar_t* sc_codes[] = {
+	arbT("IDS_COL_DOG"),
+	arbT("IDS_COL_DATE"),
+	arbT("IDS_COL_VENUE"),
+	arbT("IDS_COL_CLUB"),
+	arbT("IDS_COL_DIV_LVL_EVT"),
+	arbT("IDS_COL_LOCATION"),
+	arbT("IDS_COL_HEIGHT"),
+	arbT("IDS_COL_JUDGE"),
+	arbT("IDS_COL_HANDLER"),
+	arbT("IDS_COL_CONDITIONS"),
+	arbT("IDS_COL_Q"),
+	arbT("IDS_COL_SCT"),
+	arbT("IDS_COL_YARDS"),
+	arbT("IDS_COL_OPEN_CLOSE"),
+	arbT("IDS_COL_TIME"),
+	arbT("IDS_COL_OBSTACLES"),
+	arbT("IDS_COL_FAULTS"),
+	arbT("IDS_COL_SCORE"),
+	arbT("IDS_COL_PLACE"),
+	arbT("IDS_COL_IN_CLASS"),
+	arbT("IDS_COL_Q_D"),
+	arbT("IDS_COL_OTHERPOINTS"),
+	arbT("IDS_COL_COMMENTS"),
+	arbT("IDS_COL_PLACE"),
+	arbT("IDS_COL_Q"),
+	arbT("IDS_COL_TIME"),
+	arbT("IDS_COL_SCORE"),
+	arbT("IDS_COL_HEIGHT"),
+	arbT("IDS_COL_NAME_BREED_NOTE"),
+	arbT("IDS_COL_PLACE"),
+	arbT("IDS_COL_Q"),
+	arbT("IDS_COL_TIME"),
+	arbT("IDS_COL_SCORE"),
+	arbT("IDS_COL_HEIGHT"),
+	arbT("IDS_COL_NAME_BREED_NOTE"),
+	arbT("IDS_COL_PLACE"),
+	arbT("IDS_COL_Q"),
+	arbT("IDS_COL_TIME"),
+	arbT("IDS_COL_SCORE"),
+	arbT("IDS_COL_HEIGHT"),
+	arbT("IDS_COL_NAME_BREED_NOTE"),
+	arbT("IDS_COL_PLACE"),
+	arbT("IDS_COL_Q"),
+	arbT("IDS_COL_TIME"),
+	arbT("IDS_COL_SCORE"),
+	arbT("IDS_COL_HEIGHT"),
+	arbT("IDS_COL_NAME_BREED_NOTE"),
+};
+#define FOR_TIME 0x1
+#define FOR_PTS  0x2
+#define FOR_BOTH 0x3
+static const struct
+{
+	unsigned char type;
+	int line;
+	int box;
+	int colspan; // number of boxes to span
+	int rowspan;
+	bool bContinuation;
+	int code;
+	bool bWorkBreak;
+	unsigned int fmt;
+} sc_lines[] = {
+	// clang-format off
 		{FOR_BOTH,  0, 0, 2, 1, false, CODE_DOG,        false, wxALIGN_LEFT | wxALIGN_BOTTOM},
 		{FOR_BOTH,  0, 2, 2, 1, false, CODE_DATE,       false, wxALIGN_LEFT | wxALIGN_BOTTOM},
 		{FOR_BOTH,  0, 4, 2, 1, false, CODE_VENUE,      false, wxALIGN_LEFT | wxALIGN_BOTTOM},
@@ -328,7 +324,7 @@ namespace
 		{FOR_BOTH,  1, 0, 3, 1, false, CODE_DIV,        false, wxALIGN_LEFT | wxALIGN_BOTTOM},
 		{FOR_BOTH,  1, 3, 1, 1, false, CODE_HEIGHT,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
 		{FOR_BOTH,  1, 4, 4, 2, false, CODE_CLUB,       true,  wxALIGN_LEFT},
-		{FOR_BOTH,  2, 4, 4, 1, true,  CODE_CLUB, false, 0},
+		{FOR_BOTH,  2, 4, 4, 1, true,  CODE_CLUB,       false, 0},
 		{FOR_BOTH,  2, 0, 2, 1, false, CODE_JUDGE,      false, wxALIGN_LEFT | wxALIGN_BOTTOM},
 		{FOR_BOTH,  2, 2, 2, 1, false, CODE_HANDLER,    false, wxALIGN_LEFT | wxALIGN_BOTTOM},
 		{FOR_BOTH,  3, 0, 7, 1, false, CODE_CONDITIONS, true,  wxALIGN_LEFT},
@@ -344,10 +340,10 @@ namespace
 		{FOR_BOTH,  4, 6, 1, 1, false, CODE_INCLASS,    false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
 		{FOR_BOTH,  4, 7, 1, 1, false, CODE_QD,         false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
 		{FOR_BOTH,  5, 0, 8, 5, false, CODE_COMMENTS,   true,  wxALIGN_LEFT},
-		{FOR_BOTH,  6, 0, 8, 4, true,  CODE_COMMENTS, false, 0},
-		{FOR_BOTH,  7, 0, 8, 3, true,  CODE_COMMENTS, false, 0},
-		{FOR_BOTH,  8, 0, 8, 2, true,  CODE_COMMENTS, false, 0},
-		{FOR_BOTH,  9, 0, 6, 1, true,  CODE_COMMENTS, false, 0},
+		{FOR_BOTH,  6, 0, 8, 4, true,  CODE_COMMENTS,   false, 0},
+		{FOR_BOTH,  7, 0, 8, 3, true,  CODE_COMMENTS,   false, 0},
+		{FOR_BOTH,  8, 0, 8, 2, true,  CODE_COMMENTS,   false, 0},
+		{FOR_BOTH,  9, 0, 6, 1, true,  CODE_COMMENTS,   false, 0},
 		{FOR_BOTH,  9, 6, 2, 1, false, CODE_OTHER,      true,  wxALIGN_LEFT},
 		{FOR_BOTH, 10, 0, 1, 1, false, CODE_REFPLACE1,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
 		{FOR_BOTH, 10, 1, 1, 1, false, CODE_REFQ1,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
@@ -373,9 +369,10 @@ namespace
 		{FOR_BOTH, 13, 3, 1, 1, false, CODE_REFSCORE4,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
 		{FOR_BOTH, 13, 4, 1, 1, false, CODE_REFHT4,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
 		{FOR_BOTH, 13, 5, 3, 1, false, CODE_REF4,       true,  wxALIGN_LEFT},
-	};
-	constexpr int sc_nLines = sizeof(sc_lines) / sizeof(sc_lines[0]);
-}
+	// clang-format on
+};
+constexpr int sc_nLines = sizeof(sc_lines) / sizeof(sc_lines[0]);
+} // namespace
 
 static void RefRunHelper(fmt::wmemory_buffer& text, ARBDogReferenceRunPtr const& inRef, int code)
 {
@@ -399,12 +396,12 @@ static void RefRunHelper(fmt::wmemory_buffer& text, ARBDogReferenceRunPtr const&
 	case CODE_REFTIME2:
 	case CODE_REFTIME3:
 	case CODE_REFTIME4:
-		{
-			double val = inRef->GetTime();
-			if (0.0 < val)
-				fmt::format_to(text, L"{}", ARBDouble::ToString(val));
-		}
-		break;
+	{
+		double val = inRef->GetTime();
+		if (0.0 < val)
+			fmt::format_to(text, L"{}", ARBDouble::ToString(val));
+	}
+	break;
 	case CODE_REFSCORE1:
 	case CODE_REFSCORE2:
 	case CODE_REFSCORE3:
@@ -431,7 +428,11 @@ static void RefRunHelper(fmt::wmemory_buffer& text, ARBDogReferenceRunPtr const&
 }
 
 
-std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTrial, ARBDogRunPtr const& inRun, int code)
+std::wstring CPrintRuns::GetFieldText(
+	ARBDogPtr const& inDog,
+	ARBDogTrialPtr const& inTrial,
+	ARBDogRunPtr const& inRun,
+	int code)
 {
 	fmt::wmemory_buffer text;
 	switch (code)
@@ -613,8 +614,7 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 					nullptr,
 					&pScoring);
 			double timeFaults = inRun->GetScoring().GetTimeFaults(pScoring);
-			if (inRun->GetQ().AllowTally()
-			|| (0 < inRun->GetScoring().GetCourseFaults() || 0.0 < timeFaults))
+			if (inRun->GetQ().AllowTally() || (0 < inRun->GetScoring().GetCourseFaults() || 0.0 < timeFaults))
 			{
 				fmt::format_to(text, L"{}", inRun->GetScoring().GetCourseFaults());
 				if (0.0 < timeFaults)
@@ -666,8 +666,8 @@ std::wstring CPrintRuns::GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr con
 		{
 			int i = 0;
 			for (ARBDogRunOtherPointsList::iterator iter = inRun->GetOtherPoints().begin();
-				iter != inRun->GetOtherPoints().end();
-				++iter, ++i)
+				 iter != inRun->GetOtherPoints().end();
+				 ++iter, ++i)
 			{
 				if (0 < i)
 					fmt::format_to(text, L" ");
@@ -775,8 +775,7 @@ void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect
 		// Now go thru each box.
 		for (int j = 0; j < sc_nLines; ++j)
 		{
-			if ((bPoints && (sc_lines[j].type & FOR_PTS))
-			|| (!bPoints && (sc_lines[j].type & FOR_TIME)))
+			if ((bPoints && (sc_lines[j].type & FOR_PTS)) || (!bPoints && (sc_lines[j].type & FOR_TIME)))
 			{
 				wxRect rect;
 				rect.x = r[iItem].x + w * sc_lines[j].box;
@@ -784,7 +783,7 @@ void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect
 				if (8 == sc_lines[j].box + sc_lines[j].colspan)
 					rect.SetRight(r[iItem].GetRight());
 				rect.y = r[iItem].y + h * sc_lines[j].line;
-				rect.height = + h;
+				rect.height = +h;
 				// Draw vertical separator lines (on left)
 				if (0 < sc_lines[j].box)
 				{
@@ -858,12 +857,7 @@ static void PrintMark(wxDC* pDC, wxCoord x, wxCoord y, double oneInch)
 // sm 3ring: 2.75
 // lg 3ring: 4.25
 // lg 4ring: 1.375/4.25/1.375
-static void PrintBinderMarkings(
-		RingBinder style,
-		wxDC* pDC,
-		wxRect rPrinted,
-		int margin,
-		double oneInch)
+static void PrintBinderMarkings(RingBinder style, wxDC* pDC, wxRect rPrinted, int margin, double oneInch)
 {
 	pDC->SetPen(*wxGREY_PEN);
 	wxCoord x = static_cast<wxCoord>(rPrinted.x - margin + 0.375 * oneInch);
@@ -894,7 +888,7 @@ static void PrintBinderMarkings(
 bool CPrintRuns::OnPrintPage(int pageNum)
 {
 	ComputeScaling();
-	wxRect r = GetLogicalPageRect(); // 0-normalized
+	wxRect r = GetLogicalPageRect();       // 0-normalized
 	wxRect rSheet = GetLogicalPaperRect(); // negative x
 
 	long marginL, marginR, marginT, marginB;
@@ -1003,19 +997,22 @@ CHtmlEasyPrinting::CHtmlEasyPrinting(wxWindow* parent)
 }
 
 
-bool CHtmlEasyPrinting::DoPreview(
-		wxHtmlPrintout* printout1,
-		wxHtmlPrintout* printout2)
+bool CHtmlEasyPrinting::DoPreview(wxHtmlPrintout* printout1, wxHtmlPrintout* printout2)
 {
 	// Pass two printout objects: for preview, and possible printing.
-	CPrintPreview *preview = new CPrintPreview(printout1, printout2, wxGetApp().GetPrintData());
+	CPrintPreview* preview = new CPrintPreview(printout1, printout2, wxGetApp().GetPrintData());
 	if (!preview->Ok())
 	{
 		delete preview;
 		wxMessageBox(_("Sorry, print preview needs a printer to be installed."));
 		return false;
 	}
-	wxPreviewFrame *frame = new wxPreviewFrame(preview, wxGetApp().GetTopWindow(), _("Print Preview"), wxDefaultPosition, wxGetApp().GetTopWindow()->GetSize()); 
+	wxPreviewFrame* frame = new wxPreviewFrame(
+		preview,
+		wxGetApp().GetTopWindow(),
+		_("Print Preview"),
+		wxDefaultPosition,
+		wxGetApp().GetTopWindow()->GetSize());
 	frame->Centre(wxBOTH);
 	frame->Initialize();
 	frame->Show(true);
@@ -1034,11 +1031,9 @@ bool CHtmlEasyPrinting::DoPrint(wxHtmlPrintout* printout)
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool PrintRuns(
-		ARBConfig const* inConfig,
-		std::vector<RunInfo> const& inRuns)
+bool PrintRuns(ARBConfig const* inConfig, std::vector<RunInfo> const& inRuns)
 {
-	wxPrintPreviewBase *preview = new CPrintPreview(
+	wxPrintPreviewBase* preview = new CPrintPreview(
 		new CPrintRuns(inConfig, inRuns), // preview
 		new CPrintRuns(inConfig, inRuns), // printer
 		wxGetApp().GetPrintData());
@@ -1048,7 +1043,12 @@ bool PrintRuns(
 		wxMessageBox(_("Sorry, print preview needs a printer to be installed."));
 		return false;
 	}
-	wxPreviewFrame* frame = new wxPreviewFrame(preview, wxGetApp().GetTopWindow(), _("IDS_RUNS"), wxDefaultPosition, wxGetApp().GetTopWindow()->GetSize());
+	wxPreviewFrame* frame = new wxPreviewFrame(
+		preview,
+		wxGetApp().GetTopWindow(),
+		_("IDS_RUNS"),
+		wxDefaultPosition,
+		wxGetApp().GetTopWindow()->GetSize());
 	frame->Centre(wxBOTH);
 	frame->Initialize();
 	frame->Show(true);

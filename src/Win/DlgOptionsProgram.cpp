@@ -45,58 +45,81 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 {
 	// Controls (these are done first to control tab order)
 
-	wxCheckBox* ctrlUpdates = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* ctrlUpdates = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_OPT_PGM_AUTO_CHECK"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bAutoCheck));
 	ctrlUpdates->SetHelpText(_("HIDC_OPT_PGM_AUTO_CHECK"));
 	ctrlUpdates->SetToolTip(_("HIDC_OPT_PGM_AUTO_CHECK"));
 
-	wxStaticText* textUpdates = new wxStaticText(this, wxID_ANY,
-		_("IDC_OPT_PGM_AUTO_CHECK_TEXT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textUpdates
+		= new wxStaticText(this, wxID_ANY, _("IDC_OPT_PGM_AUTO_CHECK_TEXT"), wxDefaultPosition, wxDefaultSize, 0);
 	textUpdates->Wrap(wxDLG_UNIT_X(this, 230));
 
-	wxStaticText* textBackups = new wxStaticText(this, wxID_ANY,
-		_("IDC_OPT_PGM_EDIT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textBackups
+		= new wxStaticText(this, wxID_ANY, _("IDC_OPT_PGM_EDIT"), wxDefaultPosition, wxDefaultSize, 0);
 	textBackups->Wrap(-1);
 
-	CTextCtrl* ctrlBackups = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
+	CTextCtrl* ctrlBackups = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 30), -1),
+		0,
 		wxGenericValidator(&m_Backups));
 	ctrlBackups->SetHelpText(_("HIDC_OPT_PGM_EDIT"));
 	ctrlBackups->SetToolTip(_("HIDC_OPT_PGM_EDIT"));
 
-	wxStaticText* textBackupHelp = new wxStaticText(this, wxID_ANY,
-		_("IDC_OPT_PGM_EDIT_TEXT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textBackupHelp
+		= new wxStaticText(this, wxID_ANY, _("IDC_OPT_PGM_EDIT_TEXT"), wxDefaultPosition, wxDefaultSize, 0);
 	textBackupHelp->Wrap(wxDLG_UNIT_X(this, 155));
 
-	wxCheckBox* ctrlShowDog = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* ctrlShowDog = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_OPT_PGM_AUTOSHOW"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bAutoShow));
 	ctrlShowDog->SetHelpText(_("HIDC_OPT_PGM_AUTOSHOW"));
 	ctrlShowDog->SetToolTip(_("HIDC_OPT_PGM_AUTOSHOW"));
 
-	wxCheckBox* ctrlShowCoSanction = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* ctrlShowCoSanction = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_OPT_PGM_COSANCTION"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bShowCosanction));
 	ctrlShowCoSanction->SetHelpText(_("HIDC_OPT_PGM_COSANCTION"));
 	ctrlShowCoSanction->SetToolTip(_("HIDC_OPT_PGM_COSANCTION"));
 
-	wxCheckBox* ctrlUseProxy = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* ctrlUseProxy = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_OPT_PGM_USEPROXY"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_UseProxy));
 	ctrlUseProxy->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgOptionsProgram::OnUseProxy, this);
 	ctrlUseProxy->SetHelpText(_("HIDC_OPT_PGM_USEPROXY"));
 	ctrlUseProxy->SetToolTip(_("HIDC_OPT_PGM_USEPROXY"));
 
-	m_ctrlProxy = new CTextCtrl(this, wxID_ANY,
-		wxEmptyString, wxDefaultPosition, wxDefaultSize, 0,
+	m_ctrlProxy = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_Proxy));
 	m_ctrlProxy->SetHelpText(_("HIDC_OPT_PGM_PROXY"));
 	m_ctrlProxy->SetToolTip(_("HIDC_OPT_PGM_PROXY"));
@@ -115,7 +138,7 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 
 	sizerPgm->Add(sizerBackups, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 	sizerPgm->Add(ctrlShowDog, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerPgm->Add(ctrlShowCoSanction , 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerPgm->Add(ctrlShowCoSanction, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 	sizerPgm->Add(ctrlUseProxy, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerProxy = new wxBoxSizer(wxHORIZONTAL);

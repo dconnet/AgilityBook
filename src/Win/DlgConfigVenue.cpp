@@ -62,14 +62,15 @@
 class CDlgConfigVenueDataRoot : public CDlgConfigureDataBase
 {
 public:
-	CDlgConfigVenueDataRoot(
-			CDlgConfigVenue* pDlg,
-			CDlgConfigVenue::Action action)
+	CDlgConfigVenueDataRoot(CDlgConfigVenue* pDlg, CDlgConfigVenue::Action action)
 		: CDlgConfigureDataBase(pDlg)
 		, m_Action(action)
 	{
 	}
-	bool CanAdd() const override {return true;}
+	bool CanAdd() const override
+	{
+		return true;
+	}
 	bool DoAdd() override;
 
 private:
@@ -105,7 +106,9 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 				if (m_pDlg->m_pVenue->GetDivisions().AddDivision(name, &pNewDiv))
 				{
 					CDlgConfigureDataDivision* pData = new CDlgConfigureDataDivision(m_pDlg, pNewDiv);
-					wxTreeItemId div = m_pDlg->m_ctrlItems->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+					wxTreeItemId div
+						= m_pDlg->m_ctrlItems
+							  ->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
 					pData->AddSubItems();
 					m_pDlg->m_ctrlItems->SelectItem(div);
 					bAdded = true;
@@ -115,61 +118,64 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 		break;
 
 	case CDlgConfigVenue::Action::Events:
+	{
+		// The dialog will ensure uniqueness.
+		ARBConfigEventPtr pEvent(ARBConfigEvent::New());
+		CDlgConfigEvent dlg(true, m_pDlg->m_pVenue, pEvent, m_pDlg);
+		if (wxID_OK == dlg.ShowModal())
 		{
-			// The dialog will ensure uniqueness.
-			ARBConfigEventPtr pEvent(ARBConfigEvent::New());
-			CDlgConfigEvent dlg(true, m_pDlg->m_pVenue, pEvent, m_pDlg);
-			if (wxID_OK == dlg.ShowModal())
+			if (m_pDlg->m_pVenue->GetEvents().AddEvent(pEvent))
 			{
-				if (m_pDlg->m_pVenue->GetEvents().AddEvent(pEvent))
-				{
-					CDlgConfigureDataEvent* pData = new CDlgConfigureDataEvent(m_pDlg, pEvent);
-					wxTreeItemId evt = m_pDlg->m_ctrlItems->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
-					pData->AddSubItems();
-					m_pDlg->m_ctrlItems->SelectItem(evt);
-					bAdded = true;
-				}
+				CDlgConfigureDataEvent* pData = new CDlgConfigureDataEvent(m_pDlg, pEvent);
+				wxTreeItemId evt = m_pDlg->m_ctrlItems
+									   ->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+				pData->AddSubItems();
+				m_pDlg->m_ctrlItems->SelectItem(evt);
+				bAdded = true;
 			}
 		}
-		break;
+	}
+	break;
 
 	case CDlgConfigVenue::Action::LifetimeNames:
+	{
+		// The dialog will ensure uniqueness.
+		CDlgConfigLifetimeName dlg(m_pDlg->m_pVenue, m_pDlg);
+		if (wxID_OK == dlg.ShowModal())
 		{
-			// The dialog will ensure uniqueness.
-			CDlgConfigLifetimeName dlg(m_pDlg->m_pVenue, m_pDlg);
-			if (wxID_OK == dlg.ShowModal())
+			ARBConfigLifetimeNamePtr pName;
+			if (m_pDlg->m_pVenue->GetLifetimeNames().AddLifetimeName(dlg.GetLifetimeName(), &pName))
 			{
-				ARBConfigLifetimeNamePtr pName;
-				if (m_pDlg->m_pVenue->GetLifetimeNames().AddLifetimeName(dlg.GetLifetimeName(), &pName))
-				{
-					CDlgConfigureDataLifetimeName* pData = new CDlgConfigureDataLifetimeName(m_pDlg, pName);
-					wxTreeItemId evt = m_pDlg->m_ctrlItems->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
-					pData->AddSubItems();
-					m_pDlg->m_ctrlItems->SelectItem(evt);
-					bAdded = true;
-				}
+				CDlgConfigureDataLifetimeName* pData = new CDlgConfigureDataLifetimeName(m_pDlg, pName);
+				wxTreeItemId evt = m_pDlg->m_ctrlItems
+									   ->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+				pData->AddSubItems();
+				m_pDlg->m_ctrlItems->SelectItem(evt);
+				bAdded = true;
 			}
 		}
-		break;
+	}
+	break;
 
 	case CDlgConfigVenue::Action::MultiQ:
+	{
+		// The dialog will ensure uniqueness.
+		ARBConfigMultiQPtr multiq(ARBConfigMultiQ::New());
+		CDlgConfigMultiQ dlg(m_pDlg->m_pVenue, multiq, m_pDlg);
+		if (wxID_OK == dlg.ShowModal())
 		{
-			// The dialog will ensure uniqueness.
-			ARBConfigMultiQPtr multiq(ARBConfigMultiQ::New());
-			CDlgConfigMultiQ dlg(m_pDlg->m_pVenue, multiq, m_pDlg);
-			if (wxID_OK == dlg.ShowModal())
+			if (m_pDlg->m_pVenue->GetMultiQs().AddMultiQ(multiq))
 			{
-				if (m_pDlg->m_pVenue->GetMultiQs().AddMultiQ(multiq))
-				{
-					CDlgConfigureDataMultiQ* pData = new CDlgConfigureDataMultiQ(m_pDlg, multiq);
-					wxTreeItemId mq = m_pDlg->m_ctrlItems->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
-					pData->AddSubItems();
-					m_pDlg->m_ctrlItems->SelectItem(mq);
-					bAdded = true;
-				}
+				CDlgConfigureDataMultiQ* pData = new CDlgConfigureDataMultiQ(m_pDlg, multiq);
+				wxTreeItemId mq = m_pDlg->m_ctrlItems
+									  ->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+				pData->AddSubItems();
+				m_pDlg->m_ctrlItems->SelectItem(mq);
+				bAdded = true;
 			}
 		}
-		break;
+	}
+	break;
 
 	case CDlgConfigVenue::Action::Titles:
 		while (!done)
@@ -195,7 +201,9 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 					//pTitle->SetLongName(dlg.GetLongName());
 					//pTitle->SetDescription(dlg.GetDesc());
 					CDlgConfigureDataTitle* pData = new CDlgConfigureDataTitle(m_pDlg, pTitle);
-					wxTreeItemId titleId = m_pDlg->m_ctrlItems->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+					wxTreeItemId titleId
+						= m_pDlg->m_ctrlItems
+							  ->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
 					pData->AddSubItems();
 					m_pDlg->m_ctrlItems->SelectItem(titleId);
 					bAdded = true;
@@ -215,10 +223,10 @@ wxEND_EVENT_TABLE()
 
 
 CDlgConfigVenue::CDlgConfigVenue(
-		ARBAgilityRecordBook const& book,
-		ARBConfig const& config,
-		ARBConfigVenuePtr const& inVenue,
-		wxWindow* pParent)
+	ARBAgilityRecordBook const& book,
+	ARBConfig const& config,
+	ARBConfigVenuePtr const& inVenue,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_Book(book)
 	, m_Config(config)
@@ -239,103 +247,116 @@ CDlgConfigVenue::CDlgConfigVenue(
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDD_CONFIG_VENUE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		_("IDD_CONFIG_VENUE"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	assert(m_pVenueOrig);
 	assert(m_pVenue);
 
 	// Controls (these are done first to control tab order)
 
-	wxStaticText* textName = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_VENUE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textName
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_VENUE"), wxDefaultPosition, wxDefaultSize, 0);
 	textName->Wrap(-1);
 
-	CTextCtrl* ctrlName = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(50, -1)), 0,
+	CTextCtrl* ctrlName = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(50, -1)),
+		0,
 		CTrimValidator(&m_Name, TRIMVALIDATOR_DEFAULT, _("IDS_INVALID_NAME")));
 	ctrlName->SetHelpText(_("HIDC_CONFIG_VENUE"));
 	ctrlName->SetToolTip(_("HIDC_CONFIG_VENUE"));
 
-	wxStaticText* textURL = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_VENUE_URL"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textURL
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_VENUE_URL"), wxDefaultPosition, wxDefaultSize, 0);
 	textURL->Wrap(-1);
 
-	CTextCtrl* ctrlURL = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+	CTextCtrl* ctrlURL = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		CTrimValidator(&m_URL, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlURL->SetHelpText(_("HIDC_CONFIG_VENUE_URL"));
 	ctrlURL->SetToolTip(_("HIDC_CONFIG_VENUE_URL"));
 
-	wxStaticText* textLongName = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_VENUE_LONGNAME"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textLongName
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_VENUE_LONGNAME"), wxDefaultPosition, wxDefaultSize, 0);
 	textLongName->Wrap(-1);
 
-	CTextCtrl* ctrlLongName = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+	CTextCtrl* ctrlLongName = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		CTrimValidator(&m_LongName, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlLongName->SetHelpText(_("HIDC_CONFIG_VENUE_LONGNAME"));
 	ctrlLongName->SetToolTip(_("HIDC_CONFIG_VENUE_LONGNAME"));
 
-	wxStaticText* textDesc = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_VENUE_DESC"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textDesc
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_VENUE_DESC"), wxDefaultPosition, wxDefaultSize, 0);
 	textDesc->Wrap(-1);
 
-	CSpellCheckCtrl* ctrlDesc = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_X(this, 35)), wxTE_MULTILINE|wxTE_WORDWRAP,
+	CSpellCheckCtrl* ctrlDesc = new CSpellCheckCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(-1, wxDLG_UNIT_X(this, 35)),
+		wxTE_MULTILINE | wxTE_WORDWRAP,
 		CTrimValidator(&m_Desc, TRIMVALIDATOR_TRIM_RIGHT));
 	ctrlDesc->SetHelpText(_("HIDC_CONFIG_VENUE_DESC"));
 	ctrlDesc->SetToolTip(_("HIDC_CONFIG_VENUE_DESC"));
 
-	m_ctrlItems = new CTreeCtrl(this, wxID_ANY,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(170, 135)),
-		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_NO_LINES|wxTR_SINGLE);
+	m_ctrlItems = new CTreeCtrl(
+		this,
+		wxID_ANY,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(170, 135)),
+		wxTR_FULL_ROW_HIGHLIGHT | wxTR_HAS_BUTTONS | wxTR_HIDE_ROOT | wxTR_LINES_AT_ROOT | wxTR_NO_LINES | wxTR_SINGLE);
 	m_ctrlItems->Bind(wxEVT_COMMAND_TREE_SEL_CHANGED, &CDlgConfigVenue::OnSelectionChanged, this);
 	m_ctrlItems->Bind(wxEVT_COMMAND_TREE_ITEM_ACTIVATED, &CDlgConfigVenue::OnItemActivated, this);
 	//m_ctrlItems->SetHelpText(_(""));
 	//m_ctrlItems->SetToolTip(_(""));
 
-	m_ctrlNew = new wxButton(this, wxID_ANY,
-		_("IDC_CONFIG_VENUE_NEW"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlNew = new wxButton(this, wxID_ANY, _("IDC_CONFIG_VENUE_NEW"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigVenue::OnNew, this);
 	m_ctrlNew->SetHelpText(_("HIDC_CONFIG_VENUE_NEW"));
 	m_ctrlNew->SetToolTip(_("HIDC_CONFIG_VENUE_NEW"));
 
-	m_ctrlEdit = new wxButton(this, wxID_ANY,
-		_("IDC_CONFIG_VENUE_EDIT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlEdit = new wxButton(this, wxID_ANY, _("IDC_CONFIG_VENUE_EDIT"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigVenue::OnEdit, this);
 	m_ctrlEdit->SetHelpText(_("HIDC_CONFIG_VENUE_EDIT"));
 	m_ctrlEdit->SetToolTip(_("HIDC_CONFIG_VENUE_EDIT"));
 
-	m_ctrlDelete = new wxButton(this, wxID_ANY,
-		_("IDC_CONFIG_VENUE_DELETE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlDelete = new wxButton(this, wxID_ANY, _("IDC_CONFIG_VENUE_DELETE"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigVenue::OnDelete, this);
 	m_ctrlDelete->SetHelpText(_("HIDC_CONFIG_VENUE_DELETE"));
 	m_ctrlDelete->SetToolTip(_("HIDC_CONFIG_VENUE_DELETE"));
 
-	m_ctrlCopy = new wxButton(this, wxID_ANY,
-		_("IDC_CONFIG_VENUE_COPY"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlCopy = new wxButton(this, wxID_ANY, _("IDC_CONFIG_VENUE_COPY"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlCopy->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigVenue::OnCopy, this);
 	m_ctrlCopy->SetHelpText(_("HIDC_CONFIG_VENUE_COPY"));
 	m_ctrlCopy->SetToolTip(_("HIDC_CONFIG_VENUE_COPY"));
 
-	m_ctrlMoveUp = new wxButton(this, wxID_ANY,
-		_("IDC_CONFIG_VENUE_MOVE_UP"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlMoveUp = new wxButton(this, wxID_ANY, _("IDC_CONFIG_VENUE_MOVE_UP"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlMoveUp->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigVenue::OnMoveUp, this);
 	m_ctrlMoveUp->SetHelpText(_("HIDC_CONFIG_VENUE_MOVE_UP"));
 	m_ctrlMoveUp->SetToolTip(_("HIDC_CONFIG_VENUE_MOVE_UP"));
 
-	m_ctrlMoveDown = new wxButton(this, wxID_ANY,
-		_("IDC_CONFIG_VENUE_MOVE_DOWN"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlMoveDown = new wxButton(this, wxID_ANY, _("IDC_CONFIG_VENUE_MOVE_DOWN"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlMoveDown->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigVenue::OnMoveDown, this);
 	m_ctrlMoveDown->SetHelpText(_("HIDC_CONFIG_VENUE_MOVE_DOWN"));
 	m_ctrlMoveDown->SetToolTip(_("HIDC_CONFIG_VENUE_MOVE_DOWN"));
@@ -380,8 +401,15 @@ CDlgConfigVenue::CDlgConfigVenue(
 
 	wxTreeItemId root = m_ctrlItems->AddRoot(L"Root");
 
-	wxTreeItemId divs = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_DIVISION"), -1, -1, new CDlgConfigVenueDataRoot(this, Action::Divisions));
-	for (ARBConfigDivisionList::iterator iterDiv = m_pVenue->GetDivisions().begin(); iterDiv != m_pVenue->GetDivisions().end(); ++iterDiv)
+	wxTreeItemId divs = m_ctrlItems->AppendItem(
+		root,
+		_("IDC_CONFIG_VENUE_DIVISION"),
+		-1,
+		-1,
+		new CDlgConfigVenueDataRoot(this, Action::Divisions));
+	for (ARBConfigDivisionList::iterator iterDiv = m_pVenue->GetDivisions().begin();
+		 iterDiv != m_pVenue->GetDivisions().end();
+		 ++iterDiv)
 	{
 		CDlgConfigureDataDivision* pData = new CDlgConfigureDataDivision(this, *iterDiv);
 		m_ctrlItems->AppendItem(divs, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
@@ -389,8 +417,15 @@ CDlgConfigVenue::CDlgConfigVenue(
 	}
 	m_ctrlItems->Expand(divs);
 
-	wxTreeItemId events = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_EVENT"), -1, -1, new CDlgConfigVenueDataRoot(this, Action::Events));
-	for (ARBConfigEventList::iterator iterEvent = m_pVenue->GetEvents().begin(); iterEvent != m_pVenue->GetEvents().end(); ++iterEvent)
+	wxTreeItemId events = m_ctrlItems->AppendItem(
+		root,
+		_("IDC_CONFIG_VENUE_EVENT"),
+		-1,
+		-1,
+		new CDlgConfigVenueDataRoot(this, Action::Events));
+	for (ARBConfigEventList::iterator iterEvent = m_pVenue->GetEvents().begin();
+		 iterEvent != m_pVenue->GetEvents().end();
+		 ++iterEvent)
 	{
 		CDlgConfigureDataEvent* pData = new CDlgConfigureDataEvent(this, *iterEvent);
 		m_ctrlItems->AppendItem(events, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
@@ -398,10 +433,15 @@ CDlgConfigVenue::CDlgConfigVenue(
 	}
 	m_ctrlItems->Expand(events);
 
-	wxTreeItemId lifetimeNames = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_LIFETIMENAME"), -1, -1, new CDlgConfigVenueDataRoot(this, Action::LifetimeNames));
+	wxTreeItemId lifetimeNames = m_ctrlItems->AppendItem(
+		root,
+		_("IDC_CONFIG_VENUE_LIFETIMENAME"),
+		-1,
+		-1,
+		new CDlgConfigVenueDataRoot(this, Action::LifetimeNames));
 	for (ARBConfigLifetimeNameList::iterator iter = m_pVenue->GetLifetimeNames().begin();
-		iter != m_pVenue->GetLifetimeNames().end();
-		++iter)
+		 iter != m_pVenue->GetLifetimeNames().end();
+		 ++iter)
 	{
 		CDlgConfigureDataLifetimeName* pData = new CDlgConfigureDataLifetimeName(this, *iter);
 		m_ctrlItems->AppendItem(lifetimeNames, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
@@ -409,20 +449,29 @@ CDlgConfigVenue::CDlgConfigVenue(
 	}
 
 
-	wxTreeItemId multiQs = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_MULTIQ"), -1, -1, new CDlgConfigVenueDataRoot(this, Action::MultiQ));
-	for (ARBConfigMultiQList::iterator iter = m_pVenue->GetMultiQs().begin();
-		iter != m_pVenue->GetMultiQs().end();
-		++iter)
+	wxTreeItemId multiQs = m_ctrlItems->AppendItem(
+		root,
+		_("IDC_CONFIG_VENUE_MULTIQ"),
+		-1,
+		-1,
+		new CDlgConfigVenueDataRoot(this, Action::MultiQ));
+	for (ARBConfigMultiQList::iterator iter = m_pVenue->GetMultiQs().begin(); iter != m_pVenue->GetMultiQs().end();
+		 ++iter)
 	{
 		CDlgConfigureDataMultiQ* pData = new CDlgConfigureDataMultiQ(this, *iter);
 		m_ctrlItems->AppendItem(multiQs, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
 		pData->AddSubItems();
 	}
 
-	wxTreeItemId titles = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_TITLES"), -1, -1, new CDlgConfigVenueDataRoot(this, Action::Titles));
+	wxTreeItemId titles = m_ctrlItems->AppendItem(
+		root,
+		_("IDC_CONFIG_VENUE_TITLES"),
+		-1,
+		-1,
+		new CDlgConfigVenueDataRoot(this, Action::Titles));
 	for (ARBConfigTitleList::iterator iterTitle = m_pVenue->GetTitles().begin();
-		iterTitle != m_pVenue->GetTitles().end();
-		++iterTitle)
+		 iterTitle != m_pVenue->GetTitles().end();
+		 ++iterTitle)
 	{
 		CDlgConfigureDataTitle* pData = new CDlgConfigureDataTitle(this, *iterTitle);
 		m_ctrlItems->AppendItem(titles, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
@@ -527,12 +576,12 @@ void CDlgConfigVenue::OnKeydown(wxKeyEvent& evt)
 		break;
 	case WXK_SPACE:
 	case WXK_NUMPAD_SPACE:
-		{
-			CDlgConfigureDataBase* pBase = GetCurrentData();
-			if (pBase && pBase->CanEdit())
-				pBase->DoEdit();
-		}
-		break;
+	{
+		CDlgConfigureDataBase* pBase = GetCurrentData();
+		if (pBase && pBase->CanEdit())
+			pBase->DoEdit();
+	}
+	break;
 	}
 }
 
@@ -585,9 +634,12 @@ void CDlgConfigVenue::OnMoveUp(wxCommandEvent& evt)
 				wxTreeItemId itemPrev2 = m_ctrlItems->GetPrevSibling(itemPrev);
 				wxTreeItemId itemNew;
 				if (itemPrev2.IsOk())
-					itemNew = m_ctrlItems->InsertItem(parent, itemPrev2, StringUtil::stringWX(pDup->OnNeedText()), -1, -1, pDup);
+					itemNew
+						= m_ctrlItems
+							  ->InsertItem(parent, itemPrev2, StringUtil::stringWX(pDup->OnNeedText()), -1, -1, pDup);
 				else
-					itemNew = m_ctrlItems->InsertItem(parent, 0, StringUtil::stringWX(pDup->OnNeedText()), -1, -1, pDup);
+					itemNew
+						= m_ctrlItems->InsertItem(parent, 0, StringUtil::stringWX(pDup->OnNeedText()), -1, -1, pDup);
 				m_ctrlItems->Delete(item);
 				pDup->AddSubItems();
 				m_ctrlItems->SelectItem(itemNew);
@@ -611,7 +663,8 @@ void CDlgConfigVenue::OnMoveDown(wxCommandEvent& evt)
 			if (pDup)
 			{
 				wxTreeItemId parent = m_ctrlItems->GetItemParent(item);
-				wxTreeItemId itemNew = m_ctrlItems->InsertItem(parent, itemNext, StringUtil::stringWX(pDup->OnNeedText()), -1, -1, pDup);
+				wxTreeItemId itemNew
+					= m_ctrlItems->InsertItem(parent, itemNext, StringUtil::stringWX(pDup->OnNeedText()), -1, -1, pDup);
 				m_ctrlItems->Delete(item);
 				pDup->AddSubItems();
 				m_ctrlItems->SelectItem(itemNew);

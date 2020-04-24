@@ -31,20 +31,22 @@
 
 namespace
 {
-	class ARBConfigPlaceInfo_concrete : public ARBConfigPlaceInfo
+class ARBConfigPlaceInfo_concrete : public ARBConfigPlaceInfo
+{
+public:
+	ARBConfigPlaceInfo_concrete()
 	{
-	public:
-		ARBConfigPlaceInfo_concrete() {}
-		ARBConfigPlaceInfo_concrete(short inPlace, double inValue, bool bMustQ)
-			: ARBConfigPlaceInfo(inPlace, inValue, bMustQ)
-		{
-		}
-		ARBConfigPlaceInfo_concrete(ARBConfigPlaceInfo const& rhs)
-			: ARBConfigPlaceInfo(rhs)
-		{
-		}
-	};
+	}
+	ARBConfigPlaceInfo_concrete(short inPlace, double inValue, bool bMustQ)
+		: ARBConfigPlaceInfo(inPlace, inValue, bMustQ)
+	{
+	}
+	ARBConfigPlaceInfo_concrete(ARBConfigPlaceInfo const& rhs)
+		: ARBConfigPlaceInfo(rhs)
+	{
+	}
 };
+}; // namespace
 
 
 ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::New()
@@ -53,10 +55,7 @@ ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::New()
 }
 
 
-ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::New(
-		short inPlace,
-		double inValue,
-		bool bMustQ)
+ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::New(short inPlace, double inValue, bool bMustQ)
 {
 	return std::make_shared<ARBConfigPlaceInfo_concrete>(inPlace, inValue, bMustQ);
 }
@@ -70,10 +69,7 @@ ARBConfigPlaceInfo::ARBConfigPlaceInfo()
 }
 
 
-ARBConfigPlaceInfo::ARBConfigPlaceInfo(
-		short inPlace,
-		double inValue,
-		bool bMustQ)
+ARBConfigPlaceInfo::ARBConfigPlaceInfo(short inPlace, double inValue, bool bMustQ)
 	: m_Place(inPlace)
 	, m_Value(inValue)
 	, m_MustQ(bMustQ)
@@ -133,9 +129,7 @@ ARBConfigPlaceInfo& ARBConfigPlaceInfo::operator=(ARBConfigPlaceInfo&& rhs)
 
 bool ARBConfigPlaceInfo::operator==(ARBConfigPlaceInfo const& rhs) const
 {
-	return m_Place == rhs.m_Place
-		&& m_Value == rhs.m_Value
-		&& m_MustQ == rhs.m_MustQ;
+	return m_Place == rhs.m_Place && m_Value == rhs.m_Value && m_MustQ == rhs.m_MustQ;
 }
 
 
@@ -145,10 +139,7 @@ std::wstring ARBConfigPlaceInfo::GetGenericName() const
 }
 
 
-bool ARBConfigPlaceInfo::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBConfigPlaceInfo::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_PLACE_INFO)
@@ -165,7 +156,10 @@ bool ARBConfigPlaceInfo::Load(
 	}
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_PLACE_INFO_MUSTQ, m_MustQ))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_PLACE_INFO, ATTRIB_PLACE_INFO_MUSTQ, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
+			TREE_PLACE_INFO,
+			ATTRIB_PLACE_INFO_MUSTQ,
+			Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 	return true;
@@ -188,9 +182,9 @@ bool ARBConfigPlaceInfo::Save(ElementNodePtr const& ioTree) const
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigPlaceInfoList::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	ARBConfigPlaceInfoPtr thing(ARBConfigPlaceInfo::New());
 	if (!thing->Load(inTree, inVersion, ioCallback))
@@ -204,16 +198,13 @@ void ARBConfigPlaceInfoList::sort()
 {
 	if (2 > size())
 		return;
-	std::stable_sort(begin(), end(),
-		[](ARBConfigPlaceInfoPtr const& one, ARBConfigPlaceInfoPtr const& two)
-		{
-			return one->GetPlace() < two->GetPlace();
-		}
-	);
+	std::stable_sort(begin(), end(), [](ARBConfigPlaceInfoPtr const& one, ARBConfigPlaceInfoPtr const& two) {
+		return one->GetPlace() < two->GetPlace();
+	});
 }
 
 
-bool ARBConfigPlaceInfoList::GetPlaceInfo(short inPlace, double &outValue) const
+bool ARBConfigPlaceInfoList::GetPlaceInfo(short inPlace, double& outValue) const
 {
 	ARBConfigPlaceInfoPtr place;
 	bool bOk = FindPlaceInfo(inPlace, &place);
@@ -225,9 +216,7 @@ bool ARBConfigPlaceInfoList::GetPlaceInfo(short inPlace, double &outValue) const
 }
 
 
-bool ARBConfigPlaceInfoList::FindPlaceInfo(
-		short inPlace,
-		ARBConfigPlaceInfoPtr* outPlace) const
+bool ARBConfigPlaceInfoList::FindPlaceInfo(short inPlace, ARBConfigPlaceInfoPtr* outPlace) const
 {
 	if (outPlace)
 		outPlace->reset();
@@ -257,11 +246,7 @@ bool ARBConfigPlaceInfoList::FindPlaceInfo(
 }
 
 
-bool ARBConfigPlaceInfoList::AddPlaceInfo(
-		short inPlace,
-		double inValue,
-		bool inMustQ,
-		ARBConfigPlaceInfoPtr* outPlace)
+bool ARBConfigPlaceInfoList::AddPlaceInfo(short inPlace, double inValue, bool inMustQ, ARBConfigPlaceInfoPtr* outPlace)
 {
 	if (outPlace)
 		outPlace->reset();

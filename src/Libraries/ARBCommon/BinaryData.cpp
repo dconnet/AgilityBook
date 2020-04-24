@@ -51,9 +51,7 @@
 #endif
 
 
-bool BinaryData::Decode(
-		std::wstring const& inBase64,
-		std::vector<unsigned char>& outBinData)
+bool BinaryData::Decode(std::wstring const& inBase64, std::vector<unsigned char>& outBinData)
 {
 	outBinData.clear();
 	if (inBase64.empty())
@@ -93,9 +91,7 @@ bool BinaryData::Decode(
 }
 
 
-bool BinaryData::Encode(
-		std::vector<unsigned char> const& inBinData,
-		std::wstring& outBase64)
+bool BinaryData::Encode(std::vector<unsigned char> const& inBinData, std::wstring& outBase64)
 {
 	outBase64.clear();
 	if (inBinData.empty())
@@ -139,9 +135,7 @@ bool BinaryData::Encode(
 }
 
 
-bool BinaryData::EncodeFile(
-		std::wstring const& inFileName,
-		std::wstring& outBase64)
+bool BinaryData::EncodeFile(std::wstring const& inFileName, std::wstring& outBase64)
 {
 	outBase64.clear();
 
@@ -195,9 +189,7 @@ bool BinaryData::EncodeFile(
 }
 
 
-bool BinaryData::DecodeString(
-		std::wstring const& inBase64,
-		std::wstring& outData)
+bool BinaryData::DecodeString(std::wstring const& inBase64, std::wstring& outData)
 {
 	if (inBase64.empty())
 	{
@@ -214,9 +206,7 @@ bool BinaryData::DecodeString(
 }
 
 
-bool BinaryData::EncodeString(
-		std::wstring const& inData,
-		std::wstring& outBase64)
+bool BinaryData::EncodeString(std::wstring const& inData, std::wstring& outBase64)
 {
 	outBase64.clear();
 	if (inData.empty())

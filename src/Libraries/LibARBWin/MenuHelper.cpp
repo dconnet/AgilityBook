@@ -27,10 +27,10 @@
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ImageHelperBase.h"
 #include "LibARBWin/RegItemsBase.h"
-#include <set>
 #include <wx/artprov.h>
 #include <wx/config.h>
 #include <wx/frame.h>
+#include <set>
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -146,7 +146,7 @@ static std::unordered_map<int, KeyCodeMapping> const& GetKeyCodes()
 		{WXK_SPECIAL18, {WXK_SPECIAL18, L"SPECIAL18", false}},
 		{WXK_SPECIAL19, {WXK_SPECIAL19, L"SPECIAL19", false}},
 		{WXK_SPECIAL20, {WXK_SPECIAL20, L"SPECIAL20", false}},
-		{WXK_BROWSER_BACK, {WXK_BROWSER_BACK, L"BrowserBack", false}}, // Not in wx po at all (not a supported menu option)
+		{WXK_BROWSER_BACK, {WXK_BROWSER_BACK, L"BrowserBack", false}}, // Not in wx po (not a supported menu option)
 		{WXK_BROWSER_FORWARD, {WXK_BROWSER_FORWARD, L"BrowserForward", false}},
 		{WXK_BROWSER_REFRESH, {WXK_BROWSER_REFRESH, L"BrowserRefresh", false}},
 		{WXK_BROWSER_STOP, {WXK_BROWSER_STOP, L"BrowserStop", false}},
@@ -205,12 +205,12 @@ static wxString CodeToSpecial(int code, bool bNonMenu)
 /////////////////////////////////////////////////////////////////////////////
 
 CMenuHelper::CMenuHelper(
-		std::vector<CMenuHelper::ItemData> const& menuItems,
-		std::vector<CMenuHelper::ItemAccel> const& accels,
-		std::vector<int> const& toolbarItems,
-		std::unordered_map<int, std::wstring> const& menuIds,
-		bool doTranslation,
-		bool bAllowDups)
+	std::vector<CMenuHelper::ItemData> const& menuItems,
+	std::vector<CMenuHelper::ItemAccel> const& accels,
+	std::vector<int> const& toolbarItems,
+	std::unordered_map<int, std::wstring> const& menuIds,
+	bool doTranslation,
+	bool bAllowDups)
 	: m_menuItems(menuItems)
 	, m_accelDataDefaults(accels)
 	, m_toolbarItems(toolbarItems)
@@ -360,7 +360,6 @@ void CMenuHelper::SaveAccelerators()
 				wxString key = wxString::Format(L"Item%d", nKey++);
 				CConfigPathHelper configKey(key);
 				wxConfig::Get()->Write(L"id", 1);
-
 			}
 		}
 		m_bModified = false;
@@ -368,9 +367,7 @@ void CMenuHelper::SaveAccelerators()
 }
 
 
-bool CMenuHelper::ConfigureAccelerators(
-		wxFrame* pFrame,
-		wxWindow* pParent)
+bool CMenuHelper::ConfigureAccelerators(wxFrame* pFrame, wxWindow* pParent)
 {
 	assert(pFrame);
 	if (!pParent)
@@ -404,9 +401,7 @@ static size_t FindItem(int id, std::vector<CMenuHelper::ItemData> const& menuIte
 }
 
 
-void CMenuHelper::CreateMenu(
-		wxFrame* pFrame,
-		wxMenu* mruMenu)
+void CMenuHelper::CreateMenu(wxFrame* pFrame, wxMenu* mruMenu)
 {
 	// Load accelerators first. Not all of these are necessarily in the main menu.
 	// This ensures all accelerators are registered.
@@ -444,10 +439,9 @@ void CMenuHelper::CreateMenu(
 		m_MenuBar = new wxMenuBar();
 		bool mruAdded = false;
 
-		for (size_t index = 0; index < m_menuItems.size(); )
+		for (size_t index = 0; index < m_menuItems.size();)
 		{
-			if (0 != m_menuItems[index].menuId
-				|| !((MENU_ITEM | MENU_HELP) & m_menuItems[index].flags))
+			if (0 != m_menuItems[index].menuId || !((MENU_ITEM | MENU_HELP) & m_menuItems[index].flags))
 			{
 				++index;
 				continue;
@@ -506,7 +500,10 @@ void CMenuHelper::CreateMenu(
 				{
 					name = wxGetTranslation(m_menuItems[idxItem].toolbar);
 					descShort = wxGetTranslation(m_menuItems[idxItem].help);
-					m_ToolbarData.push_back(TranslationData(m_menuItems[idxItem].id, m_menuItems[idxItem].toolbar, m_menuItems[idxItem].help));
+					m_ToolbarData.push_back(TranslationData(
+						m_menuItems[idxItem].id,
+						m_menuItems[idxItem].toolbar,
+						m_menuItems[idxItem].help));
 				}
 				else
 				{
@@ -517,12 +514,7 @@ void CMenuHelper::CreateMenu(
 				assert(bmp.IsOk());
 				wxBitmap bmpDisabled = bmp.ConvertToDisabled();
 				assert(bmpDisabled.IsOk());
-				toolbar->AddTool(m_menuItems[idxItem].id,
-					name,
-					bmp,
-					bmpDisabled,
-					m_menuItems[idxItem].kind,
-					descShort);
+				toolbar->AddTool(m_menuItems[idxItem].id, name, bmp, bmpDisabled, m_menuItems[idxItem].kind, descShort);
 			}
 		}
 		toolbar->Realize();
@@ -530,19 +522,16 @@ void CMenuHelper::CreateMenu(
 }
 
 
-wxMenu* CMenuHelper::CreatePopupMenu(
-		wxWindow* pWindow,
-		int menuId)
+wxMenu* CMenuHelper::CreatePopupMenu(wxWindow* pWindow, int menuId)
 {
 	MenuHandle handle(0);
 
 	// We're not supporting an MRU menu item in the popups.
 	bool mruAdded = false;
 	bool bAdded = false;
-	for (size_t index = 0; index < m_menuItems.size(); )
+	for (size_t index = 0; index < m_menuItems.size();)
 	{
-		if (m_menuItems[index].menuId != menuId
-		|| !((MENU_ITEM | MENU_HELP) & m_menuItems[index].flags))
+		if (m_menuItems[index].menuId != menuId || !((MENU_ITEM | MENU_HELP) & m_menuItems[index].flags))
 		{
 			++index;
 			continue;
@@ -589,26 +578,26 @@ void CMenuHelper::UpdateMenu(bool bLoadAccelerators)
 
 
 void CMenuHelper::DoMenuItem(
-		wxWindow* pWindow,
-		wxMenu* menu,
-		int id,
-		wxString const& label,
-		wxString const& desc,
-		wxArtID const& artId)
+	wxWindow* pWindow,
+	wxMenu* menu,
+	int id,
+	wxString const& label,
+	wxString const& desc,
+	wxArtID const& artId)
 {
 	DoMenuItem(pWindow, menu, id, label, desc, wxITEM_NORMAL, nullptr, artId);
 }
 
 
 void CMenuHelper::DoMenuItem(
-		wxWindow* pWindow,
-		wxMenu* menu,
-		int id,
-		wxString const& label,
-		wxString const& desc,
-		wxItemKind kind,
-		wxMenu* subMenu,
-		wxArtID const& artId)
+	wxWindow* pWindow,
+	wxMenu* menu,
+	int id,
+	wxString const& label,
+	wxString const& desc,
+	wxItemKind kind,
+	wxMenu* subMenu,
+	wxArtID const& artId)
 {
 	wxMenuItem* item = new wxMenuItem(menu, id, label + GetAccelString(m_accelData, id), desc, kind, subMenu);
 	if (!artId.empty() && kind == wxITEM_NORMAL)
@@ -653,9 +642,7 @@ wxString CMenuHelper::GetAccelString(std::vector<ItemAccel> const& accelItems, i
 }
 
 
-int CMenuHelper::TranslateId(
-		int id,
-		std::vector<ItemAccel> const& defAccelItems)
+int CMenuHelper::TranslateId(int id, std::vector<ItemAccel> const& defAccelItems)
 {
 	if (0 != id)
 	{
@@ -698,13 +685,13 @@ void CMenuHelper::CreateAccelTable(wxFrame* pFrame)
 
 
 void CMenuHelper::Menu(
-		wxWindow* pWindow,
-		int menuId,
-		MenuHandle& handle,
-		size_t& index,
-		size_t level,
-		wxMenu* mruMenu,
-		bool& mruAdded)
+	wxWindow* pWindow,
+	int menuId,
+	MenuHandle& handle,
+	size_t& index,
+	size_t level,
+	wxMenu* mruMenu,
+	bool& mruAdded)
 {
 	for (++index; index < m_menuItems.size() && level == m_menuItems[index].menuLevel; ++index)
 	{
@@ -731,7 +718,10 @@ void CMenuHelper::Menu(
 				{
 					name = m_menuItems[index].menu;
 				}
-				DoMenuItem(pWindow, handle.pMenu, wxID_ANY,
+				DoMenuItem(
+					pWindow,
+					handle.pMenu,
+					wxID_ANY,
 					name,
 					wxString(),
 					wxITEM_NORMAL,
@@ -754,7 +744,10 @@ void CMenuHelper::Menu(
 				{
 					name = m_menuItems[idxMenu].menu;
 				}
-				DoMenuItem(pWindow, handle.pMenu, wxID_ANY,
+				DoMenuItem(
+					pWindow,
+					handle.pMenu,
+					wxID_ANY,
 					name,
 					wxString(),
 					wxITEM_NORMAL,
@@ -771,14 +764,18 @@ void CMenuHelper::Menu(
 				{
 					name = wxGetTranslation(m_menuItems[index].menu);
 					help = wxGetTranslation(m_menuItems[index].help);
-					handle.items.push_back(TranslationData(m_menuItems[index].id, m_menuItems[index].menu, m_menuItems[index].help));
+					handle.items.push_back(
+						TranslationData(m_menuItems[index].id, m_menuItems[index].menu, m_menuItems[index].help));
 				}
 				else
 				{
 					name = m_menuItems[index].menu;
 					help = m_menuItems[index].help;
 				}
-				DoMenuItem(pWindow, handle.pMenu, m_menuItems[index].id,
+				DoMenuItem(
+					pWindow,
+					handle.pMenu,
+					m_menuItems[index].id,
 					name,
 					help,
 					m_menuItems[index].kind,

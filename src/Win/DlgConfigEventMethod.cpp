@@ -70,10 +70,23 @@ public:
 	{
 	}
 	std::wstring OnNeedText(long iColumn) const override;
-	short Place() const					{return m_Place;}
-	void Place(short place)				{m_Place = place;}
-	double Value() const				{return m_Value;}
-	void Value(double val)				{m_Value = val;}
+	short Place() const
+	{
+		return m_Place;
+	}
+	void Place(short place)
+	{
+		m_Place = place;
+	}
+	double Value() const
+	{
+		return m_Value;
+	}
+	void Value(double val)
+	{
+		m_Value = val;
+	}
+
 protected:
 	short m_Place;
 	double m_Value;
@@ -114,9 +127,9 @@ wxEND_EVENT_TABLE()
 
 
 CDlgConfigEventMethod::CDlgConfigEventMethod(
-		ARBConfigVenuePtr const& inVenue,
-		ARBConfigScoringPtr const& inScoring,
-		wxWindow* pParent)
+	ARBConfigVenuePtr const& inVenue,
+	ARBConfigScoringPtr const& inScoring,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_pVenue(inVenue)
 	, m_pScoring(inScoring)
@@ -174,14 +187,19 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 
 	// Controls (these are done first to control tab order)
 
-	wxStaticText* textDiv = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_EVENT_DIVISION"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textDiv
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_EVENT_DIVISION"), wxDefaultPosition, wxDefaultSize, 0);
 	textDiv->Wrap(-1);
 
-	m_ctrlDivision = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY);
+	m_ctrlDivision = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_READONLY);
 	m_ctrlDivision->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgConfigEventMethod::OnSelchangeDivision, this);
 	m_ctrlDivision->SetHelpText(_("HIDC_CONFIG_EVENT_DIVISION"));
 	m_ctrlDivision->SetToolTip(_("HIDC_CONFIG_EVENT_DIVISION"));
@@ -190,8 +208,8 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	if (m_pScoring->GetDivision() == WILDCARD_DIVISION)
 		m_ctrlDivision->SetSelection(index);
 	for (ARBConfigDivisionList::iterator iterDiv = m_pVenue->GetDivisions().begin();
-		iterDiv != m_pVenue->GetDivisions().end();
-		++iterDiv)
+		 iterDiv != m_pVenue->GetDivisions().end();
+		 ++iterDiv)
 	{
 		ARBConfigDivisionPtr pDiv = (*iterDiv);
 		index = m_ctrlDivision->Append(StringUtil::stringWX(pDiv->GetName()));
@@ -200,20 +218,29 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 			m_ctrlDivision->SetSelection(index);
 	}
 
-	wxStaticText* textLevel = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_EVENT_LEVEL"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textLevel
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_EVENT_LEVEL"), wxDefaultPosition, wxDefaultSize, 0);
 	textLevel->Wrap(-1);
 
-	m_ctrlLevel = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY);
+	m_ctrlLevel = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_READONLY);
 	m_ctrlLevel->SetHelpText(_("HIDC_CONFIG_EVENT_LEVEL"));
 	m_ctrlLevel->SetToolTip(_("HIDC_CONFIG_EVENT_LEVEL"));
 
-	m_ctrlValidFrom = new wxCheckBox(this, wxID_ANY,
+	m_ctrlValidFrom = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_CONFIG_EVENT_DATE_VALID_FROM"),
-		wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT);
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxALIGN_RIGHT);
 	m_ctrlValidFrom->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigEventMethod::OnValidFrom, this);
 	m_ctrlValidFrom->SetHelpText(_("HIDC_CONFIG_EVENT_DATE_VALID_FROM"));
 	m_ctrlValidFrom->SetToolTip(_("HIDC_CONFIG_EVENT_DATE_VALID_FROM"));
@@ -228,8 +255,13 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	{
 		m_ctrlValidFrom->SetValue(false);
 	}
-	m_ctrlDateFrom = new wxDatePickerCtrl(this, wxID_ANY, date,
-		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
+	m_ctrlDateFrom = new wxDatePickerCtrl(
+		this,
+		wxID_ANY,
+		date,
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDP_DROPDOWN | wxDP_SHOWCENTURY,
 		CGenericValidator(&m_dateFrom));
 	m_ctrlDateFrom->SetHelpText(_("HIDC_CONFIG_EVENT_DATE_START"));
 	m_ctrlDateFrom->SetToolTip(_("HIDC_CONFIG_EVENT_DATE_START"));
@@ -238,9 +270,13 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	else
 		m_ctrlDateFrom->Enable(false);
 
-	m_ctrlValidTo = new wxCheckBox(this, wxID_ANY,
+	m_ctrlValidTo = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_CONFIG_EVENT_DATE_VALID_TO"),
-		wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT);
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxALIGN_RIGHT);
 	m_ctrlValidTo->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigEventMethod::OnValidTo, this);
 	m_ctrlValidTo->SetHelpText(_("HIDC_CONFIG_EVENT_DATE_VALID_TO"));
 	m_ctrlValidTo->SetToolTip(_("HIDC_CONFIG_EVENT_DATE_VALID_TO"));
@@ -255,8 +291,13 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	{
 		m_ctrlValidTo->SetValue(false);
 	}
-	m_ctrlDateTo = new wxDatePickerCtrl(this, wxID_ANY, date,
-		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
+	m_ctrlDateTo = new wxDatePickerCtrl(
+		this,
+		wxID_ANY,
+		date,
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDP_DROPDOWN | wxDP_SHOWCENTURY,
 		CGenericValidator(&m_dateTo));
 	m_ctrlDateTo->SetHelpText(_("HIDC_CONFIG_EVENT_DATE_END"));
 	m_ctrlDateTo->SetToolTip(_("HIDC_CONFIG_EVENT_DATE_END"));
@@ -265,21 +306,25 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	else
 		m_ctrlDateTo->Enable(false);
 
-	wxStaticText* textStyle = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_EVENT_TYPE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textStyle
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_EVENT_TYPE"), wxDefaultPosition, wxDefaultSize, 0);
 	textStyle->Wrap(-1);
 
-	m_ctrlType = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY); 
+	m_ctrlType = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_READONLY);
 	m_ctrlType->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgConfigEventMethod::OnSelchangeType, this);
 	m_ctrlType->SetHelpText(_("HIDC_CONFIG_EVENT_TYPE"));
 	m_ctrlType->SetToolTip(_("HIDC_CONFIG_EVENT_TYPE"));
 	// If any additional types are added in ARBConfigScoring,
 	// they'll have to be manually added here...
-	static ARBScoringStyle const Styles[] =
-	{
+	static ARBScoringStyle const Styles[] = {
 		ARBScoringStyle::FaultsThenTime,
 		ARBScoringStyle::Faults100ThenTime,
 		ARBScoringStyle::Faults200ThenTime,
@@ -296,55 +341,79 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		m_ctrlType->SetClientData(idx, reinterpret_cast<void*>(Styles[index]));
 	}
 
-	m_ctrlDropFractions = new wxCheckBox(this, wxID_ANY,
+	m_ctrlDropFractions = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_CONFIG_EVENT_DROP_FRACTIONS"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_DropFractions));
 	m_ctrlDropFractions->SetHelpText(_("HIDC_CONFIG_EVENT_DROP_FRACTIONS"));
 	m_ctrlDropFractions->SetToolTip(_("HIDC_CONFIG_EVENT_DROP_FRACTIONS"));
 
-	m_ctrlBonus = new wxCheckBox(this, wxID_ANY,
+	m_ctrlBonus = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_CONFIG_EVENT_BONUSTITLE"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_Bonus));
 	m_ctrlBonus->SetHelpText(_("HIDC_CONFIG_EVENT_BONUSTITLE"));
 	m_ctrlBonus->SetToolTip(_("HIDC_CONFIG_EVENT_BONUSTITLE"));
 
-	m_ctrlSuperQ = new wxCheckBox(this, wxID_ANY,
+	m_ctrlSuperQ = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_CONFIG_EVENT_SUPERQ"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_SuperQ));
 	m_ctrlSuperQ->SetHelpText(_("HIDC_CONFIG_EVENT_SUPERQ"));
 	m_ctrlSuperQ->SetToolTip(_("HIDC_CONFIG_EVENT_SUPERQ"));
 
-	m_ctrlSpeedPts = new wxCheckBox(this, wxID_ANY,
+	m_ctrlSpeedPts = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_CONFIG_EVENT_SPEED"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_SpeedPts));
 	m_ctrlSpeedPts->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigEventMethod::OnSpeedPoints, this);
 	m_ctrlSpeedPts->SetHelpText(_("HIDC_CONFIG_EVENT_SPEED"));
 	m_ctrlSpeedPts->SetToolTip(_("HIDC_CONFIG_EVENT_SPEED"));
 
-	m_ctrlMultiplyText = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_EVENT_TF_MULTIPLY"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlMultiplyText
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_EVENT_TF_MULTIPLY"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlMultiplyText->Wrap(-1);
 
-	m_ctrlMultiply = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), 0,
+	m_ctrlMultiply = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 20), -1),
+		0,
 		CGenericValidator(&m_Multiply));
 	m_ctrlMultiply->SetHelpText(_("HIDC_CONFIG_EVENT_TF_MULTIPLY"));
 	m_ctrlMultiply->SetToolTip(_("HIDC_CONFIG_EVENT_TF_MULTIPLY"));
 
-	m_ctrlPlacementText = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_EVENT_PLACEMENT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlPlacementText
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_EVENT_PLACEMENT"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlPlacementText->Wrap(-1);
 	m_ctrlPlacementText->Show(m_SpeedPts);
 
-	m_ctrlPlacement = new CReportListCtrl(this,
-		wxDefaultPosition, wxDefaultSize,
-		true, CReportListCtrl::SortHeader::None, true, false);
+	m_ctrlPlacement = new CReportListCtrl(
+		this,
+		wxDefaultPosition,
+		wxDefaultSize,
+		true,
+		CReportListCtrl::SortHeader::None,
+		true,
+		false);
 	m_ctrlPlacement->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgConfigEventMethod::OnItemchangedPlacement, this);
 	m_ctrlPlacement->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgConfigEventMethod::OnItemActivatedPlacement, this);
 	m_ctrlPlacement->Bind(wxEVT_KEY_DOWN, &CDlgConfigEventMethod::OnKeydownPlacement, this);
@@ -353,12 +422,11 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlPlacement->InsertColumn(0, _("IDS_COL_PLACE"));
 	m_ctrlPlacement->InsertColumn(1, _("IDS_COL_MULTIPLIER"));
 	index = 0;
-	for (ARBConfigPlaceInfoList::iterator iterPlace = m_PlaceInfo.begin();
-		iterPlace != m_PlaceInfo.end();
-		++index, ++iterPlace)
+	for (ARBConfigPlaceInfoList::iterator iterPlace = m_PlaceInfo.begin(); iterPlace != m_PlaceInfo.end();
+		 ++index, ++iterPlace)
 	{
-		CDlgConfigureDataPlacementPtr pData(std::make_shared<CDlgConfigureDataPlacement>(
-			(*iterPlace)->GetPlace(), (*iterPlace)->GetValue()));
+		CDlgConfigureDataPlacementPtr pData(
+			std::make_shared<CDlgConfigureDataPlacement>((*iterPlace)->GetPlace(), (*iterPlace)->GetValue()));
 		m_ctrlPlacement->InsertItem(pData);
 	}
 	m_ctrlPlacement->SortItems(ComparePlacement);
@@ -366,87 +434,127 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlPlacement->SetColumnWidth(1, wxLIST_AUTOSIZE_USEHEADER);
 	m_ctrlPlacement->Show(m_SpeedPts);
 
-	m_ctrlPlacementNew = new wxButton(this, wxID_ANY,
+	m_ctrlPlacementNew = new wxButton(
+		this,
+		wxID_ANY,
 		_("IDC_CONFIG_EVENT_PLACEMENT_NEW"),
-		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxBU_EXACTFIT);
 	m_ctrlPlacementNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigEventMethod::OnPlacementNew, this);
 	m_ctrlPlacementNew->SetHelpText(_("HIDC_CONFIG_EVENT_PLACEMENT_NEW"));
 	m_ctrlPlacementNew->SetToolTip(_("HIDC_CONFIG_EVENT_PLACEMENT_NEW"));
 	m_ctrlPlacementNew->Show(m_SpeedPts);
 
-	m_ctrlPlacementEdit = new wxButton(this, wxID_ANY,
+	m_ctrlPlacementEdit = new wxButton(
+		this,
+		wxID_ANY,
 		_("IDC_CONFIG_EVENT_PLACEMENT_EDIT"),
-		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxBU_EXACTFIT);
 	m_ctrlPlacementEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigEventMethod::OnPlacementEdit, this);
 	m_ctrlPlacementEdit->SetHelpText(_("HIDC_CONFIG_EVENT_PLACEMENT_EDIT"));
 	m_ctrlPlacementEdit->SetToolTip(_("HIDC_CONFIG_EVENT_PLACEMENT_EDIT"));
 	m_ctrlPlacementEdit->Show(m_SpeedPts);
 
-	m_ctrlPlacementDelete = new wxButton(this, wxID_ANY,
+	m_ctrlPlacementDelete = new wxButton(
+		this,
+		wxID_ANY,
 		_("IDC_CONFIG_EVENT_PLACEMENT_DELETE"),
-		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxBU_EXACTFIT);
 	m_ctrlPlacementDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigEventMethod::OnPlacementDelete, this);
 	m_ctrlPlacementDelete->SetHelpText(_("HIDC_CONFIG_EVENT_PLACEMENT_DELETE"));
 	m_ctrlPlacementDelete->SetToolTip(_("HIDC_CONFIG_EVENT_PLACEMENT_DELETE"));
 	m_ctrlPlacementDelete->Show(m_SpeedPts);
 
-	m_ctrlTimeFaultsCleanQ = new wxCheckBox(this, wxID_ANY,
+	m_ctrlTimeFaultsCleanQ = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_TimeFaultsCleanQ));
 	m_ctrlTimeFaultsCleanQ->SetHelpText(_("HIDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ"));
 	m_ctrlTimeFaultsCleanQ->SetToolTip(_("HIDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ"));
 
-	m_ctrlSubtractTimeFaults = new wxCheckBox(this, wxID_ANY,
+	m_ctrlSubtractTimeFaults = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_SubtractTimeFaults));
 	m_ctrlSubtractTimeFaults->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigEventMethod::OnComputeTimeFaults, this);
 	m_ctrlSubtractTimeFaults->SetHelpText(_("HIDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"));
 	m_ctrlSubtractTimeFaults->SetToolTip(_("HIDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"));
 
-	m_ctrlTimeFaultsUnder = new wxCheckBox(this, wxID_ANY,
+	m_ctrlTimeFaultsUnder = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_CONFIG_EVENT_TIME_FAULTS_UNDER"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_TimeFaultsUnder));
 	m_ctrlTimeFaultsUnder->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigEventMethod::OnComputeTimeFaults, this);
 	m_ctrlTimeFaultsUnder->SetHelpText(_("HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER"));
 	m_ctrlTimeFaultsUnder->SetToolTip(_("HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER"));
 
-	m_ctrlTimeFaultsOver = new wxCheckBox(this, wxID_ANY,
+	m_ctrlTimeFaultsOver = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_CONFIG_EVENT_TIME_FAULTS_OVER"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_TimeFaultsOver));
 	m_ctrlTimeFaultsOver->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigEventMethod::OnComputeTimeFaults, this);
 	m_ctrlTimeFaultsOver->SetHelpText(_("HIDC_CONFIG_EVENT_TIME_FAULTS_OVER"));
 	m_ctrlTimeFaultsOver->SetToolTip(_("HIDC_CONFIG_EVENT_TIME_FAULTS_OVER"));
 
-	m_ctrlTimeFaultsTitlingPts = new wxCheckBox(this, wxID_ANY,
+	m_ctrlTimeFaultsTitlingPts = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_CONFIG_EVENT_TIME_FAULTS_TITLING_PTS"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_TitlingPointsRawFaults));
 	m_ctrlTimeFaultsTitlingPts->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigEventMethod::OnComputeTimeFaults, this);
 	m_ctrlTimeFaultsTitlingPts->SetHelpText(_("HIDC_CONFIG_EVENT_TIME_FAULTS_TITLING_PTS"));
 	m_ctrlTimeFaultsTitlingPts->SetToolTip(_("HIDC_CONFIG_EVENT_TIME_FAULTS_TITLING_PTS"));
 
-	m_ctrlPointsOpeningText = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_EVENT_OPENING_PTS"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlPointsOpeningText
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_EVENT_OPENING_PTS"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlPointsOpeningText->Wrap(-1);
 
-	m_ctrlPointsOpening = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), 0,
+	m_ctrlPointsOpening = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 20), -1),
+		0,
 		CGenericValidator(&m_OpeningPts));
 	m_ctrlPointsOpening->SetHelpText(_("HIDC_CONFIG_EVENT_OPENING_PTS"));
 	m_ctrlPointsOpening->SetToolTip(_("HIDC_CONFIG_EVENT_OPENING_PTS"));
 
-	m_ctrlPointsClosingText = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_EVENT_CLOSING_PTS"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlPointsClosingText
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_EVENT_CLOSING_PTS"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlPointsClosingText->Wrap(-1);
 
-	m_ctrlPointsClosing = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), 0,
+	m_ctrlPointsClosing = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 20), -1),
+		0,
 		CGenericValidator(&m_ClosingPts));
 	m_ctrlPointsClosing->SetHelpText(_("HIDC_CONFIG_EVENT_CLOSING_PTS"));
 	m_ctrlPointsClosing->SetToolTip(_("HIDC_CONFIG_EVENT_CLOSING_PTS"));
@@ -590,15 +698,13 @@ void CDlgConfigEventMethod::UpdateButtons()
 	{
 		bool bEnable = true;
 		if (m_ctrlSubtractTimeFaults->IsShown()
-			&& (m_ctrlTimeFaultsUnder->IsShown()
-			|| m_ctrlTimeFaultsOver->IsShown()))
+			&& (m_ctrlTimeFaultsUnder->IsShown() || m_ctrlTimeFaultsOver->IsShown()))
 		{
 			bEnable = (m_SubtractTimeFaults && (m_TimeFaultsUnder || m_TimeFaultsOver));
 		}
 		m_ctrlMultiply->Enable(bEnable);
 	}
-	if (m_ctrlTimeFaultsUnder->IsShown()
-		|| m_ctrlTimeFaultsOver->IsShown())
+	if (m_ctrlTimeFaultsUnder->IsShown() || m_ctrlTimeFaultsOver->IsShown())
 	{
 		bool bEnableOverUnder = true;
 		if (m_ctrlSubtractTimeFaults->IsShown())
@@ -738,13 +844,13 @@ void CDlgConfigEventMethod::FillLevelList()
 	if (0 == idxDiv) // All
 	{
 		for (ARBConfigDivisionList::iterator iter = m_pVenue->GetDivisions().begin();
-			iter != m_pVenue->GetDivisions().end();
-			++iter)
+			 iter != m_pVenue->GetDivisions().end();
+			 ++iter)
 		{
 			ARBConfigDivisionPtr pDiv = (*iter);
 			for (ARBConfigLevelList::iterator iterLevel = pDiv->GetLevels().begin();
-				iterLevel != pDiv->GetLevels().end();
-				++iterLevel)
+				 iterLevel != pDiv->GetLevels().end();
+				 ++iterLevel)
 			{
 				wxString wxName(StringUtil::stringWX((*iterLevel)->GetName()));
 				if (wxNOT_FOUND == m_ctrlLevel->FindString(wxName, true))
@@ -758,10 +864,11 @@ void CDlgConfigEventMethod::FillLevelList()
 	}
 	else if (0 < idxDiv)
 	{
-		CDlgConfigureMethodDataDivision* pDiv = dynamic_cast<CDlgConfigureMethodDataDivision*>(m_ctrlDivision->GetClientObject(idxDiv));
+		CDlgConfigureMethodDataDivision* pDiv
+			= dynamic_cast<CDlgConfigureMethodDataDivision*>(m_ctrlDivision->GetClientObject(idxDiv));
 		for (ARBConfigLevelList::iterator iterLevel = pDiv->m_Div->GetLevels().begin();
-			iterLevel != pDiv->m_Div->GetLevels().end();
-			++iterLevel)
+			 iterLevel != pDiv->m_Div->GetLevels().end();
+			 ++iterLevel)
 		{
 			index = m_ctrlLevel->Append(StringUtil::stringWX((*iterLevel)->GetName()));
 			if (m_pScoring->GetLevel() == (*iterLevel)->GetName())
@@ -883,8 +990,8 @@ void CDlgConfigEventMethod::OnPlacementNew(wxCommandEvent& evt)
 	CDlgConfigPlaceInfo dlg(placements, -1, 0.0, this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		CDlgConfigureDataPlacementPtr pData(std::make_shared<CDlgConfigureDataPlacement>(
-			dlg.GetPlace(), dlg.GetValue()));
+		CDlgConfigureDataPlacementPtr pData(
+			std::make_shared<CDlgConfigureDataPlacement>(dlg.GetPlace(), dlg.GetValue()));
 		m_ctrlPlacement->InsertItem(pData);
 		m_ctrlPlacement->SortItems(ComparePlacement);
 		m_ctrlPlacement->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
@@ -944,8 +1051,7 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 		m_dateTo.clear();
 
 	// Validate that from-to dates are okay.
-	if (m_dateFrom.IsValid() && m_dateTo.IsValid()
-	&& m_dateFrom > m_dateTo)
+	if (m_dateFrom.IsValid() && m_dateTo.IsValid() && m_dateFrom > m_dateTo)
 	{
 		wxMessageBox(_("IDS_CONFIGEVENT_DATEORDER"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 		m_ctrlDateTo->SetFocus();

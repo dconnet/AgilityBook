@@ -33,16 +33,18 @@
 
 namespace
 {
-	class ARBDogRunOtherPoints_concrete : public ARBDogRunOtherPoints
+class ARBDogRunOtherPoints_concrete : public ARBDogRunOtherPoints
+{
+public:
+	ARBDogRunOtherPoints_concrete()
 	{
-	public:
-		ARBDogRunOtherPoints_concrete() {}
-		ARBDogRunOtherPoints_concrete(ARBDogRunOtherPoints const& rhs)
-			: ARBDogRunOtherPoints(rhs)
-		{
-		}
-	};
+	}
+	ARBDogRunOtherPoints_concrete(ARBDogRunOtherPoints const& rhs)
+		: ARBDogRunOtherPoints(rhs)
+	{
+	}
 };
+}; // namespace
 
 
 ARBDogRunOtherPointsPtr ARBDogRunOtherPoints::New()
@@ -107,8 +109,7 @@ ARBDogRunOtherPoints& ARBDogRunOtherPoints::operator=(ARBDogRunOtherPoints&& rhs
 
 bool ARBDogRunOtherPoints::operator==(ARBDogRunOtherPoints const& rhs) const
 {
-	return m_Name == rhs.m_Name
-		&& m_Points == rhs.m_Points;
+	return m_Name == rhs.m_Name && m_Points == rhs.m_Points;
 }
 
 
@@ -120,23 +121,24 @@ size_t ARBDogRunOtherPoints::GetSearchStrings(std::set<std::wstring>& ioStrings)
 
 
 bool ARBDogRunOtherPoints::Load(
-		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfig const& inConfig,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_PLACEMENT_OTHERPOINTS)
 		return false;
-	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_NAME, m_Name)
-	|| 0 == m_Name.length())
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_NAME, m_Name) || 0 == m_Name.length())
 	{
-		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_PLACEMENT_OTHERPOINTS, ATTRIB_PLACEMENT_OTHERPOINTS_NAME));
+		ioCallback.LogMessage(
+			Localization()->ErrorMissingAttribute(TREE_PLACEMENT_OTHERPOINTS, ATTRIB_PLACEMENT_OTHERPOINTS_NAME));
 		return false;
 	}
 	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_POINTS, m_Points))
 	{
-		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_PLACEMENT_OTHERPOINTS, ATTRIB_PLACEMENT_OTHERPOINTS_POINTS));
+		ioCallback.LogMessage(
+			Localization()->ErrorMissingAttribute(TREE_PLACEMENT_OTHERPOINTS, ATTRIB_PLACEMENT_OTHERPOINTS_POINTS));
 		return false;
 	}
 	return true;
@@ -157,10 +159,10 @@ bool ARBDogRunOtherPoints::Save(ElementNodePtr const& ioTree) const
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBDogRunOtherPointsList::Load(
-		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfig const& inConfig,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	ARBDogRunOtherPointsPtr thing(ARBDogRunOtherPoints::New());
 	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))

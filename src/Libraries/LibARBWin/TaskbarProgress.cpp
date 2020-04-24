@@ -36,7 +36,12 @@ public:
 		, m_pTaskbarList(nullptr)
 	{
 		if (IsWin7OrBetter())
-			::CoCreateInstance(CLSID_TaskbarList, nullptr, CLSCTX_ALL, __uuidof(ITaskbarList3), (void**)&m_pTaskbarList);
+			::CoCreateInstance(
+				CLSID_TaskbarList,
+				nullptr,
+				CLSCTX_ALL,
+				__uuidof(ITaskbarList3),
+				(void**)&m_pTaskbarList);
 	}
 
 	~CTaskbarProgressImpl()
@@ -44,7 +49,7 @@ public:
 		if (m_pTaskbarList)
 			m_pTaskbarList->Release();
 	}
-	
+
 	bool SetProgressState(TBPFLAG tbpFlags) override
 	{
 		return (m_pTaskbarList && SUCCEEDED(m_pTaskbarList->SetProgressState(m_hWnd, tbpFlags)));

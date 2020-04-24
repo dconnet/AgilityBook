@@ -87,11 +87,13 @@ ARBConfig::~ARBConfig()
 bool ARBConfig::operator==(ARBConfig const& rhs) const
 {
 	// Equality does not include actions or the update flag
+	// clang-format off
 	return m_Version == rhs.m_Version
 		&& m_CalSites == rhs.m_CalSites
 		&& m_Venues == rhs.m_Venues
 		&& m_FaultTypes == rhs.m_FaultTypes
 		&& m_OtherPoints == rhs.m_OtherPoints;
+	// clang-format on
 }
 
 
@@ -111,15 +113,11 @@ void ARBConfig::clear()
  * FileVersion 3 moved faults from the venue to the config.
  * This function allows the venue to migrate old file formats.
  */
-bool ARBConfig::LoadFault(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBConfig::LoadFault(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	if (!inTree)
 		return false;
-	if (inTree->GetName() == TREE_FAULTTYPE
-	&& m_FaultTypes.Load(inTree, inVersion, ioCallback))
+	if (inTree->GetName() == TREE_FAULTTYPE && m_FaultTypes.Load(inTree, inVersion, ioCallback))
 		return true;
 	else
 		return false;
@@ -130,32 +128,28 @@ bool ARBConfig::LoadFault(
  * FileVersion 3 moved otherpoints from the venue to the config.
  * This function allows the venue to migrate old file formats.
  */
-bool ARBConfig::LoadOtherPoints(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBConfig::LoadOtherPoints(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	if (!inTree)
 		return false;
-	if (inTree->GetName() == TREE_OTHERPTS
-	&& m_OtherPoints.Load(inTree, inVersion, ioCallback))
+	if (inTree->GetName() == TREE_OTHERPTS && m_OtherPoints.Load(inTree, inVersion, ioCallback))
 		return true;
 	else
 		return false;
 }
 
 
-bool ARBConfig::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBConfig::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_CONFIG)
 		return false;
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_CONFIG_UPDATE, m_bUpdate))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CONFIG, ATTRIB_CONFIG_UPDATE, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
+			TREE_CONFIG,
+			ATTRIB_CONFIG_UPDATE,
+			Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 	inTree->GetAttrib(ATTRIB_CONFIG_VERSION, m_Version);
@@ -262,9 +256,7 @@ std::string ARBConfig::GetDTD(IARBConfigHandler const* inHandler)
 }
 
 
-std::wstring ARBConfig::GetTitleNiceName(
-		std::wstring const& inVenue,
-		std::wstring const& inTitle) const
+std::wstring ARBConfig::GetTitleNiceName(std::wstring const& inVenue, std::wstring const& inTitle) const
 {
 	ARBConfigTitlePtr pTitle;
 	if (m_Venues.FindTitle(inVenue, inTitle, &pTitle))
@@ -277,9 +269,7 @@ std::wstring ARBConfig::GetTitleNiceName(
 }
 
 
-std::wstring ARBConfig::GetTitleCompleteName(
-		ARBDogTitlePtr const& inTitle,
-		bool bAbbrevFirst) const
+std::wstring ARBConfig::GetTitleCompleteName(ARBDogTitlePtr const& inTitle, bool bAbbrevFirst) const
 {
 	if (!inTitle)
 		return std::wstring();
@@ -291,10 +281,7 @@ std::wstring ARBConfig::GetTitleCompleteName(
 }
 
 
-bool ARBConfig::Update(
-		int indent,
-		ARBConfig const& inConfigNew,
-		fmt::wmemory_buffer& ioInfo)
+bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, fmt::wmemory_buffer& ioInfo)
 {
 	int nChanges = 0; // A simple count of changes that have occurred.
 	// Update CalSites. (existing ones are never removed except by an action)
@@ -304,8 +291,8 @@ bool ARBConfig::Update(
 	int nSkipped = 0;
 	{
 		for (ARBConfigCalSiteList::const_iterator iterCalSite = inConfigNew.GetCalSites().begin();
-			iterCalSite != inConfigNew.GetCalSites().end();
-			++iterCalSite)
+			 iterCalSite != inConfigNew.GetCalSites().end();
+			 ++iterCalSite)
 		{
 			ARBConfigCalSitePtr site;
 			if (m_CalSites.FindSite((*iterCalSite)->GetName(), &site))
@@ -337,8 +324,8 @@ bool ARBConfig::Update(
 	nUpdated = 0;
 	nSkipped = 0;
 	for (ARBConfigFaultList::const_iterator iterFaults = inConfigNew.GetFaults().begin();
-	iterFaults != inConfigNew.GetFaults().end();
-	++iterFaults)
+		 iterFaults != inConfigNew.GetFaults().end();
+		 ++iterFaults)
 	{
 		if (!GetFaults().FindFault((*iterFaults)->GetName()))
 		{
@@ -360,8 +347,8 @@ bool ARBConfig::Update(
 	nUpdated = 0;
 	nSkipped = 0;
 	for (ARBConfigOtherPointsList::const_iterator iterOther = inConfigNew.GetOtherPoints().begin();
-	iterOther != inConfigNew.GetOtherPoints().end();
-	++iterOther)
+		 iterOther != inConfigNew.GetOtherPoints().end();
+		 ++iterOther)
 	{
 		ARBConfigOtherPointsPtr pOther;
 		if (GetOtherPoints().FindOtherPoints((*iterOther)->GetName(), &pOther))
@@ -396,15 +383,15 @@ bool ARBConfig::Update(
 	nSkipped = 0;
 	std::wstring venueInfo;
 	for (ARBConfigVenueList::const_iterator iterVenue = inConfigNew.GetVenues().begin();
-	iterVenue != inConfigNew.GetVenues().end();
-	++iterVenue)
+		 iterVenue != inConfigNew.GetVenues().end();
+		 ++iterVenue)
 	{
 		ARBConfigVenuePtr pVenue;
 		if (GetVenues().FindVenue((*iterVenue)->GetName(), &pVenue))
 		{
 			if (*pVenue != *(*iterVenue))
 			{
-				if (pVenue->Update(indent+1, (*iterVenue), venueInfo))
+				if (pVenue->Update(indent + 1, (*iterVenue), venueInfo))
 				{
 					++nUpdated;
 					++nChanges;

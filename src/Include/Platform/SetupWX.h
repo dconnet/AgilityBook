@@ -41,14 +41,14 @@
 // Pre-compiled header setup
 #include <wx/wxprec.h>
 #ifdef __BORLANDC__
-#   pragma hdrstop
+#pragma hdrstop
 #endif
 // Compiler doesn't support precompiled headers,
 // pull in the headers that wxprec includes.
 #ifndef WX_PRECOMP
 #include <wx/defs.h>
-#include <wx/wxchar.h>
 #include <wx/wx.h>
+#include <wx/wxchar.h>
 #endif
 
 // Include most wx headers needed here. Include any that cause warnings.
@@ -81,12 +81,13 @@
 #endif
 
 // Note: wxDLG_UNIT is defined in wx/defs.h
-#define wxDLG_UNIT_X(parent, value) parent->ConvertDialogToPixels(wxSize(value,0)).x
-#define wxDLG_UNIT_Y(parent, value) parent->ConvertDialogToPixels(wxSize(0,value)).y
+#define wxDLG_UNIT_X(parent, value) parent->ConvertDialogToPixels(wxSize(value, 0)).x
+#define wxDLG_UNIT_Y(parent, value) parent->ConvertDialogToPixels(wxSize(0, value)).y
 
 // ARBv3 was developed against v3.0.0+ - anything earlier is not supported.
 // It makes use of features not available in earlier versions.
 #include <wx/version.h>
+
 #include "Platform/arbWarningPop.h"
 
 // wx3.1.2 is min since I'm relying on wxStandardPaths GetResourcesDir behavior
@@ -123,29 +124,29 @@
 
 // Make sure UNICODE settings are consistent
 #if defined(wxUSE_UNICODE) && wxUSE_UNICODE
-	#if !defined(UNICODE)
-		#error UNICODE must be defined when using wxUSE_UNICODE
-	#endif
-	#if !defined(_UNICODE)
-		#error _UNICODE must be defined when using wxUSE_UNICODE
-	#endif
+#if !defined(UNICODE)
+#error UNICODE must be defined when using wxUSE_UNICODE
+#endif
+#if !defined(_UNICODE)
+#error _UNICODE must be defined when using wxUSE_UNICODE
+#endif
 #endif
 
 // WX does not define a common 64bit flag
 
 #if defined(__WXMSW__)
- #if defined(_WIN64) && !defined(ARB_64BIT)
-  #define ARB_64BIT
- #endif
+#if defined(_WIN64) && !defined(ARB_64BIT)
+#define ARB_64BIT
+#endif
 #elif defined(__WXMAC__)
- #if defined(__LP64__) && !defined(ARB_64BIT)
-  #define ARB_64BIT
- #endif
+#if defined(__LP64__) && !defined(ARB_64BIT)
+#define ARB_64BIT
+#endif
 #elif defined(__WXGTK__) || defined(__WXX11__)
- // Just assume GTK/X11 means linux (ubuntu is what I've tested)
- #if defined(__LP64__) && !defined(ARB_64BIT)
-  #define ARB_64BIT
- #endif
+// Just assume GTK/X11 means linux (ubuntu is what I've tested)
+#if defined(__LP64__) && !defined(ARB_64BIT)
+#define ARB_64BIT
+#endif
 #else
 #error Unknown platform
 #endif
@@ -155,13 +156,13 @@
  * Macros to enable easy first control focus.
  */
 #define DECLARE_ON_INIT() \
-		wxWindow* m_Focus = nullptr; \
-		void OnInit(wxInitDialogEvent& evt);
+	wxWindow* m_Focus = nullptr; \
+	void OnInit(wxInitDialogEvent& evt);
 #define IMPLEMENT_ON_INIT(cls, ctrl) \
-		{ \
-			Bind(wxEVT_INIT_DIALOG, &cls::OnInit, this); \
-			m_Focus = ctrl; \
-		}
+	{ \
+		Bind(wxEVT_INIT_DIALOG, &cls::OnInit, this); \
+		m_Focus = ctrl; \
+	}
 #define DEFINE_ON_INIT(cls) \
 	void cls::OnInit(wxInitDialogEvent& evt) \
 	{ \

@@ -61,13 +61,25 @@ public:
 		: m_List(list)
 	{
 	}
-	~CDlgListCtrlData() {}
-	virtual bool HasIcon() const				{return false;}
-	virtual int OnNeedIcon() const				{return -1;}
+	~CDlgListCtrlData()
+	{
+	}
+	virtual bool HasIcon() const
+	{
+		return false;
+	}
+	virtual int OnNeedIcon() const
+	{
+		return -1;
+	}
 	void OnNeedListItem(long iCol, wxListItem& info) const override;
 	virtual bool OnEdit() = 0;
 	virtual void Apply() = 0;
-	virtual ARBCalendarPtr GetCalendar() const	{return ARBCalendarPtr();}
+	virtual ARBCalendarPtr GetCalendar() const
+	{
+		return ARBCalendarPtr();
+	}
+
 protected:
 	CReportListCtrl* m_List;
 };
@@ -90,20 +102,25 @@ class CDlgListCtrlDataCalendar : public CDlgListCtrlData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgListCtrlDataCalendar)
 public:
-	CDlgListCtrlDataCalendar(
-			CDlgListCtrl* parent,
-			ARBCalendarPtr const& inCal)
+	CDlgListCtrlDataCalendar(CDlgListCtrl* parent, ARBCalendarPtr const& inCal)
 		: CDlgListCtrlData(parent->m_ctrlList)
 		, m_Parent(parent)
 		, m_pCal(inCal)
 	{
 	}
-	bool HasIcon() const override {return true;}
+	bool HasIcon() const override
+	{
+		return true;
+	}
 	int OnNeedIcon() const override;
 	std::wstring OnNeedText(long iCol) const override;
 	bool OnEdit() override;
 	void Apply() override;
-	ARBCalendarPtr GetCalendar() const override {return m_pCal;}
+	ARBCalendarPtr GetCalendar() const override
+	{
+		return m_pCal;
+	}
+
 private:
 	CDlgListCtrl* m_Parent;
 	ARBCalendarPtr m_pCal;
@@ -176,17 +193,17 @@ class CDlgListCtrlDataFaults : public CDlgListCtrlData
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgListCtrlDataFaults)
 public:
 	static void GetAllFaults(
-			CDlgListCtrl const* pDlg,
-			CReportListCtrl const* ctrl,
-			CAgilityBookDoc* pDoc,
-			ARBDogRunPtr const& inRun,
-			std::set<std::wstring>& faults);
+		CDlgListCtrl const* pDlg,
+		CReportListCtrl const* ctrl,
+		CAgilityBookDoc* pDoc,
+		ARBDogRunPtr const& inRun,
+		std::set<std::wstring>& faults);
 	CDlgListCtrlDataFaults(
-			CDlgListCtrl* pDlg,
-			CReportListCtrl* list,
-			CAgilityBookDoc* pDoc,
-			ARBDogRunPtr const& inRun,
-			std::wstring fault)
+		CDlgListCtrl* pDlg,
+		CReportListCtrl* list,
+		CAgilityBookDoc* pDoc,
+		ARBDogRunPtr const& inRun,
+		std::wstring fault)
 		: CDlgListCtrlData(list)
 		, m_pDoc(pDoc)
 		, m_pDlg(pDlg)
@@ -194,9 +211,13 @@ public:
 		, m_Fault(fault)
 	{
 	}
-	std::wstring OnNeedText(long iCol) const override {return m_Fault;}
+	std::wstring OnNeedText(long iCol) const override
+	{
+		return m_Fault;
+	}
 	bool OnEdit() override;
 	void Apply() override;
+
 private:
 	CAgilityBookDoc* m_pDoc;
 	CDlgListCtrl* m_pDlg;
@@ -207,19 +228,19 @@ typedef std::shared_ptr<CDlgListCtrlDataFaults> CDlgListCtrlDataFaultsPtr;
 
 
 void CDlgListCtrlDataFaults::GetAllFaults(
-		CDlgListCtrl const* pDlg,
-		CReportListCtrl const* ctrl,
-		CAgilityBookDoc* pDoc,
-		ARBDogRunPtr const& inRun,
-		std::set<std::wstring>& faults)
+	CDlgListCtrl const* pDlg,
+	CReportListCtrl const* ctrl,
+	CAgilityBookDoc* pDoc,
+	ARBDogRunPtr const& inRun,
+	std::set<std::wstring>& faults)
 {
 	faults.clear();
 	pDoc->Book().GetAllFaultTypes(faults);
 	if (inRun)
 	{
 		for (ARBDogFaultList::const_iterator iterFault = inRun->GetFaults().begin();
-			iterFault != inRun->GetFaults().end();
-			++iterFault)
+			 iterFault != inRun->GetFaults().end();
+			 ++iterFault)
 		{
 			faults.insert((*iterFault));
 		}
@@ -264,10 +285,10 @@ class CDlgListCtrlDataOtherPoints : public CDlgListCtrlData
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgListCtrlDataOtherPoints)
 public:
 	CDlgListCtrlDataOtherPoints(
-			CReportListCtrl* list,
-			ARBConfig& config,
-			ARBDogRunPtr const& inRun,
-			ARBDogRunOtherPointsPtr const& inOther)
+		CReportListCtrl* list,
+		ARBConfig& config,
+		ARBDogRunPtr const& inRun,
+		ARBDogRunOtherPointsPtr const& inOther)
 		: CDlgListCtrlData(list)
 		, m_pConfig(config)
 		, m_pRun(inRun)
@@ -277,6 +298,7 @@ public:
 	std::wstring OnNeedText(long iCol) const override;
 	bool OnEdit() override;
 	void Apply() override;
+
 private:
 	ARBConfig& m_pConfig;
 	ARBDogRunPtr m_pRun;
@@ -321,10 +343,10 @@ class CDlgListCtrlDataPartners : public CDlgListCtrlData
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgListCtrlDataPartners)
 public:
 	CDlgListCtrlDataPartners(
-			CDlgListCtrl* pDlg,
-			CReportListCtrl* list,
-			ARBDogRunPtr const& inRun,
-			ARBDogRunPartnerPtr const& inPartner)
+		CDlgListCtrl* pDlg,
+		CReportListCtrl* list,
+		ARBDogRunPtr const& inRun,
+		ARBDogRunPartnerPtr const& inPartner)
 		: CDlgListCtrlData(list)
 		, m_pDlg(pDlg)
 		, m_pRun(inRun)
@@ -334,6 +356,7 @@ public:
 	std::wstring OnNeedText(long iCol) const override;
 	bool OnEdit() override;
 	void Apply() override;
+
 private:
 	CDlgListCtrl* m_pDlg;
 	ARBDogRunPtr m_pRun;
@@ -387,11 +410,11 @@ wxEND_EVENT_TABLE()
 
 // Calendar
 CDlgListCtrl::CDlgListCtrl(
-		CAgilityBookDoc* pDoc,
-		ARBDate const& date,
-		std::vector<ARBCalendarPtr> const* entries,
-		CTabView* pTabView,
-		wxWindow* pParent)
+	CAgilityBookDoc* pDoc,
+	ARBDate const& date,
+	std::vector<ARBCalendarPtr> const* entries,
+	CTabView* pTabView,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
 	, m_ctrlNew(nullptr)
@@ -437,11 +460,7 @@ CDlgListCtrl::CDlgListCtrl(
 
 
 // Faults/Partners
-CDlgListCtrl::CDlgListCtrl(
-		ARBWhatToList inType,
-		CAgilityBookDoc* pDoc,
-		ARBDogRunPtr const& inRun,
-		wxWindow* pParent)
+CDlgListCtrl::CDlgListCtrl(ARBWhatToList inType, CAgilityBookDoc* pDoc, ARBDogRunPtr const& inRun, wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
 	, m_ctrlNew(nullptr)
@@ -472,9 +491,11 @@ CDlgListCtrl::CDlgListCtrl(
 	{
 		Create(StringUtil::stringW(_("IDS_FAULT_TYPES")), pParent, false);
 		m_ctrlList->InsertColumn(nCols++, _("IDS_COL_FAULT"));
-		for (ARBDogFaultList::const_iterator iter = m_pRun->GetFaults().begin(); iter != m_pRun->GetFaults().end(); ++iter)
+		for (ARBDogFaultList::const_iterator iter = m_pRun->GetFaults().begin(); iter != m_pRun->GetFaults().end();
+			 ++iter)
 		{
-			CDlgListCtrlDataFaultsPtr pData(std::make_shared<CDlgListCtrlDataFaults>(this, m_ctrlList, m_pDoc, m_pRun, (*iter)));
+			CDlgListCtrlDataFaultsPtr pData(
+				std::make_shared<CDlgListCtrlDataFaults>(this, m_ctrlList, m_pDoc, m_pRun, (*iter)));
 			items.push_back(pData);
 		}
 	}
@@ -485,9 +506,12 @@ CDlgListCtrl::CDlgListCtrl(
 		m_ctrlList->InsertColumn(nCols++, _("IDS_COL_DOG"));
 		m_ctrlList->InsertColumn(nCols++, _("IDS_COL_NUMBER"));
 		m_ctrlList->InsertColumn(nCols++, _("IDS_COL_HANDLER"));
-		for (ARBDogRunPartnerList::const_iterator iter = m_pRun->GetPartners().begin(); iter != m_pRun->GetPartners().end(); ++iter)
+		for (ARBDogRunPartnerList::const_iterator iter = m_pRun->GetPartners().begin();
+			 iter != m_pRun->GetPartners().end();
+			 ++iter)
 		{
-			CDlgListCtrlDataPartnersPtr pData(std::make_shared<CDlgListCtrlDataPartners>(this, m_ctrlList, m_pRun, *iter));
+			CDlgListCtrlDataPartnersPtr pData(
+				std::make_shared<CDlgListCtrlDataPartners>(this, m_ctrlList, m_pRun, *iter));
 			items.push_back(pData);
 		}
 	}
@@ -500,10 +524,7 @@ CDlgListCtrl::CDlgListCtrl(
 
 
 // OtherPoints
-CDlgListCtrl::CDlgListCtrl(
-		ARBConfig& pConfig,
-		ARBDogRunPtr const& inRun,
-		wxWindow* pParent)
+CDlgListCtrl::CDlgListCtrl(ARBConfig& pConfig, ARBDogRunPtr const& inRun, wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
 	, m_ctrlNew(nullptr)
@@ -533,30 +554,41 @@ CDlgListCtrl::CDlgListCtrl(
 	m_ctrlList->InsertColumn(nCols++, _("IDS_COL_NAME"));
 	m_ctrlList->InsertColumn(nCols++, _("IDS_COL_POINTS"));
 	std::vector<CDlgListCtrlDataPtr> items;
-	for (ARBDogRunOtherPointsList::const_iterator iter = m_pRun->GetOtherPoints().begin(); iter != m_pRun->GetOtherPoints().end(); ++iter)
+	for (ARBDogRunOtherPointsList::const_iterator iter = m_pRun->GetOtherPoints().begin();
+		 iter != m_pRun->GetOtherPoints().end();
+		 ++iter)
 	{
-		CDlgListCtrlDataOtherPointsPtr pData(std::make_shared<CDlgListCtrlDataOtherPoints>(m_ctrlList, *m_pConfig, m_pRun, *iter));
+		CDlgListCtrlDataOtherPointsPtr pData(
+			std::make_shared<CDlgListCtrlDataOtherPoints>(m_ctrlList, *m_pConfig, m_pRun, *iter));
 		items.push_back(pData);
 	}
 	FinishCreate(nCols, items);
 }
 
 
-bool CDlgListCtrl::Create(
-		std::wstring const& inCaption,
-		wxWindow* pParent,
-		bool bHasImageList)
+bool CDlgListCtrl::Create(std::wstring const& inCaption, wxWindow* pParent, bool bHasImageList)
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	if (!wxDialog::Create(pParent, wxID_ANY, inCaption.c_str(), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER))
+	if (!wxDialog::Create(
+			pParent,
+			wxID_ANY,
+			inCaption.c_str(),
+			wxDefaultPosition,
+			wxDefaultSize,
+			wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER))
 		return false;
 
 	// Controls (these are done first to control tab order)
 
-	m_ctrlList = new CReportListCtrl(this,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(250, 80)),
-		true, CReportListCtrl::SortHeader::NoSort, true, bHasImageList);
+	m_ctrlList = new CReportListCtrl(
+		this,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(250, 80)),
+		true,
+		CReportListCtrl::SortHeader::NoSort,
+		true,
+		bHasImageList);
 	if (bHasImageList)
 	{
 		m_imgTentative = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrQuestion));
@@ -577,44 +609,32 @@ bool CDlgListCtrl::Create(
 
 	wxButton* btnCancel = new wxButton(this, wxID_CANCEL);
 
-	m_ctrlUp = new wxButton(this, wxID_ANY,
-		_("IDC_LIST_MOVE_UP"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlUp = new wxButton(this, wxID_ANY, _("IDC_LIST_MOVE_UP"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlUp->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgListCtrl::OnMoveUp, this);
 	m_ctrlUp->SetHelpText(_("HIDC_LIST_MOVE_UP"));
 	m_ctrlUp->SetToolTip(_("HIDC_LIST_MOVE_UP"));
 
-	m_ctrlDown = new wxButton(this, wxID_ANY,
-		_("IDC_LIST_MOVE_DOWN"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlDown = new wxButton(this, wxID_ANY, _("IDC_LIST_MOVE_DOWN"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlDown->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgListCtrl::OnMoveDown, this);
 	m_ctrlDown->SetHelpText(_("HIDC_LIST_MOVE_DOWN"));
 	m_ctrlDown->SetToolTip(_("HIDC_LIST_MOVE_DOWN"));
 
-	m_ctrlNew = new wxButton(this, wxID_ANY,
-		_("IDC_LIST_NEW"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlNew = new wxButton(this, wxID_ANY, _("IDC_LIST_NEW"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgListCtrl::OnNew, this);
 	m_ctrlNew->SetHelpText(_("HIDC_LIST_NEW"));
 	m_ctrlNew->SetToolTip(_("HIDC_LIST_NEW"));
 
-	m_ctrlEdit = new wxButton(this, wxID_ANY,
-		_("IDC_LIST_EDIT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlEdit = new wxButton(this, wxID_ANY, _("IDC_LIST_EDIT"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgListCtrl::OnEdit, this);
 	m_ctrlEdit->SetHelpText(_("HIDC_LIST_EDIT"));
 	m_ctrlEdit->SetToolTip(_("HIDC_LIST_EDIT"));
 
-	m_ctrlDelete = new wxButton(this, wxID_ANY,
-		_("IDC_LIST_DELETE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlDelete = new wxButton(this, wxID_ANY, _("IDC_LIST_DELETE"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgListCtrl::OnDelete, this);
 	m_ctrlDelete->SetHelpText(_("HIDC_LIST_DELETE"));
 	m_ctrlDelete->SetToolTip(_("HIDC_LIST_DELETE"));
 
-	m_ctrlCreateTrial = new wxButton(this, wxID_ANY,
-		_("IDC_LIST_TRIAL"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlCreateTrial = new wxButton(this, wxID_ANY, _("IDC_LIST_TRIAL"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlCreateTrial->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgListCtrl::OnCreateTrial, this);
 	m_ctrlCreateTrial->SetHelpText(_("HIDC_LIST_TRIAL"));
 	m_ctrlCreateTrial->SetToolTip(_("HIDC_LIST_TRIAL"));
@@ -659,9 +679,7 @@ bool CDlgListCtrl::Create(
 }
 
 
-void CDlgListCtrl::FinishCreate(
-		int nCols,
-		std::vector<CDlgListCtrlDataPtr>& items)
+void CDlgListCtrl::FinishCreate(int nCols, std::vector<CDlgListCtrlDataPtr>& items)
 {
 	int i = 0;
 	for (std::vector<CDlgListCtrlDataPtr>::const_iterator iter = items.begin(); iter != items.end(); ++i, ++iter)
@@ -741,9 +759,7 @@ void CDlgListCtrl::DoEdit()
 }
 
 
-void CDlgListCtrl::GetAllPartners(
-		std::set<std::wstring>& ioPartners,
-		std::set<std::wstring>& ioDogs) const
+void CDlgListCtrl::GetAllPartners(std::set<std::wstring>& ioPartners, std::set<std::wstring>& ioDogs) const
 {
 	if (m_pDoc)
 	{
@@ -795,64 +811,67 @@ void CDlgListCtrl::OnNew(wxCommandEvent& evt)
 	switch (m_What)
 	{
 	case ARBWhatToList::Calendar:
+	{
+		ARBCalendarPtr cal(ARBCalendar::New());
+		cal->SetStartDate(m_Date);
+		cal->SetEndDate(m_Date + 1);
+		CDlgCalendar dlg(cal, m_pDoc);
+		if (wxID_OK == dlg.ShowModal())
 		{
-			ARBCalendarPtr cal(ARBCalendar::New());
-			cal->SetStartDate(m_Date);
-			cal->SetEndDate(m_Date + 1);
-			CDlgCalendar dlg(cal, m_pDoc);
-			if (wxID_OK == dlg.ShowModal())
+			if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
 			{
-				if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
-				{
-					bUpdate = true;
-					CDlgListCtrlDataCalendarPtr pData(std::make_shared<CDlgListCtrlDataCalendar>(this, cal));
-					nItem = m_ctrlList->InsertItem(pData);
-				}
+				bUpdate = true;
+				CDlgListCtrlDataCalendarPtr pData(std::make_shared<CDlgListCtrlDataCalendar>(this, cal));
+				nItem = m_ctrlList->InsertItem(pData);
 			}
 		}
-		break;
+	}
+	break;
 
 	case ARBWhatToList::Faults:
+	{
+		std::set<std::wstring> faults;
+		CDlgListCtrlDataFaults::GetAllFaults(this, m_ctrlList, m_pDoc, m_pRun, faults);
+		CDlgFault dlg(faults, wxEmptyString, this);
+		if (wxID_OK == dlg.ShowModal())
 		{
-			std::set<std::wstring> faults;
-			CDlgListCtrlDataFaults::GetAllFaults(this, m_ctrlList, m_pDoc, m_pRun, faults);
-			CDlgFault dlg(faults, wxEmptyString, this);
-			if (wxID_OK == dlg.ShowModal())
-			{
-				bUpdate = true;
-				CDlgListCtrlDataFaultsPtr pData(std::make_shared<CDlgListCtrlDataFaults>(this, m_ctrlList, m_pDoc, m_pRun, dlg.GetFault()));
-				nItem = m_ctrlList->InsertItem(pData);
-			}
+			bUpdate = true;
+			CDlgListCtrlDataFaultsPtr pData(
+				std::make_shared<CDlgListCtrlDataFaults>(this, m_ctrlList, m_pDoc, m_pRun, dlg.GetFault()));
+			nItem = m_ctrlList->InsertItem(pData);
 		}
-		break;
+	}
+	break;
 
 	case ARBWhatToList::OtherPoints:
+	{
+		ARBDogRunOtherPointsPtr pOther(ARBDogRunOtherPoints::New());
+		CDlgOtherPoint dlg(*m_pConfig, pOther, this);
+		if (wxID_OK == dlg.ShowModal())
 		{
-			ARBDogRunOtherPointsPtr pOther(ARBDogRunOtherPoints::New());
-			CDlgOtherPoint dlg(*m_pConfig, pOther, this);
-			if (wxID_OK == dlg.ShowModal())
-			{
-				bUpdate = true;
-				CDlgListCtrlDataOtherPointsPtr pData(std::make_shared<CDlgListCtrlDataOtherPoints>(m_ctrlList, *m_pConfig, m_pRun, pOther));
-				nItem = m_ctrlList->InsertItem(pData);
-			}
+			bUpdate = true;
+			CDlgListCtrlDataOtherPointsPtr pData(
+				std::make_shared<CDlgListCtrlDataOtherPoints>(m_ctrlList, *m_pConfig, m_pRun, pOther));
+			nItem = m_ctrlList->InsertItem(pData);
 		}
-		break;
+	}
+	break;
 
 	case ARBWhatToList::Partners:
+	{
+		ARBDogRunPartnerPtr partner(ARBDogRunPartner::New());
+		std::set<std::wstring> handlers, dogs;
+		GetAllPartners(handlers, dogs);
+		CDlgPartner dlg(partner, handlers, dogs);
+		if (wxID_OK == dlg.ShowModal())
 		{
-			ARBDogRunPartnerPtr partner(ARBDogRunPartner::New());
-			std::set<std::wstring> handlers, dogs;
-			GetAllPartners(handlers, dogs);
-			CDlgPartner dlg(partner, handlers, dogs);
-			if (wxID_OK == dlg.ShowModal())
-			{
-				bUpdate = true;
-				CDlgListCtrlDataPartnersPtr pData(std::make_shared<CDlgListCtrlDataPartners>(this, m_ctrlList, m_pRun, partner));
-				nItem = m_ctrlList->InsertItem(pData);
-			}
+			bUpdate = true;
+			CDlgListCtrlDataPartnersPtr pData(
+				std::make_shared<CDlgListCtrlDataPartners>(this, m_ctrlList, m_pRun, partner));
+			nItem = m_ctrlList->InsertItem(pData);
 		}
-		break;
+	}
+	break;
 	}
 	if (bUpdate)
 	{
@@ -947,11 +966,12 @@ bool CDlgListCtrl::DoOK()
 	switch (m_What)
 	{
 	case ARBWhatToList::Calendar:
-		{
-			for (std::vector<ARBCalendarPtr>::const_iterator iter = m_CalEntries->begin(); iter != m_CalEntries->end(); ++iter)
-				m_pDoc->Book().GetCalendar().DeleteCalendar((*iter));
-		}
-		break;
+	{
+		for (std::vector<ARBCalendarPtr>::const_iterator iter = m_CalEntries->begin(); iter != m_CalEntries->end();
+			 ++iter)
+			m_pDoc->Book().GetCalendar().DeleteCalendar((*iter));
+	}
+	break;
 	case ARBWhatToList::Faults:
 		m_pRun->GetFaults().clear();
 		break;
@@ -975,18 +995,18 @@ bool CDlgListCtrl::DoOK()
 	switch (m_What)
 	{
 	case ARBWhatToList::Calendar:
+	{
+		if (CAgilityBookOptions::AutoDeleteCalendarEntries())
 		{
-			if (CAgilityBookOptions::AutoDeleteCalendarEntries())
-			{
-				ARBDate today(ARBDate::Today());
-				today -= CAgilityBookOptions::DaysTillEntryIsPast();
-				m_pDoc->Book().GetCalendar().TrimEntries(today);
-			}
-			m_pDoc->Book().GetCalendar().sort();
-			CUpdateHint hint(UPDATE_CALENDAR_VIEW);
-			m_pDoc->UpdateAllViews(nullptr, &hint);
+			ARBDate today(ARBDate::Today());
+			today -= CAgilityBookOptions::DaysTillEntryIsPast();
+			m_pDoc->Book().GetCalendar().TrimEntries(today);
 		}
-		break;
+		m_pDoc->Book().GetCalendar().sort();
+		CUpdateHint hint(UPDATE_CALENDAR_VIEW);
+		m_pDoc->UpdateAllViews(nullptr, &hint);
+	}
+	break;
 	case ARBWhatToList::Faults:
 	case ARBWhatToList::OtherPoints:
 	case ARBWhatToList::Partners:
@@ -998,8 +1018,7 @@ bool CDlgListCtrl::DoOK()
 
 void CDlgListCtrl::OnOk(wxCommandEvent& evt)
 {
-	if (Validate() && TransferDataFromWindow()
-	&& DoOK())
+	if (Validate() && TransferDataFromWindow() && DoOK())
 	{
 		EndDialog(wxID_OK);
 	}

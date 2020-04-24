@@ -30,9 +30,7 @@
 #endif
 
 
-CDlgFind::CDlgFind(
-		IFindCallback& callback,
-		wxWindow* pParent)
+CDlgFind::CDlgFind(IFindCallback& callback, wxWindow* pParent)
 	: wxDialog()
 	, m_Callback(callback)
 	, m_textCtrl(nullptr)
@@ -51,33 +49,30 @@ CDlgFind::CDlgFind(
 
 	// Controls (these are done first to control tab order)
 
-	wxStaticText* staticText = new wxStaticText(this, wxID_ANY,
-		_("IDC_FIND_NAME"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* staticText
+		= new wxStaticText(this, wxID_ANY, _("IDC_FIND_NAME"), wxDefaultPosition, wxDefaultSize, 0);
 	staticText->Wrap(-1);
 
-	m_textCtrl = new CTextCtrl(this, wxID_ANY, text,
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_textCtrl = new CTextCtrl(this, wxID_ANY, text, wxDefaultPosition, wxDefaultSize, 0);
 	m_textCtrl->Bind(wxEVT_COMMAND_TEXT_UPDATED, &CDlgFind::OnChangeName, this);
 	m_textCtrl->SetHelpText(_("HIDC_FIND_NAME"));
 
-	m_checkBox = new wxCheckBox(this, wxID_ANY,
-		_("IDC_FIND_CASE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_checkBox = new wxCheckBox(this, wxID_ANY, _("IDC_FIND_CASE"), wxDefaultPosition, wxDefaultSize, 0);
 	m_checkBox->SetValue(m_Callback.MatchCase());
 	m_checkBox->SetHelpText(_("HIDC_FIND_CASE"));
 
-	wxString radioSearchFields[] =
-	{
-		_("IDC_FIND_ALL"),
-		_("IDC_FIND_VISIBLE")
-	};
+	wxString radioSearchFields[] = {_("IDC_FIND_ALL"), _("IDC_FIND_VISIBLE")};
 	int radioSearchCount = sizeof(radioSearchFields) / sizeof(radioSearchFields[0]);
-	m_radioBoxSearch = new wxRadioBox(this, wxID_ANY,
+	m_radioBoxSearch = new wxRadioBox(
+		this,
+		wxID_ANY,
 		_("IDC_FIND_FIELDS"),
-		wxDefaultPosition, wxDefaultSize,
-		radioSearchCount, radioSearchFields,
-		1, wxRA_SPECIFY_COLS);
+		wxDefaultPosition,
+		wxDefaultSize,
+		radioSearchCount,
+		radioSearchFields,
+		1,
+		wxRA_SPECIFY_COLS);
 	m_radioBoxSearch->SetItemHelpText(0, _("HIDC_FIND_ALL"));
 #if wxUSE_TOOLTIPS
 	m_radioBoxSearch->SetItemToolTip(0, _("HIDC_FIND_ALL"));
@@ -90,17 +85,18 @@ CDlgFind::CDlgFind(
 	if (!m_Callback.EnableSearch())
 		m_radioBoxSearch->Enable(false);
 
-	wxString radioDirectionFields[] =
-	{
-		_("IDC_FIND_UP"),
-		_("IDC_FIND_DOWN")
-	};
+	wxString radioDirectionFields[] = {_("IDC_FIND_UP"), _("IDC_FIND_DOWN")};
 	int radioDirectionCount = sizeof(radioDirectionFields) / sizeof(radioDirectionFields[0]);
-	m_radioBoxDir = new wxRadioBox(this, wxID_ANY,
+	m_radioBoxDir = new wxRadioBox(
+		this,
+		wxID_ANY,
 		_("IDC_FIND_DIRECTION"),
-		wxDefaultPosition, wxDefaultSize,
-		radioDirectionCount, radioDirectionFields,
-		1, wxRA_SPECIFY_COLS);
+		wxDefaultPosition,
+		wxDefaultSize,
+		radioDirectionCount,
+		radioDirectionFields,
+		1,
+		wxRA_SPECIFY_COLS);
 	m_radioBoxDir->SetItemHelpText(0, _("HIDC_FIND_UP"));
 #if wxUSE_TOOLTIPS
 	m_radioBoxDir->SetItemToolTip(0, _("HIDC_FIND_UP"));
@@ -113,16 +109,12 @@ CDlgFind::CDlgFind(
 	if (!m_Callback.EnableDirection())
 		m_radioBoxDir->Enable(false);
 
-	m_btnFind = new wxButton(this, wxID_ANY,
-		_("IDC_FIND_NEXT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_btnFind = new wxButton(this, wxID_ANY, _("IDC_FIND_NEXT"), wxDefaultPosition, wxDefaultSize, 0);
 	m_btnFind->SetDefault();
 	m_btnFind->Enable(0 < text.length());
 	m_btnFind->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgFind::OnFind, this);
 
-	wxButton* btnClose = new wxButton(this, wxID_CANCEL,
-		_("IDC_FIND_CLOSE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* btnClose = new wxButton(this, wxID_CANCEL, _("IDC_FIND_CLOSE"), wxDefaultPosition, wxDefaultSize, 0);
 
 	// Sizers
 

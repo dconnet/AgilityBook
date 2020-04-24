@@ -94,10 +94,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfig& ioConfig,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfig& ioConfig,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -114,10 +114,7 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(
-			int indent,
-			ARBConfigVenuePtr const& inVenueNew,
-			std::wstring& ioInfo);
+	bool Update(int indent, ARBConfigVenuePtr const& inVenueNew, std::wstring& ioInfo);
 
 	/*
 	 * Getters/setters.
@@ -234,10 +231,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfig& ioConfig,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfig& ioConfig,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Sort the list by name.
@@ -261,10 +258,7 @@ public:
 	 * @param inUseShortName Search by shortname instead of longname.
 	 * @return MultiQ exists.
 	 */
-	bool VerifyMultiQ(
-			std::wstring const& inVenue,
-			std::wstring const& inMultiQ,
-			bool inUseShortName = false) const;
+	bool VerifyMultiQ(std::wstring const& inVenue, std::wstring const& inMultiQ, bool inUseShortName = false) const;
 
 	/**
 	 * Verify a level exists.
@@ -273,10 +267,7 @@ public:
 	 * @param inLevel Level to verify.
 	 * @return Level exists.
 	 */
-	bool VerifyLevel(
-			std::wstring const& inVenue,
-			std::wstring const& inDivision,
-			std::wstring const& inLevel) const;
+	bool VerifyLevel(std::wstring const& inVenue, std::wstring const& inDivision, std::wstring const& inLevel) const;
 
 	/**
 	 * Verify an event exists.
@@ -288,11 +279,11 @@ public:
 	 * @return Event exists.
 	 */
 	bool VerifyEvent(
-			std::wstring const& inVenue,
-			std::wstring const& inDivision,
-			std::wstring const& inLevel,
-			std::wstring const& inEvent,
-			ARBDate const& inDate) const;
+		std::wstring const& inVenue,
+		std::wstring const& inDivision,
+		std::wstring const& inLevel,
+		std::wstring const& inEvent,
+		ARBDate const& inDate) const;
 
 	/**
 	 * Find a title by the complete name.
@@ -304,10 +295,10 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitleCompleteName(
-			std::wstring const& inVenue,
-			std::wstring const& inName,
-			bool bAbbrevFirst = true,
-			ARBConfigTitlePtr* outTitle = nullptr) const;
+		std::wstring const& inVenue,
+		std::wstring const& inName,
+		bool bAbbrevFirst = true,
+		ARBConfigTitlePtr* outTitle = nullptr) const;
 
 	/**
 	 * Find a title.
@@ -316,10 +307,8 @@ public:
 	 * @param outTitle Pointer to found object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindTitle(
-			std::wstring const& inVenue,
-			std::wstring const& inTitle,
-			ARBConfigTitlePtr* outTitle = nullptr) const;
+	bool FindTitle(std::wstring const& inVenue, std::wstring const& inTitle, ARBConfigTitlePtr* outTitle = nullptr)
+		const;
 
 	/**
 	 * Delete a title.
@@ -334,9 +323,7 @@ public:
 	 * @param outVenue Object that was found.
 	 * @return Whether the object was found.
 	 */
-	bool FindVenue(
-			std::wstring const& inVenue,
-			ARBConfigVenuePtr* outVenue = nullptr) const;
+	bool FindVenue(std::wstring const& inVenue, ARBConfigVenuePtr* outVenue = nullptr) const;
 
 	/**
 	 * Add a venue.
@@ -344,9 +331,7 @@ public:
 	 * @param outVenue Pointer to new object, NULL if name already exists or is empty.
 	 * @return Whether the object was added.
 	 */
-	bool AddVenue(
-			std::wstring const& inVenue,
-			ARBConfigVenuePtr* outVenue = nullptr);
+	bool AddVenue(std::wstring const& inVenue, ARBConfigVenuePtr* outVenue = nullptr);
 
 	/**
 	 * Add a venue.
@@ -374,11 +359,11 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindEvent(
-			std::wstring const& inVenue,
-			std::wstring const& inEvent,
-			std::wstring const& inDivision,
-			std::wstring const& inLevel,
-			ARBDate const& inDate,
-			ARBConfigEventPtr* outEvent = nullptr,
-			ARBConfigScoringPtr* outScoring = nullptr) const;
+		std::wstring const& inVenue,
+		std::wstring const& inEvent,
+		std::wstring const& inDivision,
+		std::wstring const& inLevel,
+		ARBDate const& inDate,
+		ARBConfigEventPtr* outEvent = nullptr,
+		ARBConfigScoringPtr* outScoring = nullptr) const;
 };

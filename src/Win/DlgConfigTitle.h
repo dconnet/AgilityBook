@@ -27,9 +27,7 @@ class wxDatePickerCtrl;
 class CDlgConfigTitle : public wxDialog
 {
 public:
-	CDlgConfigTitle(
-			ARBConfigTitlePtr const& inTitle,
-			wxWindow* pParent = nullptr);
+	CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pParent = nullptr);
 
 private:
 	ARBConfigTitlePtr m_Title;

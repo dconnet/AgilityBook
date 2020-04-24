@@ -36,51 +36,45 @@
 
 enum class ARBTitleStyle
 {
-	None,	///< "Title"
-	Number,	///< "Title4"
-	Roman,	///< "Title-IV"
+	None,   ///< "Title"
+	Number, ///< "Title4"
+	Roman,  ///< "Title-IV"
 };
 enum class ARBTitleSeparator
 {
-	None,	///< "Title4"
-	Space,	///< "Title 4"
-	Hyphen,	///< "Title-4"
+	None,   ///< "Title4"
+	Space,  ///< "Title 4"
+	Hyphen, ///< "Title-4"
 };
 
 
 ARB_API ARBAttribLookup LoadTitleStyle(
-		ElementNodePtr const& inTree,
-		wchar_t const* inAttrib,
-		ARBVersion const& inVersion,
-		ARBTitleStyle& ioStyle);
-ARB_API void SaveTitleStyle(
-		ElementNodePtr const& ioTree,
-		wchar_t const* inAttrib,
-		ARBTitleStyle inStyle);
+	ElementNodePtr const& inTree,
+	wchar_t const* inAttrib,
+	ARBVersion const& inVersion,
+	ARBTitleStyle& ioStyle);
+ARB_API void SaveTitleStyle(ElementNodePtr const& ioTree, wchar_t const* inAttrib, ARBTitleStyle inStyle);
 
 
 ARB_API ARBAttribLookup LoadTitleSeparator(
-		ElementNodePtr const& inTree,
-		wchar_t const* inAttrib,
-		ARBVersion const& inVersion,
-		ARBTitleStyle inStyle,
-		ARBTitleSeparator& ioSep);
-ARB_API void SaveTitleSeparator(
-		ElementNodePtr const& ioTree,
-		wchar_t const* inAttrib,
-		ARBTitleSeparator inSep);
+	ElementNodePtr const& inTree,
+	wchar_t const* inAttrib,
+	ARBVersion const& inVersion,
+	ARBTitleStyle inStyle,
+	ARBTitleSeparator& ioSep);
+ARB_API void SaveTitleSeparator(ElementNodePtr const& ioTree, wchar_t const* inAttrib, ARBTitleSeparator inSep);
 
 
 class ARB_API ARBTitleInstance
 {
 protected:
 	std::wstring TitleInstance(
-			bool bShowInstanceOne,
-			short instance,
-			short startAt,
-			short increment,
-			ARBTitleStyle style,
-			ARBTitleSeparator sep) const;
+		bool bShowInstanceOne,
+		short instance,
+		short startAt,
+		short increment,
+		ARBTitleStyle style,
+		ARBTitleSeparator sep) const;
 };
 
 
@@ -88,7 +82,9 @@ protected:
  * Title configuration.
  * A title consists of a name (the abbreviation), a long name and a description.
  */
-class ARB_API ARBConfigTitle : public ARBBase, protected ARBTitleInstance
+class ARB_API ARBConfigTitle
+	: public ARBBase
+	, protected ARBTitleInstance
 {
 protected:
 	ARBConfigTitle();
@@ -141,10 +137,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -161,8 +154,7 @@ public:
 	bool IsValidOn(ARBDate inDate) const
 	{
 		if (inDate.IsValid()
-		&& ((m_ValidFrom.IsValid() && inDate < m_ValidFrom)
-		|| (m_ValidTo.IsValid() && inDate > m_ValidTo)))
+			&& ((m_ValidFrom.IsValid() && inDate < m_ValidFrom) || (m_ValidTo.IsValid() && inDate > m_ValidTo)))
 		{
 			return false;
 		}
@@ -195,10 +187,7 @@ public:
 	 * @param bAddDates Add the valid date ranges, if applicable.
 	 * @return The complete name.
 	 */
-	std::wstring GetCompleteName(
-			short inInstance = 0,
-			bool bAbbrevFirst = true,
-			bool bAddDates = false) const;
+	std::wstring GetCompleteName(short inInstance = 0, bool bAbbrevFirst = true, bool bAddDates = false) const;
 
 	/*
 	 * Getters/setters.
@@ -288,9 +277,7 @@ public:
 	{
 		return m_MultipleSeparator;
 	}
-	void SetMultipleStyle(
-			ARBTitleStyle inMultipleStyle,
-			ARBTitleSeparator inMultipleSeparator)
+	void SetMultipleStyle(ARBTitleStyle inMultipleStyle, ARBTitleSeparator inMultipleSeparator)
 	{
 		m_MultipleStyle = inMultipleStyle;
 		m_MultipleSeparator = inMultipleSeparator;
@@ -329,10 +316,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback,
-			bool inCheckDups = false);
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback,
+		bool inCheckDups = false);
 
 	/**
 	 * Reorder the list based on 'inList'
@@ -350,10 +337,10 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitleCompleteName(
-			std::wstring const& inName,
-			short inInstance,
-			bool bAbbrevFirst = true,
-			ARBConfigTitlePtr* outTitle = nullptr) const;
+		std::wstring const& inName,
+		short inInstance,
+		bool bAbbrevFirst = true,
+		ARBConfigTitlePtr* outTitle = nullptr) const;
 
 	/**
 	 * Find a title.
@@ -361,9 +348,7 @@ public:
 	 * @param outTitle Pointer to found object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindTitle(
-			std::wstring const& inName,
-			ARBConfigTitlePtr* outTitle = nullptr) const;
+	bool FindTitle(std::wstring const& inName, ARBConfigTitlePtr* outTitle = nullptr) const;
 
 	/**
 	 * Add a title.
@@ -371,9 +356,7 @@ public:
 	 * @param outTitle Pointer to new object, NULL if name already exists or is empty.
 	 * @return Whether the object was added.
 	 */
-	bool AddTitle(
-			std::wstring const& inName,
-			ARBConfigTitlePtr* outTitle = nullptr);
+	bool AddTitle(std::wstring const& inName, ARBConfigTitlePtr* outTitle = nullptr);
 
 	/**
 	 * Add a title.

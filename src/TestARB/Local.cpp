@@ -65,7 +65,8 @@ bool CLocalization::Load()
 	m_InvalidRoot = fmt::format(StringUtil::GetTranslation(arbT("IDS_INVALID_ROOT")), TREE_BOOK);
 	m_MissingConfig = fmt::format(StringUtil::GetTranslation(arbT("IDS_MISSING_CONFIG")), TREE_CONFIG);
 	m_InvalidConfig = fmt::format(StringUtil::GetTranslation(arbT("IDS_INVALID_CONFIG")), TREE_CONFIG);
-	m_InvalidVenueConfig = fmt::format(StringUtil::GetTranslation(arbT("IDS_INVALID_VENUE_CONFIG")), TREE_DIVISION, TREE_EVENT);
+	m_InvalidVenueConfig
+		= fmt::format(StringUtil::GetTranslation(arbT("IDS_INVALID_VENUE_CONFIG")), TREE_DIVISION, TREE_EVENT);
 	m_InvalidDivName = StringUtil::GetTranslation(arbT("IDS_INVALID_DIV_NAME"));
 	m_InvalidVenueName = StringUtil::GetTranslation(arbT("IDS_INVALID_VENUE_NAME"));
 	m_InvalidLifetimeName = StringUtil::GetTranslation(arbT("IDS_INVALID_LIFETIME_NAME"));
@@ -85,7 +86,8 @@ bool CLocalization::Load()
 	m_CalendarEntered = StringUtil::GetTranslation(arbT("IDS_CALENDAR_ENTERED"));
 	m_CalendarPending = StringUtil::GetTranslation(arbT("IDS_CALENDAR_PENDING"));
 	m_CalendarPlanning = StringUtil::GetTranslation(arbT("IDS_CALENDAR_PLANNING"));
-	m_CalendarStatusN = m_CalendarStatusE = m_CalendarStatusO = m_CalendarStatusP = StringUtil::GetTranslation(arbT("IDS_CALENDAR_STATUS"));
+	m_CalendarStatusN = m_CalendarStatusE = m_CalendarStatusO = m_CalendarStatusP
+		= StringUtil::GetTranslation(arbT("IDS_CALENDAR_STATUS"));
 	m_CalendarStatusN += m_CalendarNotEntered;
 	m_CalendarStatusE += m_CalendarEntered;
 	m_CalendarStatusO += m_CalendarPending;
@@ -114,7 +116,8 @@ bool CLocalization::Load()
 
 std::wstring CLocalization::UpdateCalSites(int nNew, int nUpdated, int nSkipped) const
 {
-	return fmt::format(L"{}: {}, {}, {}",
+	return fmt::format(
+		L"{}: {}, {}, {}",
 		StringUtil::GetTranslation(arbT("IDS_UPDATE_CALSITES")),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")), nNew),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_UPDATED")), nUpdated),
@@ -124,7 +127,8 @@ std::wstring CLocalization::UpdateCalSites(int nNew, int nUpdated, int nSkipped)
 
 std::wstring CLocalization::UpdateFaults(int nNew, int nSkipped) const
 {
-	return fmt::format(L"{}: {}, {}",
+	return fmt::format(
+		L"{}: {}, {}",
 		StringUtil::GetTranslation(arbT("IDS_COL_FAULTS")),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")), nNew),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_IDENTICAL")), nSkipped));
@@ -133,7 +137,8 @@ std::wstring CLocalization::UpdateFaults(int nNew, int nSkipped) const
 
 std::wstring CLocalization::UpdateOtherPts(int nNew, int nUpdated, int nSkipped) const
 {
-	return fmt::format(L"{}: {}, {}, {}",
+	return fmt::format(
+		L"{}: {}, {}, {}",
 		StringUtil::GetTranslation(arbT("IDS_OTHERPOINTS")),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")), nNew),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_UPDATED")), nUpdated),
@@ -143,7 +148,8 @@ std::wstring CLocalization::UpdateOtherPts(int nNew, int nUpdated, int nSkipped)
 
 std::wstring CLocalization::UpdateVenues(int nNew, int nUpdated, int nSkipped) const
 {
-	return fmt::format(L"{}: {}, {}, {}",
+	return fmt::format(
+		L"{}: {}, {}, {}",
 		StringUtil::GetTranslation(arbT("IDS_COL_VENUES")),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")), nNew),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_UPDATED")), nUpdated),
@@ -153,7 +159,8 @@ std::wstring CLocalization::UpdateVenues(int nNew, int nUpdated, int nSkipped) c
 
 std::wstring CLocalization::UpdateLifetimeNames(int nNew, int nSkipped) const
 {
-	return fmt::format(L"{}: {}, {}",
+	return fmt::format(
+		L"{}: {}, {}",
 		StringUtil::GetTranslation(arbT("IDS_LIFETIMENAMES")),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")), nNew),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_IDENTICAL")), nSkipped));
@@ -162,7 +169,8 @@ std::wstring CLocalization::UpdateLifetimeNames(int nNew, int nSkipped) const
 
 std::wstring CLocalization::UpdateDivisions(int nAdded, int nUpdated, int nSkipped) const
 {
-	return fmt::format(L"{}: {}, {}, {}",
+	return fmt::format(
+		L"{}: {}, {}, {}",
 		StringUtil::GetTranslation(arbT("IDS_COL_DIVISIONS")),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")), nAdded),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_UPDATED")), nUpdated),
@@ -172,7 +180,8 @@ std::wstring CLocalization::UpdateDivisions(int nAdded, int nUpdated, int nSkipp
 
 std::wstring CLocalization::UpdateDivisionsReordered() const
 {
-	return fmt::format(L"{}: {}",
+	return fmt::format(
+		L"{}: {}",
 		StringUtil::GetTranslation(arbT("IDS_COL_DIVISIONS")),
 		StringUtil::GetTranslation(arbT("IDS_REORDERED")));
 }
@@ -180,7 +189,8 @@ std::wstring CLocalization::UpdateDivisionsReordered() const
 
 std::wstring CLocalization::UpdateEvents(int nAdded, int nUpdated, int nSkipped) const
 {
-	return fmt::format(L"{}: {}, {}, {}",
+	return fmt::format(
+		L"{}: {}, {}, {}",
 		StringUtil::GetTranslation(arbT("IDS_COL_EVENTS")),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")), nAdded),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_UPDATED")), nUpdated),
@@ -190,7 +200,8 @@ std::wstring CLocalization::UpdateEvents(int nAdded, int nUpdated, int nSkipped)
 
 std::wstring CLocalization::UpdateEventsReordered() const
 {
-	return fmt::format(L"{}: {}",
+	return fmt::format(
+		L"{}: {}",
 		StringUtil::GetTranslation(arbT("IDS_COL_EVENTS")),
 		StringUtil::GetTranslation(arbT("IDS_REORDERED")));
 }
@@ -198,7 +209,8 @@ std::wstring CLocalization::UpdateEventsReordered() const
 
 std::wstring CLocalization::UpdateMultiqs(int nAdded, int nDeleted, int nSkipped) const
 {
-	return fmt::format(L"{}: {}, {}, {}",
+	return fmt::format(
+		L"{}: {}, {}, {}",
 		StringUtil::GetTranslation(arbT("IDS_COL_MULTIQS")),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")), nAdded),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_DELETED")), nDeleted),
@@ -208,7 +220,8 @@ std::wstring CLocalization::UpdateMultiqs(int nAdded, int nDeleted, int nSkipped
 
 std::wstring CLocalization::UpdateMultiqsReordered() const
 {
-	return fmt::format(L"{}: {}",
+	return fmt::format(
+		L"{}: {}",
 		StringUtil::GetTranslation(arbT("IDS_COL_MULTIQS")),
 		StringUtil::GetTranslation(arbT("IDS_REORDERED")));
 }
@@ -216,7 +229,8 @@ std::wstring CLocalization::UpdateMultiqsReordered() const
 
 std::wstring CLocalization::UpdateLevels(int nAdded, int nUpdated, int nSkipped) const
 {
-	return fmt::format(L"{}: {}, {}, {}",
+	return fmt::format(
+		L"{}: {}, {}, {}",
 		StringUtil::GetTranslation(arbT("IDS_COL_LEVELS")),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")), nAdded),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_UPDATED")), nUpdated),
@@ -226,7 +240,8 @@ std::wstring CLocalization::UpdateLevels(int nAdded, int nUpdated, int nSkipped)
 
 std::wstring CLocalization::UpdateLevelsReordered() const
 {
-	return fmt::format(L"{}: {}",
+	return fmt::format(
+		L"{}: {}",
 		StringUtil::GetTranslation(arbT("IDS_COL_LEVELS")),
 		StringUtil::GetTranslation(arbT("IDS_REORDERED")));
 }
@@ -234,7 +249,8 @@ std::wstring CLocalization::UpdateLevelsReordered() const
 
 std::wstring CLocalization::UpdateTitles(int nAdded, int nUpdated, int nSkipped) const
 {
-	return fmt::format(L"{}: {}, {}, {}",
+	return fmt::format(
+		L"{}: {}, {}, {}",
 		StringUtil::GetTranslation(arbT("IDS_TITLES")),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")), nAdded),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_UPDATED")), nUpdated),
@@ -244,7 +260,8 @@ std::wstring CLocalization::UpdateTitles(int nAdded, int nUpdated, int nSkipped)
 
 std::wstring CLocalization::UpdateTitlesReordered() const
 {
-	return fmt::format(L"{}: {}",
+	return fmt::format(
+		L"{}: {}",
 		StringUtil::GetTranslation(arbT("IDS_TITLES")),
 		StringUtil::GetTranslation(arbT("IDS_REORDERED")));
 }
@@ -252,7 +269,8 @@ std::wstring CLocalization::UpdateTitlesReordered() const
 
 std::wstring CLocalization::UpdateSubLevels(int nAdded, int nUpdated, int nSkipped) const
 {
-	return fmt::format(L"{}: {}, {}, {}",
+	return fmt::format(
+		L"{}: {}, {}, {}",
 		StringUtil::GetTranslation(arbT("IDS_SUBLEVEL_NAME")),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")), nAdded),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_UPDATED")), nUpdated),
@@ -262,7 +280,8 @@ std::wstring CLocalization::UpdateSubLevels(int nAdded, int nUpdated, int nSkipp
 
 std::wstring CLocalization::UpdateSubLevelsReordered() const
 {
-	return fmt::format(L"{}: {}",
+	return fmt::format(
+		L"{}: {}",
 		StringUtil::GetTranslation(arbT("IDS_SUBLEVEL_NAME")),
 		StringUtil::GetTranslation(arbT("IDS_REORDERED")));
 }
@@ -270,7 +289,8 @@ std::wstring CLocalization::UpdateSubLevelsReordered() const
 
 std::wstring CLocalization::UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const
 {
-	return fmt::format(L" {}: {}, {}, {}, {}",
+	return fmt::format(
+		L" {}: {}, {}, {}, {}",
 		StringUtil::GetTranslation(arbT("IDS_UPDATE_RULES")),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")), nAdded),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_DELETED")), nDeleted),
@@ -286,9 +306,9 @@ std::wstring CLocalization::ActionDeleteCalPlugin(std::wstring const& name) cons
 
 
 std::wstring CLocalization::ActionRenameOtherPoints(
-		std::wstring const& oldName,
-		std::wstring const& newName,
-		int nChanges) const
+	std::wstring const& oldName,
+	std::wstring const& newName,
+	int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
 	fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_OTHERPTS")), oldName, newName);
@@ -300,9 +320,7 @@ std::wstring CLocalization::ActionRenameOtherPoints(
 }
 
 
-std::wstring CLocalization::ActionPreDeleteOtherPoints(
-		std::wstring const& name,
-		int nChanges) const
+std::wstring CLocalization::ActionPreDeleteOtherPoints(std::wstring const& name, int nChanges) const
 {
 	return fmt::format(StringUtil::GetTranslation(arbT("IDS_ACTION_PREDELETE_OTHERPTS")), name, nChanges);
 }
@@ -314,10 +332,8 @@ std::wstring CLocalization::ActionDeleteOtherPoints(std::wstring const& name) co
 }
 
 
-std::wstring CLocalization::ActionRenameVenue(
-		std::wstring const& oldName,
-		std::wstring const& newName,
-		int nChanges) const
+std::wstring CLocalization::ActionRenameVenue(std::wstring const& oldName, std::wstring const& newName, int nChanges)
+	const
 {
 	fmt::wmemory_buffer buffer;
 	fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_VENUE")), oldName, newName);
@@ -329,9 +345,7 @@ std::wstring CLocalization::ActionRenameVenue(
 }
 
 
-std::wstring CLocalization::ActionPreDeleteVenue(
-		std::wstring const& name,
-		int nChanges) const
+std::wstring CLocalization::ActionPreDeleteVenue(std::wstring const& name, int nChanges) const
 {
 	return fmt::format(StringUtil::GetTranslation(arbT("IDS_ACTION_PREDELETE_VENUE")), name, nChanges);
 }
@@ -344,10 +358,10 @@ std::wstring CLocalization::ActionDeleteVenue(std::wstring const& name) const
 
 
 std::wstring CLocalization::ActionRenameMultiQ(
-		std::wstring const& venue,
-		std::wstring const& oldName,
-		std::wstring const& newName,
-		int nChanges) const
+	std::wstring const& venue,
+	std::wstring const& oldName,
+	std::wstring const& newName,
+	int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
 	fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_MULTIQ")), venue, oldName, newName);
@@ -359,28 +373,24 @@ std::wstring CLocalization::ActionRenameMultiQ(
 }
 
 
-std::wstring CLocalization::ActionPreDeleteMultiQ(
-		std::wstring const& venue,
-		std::wstring const& name,
-		int nChanges) const
+std::wstring CLocalization::ActionPreDeleteMultiQ(std::wstring const& venue, std::wstring const& name, int nChanges)
+	const
 {
 	return fmt::format(StringUtil::GetTranslation(arbT("IDS_ACTION_PREDELETE_MULTIQ")), venue, name, nChanges);
 }
 
 
-std::wstring CLocalization::ActionDeleteMultiQ(
-		std::wstring const& venue,
-		std::wstring const& name) const
+std::wstring CLocalization::ActionDeleteMultiQ(std::wstring const& venue, std::wstring const& name) const
 {
 	return fmt::format(StringUtil::GetTranslation(arbT("IDS_ACTION_DELETE_MULTIQ")), venue, name);
 }
 
 
 std::wstring CLocalization::ActionRenameDivision(
-		std::wstring const& venue,
-		std::wstring const& oldName,
-		std::wstring const& newName,
-		int nChanges) const
+	std::wstring const& venue,
+	std::wstring const& oldName,
+	std::wstring const& newName,
+	int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
 	fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_DIV")), venue, oldName, newName);
@@ -392,28 +402,24 @@ std::wstring CLocalization::ActionRenameDivision(
 }
 
 
-std::wstring CLocalization::ActionPreDeleteDivision(
-		std::wstring const& venue,
-		std::wstring const& name,
-		int nChanges) const
+std::wstring CLocalization::ActionPreDeleteDivision(std::wstring const& venue, std::wstring const& name, int nChanges)
+	const
 {
 	return fmt::format(StringUtil::GetTranslation(arbT("IDS_ACTION_PREDELETE_DIV")), venue, name, nChanges);
 }
 
 
-std::wstring CLocalization::ActionDeleteDivision(
-		std::wstring const& venue,
-		std::wstring const& name) const
+std::wstring CLocalization::ActionDeleteDivision(std::wstring const& venue, std::wstring const& name) const
 {
 	return fmt::format(StringUtil::GetTranslation(arbT("IDS_ACTION_DELETE_DIV")), venue, name);
 }
 
 
 std::wstring CLocalization::ActionRenameLevel(
-		std::wstring const& venue,
-		std::wstring const& oldName,
-		std::wstring const& newName,
-		int nChanges) const
+	std::wstring const& venue,
+	std::wstring const& oldName,
+	std::wstring const& newName,
+	int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
 	fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_LEVEL")), venue, oldName, newName);
@@ -425,28 +431,24 @@ std::wstring CLocalization::ActionRenameLevel(
 }
 
 
-std::wstring CLocalization::ActionPreDeleteLevel(
-		std::wstring const& venue,
-		std::wstring const& name,
-		int nChanges) const
+std::wstring CLocalization::ActionPreDeleteLevel(std::wstring const& venue, std::wstring const& name, int nChanges)
+	const
 {
 	return fmt::format(StringUtil::GetTranslation(arbT("IDS_ACTION_PREDELETE_LEVEL")), venue, name, nChanges);
 }
 
 
-std::wstring CLocalization::ActionDeleteLevel(
-		std::wstring const& venue,
-		std::wstring const& name) const
+std::wstring CLocalization::ActionDeleteLevel(std::wstring const& venue, std::wstring const& name) const
 {
 	return fmt::format(StringUtil::GetTranslation(arbT("IDS_ACTION_DELETE_LEVEL")), venue, name);
 }
 
 
 std::wstring CLocalization::ActionRenameTitle(
-		std::wstring const& venue,
-		std::wstring const& oldName,
-		std::wstring const& newName,
-		int nChanges) const
+	std::wstring const& venue,
+	std::wstring const& oldName,
+	std::wstring const& newName,
+	int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
 	fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_TITLE")), venue, oldName, newName);
@@ -458,28 +460,24 @@ std::wstring CLocalization::ActionRenameTitle(
 }
 
 
-std::wstring CLocalization::ActionPreDeleteTitle(
-		std::wstring const& venue,
-		std::wstring const& name,
-		int nChanges) const
+std::wstring CLocalization::ActionPreDeleteTitle(std::wstring const& venue, std::wstring const& name, int nChanges)
+	const
 {
 	return fmt::format(StringUtil::GetTranslation(arbT("IDS_ACTION_PREDELETE_TITLE")), venue, name, nChanges);
 }
 
 
-std::wstring CLocalization::ActionDeleteTitle(
-		std::wstring const& venue,
-		std::wstring const& name) const
+std::wstring CLocalization::ActionDeleteTitle(std::wstring const& venue, std::wstring const& name) const
 {
 	return fmt::format(StringUtil::GetTranslation(arbT("IDS_ACTION_DELETE_TITLE")), venue, name);
 }
 
 
 std::wstring CLocalization::ActionRenameEvent(
-		std::wstring const& venue,
-		std::wstring const& oldName,
-		std::wstring const& newName,
-		int nChanges) const
+	std::wstring const& venue,
+	std::wstring const& oldName,
+	std::wstring const& newName,
+	int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
 	fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_EVENT")), venue, oldName, newName);
@@ -491,45 +489,54 @@ std::wstring CLocalization::ActionRenameEvent(
 }
 
 
-std::wstring CLocalization::ActionPreDeleteEvent(
-		std::wstring const& venue,
-		std::wstring const& name,
-		int nChanges) const
+std::wstring CLocalization::ActionPreDeleteEvent(std::wstring const& venue, std::wstring const& name, int nChanges)
+	const
 {
 	return fmt::format(StringUtil::GetTranslation(arbT("IDS_ACTION_PREDELETE_EVENT")), venue, name, nChanges);
 }
 
 
-std::wstring CLocalization::ActionDeleteEvent(
-		std::wstring const& venue,
-		std::wstring const& name) const
+std::wstring CLocalization::ActionDeleteEvent(std::wstring const& venue, std::wstring const& name) const
 {
 	return fmt::format(StringUtil::GetTranslation(arbT("IDS_ACTION_DELETE_EVENT")), venue, name);
 }
 
 
 std::wstring CLocalization::ActionRenameLifetimeName(
-		std::wstring const& venue,
-		std::wstring const& oldName,
-		std::wstring const& newName,
-		int nEventChanges) const
+	std::wstring const& venue,
+	std::wstring const& oldName,
+	std::wstring const& newName,
+	int nEventChanges) const
 {
 	if (0 == nEventChanges)
-		return fmt::format(StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_LIFETIMENAME_0")), venue, oldName, newName);
+		return fmt::format(
+			StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_LIFETIMENAME_0")),
+			venue,
+			oldName,
+			newName);
 	else
-		return fmt::format(StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_LIFETIMENAME_N")), venue, oldName, newName, nEventChanges);
+		return fmt::format(
+			StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_LIFETIMENAME_N")),
+			venue,
+			oldName,
+			newName,
+			nEventChanges);
 }
 
 
 std::wstring CLocalization::ActionDeleteLifetimeName(
-		std::wstring const& venue,
-		std::wstring const& name,
-		int nEventChanges) const
+	std::wstring const& venue,
+	std::wstring const& name,
+	int nEventChanges) const
 {
 	if (0 == nEventChanges)
 		return fmt::format(StringUtil::GetTranslation(arbT("IDS_ACTION_DELETE_LIFETIMENAME_0")), venue, name);
 	else
-		return fmt::format(StringUtil::GetTranslation(arbT("IDS_ACTION_DELETE_LIFETIMENAME_N")), venue, name, nEventChanges);
+		return fmt::format(
+			StringUtil::GetTranslation(arbT("IDS_ACTION_DELETE_LIFETIMENAME_N")),
+			venue,
+			name,
+			nEventChanges);
 }
 
 
@@ -541,7 +548,10 @@ std::wstring CLocalization::TitlePointsNameFormat(double points, double faults) 
 
 std::wstring CLocalization::LifetimePointsNameWithSpeedPointsFormat(double faults) const
 {
-	return fmt::format(StringUtil::GetTranslation(arbT("IDS_LIFETITLEPOINTSNAME")), StringUtil::GetTranslation(arbT("IDS_COL_SPEED")), faults);
+	return fmt::format(
+		StringUtil::GetTranslation(arbT("IDS_LIFETITLEPOINTSNAME")),
+		StringUtil::GetTranslation(arbT("IDS_COL_SPEED")),
+		faults);
 }
 
 
@@ -560,13 +570,19 @@ std::wstring CLocalization::PlacementPointsNameFormat(double points, short place
 
 std::wstring CLocalization::WarnDeletedRuns(int nRuns, std::wstring const& inRunsMsg) const
 {
-	return fmt::format(L"{}\n{}", fmt::format(StringUtil::GetTranslation(arbT("IDS_WARN_DELETED_RUNS")), nRuns), inRunsMsg);
+	return fmt::format(
+		L"{}\n{}",
+		fmt::format(StringUtil::GetTranslation(arbT("IDS_WARN_DELETED_RUNS")), nRuns),
+		inRunsMsg);
 }
 
 
 std::wstring CLocalization::UpdateTeamRuns(int nRuns, std::wstring const& inRunsMsg) const
 {
-	return fmt::format(L"{}\n{}", fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_TEAM_RUNS")), nRuns), inRunsMsg);
+	return fmt::format(
+		L"{}\n{}",
+		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_TEAM_RUNS")), nRuns),
+		inRunsMsg);
 }
 
 
@@ -578,13 +594,19 @@ std::wstring CLocalization::UpdateTableRuns(int nRuns) const
 
 std::wstring CLocalization::UpdateTableRuns(int nRuns, std::wstring const& inRunsMsg) const
 {
-	return fmt::format(L"{}\n{}", fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_TABLE_RUNS2")), nRuns), inRunsMsg);
+	return fmt::format(
+		L"{}\n{}",
+		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_TABLE_RUNS2")), nRuns),
+		inRunsMsg);
 }
 
 
 std::wstring CLocalization::UpdateSubnameRuns(int nRuns, std::wstring const& inRunsMsg) const
 {
-	return fmt::format(L"{}\n{}", fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_SUBNAME_RUNS")), nRuns), inRunsMsg);
+	return fmt::format(
+		L"{}\n{}",
+		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_SUBNAME_RUNS")), nRuns),
+		inRunsMsg);
 }
 
 
@@ -598,16 +620,12 @@ std::wstring CLocalization::ErrorInvalidDocStructure(wchar_t const* const inMsg)
 
 
 std::wstring CLocalization::ErrorMissingAttribute(
-		wchar_t const* const inElement,
-		wchar_t const* const inAttrib,
-		wchar_t const* const inMsg) const
+	wchar_t const* const inElement,
+	wchar_t const* const inAttrib,
+	wchar_t const* const inMsg) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, L"{}{}{}{}'.",
-		m_InvalidFileFormat,
-		inElement,
-		m_InvalidFileMissingAttrib,
-		inAttrib);
+	fmt::format_to(buffer, L"{}{}{}{}'.", m_InvalidFileFormat, inElement, m_InvalidFileMissingAttrib, inAttrib);
 	if (inMsg)
 		fmt::format_to(buffer, L" {}\n", inMsg);
 	return fmt::to_string(buffer);
@@ -615,16 +633,12 @@ std::wstring CLocalization::ErrorMissingAttribute(
 
 
 std::wstring CLocalization::ErrorInvalidAttributeValue(
-		wchar_t const* const inElement,
-		wchar_t const* const inAttrib,
-		wchar_t const* const inMsg) const
+	wchar_t const* const inElement,
+	wchar_t const* const inAttrib,
+	wchar_t const* const inMsg) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, L"{}{}{}{}'.",
-		m_InvalidFileFormat,
-		inElement,
-		m_InvalidFileBadAttrib,
-		inAttrib);
+	fmt::format_to(buffer, L"{}{}{}{}'.", m_InvalidFileFormat, inElement, m_InvalidFileBadAttrib, inAttrib);
 	if (inMsg)
 		fmt::format_to(buffer, L" {}\n", inMsg);
 	return fmt::to_string(buffer);

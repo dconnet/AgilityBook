@@ -31,16 +31,19 @@
 #endif
 
 
-CDlgFault::CDlgFault(
-		std::set<std::wstring>& inFaults,
-		std::wstring const& fault,
-		wxWindow* pParent)
+CDlgFault::CDlgFault(std::set<std::wstring>& inFaults, std::wstring const& fault, wxWindow* pParent)
 	: wxDialog()
 	, m_Fault(StringUtil::stringWX(fault))
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDD_FAULT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		_("IDD_FAULT"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	wxArrayString faults;
 	for (std::set<std::wstring>::const_iterator iter = inFaults.begin(); iter != inFaults.end(); ++iter)
@@ -51,10 +54,14 @@ CDlgFault::CDlgFault(
 
 	// Controls (these are done first to control tab order)
 
-	wxComboBox* comboBox = new wxComboBox(this, wxID_ANY, m_Fault,
-		wxDefaultPosition, wxDefaultSize,
+	wxComboBox* comboBox = new wxComboBox(
+		this,
+		wxID_ANY,
+		m_Fault,
+		wxDefaultPosition,
+		wxDefaultSize,
 		faults,
-		wxCB_DROPDOWN|wxCB_SORT,
+		wxCB_DROPDOWN | wxCB_SORT,
 		CTrimValidator(&m_Fault, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));
 	comboBox->SetHelpText(_("HIDC_FAULTS"));
 	comboBox->SetToolTip(_("HIDC_FAULTS"));

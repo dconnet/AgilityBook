@@ -34,7 +34,10 @@ class CARBUpdaterApp : public CBaseApp
 	DECLARE_NO_COPY_IMPLEMENTED(CARBUpdaterApp)
 public:
 	CARBUpdaterApp();
-	bool InitLanguage() override {return true;}
+	bool InitLanguage() override
+	{
+		return true;
+	}
 	bool OnInit() override;
 };
 
@@ -56,13 +59,10 @@ bool CARBUpdaterApp::OnInit()
 
 	wxImage::AddHandler(new wxPNGHandler);
 
-	static const wxCmdLineEntryDesc cmdLineDesc[] =
-	{
-		{wxCMD_LINE_SWITCH, "g", "generate",
-			"Ignore all other options and display a dialog allowing MD5 generation"},
-		{wxCMD_LINE_OPTION, "f", "file",
-			"Downloaded file"},
-		{wxCMD_LINE_NONE}
+	static const wxCmdLineEntryDesc cmdLineDesc[] = {
+		{wxCMD_LINE_SWITCH, "g", "generate", "Ignore all other options and display a dialog allowing MD5 generation"},
+		{wxCMD_LINE_OPTION, "f", "file", "Downloaded file"},
+		{wxCMD_LINE_NONE},
 	};
 	wxCmdLineParser cmdline(cmdLineDesc, argc, argv);
 	if (0 != cmdline.Parse(true))
@@ -77,7 +77,7 @@ bool CARBUpdaterApp::OnInit()
 	{
 		if (file.length() > 1 && file[0] == '"')
 		{
-			file = file.SubString(1, file.length()-2);
+			file = file.SubString(1, file.length() - 2);
 		}
 		file.Trim(true);
 	}

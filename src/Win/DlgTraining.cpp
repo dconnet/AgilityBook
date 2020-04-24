@@ -41,10 +41,7 @@ wxBEGIN_EVENT_TABLE(CDlgTraining, wxDialog)
 wxEND_EVENT_TABLE()
 
 
-CDlgTraining::CDlgTraining(
-		ARBTrainingPtr const& inTraining,
-		CAgilityBookDoc* pDoc,
-		wxWindow* pParent)
+CDlgTraining::CDlgTraining(ARBTrainingPtr const& inTraining, CAgilityBookDoc* pDoc, wxWindow* pParent)
 	: wxDialog()
 	, m_pTraining(inTraining)
 	, m_pDoc(pDoc)
@@ -55,7 +52,13 @@ CDlgTraining::CDlgTraining(
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDD_TRAINING"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		_("IDD_TRAINING"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	wxDateTime date(wxDateTime::Now());
 	if (inTraining->GetDate().IsValid())
@@ -80,46 +83,61 @@ CDlgTraining::CDlgTraining(
 
 	// Controls (these are done first to control tab order)
 
-	wxStaticText* textDate = new wxStaticText(this, wxID_ANY,
-		_("IDC_TRAINING_DATE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textDate
+		= new wxStaticText(this, wxID_ANY, _("IDC_TRAINING_DATE"), wxDefaultPosition, wxDefaultSize, 0);
 	textDate->Wrap(-1);
 
-	m_datePicker = new wxDatePickerCtrl(this, wxID_ANY, date,
-		wxDefaultPosition, wxDefaultSize,
-		wxDP_DROPDOWN|wxDP_SHOWCENTURY);
+	m_datePicker = new wxDatePickerCtrl(
+		this,
+		wxID_ANY,
+		date,
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDP_DROPDOWN | wxDP_SHOWCENTURY);
 	m_datePicker->SetHelpText(_("HIDC_TRAINING_DATE"));
 	m_datePicker->SetToolTip(_("HIDC_TRAINING_DATE"));
 
-	wxStaticText* textName = new wxStaticText(this, wxID_ANY,
-		_("IDC_TRAINING_NAME"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textName
+		= new wxStaticText(this, wxID_ANY, _("IDC_TRAINING_NAME"), wxDefaultPosition, wxDefaultSize, 0);
 	textName->Wrap(-1);
 
-	wxComboBox* ctrlName = new wxComboBox(this, wxID_ANY, m_Name,
-		wxDefaultPosition, wxDefaultSize,
-		names, wxCB_DROPDOWN|wxCB_SORT,
+	wxComboBox* ctrlName = new wxComboBox(
+		this,
+		wxID_ANY,
+		m_Name,
+		wxDefaultPosition,
+		wxDefaultSize,
+		names,
+		wxCB_DROPDOWN | wxCB_SORT,
 		CTrimValidator(&m_Name, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlName->SetHelpText(_("HIDC_TRAINING_NAME"));
 	ctrlName->SetToolTip(_("HIDC_TRAINING_NAME"));
 	ctrlName->AutoComplete(names);
 
-	wxStaticText* textSubname = new wxStaticText(this, wxID_ANY,
-		_("IDC_TRAINING_SUBNAME"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textSubname
+		= new wxStaticText(this, wxID_ANY, _("IDC_TRAINING_SUBNAME"), wxDefaultPosition, wxDefaultSize, 0);
 	textSubname->Wrap(-1);
 
-	wxComboBox* ctrlSubname = new wxComboBox(this, wxID_ANY, m_SubName,
-		wxDefaultPosition, wxDefaultSize,
-		subnames, wxCB_DROPDOWN|wxCB_SORT,
+	wxComboBox* ctrlSubname = new wxComboBox(
+		this,
+		wxID_ANY,
+		m_SubName,
+		wxDefaultPosition,
+		wxDefaultSize,
+		subnames,
+		wxCB_DROPDOWN | wxCB_SORT,
 		CTrimValidator(&m_SubName, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlSubname->SetHelpText(_("HIDC_TRAINING_SUBNAME"));
 	ctrlSubname->SetToolTip(_("HIDC_TRAINING_SUBNAME"));
 	ctrlSubname->AutoComplete(subnames);
 
-	CSpellCheckCtrl* ctrlNote = new CSpellCheckCtrl(this, wxID_ANY, m_Notes,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(210, 110)),
-		wxTE_MULTILINE|wxTE_WORDWRAP,
+	CSpellCheckCtrl* ctrlNote = new CSpellCheckCtrl(
+		this,
+		wxID_ANY,
+		m_Notes,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(210, 110)),
+		wxTE_MULTILINE | wxTE_WORDWRAP,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_RIGHT));
 	ctrlNote->SetHelpText(_("HIDC_TRAINING_NOTES"));
 	ctrlNote->SetToolTip(_("HIDC_TRAINING_NOTES"));

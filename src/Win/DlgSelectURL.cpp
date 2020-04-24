@@ -32,9 +32,7 @@
 #endif
 
 
-CDlgSelectURL::CDlgSelectURL(
-		std::wstring const& name,
-		wxWindow* pParent)
+CDlgSelectURL::CDlgSelectURL(std::wstring const& name, wxWindow* pParent)
 	: wxDialog()
 	, m_Name(StringUtil::stringWX(name))
 	, m_textCtrl(nullptr)
@@ -43,10 +41,7 @@ CDlgSelectURL::CDlgSelectURL(
 }
 
 
-CDlgSelectURL::CDlgSelectURL(
-		std::wstring const& name,
-		bool bAllowEmpty,
-		wxWindow* pParent)
+CDlgSelectURL::CDlgSelectURL(std::wstring const& name, bool bAllowEmpty, wxWindow* pParent)
 	: wxDialog()
 	, m_Name(StringUtil::stringWX(name))
 	, m_textCtrl(nullptr)
@@ -59,19 +54,32 @@ void CDlgSelectURL::InitDlg(wxWindow* pParent, bool bAllowEmpty)
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDD_SELECT_URL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		_("IDD_SELECT_URL"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
 
-	m_textCtrl = new CTextCtrl(this, wxID_ANY, m_Name,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 170), -1), 0,
-		CTrimValidator(&m_Name, TRIMVALIDATOR_TRIM_BOTH | (bAllowEmpty ? 0 : TRIMVALIDATOR_NONEMPTY), _("IDS_ENTER_NAME")));
+	m_textCtrl = new CTextCtrl(
+		this,
+		wxID_ANY,
+		m_Name,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 170), -1),
+		0,
+		CTrimValidator(
+			&m_Name,
+			TRIMVALIDATOR_TRIM_BOTH | (bAllowEmpty ? 0 : TRIMVALIDATOR_NONEMPTY),
+			_("IDS_ENTER_NAME")));
 	m_textCtrl->SetHelpText(_("HIDC_SELECTURL_NAME"));
 	m_textCtrl->SetToolTip(_("HIDC_SELECTURL_NAME"));
 
-	wxButton* btnSelect = new wxButton(this, wxID_ANY,
-		_("IDC_SELECTURL_FILENAME"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* btnSelect
+		= new wxButton(this, wxID_ANY, _("IDC_SELECTURL_FILENAME"), wxDefaultPosition, wxDefaultSize, 0);
 	btnSelect->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgSelectURL::OnFilename, this);
 	btnSelect->SetHelpText(_("HIDC_SELECTURL_FILENAME"));
 	btnSelect->SetToolTip(_("HIDC_SELECTURL_FILENAME"));
@@ -86,7 +94,7 @@ void CDlgSelectURL::InitDlg(wxWindow* pParent, bool bAllowEmpty)
 
 	bSizer->Add(bTextSizer, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
@@ -110,12 +118,13 @@ std::wstring CDlgSelectURL::Name() const
 
 void CDlgSelectURL::OnFilename(wxCommandEvent& evt)
 {
-	wxFileDialog file(this,
-			L"", // caption
-			L"", // default dir
-			m_textCtrl->GetValue(),
-			_("IDS_FILEEXT_FILTER_ALL"),
-			wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+	wxFileDialog file(
+		this,
+		L"", // caption
+		L"", // default dir
+		m_textCtrl->GetValue(),
+		_("IDS_FILEEXT_FILTER_ALL"),
+		wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 	if (wxID_OK == file.ShowModal())
 	{
 		m_textCtrl->SetValue(file.GetPath());

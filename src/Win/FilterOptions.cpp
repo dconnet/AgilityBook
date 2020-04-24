@@ -20,9 +20,9 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "FilterOptions.h"
 
+#include "AgilityBook.h"
 #include "AgilityBookOptions.h"
 #include "RegItems.h"
 
@@ -32,17 +32,15 @@
 #include "ARB/ARBDogTrial.h"
 #include "ARBCommon/ARBDate.h"
 #include "ARBCommon/StringUtil.h"
-#include <algorithm>
 #include <wx/config.h>
+#include <algorithm>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
 
 
-static void FilterVenue(
-		wxString inVenue,
-		std::vector<CVenueFilter>& venues)
+static void FilterVenue(wxString inVenue, std::vector<CVenueFilter>& venues)
 {
 	if (!inVenue.IsEmpty())
 	{
@@ -51,7 +49,7 @@ static void FilterVenue(
 		while (0 <= (pos = inVenue.Find(':')))
 		{
 			raw.push_back(inVenue.Left(pos));
-			inVenue = inVenue.Mid(pos+1);
+			inVenue = inVenue.Mid(pos + 1);
 		}
 		raw.push_back(inVenue);
 		for (size_t i = 0; i < raw.size(); ++i)
@@ -61,7 +59,7 @@ static void FilterVenue(
 			while (0 <= (pos = inVenue.Find('/')))
 			{
 				rawFilter.push_back(inVenue.Left(pos));
-				inVenue = inVenue.Mid(pos+1);
+				inVenue = inVenue.Mid(pos + 1);
 			}
 			rawFilter.push_back(inVenue);
 			if (0 < rawFilter.size())
@@ -89,9 +87,7 @@ static void FilterVenue(
 static wxString FilterVenue(std::vector<CVenueFilter> const& venues)
 {
 	wxString venue;
-	for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
-		iter != venues.end();
-		++iter)
+	for (std::vector<CVenueFilter>::const_iterator iter = venues.begin(); iter != venues.end(); ++iter)
 	{
 		if (!venue.IsEmpty())
 			venue += L":";
@@ -113,7 +109,7 @@ static void TrainingNames(std::wstring inNames, std::set<std::wstring>& outNames
 		while (std::wstring::npos != (pos = inNames.find(':')))
 		{
 			outNames.insert(inNames.substr(0, pos));
-			inNames = inNames.substr(pos+1);
+			inNames = inNames.substr(pos + 1);
 		}
 		outNames.insert(inNames);
 	}
@@ -137,12 +133,12 @@ static wxString TrainingNames(std::set<std::wstring> const& inNames)
 // These values are written to the registry.
 enum ViewFilter
 {
-	eReserved1 = 0x01,	///< Obsolete, implies not+plan+enter
-	eReserved2 = 0x02,	///< Obsolete, changed to ViewAllCalendarOpening()
-	eReserved3 = 0x04,	///< Obsolete, changed to ViewAllCalendarClosing()
-	eViewNotEntered = 0x08,	///< Type of entry to view
-	eViewPlanning = 0x10,	///< Type of entry to view
-	eViewEntered = 0x20,	///< Type of entry to view
+	eReserved1 = 0x01,      ///< Obsolete, implies not+plan+enter
+	eReserved2 = 0x02,      ///< Obsolete, changed to ViewAllCalendarOpening()
+	eReserved3 = 0x04,      ///< Obsolete, changed to ViewAllCalendarClosing()
+	eViewNotEntered = 0x08, ///< Type of entry to view
+	eViewPlanning = 0x10,   ///< Type of entry to view
+	eViewEntered = 0x20,    ///< Type of entry to view
 	eViewNormal = eViewNotEntered | eViewPlanning | eViewEntered
 };
 
@@ -217,20 +213,19 @@ CFilterOptions::CFilterOptions()
 
 
 bool CFilterOptions::Update(
-		ARBConfig const& inConfigNew,
-		short configVersionPreUpdate,
-		ARBConfig const& inConfigCurrent)
+	ARBConfig const& inConfigNew,
+	short configVersionPreUpdate,
+	ARBConfig const& inConfigCurrent)
 {
 	bool bRefresh = false;
 
 	if (!m_bViewAllVenues)
 	{
-		for (std::vector<CVenueFilter>::iterator i = m_venueFilter.begin();
-			i != m_venueFilter.end();
-			++i)
+		for (std::vector<CVenueFilter>::iterator i = m_venueFilter.begin(); i != m_venueFilter.end(); ++i)
 		{
 			CVenueFilter filter = *i;
-			if (inConfigNew.GetActions().Update(configVersionPreUpdate, inConfigCurrent, filter.venue, filter.division, filter.level))
+			if (inConfigNew.GetActions()
+					.Update(configVersionPreUpdate, inConfigCurrent, filter.venue, filter.division, filter.level))
 			{
 				bRefresh = true;
 				(*i).venue = filter.venue;
@@ -240,18 +235,17 @@ bool CFilterOptions::Update(
 		}
 	}
 
-	for (std::vector<CFilterOptionData>::iterator iFilter = m_filters.begin();
-		iFilter != m_filters.end();
-		++iFilter)
+	for (std::vector<CFilterOptionData>::iterator iFilter = m_filters.begin(); iFilter != m_filters.end(); ++iFilter)
 	{
 		if (!(*iFilter).bViewAllVenues)
 		{
 			for (std::vector<CVenueFilter>::iterator i = (*iFilter).venueFilter.begin();
-				i != (*iFilter).venueFilter.end();
-				++i)
+				 i != (*iFilter).venueFilter.end();
+				 ++i)
 			{
 				CVenueFilter filter = *i;
-				if (inConfigNew.GetActions().Update(configVersionPreUpdate, inConfigCurrent, filter.venue, filter.division, filter.level))
+				if (inConfigNew.GetActions()
+						.Update(configVersionPreUpdate, inConfigCurrent, filter.venue, filter.division, filter.level))
 				{
 					bRefresh = true;
 					(*i).venue = filter.venue;
@@ -276,7 +270,8 @@ void CFilterOptions::Load()
 	wxString val;
 	std::wstring all(StringUtil::GetTranslation(arbT("IDS_ALL")));
 
-	m_calView.m_Filter = static_cast<unsigned short>(wxConfig::Get()->Read(CFG_CAL_FILTER, static_cast<long>(eViewNormal)));
+	m_calView.m_Filter
+		= static_cast<unsigned short>(wxConfig::Get()->Read(CFG_CAL_FILTER, static_cast<long>(eViewNormal)));
 	wxConfig::Get()->Read(CFG_COMMON_VIEWALLDATES, &m_bAllDates, true);
 	wxConfig::Get()->Read(CFG_COMMON_STARTFILTER, &m_bStartDate, false);
 	m_dateStartDate = ARBDate::Today();
@@ -343,11 +338,9 @@ void CFilterOptions::Save()
 	data.nameFilter = m_nameFilter;
 
 	bool bFound = false;
-	for (std::vector<CFilterOptionData>::iterator i = m_filters.begin();
-		i != m_filters.end();
-		++i)
+	for (std::vector<CFilterOptionData>::iterator i = m_filters.begin(); i != m_filters.end(); ++i)
 	{
-		if (*i== data)
+		if (*i == data)
 		{
 			bFound = true;
 			m_curFilter = (*i).filterName;
@@ -390,9 +383,7 @@ void CFilterOptions::Save()
 		}
 	}
 	int index = 0;
-	for (std::vector<CFilterOptionData>::iterator i = m_filters.begin();
-		i != m_filters.end();
-		++index, ++i)
+	for (std::vector<CFilterOptionData>::iterator i = m_filters.begin(); i != m_filters.end(); ++index, ++i)
 	{
 		(*i).Save(index);
 	}
@@ -401,13 +392,10 @@ void CFilterOptions::Save()
 }
 
 
-std::vector<CFilterOptions::CFilterOptionData>::iterator
-CFilterOptions::FindFilter(std::wstring const& inName)
+std::vector<CFilterOptions::CFilterOptionData>::iterator CFilterOptions::FindFilter(std::wstring const& inName)
 {
 	wxString wxName(StringUtil::stringWX(inName));
-	for (std::vector<CFilterOptionData>::iterator i = m_filters.begin();
-		i != m_filters.end();
-		++i)
+	for (std::vector<CFilterOptionData>::iterator i = m_filters.begin(); i != m_filters.end(); ++i)
 	{
 		if ((*i).filterName == wxName)
 			return i;
@@ -415,27 +403,20 @@ CFilterOptions::FindFilter(std::wstring const& inName)
 	return m_filters.end();
 }
 
-size_t CFilterOptions::GetAllFilterNames(
-		std::vector<std::wstring>& outNames,
-		bool bForEditing) const
+size_t CFilterOptions::GetAllFilterNames(std::vector<std::wstring>& outNames, bool bForEditing) const
 {
 	outNames.clear();
 	if (0 < m_filters.size())
 	{
 		outNames.reserve(m_filters.size());
-		for (std::vector<CFilterOptionData>::const_iterator i = m_filters.begin();
-			i != m_filters.end();
-			++i)
+		for (std::vector<CFilterOptionData>::const_iterator i = m_filters.begin(); i != m_filters.end(); ++i)
 		{
 			outNames.push_back(StringUtil::stringW((*i).filterName));
 		}
 	}
-	std::stable_sort(outNames.begin(), outNames.end(),
-		[](std::wstring const& one, std::wstring const& two)
-		{
-			return StringUtil::CompareNoCase(one, two) < 0;
-		}
-	);
+	std::stable_sort(outNames.begin(), outNames.end(), [](std::wstring const& one, std::wstring const& two) {
+		return StringUtil::CompareNoCase(one, two) < 0;
+	});
 	if (!bForEditing)
 	{
 		if (0 < outNames.size() || IsFilterEnabled())
@@ -524,18 +505,14 @@ bool CFilterOptions::DeleteFilter(std::wstring const& inName)
 
 bool CFilterOptions::IsFilterEnabled() const
 {
-	if (m_bAllDates
-	&& m_bViewAllVenues
-	&& ARBFilterViewRuns::All == m_eRuns)
+	if (m_bAllDates && m_bViewAllVenues && ARBFilterViewRuns::All == m_eRuns)
 		return false;
 	else
 		return true;
 }
 
 
-bool CFilterOptions::IsDateVisible(
-		ARBDate const& startDate,
-		ARBDate const& endDate) const
+bool CFilterOptions::IsDateVisible(ARBDate const& startDate, ARBDate const& endDate) const
 {
 	if (!m_bAllDates)
 	{
@@ -548,28 +525,21 @@ bool CFilterOptions::IsDateVisible(
 }
 
 
-bool CFilterOptions::IsTitleVisible(
-		std::vector<CVenueFilter> const& venues,
-		ARBDogTitlePtr const& inTitle) const
+bool CFilterOptions::IsTitleVisible(std::vector<CVenueFilter> const& venues, ARBDogTitlePtr const& inTitle) const
 {
 	if (!CAgilityBookOptions::GetViewHiddenTitles() && inTitle->IsHidden())
 		return false;
-	if (!inTitle->GetDate().IsValid()
-	|| !IsDateVisible(inTitle->GetDate(), inTitle->GetDate()))
+	if (!inTitle->GetDate().IsValid() || !IsDateVisible(inTitle->GetDate(), inTitle->GetDate()))
 		return false;
 	return IsVenueVisible(venues, inTitle->GetVenue());
 }
 
 
-bool CFilterOptions::IsVenueVisible(
-		std::vector<CVenueFilter> const& venues,
-		std::wstring const& venue) const
+bool CFilterOptions::IsVenueVisible(std::vector<CVenueFilter> const& venues, std::wstring const& venue) const
 {
 	if (!m_bViewAllVenues)
 	{
-		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
-			iter != venues.end();
-			++iter)
+		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin(); iter != venues.end(); ++iter)
 		{
 			if ((*iter).venue == venue)
 				return true;
@@ -581,18 +551,15 @@ bool CFilterOptions::IsVenueVisible(
 
 
 bool CFilterOptions::IsVenueDivisionVisible(
-		std::vector<CVenueFilter> const& venues,
-		std::wstring const& venue,
-		std::wstring const& div) const
+	std::vector<CVenueFilter> const& venues,
+	std::wstring const& venue,
+	std::wstring const& div) const
 {
 	if (!m_bViewAllVenues)
 	{
-		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
-			iter != venues.end();
-			++iter)
+		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin(); iter != venues.end(); ++iter)
 		{
-			if ((*iter).venue == venue
-			&& (*iter).division == div)
+			if ((*iter).venue == venue && (*iter).division == div)
 				return true;
 		}
 		return false;
@@ -602,20 +569,16 @@ bool CFilterOptions::IsVenueDivisionVisible(
 
 
 bool CFilterOptions::IsVenueLevelVisible(
-		std::vector<CVenueFilter> const& venues,
-		std::wstring const& venue,
-		std::wstring const& div,
-		std::wstring const& level) const
+	std::vector<CVenueFilter> const& venues,
+	std::wstring const& venue,
+	std::wstring const& div,
+	std::wstring const& level) const
 {
 	if (!m_bViewAllVenues)
 	{
-		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
-			iter != venues.end();
-			++iter)
+		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin(); iter != venues.end(); ++iter)
 		{
-			if ((*iter).venue == venue
-			&& (*iter).division == div
-			&& (*iter).level == level)
+			if ((*iter).venue == venue && (*iter).division == div && (*iter).level == level)
 				return true;
 		}
 		return false;
@@ -624,9 +587,7 @@ bool CFilterOptions::IsVenueLevelVisible(
 }
 
 
-bool CFilterOptions::IsTrialVisible(
-		std::vector<CVenueFilter> const& venues,
-		ARBDogTrialPtr const& inTrial) const
+bool CFilterOptions::IsTrialVisible(std::vector<CVenueFilter> const& venues, ARBDogTrialPtr const& inTrial) const
 {
 	// Yes, it seems backwards, but it is correct.
 	if (!IsDateVisible(inTrial->GetEndDate(), inTrial->GetStartDate()))
@@ -634,8 +595,8 @@ bool CFilterOptions::IsTrialVisible(
 	if (!m_bViewAllVenues)
 	{
 		for (ARBDogClubList::const_iterator iterClub = inTrial->GetClubs().begin();
-			iterClub != inTrial->GetClubs().end();
-			++iterClub)
+			 iterClub != inTrial->GetClubs().end();
+			 ++iterClub)
 		{
 			if (IsVenueVisible(venues, (*iterClub)->GetVenue()))
 				return true;
@@ -648,9 +609,9 @@ bool CFilterOptions::IsTrialVisible(
 
 // Return type should be the same as ARBBase::m_nFiltered
 unsigned short CFilterOptions::IsRunVisible(
-		std::vector<CVenueFilter> const& venues,
-		ARBDogTrialPtr const& inTrial,
-		ARBDogRunPtr const& inRun) const
+	std::vector<CVenueFilter> const& venues,
+	ARBDogTrialPtr const& inTrial,
+	ARBDogRunPtr const& inRun) const
 {
 	unsigned short nVisible = 0;
 	if (!IsDateVisible(inRun->GetDate(), inRun->GetDate()))
@@ -666,14 +627,12 @@ unsigned short CFilterOptions::IsRunVisible(
 		// of the filter matches too.
 		if (IsDateVisible(inTrial->GetRuns().GetEndDate(), inTrial->GetRuns().GetStartDate()))
 		{
-			for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
-				iter != venues.end();
-				++iter)
+			for (std::vector<CVenueFilter>::const_iterator iter = venues.begin(); iter != venues.end(); ++iter)
 			{
 				bool bCheck = false;
 				for (ARBDogClubList::const_iterator iterClub = inTrial->GetClubs().begin();
-					iterClub != inTrial->GetClubs().end();
-					++iterClub)
+					 iterClub != inTrial->GetClubs().end();
+					 ++iterClub)
 				{
 					if ((*iter).venue == (*iterClub)->GetVenue())
 					{
@@ -681,9 +640,7 @@ unsigned short CFilterOptions::IsRunVisible(
 						break;
 					}
 				}
-				if (bCheck
-				&& inRun->GetDivision() == (*iter).division
-				&& inRun->GetLevel() == (*iter).level)
+				if (bCheck && inRun->GetDivision() == (*iter).division && inRun->GetLevel() == (*iter).level)
 				{
 					nVisible = GetFilterMask(ARBFilterType::Full) | GetFilterMask(ARBFilterType::IgnoreQ);
 					break;
@@ -691,14 +648,12 @@ unsigned short CFilterOptions::IsRunVisible(
 			}
 		}
 	}
-	if ((nVisible & GetFilterMask(ARBFilterType::Full))
-	&& ARBFilterViewRuns::All != m_eRuns)
+	if ((nVisible & GetFilterMask(ARBFilterType::Full)) && ARBFilterViewRuns::All != m_eRuns)
 	{
 		// Only set the full filter, not the IgnoreQ filter.
 		nVisible &= ~GetFilterMask(ARBFilterType::Full);
 		bool bQualifying = ARBFilterViewRuns::Qs == m_eRuns;
-		if ((inRun->GetQ().Qualified() && bQualifying)
-		|| (!inRun->GetQ().Qualified() && !bQualifying))
+		if ((inRun->GetQ().Qualified() && bQualifying) || (!inRun->GetQ().Qualified() && !bQualifying))
 			nVisible |= GetFilterMask(ARBFilterType::Full);
 	}
 	return nVisible;
@@ -711,10 +666,10 @@ unsigned short CFilterOptions::IsRunVisible(
 // set the filtering to hide NADAC novice runs, the asca visibility caused
 // the novice run to appear in the nadac points listing when it shouldn't.
 bool CFilterOptions::IsRunVisible(
-		std::vector<CVenueFilter> const& venues,
-		ARBConfigVenuePtr const& inVenue,
-		ARBDogTrialPtr const& inTrial,
-		ARBDogRunPtr const& inRun) const
+	std::vector<CVenueFilter> const& venues,
+	ARBConfigVenuePtr const& inVenue,
+	ARBDogTrialPtr const& inTrial,
+	ARBDogRunPtr const& inRun) const
 {
 	if (1 >= inTrial->GetClubs().size())
 		return true;
@@ -722,14 +677,10 @@ bool CFilterOptions::IsRunVisible(
 	if (!m_bViewAllVenues)
 	{
 		bVisible = false;
-		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
-			iter != venues.end();
-			++iter)
+		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin(); iter != venues.end(); ++iter)
 		{
-			if (inTrial->HasVenue(inVenue->GetName())
-			&& inVenue->GetName() == (*iter).venue
-			&& inRun->GetDivision() == (*iter).division
-			&& inRun->GetLevel() == (*iter).level)
+			if (inTrial->HasVenue(inVenue->GetName()) && inVenue->GetName() == (*iter).venue
+				&& inRun->GetDivision() == (*iter).division && inRun->GetLevel() == (*iter).level)
 			{
 				bVisible = true;
 				break;
@@ -740,9 +691,7 @@ bool CFilterOptions::IsRunVisible(
 }
 
 
-bool CFilterOptions::IsCalendarVisible(
-		std::vector<CVenueFilter> const& venues,
-		ARBCalendarPtr const& inCal) const
+bool CFilterOptions::IsCalendarVisible(std::vector<CVenueFilter> const& venues, ARBCalendarPtr const& inCal) const
 {
 	if (!m_bAllDates)
 	{
@@ -761,9 +710,7 @@ bool CFilterOptions::IsCalendarVisible(
 	if (!m_bViewAllVenues)
 	{
 		bVisible = false;
-		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
-			iter != venues.end();
-			++iter)
+		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin(); iter != venues.end(); ++iter)
 		{
 			if (inCal->GetVenue() == (*iter).venue)
 			{
@@ -776,9 +723,7 @@ bool CFilterOptions::IsCalendarVisible(
 }
 
 
-bool CFilterOptions::IsTrainingLogVisible(
-		std::set<std::wstring> const& names,
-		ARBTrainingPtr const& inTraining) const
+bool CFilterOptions::IsTrainingLogVisible(std::set<std::wstring> const& names, ARBTrainingPtr const& inTraining) const
 {
 	if (!m_bAllDates)
 	{
@@ -797,9 +742,7 @@ bool CFilterOptions::IsTrainingLogVisible(
 	if (!m_bViewAllNames)
 	{
 		bVisible = false;
-		for (std::set<std::wstring>::const_iterator iter = names.begin();
-			iter != names.end();
-			++iter)
+		for (std::set<std::wstring>::const_iterator iter = names.begin(); iter != names.end(); ++iter)
 		{
 			if (inTraining->GetName() == *iter)
 			{
@@ -812,18 +755,13 @@ bool CFilterOptions::IsTrainingLogVisible(
 }
 
 
-bool CFilterOptions::FilterExists(
-		std::wstring const& inVenue,
-		std::wstring const& inDiv,
-		std::wstring const& inLevel) const
+bool CFilterOptions::FilterExists(std::wstring const& inVenue, std::wstring const& inDiv, std::wstring const& inLevel)
+	const
 {
-	for (std::vector<CVenueFilter>::const_iterator iter = m_venueFilter.begin();
-		iter != m_venueFilter.end();
-		++iter)
+	for (std::vector<CVenueFilter>::const_iterator iter = m_venueFilter.begin(); iter != m_venueFilter.end(); ++iter)
 	{
-		if ((*iter).venue == inVenue
-		&& (0 == inDiv.length() || (0 < inDiv.length() && (*iter).division == inDiv))
-		&& (0 == inLevel.length() || (0 < inLevel.length() && (*iter).level == inLevel)))
+		if ((*iter).venue == inVenue && (0 == inDiv.length() || (0 < inDiv.length() && (*iter).division == inDiv))
+			&& (0 == inLevel.length() || (0 < inLevel.length() && (*iter).level == inLevel)))
 			return true;
 	}
 	return false;
@@ -832,50 +770,53 @@ bool CFilterOptions::FilterExists(
 /////////////////////////////////////////////////////////////////////////////
 
 CFilterOptions::CFilterOptionData::CFilterOptionData()
-		: filterName()
-		, calView(eViewNormal)
-		, bAllDates(true)
-		, bStartDate(false)
-		, dateStartDate(ARBDate::Today())
-		, bEndDate(false)
-		, dateEndDate(ARBDate::Today())
-		, bViewAllVenues(true)
-		, venueFilter()
-		, eRuns(ARBFilterViewRuns::All)
-		, bViewAllNames(true)
-		, nameFilter()
+	: filterName()
+	, calView(eViewNormal)
+	, bAllDates(true)
+	, bStartDate(false)
+	, dateStartDate(ARBDate::Today())
+	, bEndDate(false)
+	, dateEndDate(ARBDate::Today())
+	, bViewAllVenues(true)
+	, venueFilter()
+	, eRuns(ARBFilterViewRuns::All)
+	, bViewAllNames(true)
+	, nameFilter()
 {
 }
 
 
 CFilterOptions::CFilterOptionData::CFilterOptionData(int index)
-		: filterName()
-		, calView(eViewNormal)
-		, bAllDates(true)
-		, bStartDate(false)
-		, dateStartDate(ARBDate::Today())
-		, bEndDate(false)
-		, dateEndDate(ARBDate::Today())
-		, bViewAllVenues(true)
-		, venueFilter()
-		, eRuns(ARBFilterViewRuns::All)
-		, bViewAllNames(true)
-		, nameFilter()
+	: filterName()
+	, calView(eViewNormal)
+	, bAllDates(true)
+	, bStartDate(false)
+	, dateStartDate(ARBDate::Today())
+	, bEndDate(false)
+	, dateEndDate(ARBDate::Today())
+	, bViewAllVenues(true)
+	, venueFilter()
+	, eRuns(ARBFilterViewRuns::All)
+	, bViewAllNames(true)
+	, nameFilter()
 {
 	wxString section = CFG_KEY_FILTER_N(index);
 
 	filterName = wxConfig::Get()->Read(section + CFG_FILTER_ITEM_NAME, filterName);
-	calView.m_Filter = static_cast<unsigned short>(wxConfig::Get()->Read(section + CFG_FILTER_ITEM_CAL, static_cast<long>(calView.m_Filter)));
+	calView.m_Filter = static_cast<unsigned short>(
+		wxConfig::Get()->Read(section + CFG_FILTER_ITEM_CAL, static_cast<long>(calView.m_Filter)));
 	wxConfig::Get()->Read(section + CFG_FILTER_ITEM_ALLDATES, &bAllDates, bAllDates);
 	wxConfig::Get()->Read(section + CFG_FILTER_ITEM_START, &bStartDate, bStartDate);
-	dateStartDate.SetJulianDay(wxConfig::Get()->Read(section + CFG_FILTER_ITEM_STARTJDAY, dateStartDate.GetJulianDay()));
+	dateStartDate.SetJulianDay(
+		wxConfig::Get()->Read(section + CFG_FILTER_ITEM_STARTJDAY, dateStartDate.GetJulianDay()));
 	wxConfig::Get()->Read(section + CFG_FILTER_ITEM_END, &bEndDate, bEndDate);
 	dateEndDate.SetJulianDay(wxConfig::Get()->Read(section + CFG_FILTER_ITEM_ENDJDAY, dateEndDate.GetJulianDay()));
 	wxConfig::Get()->Read(section + CFG_FILTER_ITEM_ALLVENUES, &bViewAllVenues, bViewAllVenues);
 	wxString names = wxConfig::Get()->Read(section + CFG_FILTER_ITEM_FILTERVENUE, wxEmptyString);
 	venueFilter.clear();
 	FilterVenue(names, venueFilter);
-	eRuns = static_cast<ARBFilterViewRuns>(wxConfig::Get()->Read(section + CFG_FILTER_ITEM_VIEWRUNS, static_cast<long>(eRuns)));
+	eRuns = static_cast<ARBFilterViewRuns>(
+		wxConfig::Get()->Read(section + CFG_FILTER_ITEM_VIEWRUNS, static_cast<long>(eRuns)));
 	wxConfig::Get()->Read(section + CFG_FILTER_ITEM_ALLNAMES, &bViewAllNames, bViewAllNames);
 	names = wxConfig::Get()->Read(section + CFG_FILTER_ITEM_FILTERNAMES, wxEmptyString);
 	nameFilter.clear();
@@ -883,8 +824,7 @@ CFilterOptions::CFilterOptionData::CFilterOptionData(int index)
 }
 
 
-CFilterOptions::CFilterOptionData::CFilterOptionData(
-		CFilterOptions::CFilterOptionData const& rhs)
+CFilterOptions::CFilterOptionData::CFilterOptionData(CFilterOptions::CFilterOptionData const& rhs)
 	: filterName(rhs.filterName)
 	, calView(rhs.calView)
 	, bAllDates(rhs.bAllDates)
@@ -901,8 +841,7 @@ CFilterOptions::CFilterOptionData::CFilterOptionData(
 }
 
 
-CFilterOptions::CFilterOptionData::CFilterOptionData(
-		CFilterOptions::CFilterOptionData&& rhs)
+CFilterOptions::CFilterOptionData::CFilterOptionData(CFilterOptions::CFilterOptionData&& rhs)
 	: filterName(std::move(rhs.filterName))
 	, calView(std::move(rhs.calView))
 	, bAllDates(std::move(rhs.bAllDates))
@@ -920,7 +859,7 @@ CFilterOptions::CFilterOptionData::CFilterOptionData(
 
 
 CFilterOptions::CFilterOptionData& CFilterOptions::CFilterOptionData::operator=(
-		CFilterOptions::CFilterOptionData const& rhs)
+	CFilterOptions::CFilterOptionData const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -941,8 +880,7 @@ CFilterOptions::CFilterOptionData& CFilterOptions::CFilterOptionData::operator=(
 }
 
 
-CFilterOptions::CFilterOptionData& CFilterOptions::CFilterOptionData::operator=(
-		CFilterOptions::CFilterOptionData&& rhs)
+CFilterOptions::CFilterOptionData& CFilterOptions::CFilterOptionData::operator=(CFilterOptions::CFilterOptionData&& rhs)
 {
 	if (this != &rhs)
 	{
@@ -963,20 +901,14 @@ CFilterOptions::CFilterOptionData& CFilterOptions::CFilterOptionData::operator=(
 }
 
 
-bool CFilterOptions::CFilterOptionData::operator==(
-		CFilterOptions::CFilterOptionData const& rhs) const
+bool CFilterOptions::CFilterOptionData::operator==(CFilterOptions::CFilterOptionData const& rhs) const
 {
-	return !(calView.m_Filter != rhs.calView.m_Filter
-	|| eRuns != rhs.eRuns
-	|| bAllDates != rhs.bAllDates
-	|| (!bAllDates
-		&& (bStartDate != rhs.bStartDate || bEndDate != rhs.bEndDate))
-	|| (bStartDate && dateStartDate != rhs.dateStartDate)
-	|| (bEndDate && dateEndDate != rhs.dateEndDate)
-	|| bViewAllVenues != rhs.bViewAllVenues
-	|| (!bViewAllVenues && venueFilter != rhs.venueFilter)
-	|| bViewAllNames != rhs.bViewAllNames
-	|| (!bViewAllNames && nameFilter != rhs.nameFilter));
+	return !(
+		calView.m_Filter != rhs.calView.m_Filter || eRuns != rhs.eRuns || bAllDates != rhs.bAllDates
+		|| (!bAllDates && (bStartDate != rhs.bStartDate || bEndDate != rhs.bEndDate))
+		|| (bStartDate && dateStartDate != rhs.dateStartDate) || (bEndDate && dateEndDate != rhs.dateEndDate)
+		|| bViewAllVenues != rhs.bViewAllVenues || (!bViewAllVenues && venueFilter != rhs.venueFilter)
+		|| bViewAllNames != rhs.bViewAllNames || (!bViewAllNames && nameFilter != rhs.nameFilter));
 }
 
 

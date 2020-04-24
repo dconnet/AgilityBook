@@ -21,7 +21,7 @@
 #include "fmt/format.h"
 
 //Sorting:
-#define CFG_KEY_SORTING					L"Sorting"
+#define CFG_KEY_SORTING L"Sorting"
 //	ST [key]Order (ColumnOrder.cpp)
 inline std::wstring CFG_SORTING_ORDER(std::wstring const& item)
 {
@@ -33,12 +33,12 @@ inline std::wstring CFG_SORTING_SORT(std::wstring const& item)
 	return fmt::format(L"{}/{}Sort", CFG_KEY_SORTING, item);
 }
 
-#define CFG_KEY_ACCELERATORS	L"Accelerators"
+#define CFG_KEY_ACCELERATORS L"Accelerators"
 // ST
-#define CFG_ACCEL_KEYCODE		L"KeyCode"
+#define CFG_ACCEL_KEYCODE L"KeyCode"
 // ST
-#define CFG_ACCEL_ID			L"id"
+#define CFG_ACCEL_ID L"id"
 // DW (bitmask for alt/ctrl/shift modifiers)
-#define CFG_ACCEL_MOD			L"mod"
+#define CFG_ACCEL_MOD L"mod"
 
-#define CFG_KEY_RECENT_FILES	L"Recent File List" // Named this way for compatibility with existing MFC app
+#define CFG_KEY_RECENT_FILES L"Recent File List" // Named this way for compatibility with existing MFC app

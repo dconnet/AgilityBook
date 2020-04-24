@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBConfigMultiQ.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -34,7 +34,7 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBConfigMultiQPtr New();
+			//	static ARBConfigMultiQPtr New();
 		}
 	}
 
@@ -44,7 +44,7 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigMultiQPtr Clone() const;
+			//	ARBConfigMultiQPtr Clone() const;
 		}
 	}
 
@@ -54,7 +54,7 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigMultiQ& operator=(ARBConfigMultiQ const& rhs);
+			//	ARBConfigMultiQ& operator=(ARBConfigMultiQ const& rhs);
 		}
 	}
 
@@ -64,8 +64,8 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBConfigMultiQ const& rhs) const;
-		//	bool operator!=(ARBConfigMultiQ const& rhs) const
+			//	bool operator==(ARBConfigMultiQ const& rhs) const;
+			//	bool operator!=(ARBConfigMultiQ const& rhs) const
 		}
 	}
 
@@ -75,7 +75,7 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const
+			//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -85,11 +85,11 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfigVenue const& inVenue,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfigVenue const& inVenue,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -99,7 +99,7 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 
@@ -109,9 +109,9 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Match(
-		//			std::vector<ARBDogRunPtr>& ioRuns,
-		//			std::vector<ARBDogRunPtr>& outRuns) const;
+			//	bool Match(
+			//			std::vector<ARBDogRunPtr>& ioRuns,
+			//			std::vector<ARBDogRunPtr>& outRuns) const;
 		}
 	}
 
@@ -121,9 +121,9 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameDivision(
-		//			std::wstring const& inOldDiv,
-		//			std::wstring const& inNewDiv);
+			//	int RenameDivision(
+			//			std::wstring const& inOldDiv,
+			//			std::wstring const& inNewDiv);
 		}
 	}
 
@@ -133,7 +133,7 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteDivision(std::wstring const& inDiv);
+			//	int DeleteDivision(std::wstring const& inDiv);
 		}
 	}
 
@@ -143,10 +143,10 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameLevel(
-		//			std::wstring const& inDiv,
-		//			std::wstring const& inOldLevel,
-		//			std::wstring const& inNewLevel);
+			//	int RenameLevel(
+			//			std::wstring const& inDiv,
+			//			std::wstring const& inOldLevel,
+			//			std::wstring const& inNewLevel);
 		}
 	}
 
@@ -156,7 +156,7 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteLevel(std::wstring const& inLevel);
+			//	int DeleteLevel(std::wstring const& inLevel);
 		}
 	}
 
@@ -166,9 +166,9 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameEvent(
-		//			std::wstring const& inOldEvent,
-		//			std::wstring const& inNewEvent);
+			//	int RenameEvent(
+			//			std::wstring const& inOldEvent,
+			//			std::wstring const& inNewEvent);
 		}
 	}
 
@@ -178,7 +178,7 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteEvent(std::wstring const& inEvent);
+			//	int DeleteEvent(std::wstring const& inEvent);
 		}
 	}
 
@@ -188,15 +188,15 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddItem(
-		//			std::wstring const& inDiv,
-		//			std::wstring const& inLevel,
-		//			std::wstring const& inEvent);
-		//	bool RemoveItem(
-		//			std::wstring const& inDiv,
-		//			std::wstring const& inLevel,
-		//			std::wstring const& inEvent);
-		//	bool RemoveAllItems();
+			//	bool AddItem(
+			//			std::wstring const& inDiv,
+			//			std::wstring const& inLevel,
+			//			std::wstring const& inEvent);
+			//	bool RemoveItem(
+			//			std::wstring const& inDiv,
+			//			std::wstring const& inLevel,
+			//			std::wstring const& inEvent);
+			//	bool RemoveAllItems();
 		}
 	}
 }
@@ -209,11 +209,11 @@ TEST_CASE("ConfigMultiQList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfigVenue const& inVenue,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfigVenue const& inVenue,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -223,13 +223,13 @@ TEST_CASE("ConfigMultiQList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindMultiQ(
-		//			std::wstring const& inName,
-		//			bool inUseShortName = false,
-		//			ARBConfigMultiQPtr* outMultiQ = nullptr) const;
-		//	bool FindMultiQ(
-		//			ARBConfigMultiQ const& inMultiQ,
-		//			ARBConfigMultiQPtr* outMultiQ = nullptr) const;
+			//	bool FindMultiQ(
+			//			std::wstring const& inName,
+			//			bool inUseShortName = false,
+			//			ARBConfigMultiQPtr* outMultiQ = nullptr) const;
+			//	bool FindMultiQ(
+			//			ARBConfigMultiQ const& inMultiQ,
+			//			ARBConfigMultiQPtr* outMultiQ = nullptr) const;
 		}
 	}
 
@@ -239,9 +239,9 @@ TEST_CASE("ConfigMultiQList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameDivision(
-		//			std::wstring const& inOldDiv,
-		//			std::wstring const& inNewDiv);
+			//	int RenameDivision(
+			//			std::wstring const& inOldDiv,
+			//			std::wstring const& inNewDiv);
 		}
 	}
 
@@ -251,7 +251,7 @@ TEST_CASE("ConfigMultiQList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteDivision(std::wstring const& inDiv);
+			//	int DeleteDivision(std::wstring const& inDiv);
 		}
 	}
 
@@ -261,10 +261,10 @@ TEST_CASE("ConfigMultiQList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameLevel(
-		//			std::wstring const& inDiv,
-		//			std::wstring const& inOldLevel,
-		//			std::wstring const& inNewLevel);
+			//	int RenameLevel(
+			//			std::wstring const& inDiv,
+			//			std::wstring const& inOldLevel,
+			//			std::wstring const& inNewLevel);
 		}
 	}
 
@@ -274,7 +274,7 @@ TEST_CASE("ConfigMultiQList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteLevel(std::wstring const& inLevel);
+			//	int DeleteLevel(std::wstring const& inLevel);
 		}
 	}
 
@@ -284,9 +284,9 @@ TEST_CASE("ConfigMultiQList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameEvent(
-		//			std::wstring const& inOldEvent,
-		//			std::wstring const& inNewEvent);
+			//	int RenameEvent(
+			//			std::wstring const& inOldEvent,
+			//			std::wstring const& inNewEvent);
 		}
 	}
 
@@ -296,7 +296,7 @@ TEST_CASE("ConfigMultiQList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteEvent(std::wstring const& inEvent);
+			//	int DeleteEvent(std::wstring const& inEvent);
 		}
 	}
 
@@ -306,8 +306,8 @@ TEST_CASE("ConfigMultiQList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddMultiQ(ARBConfigMultiQPtr inMultiQ);
-		//	bool DeleteMultiQ(ARBConfigMultiQPtr inMultiQ);
+			//	bool AddMultiQ(ARBConfigMultiQPtr inMultiQ);
+			//	bool DeleteMultiQ(ARBConfigMultiQPtr inMultiQ);
 		}
 	}
 }

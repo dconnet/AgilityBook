@@ -89,10 +89,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfigDivisionList const& inDivisions,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfigDivisionList const& inDivisions,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -109,10 +109,7 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(
-			int indent,
-			ARBConfigEventPtr const& inEventNew,
-			std::wstring& ioInfo);
+	bool Update(int indent, ARBConfigEventPtr const& inEventNew, std::wstring& ioInfo);
 
 	/**
 	 * Find all the scoring methods that match.
@@ -124,11 +121,11 @@ public:
 	 * @return Number of items found.
 	 */
 	size_t FindAllEvents(
-			std::wstring const& inDivision,
-			std::wstring const& inLevel,
-			ARBDate const& inDate,
-			bool inTitlePoints,
-			ARBVector<ARBConfigScoringPtr>& outList) const
+		std::wstring const& inDivision,
+		std::wstring const& inLevel,
+		ARBDate const& inDate,
+		bool inTitlePoints,
+		ARBVector<ARBConfigScoringPtr>& outList) const
 	{
 		return m_Scoring.FindAllEvents(inDivision, inLevel, inDate, inTitlePoints, outList);
 	}
@@ -140,10 +137,7 @@ public:
 	 * @param inDate Date for matching methods.
 	 * @return true if FindAllEvents() > 0.
 	 */
-	bool VerifyEvent(
-			std::wstring const& inDivision,
-			std::wstring const& inLevel,
-			ARBDate const& inDate) const
+	bool VerifyEvent(std::wstring const& inDivision, std::wstring const& inLevel, ARBDate const& inDate) const
 	{
 		return m_Scoring.VerifyEvent(inDivision, inLevel, inDate);
 	}
@@ -157,10 +151,10 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindEvent(
-			std::wstring const& inDivision,
-			std::wstring const& inLevel,
-			ARBDate const& inDate,
-			ARBConfigScoringPtr* outScoring = nullptr) const
+		std::wstring const& inDivision,
+		std::wstring const& inLevel,
+		ARBDate const& inDate,
+		ARBConfigScoringPtr* outScoring = nullptr) const
 	{
 		return m_Scoring.FindEvent(inDivision, inLevel, inDate, outScoring);
 	}
@@ -235,10 +229,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfigDivisionList const& inDivisions,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfigDivisionList const& inDivisions,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Reorder the list based on 'inList'
@@ -255,10 +249,10 @@ public:
 	 * @return Event exists.
 	 */
 	bool VerifyEvent(
-			std::wstring const& inEvent,
-			std::wstring const& inDivision,
-			std::wstring const& inLevel,
-			ARBDate const& inDate) const;
+		std::wstring const& inEvent,
+		std::wstring const& inDivision,
+		std::wstring const& inLevel,
+		ARBDate const& inDate) const;
 
 	/**
 	 * Find an event.
@@ -270,13 +264,13 @@ public:
 	 * @param outScoring Pointer to object, NULL if not found.
 	 * @return Whether the event was found.
 	 */
-	 bool FindEvent(
-			std::wstring const& inEvent,
-			std::wstring const& inDivision,
-			std::wstring const& inLevel,
-			ARBDate const& inDate,
-			ARBConfigEventPtr* outEvent = nullptr,
-			ARBConfigScoringPtr* outScoring = nullptr) const;
+	bool FindEvent(
+		std::wstring const& inEvent,
+		std::wstring const& inDivision,
+		std::wstring const& inLevel,
+		ARBDate const& inDate,
+		ARBConfigEventPtr* outEvent = nullptr,
+		ARBConfigScoringPtr* outScoring = nullptr) const;
 
 	/**
 	 * Rename a division.
@@ -284,9 +278,7 @@ public:
 	 * @param inNewDiv New division name.
 	 * @return Number of ARBConfigScoring items updated.
 	 */
-	int RenameDivision(
-			std::wstring const& inOldDiv,
-			std::wstring const& inNewDiv);
+	int RenameDivision(std::wstring const& inOldDiv, std::wstring const& inNewDiv);
 
 	/**
 	 * Delete a division.
@@ -302,10 +294,7 @@ public:
 	 * @param inNewLevel New level name.
 	 * @return Number of ARBConfigScoring items updated.
 	 */
-	int RenameLevel(
-			std::wstring const& inOldDiv,
-			std::wstring const& inOldLevel,
-			std::wstring const& inNewLevel);
+	int RenameLevel(std::wstring const& inOldDiv, std::wstring const& inOldLevel, std::wstring const& inNewLevel);
 
 	/**
 	 * Delete a level.
@@ -313,9 +302,7 @@ public:
 	 * @param inLevel Level name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteLevel(
-			std::wstring const& inDiv,
-			std::wstring const& inLevel);
+	int DeleteLevel(std::wstring const& inDiv, std::wstring const& inLevel);
 
 	/**
 	 * Rename a lifetime name.
@@ -323,9 +310,7 @@ public:
 	 * @param inNewName New Lifetime name.
 	 * @return Number of ARBConfigScoring items updated.
 	 */
-	int RenameLifetimeName(
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
+	int RenameLifetimeName(std::wstring const& inOldName, std::wstring const& inNewName);
 
 	/**
 	 * Delete a lifetime name.
@@ -340,9 +325,7 @@ public:
 	 * @param outEvent Pointer to object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindEvent(
-			std::wstring const& inEvent,
-			ARBConfigEventPtr* outEvent = nullptr) const;
+	bool FindEvent(std::wstring const& inEvent, ARBConfigEventPtr* outEvent = nullptr) const;
 
 	/**
 	 * Add an event.

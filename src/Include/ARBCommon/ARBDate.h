@@ -39,26 +39,23 @@
  */
 enum class ARBDateFormat
 {
-	Locale = 0,			///< System (current) locale (output only)
-	// Leading zeros
-	DashMMDDYYYY = 1,	///< MM-DD-YYYY
-	SlashMMDDYYYY = 2,	///< MM/DD/YYYY
-	DashYYYYMMDD = 3,	///< YYYY-MM-DD, ISO 8601
+	Locale = 0,        ///< System (current) locale (output only)
+	DashMMDDYYYY = 1,  ///< MM-DD-YYYY
+	SlashMMDDYYYY = 2, ///< MM/DD/YYYY
+	DashYYYYMMDD = 3,  ///< YYYY-MM-DD, ISO 8601
 	ISO = 3,
-	SlashYYYYMMDD = 4,	///< YYYY/MM/DD
-	DashDDMMYYYY = 5,	///< DD-MM-YYYY
-	SlashDDMMYYYY = 6,	///< DD/MM/YYYY
-	// No leading zeros
-	DashMDY = 7,		///< M-D-Y
-	SlashMDY = 8,		///< M/D/Y
-	DashYMD = 9,		///< Y-M-D
-	SlashYMD = 10,		///< Y/M/D
-	DashDMY = 11,		///< D-M-Y
-	SlashDMY = 12,		///< D/M/Y
-	// New formats...
-	YYYYMMDD = 13,		///< YYYYMMDD (output only)
-	Reserved14 = 14,	///< was eCurrentLocale
-	Verbose = 15,		///< "%A, %B %d, %Y" (output only)
+	SlashYYYYMMDD = 4, ///< YYYY/MM/DD
+	DashDDMMYYYY = 5,  ///< DD-MM-YYYY
+	SlashDDMMYYYY = 6, ///< DD/MM/YYYY
+	DashMDY = 7,       ///< M-D-Y
+	SlashMDY = 8,      ///< M/D/Y
+	DashYMD = 9,       ///< Y-M-D
+	SlashYMD = 10,     ///< Y/M/D
+	DashDMY = 11,      ///< D-M-Y
+	SlashDMY = 12,     ///< D/M/Y
+	YYYYMMDD = 13,     ///< YYYYMMDD (output only)
+	Reserved14 = 14,   ///< was eCurrentLocale
+	Verbose = 15,      ///< "%A, %B %d, %Y" (output only)
 };
 
 /**
@@ -66,13 +63,13 @@ enum class ARBDateFormat
  */
 enum class ARBDayOfWeek
 {
-	Sunday = 0,		///< Sunday
-	Monday = 1,		///< Monday
-	Tuesday = 2,	///< Tuesday
-	Wednesday = 3,	///< Wednesday
-	Thursday = 4,	///< Thursday
-	Friday = 5,		///< Friday
-	Saturday = 6,	///< Saturday
+	Sunday = 0,    ///< Sunday
+	Monday = 1,    ///< Monday
+	Tuesday = 2,   ///< Tuesday
+	Wednesday = 3, ///< Wednesday
+	Thursday = 4,  ///< Thursday
+	Friday = 5,    ///< Friday
+	Saturday = 6,  ///< Saturday
 };
 
 
@@ -89,9 +86,7 @@ public:
 	 * @param inFormat Parse using this format
 	 * @return Parsed date, if parse fails, date is invalid.
 	 */
-	static ARBDate FromString(
-			std::wstring const& inDate,
-			ARBDateFormat inFormat);
+	static ARBDate FromString(std::wstring const& inDate, ARBDateFormat inFormat);
 
 	/**
 	 * Get a string showing the valid date range (if set)
@@ -101,9 +96,9 @@ public:
 	 * @return Date range string
 	 */
 	static std::wstring GetValidDateString(
-			ARBDate const& inFrom,
-			ARBDate const& inTo,
-			ARBDateFormat inFormat = ARBDateFormat::DashYMD);
+		ARBDate const& inFrom,
+		ARBDate const& inTo,
+		ARBDateFormat inFormat = ARBDateFormat::DashYMD);
 
 	/**
 	 * Get the current date.
@@ -126,14 +121,11 @@ public:
 #if defined(__WXWINDOWS__)
 	ARBDate(wxDateTime const& inTime)
 	{
-		ARBDate date(inTime.GetYear(), inTime.GetMonth()+1, inTime.GetDay());
+		ARBDate date(inTime.GetYear(), inTime.GetMonth() + 1, inTime.GetDay());
 		*this = date;
 	}
 #endif
-	ARBDate(
-			int inYr,
-			int inMon,
-			int inDay)
+	ARBDate(int inYr, int inMon, int inDay)
 		: m_Julian(0)
 	{
 		SetDate(inYr, inMon, inDay);
@@ -189,11 +181,7 @@ public:
 	 * @param bClearOnError If the input date is bad, clear the existing date.
 	 * @return Whether date was set (invalid date fails)
 	 */
-	bool SetDate(
-			int inYr,
-			int inMon,
-			int inDay,
-			bool bClearOnError = true);
+	bool SetDate(int inYr, int inMon, int inDay, bool bClearOnError = true);
 
 	ARBDate& operator=(ARBDate const& rhs)
 	{
@@ -287,9 +275,7 @@ public:
 	/**
 	 * Test if date is between two dates (inclusive)
 	 */
-	bool isBetween(
-			ARBDate const& inDate1,
-			ARBDate const& inDate2) const
+	bool isBetween(ARBDate const& inDate1, ARBDate const& inDate2) const
 	{
 		if (inDate1 > inDate2)
 			return isBetween(inDate2, inDate1);
@@ -308,9 +294,7 @@ public:
 	 * @param inForceOutput Always return a string, even if the date is not valid.
 	 * @return Date in the format defined by inFormat.
 	 */
-	std::wstring GetString(
-			ARBDateFormat inFormat = ARBDateFormat::Locale,
-			bool inForceOutput = false) const;
+	std::wstring GetString(ARBDateFormat inFormat = ARBDateFormat::Locale, bool inForceOutput = false) const;
 
 	/**
 	 * Get the current date.
@@ -318,10 +302,7 @@ public:
 	 * @param outMon Current month.
 	 * @param outDay Current day.
 	 */
-	void GetDate(
-			int& outYr,
-			int& outMon,
-			int& outDay) const;
+	void GetDate(int& outYr, int& outMon, int& outDay) const;
 
 	/**
 	 * Convert the date to a time.
@@ -346,9 +327,9 @@ public:
 	bool GetDate(wxDateTime& outDate) const;
 #endif
 
-	int GetDay() const;		///< Get the current day.
-	int GetMonth() const;	///< Get the current month.
-	int GetYear() const;	///< Get the current year.
+	int GetDay() const;   ///< Get the current day.
+	int GetMonth() const; ///< Get the current month.
+	int GetYear() const;  ///< Get the current year.
 
 	/**
 	 * Day of year (1-366)
@@ -365,9 +346,9 @@ public:
 		// I suspect it won't work properly on dates before 1752 (start of
 		// Gregorian calendar).
 		//return int((((m_Julian+1)%7)+6)%7); // Mon = 0
-		return static_cast<int>((((m_Julian+1)%7)+(7-static_cast<int>(inFirstDay)))%7);
+		return static_cast<int>((((m_Julian + 1) % 7) + (7 - static_cast<int>(inFirstDay))) % 7);
 	}
 
 private:
-	long m_Julian;	///< Julian day, not Julian date.
+	long m_Julian; ///< Julian day, not Julian date.
 };

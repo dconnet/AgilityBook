@@ -36,16 +36,18 @@
 
 namespace
 {
-	class ARBInfoItem_concrete : public ARBInfoItem
+class ARBInfoItem_concrete : public ARBInfoItem
+{
+public:
+	ARBInfoItem_concrete()
 	{
-	public:
-		ARBInfoItem_concrete() {}
-		ARBInfoItem_concrete(ARBInfoItem const& rhs)
-			: ARBInfoItem(rhs)
-		{
-		}
-	};
+	}
+	ARBInfoItem_concrete(ARBInfoItem const& rhs)
+		: ARBInfoItem(rhs)
+	{
+	}
 };
+}; // namespace
 
 
 ARBInfoItemPtr ARBInfoItem::New()
@@ -115,9 +117,7 @@ ARBInfoItem& ARBInfoItem::operator=(ARBInfoItem&& rhs)
 
 bool ARBInfoItem::operator==(ARBInfoItem const& rhs) const
 {
-	return m_Name == rhs.m_Name
-		&& m_Comment == rhs.m_Comment
-		&& m_Visible == rhs.m_Visible;
+	return m_Name == rhs.m_Name && m_Comment == rhs.m_Comment && m_Visible == rhs.m_Visible;
 }
 
 
@@ -139,10 +139,10 @@ size_t ARBInfoItem::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 
 
 bool ARBInfoItem::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback,
-		std::wstring const& inItemName)
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback,
+	std::wstring const& inItemName)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != inItemName)
@@ -154,7 +154,10 @@ bool ARBInfoItem::Load(
 	}
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_INFO_VISIBLE, m_Visible))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(inItemName.c_str(), ATTRIB_INFO_VISIBLE, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
+			inItemName.c_str(),
+			ATTRIB_INFO_VISIBLE,
+			Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 	m_Comment = inTree->GetValue();
@@ -162,9 +165,7 @@ bool ARBInfoItem::Load(
 }
 
 
-bool ARBInfoItem::Save(
-		ElementNodePtr const& ioTree,
-		std::wstring const& inItemName) const
+bool ARBInfoItem::Save(ElementNodePtr const& ioTree, std::wstring const& inItemName) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -222,10 +223,7 @@ ARBInfoItemList& ARBInfoItemList::operator=(ARBInfoItemList&& rhs)
 }
 
 
-bool ARBInfoItemList::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBInfoItemList::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	ARBInfoItemPtr item(ARBInfoItem::New());
 	if (!item->Load(inTree, inVersion, ioCallback, m_ItemName))
@@ -253,18 +251,13 @@ void ARBInfoItemList::sort()
 {
 	if (2 > size())
 		return;
-	std::stable_sort(begin(), end(),
-		[](ARBInfoItemPtr const& one, ARBInfoItemPtr const& two)
-		{
-			return StringUtil::CompareNoCase(one->GetName(), two->GetName()) < 0;
-		}
-	);
+	std::stable_sort(begin(), end(), [](ARBInfoItemPtr const& one, ARBInfoItemPtr const& two) {
+		return StringUtil::CompareNoCase(one->GetName(), two->GetName()) < 0;
+	});
 }
 
 
-size_t ARBInfoItemList::GetAllItems(
-		std::set<std::wstring>& outNames,
-		bool inVisibleOnly) const
+size_t ARBInfoItemList::GetAllItems(std::set<std::wstring>& outNames, bool inVisibleOnly) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -286,7 +279,7 @@ void ARBInfoItemList::CondenseContent(std::set<std::wstring> const& inNamesInUse
 {
 	// Remove any entries that have empty comments for items that we have
 	// shown under. This is simply to keep the file size down.
-	for (iterator iter = begin(); iter != end(); )
+	for (iterator iter = begin(); iter != end();)
 	{
 		ARBInfoItemPtr item = *iter;
 		if (item->GetComment().empty() && item->IsVisible())
@@ -302,9 +295,7 @@ void ARBInfoItemList::CondenseContent(std::set<std::wstring> const& inNamesInUse
 }
 
 
-bool ARBInfoItemList::FindItem(
-		std::wstring const& inName,
-		ARBInfoItemPtr* outItem) const
+bool ARBInfoItemList::FindItem(std::wstring const& inName, ARBInfoItemPtr* outItem) const
 {
 	if (outItem)
 		outItem->reset();
@@ -322,9 +313,7 @@ bool ARBInfoItemList::FindItem(
 }
 
 
-bool ARBInfoItemList::AddItem(
-		std::wstring const& inItem,
-		ARBInfoItemPtr* outItem)
+bool ARBInfoItemList::AddItem(std::wstring const& inItem, ARBInfoItemPtr* outItem)
 {
 	if (outItem)
 		outItem->reset();

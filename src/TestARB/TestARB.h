@@ -18,7 +18,7 @@
 #include "ARBCommon/ARBTypes.h"
 class ARBConfig;
 
-#define IDR_DTD_AGILITYRECORDBOOK	1
+#define IDR_DTD_AGILITYRECORDBOOK 1
 
 extern const wchar_t* const gc_Configs[];
 extern size_t gc_NumConfigs;

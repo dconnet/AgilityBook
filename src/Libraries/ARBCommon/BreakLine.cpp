@@ -26,11 +26,7 @@
 #endif
 
 
-size_t BreakLine(
-		wchar_t inSep,
-		std::wstring const& inStr,
-		std::vector<std::wstring>& outFields,
-		bool inRemoveEmpties)
+size_t BreakLine(wchar_t inSep, std::wstring const& inStr, std::vector<std::wstring>& outFields, bool inRemoveEmpties)
 {
 	outFields.clear();
 
@@ -80,18 +76,18 @@ size_t BreakLine(
  */
 
 ReadStatus ReadCSV(
-		wchar_t inSep,
-		std::wstring inRecord,
-		std::vector<std::wstring>& ioFields,
-		bool bContinuation,
-		std::wstring newLine)
+	wchar_t inSep,
+	std::wstring inRecord,
+	std::vector<std::wstring>& ioFields,
+	bool bContinuation,
+	std::wstring newLine)
 {
 	if (!bContinuation)
 		ioFields.clear();
 	ReadStatus status = ReadStatus::Ok;
 	if (bContinuation && inRecord.empty())
 	{
-		ioFields[ioFields.size()-1] += newLine;
+		ioFields[ioFields.size() - 1] += newLine;
 		status = ReadStatus::NeedMore;
 	}
 	bool bAddEmpty = false;
@@ -182,7 +178,7 @@ ReadStatus ReadCSV(
 				return ReadStatus::Error;
 		}
 		if (bContinuation && 0 < ioFields.size())
-			ioFields[ioFields.size()-1] += newLine + str;
+			ioFields[ioFields.size() - 1] += newLine + str;
 		else
 			ioFields.push_back(str);
 		bContinuation = false;
@@ -193,15 +189,11 @@ ReadStatus ReadCSV(
 }
 
 
-std::wstring WriteCSV(
-		wchar_t inSep,
-		std::vector<std::wstring> const& inFields)
+std::wstring WriteCSV(wchar_t inSep, std::vector<std::wstring> const& inFields)
 {
 	size_t fld = 0;
 	fmt::wmemory_buffer val;
-	for (std::vector<std::wstring>::const_iterator i = inFields.begin();
-		i != inFields.end();
-		++i, ++fld)
+	for (std::vector<std::wstring>::const_iterator i = inFields.begin(); i != inFields.end(); ++i, ++fld)
 	{
 		if (0 < fld)
 			fmt::format_to(val, L"{}", inSep);
@@ -211,14 +203,11 @@ std::wstring WriteCSV(
 }
 
 
-std::wstring WriteCSVField(
-		wchar_t inSep,
-		std::wstring const& inField)
+std::wstring WriteCSVField(wchar_t inSep, std::wstring const& inField)
 {
 	fmt::wmemory_buffer val;
-	if (std::wstring::npos != inField.find(L'"')
-	|| std::wstring::npos != inField.find(L'\n')
-	|| std::wstring::npos != inField.find(inSep))
+	if (std::wstring::npos != inField.find(L'"') || std::wstring::npos != inField.find(L'\n')
+		|| std::wstring::npos != inField.find(inSep))
 	{
 		std::wstring str(inField);
 		fmt::format_to(val, L"\"");

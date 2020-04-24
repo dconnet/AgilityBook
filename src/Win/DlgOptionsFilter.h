@@ -35,10 +35,7 @@ public:
 
 private:
 	void FillControls();
-	void FillFilter(
-			wxTreeItemId hItem,
-			std::wstring path,
-			std::vector<CVenueFilter>& outVenues);
+	void FillFilter(wxTreeItemId hItem, std::wstring path, std::vector<CVenueFilter>& outVenues);
 	void UpdateControls();
 	void CommitChanges();
 

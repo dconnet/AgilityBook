@@ -54,11 +54,7 @@
 
 // Trailing zeros are trimmed unless inPrec=2.
 // Then they are only trimmed if all zero (and inPrec=2).
-std::wstring ARBDouble::ToString(
-		double inValue,
-		int inPrec,
-		bool bUseCurrentLocale,
-		ZeroStrip eStripZeros)
+std::wstring ARBDouble::ToString(double inValue, int inPrec, bool bUseCurrentLocale, ZeroStrip eStripZeros)
 {
 	std::wstring retVal;
 
@@ -111,9 +107,9 @@ std::wstring ARBDouble::ToString(
 			{
 				size_t len = retVal.length();
 				size_t oldLen = len;
-				while (0 < len && retVal[len-1] == '0')
+				while (0 < len && retVal[len - 1] == '0')
 					--len;
-				if (0 < len && retVal[len-1] == pt)
+				if (0 < len && retVal[len - 1] == pt)
 					--len;
 				if (len != oldLen)
 					retVal = retVal.substr(0, len);
@@ -124,20 +120,14 @@ std::wstring ARBDouble::ToString(
 }
 
 
-std::wstring ARBDouble::ToString(
-		double inValue,
-		int inPrec,
-		ARBDouble::ZeroStrip eStripZeros)
+std::wstring ARBDouble::ToString(double inValue, int inPrec, ARBDouble::ZeroStrip eStripZeros)
 {
 	return ARBDouble::ToString(inValue, inPrec, true, eStripZeros);
 }
 
 
 // http://groups.google.com/group/comp.lang.c++.moderated/msg/518274ddc6fb8541?hl=en&
-bool ARBDouble::equal(
-		double const& inVal1,
-		double const& inVal2,
-		double inPrec)
+bool ARBDouble::equal(double const& inVal1, double const& inVal2, double inPrec)
 {
 	int mag1, mag2;
 	frexp(inVal1, &mag1);
@@ -153,13 +143,13 @@ bool ARBDouble::equal(
 /////////////////////////////////////////////////////////////////////////////
 
 ARBVersion::ARBVersion(std::wstring inStr)
-	: m_Version({ 0, 0 })
+	: m_Version({0, 0})
 {
 	std::wstring::size_type pos = inStr.find('.');
 	if (std::wstring::npos != pos)
 	{
 		m_Version[0] = static_cast<unsigned short>(StringUtil::ToCLong(inStr));
-		inStr = inStr.substr(pos+1);
+		inStr = inStr.substr(pos + 1);
 		m_Version[1] = static_cast<unsigned short>(StringUtil::ToCLong(inStr));
 	}
 	else

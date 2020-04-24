@@ -41,10 +41,10 @@ wxIMPLEMENT_CLASS(CTrimValidator, wxGenericValidator)
 /////////////////////////////////////////////////////////////////////////////
 
 CGenericValidator::CGenericValidator(
-		unsigned short* val,
-		unsigned short defVal,
-		bool bUseDefOnEmpty,
-		wxChar const* errMsg)
+	unsigned short* val,
+	unsigned short defVal,
+	bool bUseDefOnEmpty,
+	wxChar const* errMsg)
 	: m_pUShort(val)
 	, m_pShort(nullptr)
 	, m_pLong(nullptr)
@@ -62,11 +62,7 @@ CGenericValidator::CGenericValidator(
 }
 
 
-CGenericValidator::CGenericValidator(
-		short* val,
-		short defVal,
-		bool bUseDefOnEmpty,
-		wxChar const* errMsg)
+CGenericValidator::CGenericValidator(short* val, short defVal, bool bUseDefOnEmpty, wxChar const* errMsg)
 	: m_pUShort(nullptr)
 	, m_pShort(val)
 	, m_pLong(nullptr)
@@ -84,11 +80,7 @@ CGenericValidator::CGenericValidator(
 }
 
 
-CGenericValidator::CGenericValidator(
-		long* val,
-		long defVal,
-		bool bUseDefOnEmpty,
-		wxChar const* errMsg)
+CGenericValidator::CGenericValidator(long* val, long defVal, bool bUseDefOnEmpty, wxChar const* errMsg)
 	: m_pUShort(nullptr)
 	, m_pShort(nullptr)
 	, m_pLong(val)
@@ -106,12 +98,7 @@ CGenericValidator::CGenericValidator(
 }
 
 
-CGenericValidator::CGenericValidator(
-		double* val,
-		int inPrec,
-		double defVal,
-		bool bUseDefOnEmpty,
-		wxChar const* errMsg)
+CGenericValidator::CGenericValidator(double* val, int inPrec, double defVal, bool bUseDefOnEmpty, wxChar const* errMsg)
 	: m_pUShort(nullptr)
 	, m_pShort(nullptr)
 	, m_pLong(nullptr)
@@ -129,9 +116,7 @@ CGenericValidator::CGenericValidator(
 }
 
 
-CGenericValidator::CGenericValidator(
-		ARBDate* val,
-		wxChar const* errMsg)
+CGenericValidator::CGenericValidator(ARBDate* val, wxChar const* errMsg)
 	: m_pUShort(nullptr)
 	, m_pShort(nullptr)
 	, m_pLong(nullptr)
@@ -148,9 +133,7 @@ CGenericValidator::CGenericValidator(
 }
 
 
-CGenericValidator::CGenericValidator(
-		wxDateTime* val,
-		wxChar const* errMsg)
+CGenericValidator::CGenericValidator(wxDateTime* val, wxChar const* errMsg)
 	: m_pUShort(nullptr)
 	, m_pShort(nullptr)
 	, m_pLong(nullptr)
@@ -452,10 +435,7 @@ bool CGenericValidator::Validate(wxWindow* parent)
 
 /////////////////////////////////////////////////////////////////////////////
 
-CTrimValidator::CTrimValidator(
-		wxString* valPtr,
-		long trimStyle,
-		wxChar const* errMsg)
+CTrimValidator::CTrimValidator(wxString* valPtr, long trimStyle, wxChar const* errMsg)
 	: wxGenericValidator(valPtr)
 	, m_TrimStyle(trimStyle)
 	, m_ErrMsg()

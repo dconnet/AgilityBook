@@ -39,10 +39,10 @@ class CDlgConfigVenue : public wxDialog
 
 public:
 	CDlgConfigVenue(
-			ARBAgilityRecordBook const& book,
-			ARBConfig const& config,
-			ARBConfigVenuePtr const& inVenue,
-			wxWindow* pParent = nullptr);
+		ARBAgilityRecordBook const& book,
+		ARBConfig const& config,
+		ARBConfigVenuePtr const& inVenue,
+		wxWindow* pParent = nullptr);
 	~CDlgConfigVenue();
 
 	void GetFixups(ARBConfigActionList& ioFixups);

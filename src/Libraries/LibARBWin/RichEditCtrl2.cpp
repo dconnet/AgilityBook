@@ -27,14 +27,19 @@
 
 
 CRichEditCtrl2::CRichEditCtrl2(
-		wxWindow* parent,
-		wxWindowID id,
-		const wxString& value,
-		const wxPoint& pos,
-		const wxSize& size,
-		bool bReadOnly)
-	: CTextCtrl(parent, id, value, pos, size,
-		wxTE_AUTO_URL|wxTE_MULTILINE|wxTE_RICH2 | (bReadOnly ? wxTE_READONLY : 0))
+	wxWindow* parent,
+	wxWindowID id,
+	const wxString& value,
+	const wxPoint& pos,
+	const wxSize& size,
+	bool bReadOnly)
+	: CTextCtrl(
+		parent,
+		id,
+		value,
+		pos,
+		size,
+		wxTE_AUTO_URL | wxTE_MULTILINE | wxTE_RICH2 | (bReadOnly ? wxTE_READONLY : 0))
 {
 	Bind(wxEVT_COMMAND_TEXT_URL, &CRichEditCtrl2::OnUrl, this);
 	if (bReadOnly)

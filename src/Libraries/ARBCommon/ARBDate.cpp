@@ -64,16 +64,12 @@
 //     August 1963.  (Also published in Collected Algorithms from CACM,
 //     algorithm number 199).
 
-#define SDN_OFFSET			32045
-#define DAYS_PER_5_MONTHS	153
-#define DAYS_PER_4_YEARS	1461
-#define DAYS_PER_400_YEARS	146097
+#define SDN_OFFSET         32045
+#define DAYS_PER_5_MONTHS  153
+#define DAYS_PER_4_YEARS   1461
+#define DAYS_PER_400_YEARS 146097
 
-static void SdnToGregorian(
-		long int sdn,
-		int* pYear,
-		int* pMonth,
-		int* pDay)
+static void SdnToGregorian(long int sdn, int* pYear, int* pMonth, int* pDay)
 {
 	if (sdn <= 0)
 	{
@@ -118,18 +114,13 @@ static void SdnToGregorian(
 }
 
 
-static long int GregorianToSdn(
-		int inputYear,
-		int inputMonth,
-		int inputDay)
+static long int GregorianToSdn(int inputYear, int inputMonth, int inputDay)
 {
 	int year = 0;
 	int month = 0;
 
 	/* check for invalid dates */
-	if (inputYear == 0 || inputYear < -4714
-	|| inputMonth <= 0 || inputMonth > 12
-	|| inputDay <= 0 || inputDay > 31)
+	if (inputYear == 0 || inputYear < -4714 || inputMonth <= 0 || inputMonth > 12 || inputDay <= 0 || inputDay > 31)
 	{
 		return 0;
 	}
@@ -158,11 +149,9 @@ static long int GregorianToSdn(
 		year--;
 	}
 
-	return ( ((year / 100) * DAYS_PER_400_YEARS) / 4
-		+ ((year % 100) * DAYS_PER_4_YEARS) / 4
-		+ (month * DAYS_PER_5_MONTHS + 2) / 5
-		+ inputDay
-		- SDN_OFFSET );
+	return (
+		((year / 100) * DAYS_PER_400_YEARS) / 4 + ((year % 100) * DAYS_PER_4_YEARS) / 4
+		+ (month * DAYS_PER_5_MONTHS + 2) / 5 + inputDay - SDN_OFFSET);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -176,12 +165,7 @@ ARBDate ARBDate::Today()
 }
 
 
-static int ParseFields(
-		std::wstring inDate,
-		char sep,
-		unsigned short& val1,
-		unsigned short& val2,
-		unsigned short& val3)
+static int ParseFields(std::wstring inDate, char sep, unsigned short& val1, unsigned short& val2, unsigned short& val3)
 {
 	int nVals = 0;
 	std::wstring::size_type pos = inDate.find(sep);
@@ -189,13 +173,13 @@ static int ParseFields(
 	{
 		val1 = static_cast<unsigned short>(StringUtil::ToCLong(inDate));
 		++nVals;
-		inDate = inDate.substr(pos+1);
+		inDate = inDate.substr(pos + 1);
 		pos = inDate.find(sep);
 		if (std::wstring::npos != pos)
 		{
 			val2 = static_cast<unsigned short>(StringUtil::ToCLong(inDate));
 			++nVals;
-			inDate = inDate.substr(pos+1);
+			inDate = inDate.substr(pos + 1);
 			val3 = static_cast<unsigned short>(StringUtil::ToCLong(inDate));
 			++nVals;
 		}
@@ -205,9 +189,7 @@ static int ParseFields(
 
 
 // static
-ARBDate ARBDate::FromString(
-		std::wstring const& inDate,
-		ARBDateFormat inFormat)
+ARBDate ARBDate::FromString(std::wstring const& inDate, ARBDateFormat inFormat)
 {
 	ARBDate date;
 	if (ARBDateFormat::Locale == inFormat)
@@ -215,7 +197,7 @@ ARBDate ARBDate::FromString(
 #if defined(__WXWINDOWS__)
 		wxDateTime dt;
 		if (dt.ParseDate(inDate.c_str()))
-			date.SetDate(dt.GetYear(), static_cast<int>(dt.GetMonth())+1, dt.GetDay());
+			date.SetDate(dt.GetYear(), static_cast<int>(dt.GetMonth()) + 1, dt.GetDay());
 #else
 #pragma PRAGMA_TODO(parse date using locale)
 		assert(0);
@@ -227,12 +209,14 @@ ARBDate ARBDate::FromString(
 		int nDash = ParseFields(inDate, '-', val1, val2, val3);
 		int nSlash = ParseFields(inDate, '/', val1, val2, val3);
 		int yr = 0, mon = 0, day = 0;
-		if ((3 == nDash &&
-		(ARBDateFormat::DashMMDDYYYY == inFormat || ARBDateFormat::DashYYYYMMDD == inFormat || ARBDateFormat::DashDDMMYYYY == inFormat
-			|| ARBDateFormat::DashMDY == inFormat || ARBDateFormat::DashYMD == inFormat || ARBDateFormat::DashDMY == inFormat))
-		|| (3 == nSlash &&
-		(ARBDateFormat::SlashMMDDYYYY == inFormat || ARBDateFormat::SlashYYYYMMDD == inFormat || ARBDateFormat::SlashDDMMYYYY == inFormat
-			|| ARBDateFormat::SlashMDY == inFormat || ARBDateFormat::SlashYMD == inFormat || ARBDateFormat::SlashDMY == inFormat)))
+		if ((3 == nDash
+			 && (ARBDateFormat::DashMMDDYYYY == inFormat || ARBDateFormat::DashYYYYMMDD == inFormat
+				 || ARBDateFormat::DashDDMMYYYY == inFormat || ARBDateFormat::DashMDY == inFormat
+				 || ARBDateFormat::DashYMD == inFormat || ARBDateFormat::DashDMY == inFormat))
+			|| (3 == nSlash
+				&& (ARBDateFormat::SlashMMDDYYYY == inFormat || ARBDateFormat::SlashYYYYMMDD == inFormat
+					|| ARBDateFormat::SlashDDMMYYYY == inFormat || ARBDateFormat::SlashMDY == inFormat
+					|| ARBDateFormat::SlashYMD == inFormat || ARBDateFormat::SlashDMY == inFormat)))
 		{
 			bool bOk = true;
 			switch (inFormat)
@@ -285,10 +269,7 @@ ARBDate ARBDate::FromString(
 
 
 // static
-std::wstring ARBDate::GetValidDateString(
-		ARBDate const& inFrom,
-		ARBDate const& inTo,
-		ARBDateFormat inFormat)
+std::wstring ARBDate::GetValidDateString(ARBDate const& inFrom, ARBDate const& inTo, ARBDateFormat inFormat)
 {
 	std::wstring str;
 	if (inFrom.IsValid() || inTo.IsValid())
@@ -321,10 +302,7 @@ ARBDate::ARBDate(time_t inTime)
 #else
 		struct tm* pTime = localtime(&inTime);
 #endif
-		m_Julian = GregorianToSdn(
-			pTime->tm_year + 1900,
-			pTime->tm_mon + 1,
-			pTime->tm_mday);
+		m_Julian = GregorianToSdn(pTime->tm_year + 1900, pTime->tm_mon + 1, pTime->tm_mday);
 	}
 }
 
@@ -340,18 +318,11 @@ void ARBDate::SetToday()
 #else
 	struct tm* pTime = localtime(&t);
 #endif
-	m_Julian = GregorianToSdn(
-		pTime->tm_year + 1900,
-		pTime->tm_mon + 1,
-		pTime->tm_mday);
+	m_Julian = GregorianToSdn(pTime->tm_year + 1900, pTime->tm_mon + 1, pTime->tm_mday);
 }
 
 
-bool ARBDate::SetDate(
-		int inYr,
-		int inMon,
-		int inDay,
-		bool bClearOnError)
+bool ARBDate::SetDate(int inYr, int inMon, int inDay, bool bClearOnError)
 {
 	bool bOk = true;
 	long julian = GregorianToSdn(inYr, inMon, inDay);
@@ -369,9 +340,7 @@ bool ARBDate::SetDate(
 }
 
 
-std::wstring ARBDate::GetString(
-		ARBDateFormat inFormat,
-		bool inForceOutput) const
+std::wstring ARBDate::GetString(ARBDateFormat inFormat, bool inForceOutput) const
 {
 	if (!inForceOutput && !IsValid())
 		return std::wstring();
@@ -384,65 +353,65 @@ std::wstring ARBDate::GetString(
 	switch (inFormat)
 	{
 	case ARBDateFormat::Locale:
-		{
+	{
 #if defined(__WXWINDOWS__)
-			wxDateTime dt(static_cast<wxDateTime::wxDateTime_t>(day), static_cast<wxDateTime::Month>(mon-1), yr);
-			date = dt.FormatDate();
+		wxDateTime dt(static_cast<wxDateTime::wxDateTime_t>(day), static_cast<wxDateTime::Month>(mon - 1), yr);
+		date = dt.FormatDate();
 #else
 #pragma PRAGMA_TODO(format date using locale)
-			assert(0);
+		assert(0);
 #endif
-		}
-		break;
-	case ARBDateFormat::DashMMDDYYYY:		///< MM-DD-YYYY
+	}
+	break;
+	case ARBDateFormat::DashMMDDYYYY: ///< MM-DD-YYYY
 		date = fmt::format(L"{:02}-{:02}-{:04}", mon, day, yr);
 		break;
 	case ARBDateFormat::YYYYMMDD:
 		date = fmt::format(L"{:04}{:02}{:02}", yr, mon, day);
 		break;
 	case ARBDateFormat::Verbose:
-		{
+	{
 #if defined(__WXWINDOWS__)
-			wxDateTime dt(static_cast<wxDateTime::wxDateTime_t>(day), static_cast<wxDateTime::Month>(mon-1), yr);
-			date = StringUtil::stringW(dt.Format(L"%A, %B %d, %Y"));
+		wxDateTime dt(static_cast<wxDateTime::wxDateTime_t>(day), static_cast<wxDateTime::Month>(mon - 1), yr);
+		date = StringUtil::stringW(dt.Format(L"%A, %B %d, %Y"));
 #else
 #pragma PRAGMA_TODO(convert wxDateTime usage)
-			assert(0);
+		assert(0);
 #endif
-		}
-		break;
+	}
+	break;
 	case ARBDateFormat::Reserved14:
-	case ARBDateFormat::SlashMMDDYYYY:	///< MM/DD/YYYY
+	case ARBDateFormat::SlashMMDDYYYY: ///< MM/DD/YYYY
 		date = fmt::format(L"{:02}/{:02}/{:04}", mon, day, yr);
 		break;
-	case ARBDateFormat::DashYYYYMMDD:		///< YYYY-MM-DD
+	case ARBDateFormat::DashYYYYMMDD: ///< YYYY-MM-DD
 		date = fmt::format(L"{:04}-{:02}-{:02}", yr, mon, day);
 		break;
-	case ARBDateFormat::SlashYYYYMMDD:	///< YYYY/MM/DD
+	case ARBDateFormat::SlashYYYYMMDD: ///< YYYY/MM/DD
 		date = fmt::format(L"{:04}/{:02}/{:02}", yr, mon, day);
 		break;
-	case ARBDateFormat::DashDDMMYYYY:		///< DD-MM-YYYY
+	case ARBDateFormat::DashDDMMYYYY: ///< DD-MM-YYYY
 		date = fmt::format(L"{:02}-{:02}-{:04}", day, mon, yr);
 		break;
-	case ARBDateFormat::SlashDDMMYYYY:	///< DD/MM/YYYY
+	case ARBDateFormat::SlashDDMMYYYY: ///< DD/MM/YYYY
 		date = fmt::format(L"{:02}/{:02}/{:04}", day, mon, yr);
 		break;
-	case ARBDateFormat::DashMDY:	///< M-D-Y
+	case ARBDateFormat::DashMDY: ///< M-D-Y
 		date = fmt::format(L"{}-{}-{}", mon, day, yr);
 		break;
-	case ARBDateFormat::SlashMDY:	///< M/D/Y
+	case ARBDateFormat::SlashMDY: ///< M/D/Y
 		date = fmt::format(L"{}/{}/{}", mon, day, yr);
 		break;
-	case ARBDateFormat::DashYMD:	///< Y-M-D
+	case ARBDateFormat::DashYMD: ///< Y-M-D
 		date = fmt::format(L"{}-{}-{}", yr, mon, day);
 		break;
-	case ARBDateFormat::SlashYMD:	///< Y/M/D
+	case ARBDateFormat::SlashYMD: ///< Y/M/D
 		date = fmt::format(L"{}/{}/{}", yr, mon, day);
 		break;
-	case ARBDateFormat::DashDMY:	///< D-M-Y
+	case ARBDateFormat::DashDMY: ///< D-M-Y
 		date = fmt::format(L"{}-{}-{}", day, mon, yr);
 		break;
-	case ARBDateFormat::SlashDMY:	///< D/M/Y
+	case ARBDateFormat::SlashDMY: ///< D/M/Y
 		date = fmt::format(L"{}/{}/{}", day, mon, yr);
 		break;
 	}
@@ -450,10 +419,7 @@ std::wstring ARBDate::GetString(
 }
 
 
-void ARBDate::GetDate(
-		int& outYr,
-		int& outMon,
-		int& outDay) const
+void ARBDate::GetDate(int& outYr, int& outMon, int& outDay) const
 {
 	SdnToGregorian(m_Julian, &outYr, &outMon, &outDay);
 }

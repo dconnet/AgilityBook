@@ -23,10 +23,7 @@ class CRichEditCtrl2;
 class CDlgOtherPoint : public wxDialog
 {
 public:
-	CDlgOtherPoint(
-			ARBConfig& config,
-			ARBDogRunOtherPointsPtr const& inRunOther,
-			wxWindow* pParent = nullptr);
+	CDlgOtherPoint(ARBConfig& config, ARBDogRunOtherPointsPtr const& inRunOther, wxWindow* pParent = nullptr);
 
 private:
 	void LoadPoints(ARBConfigOtherPointsPtr const& inOther);

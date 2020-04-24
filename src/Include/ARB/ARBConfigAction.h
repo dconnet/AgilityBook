@@ -137,19 +137,19 @@ public:
 	 * @return Changes occurred.
 	 */
 	virtual bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const = 0;
+		ARBConfig& ioConfig,
+		ARBDogList* ioDogs,
+		fmt::wmemory_buffer& ioInfo,
+		IConfigActionCallback& ioCallBack) const = 0;
 
 	/**
 	 * Allow the UI to update filter contents.
 	 */
 	virtual bool Update(
-			ARBConfig const& inConfigCurrent,
-			std::wstring& ioVenue,
-			std::wstring& ioDivision,
-			std::wstring& ioSubLevel) const
+		ARBConfig const& inConfigCurrent,
+		std::wstring& ioVenue,
+		std::wstring& ioDivision,
+		std::wstring& ioSubLevel) const
 	{
 		return false;
 	}
@@ -164,25 +164,22 @@ protected:
 /////////////////////////////////////////////////////////////////////////////
 
 class ARB_API ARBConfigActionDeleteCalPlugin : public ARBConfigAction
-{ 
+{
 protected:
-	ARBConfigActionDeleteCalPlugin(
-			std::wstring const& inName);
+	ARBConfigActionDeleteCalPlugin(std::wstring const& inName);
 	ARBConfigActionDeleteCalPlugin(ARBConfigActionDeleteCalPlugin const& rhs);
 	DECLARE_NO_COPY_ACTION(ARBConfigActionDeleteCalPlugin)
 
 public:
-	static ARBConfigActionPtr New(
-			std::wstring const& inName);
-	~ARBConfigActionDeleteCalPlugin() {}
+	static ARBConfigActionPtr New(std::wstring const& inName);
+	~ARBConfigActionDeleteCalPlugin()
+	{
+	}
 
 	ARBConfigActionPtr Clone() const override;
 
-	bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const override;
+	bool Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
+		const override;
 
 protected:
 	std::wstring m_Name;
@@ -191,29 +188,22 @@ protected:
 /////////////////////////////////////////////////////////////////////////////
 
 class ARB_API ARBConfigActionRenameOtherPoints : public ARBConfigAction
-{ 
+{
 protected:
-	ARBConfigActionRenameOtherPoints(
-			short configVersion,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
+	ARBConfigActionRenameOtherPoints(short configVersion, std::wstring const& inOldName, std::wstring const& inNewName);
 	ARBConfigActionRenameOtherPoints(ARBConfigActionRenameOtherPoints const& rhs);
 	DECLARE_NO_COPY_ACTION(ARBConfigActionRenameOtherPoints)
 
 public:
-	static ARBConfigActionPtr New(
-			short configVersion,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
-	~ARBConfigActionRenameOtherPoints() {}
+	static ARBConfigActionPtr New(short configVersion, std::wstring const& inOldName, std::wstring const& inNewName);
+	~ARBConfigActionRenameOtherPoints()
+	{
+	}
 
 	ARBConfigActionPtr Clone() const override;
 
-	bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const override;
+	bool Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
+		const override;
 
 protected:
 	std::wstring m_OldName;
@@ -222,27 +212,22 @@ protected:
 
 
 class ARB_API ARBConfigActionDeleteOtherPoints : public ARBConfigAction
-{ 
+{
 protected:
-	ARBConfigActionDeleteOtherPoints(
-			short configVersion,
-			std::wstring const& inName);
+	ARBConfigActionDeleteOtherPoints(short configVersion, std::wstring const& inName);
 	ARBConfigActionDeleteOtherPoints(ARBConfigActionDeleteOtherPoints const& rhs);
 	DECLARE_NO_COPY_ACTION(ARBConfigActionDeleteOtherPoints)
 
 public:
-	static ARBConfigActionPtr New(
-			short configVersion,
-			std::wstring const& inName);
-	~ARBConfigActionDeleteOtherPoints() {}
+	static ARBConfigActionPtr New(short configVersion, std::wstring const& inName);
+	~ARBConfigActionDeleteOtherPoints()
+	{
+	}
 
 	ARBConfigActionPtr Clone() const override;
 
-	bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const override;
+	bool Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
+		const override;
 
 protected:
 	std::wstring m_Name;
@@ -253,33 +238,26 @@ protected:
 class ARB_API ARBConfigActionRenameVenue : public ARBConfigAction
 {
 protected:
-	ARBConfigActionRenameVenue(
-			short configVersion,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
+	ARBConfigActionRenameVenue(short configVersion, std::wstring const& inOldName, std::wstring const& inNewName);
 	ARBConfigActionRenameVenue(ARBConfigActionRenameVenue const& rhs);
 	DECLARE_NO_COPY_ACTION(ARBConfigActionRenameVenue)
 
 public:
-	static ARBConfigActionPtr New(
-			short configVersion,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
-	~ARBConfigActionRenameVenue() {}
+	static ARBConfigActionPtr New(short configVersion, std::wstring const& inOldName, std::wstring const& inNewName);
+	~ARBConfigActionRenameVenue()
+	{
+	}
 
 	ARBConfigActionPtr Clone() const override;
 
-	bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const override;
+	bool Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
+		const override;
 
 	bool Update(
-			ARBConfig const& inConfigCurrent,
-			std::wstring& ioVenue,
-			std::wstring& ioDivision,
-			std::wstring& ioSubLevel) const override;
+		ARBConfig const& inConfigCurrent,
+		std::wstring& ioVenue,
+		std::wstring& ioDivision,
+		std::wstring& ioSubLevel) const override;
 
 private:
 	std::wstring m_OldName;
@@ -290,25 +268,20 @@ private:
 class ARB_API ARBConfigActionDeleteVenue : public ARBConfigAction
 {
 protected:
-	ARBConfigActionDeleteVenue(
-			short configVersion,
-			std::wstring const& inName);
+	ARBConfigActionDeleteVenue(short configVersion, std::wstring const& inName);
 	ARBConfigActionDeleteVenue(ARBConfigActionDeleteVenue const& rhs);
 	DECLARE_NO_COPY_ACTION(ARBConfigActionDeleteVenue)
 
 public:
-	static ARBConfigActionPtr New(
-			short configVersion,
-			std::wstring const& inName);
-	~ARBConfigActionDeleteVenue() {}
+	static ARBConfigActionPtr New(short configVersion, std::wstring const& inName);
+	~ARBConfigActionDeleteVenue()
+	{
+	}
 
 	ARBConfigActionPtr Clone() const override;
 
-	bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const override;
+	bool Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
+		const override;
 
 private:
 	std::wstring m_Name;
@@ -320,28 +293,27 @@ class ARB_API ARBConfigActionRenameMultiQ : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameMultiQ(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName);
 	ARBConfigActionRenameMultiQ(ARBConfigActionRenameMultiQ const& rhs);
 	DECLARE_NO_COPY_ACTION(ARBConfigActionRenameMultiQ)
 
 public:
 	static ARBConfigActionPtr New(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
-	~ARBConfigActionRenameMultiQ() {}
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName);
+	~ARBConfigActionRenameMultiQ()
+	{
+	}
 
 	ARBConfigActionPtr Clone() const override;
 
-	bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const override;
+	bool Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
+		const override;
 
 protected:
 	std::wstring m_Venue;
@@ -353,27 +325,20 @@ protected:
 class ARB_API ARBConfigActionDeleteMultiQ : public ARBConfigAction
 {
 protected:
-	ARBConfigActionDeleteMultiQ(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inName);
+	ARBConfigActionDeleteMultiQ(short configVersion, std::wstring const& inVenue, std::wstring const& inName);
 	ARBConfigActionDeleteMultiQ(ARBConfigActionDeleteMultiQ const& rhs);
 	DECLARE_NO_COPY_ACTION(ARBConfigActionDeleteMultiQ)
 
 public:
-	static ARBConfigActionPtr New(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inName);
-	~ARBConfigActionDeleteMultiQ() {}
+	static ARBConfigActionPtr New(short configVersion, std::wstring const& inVenue, std::wstring const& inName);
+	~ARBConfigActionDeleteMultiQ()
+	{
+	}
 
 	ARBConfigActionPtr Clone() const override;
 
-	bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const override;
+	bool Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
+		const override;
 
 protected:
 	std::wstring m_Venue;
@@ -386,34 +351,33 @@ class ARB_API ARBConfigActionRenameDivision : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameDivision(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName);
 	ARBConfigActionRenameDivision(ARBConfigActionRenameDivision const& rhs);
 	DECLARE_NO_COPY_ACTION(ARBConfigActionRenameDivision)
 
 public:
 	static ARBConfigActionPtr New(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
-	~ARBConfigActionRenameDivision() {}
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName);
+	~ARBConfigActionRenameDivision()
+	{
+	}
 
 	ARBConfigActionPtr Clone() const override;
 
-	bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const override;
+	bool Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
+		const override;
 
 	bool Update(
-			ARBConfig const& inConfigCurrent,
-			std::wstring& ioVenue,
-			std::wstring& ioDivision,
-			std::wstring& ioSubLevel) const override;
+		ARBConfig const& inConfigCurrent,
+		std::wstring& ioVenue,
+		std::wstring& ioDivision,
+		std::wstring& ioSubLevel) const override;
 
 protected:
 	std::wstring m_Venue;
@@ -425,27 +389,20 @@ protected:
 class ARB_API ARBConfigActionDeleteDivision : public ARBConfigAction
 {
 protected:
-	ARBConfigActionDeleteDivision(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inName);
+	ARBConfigActionDeleteDivision(short configVersion, std::wstring const& inVenue, std::wstring const& inName);
 	ARBConfigActionDeleteDivision(ARBConfigActionDeleteDivision const& rhs);
 	DECLARE_NO_COPY_ACTION(ARBConfigActionDeleteDivision)
 
 public:
-	static ARBConfigActionPtr New(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inName);
-	~ARBConfigActionDeleteDivision() {}
+	static ARBConfigActionPtr New(short configVersion, std::wstring const& inVenue, std::wstring const& inName);
+	~ARBConfigActionDeleteDivision()
+	{
+	}
 
 	ARBConfigActionPtr Clone() const override;
 
-	bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const override;
+	bool Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
+		const override;
 
 protected:
 	std::wstring m_Venue;
@@ -458,45 +415,44 @@ class ARB_API ARBConfigActionRenameLevel : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameLevel(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inDiv,
-			std::wstring const& inLevel,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inLevel,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName);
 	ARBConfigActionRenameLevel(ARBConfigActionRenameLevel const& rhs);
 	DECLARE_NO_COPY_ACTION(ARBConfigActionRenameLevel)
 
 public:
 	static ARBConfigActionPtr NewLevel(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inDiv,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
-	~ARBConfigActionRenameLevel() {}
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName);
+	~ARBConfigActionRenameLevel()
+	{
+	}
 
 	static ARBConfigActionPtr NewSubLevel(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inDiv,
-			std::wstring const& inLevel,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inLevel,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName);
 
 	ARBConfigActionPtr Clone() const override;
 
-	bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const override;
+	bool Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
+		const override;
 
 	bool Update(
-			ARBConfig const& inConfigCurrent,
-			std::wstring& ioVenue,
-			std::wstring& ioDivision,
-			std::wstring& ioSubLevel) const override;
+		ARBConfig const& inConfigCurrent,
+		std::wstring& ioVenue,
+		std::wstring& ioDivision,
+		std::wstring& ioSubLevel) const override;
 
 protected:
 	std::wstring m_Venue;
@@ -511,37 +467,36 @@ class ARB_API ARBConfigActionDeleteLevel : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteLevel(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inDiv,
-			std::wstring const& inLevel,
-			std::wstring const& inName);
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inLevel,
+		std::wstring const& inName);
 	ARBConfigActionDeleteLevel(ARBConfigActionDeleteLevel const& rhs);
 	DECLARE_NO_COPY_ACTION(ARBConfigActionDeleteLevel)
 
 public:
 	static ARBConfigActionPtr NewLevel(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inDiv,
-			std::wstring const& inName);
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inName);
 
 	static ARBConfigActionPtr NewSubLevel(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inDiv,
-			std::wstring const& inLevel,
-			std::wstring const& inName);
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inLevel,
+		std::wstring const& inName);
 
-	~ARBConfigActionDeleteLevel() {}
+	~ARBConfigActionDeleteLevel()
+	{
+	}
 
 	ARBConfigActionPtr Clone() const override;
 
-	bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const override;
+	bool Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
+		const override;
 
 protected:
 	std::wstring m_Venue;
@@ -556,28 +511,27 @@ class ARB_API ARBConfigActionRenameTitle : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameTitle(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName);
 	ARBConfigActionRenameTitle(ARBConfigActionRenameTitle const& rhs);
 	DECLARE_NO_COPY_ACTION(ARBConfigActionRenameTitle)
 
 public:
 	static ARBConfigActionPtr New(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
-	~ARBConfigActionRenameTitle() {}
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName);
+	~ARBConfigActionRenameTitle()
+	{
+	}
 
 	ARBConfigActionPtr Clone() const override;
 
-	bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const override;
+	bool Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
+		const override;
 
 protected:
 	std::wstring m_Venue;
@@ -590,30 +544,29 @@ class ARB_API ARBConfigActionDeleteTitle : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteTitle(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inDiv,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName);
 	ARBConfigActionDeleteTitle(ARBConfigActionDeleteTitle const& rhs);
 	DECLARE_NO_COPY_ACTION(ARBConfigActionDeleteTitle)
 
 public:
 	static ARBConfigActionPtr New(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inDiv,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
-	~ARBConfigActionDeleteTitle() {}
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName);
+	~ARBConfigActionDeleteTitle()
+	{
+	}
 
 	ARBConfigActionPtr Clone() const override;
 
-	bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const override;
+	bool Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
+		const override;
 
 protected:
 	std::wstring m_Venue;
@@ -628,28 +581,27 @@ class ARB_API ARBConfigActionRenameEvent : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameEvent(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName);
 	ARBConfigActionRenameEvent(ARBConfigActionRenameEvent const& rhs);
 	DECLARE_NO_COPY_ACTION(ARBConfigActionRenameEvent)
 
 public:
 	static ARBConfigActionPtr New(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
-	~ARBConfigActionRenameEvent() {}
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName);
+	~ARBConfigActionRenameEvent()
+	{
+	}
 
 	ARBConfigActionPtr Clone() const override;
 
-	bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const override;
+	bool Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
+		const override;
 
 protected:
 	std::wstring m_Venue;
@@ -661,27 +613,20 @@ protected:
 class ARB_API ARBConfigActionDeleteEvent : public ARBConfigAction
 {
 protected:
-	ARBConfigActionDeleteEvent(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inName);
+	ARBConfigActionDeleteEvent(short configVersion, std::wstring const& inVenue, std::wstring const& inName);
 	ARBConfigActionDeleteEvent(ARBConfigActionDeleteEvent const& rhs);
 	DECLARE_NO_COPY_ACTION(ARBConfigActionDeleteEvent)
 
 public:
-	static ARBConfigActionPtr New(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inName);
-	~ARBConfigActionDeleteEvent() {}
+	static ARBConfigActionPtr New(short configVersion, std::wstring const& inVenue, std::wstring const& inName);
+	~ARBConfigActionDeleteEvent()
+	{
+	}
 
 	ARBConfigActionPtr Clone() const override;
 
-	bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const override;
+	bool Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
+		const override;
 
 protected:
 	std::wstring m_Venue;
@@ -694,28 +639,27 @@ class ARB_API ARBConfigActionRenameLifetimeName : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameLifetimeName(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName);
 	ARBConfigActionRenameLifetimeName(ARBConfigActionRenameLifetimeName const& rhs);
 	DECLARE_NO_COPY_ACTION(ARBConfigActionRenameLifetimeName)
 
 public:
 	static ARBConfigActionPtr New(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
-	~ARBConfigActionRenameLifetimeName() {}
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName);
+	~ARBConfigActionRenameLifetimeName()
+	{
+	}
 
 	ARBConfigActionPtr Clone() const override;
 
-	bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const override;
+	bool Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
+		const override;
 
 protected:
 	std::wstring m_Venue;
@@ -727,27 +671,20 @@ protected:
 class ARB_API ARBConfigActionDeleteLifetimeName : public ARBConfigAction
 {
 protected:
-	ARBConfigActionDeleteLifetimeName(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inName);
+	ARBConfigActionDeleteLifetimeName(short configVersion, std::wstring const& inVenue, std::wstring const& inName);
 	ARBConfigActionDeleteLifetimeName(ARBConfigActionDeleteLifetimeName const& rhs);
 	DECLARE_NO_COPY_ACTION(ARBConfigActionDeleteLifetimeName)
 
 public:
-	static ARBConfigActionPtr New(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inName);
-	~ARBConfigActionDeleteLifetimeName() {}
+	static ARBConfigActionPtr New(short configVersion, std::wstring const& inVenue, std::wstring const& inName);
+	~ARBConfigActionDeleteLifetimeName()
+	{
+	}
 
 	ARBConfigActionPtr Clone() const override;
 
-	bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const override;
+	bool Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
+		const override;
 
 protected:
 	std::wstring m_Venue;
@@ -770,16 +707,10 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
-	int Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack) const;
+	int Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
+		const;
 
 	/**
 	 * Allow the UI to update filter contents.
@@ -791,9 +722,9 @@ public:
 	 * @return A name was updated.
 	 */
 	bool Update(
-			short configVersionPreUpdate,
-			ARBConfig const& inConfigCurrent,
-			std::wstring& ioVenue,
-			std::wstring& ioDivision,
-			std::wstring& ioSubLevel) const;
+		short configVersionPreUpdate,
+		ARBConfig const& inConfigCurrent,
+		std::wstring& ioVenue,
+		std::wstring& ioDivision,
+		std::wstring& ioSubLevel) const;
 };

@@ -57,8 +57,8 @@
 
 
 // Registry settings in "Last"
-#define LAST_STYLE		L"Last/WizStyle"
-#define LAST_STYLEITEM	L"Last/WizSubStyle" // A number will be appended
+#define LAST_STYLE     L"Last/WizStyle"
+#define LAST_STYLEITEM L"Last/WizSubStyle" // A number will be appended
 // Note: LAST_STYLE is a fixed number, regardless of UI order.
 // LAST_STYLEITEM actually uses the UI order (as of v1.10). If items are
 // reordered, this _will_ cause a problem. As of v2.0, this will change to
@@ -74,9 +74,7 @@
 wxIMPLEMENT_CLASS(CWizardStart, wxWizardPage)
 
 
-CWizardStart::CWizardStart(
-		CWizard* pSheet,
-		CAgilityBookDoc* pDoc)
+CWizardStart::CWizardStart(CWizard* pSheet, CAgilityBookDoc* pDoc)
 	: wxWizardPage(pSheet)
 	, m_pSheet(pSheet)
 	, m_pDoc(pDoc)
@@ -103,9 +101,13 @@ CWizardStart::CWizardStart(
 	wxRadioButton* radioExcel = nullptr;
 	if (m_pSheet->ExcelHelper())
 	{
-		radioExcel = new wxRadioButton(this, wxID_ANY,
+		radioExcel = new wxRadioButton(
+			this,
+			wxID_ANY,
 			_("IDC_WIZARD_START_EXCEL"),
-			wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
+			wxDefaultPosition,
+			wxDefaultSize,
+			wxRB_GROUP);
 		radioExcel->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CWizardStart::OnWizardStyleExcel, this);
 		radioExcel->SetHelpText(_("HIDC_WIZARD_START_EXCEL"));
 		radioExcel->SetToolTip(_("HIDC_WIZARD_START_EXCEL"));
@@ -114,24 +116,20 @@ CWizardStart::CWizardStart(
 	wxRadioButton* radioCalc = nullptr;
 	if (m_pSheet->CalcHelper())
 	{
-		radioCalc = new wxRadioButton(this, wxID_ANY,
-			_("IDC_WIZARD_START_CALC"),
-			wxDefaultPosition, wxDefaultSize, 0);
+		radioCalc = new wxRadioButton(this, wxID_ANY, _("IDC_WIZARD_START_CALC"), wxDefaultPosition, wxDefaultSize, 0);
 		radioCalc->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CWizardStart::OnWizardStyleCalc, this);
 		radioCalc->SetHelpText(_("HIDC_WIZARD_START_CALC"));
 		radioCalc->SetToolTip(_("HIDC_WIZARD_START_CALC"));
 	}
 
-	wxRadioButton* radioSpread = new wxRadioButton(this, wxID_ANY,
-		_("IDC_WIZARD_START_SPREADSHEET"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxRadioButton* radioSpread
+		= new wxRadioButton(this, wxID_ANY, _("IDC_WIZARD_START_SPREADSHEET"), wxDefaultPosition, wxDefaultSize, 0);
 	radioSpread->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CWizardStart::OnWizardStyleSpread, this);
 	radioSpread->SetHelpText(_("HIDC_WIZARD_START_SPREADSHEET"));
 	radioSpread->SetToolTip(_("HIDC_WIZARD_START_SPREADSHEET"));
 
-	wxRadioButton* radioArb = new wxRadioButton(this, wxID_ANY,
-		_("IDC_WIZARD_START_ARB"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxRadioButton* radioArb
+		= new wxRadioButton(this, wxID_ANY, _("IDC_WIZARD_START_ARB"), wxDefaultPosition, wxDefaultSize, 0);
 	radioArb->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, &CWizardStart::OnWizardStyleArb, this);
 	radioArb->SetHelpText(_("HIDC_WIZARD_START_ARB"));
 	radioArb->SetToolTip(_("HIDC_WIZARD_START_ARB"));
@@ -158,17 +156,21 @@ CWizardStart::CWizardStart(
 		break;
 	}
 
-	m_ctrlList = new wxListBox(this, wxID_ANY,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 115), -1),
-		0, nullptr, wxLB_HSCROLL|wxLB_SINGLE);
+	m_ctrlList = new wxListBox(
+		this,
+		wxID_ANY,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 115), -1),
+		0,
+		nullptr,
+		wxLB_HSCROLL | wxLB_SINGLE);
 	m_ctrlList->Bind(wxEVT_COMMAND_LISTBOX_SELECTED, &CWizardStart::OnSelchangeExportList, this);
 	m_ctrlList->SetHelpText(_("HIDC_WIZARD_START_LIST"));
 	m_ctrlList->SetToolTip(_("HIDC_WIZARD_START_LIST"));
 
 	wxStaticBox* boxDesc = new wxStaticBox(this, wxID_ANY, _("IDC_WIZARD_START_DESCRIPTION"));
 
-	m_ctrlDesc = new wxStaticText(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE);
+	m_ctrlDesc = new wxStaticText(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE);
 	m_ctrlDesc->Wrap(wxDLG_UNIT_X(this, 115));
 
 	// Sizers
@@ -214,136 +216,167 @@ enum class WizardPage
 // In v2, it's id based.
 namespace
 {
-	static struct
+static struct
+{
+	// For integrity checking. See Wizard.h.
+	int index;
+	struct
 	{
-		// For integrity checking. See Wizard.h.
-		int index;
-		struct
-		{
-			WizardPage nextPage;
-			// Listing (NULL denotes no entry)
-			wchar_t const* item;
-			// Description shown when listing is selected.
-			wchar_t const* desc;
-		} data[4]; // Data must agree with radio buttons. [WIZARD_RADIO_*]
-		// excel, spread, arb, calc
-	} const sc_Items[] =
+		WizardPage nextPage;
+		// Listing (NULL denotes no entry)
+		wchar_t const* item;
+		// Description shown when listing is selected.
+		wchar_t const* desc;
+	} data[4]; // Data must agree with radio buttons. [WIZARD_RADIO_*]
+			   // excel, spread, arb, calc
+} const sc_Items[] = {
 	{
-		{WIZ_IMPORT_RUNS,
+		WIZ_IMPORT_RUNS,
 		{
 			{WizardPage::Import, arbT("IDS_WIZ_IMPORT_RUNS"), arbT("IDS_WIZ_IMPORT_RUNS_EXCEL")},
 			{WizardPage::Import, arbT("IDS_WIZ_IMPORT_RUNS"), arbT("IDS_WIZ_IMPORT_RUNS_SPREAD")},
 			{WizardPage::Finish, arbT("IDS_WIZ_IMPORT_RUNS_PLUS"), arbT("IDS_WIZ_IMPORT_RUNS_ARB")},
 			{WizardPage::Import, arbT("IDS_WIZ_IMPORT_RUNS"), arbT("IDS_WIZ_IMPORT_RUNS_CALC")},
-		} },
-		{WIZ_EXPORT_RUNS,
+		},
+	},
+	{
+		WIZ_EXPORT_RUNS,
 		{
 			{WizardPage::Export, arbT("IDS_WIZ_EXPORT_RUNS"), arbT("IDS_WIZ_EXPORT_RUNS_EXCEL")},
 			{WizardPage::Export, arbT("IDS_WIZ_EXPORT_RUNS"), arbT("IDS_WIZ_EXPORT_RUNS_SPREAD")},
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::Export, arbT("IDS_WIZ_EXPORT_RUNS"), arbT("IDS_WIZ_EXPORT_RUNS_CALC")},
-		} },
-		{WIZ_IMPORT_CALENDAR,
+		},
+	},
+	{
+		WIZ_IMPORT_CALENDAR,
 		{
 			{WizardPage::Import, arbT("IDS_WIZ_IMPORT_CAL"), arbT("IDS_WIZ_IMPORT_CAL_EXCEL")},
 			{WizardPage::Import, arbT("IDS_WIZ_IMPORT_CAL"), arbT("IDS_WIZ_IMPORT_CAL_SPREAD")},
 			{WizardPage::Finish, arbT("IDS_WIZ_IMPORT_CAL"), arbT("IDS_WIZ_IMPORT_CAL_ARB")},
 			{WizardPage::Import, arbT("IDS_WIZ_IMPORT_CAL"), arbT("IDS_WIZ_IMPORT_CAL_CALC")},
-		} },
-		{WIZ_EXPORT_CALENDAR,
+		},
+	},
+	{
+		WIZ_EXPORT_CALENDAR,
 		{
 			{WizardPage::Export, arbT("IDS_WIZ_EXPORT_CAL"), arbT("IDS_WIZ_EXPORT_CAL_EXCEL")},
 			{WizardPage::Export, arbT("IDS_WIZ_EXPORT_CAL"), arbT("IDS_WIZ_EXPORT_CAL_SPREAD")},
 			{WizardPage::Finish, arbT("IDS_WIZ_EXPORT_CAL"), arbT("IDS_WIZ_EXPORT_CAL_ARB")},
 			{WizardPage::Export, arbT("IDS_WIZ_EXPORT_CAL"), arbT("IDS_WIZ_EXPORT_CAL_CALC")},
-		} },
-		{WIZ_EXPORT_CALENDAR_VCAL,
+		},
+	},
+	{
+		WIZ_EXPORT_CALENDAR_VCAL,
 		{
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::Finish, arbT("IDS_WIZ_EXPORT_CAL_VCAL"), arbT("IDS_WIZ_EXPORT_CAL_VCAL_SPREAD")},
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::None, nullptr, nullptr},
-		} },
-		{WIZ_EXPORT_CALENDAR_ICAL,
+		},
+	},
+	{
+		WIZ_EXPORT_CALENDAR_ICAL,
 		{
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::Finish, arbT("IDS_WIZ_EXPORT_CAL_ICAL"), arbT("IDS_WIZ_EXPORT_CAL_ICAL_SPREAD")},
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::None, nullptr, nullptr},
-		} },
-		{WIZ_EXPORT_CALENDAR_APPT,
+		},
+	},
+	{
+		WIZ_EXPORT_CALENDAR_APPT,
 		{
 			{WizardPage::Export, arbT("IDS_WIZ_EXPORT_CAL_APPT"), arbT("IDS_WIZ_EXPORT_CAL_APPT_EXCEL")},
 			{WizardPage::Export, arbT("IDS_WIZ_EXPORT_CAL_APPT"), arbT("IDS_WIZ_EXPORT_CAL_APPT_SPREAD")},
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::None, nullptr, nullptr},
-		} },
-		{WIZ_EXPORT_CALENDAR_TASK,
+		},
+	},
+	{
+		WIZ_EXPORT_CALENDAR_TASK,
 		{
 			{WizardPage::Export, arbT("IDS_WIZ_EXPORT_CAL_TASK"), arbT("IDS_WIZ_EXPORT_CAL_TASK_EXCEL")},
 			{WizardPage::Export, arbT("IDS_WIZ_EXPORT_CAL_TASK"), arbT("IDS_WIZ_EXPORT_CAL_TASK_SPREAD")},
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::None, nullptr, nullptr},
-		} },
-		{WIZ_IMPORT_LOG,
+		},
+	},
+	{
+		WIZ_IMPORT_LOG,
 		{
 			{WizardPage::Import, arbT("IDS_WIZ_IMPORT_LOG"), arbT("IDS_WIZ_IMPORT_LOG_EXCEL")},
 			{WizardPage::Import, arbT("IDS_WIZ_IMPORT_LOG"), arbT("IDS_WIZ_IMPORT_LOG_SPREAD")},
 			{WizardPage::Finish, arbT("IDS_WIZ_IMPORT_LOG"), arbT("IDS_WIZ_IMPORT_LOG_ARB")},
 			{WizardPage::Import, arbT("IDS_WIZ_IMPORT_LOG"), arbT("IDS_WIZ_IMPORT_LOG_CALC")},
-		} },
-		{WIZ_EXPORT_LOG,
+		},
+	},
+	{
+		WIZ_EXPORT_LOG,
 		{
 			{WizardPage::Export, arbT("IDS_WIZ_EXPORT_LOG"), arbT("IDS_WIZ_EXPORT_LOG_EXCEL")},
 			{WizardPage::Export, arbT("IDS_WIZ_EXPORT_LOG"), arbT("IDS_WIZ_EXPORT_LOG_SPREAD")},
 			{WizardPage::Finish, arbT("IDS_WIZ_EXPORT_LOG"), arbT("IDS_WIZ_EXPORT_LOG_ARB")},
 			{WizardPage::Export, arbT("IDS_WIZ_EXPORT_LOG"), arbT("IDS_WIZ_EXPORT_LOG_CALC")},
-		} },
-		{WIZ_IMPORT_CONFIGURATION,
+		},
+	},
+	{
+		WIZ_IMPORT_CONFIGURATION,
 		{
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::Finish, arbT("IDS_WIZ_IMPORT_CONFIG"), arbT("IDS_WIZ_IMPORT_CONFIG_ARB")},
 			{WizardPage::None, nullptr, nullptr},
-		} },
-		{WIZ_EXPORT_CONFIGURATION,
+		},
+	},
+	{
+		WIZ_EXPORT_CONFIGURATION,
 		{
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::Finish, arbT("IDS_WIZ_EXPORT_CONFIG"), arbT("IDS_WIZ_EXPORT_CONFIG_ARB")},
 			{WizardPage::None, nullptr, nullptr},
-		} },
-		{WIZ_EXPORT_DTD,
+		},
+	},
+	{
+		WIZ_EXPORT_DTD,
 		{
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::Finish, arbT("IDS_WIZ_EXPORT_DTD"), arbT("IDS_WIZ_EXPORT_DTD_ARB")},
 			{WizardPage::None, nullptr, nullptr},
-		} },
-		{WIZ_EXPORT_XML,
+		},
+	},
+	{
+		WIZ_EXPORT_XML,
 		{
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::Finish, arbT("IDS_WIZ_EXPORT_XML"), arbT("IDS_WIZ_EXPORT_XML_ARB")},
 			{WizardPage::None, nullptr, nullptr},
-		} },
-		{WIZ_IMPORT_SETTINGS,
+		},
+	},
+	{
+		WIZ_IMPORT_SETTINGS,
 		{
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::Finish, arbT("IDS_WIZ_IMPORT_SETTINGS"), arbT("IDS_WIZ_IMPORT_SETTINGS_ARB")},
 			{WizardPage::None, nullptr, nullptr},
-		} },
-		{WIZ_EXPORT_SETTINGS,
+		},
+	},
+	{
+		WIZ_EXPORT_SETTINGS,
 		{
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::None, nullptr, nullptr},
 			{WizardPage::Finish, arbT("IDS_WIZ_EXPORT_SETTINGS"), arbT("IDS_WIZ_EXPORT_SETTINGS_ARB")},
 			{WizardPage::None, nullptr, nullptr},
-		} },
-	};
-	constexpr int sc_nItems = sizeof(sc_Items) / sizeof(sc_Items[0]);
-}
+		},
+	},
+};
+constexpr int sc_nItems = sizeof(sc_Items) / sizeof(sc_Items[0]);
+} // namespace
 
 
 void CWizardStart::UpdateList(bool bInit)
@@ -357,11 +390,9 @@ void CWizardStart::UpdateList(bool bInit)
 	{
 		assert(sc_Items[i].index == i);
 		bool bAdd = true;
-		if (m_pSheet->GetCalendarEntries()
-		&& sc_Items[i].index != WIZ_EXPORT_CALENDAR_VCAL
-		&& sc_Items[i].index != WIZ_EXPORT_CALENDAR_ICAL
-		&& sc_Items[i].index != WIZ_EXPORT_CALENDAR_APPT
-		&& sc_Items[i].index != WIZ_EXPORT_CALENDAR_TASK)
+		if (m_pSheet->GetCalendarEntries() && sc_Items[i].index != WIZ_EXPORT_CALENDAR_VCAL
+			&& sc_Items[i].index != WIZ_EXPORT_CALENDAR_ICAL && sc_Items[i].index != WIZ_EXPORT_CALENDAR_APPT
+			&& sc_Items[i].index != WIZ_EXPORT_CALENDAR_TASK)
 			bAdd = false;
 		if (bAdd && !sc_Items[i].data[m_Style].item)
 			bAdd = false;
@@ -462,8 +493,7 @@ void CWizardStart::OnWizardChanging(wxWizardEvent& evt)
 		}
 		int data = static_cast<int>(reinterpret_cast<size_t>(m_ctrlList->GetClientData(index)));
 		m_pSheet->SetImportExportItem(data, m_Style);
-		if (WizardPage::Finish == sc_Items[data].data[m_Style].nextPage
-		&& !DoWizardFinish())
+		if (WizardPage::Finish == sc_Items[data].data[m_Style].nextPage && !DoWizardFinish())
 		{
 			evt.Veto();
 			return;
@@ -498,198 +528,207 @@ bool CWizardStart::DoWizardFinish()
 			break;
 
 		case WIZ_IMPORT_RUNS:
+		{
+			wxFileDialog file(
+				this,
+				wxEmptyString, // caption
+				wxEmptyString, // def dir
+				_("IDS_FILEEXT_FNAME_ARB"),
+				_("IDS_FILEEXT_FILTER_ARB"),
+				wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+			if (wxID_OK == file.ShowModal())
 			{
-				wxFileDialog file(this,
-					wxEmptyString, // caption
-					wxEmptyString, // def dir
-					_("IDS_FILEEXT_FNAME_ARB"),
-					_("IDS_FILEEXT_FILTER_ARB"),
-					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
-				if (wxID_OK == file.ShowModal())
-				{
-					ElementNodePtr tree(ElementNode::New());
-					bool bLoadOk = false;
-					{
-						wxBusyCursor wait;
-						bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
-					}
-					if (!bLoadOk)
-					{
-						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
-						if (0 < errMsg.size())
-						{
-							msg << L"\n\n" << fmt::to_string(errMsg);
-						}
-						wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
-					}
-					else
-						bOk = m_pDoc->ImportARBRunData(tree, this);
-				}
-			}
-			break;
-
-		case WIZ_IMPORT_CALENDAR:
-			{
-				wxFileDialog file(this,
-					wxEmptyString, // caption
-					wxEmptyString, // def dir
-					_("IDS_FILEEXT_FNAME_ARB"),
-					_("IDS_FILEEXT_FILTER_ARB"),
-					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
-				if (wxID_OK == file.ShowModal())
-				{
-					ElementNodePtr tree(ElementNode::New());
-					bool bLoadOk = false;
-					{
-						wxBusyCursor wait;
-						bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
-					}
-					if (!bLoadOk)
-					{
-						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
-						if (0 < errMsg.size())
-						{
-							msg << L"\n\n" << fmt::to_string(errMsg);
-						}
-						wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
-					}
-					else
-						bOk = m_pDoc->ImportARBCalData(tree, this);
-				}
-			}
-			break;
-
-		case WIZ_EXPORT_CALENDAR:
-			{
-				wxFileDialog file(this,
-					wxEmptyString, // caption
-					wxEmptyString, // def dir
-					_("IDS_FILEEXT_FNAME_ARB"),
-					_("IDS_FILEEXT_FILTER_ARB"),
-					wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
-				if (wxID_OK == file.ShowModal())
+				ElementNodePtr tree(ElementNode::New());
+				bool bLoadOk = false;
 				{
 					wxBusyCursor wait;
-					CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
-					std::wstring verstr = ver.GetVersionString();
-					ElementNodePtr tree(ElementNode::New());
-					if (m_pDoc->Book().Save(tree, verstr, true, false, false, false, false))
-					{
-						tree->SaveXML(StringUtil::stringW(file.GetPath()));
-					}
-					bOk = true;
+					bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
 				}
+				if (!bLoadOk)
+				{
+					wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
+					if (0 < errMsg.size())
+					{
+						msg << L"\n\n" << fmt::to_string(errMsg);
+					}
+					wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+				}
+				else
+					bOk = m_pDoc->ImportARBRunData(tree, this);
 			}
-			break;
+		}
+		break;
+
+		case WIZ_IMPORT_CALENDAR:
+		{
+			wxFileDialog file(
+				this,
+				wxEmptyString, // caption
+				wxEmptyString, // def dir
+				_("IDS_FILEEXT_FNAME_ARB"),
+				_("IDS_FILEEXT_FILTER_ARB"),
+				wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+			if (wxID_OK == file.ShowModal())
+			{
+				ElementNodePtr tree(ElementNode::New());
+				bool bLoadOk = false;
+				{
+					wxBusyCursor wait;
+					bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
+				}
+				if (!bLoadOk)
+				{
+					wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
+					if (0 < errMsg.size())
+					{
+						msg << L"\n\n" << fmt::to_string(errMsg);
+					}
+					wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+				}
+				else
+					bOk = m_pDoc->ImportARBCalData(tree, this);
+			}
+		}
+		break;
+
+		case WIZ_EXPORT_CALENDAR:
+		{
+			wxFileDialog file(
+				this,
+				wxEmptyString, // caption
+				wxEmptyString, // def dir
+				_("IDS_FILEEXT_FNAME_ARB"),
+				_("IDS_FILEEXT_FILTER_ARB"),
+				wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+			if (wxID_OK == file.ShowModal())
+			{
+				wxBusyCursor wait;
+				CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
+				std::wstring verstr = ver.GetVersionString();
+				ElementNodePtr tree(ElementNode::New());
+				if (m_pDoc->Book().Save(tree, verstr, true, false, false, false, false))
+				{
+					tree->SaveXML(StringUtil::stringW(file.GetPath()));
+				}
+				bOk = true;
+			}
+		}
+		break;
 
 		case WIZ_EXPORT_CALENDAR_VCAL:
 		case WIZ_EXPORT_CALENDAR_ICAL:
+		{
+			wxString fname, filter;
+			if (WIZ_EXPORT_CALENDAR_VCAL == data)
 			{
-				wxString fname, filter;
-				if (WIZ_EXPORT_CALENDAR_VCAL == data)
-				{
-					fname = _("IDS_FILEEXT_FNAME_VCS");
-					filter = _("IDS_FILEEXT_FILTER_VCS");
-				}
-				else
-				{
-					fname = _("IDS_FILEEXT_FNAME_ICS");
-					filter = _("IDS_FILEEXT_FILTER_ICS");
-				}
-				wxFileDialog file(this,
-					wxEmptyString, // caption
-					wxEmptyString, // def dir
-					fname,
-					filter,
-					wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
-				if (wxID_OK == file.ShowModal())
-				{
-					wxBusyCursor wait;
-					std::vector<ARBCalendarPtr> allEntries;
-					std::vector<ARBCalendarPtr>* entries = m_pSheet->GetCalendarEntries();
-					if (!entries)
-					{
-						allEntries.reserve(m_pDoc->Book().GetCalendar().size());
-						for (ARBCalendarList::const_iterator iterCal = m_pDoc->Book().GetCalendar().begin(); iterCal != m_pDoc->Book().GetCalendar().end(); ++iterCal)
-						{
-							allEntries.push_back(*iterCal);
-						}
-						entries = &allEntries;
-					}
-					std::stringstream outData;
-					int nWarning = CAgilityBookOptions::CalendarOpeningNear();
-					ICalendarPtr iCalendar = ICalendar::iCalendarBegin(outData, (WIZ_EXPORT_CALENDAR_VCAL == data) ? 1 : 2);
-					for (std::vector<ARBCalendarPtr>::const_iterator iterCal = entries->begin(); iterCal != entries->end(); ++iterCal)
-					{
-						ARBCalendarPtr pCal = *iterCal;
-						pCal->iCalendar(iCalendar, nWarning);
-					}
-					iCalendar.reset();
-					wxFFileOutputStream output(file.GetPath(), L"wb");
-					if (output.IsOk())
-					{
-						std::string const& str = outData.str();
-						output.Write(str.c_str(), str.length());
-						output.Close();
-					}
-					bOk = true;
-				}
+				fname = _("IDS_FILEEXT_FNAME_VCS");
+				filter = _("IDS_FILEEXT_FILTER_VCS");
 			}
-			break;
+			else
+			{
+				fname = _("IDS_FILEEXT_FNAME_ICS");
+				filter = _("IDS_FILEEXT_FILTER_ICS");
+			}
+			wxFileDialog file(
+				this,
+				wxEmptyString, // caption
+				wxEmptyString, // def dir
+				fname,
+				filter,
+				wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+			if (wxID_OK == file.ShowModal())
+			{
+				wxBusyCursor wait;
+				std::vector<ARBCalendarPtr> allEntries;
+				std::vector<ARBCalendarPtr>* entries = m_pSheet->GetCalendarEntries();
+				if (!entries)
+				{
+					allEntries.reserve(m_pDoc->Book().GetCalendar().size());
+					for (ARBCalendarList::const_iterator iterCal = m_pDoc->Book().GetCalendar().begin();
+						 iterCal != m_pDoc->Book().GetCalendar().end();
+						 ++iterCal)
+					{
+						allEntries.push_back(*iterCal);
+					}
+					entries = &allEntries;
+				}
+				std::stringstream outData;
+				int nWarning = CAgilityBookOptions::CalendarOpeningNear();
+				ICalendarPtr iCalendar = ICalendar::iCalendarBegin(outData, (WIZ_EXPORT_CALENDAR_VCAL == data) ? 1 : 2);
+				for (std::vector<ARBCalendarPtr>::const_iterator iterCal = entries->begin(); iterCal != entries->end();
+					 ++iterCal)
+				{
+					ARBCalendarPtr pCal = *iterCal;
+					pCal->iCalendar(iCalendar, nWarning);
+				}
+				iCalendar.reset();
+				wxFFileOutputStream output(file.GetPath(), L"wb");
+				if (output.IsOk())
+				{
+					std::string const& str = outData.str();
+					output.Write(str.c_str(), str.length());
+					output.Close();
+				}
+				bOk = true;
+			}
+		}
+		break;
 
 		case WIZ_IMPORT_LOG:
+		{
+			wxFileDialog file(
+				this,
+				wxEmptyString, // caption
+				wxEmptyString, // def dir
+				_("IDS_FILEEXT_FNAME_ARB"),
+				_("IDS_FILEEXT_FILTER_ARB"),
+				wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+			if (wxID_OK == file.ShowModal())
 			{
-				wxFileDialog file(this,
-					wxEmptyString, // caption
-					wxEmptyString, // def dir
-					_("IDS_FILEEXT_FNAME_ARB"),
-					_("IDS_FILEEXT_FILTER_ARB"),
-					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
-				if (wxID_OK == file.ShowModal())
-				{
-					ElementNodePtr tree(ElementNode::New());
-					bool bLoadOk = false;
-					{
-						wxBusyCursor wait;
-						bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
-					}
-					if (!bLoadOk)
-					{
-						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
-						if (0 < errMsg.size())
-						{
-							msg << L"\n\n" << fmt::to_string(errMsg);
-						}
-						wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
-					}
-					else
-						bOk = m_pDoc->ImportARBLogData(tree, this);
-				}
-			}
-			break;
-
-		case WIZ_EXPORT_LOG:
-			{
-				wxFileDialog file(this,
-					wxEmptyString, // caption
-					wxEmptyString, // def dir
-					_("IDS_FILEEXT_FNAME_ARB"),
-					_("IDS_FILEEXT_FILTER_ARB"),
-					wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
-				if (wxID_OK == file.ShowModal())
+				ElementNodePtr tree(ElementNode::New());
+				bool bLoadOk = false;
 				{
 					wxBusyCursor wait;
-					CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
-					std::wstring verstr = ver.GetVersionString();
-					ElementNodePtr tree(ElementNode::New());
-					if (m_pDoc->Book().Save(tree, verstr, false, true, false, false, false))
-					{
-						tree->SaveXML(StringUtil::stringW(file.GetPath()));
-					}
-					bOk = true;
+					bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
 				}
+				if (!bLoadOk)
+				{
+					wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
+					if (0 < errMsg.size())
+					{
+						msg << L"\n\n" << fmt::to_string(errMsg);
+					}
+					wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+				}
+				else
+					bOk = m_pDoc->ImportARBLogData(tree, this);
 			}
-			break;
+		}
+		break;
+
+		case WIZ_EXPORT_LOG:
+		{
+			wxFileDialog file(
+				this,
+				wxEmptyString, // caption
+				wxEmptyString, // def dir
+				_("IDS_FILEEXT_FNAME_ARB"),
+				_("IDS_FILEEXT_FILTER_ARB"),
+				wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+			if (wxID_OK == file.ShowModal())
+			{
+				wxBusyCursor wait;
+				CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
+				std::wstring verstr = ver.GetVersionString();
+				ElementNodePtr tree(ElementNode::New());
+				if (m_pDoc->Book().Save(tree, verstr, false, true, false, false, false))
+				{
+					tree->SaveXML(StringUtil::stringW(file.GetPath()));
+				}
+				bOk = true;
+			}
+		}
+		break;
 
 		case WIZ_IMPORT_CONFIGURATION:
 			bOk = m_pDoc->ImportConfiguration(false);
@@ -698,152 +737,157 @@ bool CWizardStart::DoWizardFinish()
 			break;
 
 		case WIZ_EXPORT_CONFIGURATION:
+		{
+			wxFileDialog file(
+				this,
+				wxEmptyString, // caption
+				wxEmptyString, // def dir
+				_("IDS_FILEEXT_FNAME_ARB"),
+				_("IDS_FILEEXT_FILTER_ARB"),
+				wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+			if (wxID_OK == file.ShowModal())
 			{
-				wxFileDialog file(this,
-					wxEmptyString, // caption
-					wxEmptyString, // def dir
-					_("IDS_FILEEXT_FNAME_ARB"),
-					_("IDS_FILEEXT_FILTER_ARB"),
-					wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
-				if (wxID_OK == file.ShowModal())
+				wxBusyCursor wait;
+				CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
+				std::wstring verstr = ver.GetVersionString();
+				ElementNodePtr tree(ElementNode::New());
+				if (m_pDoc->Book().Save(tree, verstr, false, false, true, false, false))
 				{
-					wxBusyCursor wait;
-					CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
-					std::wstring verstr = ver.GetVersionString();
-					ElementNodePtr tree(ElementNode::New());
-					if (m_pDoc->Book().Save(tree, verstr, false, false, true, false, false))
-					{
-						tree->SaveXML(StringUtil::stringW(file.GetPath()));
-					}
-					bOk = true;
+					tree->SaveXML(StringUtil::stringW(file.GetPath()));
 				}
+				bOk = true;
 			}
-			break;
+		}
+		break;
 
 		case WIZ_EXPORT_DTD:
+		{
+			wxFileDialog file(
+				this,
+				wxEmptyString, // caption
+				wxEmptyString, // def dir
+				L"AgilityRecordBook.dtd",
+				_("IDS_FILEEXT_FILTER_DTD"),
+				wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+			if (wxID_OK == file.ShowModal())
 			{
-				wxFileDialog file(this,
-					wxEmptyString, // caption
-					wxEmptyString, // def dir
-					L"AgilityRecordBook.dtd",
-					_("IDS_FILEEXT_FILTER_DTD"),
-					wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
-				if (wxID_OK == file.ShowModal())
+				wxBusyCursor wait;
+				wxFFileOutputStream output(file.GetPath(), L"wb");
+				if (output.IsOk())
 				{
-					wxBusyCursor wait;
-					wxFFileOutputStream output(file.GetPath(), L"wb");
-					if (output.IsOk())
-					{
-						CConfigHandler handler;
-						std::string dtd = ARBConfig::GetDTD(&handler);
-						output.Write(dtd.c_str(), dtd.length());
-						output.Close();
-					}
-					bOk = true;
+					CConfigHandler handler;
+					std::string dtd = ARBConfig::GetDTD(&handler);
+					output.Write(dtd.c_str(), dtd.length());
+					output.Close();
 				}
+				bOk = true;
 			}
-			break;
+		}
+		break;
 
 		case WIZ_EXPORT_XML:
+		{
+			wxString name = m_pDoc->GetFilename();
+			if (name.empty())
 			{
-				wxString name = m_pDoc->GetFilename();
-				if (name.empty())
+				name = L"AgilityRecordBook.";
+				name += _("IDS_FILEEXT_DEF_XML");
+			}
+			else
+			{
+				int iDot = name.Find('.', true);
+				if (0 <= iDot)
+					name = name.Left(iDot + 1) + _("IDS_FILEEXT_DEF_XML");
+				else
 				{
-					name = L"AgilityRecordBook.";
+					name += L".";
 					name += _("IDS_FILEEXT_DEF_XML");
+				}
+			}
+			wxFileDialog file(
+				this,
+				wxEmptyString, // caption
+				wxEmptyString, // def dir
+				name,
+				_("IDS_FILEEXT_FILTER_XML"),
+				wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+			if (wxID_OK == file.ShowModal())
+			{
+				wxBusyCursor wait;
+				CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
+				std::wstring verstr = ver.GetVersionString();
+				ElementNodePtr tree(ElementNode::New());
+				if (m_pDoc->Book().Save(tree, verstr, true, true, true, true, true))
+				{
+					CConfigHandler handler;
+					tree->SaveXML(StringUtil::stringW(file.GetPath()), ARBConfig::GetDTD(&handler));
+				}
+				bOk = true;
+			}
+		}
+		break;
+
+		case WIZ_IMPORT_SETTINGS:
+		{
+			wxString name = L"AgilityRecordBook.";
+			name += _("IDS_FILEEXT_DEF_SETTINGS");
+			wxFileDialog file(
+				this,
+				wxEmptyString, // caption
+				wxEmptyString, // def dir
+				name,
+				_("IDS_FILEEXT_FILTER_SETTINGS"),
+				wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+			if (wxID_OK == file.ShowModal())
+			{
+				ElementNodePtr tree(ElementNode::New());
+				bool bLoadOk = false;
+				{
+					wxBusyCursor wait;
+					bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
+				}
+				if (bLoadOk && CAgilityBookOptions::ImportSettings(tree))
+				{
+					bOk = true;
 				}
 				else
 				{
-					int iDot = name.Find('.', true);
-					if (0 <= iDot)
-						name = name.Left(iDot+1) + _("IDS_FILEEXT_DEF_XML");
-					else
+					wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
+					if (0 < errMsg.size())
 					{
-						name += L".";
-						name += _("IDS_FILEEXT_DEF_XML");
+						msg << L"\n\n" << fmt::to_string(errMsg);
 					}
+					wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				}
-				wxFileDialog file(this,
-					wxEmptyString, // caption
-					wxEmptyString, // def dir
-					name,
-					_("IDS_FILEEXT_FILTER_XML"),
-					wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
-				if (wxID_OK == file.ShowModal())
+			}
+		}
+		break;
+
+		case WIZ_EXPORT_SETTINGS:
+		{
+			wxString name = L"AgilityRecordBook.";
+			name += _("IDS_FILEEXT_DEF_SETTINGS");
+			wxFileDialog file(
+				this,
+				wxEmptyString, // caption
+				wxEmptyString, // def dir
+				name,
+				_("IDS_FILEEXT_FILTER_SETTINGS"),
+				wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+			if (wxID_OK == file.ShowModal())
+			{
+				wxBusyCursor wait;
+				CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
+				std::wstring verstr = ver.GetVersionString();
+				ElementNodePtr settings = CAgilityBookOptions::ExportSettings();
+				if (settings)
 				{
-					wxBusyCursor wait;
-					CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
-					std::wstring verstr = ver.GetVersionString();
-					ElementNodePtr tree(ElementNode::New());
-					if (m_pDoc->Book().Save(tree, verstr, true, true, true, true, true))
-					{
-						CConfigHandler handler;
-						tree->SaveXML(StringUtil::stringW(file.GetPath()), ARBConfig::GetDTD(&handler));
-					}
+					settings->SaveXML(StringUtil::stringW(file.GetPath()));
 					bOk = true;
 				}
 			}
-			break;
-
-		case WIZ_IMPORT_SETTINGS:
-			{
-				wxString name = L"AgilityRecordBook.";
-				name += _("IDS_FILEEXT_DEF_SETTINGS");
-				wxFileDialog file(this,
-					wxEmptyString, // caption
-					wxEmptyString, // def dir
-					name,
-					_("IDS_FILEEXT_FILTER_SETTINGS"),
-					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
-				if (wxID_OK == file.ShowModal())
-				{
-					ElementNodePtr tree(ElementNode::New());
-					bool bLoadOk = false;
-					{
-						wxBusyCursor wait;
-						bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
-					}
-					if (bLoadOk && CAgilityBookOptions::ImportSettings(tree))
-					{
-						bOk = true;
-					}
-					else
-					{
-						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
-						if (0 < errMsg.size())
-						{
-							msg << L"\n\n" << fmt::to_string(errMsg);
-						}
-						wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
-					}
-				}
-			}
-			break;
-
-		case WIZ_EXPORT_SETTINGS:
-			{
-				wxString name = L"AgilityRecordBook.";
-				name += _("IDS_FILEEXT_DEF_SETTINGS");
-				wxFileDialog file(this,
-					wxEmptyString, // caption
-					wxEmptyString, // def dir
-					name,
-					_("IDS_FILEEXT_FILTER_SETTINGS"),
-					wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
-				if (wxID_OK == file.ShowModal())
-				{
-					wxBusyCursor wait;
-					CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
-					std::wstring verstr = ver.GetVersionString();
-					ElementNodePtr settings = CAgilityBookOptions::ExportSettings();
-					if (settings)
-					{
-						settings->SaveXML(StringUtil::stringW(file.GetPath()));
-						bOk = true;
-					}
-				}
-			}
-			break;
+		}
+		break;
 		}
 	}
 	return bOk;

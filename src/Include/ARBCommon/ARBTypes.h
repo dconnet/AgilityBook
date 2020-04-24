@@ -43,19 +43,19 @@
 #include <vector>
 
 #define ARB_TYPEDEF(name) \
-	class name;\
+	class name; \
 	typedef std::shared_ptr<name> name##Ptr;
 #define ARB_TYPEDEF2(name) \
-	class name;\
-	typedef std::weak_ptr<name> name##WPtr;\
+	class name; \
+	typedef std::weak_ptr<name> name##WPtr; \
 	typedef std::shared_ptr<name> name##Ptr;
 #define ARB_TYPEDEF_LIST(name) \
-	class name;\
-	class name##List;\
+	class name; \
+	class name##List; \
 	typedef std::shared_ptr<name> name##Ptr;
 #define ARB_TYPEDEF2_LIST(name) \
-	class name;\
-	class name##List;\
+	class name; \
+	class name##List; \
 	typedef std::weak_ptr<name> name##WPtr; \
 	typedef std::shared_ptr<name> name##Ptr;
 
@@ -136,34 +136,28 @@ private:
  */
 namespace ARBDouble
 {
-	/// How to handle trailing zeros
-	enum class ZeroStrip
-	{
-		Compatible,		///< Strip, unless inPrec = 2
-		Strip,			///< Strip
-		AsIs			///< Don't touch
-	};
-	/**
+/// How to handle trailing zeros
+enum class ZeroStrip
+{
+	Compatible, ///< Strip, unless inPrec = 2
+	Strip,      ///< Strip
+	AsIs        ///< Don't touch
+};
+/**
 	 * Trailing zeros are trimmed unless inPrec=2.
 	 * Then they are only trimmed if all zero (and inPrec=2).
 	 */
-	ARBCOMMON_API std::wstring ToString(
-			double inValue,
-			int inPrec = 2,
-			bool bUseCurrentLocale = true,
-			ZeroStrip eStripZeros = ZeroStrip::Compatible);
-	ARBCOMMON_API std::wstring ToString(
-			double inValue,
-			int inPrec,
-			ZeroStrip eStripZeros);
-	/**
+ARBCOMMON_API std::wstring ToString(
+	double inValue,
+	int inPrec = 2,
+	bool bUseCurrentLocale = true,
+	ZeroStrip eStripZeros = ZeroStrip::Compatible);
+ARBCOMMON_API std::wstring ToString(double inValue, int inPrec, ZeroStrip eStripZeros);
+/**
 	 * Compare two doubles, allowing for 'prec' error.
 	 */
-	ARBCOMMON_API bool equal(
-			double const& inVal1,
-			double const& inVal2,
-			double inPrec = 1e-9);
-};
+ARBCOMMON_API bool equal(double const& inVal1, double const& inVal2, double inPrec = 1e-9);
+}; // namespace ARBDouble
 
 /////////////////////////////////////////////////////////////////////////////
 /**
@@ -176,16 +170,15 @@ namespace ARBDouble
 class ARBCOMMON_API ARBVersion
 {
 	typedef std::array<unsigned short, 2> VERSION_ARB;
+
 public:
 	ARBVersion()
-		: m_Version({ 0, 0 })
+		: m_Version({0, 0})
 	{
 	}
 
-	ARBVersion(
-			unsigned short major,
-			unsigned short minor)
-		: m_Version({ major, minor })
+	ARBVersion(unsigned short major, unsigned short minor)
+		: m_Version({major, minor})
 	{
 	}
 
@@ -248,7 +241,7 @@ public:
 
 	void clear()
 	{
-		m_Version = { 0, 0 };
+		m_Version = {0, 0};
 	}
 	bool IsSet()
 	{

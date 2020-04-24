@@ -42,10 +42,7 @@ wxBEGIN_EVENT_TABLE(CDlgOptions, wxDialog)
 wxEND_EVENT_TABLE()
 
 
-CDlgOptions::CDlgOptions(
-		CAgilityBookDoc* pDoc,
-		wxWindow* pParent,
-		size_t iSelectPage)
+CDlgOptions::CDlgOptions(CAgilityBookDoc* pDoc, wxWindow* pParent, size_t iSelectPage)
 	: wxDialog()
 	, m_pDoc(pDoc)
 {

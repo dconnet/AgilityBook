@@ -16,9 +16,9 @@
 
 #if defined(_DLL) && defined(_WIN32)
 #if defined(ARBWIN_EXPORT)
-#define ARBWIN_API	__declspec(dllexport)
+#define ARBWIN_API __declspec(dllexport)
 #else
-#define ARBWIN_API	__declspec(dllimport)
+#define ARBWIN_API __declspec(dllimport)
 #endif
 
 #else

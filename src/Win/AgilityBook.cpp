@@ -53,8 +53,6 @@
 #include "LibARBWin/DPI.h"
 #include "LibARBWin/ListCtrl.h"
 #include "LibARBWin/SetupApp.h"
-#include <stdexcept>
-#include <vector>
 #include <wx/choicdlg.h>
 #include <wx/cmdline.h>
 #include <wx/cmndata.h>
@@ -70,6 +68,8 @@
 #include <wx/sysopt.h>
 #include <wx/url.h>
 #include <wx/utils.h>
+#include <stdexcept>
+#include <vector>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -83,10 +83,12 @@ IMPLEMENT_APP(CAgilityBookApp)
 class CAgilityBookDocManager : public wxDocManager
 {
 	CAgilityBookDocManager() = delete;
+
 public:
 	CAgilityBookDocManager(size_t historySize);
 	wxFileHistory* OnCreateFileHistory() override;
-	void ActivateView(wxView *view, bool activate = true) override;
+	void ActivateView(wxView* view, bool activate = true) override;
+
 private:
 	size_t m_History;
 
@@ -116,7 +118,7 @@ wxFileHistory* CAgilityBookDocManager::OnCreateFileHistory()
 }
 
 
-void CAgilityBookDocManager::ActivateView(wxView *view, bool activate)
+void CAgilityBookDocManager::ActivateView(wxView* view, bool activate)
 {
 	CTabView* pTabView = wxDynamicCast(view, CTabView);
 	if (!pTabView)
@@ -127,10 +129,10 @@ void CAgilityBookDocManager::ActivateView(wxView *view, bool activate)
 void CAgilityBookDocManager::OnPrint(wxCommandEvent& evt)
 {
 	// Copied wxDocManager implementation so I could put my printer data in
-	wxView *view = GetCurrentView();
+	wxView* view = GetCurrentView();
 	if (!view)
 		return;
-	wxPrintout *printout = view->OnCreatePrintout();
+	wxPrintout* printout = view->OnCreatePrintout();
 	if (printout)
 	{
 		wxPrinter printer(wxGetApp().GetPrintData());
@@ -144,21 +146,26 @@ void CAgilityBookDocManager::OnPrint(wxCommandEvent& evt)
 void CAgilityBookDocManager::OnPreview(wxCommandEvent& evt)
 {
 	// Copied wxDocManager implementation so I could put my printer data in
-	wxView *view = GetCurrentView();
+	wxView* view = GetCurrentView();
 	if (!view)
 		return;
-	wxPrintout *printout = view->OnCreatePrintout();
+	wxPrintout* printout = view->OnCreatePrintout();
 	if (printout)
 	{
 		// Pass two printout objects: for preview, and possible printing.
-		wxPrintPreviewBase *preview = new CPrintPreview(printout, view->OnCreatePrintout(), wxGetApp().GetPrintData());
+		wxPrintPreviewBase* preview = new CPrintPreview(printout, view->OnCreatePrintout(), wxGetApp().GetPrintData());
 		if (!preview->Ok())
 		{
 			delete preview;
 			wxMessageBox(_("Sorry, print preview needs a printer to be installed."));
 			return;
 		}
-		wxPreviewFrame *frame = new wxPreviewFrame(preview, wxGetApp().GetTopWindow(), _("Print Preview"), wxDefaultPosition, wxGetApp().GetTopWindow()->GetSize());
+		wxPreviewFrame* frame = new wxPreviewFrame(
+			preview,
+			wxGetApp().GetTopWindow(),
+			_("Print Preview"),
+			wxDefaultPosition,
+			wxGetApp().GetTopWindow()->GetSize());
 		frame->Centre(wxBOTH);
 		frame->Initialize();
 		frame->Show(true);
@@ -232,17 +239,13 @@ void CAgilityBookApp::AutoCheckConfiguration(CAgilityBookDoc* pDoc)
 }
 
 
-void CAgilityBookApp::UpdateConfiguration(
-		CAgilityBookDoc* pDoc,
-		bool& outClose)
+void CAgilityBookApp::UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outClose)
 {
 	m_UpdateInfo.UpdateConfiguration(pDoc, outClose);
 }
 
 
-void CAgilityBookApp::SetMessageText(
-		std::wstring const& msg,
-		bool bFiltered)
+void CAgilityBookApp::SetMessageText(std::wstring const& msg, bool bFiltered)
 {
 	CMainFrame* pFrame = wxDynamicCast(GetTopWindow(), CMainFrame);
 	if (pFrame)
@@ -335,7 +338,7 @@ bool CAgilityBookApp::OnInit()
 		filename = fName.GetFullPath();
 	}
 
-    CReportListCtrl::EnableRowColors(CAgilityBookOptions::UseAlternateRowColor());
+	CReportListCtrl::EnableRowColors(CAgilityBookOptions::UseAlternateRowColor());
 
 	m_manager = std::make_unique<CAgilityBookDocManager>(CAgilityBookOptions::GetMRUFileCount());
 	m_manager->SetMaxDocsOpen(1);
@@ -345,8 +348,16 @@ bool CAgilityBookApp::OnInit()
 	}
 
 	// Yes. Intentional. Magic happens.
-	new CAgilityBookDocTemplate(m_manager.get(), L"ARB", L"*.arb", L"", L"arb", L"ARB Doc", L"ARB View",
-		CLASSINFO(CAgilityBookDoc), CLASSINFO(CTabView));
+	new CAgilityBookDocTemplate(
+		m_manager.get(),
+		L"ARB",
+		L"*.arb",
+		L"",
+		L"arb",
+		L"ARB Doc",
+		L"ARB View",
+		CLASSINFO(CAgilityBookDoc),
+		CLASSINFO(CTabView));
 #ifdef __WXMAC__
 #ifndef __WXOSX_COCOA__
 	wxFileName::MacRegisterDefaultTypeAndCreator(L"arb", 'ARBB', 'ARBA');
@@ -403,7 +414,7 @@ bool CAgilityBookApp::OnInit()
 		rWorkSpace = monitor.GetClientArea();
 	}
 
-	CMainFrame *frame = new CMainFrame(m_manager.get());
+	CMainFrame* frame = new CMainFrame(m_manager.get());
 	int width = DPI::Scale(600);
 	int height = DPI::Scale(400);
 	int defWidth = width;
@@ -628,20 +639,13 @@ void CAgilityBookApp::OnSetLanguage(wxLanguage langId)
 }
 
 
-bool CAgilityBookApp::OnCreateBitmap(
-		const wxArtID& id,
-		const wxArtClient& client,
-		const wxSize& size,
-		wxBitmap& outBmp)
+bool CAgilityBookApp::OnCreateBitmap(const wxArtID& id, const wxArtClient& client, const wxSize& size, wxBitmap& outBmp)
 {
 	return m_imageHelper.DoCreateBitmap(GetTopWindow(), id, client, size, outBmp);
 }
 
 
-bool CAgilityBookApp::OnCreateIconBundle(
-		const wxArtID& id,
-		const wxArtClient& client,
-		wxIconBundle& outIcon)
+bool CAgilityBookApp::OnCreateIconBundle(const wxArtID& id, const wxArtClient& client, wxIconBundle& outIcon)
 {
 	return m_imageHelper.DoCreateIconBundle(GetTopWindow(), id, client, outIcon);
 }

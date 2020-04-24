@@ -17,11 +17,11 @@
 #include "DlgConfigAccel.h"
 
 #include "ARBCommon/StringUtil.h"
-#include "fmt/format.h"
 #include "LibARBWin/ListCtrl.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/MenuHelper.h"
 #include "LibARBWin/Validators.h"
+#include "fmt/format.h"
 #include <wx/utils.h>
 
 #if defined(__WXMSW__)
@@ -60,12 +60,12 @@ class CDlgEditAccel : public wxDialog
 {
 public:
 	CDlgEditAccel(
-			std::vector<CMenuHelper::ItemAccel> const& accelData,
-			CMenuHelper::ItemAccel const& item,
-			std::unordered_map<int, KeyCodeMapping> const& keyMap,
-			std::wstring const& action,
-			bool bAllowDups,
-			wxWindow* pParent);
+		std::vector<CMenuHelper::ItemAccel> const& accelData,
+		CMenuHelper::ItemAccel const& item,
+		std::unordered_map<int, KeyCodeMapping> const& keyMap,
+		std::wstring const& action,
+		bool bAllowDups,
+		wxWindow* pParent);
 
 	bool GetData(CMenuHelper::ItemAccel& item);
 
@@ -85,12 +85,12 @@ private:
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgEditAccel::CDlgEditAccel(
-		std::vector<CMenuHelper::ItemAccel> const& accelData,
-		CMenuHelper::ItemAccel const& item,
-		std::unordered_map<int, KeyCodeMapping> const& keyMap,
-		std::wstring const& action,
-		bool bAllowDups,
-		wxWindow* pParent)
+	std::vector<CMenuHelper::ItemAccel> const& accelData,
+	CMenuHelper::ItemAccel const& item,
+	std::unordered_map<int, KeyCodeMapping> const& keyMap,
+	std::wstring const& action,
+	bool bAllowDups,
+	wxWindow* pParent)
 	: m_accelData(accelData)
 	, m_item(item)
 	, m_keyMap(keyMap)
@@ -100,36 +100,47 @@ CDlgEditAccel::CDlgEditAccel(
 	wxString caption = wxString::Format(L"%s : %s", _("Assign Key"), action.c_str());
 	Create(pParent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
-	wxStaticText* textKey = new wxStaticText(this, wxID_ANY,
-		_("Key:"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textKey = new wxStaticText(this, wxID_ANY, _("Key:"), wxDefaultPosition, wxDefaultSize, 0);
 
-	m_ctrlKey = new wxTextCtrl(this, wxID_ANY, GetKeyCode(m_keyMap, m_item.keyCode),
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(30, -1)), 0);
+	m_ctrlKey = new wxTextCtrl(
+		this,
+		wxID_ANY,
+		GetKeyCode(m_keyMap, m_item.keyCode),
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(30, -1)),
+		0);
 	m_ctrlKey->Bind(wxEVT_KEY_DOWN, &CDlgEditAccel::OnKeyDown, this);
 
-	wxStaticText* textMod = new wxStaticText(this, wxID_ANY,
-		_("Modifiers:"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textMod = new wxStaticText(this, wxID_ANY, _("Modifiers:"), wxDefaultPosition, wxDefaultSize, 0);
 
-	wxCheckBox* ctrlCtrl = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* ctrlCtrl = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("Ctrl"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_item.bCtrl));
 
-	wxCheckBox* ctrlAlt = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* ctrlAlt = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("Alt"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_item.bAlt));
 
-	wxCheckBox* ctrlShift = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* ctrlShift = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("Shift"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_item.bShift));
 
-	wxButton* ctrlClear = new wxButton(this, wxID_ANY,
-		_("Clear"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* ctrlClear = new wxButton(this, wxID_ANY, _("Clear"), wxDefaultPosition, wxDefaultSize, 0);
 	ctrlClear->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgEditAccel::OnClear, this);
 
 	// Sizers
@@ -220,7 +231,10 @@ void CDlgEditAccel::OnOk(wxCommandEvent& evt)
 				auto accel = std::make_pair(iter->keyCode, mask);
 				if (accels.find(accel) != accels.end())
 				{
-					wxMessageBox(_("ERROR: This accelerator is already in use."), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+					wxMessageBox(
+						_("ERROR: This accelerator is already in use."),
+						wxMessageBoxCaptionStr,
+						wxOK | wxCENTRE | wxICON_STOP);
 					return;
 				}
 			}
@@ -237,12 +251,12 @@ class CMenuData : public CListData
 {
 public:
 	CMenuData(
-			std::unordered_map<int, KeyCodeMapping> const& keyMap,
-			std::vector<CMenuHelper::ItemAccel> const& accels,
-			std::wstring const& path,
-			std::wstring const& item,
-			std::wstring const& location,
-			int order)
+		std::unordered_map<int, KeyCodeMapping> const& keyMap,
+		std::vector<CMenuHelper::ItemAccel> const& accels,
+		std::wstring const& path,
+		std::wstring const& item,
+		std::wstring const& location,
+		int order)
 		: m_keyMap(keyMap)
 		, m_accels(accels)
 		, m_path(path)
@@ -289,7 +303,10 @@ public:
 		return std::wstring();
 	}
 
-	std::vector<CMenuHelper::ItemAccel> const& Accels() const { return m_accels; }
+	std::vector<CMenuHelper::ItemAccel> const& Accels() const
+	{
+		return m_accels;
+	}
 
 	void ClearAccels()
 	{
@@ -311,11 +328,7 @@ public:
 		return 0;
 	}
 
-	bool Configure(
-			std::vector<CMenuHelper::ItemAccel> const& accelData,
-			bool bAdd,
-			bool bAllowDups,
-			wxWindow* pParent)
+	bool Configure(std::vector<CMenuHelper::ItemAccel> const& accelData, bool bAdd, bool bAllowDups, wxWindow* pParent)
 	{
 		assert(m_accels.size() > 0);
 
@@ -406,14 +419,14 @@ static int wxCALLBACK CompareItems(CListDataPtr const& item1, CListDataPtr const
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigAccel::CDlgConfigAccel(
-		std::unordered_map<int, std::wstring> const& menuIds,
-		std::vector<CMenuHelper::ItemAccel> const& accelData,
-		std::vector<CMenuHelper::ItemAccel> const& accelDataDefaults,
-		bool bAllowDups,
-		std::vector<CMenuHelper::ItemData> const& menuItems,
-		std::unordered_map<int, KeyCodeMapping> const& keyMap,
-		wxWindow* pParent,
-		std::wstring caption)
+	std::unordered_map<int, std::wstring> const& menuIds,
+	std::vector<CMenuHelper::ItemAccel> const& accelData,
+	std::vector<CMenuHelper::ItemAccel> const& accelDataDefaults,
+	bool bAllowDups,
+	std::vector<CMenuHelper::ItemData> const& menuItems,
+	std::unordered_map<int, KeyCodeMapping> const& keyMap,
+	wxWindow* pParent,
+	std::wstring caption)
 	: m_menuIds(menuIds)
 	, m_accelDataDefaults(accelDataDefaults)
 	, m_bAllowDups(bAllowDups)
@@ -461,9 +474,14 @@ CDlgConfigAccel::CDlgConfigAccel(
 
 	// Controls (these are done first to control tab order)
 
-	m_ctrlItems = new CReportListCtrl(this,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(250, 150)),
-		true, CReportListCtrl::SortHeader::Sort, true, false);
+	m_ctrlItems = new CReportListCtrl(
+		this,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(250, 150)),
+		true,
+		CReportListCtrl::SortHeader::Sort,
+		true,
+		false);
 	m_ctrlItems->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgConfigAccel::OnColumnClick, this);
 	m_ctrlItems->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgConfigAccel::OnItemSelected, this);
 	m_ctrlItems->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgConfigAccel::OnItemActivated, this);
@@ -476,24 +494,16 @@ CDlgConfigAccel::CDlgConfigAccel(
 	for (int i = 0; i < m_ctrlItems->GetColumnCount(); ++i)
 		m_ctrlItems->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
 
-	m_ctrlNew = new wxButton(this, wxID_ANY,
-		_("New..."),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlNew = new wxButton(this, wxID_ANY, _("New..."), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigAccel::OnAddItem, this);
 
-	m_ctrlEdit = new wxButton(this, wxID_ANY,
-		_("Edit..."),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlEdit = new wxButton(this, wxID_ANY, _("Edit..."), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigAccel::OnEditItem, this);
 
-	m_ctrlClear = new wxButton(this, wxID_ANY,
-		_("Clear"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlClear = new wxButton(this, wxID_ANY, _("Clear"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlClear->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigAccel::OnClearItem, this);
 
-	wxButton* ctrlDefaults = new wxButton(this, wxID_ANY,
-		_("Set Defaults"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* ctrlDefaults = new wxButton(this, wxID_ANY, _("Set Defaults"), wxDefaultPosition, wxDefaultSize, 0);
 	ctrlDefaults->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigAccel::OnSetDefaults, this);
 
 	// Sizers
@@ -534,18 +544,12 @@ bool CDlgConfigAccel::GetAccelData(std::vector<CMenuHelper::ItemAccel>& accelDat
 	{
 		std::vector<CMenuHelper::ItemAccel> v1(m_accelData);
 		std::vector<CMenuHelper::ItemAccel> v2(accelData);
-		std::sort(v1.begin(), v1.end(),
-				  [](CMenuHelper::ItemAccel const& one, CMenuHelper::ItemAccel const& two)
-				  {
-					  return one.key < two.key;
-				  }
-		);
-		std::sort(v2.begin(), v2.end(),
-				  [](CMenuHelper::ItemAccel const& one, CMenuHelper::ItemAccel const& two)
-				  {
-					  return one.key < two.key;
-				  }
-		);
+		std::sort(v1.begin(), v1.end(), [](CMenuHelper::ItemAccel const& one, CMenuHelper::ItemAccel const& two) {
+			return one.key < two.key;
+		});
+		std::sort(v2.begin(), v2.end(), [](CMenuHelper::ItemAccel const& one, CMenuHelper::ItemAccel const& two) {
+			return one.key < two.key;
+		});
 		bool bModified = false;
 		for (size_t i = 0; !bModified && i < v1.size(); ++i)
 		{
@@ -580,7 +584,13 @@ void CDlgConfigAccel::LoadData()
 			{
 				lastMenuId = m_menuItems[i].m_data->menuId;
 				if (m_ctrlItems->GetItemCount() > 0)
-					m_ctrlItems->InsertItem(std::make_shared<CMenuData>(m_keyMap, accels, std::wstring(), std::wstring(), std::wstring(), -1));
+					m_ctrlItems->InsertItem(std::make_shared<CMenuData>(
+						m_keyMap,
+						accels,
+						std::wstring(),
+						std::wstring(),
+						std::wstring(),
+						-1));
 			}
 
 #ifdef _DEBUG
@@ -613,7 +623,13 @@ void CDlgConfigAccel::LoadData()
 			std::wstring location;
 			if (menuStr != m_menuIds.end())
 				location = menuStr->second;
-			m_ctrlItems->InsertItem(std::make_shared<CMenuData>(m_keyMap, accels, m_menuItems[i].m_path, m_menuItems[i].m_item, location, count++));
+			m_ctrlItems->InsertItem(std::make_shared<CMenuData>(
+				m_keyMap,
+				accels,
+				m_menuItems[i].m_path,
+				m_menuItems[i].m_item,
+				location,
+				count++));
 		}
 	}
 #ifdef _DEBUG

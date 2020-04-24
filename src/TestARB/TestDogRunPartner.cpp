@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBDogRunPartner.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -34,7 +34,7 @@ TEST_CASE("DogRunPartner")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBDogRunPartnerPtr New();
+			//	static ARBDogRunPartnerPtr New();
 		}
 	}
 
@@ -44,7 +44,7 @@ TEST_CASE("DogRunPartner")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogRunPartnerPtr Clone() const;
+			//	ARBDogRunPartnerPtr Clone() const;
 		}
 	}
 
@@ -54,7 +54,7 @@ TEST_CASE("DogRunPartner")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogRunPartner& operator=(ARBDogRunPartner const& rhs);
+			//	ARBDogRunPartner& operator=(ARBDogRunPartner const& rhs);
 		}
 	}
 
@@ -64,8 +64,8 @@ TEST_CASE("DogRunPartner")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBDogRunPartner const& rhs) const;
-		//	bool operator!=(ARBDogRunPartner const& rhs) const
+			//	bool operator==(ARBDogRunPartner const& rhs) const;
+			//	bool operator!=(ARBDogRunPartner const& rhs) const
 		}
 	}
 
@@ -75,7 +75,7 @@ TEST_CASE("DogRunPartner")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const
+			//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -85,11 +85,11 @@ TEST_CASE("DogRunPartner")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig const& inConfig,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig const& inConfig,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -99,7 +99,7 @@ TEST_CASE("DogRunPartner")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 }
@@ -112,11 +112,11 @@ TEST_CASE("DogRunPartnerList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig const& inConfig,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig const& inConfig,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -135,7 +135,7 @@ TEST_CASE("DogRunPartnerList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddPartner(ARBDogRunPartnerPtr inPartner);
+			//	bool AddPartner(ARBDogRunPartnerPtr inPartner);
 		}
 	}
 }

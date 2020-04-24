@@ -34,11 +34,11 @@
 
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/ARBDate.h"
-#include <set>
-#include <vector>
 #include <wx/colour.h>
 #include <wx/font.h>
 #include <wx/fontdlg.h>
+#include <set>
+#include <vector>
 class CVersionNum;
 
 
@@ -93,9 +93,7 @@ struct CFontInfo
 	{
 	}
 	void CreateFont(wxFont& font);
-	void CreateFont(
-			wxFontDialog& dlg,
-			wxFont& font);
+	void CreateFont(wxFontDialog& dlg, wxFont& font);
 };
 
 
@@ -119,9 +117,7 @@ public:
 	static bool HideOverlappingCalendarEntries();
 	static void SetHideOverlappingCalendarEntries(bool bHide);
 	static wxColour CalendarColor(ARBCalColorItem inItem);
-	static void SetCalendarColor(
-			ARBCalColorItem inItem,
-			wxColour inColor);
+	static void SetCalendarColor(ARBCalColorItem inItem, wxColour inColor);
 	static wxColour CalendarClosingColor();
 	static void SetCalendarClosingColor(wxColour inColor);
 	static long CalendarOpeningNear();
@@ -141,13 +137,13 @@ public:
 	static bool GetNewestDatesFirst();
 	static void SetNewestDatesFirst(bool bNewest);
 	static void GetPointsViewSort(
-			ARBPointsViewSort& outPrimary,
-			ARBPointsViewSort& outSecondary,
-			ARBPointsViewSort& outTertiary);
+		ARBPointsViewSort& outPrimary,
+		ARBPointsViewSort& outSecondary,
+		ARBPointsViewSort& outTertiary);
 	static void SetPointsViewSort(
-			ARBPointsViewSort inPrimary,
-			ARBPointsViewSort inSecondary,
-			ARBPointsViewSort inTertiary);
+		ARBPointsViewSort inPrimary,
+		ARBPointsViewSort inSecondary,
+		ARBPointsViewSort inTertiary);
 	static bool GetViewHiddenTitles();
 	static void SetViewHiddenTitles(bool bSet);
 	static bool GetViewLifetimePointsByEvent();
@@ -167,81 +163,55 @@ public:
 	static void SetUnitsAsMM(bool bAsMM);
 	// Get margins in .01 inches or MM (or pixels, if DC is set)
 	static void GetPrinterMargins(
-			bool bAsMM, // In .01in or millimeters, ignored if DC is set
-			long& outLeft,
-			long& outRight,
-			long& outTop,
-			long& outBottom,
-			wxDC const* pDC); // Used to convert to logical units
+		bool bAsMM, // In .01in or millimeters, ignored if DC is set
+		long& outLeft,
+		long& outRight,
+		long& outTop,
+		long& outBottom,
+		wxDC const* pDC); // Used to convert to logical units
 	static void SetPrinterMargins(
-			bool bAsMM, // In .01 inches or millimeters
-			long inLeft,
-			long inRight,
-			long inTop,
-			long inBottom);
+		bool bAsMM, // In .01 inches or millimeters
+		long inLeft,
+		long inRight,
+		long inTop,
+		long inBottom);
 	static void GetRunPageSize(
-			bool bAsMM, // In .01in or millimeters, ignored if DC is set
-			long& outWidth,
-			long& outHeight,
-			wxDC const* pDC); // Used to convert to logical units
+		bool bAsMM, // In .01in or millimeters, ignored if DC is set
+		long& outWidth,
+		long& outHeight,
+		wxDC const* pDC); // Used to convert to logical units
 	static void SetRunPageSize(
-			bool bAsMM, // In .01 inches or millimeters
-			long inWidth,
-			long inHeight);
+		bool bAsMM, // In .01 inches or millimeters
+		long inWidth,
+		long inHeight);
 	static void GetCalendarFontInfo(CFontInfo& info);
 	static void SetCalendarFontInfo(CFontInfo const& info);
 	// Last entered options
-	static std::wstring GetLastEnteredDivision(
-			ARBDogPtr const& inDog,
-			ARBConfigVenuePtr const& inVenue);
-	static void SetLastEnteredDivision(
-			ARBDogPtr const& inDog,
-			ARBConfigVenuePtr const& inVenue,
-			wchar_t const* inLast);
-	static std::wstring GetLastEnteredLevel(
-			ARBDogPtr const& inDog,
-			ARBConfigVenuePtr const& inVenue);
-	static void SetLastEnteredLevel(
-			ARBDogPtr const& inDog,
-			ARBConfigVenuePtr const& inVenue,
-			wchar_t const* inLast);
-	static std::wstring GetLastEnteredHeight(
-			ARBDogPtr const& inDog,
-			ARBConfigVenuePtr const& inVenue);
-	static void SetLastEnteredHeight(
-			ARBDogPtr const& inDog,
-			ARBConfigVenuePtr const& inVenue,
-			wchar_t const* inLast);
+	static std::wstring GetLastEnteredDivision(ARBDogPtr const& inDog, ARBConfigVenuePtr const& inVenue);
+	static void SetLastEnteredDivision(ARBDogPtr const& inDog, ARBConfigVenuePtr const& inVenue, wchar_t const* inLast);
+	static std::wstring GetLastEnteredLevel(ARBDogPtr const& inDog, ARBConfigVenuePtr const& inVenue);
+	static void SetLastEnteredLevel(ARBDogPtr const& inDog, ARBConfigVenuePtr const& inVenue, wchar_t const* inLast);
+	static std::wstring GetLastEnteredHeight(ARBDogPtr const& inDog, ARBConfigVenuePtr const& inVenue);
+	static void SetLastEnteredHeight(ARBDogPtr const& inDog, ARBConfigVenuePtr const& inVenue, wchar_t const* inLast);
 	static std::wstring GetLastEnteredRefHeight();
 	static void SetLastEnteredRefHeight(wchar_t const* inLast);
 	static std::wstring GetLastEnteredJudge();
 	static void SetLastEnteredJudge(wchar_t const* inLast);
 	static std::wstring GetLastEnteredHandler(ARBDogPtr const& inDog);
-	static void SetLastEnteredHandler(
-			ARBDogPtr const& inDog,
-			wchar_t const* inLast);
+	static void SetLastEnteredHandler(ARBDogPtr const& inDog, wchar_t const* inLast);
 	static void CleanLastItems(std::wstring const& callName);
 	static void CleanLastItems(std::wstring const& oldCallName, std::wstring const& newCallName);
 	static void CleanLastItems(ARBConfig const& inConfig);
 	// Import/Export options
 	static long GetImportStartRow();
 	static void SetImportStartRow(long row);
-	static void GetImportExportDelimiters(
-			bool bImport,
-			ARBImportExportDelim& delim,
-			std::wstring& delimiter);
-	static void SetImportExportDelimiters(
-			bool bImport,
-			ARBImportExportDelim delim,
-			std::wstring const& delimiter);
-	static void GetImportExportDateFormat(
-			bool bImport,
-			ARBDateFormat& outFormat);
-	static void SetImportExportDateFormat(
-			bool bImport,
-			ARBDateFormat inFormat);
+	static void GetImportExportDelimiters(bool bImport, ARBImportExportDelim& delim, std::wstring& delimiter);
+	static void SetImportExportDelimiters(bool bImport, ARBImportExportDelim delim, std::wstring const& delimiter);
+	static void GetImportExportDateFormat(bool bImport, ARBDateFormat& outFormat);
+	static void SetImportExportDateFormat(bool bImport, ARBDateFormat inFormat);
 	enum ColumnOrder
 	{
+		// clang-format off
 		eUnknown		= 0x0000,
 		eRunsImport		= 0x0001,
 		eRunsExport		= 0x0002,
@@ -253,6 +223,7 @@ public:
 		eLogExport		= 0x0080,
 		eView			= 0x0100,
 		eAllColumns		= 0x01ff
+		// clang-format on
 	};
 	// General program options
 	static long GetMRUFileCount();
@@ -276,29 +247,27 @@ public:
 	static std::wstring GetProxy();
 	// -CalSite suppression options
 	static bool IsCalSiteVisible(
-			std::wstring const& filename,
-			CVersionNum const& inVer); // Version number of current calsite
-	static void SuppressCalSite(
-			std::wstring const& filename,
-			bool bSuppress);
+		std::wstring const& filename,
+		CVersionNum const& inVer); // Version number of current calsite
+	static void SuppressCalSite(std::wstring const& filename, bool bSuppress);
 	static CVersionNum GetCalSitePermanentStatus(std::wstring const& filename);
 	static void SuppressCalSitePermanently(
-			std::wstring const& filename,
-			CVersionNum const& inVer,
-			bool bSuppress = true);
+		std::wstring const& filename,
+		CVersionNum const& inVer,
+		bool bSuppress = true);
 
 protected:
 	friend class CDlgAssignColumns;
 	// CDlgAssignColumns has some structs for used to ensure validity.
 	static void GetColumnOrder(
-			ColumnOrder eOrder,
-			size_t idxColumn,
-			std::wstring const& namedColumn,
-			std::vector<long>& outValues,
-			bool bDefaultValues = false);
+		ColumnOrder eOrder,
+		size_t idxColumn,
+		std::wstring const& namedColumn,
+		std::vector<long>& outValues,
+		bool bDefaultValues = false);
 	static void SetColumnOrder(
-			ColumnOrder eOrder,
-			size_t idxColumn,
-			std::wstring const& namedColumn,
-			std::vector<long> const& inValues);
+		ColumnOrder eOrder,
+		size_t idxColumn,
+		std::wstring const& namedColumn,
+		std::vector<long> const& inValues);
 };

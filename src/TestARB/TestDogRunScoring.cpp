@@ -17,8 +17,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBDogRunScoring.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -33,7 +33,7 @@ TEST_CASE("DogRunScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBScoringType TranslateConfigScoring(ARBScoringStyle inType);
+			//	static ARBScoringType TranslateConfigScoring(ARBScoringStyle inType);
 		}
 	}
 
@@ -43,8 +43,8 @@ TEST_CASE("DogRunScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogRunScoring();
-		//	ARBDogRunScoring(ARBDogRunScoring const& rhs);
+			//	ARBDogRunScoring();
+			//	ARBDogRunScoring(ARBDogRunScoring const& rhs);
 		}
 	}
 
@@ -54,7 +54,7 @@ TEST_CASE("DogRunScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogRunScoring& operator=(ARBDogRunScoring const& rhs);
+			//	ARBDogRunScoring& operator=(ARBDogRunScoring const& rhs);
 		}
 	}
 
@@ -64,8 +64,8 @@ TEST_CASE("DogRunScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBDogRunScoring const& rhs) const;
-		//	bool operator!=(ARBDogRunScoring const& rhs) const
+			//	bool operator==(ARBDogRunScoring const& rhs) const;
+			//	bool operator!=(ARBDogRunScoring const& rhs) const
 		}
 	}
 
@@ -75,13 +75,13 @@ TEST_CASE("DogRunScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			short inConfigVersion,
-		//			ARBConfigEventPtr inEvent,
-		//			ARBConfigScoringPtr inEventScoring,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			short inConfigVersion,
+			//			ARBConfigEventPtr inEvent,
+			//			ARBConfigScoringPtr inEventScoring,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -91,7 +91,7 @@ TEST_CASE("DogRunScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 
@@ -101,9 +101,9 @@ TEST_CASE("DogRunScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool GetMinYPS(
-		//			bool inTableInYPS,
-		//			double& outYPS) const;
+			//	bool GetMinYPS(
+			//			bool inTableInYPS,
+			//			double& outYPS) const;
 		}
 	}
 
@@ -113,9 +113,9 @@ TEST_CASE("DogRunScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool GetYPS(
-		//			bool inTableInYPS,
-		//			double& outYPS) const;
+			//	bool GetYPS(
+			//			bool inTableInYPS,
+			//			double& outYPS) const;
 		}
 	}
 
@@ -125,7 +125,7 @@ TEST_CASE("DogRunScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool GetObstaclesPS(bool inTableInYPS, bool inRunTimeInOPS, double& outOPS) const;
+			//	bool GetObstaclesPS(bool inTableInYPS, bool inRunTimeInOPS, double& outOPS) const;
 		}
 	}
 
@@ -135,7 +135,7 @@ TEST_CASE("DogRunScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	double GetTimeFaults(ARBConfigScoringPtr inScoring) const;
+			//	double GetTimeFaults(ARBConfigScoringPtr inScoring) const;
 		}
 	}
 }

@@ -45,10 +45,7 @@
 #endif
 
 
-CBaseApp::CBaseApp(
-		wxString const& appName,
-		wxString const& appRegKey,
-		ARBLanguageCatalog useLangCatalog)
+CBaseApp::CBaseApp(wxString const& appName, wxString const& appRegKey, ARBLanguageCatalog useLangCatalog)
 	: m_VendorName(L"dcon Software")
 	, m_BaseAppName(appName)
 	, m_BaseRegName(appRegKey)
@@ -67,8 +64,8 @@ CBaseApp::CBaseApp(
 	wxHandleFatalExceptions();
 #endif
 	m_langMgr = std::make_unique<CLanguageManager>(
-			ARBLanguageCatalog::None != useLangCatalog ? this : nullptr,
-			ARBLanguageCatalog::Embedded == useLangCatalog);
+		ARBLanguageCatalog::None != useLangCatalog ? this : nullptr,
+		ARBLanguageCatalog::Embedded == useLangCatalog);
 }
 
 
@@ -76,12 +73,17 @@ CBaseApp::CBaseApp(
 class BaseAppDebugReport : public wxDebugReportCompress
 {
 	wxString m_reportName;
+
 public:
-	BaseAppDebugReport(wxString reportName) : m_reportName(reportName)
+	BaseAppDebugReport(wxString reportName)
+		: m_reportName(reportName)
 	{
 	}
 
-	wxString GetReportName() const override { return m_reportName; }
+	wxString GetReportName() const override
+	{
+		return m_reportName;
+	}
 };
 
 
@@ -134,8 +136,8 @@ bool CBaseApp::OnInit()
 	wxStandardPaths::Get().DontIgnoreAppSubDir();
 #endif
 
-    // Suppress PNG loading messages.
-    // Specifically: "iCCP: known incorrect sRGB profile"
+	// Suppress PNG loading messages.
+	// Specifically: "iCCP: known incorrect sRGB profile"
 	wxImage::SetDefaultLoadFlags(wxImage::GetDefaultLoadFlags() & ~wxImage::Load_Verbose);
 
 	std::wstring errMsg;
@@ -168,7 +170,8 @@ bool CBaseApp::OnInit()
 			if (wxFile::Exists(inifile))
 			{
 				wxLogNull suppress;
-				wxFileConfig* pConfig = new wxFileConfig(m_BaseRegName, m_VendorName, inifile, wxEmptyString, wxCONFIG_USE_LOCAL_FILE);
+				wxFileConfig* pConfig
+					= new wxFileConfig(m_BaseRegName, m_VendorName, inifile, wxEmptyString, wxCONFIG_USE_LOCAL_FILE);
 				if (!m_bReadOnlyInfo)
 				{
 					pConfig->Write(m_ConfigTest, true); // Write-only value to test info file viability
@@ -292,20 +295,13 @@ void CBaseApp::OnErrorMessage(wxString const& msg) const
 }
 
 
-bool CBaseApp::OnCreateBitmap(
-		const wxArtID& id,
-		const wxArtClient& client,
-		const wxSize& size,
-		wxBitmap& outBmp)
+bool CBaseApp::OnCreateBitmap(const wxArtID& id, const wxArtClient& client, const wxSize& size, wxBitmap& outBmp)
 {
 	return false;
 }
 
 
-bool CBaseApp::OnCreateIconBundle(
-		const wxArtID& id,
-		const wxArtClient& client,
-		wxIconBundle& outIcon)
+bool CBaseApp::OnCreateIconBundle(const wxArtID& id, const wxArtClient& client, wxIconBundle& outIcon)
 {
 	return false;
 }

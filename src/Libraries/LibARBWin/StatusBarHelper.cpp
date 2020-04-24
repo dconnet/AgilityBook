@@ -63,10 +63,7 @@ bool CStatusBarHelper::Initialize(wxStatusBar* statusbar)
 }
 
 
-bool CStatusBarHelper::Update(
-		wxFrame* frame,
-		int nCol,
-		wxString const& text)
+bool CStatusBarHelper::Update(wxFrame* frame, int nCol, wxString const& text)
 {
 	if (!frame || m_Widths.size() == 0)
 		return false;
@@ -89,9 +86,7 @@ bool CStatusBarHelper::Update(
 }
 
 
-bool CStatusBarHelper::Update(
-		wxFrame* frame,
-		std::vector<wxString> const& text)
+bool CStatusBarHelper::Update(wxFrame* frame, std::vector<wxString> const& text)
 {
 	if (!frame || m_Widths.size() == 0)
 		return false;
@@ -103,13 +98,13 @@ bool CStatusBarHelper::Update(
 	assert(text.size() + 1 == m_Widths.size());
 
 	for (int i = 0; i < static_cast<int>(text.size()); ++i)
-		frame->SetStatusText(text[i], i+1);
+		frame->SetStatusText(text[i], i + 1);
 
 	wxClientDC dc(statusbar);
 	dc.SetFont(statusbar->GetFont());
 	for (size_t i = 0; i < text.size(); ++i)
 	{
-		m_Widths[i+1] = dc.GetTextExtent(text[i]).x;
+		m_Widths[i + 1] = dc.GetTextExtent(text[i]).x;
 	}
 
 	SetStatusBarWidths(statusbar, -1);
@@ -118,11 +113,10 @@ bool CStatusBarHelper::Update(
 }
 
 
-void CStatusBarHelper::SetStatusBarWidths(
-		wxStatusBar* statusbar,
-		int nColumn)
+void CStatusBarHelper::SetStatusBarWidths(wxStatusBar* statusbar, int nColumn)
 {
-	bool bAddKludge = (statusbar->HasFlag(wxSTB_SIZEGRIP) && (0 > nColumn || nColumn == static_cast<int>(m_Widths.size()) - 1));
+	bool bAddKludge
+		= (statusbar->HasFlag(wxSTB_SIZEGRIP) && (0 > nColumn || nColumn == static_cast<int>(m_Widths.size()) - 1));
 	// The gripper isn't right on hidpi. Add a fudge factor.
 	if (bAddKludge)
 	{

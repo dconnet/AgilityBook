@@ -45,7 +45,8 @@ enum class ARBLanguageCatalog
 };
 
 
-class ARBWIN_API CBaseApp : public wxApp
+class ARBWIN_API CBaseApp
+	: public wxApp
 	, public ILanguageCallback
 	, public IImageManagerCallback
 {
@@ -53,15 +54,18 @@ class ARBWIN_API CBaseApp : public wxApp
 protected:
 	// If appRegKey is empty, no config will be created.
 	CBaseApp(
-			wxString const& appName,
-			wxString const& appRegKey = wxEmptyString,
-			ARBLanguageCatalog useLangCatalog = ARBLanguageCatalog::None);
+		wxString const& appName,
+		wxString const& appRegKey = wxEmptyString,
+		ARBLanguageCatalog useLangCatalog = ARBLanguageCatalog::None);
 
 #if USE_DBGREPORT
 	void GenerateReport(wxDebugReport::Context ctx);
 #endif
 
-	virtual wxString GetReportName() const { return GetAppName(); }
+	virtual wxString GetReportName() const
+	{
+		return GetAppName();
+	}
 
 	// wxApp virtual
 	// Will init Element, ImageManager, wxApp::SetAppName and wxConfig::Set.
@@ -74,7 +78,10 @@ protected:
 
 #if USE_DBGREPORT
 	// Allow derived program ability to add files
-	virtual bool OnAddFileDebugReport(wxDebugReport* report) { return false; }
+	virtual bool OnAddFileDebugReport(wxDebugReport* report)
+	{
+		return false;
+	}
 #endif
 
 	// CBaseApp virtual
@@ -86,7 +93,6 @@ protected:
 	virtual void InitFSHandlers();
 
 public:
-
 	// Language control
 
 	/**
@@ -101,7 +107,10 @@ public:
 
 	// Are we running in standalone mode? (wxConfig is using .info file)
 
-	bool IsStandloneMode() const { return m_bStandalone; }
+	bool IsStandloneMode() const
+	{
+		return m_bStandalone;
+	}
 
 protected:
 	// ILanguageCallback interface
@@ -113,15 +122,8 @@ protected:
 	void OnErrorMessage(wxString const& msg) const override;
 
 	// IImageManagerCallback interface
-	bool OnCreateBitmap(
-			const wxArtID& id,
-			const wxArtClient& client,
-			const wxSize& size,
-			wxBitmap& outBmp) override;
-	bool OnCreateIconBundle(
-			const wxArtID& id,
-			const wxArtClient& client,
-			wxIconBundle& outIcon) override;
+	bool OnCreateBitmap(const wxArtID& id, const wxArtClient& client, const wxSize& size, wxBitmap& outBmp) override;
+	bool OnCreateIconBundle(const wxArtID& id, const wxArtClient& client, wxIconBundle& outIcon) override;
 
 	virtual bool InitLanguage();
 	virtual int SelectLang(wxWindow* parent = nullptr);

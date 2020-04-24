@@ -25,10 +25,7 @@ class wxDatePickerCtrl;
 class CDlgTraining : public wxDialog
 {
 public:
-	CDlgTraining(
-			ARBTrainingPtr const& inTraining,
-			CAgilityBookDoc* pDoc,
-			wxWindow* pParent = nullptr);
+	CDlgTraining(ARBTrainingPtr const& inTraining, CAgilityBookDoc* pDoc, wxWindow* pParent = nullptr);
 
 private:
 	ARBTrainingPtr m_pTraining;

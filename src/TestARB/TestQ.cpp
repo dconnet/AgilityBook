@@ -139,7 +139,7 @@ TEST_CASE("ARBQ")
 			REQUIRE(q.Load(L"SQ", ver, callback));
 			REQUIRE(L"SQ" == q.str());
 #else
-#pragma PRAGMA_TODO(implement non-wx version)
+#pragma PRAGMA_TODO(implement non - wx version)
 #endif
 		}
 	}
@@ -157,7 +157,7 @@ TEST_CASE("ARBQ")
 			REQUIRE(!q.Load(L"attrib", ver, callback));
 			REQUIRE(L"" == q.str());
 #else
-#pragma PRAGMA_TODO(implement non-wx version)
+#pragma PRAGMA_TODO(implement non - wx version)
 #endif
 		}
 	}

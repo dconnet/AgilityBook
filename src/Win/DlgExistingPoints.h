@@ -35,10 +35,10 @@ class CDlgExistingPoints : public wxDialog
 {
 public:
 	CDlgExistingPoints(
-			CAgilityBookDoc* pDoc,
-			ARBDogExistingPointsList& points,
-			ARBDogExistingPointsPtr const& inExistingPoints,
-			wxWindow* pParent = nullptr);
+		CAgilityBookDoc* pDoc,
+		ARBDogExistingPointsList& points,
+		ARBDogExistingPointsPtr const& inExistingPoints,
+		wxWindow* pParent = nullptr);
 
 private:
 	ARBExistingPointType GetCurrentType() const;
@@ -50,13 +50,13 @@ private:
 	CDlgPointsMultiQData* GetMultiQData(int index) const;
 	ARBConfigScoringPtr GetConfigScoring() const;
 	void SetEnableLists(
-			bool& outVenue,
-			bool& outDivMQ,
-			bool& outLevel,
-			bool& outEvent,
-			bool& outSubName,
-			bool& outTypeName,
-			bool bSet);
+		bool& outVenue,
+		bool& outDivMQ,
+		bool& outLevel,
+		bool& outEvent,
+		bool& outSubName,
+		bool& outTypeName,
+		bool bSet);
 	void UpdateControls();
 	void FillVenues();
 	void FillDivMultiQ();

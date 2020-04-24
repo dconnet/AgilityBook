@@ -21,11 +21,11 @@
 
 #include "ConfigHandler.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBDog.h"
 #include "ARB/ARBDogClub.h"
 #include "ARB/ARBDogRun.h"
 #include "ARB/ARBDogTrial.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -40,7 +40,7 @@ TEST_CASE("DogRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBDogRunPtr New();
+			//	static ARBDogRunPtr New();
 		}
 	}
 
@@ -50,7 +50,7 @@ TEST_CASE("DogRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogRunPtr Clone() const;
+			//	ARBDogRunPtr Clone() const;
 		}
 	}
 
@@ -60,7 +60,7 @@ TEST_CASE("DogRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogRun& operator=(ARBDogRun const& rhs);
+			//	ARBDogRun& operator=(ARBDogRun const& rhs);
 		}
 	}
 
@@ -70,8 +70,8 @@ TEST_CASE("DogRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBDogRun const& rhs) const;
-		//	bool operator!=(ARBDogRun const& rhs) const
+			//	bool operator==(ARBDogRun const& rhs) const;
+			//	bool operator!=(ARBDogRun const& rhs) const
 		}
 	}
 
@@ -81,7 +81,7 @@ TEST_CASE("DogRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const;
+			//	virtual std::wstring GetGenericName() const;
 		}
 	}
 
@@ -91,12 +91,12 @@ TEST_CASE("DogRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig const& inConfig,
-		//			ARBDogClubList const& inClubs,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig const& inConfig,
+			//			ARBDogClubList const& inClubs,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -106,7 +106,7 @@ TEST_CASE("DogRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 
@@ -116,7 +116,7 @@ TEST_CASE("DogRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int NumOtherPointsInUse(std::wstring const& inOther) const;
+			//	int NumOtherPointsInUse(std::wstring const& inOther) const;
 		}
 	}
 
@@ -126,9 +126,9 @@ TEST_CASE("DogRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameOtherPoints(
-		//			std::wstring const& inOldName,
-		//			std::wstring const& inNewName);
+			//	int RenameOtherPoints(
+			//			std::wstring const& inOldName,
+			//			std::wstring const& inNewName);
 		}
 	}
 
@@ -138,7 +138,7 @@ TEST_CASE("DogRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteOtherPoints(std::wstring const& inName);
+			//	int DeleteOtherPoints(std::wstring const& inName);
 		}
 	}
 
@@ -148,7 +148,7 @@ TEST_CASE("DogRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	short GetSpeedPoints(ARBConfigScoringPtr inScoring) const;
+			//	short GetSpeedPoints(ARBConfigScoringPtr inScoring) const;
 		}
 	}
 
@@ -158,11 +158,11 @@ TEST_CASE("DogRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	double GetTitlePoints(
-		//			ARBConfigScoringPtr inScoring,
-		//			bool* outClean = nullptr,
-		//			double* outLifeTime = nullptr,
-		//			double* outPlacement = nullptr) const;
+			//	double GetTitlePoints(
+			//			ARBConfigScoringPtr inScoring,
+			//			bool* outClean = nullptr,
+			//			double* outLifeTime = nullptr,
+			//			double* outPlacement = nullptr) const;
 		}
 	}
 
@@ -259,7 +259,7 @@ TEST_CASE("DogRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	double GetPlacementPoints(ARBConfigScoringPtr const& inScoring) const;
+			//	double GetPlacementPoints(ARBConfigScoringPtr const& inScoring) const;
 		}
 	}
 
@@ -269,7 +269,7 @@ TEST_CASE("DogRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	double GetScore(ARBConfigScoringPtr inScoring) const;
+			//	double GetScore(ARBConfigScoringPtr inScoring) const;
 		}
 	}
 }
@@ -282,12 +282,12 @@ TEST_CASE("DogRunList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig const& inConfig,
-		//			ARBDogClubList const& inClubs,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig const& inConfig,
+			//			ARBDogClubList const& inClubs,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -306,7 +306,7 @@ TEST_CASE("DogRunList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void sort();
+			//	void sort();
 		}
 	}
 
@@ -316,7 +316,7 @@ TEST_CASE("DogRunList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDate GetStartDate() const;
+			//	ARBDate GetStartDate() const;
 		}
 	}
 
@@ -326,7 +326,7 @@ TEST_CASE("DogRunList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDate GetEndDate() const;
+			//	ARBDate GetEndDate() const;
 		}
 	}
 
@@ -336,7 +336,7 @@ TEST_CASE("DogRunList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddRun(ARBDogRunPtr inRun);
+			//	bool AddRun(ARBDogRunPtr inRun);
 		}
 	}
 
@@ -346,7 +346,7 @@ TEST_CASE("DogRunList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool DeleteRun(ARBDogRunPtr inRun);
+			//	bool DeleteRun(ARBDogRunPtr inRun);
 		}
 	}
 }

@@ -25,12 +25,12 @@ class CDlgEventSelect : public wxDialog
 {
 public:
 	CDlgEventSelect(
-			ARBConfigVenuePtr const& inVenue,
-			ARBDate const& inDate,
-			std::wstring const& inDivision,
-			std::wstring const& inLevel,
-			std::wstring const& inEvent,
-			wxWindow* pParent = nullptr);
+		ARBConfigVenuePtr const& inVenue,
+		ARBDate const& inDate,
+		std::wstring const& inDivision,
+		std::wstring const& inLevel,
+		std::wstring const& inEvent,
+		wxWindow* pParent = nullptr);
 
 	std::wstring GetDivision() const;
 	std::wstring GetLevel() const;

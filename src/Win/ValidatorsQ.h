@@ -26,12 +26,18 @@ class CQualifyingValidator : public wxValidator
 	DECLARE_CLASS(CQualifyingValidator)
 	DECLARE_NO_ASSIGN_IMPLEMENTED(CQualifyingValidator)
 	CQualifyingValidator(CQualifyingValidator&& rhs) = delete;
+
 public:
 	CQualifyingValidator(ARB_Q* valPtr = nullptr, bool bAllowNoSel = false);
 	CQualifyingValidator(CQualifyingValidator const& rhs);
-	~CQualifyingValidator() {}
+	~CQualifyingValidator()
+	{
+	}
 
-	wxObject *Clone() const override {return new CQualifyingValidator(*this);}
+	wxObject* Clone() const override
+	{
+		return new CQualifyingValidator(*this);
+	}
 	bool Copy(CQualifyingValidator const& val);
 
 	bool TransferFromWindow() override;

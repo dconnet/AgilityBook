@@ -24,10 +24,7 @@ class CTextCtrl;
 class CDlgPluginDetails : public wxDialog
 {
 public:
-	CDlgPluginDetails(
-			ARBConfig& inConfig,
-			ARBConfigCalSitePtr const& inCalSite,
-			wxWindow* pParent = nullptr);
+	CDlgPluginDetails(ARBConfig& inConfig, ARBConfigCalSitePtr const& inCalSite, wxWindow* pParent = nullptr);
 
 private:
 	void SetCodeText();

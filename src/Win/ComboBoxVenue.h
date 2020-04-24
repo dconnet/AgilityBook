@@ -24,12 +24,12 @@ class CVenueComboBox : public wxComboBox
 	DECLARE_CLASS(CVenueComboBox)
 public:
 	CVenueComboBox(
-			wxWindow* parent,
-			ARBConfigVenueList const& inVenues,
-			wxString const& inSelectVenue,
-			bool useLongName = false,
-			wxValidator const& validator = wxDefaultValidator,
-			bool bEditable = false);
+		wxWindow* parent,
+		ARBConfigVenueList const& inVenues,
+		wxString const& inSelectVenue,
+		bool useLongName = false,
+		wxValidator const& validator = wxDefaultValidator,
+		bool bEditable = false);
 
 	ARBConfigVenuePtr GetVenue(int index) const;
 };

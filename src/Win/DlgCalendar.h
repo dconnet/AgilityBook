@@ -33,10 +33,7 @@ class wxDatePickerCtrl;
 class CDlgCalendar : public wxDialog
 {
 public:
-	CDlgCalendar(
-			ARBCalendarPtr const& inCal,
-			CAgilityBookDoc* pDoc,
-			wxWindow* pParent = nullptr);
+	CDlgCalendar(ARBCalendarPtr const& inCal, CAgilityBookDoc* pDoc, wxWindow* pParent = nullptr);
 
 private:
 	void UpdateLocationInfo(wxString const& location);

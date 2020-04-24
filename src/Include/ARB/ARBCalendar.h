@@ -34,17 +34,17 @@
   */
 enum class ARBCalendarEntry
 {
-	Not,		///< Not entered
-	Entered,	///< Entered
-	Pending,	///< Entered, not confirmed
-	Planning	///< Not entered, but planning on it soon
+	Not,     ///< Not entered
+	Entered, ///< Entered
+	Pending, ///< Entered, not confirmed
+	Planning ///< Not entered, but planning on it soon
 };
 
 enum class ARBAccommodations
 {
-	None,		///< No accommodations
-	Todo,		///< Need a place to stay
-	Confirmed	///< Reservations have been made
+	None,     ///< No accommodations
+	Todo,     ///< Need a place to stay
+	Confirmed ///< Reservations have been made
 };
 
 
@@ -68,9 +68,7 @@ public:
 	 * @param ioStream Stream to write data to.
 	 * @param inVersion Either 1 (vCal) or 2 (iCal).
 	 */
-	static ICalendarPtr iCalendarBegin(
-			std::ostream& ioStream,
-			int inVersion);
+	static ICalendarPtr iCalendarBegin(std::ostream& ioStream, int inVersion);
 };
 
 
@@ -160,10 +158,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -179,9 +174,7 @@ public:
 	 * @param inAlarm Set an alaram inAlarm days before trial start if entered
 	 *                or before trial opening if planning to enter.
 	 */
-	void iCalendar(
-			ICalendarPtr inIoStream,
-			int inAlarm) const;
+	void iCalendar(ICalendarPtr inIoStream, int inAlarm) const;
 
 	/**
 	 * Test for equality.
@@ -227,12 +220,9 @@ public:
 	 * @retval true There is an overlap between the entry and the given range.
 	 * @retval false There is no overlap
 	 */
-	bool IsRangeOverlapped(
-			ARBDate const& inDate1,
-			ARBDate const& inDate2) const
+	bool IsRangeOverlapped(ARBDate const& inDate1, ARBDate const& inDate2) const
 	{
-		if (m_DateStart.isBetween(inDate1, inDate2)
-		|| m_DateEnd.isBetween(inDate1, inDate2))
+		if (m_DateStart.isBetween(inDate1, inDate2) || m_DateEnd.isBetween(inDate1, inDate2))
 			return true;
 		else
 			return false;
@@ -405,10 +395,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Sort the list by date.
@@ -438,10 +425,7 @@ public:
 	 * @return Whether the object was found.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool FindCalendar(
-			ARBCalendarPtr const& inCal,
-			bool inMatchExact,
-			ARBCalendarPtr* outCal = nullptr) const;
+	bool FindCalendar(ARBCalendarPtr const& inCal, bool inMatchExact, ARBCalendarPtr* outCal = nullptr) const;
 
 	/**
 	 * Add a calendar entry to the list.

@@ -32,16 +32,18 @@
 
 namespace
 {
-	class ARBConfigFault_concrete : public ARBConfigFault
+class ARBConfigFault_concrete : public ARBConfigFault
+{
+public:
+	ARBConfigFault_concrete()
 	{
-	public:
-		ARBConfigFault_concrete() {}
-		ARBConfigFault_concrete(ARBConfigFault const& rhs)
-			: ARBConfigFault(rhs)
-		{
-		}
-	};
+	}
+	ARBConfigFault_concrete(ARBConfigFault const& rhs)
+		: ARBConfigFault(rhs)
+	{
+	}
 };
+}; // namespace
 
 
 ARBConfigFaultPtr ARBConfigFault::New()
@@ -101,18 +103,14 @@ bool ARBConfigFault::operator==(ARBConfigFault const& rhs) const
 }
 
 
-bool ARBConfigFault::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBConfigFault::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_FAULTTYPE)
 		return false;
-	if (inVersion == ARBVersion(1,0))
+	if (inVersion == ARBVersion(1, 0))
 	{
-		if (ARBAttribLookup::Found != inTree->GetAttrib(L"Name", m_Name)
-		|| 0 == m_Name.length())
+		if (ARBAttribLookup::Found != inTree->GetAttrib(L"Name", m_Name) || 0 == m_Name.length())
 		{
 			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_FAULTTYPE, L"Name"));
 			return false;
@@ -137,10 +135,7 @@ bool ARBConfigFault::Save(ElementNodePtr const& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool ARBConfigFaultList::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBConfigFaultList::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	ARBConfigFaultPtr thing(ARBConfigFault::New());
 	if (!thing->Load(inTree, inVersion, ioCallback))
@@ -150,9 +145,7 @@ bool ARBConfigFaultList::Load(
 }
 
 
-bool ARBConfigFaultList::FindFault(
-		std::wstring const& inName,
-		ARBConfigFaultPtr* outFault) const
+bool ARBConfigFaultList::FindFault(std::wstring const& inName, ARBConfigFaultPtr* outFault) const
 {
 	if (outFault)
 		outFault->reset();
@@ -169,9 +162,7 @@ bool ARBConfigFaultList::FindFault(
 }
 
 
-bool ARBConfigFaultList::AddFault(
-		std::wstring const& inName,
-		ARBConfigFaultPtr* outFault)
+bool ARBConfigFaultList::AddFault(std::wstring const& inName, ARBConfigFaultPtr* outFault)
 {
 	if (outFault)
 		outFault->reset();

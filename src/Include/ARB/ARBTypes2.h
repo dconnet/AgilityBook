@@ -76,8 +76,7 @@ ARB_TYPEDEF_LIST(ARBTraining)
 /**
  * Extend some common functionality.
  */
-template <typename T>
-class ARBVectorNoSave : public std::vector<T>
+template <typename T> class ARBVectorNoSave : public std::vector<T>
 {
 public:
 	ARBVectorNoSave()
@@ -94,9 +93,8 @@ public:
 		if (ARBVectorNoSave<T>::size() != rhs.size())
 			return false;
 		typename ARBVectorNoSave<T>::const_iterator iter1, iter2;
-		for (iter1 = ARBVectorNoSave<T>::begin(), iter2 = rhs.begin();
-			iter1 != ARBVectorNoSave<T>::end();
-			++iter1, ++iter2)
+		for (iter1 = ARBVectorNoSave<T>::begin(), iter2 = rhs.begin(); iter1 != ARBVectorNoSave<T>::end();
+			 ++iter1, ++iter2)
 		{
 			if (*(*iter1) != *(*iter2))
 				return false;
@@ -117,8 +115,8 @@ public:
 		outList.clear();
 		outList.reserve(ARBVectorNoSave<T>::size());
 		for (typename ARBVectorNoSave<T>::const_iterator iter = ARBVectorNoSave<T>::begin();
-			iter != ARBVectorNoSave<T>::end();
-			++iter)
+			 iter != ARBVectorNoSave<T>::end();
+			 ++iter)
 		{
 			T pItem = *iter;
 			if (pItem)
@@ -136,8 +134,8 @@ public:
 	{
 		size_t nItems = 0;
 		for (typename ARBVectorNoSave<T>::const_iterator iter = ARBVectorNoSave<T>::begin();
-			iter != ARBVectorNoSave<T>::end();
-			++iter)
+			 iter != ARBVectorNoSave<T>::end();
+			 ++iter)
 		{
 			nItems += (*iter)->GetSearchStrings(ioStrings);
 		}
@@ -150,17 +148,15 @@ public:
 	 * @param inMove Number of positions to move object.
 	 * @return Whether or not object was moved.
 	 */
-	bool Move(
-			T inItem,
-			int inMove)
+	bool Move(T inItem, int inMove)
 	{
 		bool bOk = false;
 		if (inItem)
 		{
 			int n = 0;
 			for (typename ARBVectorNoSave<T>::iterator iter = ARBVectorNoSave<T>::begin();
-				iter != ARBVectorNoSave<T>::end();
-				++iter, ++n)
+				 iter != ARBVectorNoSave<T>::end();
+				 ++iter, ++n)
 			{
 				if (inItem == *iter)
 				{
@@ -183,8 +179,7 @@ public:
 };
 
 
-template <typename T>
-class ARBVector : public ARBVectorNoSave<T>
+template <typename T> class ARBVector : public ARBVectorNoSave<T>
 {
 public:
 	ARBVector()
@@ -201,9 +196,7 @@ public:
 	 */
 	bool Save(ElementNodePtr const& ioTree) const
 	{
-		for (typename ARBVector<T>::const_iterator iter = ARBVector<T>::begin();
-			iter != ARBVector<T>::end();
-			++iter)
+		for (typename ARBVector<T>::const_iterator iter = ARBVector<T>::begin(); iter != ARBVector<T>::end(); ++iter)
 		{
 			if (!(*iter)->Save(ioTree))
 				return false;
@@ -213,8 +206,7 @@ public:
 };
 
 
-template <typename T>
-class ARBVectorSaveConfig : public ARBVectorNoSave<T>
+template <typename T> class ARBVectorSaveConfig : public ARBVectorNoSave<T>
 {
 public:
 	ARBVectorSaveConfig()
@@ -233,8 +225,8 @@ public:
 	bool Save(ElementNodePtr const& ioTree, ARBConfig const& inConfig) const
 	{
 		for (typename ARBVectorSaveConfig<T>::const_iterator iter = ARBVectorSaveConfig<T>::begin();
-			iter != ARBVectorSaveConfig<T>::end();
-			++iter)
+			 iter != ARBVectorSaveConfig<T>::end();
+			 ++iter)
 		{
 			if (!(*iter)->Save(ioTree, inConfig))
 				return false;
@@ -254,7 +246,9 @@ public:
 		: m_ErrMsg(ioErrMsg)
 	{
 	}
-	virtual ~ARBErrorCallback() {}
+	virtual ~ARBErrorCallback()
+	{
+	}
 
 	/**
 	 * Error message that requires a user response.

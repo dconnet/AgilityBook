@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBDogRegNum.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -34,7 +34,7 @@ TEST_CASE("DogRegNum")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBDogRegNumPtr New();
+			//	static ARBDogRegNumPtr New();
 		}
 	}
 
@@ -44,7 +44,7 @@ TEST_CASE("DogRegNum")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogRegNumPtr Clone() const;
+			//	ARBDogRegNumPtr Clone() const;
 		}
 	}
 
@@ -54,7 +54,7 @@ TEST_CASE("DogRegNum")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogRegNum& operator=(ARBDogRegNum const& rhs);
+			//	ARBDogRegNum& operator=(ARBDogRegNum const& rhs);
 		}
 	}
 
@@ -64,8 +64,8 @@ TEST_CASE("DogRegNum")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBDogRegNum const& rhs) const;
-		//	bool operator!=(ARBDogRegNum const& rhs) const
+			//	bool operator==(ARBDogRegNum const& rhs) const;
+			//	bool operator!=(ARBDogRegNum const& rhs) const
 		}
 	}
 
@@ -75,7 +75,7 @@ TEST_CASE("DogRegNum")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const
+			//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -85,11 +85,11 @@ TEST_CASE("DogRegNum")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig const& inConfig,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig const& inConfig,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -99,7 +99,7 @@ TEST_CASE("DogRegNum")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 }
@@ -112,11 +112,11 @@ TEST_CASE("DogRegNumList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig const& inConfig,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig const& inConfig,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -126,7 +126,7 @@ TEST_CASE("DogRegNumList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void sort();
+			//	void sort();
 		}
 	}
 
@@ -136,7 +136,7 @@ TEST_CASE("DogRegNumList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int NumRegNumsInVenue(std::wstring const& inVenue) const;
+			//	int NumRegNumsInVenue(std::wstring const& inVenue) const;
 		}
 	}
 
@@ -146,9 +146,9 @@ TEST_CASE("DogRegNumList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameVenue(
-		//			std::wstring const& inOldVenue,
-		//			std::wstring const& inNewVenue);
+			//	int RenameVenue(
+			//			std::wstring const& inOldVenue,
+			//			std::wstring const& inNewVenue);
 		}
 	}
 
@@ -158,7 +158,7 @@ TEST_CASE("DogRegNumList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteVenue(std::wstring const& inVenue);
+			//	int DeleteVenue(std::wstring const& inVenue);
 		}
 	}
 
@@ -168,9 +168,9 @@ TEST_CASE("DogRegNumList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindRegNum(
-		//			std::wstring const& inVenue,
-		//			ARBDogRegNumPtr* outRegNum = nullptr) const;
+			//	bool FindRegNum(
+			//			std::wstring const& inVenue,
+			//			ARBDogRegNumPtr* outRegNum = nullptr) const;
 		}
 	}
 
@@ -180,14 +180,14 @@ TEST_CASE("DogRegNumList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddRegNum(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inNumber,
-		//			ARBDogRegNumPtr* outRegNum = nullptr);
-		//	bool AddRegNum(ARBDogRegNumPtr inRegNum);
-		//	int DeleteRegNum(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inNumber);
+			//	bool AddRegNum(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inNumber,
+			//			ARBDogRegNumPtr* outRegNum = nullptr);
+			//	bool AddRegNum(ARBDogRegNumPtr inRegNum);
+			//	int DeleteRegNum(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inNumber);
 		}
 	}
 }

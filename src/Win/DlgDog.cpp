@@ -98,75 +98,74 @@ struct DogSortInfo : public SortInfo
 
 namespace
 {
-	static struct
-	{
-		int fmt;
-		int cx;
-		wchar_t const* idText;
-	} const colTitleInfo[] =
-	{
-		{wxLIST_FORMAT_LEFT, 5, nullptr},
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_DATE")},
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_VENUE")},
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_TITLE")},
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_NAME")},
-	};
-	constexpr int nColTitleInfo = sizeof(colTitleInfo) / sizeof(colTitleInfo[0]);
+static struct
+{
+	int fmt;
+	int cx;
+	wchar_t const* idText;
+} const colTitleInfo[] = {
+	{wxLIST_FORMAT_LEFT, 5, nullptr},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_DATE")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_VENUE")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_TITLE")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_NAME")},
+};
+constexpr int nColTitleInfo = sizeof(colTitleInfo) / sizeof(colTitleInfo[0]);
 
 
-	static struct
-	{
-		int fmt;
-		int cx;
-		wchar_t const* idText;
-	} const colRegNumInfo[] =
-	{
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_VENUE")},
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_NUMBER")},
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_HEIGHT")},
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_RECEIVED")},
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_NOTE")},
-	};
-	constexpr int nColRegNumInfo = sizeof(colRegNumInfo) / sizeof(colRegNumInfo[0]);
+static struct
+{
+	int fmt;
+	int cx;
+	wchar_t const* idText;
+} const colRegNumInfo[] = {
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_VENUE")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_NUMBER")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_HEIGHT")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_RECEIVED")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_NOTE")},
+};
+constexpr int nColRegNumInfo = sizeof(colRegNumInfo) / sizeof(colRegNumInfo[0]);
 
 
-	static struct
-	{
-		int fmt;
-		int cx;
-		wchar_t const* idText;
-	} const colExistingPointsInfo[] =
-	{
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_DATE")},
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_TYPE")},
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_POINTS")},
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_OTHERPOINTS")},
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_VENUE")},
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_MULTIQ")},
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_DIVISION")},
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_LEVEL")},
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_EVENT")},
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_SUBNAME")},
-		{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_COMMENTS")},
-	};
-	constexpr int nColExistingPointsInfo = sizeof(colExistingPointsInfo) / sizeof(colExistingPointsInfo[0]);
-}
+static struct
+{
+	int fmt;
+	int cx;
+	wchar_t const* idText;
+} const colExistingPointsInfo[] = {
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_DATE")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_TYPE")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_POINTS")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_OTHERPOINTS")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_VENUE")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_MULTIQ")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_DIVISION")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_LEVEL")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_EVENT")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_SUBNAME")},
+	{wxLIST_FORMAT_LEFT, 25, arbT("IDS_COL_COMMENTS")},
+};
+constexpr int nColExistingPointsInfo = sizeof(colExistingPointsInfo) / sizeof(colExistingPointsInfo[0]);
+} // namespace
 
 /////////////////////////////////////////////////////////////////////////////
 
 class CDlgDogDataTitle : public CListData
 {
 public:
-	CDlgDogDataTitle(
-			CDlgDog* pDlg,
-			ARBDogTitlePtr const& inTitle)
+	CDlgDogDataTitle(CDlgDog* pDlg, ARBDogTitlePtr const& inTitle)
 		: m_pDlg(pDlg)
 		, m_Title(inTitle)
 	{
 	}
 	std::wstring OnNeedText(long iCol) const override;
 	void OnNeedListItem(long iCol, wxListItem& info) const override;
-	ARBDogTitlePtr GetData() const	{return m_Title;}
+	ARBDogTitlePtr GetData() const
+	{
+		return m_Title;
+	}
+
 private:
 	CDlgDog* m_pDlg;
 	ARBDogTitlePtr m_Title;
@@ -274,25 +273,27 @@ int wxCALLBACK CompareTitles(CListDataPtr const& item1, CListDataPtr const& item
 				rc = 1;
 			break;
 		case 3: // name
-			{
-				std::wstring n1 = pTitle1->GetGenericName();
-				std::wstring n2 = pTitle2->GetGenericName();
-				if (n1 < n2)
-					rc = -1;
-				else if (n1 > n2)
-					rc = 1;
-			}
-			break;
+		{
+			std::wstring n1 = pTitle1->GetGenericName();
+			std::wstring n2 = pTitle2->GetGenericName();
+			if (n1 < n2)
+				rc = -1;
+			else if (n1 > n2)
+				rc = 1;
+		}
+		break;
 		case 4: // nice name
-			{
-				std::wstring name1 = pInfo->pDoc->Book().GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetRawName());
-				std::wstring name2 = pInfo->pDoc->Book().GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetRawName());
-				if (name1 < name2)
-					rc = -1;
-				else if (name1 > name2)
-					rc = 1;
-			}
-			break;
+		{
+			std::wstring name1
+				= pInfo->pDoc->Book().GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetRawName());
+			std::wstring name2
+				= pInfo->pDoc->Book().GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetRawName());
+			if (name1 < name2)
+				rc = -1;
+			else if (name1 > name2)
+				rc = 1;
+		}
+		break;
 		}
 		if (rc)
 		{
@@ -309,15 +310,17 @@ int wxCALLBACK CompareTitles(CListDataPtr const& item1, CListDataPtr const& item
 class CDlgDogDataRegNum : public CListData
 {
 public:
-	CDlgDogDataRegNum(
-			CDlgDog* pDlg,
-			ARBDogRegNumPtr const& inRegnum)
+	CDlgDogDataRegNum(CDlgDog* pDlg, ARBDogRegNumPtr const& inRegnum)
 		: m_pDlg(pDlg)
 		, m_RegNum(inRegnum)
 	{
 	}
 	std::wstring OnNeedText(long iCol) const override;
-	ARBDogRegNumPtr GetData() const	{return m_RegNum;}
+	ARBDogRegNumPtr GetData() const
+	{
+		return m_RegNum;
+	}
+
 private:
 	CDlgDog* m_pDlg;
 	ARBDogRegNumPtr m_RegNum;
@@ -411,15 +414,17 @@ int wxCALLBACK CompareRegNums(CListDataPtr const& item1, CListDataPtr const& ite
 class CDlgDogDataPoint : public CListData
 {
 public:
-	CDlgDogDataPoint(
-			CDlgDog* pDlg,
-			ARBDogExistingPointsPtr const& pts)
+	CDlgDogDataPoint(CDlgDog* pDlg, ARBDogExistingPointsPtr const& pts)
 		: m_pDlg(pDlg)
 		, m_Pts(pts)
 	{
 	}
 	std::wstring OnNeedText(long iCol) const override;
-	ARBDogExistingPointsPtr GetData() const	{return m_Pts;}
+	ARBDogExistingPointsPtr GetData() const
+	{
+		return m_Pts;
+	}
+
 private:
 	CDlgDog* m_pDlg;
 	ARBDogExistingPointsPtr m_Pts;
@@ -569,11 +574,7 @@ wxBEGIN_EVENT_TABLE(CDlgDog, wxDialog)
 wxEND_EVENT_TABLE()
 
 
-CDlgDog::CDlgDog(
-		CAgilityBookDoc* pDoc,
-		ARBDogPtr const& inDog,
-		wxWindow* pParent,
-		int iSelectPage)
+CDlgDog::CDlgDog(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog, wxWindow* pParent, int iSelectPage)
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_pDog(inDog)
@@ -614,7 +615,13 @@ CDlgDog::CDlgDog(
 	SetExtraStyle(wxWS_EX_VALIDATE_RECURSIVELY | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDS_COL_DOG"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		_("IDS_COL_DOG"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	if (!m_Deceased.IsValid())
 		m_Deceased.SetToday();
@@ -627,104 +634,137 @@ CDlgDog::CDlgDog(
 
 	// Controls (these are done first to control tab order)
 
-	wxNotebook* notebook = new wxNotebook(this, wxID_ANY,
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxNotebook* notebook = new wxNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0);
 	notebook->Bind(wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGING, &CDlgDog::OnPageChanging, this);
 
 	// Properties
 
-	wxPanel* panelProp = new wxPanel(notebook, wxID_ANY,
-		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+	wxPanel* panelProp = new wxPanel(notebook, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
-	wxStaticText* textCallName = new wxStaticText(panelProp, wxID_ANY,
-		_("IDC_DOG_CALLNAME"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textCallName
+		= new wxStaticText(panelProp, wxID_ANY, _("IDC_DOG_CALLNAME"), wxDefaultPosition, wxDefaultSize, 0);
 	textCallName->Wrap(-1);
 
-	CTextCtrl* ctrlName = new CTextCtrl(panelProp, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+	CTextCtrl* ctrlName = new CTextCtrl(
+		panelProp,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		CTrimValidator(&m_CallName, TRIMVALIDATOR_DEFAULT, _("IDS_BLANK_CALLNAME")));
 	ctrlName->SetHelpText(_("HIDC_DOG_CALLNAME"));
 	ctrlName->SetToolTip(_("HIDC_DOG_CALLNAME"));
 
-	wxStaticText* textBreed = new wxStaticText(panelProp, wxID_ANY,
-		_("IDC_DOG_BREED"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textBreed
+		= new wxStaticText(panelProp, wxID_ANY, _("IDC_DOG_BREED"), wxDefaultPosition, wxDefaultSize, 0);
 	textBreed->Wrap(-1);
 
-	CTextCtrl* ctrlBreed = new CTextCtrl(panelProp, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+	CTextCtrl* ctrlBreed = new CTextCtrl(
+		panelProp,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		CTrimValidator(&m_Breed, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlBreed->SetHelpText(_("HIDC_DOG_BREED"));
 	ctrlBreed->SetToolTip(_("HIDC_DOG_BREED"));
 
-	wxStaticText* textRegName = new wxStaticText(panelProp, wxID_ANY,
-		_("IDC_DOG_REG_NAME"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textRegName
+		= new wxStaticText(panelProp, wxID_ANY, _("IDC_DOG_REG_NAME"), wxDefaultPosition, wxDefaultSize, 0);
 	textRegName->Wrap(-1);
 
-	CTextCtrl* ctrlRegName = new CTextCtrl(panelProp, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+	CTextCtrl* ctrlRegName = new CTextCtrl(
+		panelProp,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		CTrimValidator(&m_RegName, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlRegName->SetHelpText(_("HIDC_DOG_REG_NAME"));
 	ctrlRegName->SetToolTip(_("HIDC_DOG_REG_NAME"));
 
-	wxStaticText* textAge = new wxStaticText(panelProp, wxID_ANY,
-		_("IDC_DOG_AGE_TEXT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textAge
+		= new wxStaticText(panelProp, wxID_ANY, _("IDC_DOG_AGE_TEXT"), wxDefaultPosition, wxDefaultSize, 0);
 	textAge->Wrap(-1);
 
-	m_ctrlAge = new wxStaticText(panelProp, wxID_ANY,
+	m_ctrlAge = new wxStaticText(
+		panelProp,
+		wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), wxALIGN_CENTRE | wxST_NO_AUTORESIZE | wxSUNKEN_BORDER);
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 20), -1),
+		wxALIGN_CENTRE | wxST_NO_AUTORESIZE | wxSUNKEN_BORDER);
 	m_ctrlAge->Wrap(-1);
 
-	wxStaticText* textBDay = new wxStaticText(panelProp, wxID_ANY,
-		_("IDC_DOG_DOB"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textBDay
+		= new wxStaticText(panelProp, wxID_ANY, _("IDC_DOG_DOB"), wxDefaultPosition, wxDefaultSize, 0);
 	textBDay->Wrap(-1);
 
-	wxDatePickerCtrl* ctrlBDay = new wxDatePickerCtrl(panelProp, wxID_ANY,
-		wxDefaultDateTime, wxDefaultPosition, wxDefaultSize,
-		wxDP_DROPDOWN|wxDP_SHOWCENTURY,
+	wxDatePickerCtrl* ctrlBDay = new wxDatePickerCtrl(
+		panelProp,
+		wxID_ANY,
+		wxDefaultDateTime,
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDP_DROPDOWN | wxDP_SHOWCENTURY,
 		CGenericValidator(&m_DOB));
 	ctrlBDay->Bind(wxEVT_DATE_CHANGED, &CDlgDog::OnDateChanged, this);
 	ctrlBDay->SetHelpText(_("HIDC_DOG_DOB"));
 	ctrlBDay->SetToolTip(_("HIDC_DOG_DOB"));
 
-	wxCheckBox* ctrlDeceased = new wxCheckBox(panelProp, wxID_ANY,
+	wxCheckBox* ctrlDeceased = new wxCheckBox(
+		panelProp,
+		wxID_ANY,
 		_("IDC_DOG_IS_DECEASED"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_IsDeceased));
 	ctrlDeceased->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgDog::OnDeceased, this);
 	ctrlDeceased->SetHelpText(_("HIDC_DOG_IS_DECEASED"));
 	ctrlDeceased->SetToolTip(_("HIDC_DOG_IS_DECEASED"));
 
-	m_ctrlDDay = new wxDatePickerCtrl(panelProp, wxID_ANY, wxDefaultDateTime,
-		wxDefaultPosition, wxDefaultSize,
-		wxDP_DROPDOWN|wxDP_SHOWCENTURY,
+	m_ctrlDDay = new wxDatePickerCtrl(
+		panelProp,
+		wxID_ANY,
+		wxDefaultDateTime,
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDP_DROPDOWN | wxDP_SHOWCENTURY,
 		CGenericValidator(&m_Deceased));
 	m_ctrlDDay->Bind(wxEVT_DATE_CHANGED, &CDlgDog::OnDateChanged, this);
 	m_ctrlDDay->SetHelpText(_("HIDC_DOG_DECEASED"));
 	m_ctrlDDay->SetToolTip(_("HIDC_DOG_DECEASED"));
 
-	wxStaticText* textNotes = new wxStaticText(panelProp, wxID_ANY,
-		_("IDC_DOG_NOTES"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textNotes
+		= new wxStaticText(panelProp, wxID_ANY, _("IDC_DOG_NOTES"), wxDefaultPosition, wxDefaultSize, 0);
 	textNotes->Wrap(-1);
 
-	CSpellCheckCtrl* ctrlNotes = new CSpellCheckCtrl(panelProp, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, 80)), wxTE_MULTILINE | wxTE_WORDWRAP,
+	CSpellCheckCtrl* ctrlNotes = new CSpellCheckCtrl(
+		panelProp,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(-1, wxDLG_UNIT_Y(this, 80)),
+		wxTE_MULTILINE | wxTE_WORDWRAP,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlNotes->SetHelpText(_("HIDC_DOG_NOTES"));
 	ctrlNotes->SetToolTip(_("HIDC_DOG_NOTES"));
 
 	// Titles
 
-	wxPanel* panelTitles = new wxPanel(notebook, wxID_ANY,
-		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+	wxPanel* panelTitles = new wxPanel(notebook, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
-	m_ctrlTitles = new CReportListCtrl(panelTitles, wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 280), -1), true, CReportListCtrl::SortHeader::Sort, true);
+	m_ctrlTitles = new CReportListCtrl(
+		panelTitles,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 280), -1),
+		true,
+		CReportListCtrl::SortHeader::Sort,
+		true);
 	m_ctrlTitles->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgDog::OnTitleColumnClick, this);
 	m_ctrlTitles->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgDog::OnTitleItemSelected, this);
 	m_ctrlTitles->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgDog::OnTitleItemActivated, this);
@@ -736,7 +776,8 @@ CDlgDog::CDlgDog(
 	m_imgTitlesTitledReceived = m_ctrlTitles->AddIcon(CImageManager::Get()->GetIcon(ImageMgrTitleTitledHave));
 	m_imgTitlesHidden = m_ctrlTitles->AddIcon(CImageManager::Get()->GetIcon(ImageMgrTitleHidden));
 	m_imgTitlesTitledHidden = m_ctrlTitles->AddIcon(CImageManager::Get()->GetIcon(ImageMgrTitleTitledHidden));
-	m_imgTitlesTitledHiddenReceived = m_ctrlTitles->AddIcon(CImageManager::Get()->GetIcon(ImageMgrTitleTitledHiddenHave));
+	m_imgTitlesTitledHiddenReceived
+		= m_ctrlTitles->AddIcon(CImageManager::Get()->GetIcon(ImageMgrTitleTitledHiddenHave));
 	int i;
 	for (i = 0; i < nColTitleInfo; ++i)
 	{
@@ -744,30 +785,30 @@ CDlgDog::CDlgDog(
 	}
 	SetColumnTitleHeaders();
 
-	wxButton* btnTitleNew = new wxButton(panelTitles, wxID_ANY,
-		_("IDC_DOG_TITLE_NEW"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* btnTitleNew
+		= new wxButton(panelTitles, wxID_ANY, _("IDC_DOG_TITLE_NEW"), wxDefaultPosition, wxDefaultSize, 0);
 	btnTitleNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgDog::OnTitleNew, this);
 	btnTitleNew->SetHelpText(_("HIDC_DOG_TITLE_NEW"));
 	btnTitleNew->SetToolTip(_("HIDC_DOG_TITLE_NEW"));
 
-	m_ctrlTitleEdit = new wxButton(panelTitles, wxID_ANY,
-		_("IDC_DOG_TITLE_EDIT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlTitleEdit = new wxButton(panelTitles, wxID_ANY, _("IDC_DOG_TITLE_EDIT"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlTitleEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgDog::OnTitleEdit, this);
 	m_ctrlTitleEdit->SetHelpText(_("HIDC_DOG_TITLE_EDIT"));
 	m_ctrlTitleEdit->SetToolTip(_("HIDC_DOG_TITLE_EDIT"));
 
-	m_ctrlTitleDelete = new wxButton(panelTitles, wxID_ANY,
-		_("IDC_DOG_TITLE_DELETE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlTitleDelete
+		= new wxButton(panelTitles, wxID_ANY, _("IDC_DOG_TITLE_DELETE"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlTitleDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgDog::OnTitleDelete, this);
 	m_ctrlTitleDelete->SetHelpText(_("HIDC_DOG_TITLE_DELETE"));
 	m_ctrlTitleDelete->SetToolTip(_("HIDC_DOG_TITLE_DELETE"));
 
-	wxCheckBox* ctrlHidden = new wxCheckBox(panelTitles, wxID_ANY,
+	wxCheckBox* ctrlHidden = new wxCheckBox(
+		panelTitles,
+		wxID_ANY,
 		_("IDC_DOG_TITLE_HIDDEN"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_ViewHiddenTitles));
 	ctrlHidden->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgDog::OnTitleHidden, this);
 	ctrlHidden->SetHelpText(_("HIDC_DOG_TITLE_HIDDEN"));
@@ -775,10 +816,15 @@ CDlgDog::CDlgDog(
 
 	// RegNums
 
-	wxPanel* panelRegNums = new wxPanel(notebook, wxID_ANY,
-		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+	wxPanel* panelRegNums = new wxPanel(notebook, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
-	m_ctrlRegNums = new CReportListCtrl(panelRegNums, wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 280), -1), true, CReportListCtrl::SortHeader::Sort, true);
+	m_ctrlRegNums = new CReportListCtrl(
+		panelRegNums,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 280), -1),
+		true,
+		CReportListCtrl::SortHeader::Sort,
+		true);
 	m_ctrlRegNums->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgDog::OnRegNumColumnClick, this);
 	m_ctrlRegNums->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgDog::OnRegNumItemSelected, this);
 	m_ctrlRegNums->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgDog::OnRegNumItemActivated, this);
@@ -791,33 +837,33 @@ CDlgDog::CDlgDog(
 	}
 	SetColumnRegNumHeaders();
 
-	wxButton* btnRegNew = new wxButton(panelRegNums, wxID_ANY,
-		_("IDC_DOGNUM_NEW"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* btnRegNew
+		= new wxButton(panelRegNums, wxID_ANY, _("IDC_DOGNUM_NEW"), wxDefaultPosition, wxDefaultSize, 0);
 	btnRegNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgDog::OnRegNumNew, this);
 	btnRegNew->SetHelpText(_("HIDC_DOGNUM_NEW"));
 	btnRegNew->SetToolTip(_("HIDC_DOGNUM_NEW"));
 
-	m_ctrlRegEdit = new wxButton(panelRegNums, wxID_ANY,
-		_("IDC_DOGNUM_EDIT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlRegEdit = new wxButton(panelRegNums, wxID_ANY, _("IDC_DOGNUM_EDIT"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlRegEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgDog::OnRegNumEdit, this);
 	m_ctrlRegEdit->SetHelpText(_("HIDC_DOGNUM_EDIT"));
 	m_ctrlRegEdit->SetToolTip(_("HIDC_DOGNUM_EDIT"));
 
-	m_ctrlRegDelete = new wxButton(panelRegNums, wxID_ANY,
-		_("IDC_DOGNUM_DELETE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlRegDelete = new wxButton(panelRegNums, wxID_ANY, _("IDC_DOGNUM_DELETE"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlRegDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgDog::OnRegNumDelete, this);
 	m_ctrlRegDelete->SetHelpText(_("HIDC_DOGNUM_DELETE"));
 	m_ctrlRegDelete->SetToolTip(_("HIDC_DOGNUM_DELETE"));
 
 	// Points
 
-	wxPanel* panelPoints = new wxPanel(notebook, wxID_ANY,
-		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+	wxPanel* panelPoints = new wxPanel(notebook, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
-	m_ctrlPoints = new CReportListCtrl(panelPoints, wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 280), -1), false, CReportListCtrl::SortHeader::Sort, true);
+	m_ctrlPoints = new CReportListCtrl(
+		panelPoints,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 280), -1),
+		false,
+		CReportListCtrl::SortHeader::Sort,
+		true);
 	m_ctrlPoints->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgDog::OnPointsColumnClick, this);
 	m_ctrlPoints->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgDog::OnPointsItemSelected, this);
 	m_ctrlPoints->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgDog::OnPointsItemActivated, this);
@@ -826,38 +872,41 @@ CDlgDog::CDlgDog(
 	m_ctrlPoints->SetToolTip(_("HIDC_DOGPTS_POINTS"));
 	for (i = 0; i < nColExistingPointsInfo; ++i)
 	{
-		m_ctrlPoints->InsertColumn(i, wxEmptyString, colExistingPointsInfo[i].fmt, wxDLG_UNIT_X(this, colExistingPointsInfo[i].cx));
+		m_ctrlPoints->InsertColumn(
+			i,
+			wxEmptyString,
+			colExistingPointsInfo[i].fmt,
+			wxDLG_UNIT_X(this, colExistingPointsInfo[i].cx));
 	}
 	SetColumnPointsHeaders();
 
-	wxButton* btnPtsNew = new wxButton(panelPoints, wxID_ANY,
-		_("IDC_DOGPTS_NEW"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* btnPtsNew = new wxButton(panelPoints, wxID_ANY, _("IDC_DOGPTS_NEW"), wxDefaultPosition, wxDefaultSize, 0);
 	btnPtsNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgDog::OnPointsNew, this);
 	btnPtsNew->SetHelpText(_("HIDC_DOGPTS_NEW"));
 	btnPtsNew->SetToolTip(_("HIDC_DOGPTS_NEW"));
 
-	m_ctrlPointsEdit = new wxButton(panelPoints, wxID_ANY,
-		_("IDC_DOGPTS_EDIT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlPointsEdit = new wxButton(panelPoints, wxID_ANY, _("IDC_DOGPTS_EDIT"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlPointsEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgDog::OnPointsEdit, this);
 	m_ctrlPointsEdit->SetHelpText(_("HIDC_DOGPTS_EDIT"));
 	m_ctrlPointsEdit->SetToolTip(_("HIDC_DOGPTS_EDIT"));
 
-	m_ctrlPointsDelete = new wxButton(panelPoints, wxID_ANY,
-		_("IDC_DOGPTS_DELETE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlPointsDelete
+		= new wxButton(panelPoints, wxID_ANY, _("IDC_DOGPTS_DELETE"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlPointsDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgDog::OnPointsDelete, this);
 	m_ctrlPointsDelete->SetHelpText(_("HIDC_DOGPTS_DELETE"));
 	m_ctrlPointsDelete->SetToolTip(_("HIDC_DOGPTS_DELETE"));
 
-	wxStaticText* textPts = new wxStaticText(panelPoints, wxID_ANY,
-		_("IDC_DOGPTS_SELECTED_PTS"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textPts
+		= new wxStaticText(panelPoints, wxID_ANY, _("IDC_DOGPTS_SELECTED_PTS"), wxDefaultPosition, wxDefaultSize, 0);
 	textPts->Wrap(-1);
 
-	m_ctrlSelectedPts = new wxStaticText(panelPoints, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), wxALIGN_CENTRE | wxST_NO_AUTORESIZE | wxSUNKEN_BORDER);
+	m_ctrlSelectedPts = new wxStaticText(
+		panelPoints,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 30), -1),
+		wxALIGN_CENTRE | wxST_NO_AUTORESIZE | wxSUNKEN_BORDER);
 	m_ctrlSelectedPts->Wrap(-1);
 
 	// Sizers
@@ -903,7 +952,7 @@ CDlgDog::CDlgDog(
 	wxBoxSizer* sizerTitleBtns = new wxBoxSizer(wxHORIZONTAL);
 	sizerTitleBtns->Add(btnTitleNew, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
 	sizerTitleBtns->Add(m_ctrlTitleEdit, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerTitleBtns->Add(m_ctrlTitleDelete, 0, wxRIGHT, wxDLG_UNIT_X(this, 3)); 
+	sizerTitleBtns->Add(m_ctrlTitleDelete, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
 	sizerTitleBtns->Add(0, 0, 1, wxEXPAND, 0);
 	sizerTitleBtns->Add(ctrlHidden, 0, wxALIGN_CENTER_VERTICAL, 0);
 
@@ -949,7 +998,7 @@ CDlgDog::CDlgDog(
 
 	bSizer->Add(notebook, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	wxSizer* sdbSizer = CreateButtonSizer(wxOK|wxCANCEL);
+	wxSizer* sdbSizer = CreateButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	UpdateDeceased();
@@ -1024,7 +1073,7 @@ void CDlgDog::UpdateAge()
 			current = m_Deceased;
 		ageDays = current - m_DOB;
 	}
-	m_ctrlAge->SetLabel(StringUtil::stringWX(ARBDouble::ToString(ageDays/365.0, 1)));
+	m_ctrlAge->SetLabel(StringUtil::stringWX(ARBDouble::ToString(ageDays / 365.0, 1)));
 }
 
 
@@ -1041,7 +1090,10 @@ void CDlgDog::SetColumnTitleHeaders()
 	{
 		std::wstring tmp;
 		if (colTitleInfo[i].idText)
-			tmp = fmt::format(L"{} ({})", wxGetTranslation(colTitleInfo[i].idText).wx_str(),  m_sortTitles.FindColumnOrder(i) + 1);
+			tmp = fmt::format(
+				L"{} ({})",
+				wxGetTranslation(colTitleInfo[i].idText).wx_str(),
+				m_sortTitles.FindColumnOrder(i) + 1);
 		else
 			tmp = fmt::format(L"({})", m_sortTitles.FindColumnOrder(i) + 1);
 		wxListItem col;
@@ -1066,13 +1118,10 @@ void CDlgDog::ListTitles()
 			pSelected = pData->GetData();
 	}
 	m_ctrlTitles->DeleteAllItems();
-	for (ARBDogTitleList::const_iterator iterTitle = m_Titles.begin();
-		iterTitle != m_Titles.end();
-		++iterTitle)
+	for (ARBDogTitleList::const_iterator iterTitle = m_Titles.begin(); iterTitle != m_Titles.end(); ++iterTitle)
 	{
 		ARBDogTitlePtr pTitle = (*iterTitle);
-		if (!CAgilityBookOptions::GetViewHiddenTitles()
-		&& pTitle->IsHidden())
+		if (!CAgilityBookOptions::GetViewHiddenTitles() && pTitle->IsHidden())
 		{
 			continue;
 		}
@@ -1134,7 +1183,10 @@ void CDlgDog::SetColumnRegNumHeaders()
 	{
 		std::wstring tmp;
 		if (colRegNumInfo[i].idText)
-			tmp = fmt::format(L"{} ({})", wxGetTranslation(colRegNumInfo[i].idText).wx_str(), m_sortRegNums.FindColumnOrder(i) + 1);
+			tmp = fmt::format(
+				L"{} ({})",
+				wxGetTranslation(colRegNumInfo[i].idText).wx_str(),
+				m_sortRegNums.FindColumnOrder(i) + 1);
 		else
 			tmp = fmt::format(L"({})", m_sortRegNums.FindColumnOrder(i) + 1);
 		wxListItem col;
@@ -1158,9 +1210,7 @@ void CDlgDog::ListRegNums()
 			pSelected = pData->GetData();
 	}
 	m_ctrlRegNums->DeleteAllItems();
-	for (ARBDogRegNumList::const_iterator iterRegNum = m_RegNums.begin();
-		iterRegNum != m_RegNums.end();
-		++iterRegNum)
+	for (ARBDogRegNumList::const_iterator iterRegNum = m_RegNums.begin(); iterRegNum != m_RegNums.end(); ++iterRegNum)
 	{
 		CDlgDogDataRegNumPtr pData(std::make_shared<CDlgDogDataRegNum>(this, *iterRegNum));
 		m_ctrlRegNums->InsertItem(pData);
@@ -1223,7 +1273,10 @@ void CDlgDog::SetColumnPointsHeaders()
 	{
 		std::wstring tmp;
 		if (colExistingPointsInfo[i].idText)
-			tmp = fmt::format(L"{} ({})", wxGetTranslation(colExistingPointsInfo[i].idText).wx_str(), m_sortPoints.FindColumnOrder(i) + 1);
+			tmp = fmt::format(
+				L"{} ({})",
+				wxGetTranslation(colExistingPointsInfo[i].idText).wx_str(),
+				m_sortPoints.FindColumnOrder(i) + 1);
 		else
 			tmp = fmt::format(L"({})", m_sortPoints.FindColumnOrder(i) + 1);
 		wxListItem col;
@@ -1250,8 +1303,8 @@ void CDlgDog::ListExistingPoints()
 	m_ctrlPoints->DeleteAllItems();
 	i = 0;
 	for (ARBDogExistingPointsList::const_iterator iterExistingPoints = m_ExistingPoints.begin();
-		iterExistingPoints != m_ExistingPoints.end();
-		++i, ++iterExistingPoints)
+		 iterExistingPoints != m_ExistingPoints.end();
+		 ++i, ++iterExistingPoints)
 	{
 		CDlgDogDataPointPtr data(std::make_shared<CDlgDogDataPoint>(this, *iterExistingPoints));
 		m_ctrlPoints->InsertItem(data);
@@ -1625,8 +1678,12 @@ void CDlgDog::OnOk(wxCommandEvent& evt)
 	{
 		std::vector<CVenueFilter> venues;
 		CFilterOptions::Options().GetFilterVenue(venues);
-		for (ARBDogList::iterator iterDogs = m_pDoc->Book().GetDogs().begin(); iterDogs != m_pDoc->Book().GetDogs().end(); ++iterDogs)
-			for (ARBDogTitleList::iterator iterTitle = (*iterDogs)->GetTitles().begin(); iterTitle != (*iterDogs)->GetTitles().end(); ++iterTitle)
+		for (ARBDogList::iterator iterDogs = m_pDoc->Book().GetDogs().begin();
+			 iterDogs != m_pDoc->Book().GetDogs().end();
+			 ++iterDogs)
+			for (ARBDogTitleList::iterator iterTitle = (*iterDogs)->GetTitles().begin();
+				 iterTitle != (*iterDogs)->GetTitles().end();
+				 ++iterTitle)
 			{
 				if (m_pDoc->ResetVisibility(venues, *iterTitle))
 					hint |= UPDATE_POINTS_VIEW;

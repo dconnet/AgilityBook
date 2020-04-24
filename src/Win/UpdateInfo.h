@@ -40,14 +40,8 @@ protected:
 	bool ReadVersionFile(bool bVerbose);
 	bool IsOutOfDate();
 	bool CanInstall() const;
-	bool CheckProgram(
-			CAgilityBookDoc* pDoc,
-			std::wstring const& lang,
-			bool& outClose,
-			bool& canInstall);
-	void CheckConfig(
-			CAgilityBookDoc* pDoc,
-			bool bVerbose);
+	bool CheckProgram(CAgilityBookDoc* pDoc, std::wstring const& lang, bool& outClose, bool& canInstall);
+	void CheckConfig(CAgilityBookDoc* pDoc, bool bVerbose);
 
 public:
 	/**
@@ -57,9 +51,7 @@ public:
 	 * @param inMsg Addition text to append to the question. If specified,
 	 *              2 newlines will be inserted first.
 	 */
-	static bool UpdateConfig(
-			CAgilityBookDoc* ioDoc,
-			wchar_t const* inMsg = nullptr);
+	static bool UpdateConfig(CAgilityBookDoc* ioDoc, wchar_t const* inMsg = nullptr);
 
 	/**
 	 * Cleanup after auto-update.
@@ -72,9 +64,7 @@ public:
 	 * @param pDoc Document to check configuration against.
 	 * @param outClose The program must close.
 	 */
-	void AutoUpdateProgram(
-			CAgilityBookDoc* pDoc,
-			bool& outClose);
+	void AutoUpdateProgram(CAgilityBookDoc* pDoc, bool& outClose);
 
 	/**
 	 * Called when opening a document. This will not load anything
@@ -89,9 +79,7 @@ public:
 	 * @param pDoc Document to check configuration against.
 	 * @param outClose The program must close.
 	 */
-	void UpdateConfiguration(
-			CAgilityBookDoc* pDoc,
-			bool& outClose);
+	void UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outClose);
 
 private:
 	CVersionNum m_VersionNum;

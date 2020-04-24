@@ -39,9 +39,7 @@
 #endif
 
 
-wxWindow* FindWindowInSizer(
-		wxSizer* sizer,
-		int id)
+wxWindow* FindWindowInSizer(wxSizer* sizer, int id)
 {
 	if (sizer)
 	{
@@ -67,10 +65,7 @@ wxWindow* FindWindowInSizer(
 }
 
 
-std::wstring GetListColumnText(
-		CListCtrl const* list,
-		long index,
-		long col)
+std::wstring GetListColumnText(CListCtrl const* list, long index, long col)
 {
 	std::wstring val;
 	if (list)
@@ -94,11 +89,7 @@ std::wstring GetListColumnText(
 }
 
 
-bool SetListColumnText(
-		CListCtrl* list,
-		long index,
-		long col,
-		std::wstring const& text)
+bool SetListColumnText(CListCtrl* list, long index, long col, std::wstring const& text)
 {
 	if (!list)
 		return false;
@@ -110,10 +101,7 @@ bool SetListColumnText(
 }
 
 
-void RefreshTreeItem(
-		wxTreeCtrl* tree,
-		wxTreeItemId item,
-		bool bRecurse)
+void RefreshTreeItem(wxTreeCtrl* tree, wxTreeItemId item, bool bRecurse)
 {
 	if (tree)
 	{
@@ -127,9 +115,8 @@ void RefreshTreeItem(
 			if (bRecurse)
 			{
 				wxTreeItemIdValue cookie;
-				for (wxTreeItemId child = tree->GetFirstChild(item, cookie);
-					child.IsOk();
-					child = tree->GetNextChild(item, cookie))
+				for (wxTreeItemId child = tree->GetFirstChild(item, cookie); child.IsOk();
+					 child = tree->GetNextChild(item, cookie))
 				{
 					RefreshTreeItem(tree, child, bRecurse);
 				}
@@ -139,12 +126,7 @@ void RefreshTreeItem(
 }
 
 
-void DrawBetterLabel(
-		wxDC* pDC,
-		wxString const& inStr,
-		wxRect& rect,
-		int flags,
-		bool bCalc)
+void DrawBetterLabel(wxDC* pDC, wxString const& inStr, wxRect& rect, int flags, bool bCalc)
 {
 	if (!pDC)
 		return;

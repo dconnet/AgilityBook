@@ -34,16 +34,9 @@ class IImageManagerCallback
 {
 public:
 	// Return code indicates image has handled.
-	virtual bool OnCreateBitmap(
-			const wxArtID& id,
-			const wxArtClient& client,
-			const wxSize& size,
-			wxBitmap& outBmp) = 0;
+	virtual bool OnCreateBitmap(const wxArtID& id, const wxArtClient& client, const wxSize& size, wxBitmap& outBmp) = 0;
 
-	virtual bool OnCreateIconBundle(
-			const wxArtID& id,
-			const wxArtClient& client,
-			wxIconBundle& outIcon) = 0;
+	virtual bool OnCreateIconBundle(const wxArtID& id, const wxArtClient& client, wxIconBundle& outIcon) = 0;
 };
 
 
@@ -55,16 +48,14 @@ protected:
 
 public:
 	static CImageManager* Get();
-	void SetCallback(IImageManagerCallback* pCallback) {m_Callback = pCallback;}
+	void SetCallback(IImageManagerCallback* pCallback)
+	{
+		m_Callback = pCallback;
+	}
 
-	wxBitmap CreateBitmap(
-			const wxArtID& id,
-			const wxArtClient& client,
-			const wxSize& size) override;
+	wxBitmap CreateBitmap(const wxArtID& id, const wxArtClient& client, const wxSize& size) override;
 
-	wxIconBundle CreateIconBundle(
-			const wxArtID& id,
-			const wxArtClient& client) override;
+	wxIconBundle CreateIconBundle(const wxArtID& id, const wxArtClient& client) override;
 
 private:
 	IImageManagerCallback* m_Callback;

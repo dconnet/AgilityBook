@@ -109,8 +109,8 @@
 #include <fstream>
 
 #include "ARBCommon/ARBMisc.h"
-#include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/ARBMsgDigest.h"
+#include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/VersionNum.h"
 #include "LibARBWin/DlgProgress.h"
@@ -128,7 +128,9 @@
 #endif
 
 #include "Platform/arbWarningPush.h"
+
 #include <wx/zipstrm.h>
+
 #include "Platform/arbWarningPop.h"
 
 #ifdef __WXMSW__
@@ -180,9 +182,7 @@ static bool GetARBFilename(wxString const& filename, std::wstring& fullpath)
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool CUpdateInfo::UpdateConfig(
-		CAgilityBookDoc* ioDoc,
-		wchar_t const* inMsg)
+bool CUpdateInfo::UpdateConfig(CAgilityBookDoc* ioDoc, wchar_t const* inMsg)
 {
 	wxString msg(_("IDS_UPDATED_CONFIG"));
 	if (inMsg && *inMsg)
@@ -399,7 +399,9 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 								int majVer;
 								int minVer;
 								GetOSInfo(majVer, minVer);
-								ARBVersion ver(static_cast<unsigned short>(majVer), static_cast<unsigned short>(minVer));
+								ARBVersion ver(
+									static_cast<unsigned short>(majVer),
+									static_cast<unsigned short>(minVer));
 								if (ver < minOS)
 									bSkip = true;
 							}
@@ -420,8 +422,8 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 							bLoadedVersion = true;
 					}
 					if (ARBAttribLookup::Found != node->GetAttrib(L"config", m_VerConfig)
-					|| ARBAttribLookup::Found != node->GetAttrib(L"size", m_size)
-					|| ARBAttribLookup::Found != node->GetAttrib(L"file", m_NewFile))
+						|| ARBAttribLookup::Found != node->GetAttrib(L"size", m_size)
+						|| ARBAttribLookup::Found != node->GetAttrib(L"file", m_NewFile))
 					{
 						bLoadedVersion = false;
 					}
@@ -442,7 +444,10 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 					{
 						if (bVerbose)
 						{
-							wxMessageBox(_("IDS_UPDATE_UNKNOWN"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+							wxMessageBox(
+								_("IDS_UPDATE_UNKNOWN"),
+								wxMessageBoxCaptionStr,
+								wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						}
 						return false;
 					}
@@ -500,11 +505,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 /**
  * Check the version against the web.
  */
-bool CUpdateInfo::CheckProgram(
-		CAgilityBookDoc* pDoc,
-		std::wstring const& lang,
-		bool& outClose,
-		bool& canInstall)
+bool CUpdateInfo::CheckProgram(CAgilityBookDoc* pDoc, std::wstring const& lang, bool& outClose, bool& canInstall)
 {
 	outClose = false;
 	canInstall = CanInstall();
@@ -531,7 +532,8 @@ bool CUpdateInfo::CheckProgram(
 				wxFileName name(StringUtil::stringWX(m_NewFile));
 				wxString filename;
 #if defined(__WXMAC__)
-				wxFileDialog dlg(wxGetApp().GetTopWindow(),
+				wxFileDialog dlg(
+					wxGetApp().GetTopWindow(),
 					wxFileSelectorPromptStr,
 					wxStandardPaths::Get().GetDocumentsDir(),
 					name.GetFullName(),
@@ -642,7 +644,8 @@ bool CUpdateInfo::CheckProgram(
 									}
 									else
 									{
-										msiFilename = wxFileName::GetTempDir() + wxFileName::GetPathSeparator() + msiName.GetFullName();
+										msiFilename = wxFileName::GetTempDir() + wxFileName::GetPathSeparator()
+													  + msiName.GetFullName();
 										wxFileOutputStream output(msiFilename);
 										inZip.Read(output);
 									}
@@ -667,7 +670,8 @@ bool CUpdateInfo::CheckProgram(
 							std::ofstream output(pFile, std::ios::out | std::ios::binary);
 #endif
 							wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-							wxString zipfile = GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
+							wxString zipfile
+								= GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
 							CLibArchive filesys(StringUtil::stringW(zipfile));
 							if (!filesys.ExtractFile(StringUtil::stringW(ARBUpdater()), output))
 							{
@@ -737,7 +741,12 @@ bool CUpdateInfo::CanInstall() const
 #ifdef WIN32
 	// Note: CoInitialize already called
 	IUpdateInstaller* iInstaller = nullptr;
-	if (SUCCEEDED(CoCreateInstance(CLSID_UpdateInstaller, nullptr, CLSCTX_INPROC_SERVER, IID_IUpdateInstaller, (LPVOID*)&iInstaller)))
+	if (SUCCEEDED(CoCreateInstance(
+			CLSID_UpdateInstaller,
+			nullptr,
+			CLSCTX_INPROC_SERVER,
+			IID_IUpdateInstaller,
+			(LPVOID*)&iInstaller)))
 	{
 		VARIANT_BOOL bVal;
 		if (SUCCEEDED(iInstaller->get_IsBusy(&bVal)))
@@ -758,9 +767,7 @@ bool CUpdateInfo::CanInstall() const
 }
 
 
-void CUpdateInfo::CheckConfig(
-		CAgilityBookDoc* pDoc,
-		bool bVerbose)
+void CUpdateInfo::CheckConfig(CAgilityBookDoc* pDoc, bool bVerbose)
 {
 	// If the parse was successful, check for the posted config version.
 	bool bUpToDate = true;
@@ -852,7 +859,10 @@ void CUpdateInfo::CheckConfig(
 					if (!book.GetConfig().Load(tree->GetElementNode(nConfig), version, err))
 					{
 						if (0 < err.m_ErrMsg.size())
-							wxMessageBox(StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+							wxMessageBox(
+								StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
+								wxMessageBoxCaptionStr,
+								wxOK | wxCENTRE | wxICON_WARNING);
 					}
 					else
 					{
@@ -870,9 +880,7 @@ void CUpdateInfo::CheckConfig(
 }
 
 
-void CUpdateInfo::AutoUpdateProgram(
-		CAgilityBookDoc* pDoc,
-		bool& outClose)
+void CUpdateInfo::AutoUpdateProgram(CAgilityBookDoc* pDoc, bool& outClose)
 {
 	outClose = false;
 	if (ReadVersionFile(false))
@@ -897,9 +905,7 @@ void CUpdateInfo::AutoCheckConfiguration(CAgilityBookDoc* pDoc)
 }
 
 
-void CUpdateInfo::UpdateConfiguration(
-		CAgilityBookDoc* pDoc,
-		bool& outClose)
+void CUpdateInfo::UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outClose)
 {
 	outClose = false;
 	// Only continue if we parsed the version.txt file

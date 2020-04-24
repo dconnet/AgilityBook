@@ -34,8 +34,8 @@
 #include "LibARBWin/DlgProgress.h"
 #include <wx/filename.h>
 #include <wx/list.h>
-#include <wx/variant.h>
 #include <wx/msw/ole/automtn.h>
+#include <wx/variant.h>
 #endif //HAS_AUTOMATION
 
 #if defined(__WXMSW__)
@@ -119,6 +119,7 @@ protected:
 		xlHAlignLeft = -4131,
 		xlHAlignRight = -4152,
 	};
+
 public:
 	static CWizardExcelExportPtr Create(wxAutomationObject& ioApp);
 	CWizardExcelExport(wxAutomationObject& ioApp);
@@ -128,49 +129,19 @@ public:
 
 	bool AllowAccess(bool bAllow) override;
 
-	bool SetTextColor(
-			long inRow,
-			long inCol,
-			wxColour inColor) override;
-	bool SetBackColor(
-			long inRow,
-			long inCol,
-			wxColour inColor) override;
-	bool SetItalic(
-			long inRow,
-			long inCol,
-			bool bItalic) override;
-	bool SetBold(
-			long inRow,
-			long inCol,
-			bool bBold) override;
+	bool SetTextColor(long inRow, long inCol, wxColour inColor) override;
+	bool SetBackColor(long inRow, long inCol, wxColour inColor) override;
+	bool SetItalic(long inRow, long inCol, bool bItalic) override;
+	bool SetBold(long inRow, long inCol, bool bBold) override;
 
-	bool SetAlignment(
-			long inRow,
-			long inCol,
-			ARBSpreadSheetAlign align) override;
-	bool SetFormat(
-			long inRow,
-			long inCol,
-			ARBSpreadSheetFormat format) override;
-	bool SetFormat(
-			long inRow,
-			long inCol,
-			std::wstring const& format) override;
+	bool SetAlignment(long inRow, long inCol, ARBSpreadSheetAlign align) override;
+	bool SetFormat(long inRow, long inCol, ARBSpreadSheetFormat format) override;
+	bool SetFormat(long inRow, long inCol, std::wstring const& format) override;
 
-	bool InsertData(
-			long inRow,
-			long inCol,
-			double inData) override;
-	bool InsertData(
-			long inRow,
-			long inCol,
-			std::wstring const& inData,
-			bool bFormula = false) override;
+	bool InsertData(long inRow, long inCol, double inData) override;
+	bool InsertData(long inRow, long inCol, std::wstring const& inData, bool bFormula = false) override;
 
-	bool AutoFit(
-			long inColFrom,
-			long inColTo) override;
+	bool AutoFit(long inColFrom, long inColTo) override;
 
 private:
 	wxAutomationObject& m_App;
@@ -187,9 +158,7 @@ public:
 	virtual ~CWizardExcelImport();
 
 	bool OpenFile(std::wstring const& inFilename) override;
-	bool GetData(
-			std::vector< std::vector<std::wstring> >& outData,
-			IDlgProgress* ioProgress) override;
+	bool GetData(std::vector<std::vector<std::wstring>>& outData, IDlgProgress* ioProgress) override;
 
 private:
 	wxAutomationObject& m_App;
@@ -219,61 +188,27 @@ class CWizardCalcExport : public ISpreadSheetExporter
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CWizardCalcExport)
 public:
-	static CWizardCalcExportPtr Create(
-			wxAutomationObject& ioManager,
-			wxAutomationObject& ioDesktop);
-	CWizardCalcExport(
-			wxAutomationObject& ioManager,
-			wxAutomationObject& ioDesktop);
+	static CWizardCalcExportPtr Create(wxAutomationObject& ioManager, wxAutomationObject& ioDesktop);
+	CWizardCalcExport(wxAutomationObject& ioManager, wxAutomationObject& ioDesktop);
 	virtual ~CWizardCalcExport();
 
 	wchar_t GetSumIfSeparator() const override;
 
 	bool AllowAccess(bool bAllow) override;
 
-	bool SetTextColor(
-			long inRow,
-			long inCol,
-			wxColour inColor) override;
-	bool SetBackColor(
-			long inRow,
-			long inCol,
-			wxColour inColor) override;
-	bool SetItalic(
-			long inRow,
-			long inCol,
-			bool bItalic) override;
-	bool SetBold(
-			long inRow,
-			long inCol,
-			bool bBold) override;
+	bool SetTextColor(long inRow, long inCol, wxColour inColor) override;
+	bool SetBackColor(long inRow, long inCol, wxColour inColor) override;
+	bool SetItalic(long inRow, long inCol, bool bItalic) override;
+	bool SetBold(long inRow, long inCol, bool bBold) override;
 
-	bool SetAlignment(
-			long inRow,
-			long inCol,
-			ARBSpreadSheetAlign align) override;
-	bool SetFormat(
-			long inRow,
-			long inCol,
-			ARBSpreadSheetFormat format) override;
-	bool SetFormat(
-			long inRow,
-			long inCol,
-			std::wstring const& format) override;
+	bool SetAlignment(long inRow, long inCol, ARBSpreadSheetAlign align) override;
+	bool SetFormat(long inRow, long inCol, ARBSpreadSheetFormat format) override;
+	bool SetFormat(long inRow, long inCol, std::wstring const& format) override;
 
-	bool InsertData(
-			long inRow,
-			long inCol,
-			double inData) override;
-	bool InsertData(
-			long inRow,
-			long inCol,
-			std::wstring const& inData,
-			bool bFormula = false) override;
+	bool InsertData(long inRow, long inCol, double inData) override;
+	bool InsertData(long inRow, long inCol, std::wstring const& inData, bool bFormula = false) override;
 
-	bool AutoFit(
-			long inColFrom,
-			long inColTo) override;
+	bool AutoFit(long inColFrom, long inColTo) override;
 
 private:
 	bool CreateWorksheet();
@@ -289,15 +224,12 @@ class CWizardCalcImport : public CWizardBaseImport
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CWizardCalcImport)
 public:
-	static CWizardCalcImportPtr Create(
-			wxAutomationObject& ioDesktop);
+	static CWizardCalcImportPtr Create(wxAutomationObject& ioDesktop);
 	CWizardCalcImport(wxAutomationObject& ioDesktop);
 	virtual ~CWizardCalcImport();
 
 	bool OpenFile(std::wstring const& inFilename) override;
-	bool GetData(
-			std::vector< std::vector<std::wstring> >& outData,
-			IDlgProgress* ioProgress) override;
+	bool GetData(std::vector<std::vector<std::wstring>>& outData, IDlgProgress* ioProgress) override;
 
 private:
 	wxAutomationObject& m_Desktop;
@@ -420,10 +352,7 @@ bool CWizardExcelExport::AllowAccess(bool bAllow)
 }
 
 
-bool CWizardExcelExport::SetTextColor(
-		long inRow,
-		long inCol,
-		wxColour inColor)
+bool CWizardExcelExport::SetTextColor(long inRow, long inCol, wxColour inColor)
 {
 	std::wstring cell1;
 	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
@@ -440,10 +369,7 @@ bool CWizardExcelExport::SetTextColor(
 }
 
 
-bool CWizardExcelExport::SetBackColor(
-		long inRow,
-		long inCol,
-		wxColour inColor)
+bool CWizardExcelExport::SetBackColor(long inRow, long inCol, wxColour inColor)
 {
 	std::wstring cell1;
 	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
@@ -460,10 +386,7 @@ bool CWizardExcelExport::SetBackColor(
 }
 
 
-bool CWizardExcelExport::SetItalic(
-		long inRow,
-		long inCol,
-		bool bItalic)
+bool CWizardExcelExport::SetItalic(long inRow, long inCol, bool bItalic)
 {
 	std::wstring cell1;
 	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
@@ -480,10 +403,7 @@ bool CWizardExcelExport::SetItalic(
 }
 
 
-bool CWizardExcelExport::SetBold(
-		long inRow,
-		long inCol,
-		bool bBold)
+bool CWizardExcelExport::SetBold(long inRow, long inCol, bool bBold)
 {
 	std::wstring cell1;
 	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
@@ -500,10 +420,7 @@ bool CWizardExcelExport::SetBold(
 }
 
 
-bool CWizardExcelExport::SetAlignment(
-		long inRow,
-		long inCol,
-		ARBSpreadSheetAlign align)
+bool CWizardExcelExport::SetAlignment(long inRow, long inCol, ARBSpreadSheetAlign align)
 {
 	if (ARBSpreadSheetAlign::None == align)
 		return true;
@@ -537,10 +454,7 @@ bool CWizardExcelExport::SetAlignment(
 }
 
 
-bool CWizardExcelExport::SetFormat(
-		long inRow,
-		long inCol,
-		ARBSpreadSheetFormat format)
+bool CWizardExcelExport::SetFormat(long inRow, long inCol, ARBSpreadSheetFormat format)
 {
 	std::wstring sFormat;
 
@@ -591,10 +505,7 @@ bool CWizardExcelExport::SetFormat(
 }
 
 
-bool CWizardExcelExport::SetFormat(
-		long inRow,
-		long inCol,
-		std::wstring const& format)
+bool CWizardExcelExport::SetFormat(long inRow, long inCol, std::wstring const& format)
 {
 	std::wstring cell1;
 	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
@@ -609,10 +520,7 @@ bool CWizardExcelExport::SetFormat(
 }
 
 
-bool CWizardExcelExport::InsertData(
-		long inRow,
-		long inCol,
-		double inData)
+bool CWizardExcelExport::InsertData(long inRow, long inCol, double inData)
 {
 	std::wstring cell1;
 	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
@@ -627,11 +535,7 @@ bool CWizardExcelExport::InsertData(
 }
 
 
-bool CWizardExcelExport::InsertData(
-		long inRow,
-		long inCol,
-		std::wstring const& inData,
-		bool bFormula)
+bool CWizardExcelExport::InsertData(long inRow, long inCol, std::wstring const& inData, bool bFormula)
 {
 	std::wstring cell1;
 	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
@@ -653,9 +557,7 @@ bool CWizardExcelExport::InsertData(
 }
 
 
-bool CWizardExcelExport::AutoFit(
-		long inColFrom,
-		long inColTo)
+bool CWizardExcelExport::AutoFit(long inColFrom, long inColTo)
 {
 	std::wstring cell1, cell2;
 	if (!ISpreadSheet::GetRowCol(0, inColFrom, cell1))
@@ -712,9 +614,7 @@ bool CWizardExcelImport::OpenFile(std::wstring const& inFilename)
 }
 
 
-bool CWizardExcelImport::GetData(
-		std::vector< std::vector<std::wstring> >& outData,
-		IDlgProgress* ioProgress)
+bool CWizardExcelImport::GetData(std::vector<std::vector<std::wstring>>& outData, IDlgProgress* ioProgress)
 {
 	outData.clear();
 	if (!m_Worksheet.GetDispatchPtr())
@@ -826,17 +726,13 @@ ISpreadSheetImporterPtr CWizardCalc::GetImporter() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-CWizardCalcExportPtr CWizardCalcExport::Create(
-		wxAutomationObject& ioManager,
-		wxAutomationObject& ioDesktop)
+CWizardCalcExportPtr CWizardCalcExport::Create(wxAutomationObject& ioManager, wxAutomationObject& ioDesktop)
 {
 	return std::make_shared<CWizardCalcExport>(ioManager, ioDesktop);
 }
 
 
-CWizardCalcExport::CWizardCalcExport(
-		wxAutomationObject& ioManager,
-		wxAutomationObject& ioDesktop)
+CWizardCalcExport::CWizardCalcExport(wxAutomationObject& ioManager, wxAutomationObject& ioDesktop)
 	: m_Manager(ioManager)
 	, m_Desktop(ioDesktop)
 	, m_Document()
@@ -884,10 +780,7 @@ bool CWizardCalcExport::AllowAccess(bool bAllow)
 }
 
 
-bool CWizardCalcExport::SetTextColor(
-		long inRow,
-		long inCol,
-		wxColour inColor)
+bool CWizardCalcExport::SetTextColor(long inRow, long inCol, wxColour inColor)
 {
 	wxAutomationObject cell(m_Worksheet.CallMethod(L"getCellByPosition", inCol, inRow));
 	if (!cell.GetDispatchPtr())
@@ -896,22 +789,16 @@ bool CWizardCalcExport::SetTextColor(
 }
 
 
-bool CWizardCalcExport::SetBackColor(
-		long inRow,
-		long inCol,
-		wxColour inColor)
+bool CWizardCalcExport::SetBackColor(long inRow, long inCol, wxColour inColor)
 {
 	wxAutomationObject cell(m_Worksheet.CallMethod(L"getCellByPosition", inCol, inRow));
 	if (!cell.GetDispatchPtr())
-		return false; 
+		return false;
 	return cell.PutProperty(L"CellBackColor", static_cast<long>(inColor.GetPixel()));
 }
 
 
-bool CWizardCalcExport::SetItalic(
-		long inRow,
-		long inCol,
-		bool bItalic)
+bool CWizardCalcExport::SetItalic(long inRow, long inCol, bool bItalic)
 {
 	wxAutomationObject cell(m_Worksheet.CallMethod(L"getCellByPosition", inCol, inRow));
 	if (!cell.GetDispatchPtr())
@@ -920,10 +807,7 @@ bool CWizardCalcExport::SetItalic(
 }
 
 
-bool CWizardCalcExport::SetBold(
-		long inRow,
-		long inCol,
-		bool bBold)
+bool CWizardCalcExport::SetBold(long inRow, long inCol, bool bBold)
 {
 	wxAutomationObject cell(m_Worksheet.CallMethod(L"getCellByPosition", inCol, inRow));
 	if (!cell.GetDispatchPtr())
@@ -932,10 +816,7 @@ bool CWizardCalcExport::SetBold(
 }
 
 
-bool CWizardCalcExport::SetAlignment(
-		long inRow,
-		long inCol,
-		ARBSpreadSheetAlign align)
+bool CWizardCalcExport::SetAlignment(long inRow, long inCol, ARBSpreadSheetAlign align)
 {
 	if (ARBSpreadSheetAlign::None == align)
 		return true;
@@ -969,10 +850,7 @@ bool CWizardCalcExport::SetAlignment(
 }
 
 
-bool CWizardCalcExport::SetFormat(
-		long inRow,
-		long inCol,
-		ARBSpreadSheetFormat format)
+bool CWizardCalcExport::SetFormat(long inRow, long inCol, ARBSpreadSheetFormat format)
 {
 	std::wstring sFormat;
 	switch (format)
@@ -995,10 +873,7 @@ bool CWizardCalcExport::SetFormat(
 }
 
 
-bool CWizardCalcExport::SetFormat(
-		long inRow,
-		long inCol,
-		std::wstring const& format)
+bool CWizardCalcExport::SetFormat(long inRow, long inCol, std::wstring const& format)
 {
 	if (!CreateWorksheet())
 		return false;
@@ -1020,18 +895,16 @@ bool CWizardCalcExport::SetFormat(
 	localSettings.PutProperty(L"Language", wxString(L"en"));
 	localSettings.PutProperty(L"Country", wxString(L"US"));
 
-	wxVariant numberFormatId = numberFormats.CallMethod(L"queryKey", format.c_str(), localSettings.GetDispatchPtr(), true);
+	wxVariant numberFormatId
+		= numberFormats.CallMethod(L"queryKey", format.c_str(), localSettings.GetDispatchPtr(), true);
 	if (numberFormatId.GetInteger() == -1)
-	   numberFormatId = numberFormats.CallMethod(L"addNew", format.c_str(), localSettings.GetDispatchPtr());
+		numberFormatId = numberFormats.CallMethod(L"addNew", format.c_str(), localSettings.GetDispatchPtr());
 
 	return cell.PutProperty(L"NumberFormat", numberFormatId);
 }
 
 
-bool CWizardCalcExport::InsertData(
-		long inRow,
-		long inCol,
-		double inData)
+bool CWizardCalcExport::InsertData(long inRow, long inCol, double inData)
 {
 	if (!CreateWorksheet())
 		return false;
@@ -1042,11 +915,7 @@ bool CWizardCalcExport::InsertData(
 }
 
 
-bool CWizardCalcExport::InsertData(
-		long inRow,
-		long inCol,
-		std::wstring const& inData,
-		bool bFormula)
+bool CWizardCalcExport::InsertData(long inRow, long inCol, std::wstring const& inData, bool bFormula)
 {
 	if (!CreateWorksheet())
 		return false;
@@ -1058,9 +927,7 @@ bool CWizardCalcExport::InsertData(
 }
 
 
-bool CWizardCalcExport::AutoFit(
-		long inColFrom,
-		long inColTo)
+bool CWizardCalcExport::AutoFit(long inColFrom, long inColTo)
 {
 	if (!CreateWorksheet())
 		return false;
@@ -1073,15 +940,13 @@ bool CWizardCalcExport::AutoFit(
 
 /////////////////////////////////////////////////////////////////////////////
 
-CWizardCalcImportPtr CWizardCalcImport::Create(
-		wxAutomationObject& ioDesktop)
+CWizardCalcImportPtr CWizardCalcImport::Create(wxAutomationObject& ioDesktop)
 {
 	return std::make_shared<CWizardCalcImport>(ioDesktop);
 }
 
 
-CWizardCalcImport::CWizardCalcImport(
-		wxAutomationObject& ioDesktop)
+CWizardCalcImport::CWizardCalcImport(wxAutomationObject& ioDesktop)
 	: m_Desktop(ioDesktop)
 {
 }
@@ -1120,9 +985,7 @@ bool CWizardCalcImport::OpenFile(std::wstring const& inFilename)
 }
 
 
-bool CWizardCalcImport::GetData(
-		std::vector< std::vector<std::wstring> >& outData,
-		IDlgProgress* ioProgress)
+bool CWizardCalcImport::GetData(std::vector<std::vector<std::wstring>>& outData, IDlgProgress* ioProgress)
 {
 	outData.clear();
 	if (!m_Worksheet.GetDispatchPtr())
@@ -1213,14 +1076,11 @@ long ISpreadSheet::GetMaxCols()
 }
 
 
-bool ISpreadSheet::GetRowCol(
-		long inRow,
-		long inCol,
-		std::wstring& outCell)
+bool ISpreadSheet::GetRowCol(long inRow, long inCol, std::wstring& outCell)
 {
 	// Lookup tables are nice!
-	static const wchar_t* const sc_ColumnNames[256] =
-	{
+	static const wchar_t* const sc_ColumnNames[256] = {
+		// clang-format off
 		L"A", L"B", L"C", L"D", L"E", L"F", L"G", L"H",
 		L"I", L"J", L"K", L"L", L"M", L"N", L"O", L"P",
 		L"Q", L"R", L"S", L"T", L"U", L"V", L"W", L"X",
@@ -1253,6 +1113,7 @@ bool ISpreadSheet::GetRowCol(
 		L"HY",L"HZ",L"IA",L"IB",L"IC",L"ID",L"IE",L"IF",
 		L"IG",L"IH",L"II",L"IJ",L"IK",L"IL",L"IM",L"IN",
 		L"IO",L"IP",L"IQ",L"IR",L"IS",L"IT",L"IU",L"IV",
+		// clang-format on
 	};
 	bool bOk = false;
 	fmt::wmemory_buffer output;

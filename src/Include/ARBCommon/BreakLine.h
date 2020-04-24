@@ -31,18 +31,15 @@
  * @return Number of fields parsed.
  * @note Return value may be larger than vector size due to removed entries.
  */
-ARBCOMMON_API size_t BreakLine(
-		wchar_t inSep,
-		std::wstring const& inStr,
-		std::vector<std::wstring>& outFields,
-		bool inRemoveEmpties = false);
+ARBCOMMON_API size_t
+BreakLine(wchar_t inSep, std::wstring const& inStr, std::vector<std::wstring>& outFields, bool inRemoveEmpties = false);
 
 
 enum class ReadStatus
 {
-	Error,		///< Data was ill-formed (quoting)
-	NeedMore,	///< Last field is incomplete - need more data
-	Ok,			///< Fields were all parsed
+	Error,    ///< Data was ill-formed (quoting)
+	NeedMore, ///< Last field is incomplete - need more data
+	Ok,       ///< Fields were all parsed
 };
 
 /**
@@ -56,11 +53,11 @@ enum class ReadStatus
  * @return Status of whether more data is needed (due to quoting multiline data)
  */
 ARBCOMMON_API ReadStatus ReadCSV(
-		wchar_t inSep,
-		std::wstring inRecord,
-		std::vector<std::wstring>& ioFields,
-		bool bContinuation = false,
-		std::wstring newLine = std::wstring(L"\n"));
+	wchar_t inSep,
+	std::wstring inRecord,
+	std::vector<std::wstring>& ioFields,
+	bool bContinuation = false,
+	std::wstring newLine = std::wstring(L"\n"));
 
 
 /**
@@ -69,9 +66,7 @@ ARBCOMMON_API ReadStatus ReadCSV(
  * @param inFields Fields to write
  * @return A string that can be written to a file. (not newline terminated)
  */
-ARBCOMMON_API std::wstring WriteCSV(
-		wchar_t inSep,
-		std::vector<std::wstring> const& inFields);
+ARBCOMMON_API std::wstring WriteCSV(wchar_t inSep, std::vector<std::wstring> const& inFields);
 
 
 /**
@@ -80,6 +75,4 @@ ARBCOMMON_API std::wstring WriteCSV(
  * @param inField Fields to write
  * @return A string that can be written to a file. (not newline terminated)
  */
-ARBCOMMON_API std::wstring WriteCSVField(
-		wchar_t inSep,
-		std::wstring const& inField);
+ARBCOMMON_API std::wstring WriteCSVField(wchar_t inSep, std::wstring const& inField);

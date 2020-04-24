@@ -44,6 +44,7 @@ public:
 	{
 	}
 	bool Search(CDlgFind* pDlg) const override;
+
 private:
 	CAgilityBookRunsView* m_pView;
 };
@@ -58,24 +59,31 @@ class CAgilityBookRunsView : public CAgilityBookBaseExtraView
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookRunsView)
 
 public:
-	CAgilityBookRunsView(
-			CTabView* pTabView,
-			wxDocument* doc);
+	CAgilityBookRunsView(CTabView* pTabView, wxDocument* doc);
 	~CAgilityBookRunsView();
 
 	bool Create(
-			CBasePanel* parentView,
-			wxWindow* parentCtrl,
-			wxDocument* doc,
-			long flags,
-			wxSizer* sizer,
-			int proportion = 0,
-			int sizerFlags = 0,
-			int border = 0) override;
-	wxWindow* GetControl() override		{return m_Ctrl;}
-	bool HasPrevPane() const override	{return true;}
+		CBasePanel* parentView,
+		wxWindow* parentCtrl,
+		wxDocument* doc,
+		long flags,
+		wxSizer* sizer,
+		int proportion = 0,
+		int sizerFlags = 0,
+		int border = 0) override;
+	wxWindow* GetControl() override
+	{
+		return m_Ctrl;
+	}
+	bool HasPrevPane() const override
+	{
+		return true;
+	}
 	bool PrevPane() override;
-	bool HasNextPane() const override	{return true;}
+	bool HasNextPane() const override
+	{
+		return true;
+	}
 	bool NextPane() override;
 	void DetachView() override;
 
@@ -84,29 +92,22 @@ public:
 	bool GetMessage2(std::wstring& msg) const override;
 	bool AllowStatusContext(int field) const override;
 
-	bool OnCreate(
-			wxDocument* doc,
-			long flags) override;
-	void DoActivateView(
-			bool activate,
-			wxView* activeView,
-			wxView* deactiveView) override;
+	bool OnCreate(wxDocument* doc, long flags) override;
+	void DoActivateView(bool activate, wxView* activeView, wxView* deactiveView) override;
 	void OnDraw(wxDC* dc) override;
-	void OnUpdate(
-			wxView* sender,
-			wxObject* inHint = nullptr) override;
+	void OnUpdate(wxView* sender, wxObject* inHint = nullptr) override;
 
 	bool IsTrial(ARBDogTrialPtr const& inTrial) const;
 
-	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
+	void SuppressSelect(bool bSuppress)
+	{
+		m_bSuppressSelect = bSuppress;
+	}
 	void GetPrintLine(long item, std::vector<std::wstring>& line) const;
 
 private:
 	CAgilityBookRunsViewDataPtr GetItemRunData(long index) const;
-	bool GetUnifiedTrial(
-			ARBDogPtr& pDog,
-			ARBDogTrialPtr& pTrial,
-			bool bSelectionOnly = true) const;
+	bool GetUnifiedTrial(ARBDogPtr& pDog, ARBDogTrialPtr& pTrial, bool bSelectionOnly = true) const;
 	void SetupColumns();
 	void LoadData();
 	void SetSelectedRun(ARBDogRunPtr pRun);
@@ -125,10 +126,17 @@ private:
 	public:
 		CSortColumn(std::vector<long>& inColumns);
 		void Initialize();
-		bool IsSorted() const			{return m_bIsSorted;}
-		long GetColumn() const			{return m_iCol;}
+		bool IsSorted() const
+		{
+			return m_bIsSorted;
+		}
+		long GetColumn() const
+		{
+			return m_iCol;
+		}
 		void SetSorted(bool bSorted);
 		void SetColumn(long iCol);
+
 	private:
 		long LookupColumn(long iCol) const;
 		std::vector<long>& m_Columns;

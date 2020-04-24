@@ -63,10 +63,7 @@ wxBEGIN_EVENT_TABLE(CDlgReorder, wxDialog)
 wxEND_EVENT_TABLE()
 
 
-CDlgReorder::CDlgReorder(
-		CAgilityBookDoc* pDoc,
-		ARBDogList* dogs,
-		wxWindow* pParent)
+CDlgReorder::CDlgReorder(CAgilityBookDoc* pDoc, ARBDogList* dogs, wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_Dogs(dogs)
@@ -82,10 +79,10 @@ CDlgReorder::CDlgReorder(
 
 
 CDlgReorder::CDlgReorder(
-		CAgilityBookDoc* pDoc,
-		ARBDogTrialPtr const& inTrial,
-		ARBDogRunPtr const& inRun,
-		wxWindow* pParent)
+	CAgilityBookDoc* pDoc,
+	ARBDogTrialPtr const& inTrial,
+	ARBDogRunPtr const& inRun,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_Dogs(nullptr)
@@ -104,26 +101,40 @@ void CDlgReorder::InitDlg(wxWindow* pParent)
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDD_REORDER"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		_("IDD_REORDER"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
 
 	wxWindow* ctrl = nullptr;
 	if (m_Dogs)
 	{
-		ctrl = m_ctrlList = new wxListBox(this, wxID_ANY,
-			wxDefaultPosition, wxDLG_UNIT(this, wxSize(85, 50)),
-			0, nullptr,
-			wxLB_NEEDED_SB|wxLB_SINGLE);
+		ctrl = m_ctrlList = new wxListBox(
+			this,
+			wxID_ANY,
+			wxDefaultPosition,
+			wxDLG_UNIT(this, wxSize(85, 50)),
+			0,
+			nullptr,
+			wxLB_NEEDED_SB | wxLB_SINGLE);
 		m_ctrlList->Bind(wxEVT_COMMAND_LISTBOX_SELECTED, &CDlgReorder::OnListSelected, this);
 		m_ctrlList->SetHelpText(_("HIDC_REORDER_LIST"));
 		m_ctrlList->SetToolTip(_("HIDC_REORDER_LIST"));
 	}
 	else if (m_Trial)
 	{
-		ctrl = m_ctrlTree = new CTreeCtrl(this, wxID_ANY,
-			wxDefaultPosition, wxDLG_UNIT(this, wxSize(145, -1)),
-			wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_NO_LINES|wxTR_SINGLE);
+		ctrl = m_ctrlTree = new CTreeCtrl(
+			this,
+			wxID_ANY,
+			wxDefaultPosition,
+			wxDLG_UNIT(this, wxSize(145, -1)),
+			wxTR_FULL_ROW_HIGHLIGHT | wxTR_HAS_BUTTONS | wxTR_HIDE_ROOT | wxTR_LINES_AT_ROOT | wxTR_NO_LINES
+				| wxTR_SINGLE);
 		m_ctrlTree->SetQuickBestSize(false);
 		m_ctrlTree->Bind(wxEVT_COMMAND_TREE_SEL_CHANGED, &CDlgReorder::OnTreeSelected, this);
 		m_ctrlTree->SetHelpText(_("HIDC_REORDER_LIST"));
@@ -134,16 +145,12 @@ void CDlgReorder::InitDlg(wxWindow* pParent)
 
 	wxButton* btnCancel = new wxButton(this, wxID_CANCEL);
 
-	m_ctrlUp = new wxButton(this, wxID_ANY,
-		_("IDC_REORDER_MOVE_UP"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlUp = new wxButton(this, wxID_ANY, _("IDC_REORDER_MOVE_UP"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlUp->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgReorder::OnMoveUp, this);
 	m_ctrlUp->SetHelpText(_("HIDC_REORDER_MOVE_UP"));
 	m_ctrlUp->SetToolTip(_("HIDC_REORDER_MOVE_UP"));
 
-	m_ctrlDown = new wxButton(this, wxID_ANY,
-		_("IDC_REORDER_MOVE_DOWN"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlDown = new wxButton(this, wxID_ANY, _("IDC_REORDER_MOVE_DOWN"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlDown->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgReorder::OnMoveDown, this);
 	m_ctrlDown->SetHelpText(_("HIDC_REORDER_MOVE_DOWN"));
 	m_ctrlDown->SetToolTip(_("HIDC_REORDER_MOVE_DOWN"));
@@ -171,9 +178,7 @@ void CDlgReorder::InitDlg(wxWindow* pParent)
 
 	if (m_Dogs && m_ctrlList)
 	{
-		for (ARBDogList::iterator iter = m_Dogs->begin();
-			iter != m_Dogs->end();
-			++iter)
+		for (ARBDogList::iterator iter = m_Dogs->begin(); iter != m_Dogs->end(); ++iter)
 		{
 			m_ctrlList->Append(StringUtil::stringWX((*iter)->GetGenericName()), new CReorderListData((*iter)));
 		}
@@ -183,14 +188,18 @@ void CDlgReorder::InitDlg(wxWindow* pParent)
 		wxTreeItemId idSelect;
 		wxTreeItemId root = m_ctrlTree->AddRoot(L"Root");
 		std::map<ARBDate, wxTreeItemId> dates;
-		for (ARBDogRunList::iterator iter = m_Trial->GetRuns().begin();
-			iter != m_Trial->GetRuns().end();
-			++iter)
+		for (ARBDogRunList::iterator iter = m_Trial->GetRuns().begin(); iter != m_Trial->GetRuns().end(); ++iter)
 		{
 			ARBDogRunPtr pRun = *iter;
 			if (dates.end() == dates.find(pRun->GetDate()))
-				dates[pRun->GetDate()] = m_ctrlTree->AppendItem(root, StringUtil::stringWX(pRun->GetDate().GetString()));
-			wxTreeItemId item = m_ctrlTree->AppendItem(dates[pRun->GetDate()], StringUtil::stringWX(pRun->GetName()), -1, 1, new CReorderTreeData(pRun));
+				dates[pRun->GetDate()]
+					= m_ctrlTree->AppendItem(root, StringUtil::stringWX(pRun->GetDate().GetString()));
+			wxTreeItemId item = m_ctrlTree->AppendItem(
+				dates[pRun->GetDate()],
+				StringUtil::stringWX(pRun->GetName()),
+				-1,
+				1,
+				new CReorderTreeData(pRun));
 			if (m_Run == pRun || (!m_Run && !idSelect.IsOk()))
 				idSelect = item;
 		}
@@ -220,7 +229,6 @@ void CDlgReorder::InitDlg(wxWindow* pParent)
 	if (ctrl)
 		ctrl->SetFocus();
 }
-
 
 
 void CDlgReorder::UpdateControls()
@@ -390,14 +398,12 @@ void CDlgReorder::OnOk(wxCommandEvent& evt)
 	{
 		m_Trial->GetRuns().clear();
 		wxTreeItemIdValue cookie1;
-		for (wxTreeItemId itemDate = m_ctrlTree->GetFirstChild(m_ctrlTree->GetRootItem(), cookie1);
-			itemDate.IsOk();
-			itemDate = m_ctrlTree->GetNextSibling(itemDate))
+		for (wxTreeItemId itemDate = m_ctrlTree->GetFirstChild(m_ctrlTree->GetRootItem(), cookie1); itemDate.IsOk();
+			 itemDate = m_ctrlTree->GetNextSibling(itemDate))
 		{
 			wxTreeItemIdValue cookie2;
-			for (wxTreeItemId itemRun = m_ctrlTree->GetFirstChild(itemDate, cookie2);
-				itemRun.IsOk();
-				itemRun = m_ctrlTree->GetNextSibling(itemRun))
+			for (wxTreeItemId itemRun = m_ctrlTree->GetFirstChild(itemDate, cookie2); itemRun.IsOk();
+				 itemRun = m_ctrlTree->GetNextSibling(itemRun))
 			{
 				CReorderTreeData* pData = dynamic_cast<CReorderTreeData*>(m_ctrlTree->GetItemData(itemRun));
 				m_Trial->GetRuns().AddRun(pData->m_pRun);

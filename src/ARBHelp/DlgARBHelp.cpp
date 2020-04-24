@@ -27,10 +27,10 @@
 #include "DlgPageEncodeFiles.h"
 #include "DlgPageEncodeFinish.h"
 
+#include "../Win/ImageHelper.h"
 #include "ARBCommon/BinaryData.h"
 #include "ARBCommon/StringUtil.h"
 #include "fmt/format.h"
-#include "../Win/ImageHelper.h"
 #include <wx/ffile.h>
 #include <wx/filename.h>
 
@@ -41,14 +41,20 @@
 // Copy test from gdicmn.h for wxBITMAP_PNG
 #if !((defined(__WINDOWS__) && wxUSE_WXDIB) || defined(__WXOSX__))
 #include "images/AgilityBook16_png.c"
+#include "images/AgilityBook256_png.c"
 #include "images/AgilityBook32_png.c"
 #include "images/AgilityBook48_png.c"
-#include "images/AgilityBook256_png.c"
 #endif
 
 
 CDlgARBHelp::CDlgARBHelp()
-	: wxWizard(nullptr, wxID_ANY, L"Agility Record Book Helper", wxNullBitmap, wxDefaultPosition, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+	: wxWizard(
+		nullptr,
+		wxID_ANY,
+		L"Agility Record Book Helper",
+		wxNullBitmap,
+		wxDefaultPosition,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
 	wxIconBundle icons;
 	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook16)));

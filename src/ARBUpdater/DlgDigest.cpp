@@ -41,9 +41,9 @@
 // Copy test from gdicmn.h for wxBITMAP_PNG
 #if !((defined(__WINDOWS__) && wxUSE_WXDIB) || defined(__WXOSX__))
 #include "images/AgilityBook16_png.c"
+#include "images/AgilityBook256_png.c"
 #include "images/AgilityBook32_png.c"
 #include "images/AgilityBook48_png.c"
-#include "images/AgilityBook256_png.c"
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -53,6 +53,7 @@ class CLongValidator : public wxValidator
 	DECLARE_CLASS(CLongValidator)
 	DECLARE_NO_ASSIGN_IMPLEMENTED(CLongValidator)
 	CLongValidator(CLongValidator&&) = delete;
+
 public:
 	CLongValidator(long* val)
 		: m_pLong(val)
@@ -63,11 +64,17 @@ public:
 	{
 		Copy(rhs);
 	}
-	~CLongValidator() {}
-	wxObject *Clone() const override {return new CLongValidator(*this);}
+	~CLongValidator()
+	{
+	}
+	wxObject* Clone() const override
+	{
+		return new CLongValidator(*this);
+	}
 	bool TransferFromWindow() override;
 	bool TransferToWindow() override;
 	bool Validate(wxWindow* parent) override;
+
 private:
 	long* m_pLong;
 };
@@ -143,7 +150,13 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	, m_Size(0)
 	, m_ConfigVersion(0)
 {
-	Create(nullptr, wxID_ANY, L"MD5/SHA1/SHA256 Checksum", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	Create(
+		nullptr,
+		wxID_ANY,
+		L"MD5/SHA1/SHA256 Checksum",
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	wxString baseConfig(L"\\AgilityBook\\trunk\\AgilityBook\\src\\Win\\res\\DefaultConfig.xml");
 	m_Config = L"D:" + baseConfig;
@@ -165,7 +178,8 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 		wxBusyCursor wait;
 		size_t size = 0;
 
-		struct {
+		struct
+		{
 			ARBMsgDigest::ARBDigest type;
 			wxString* pHash;
 			size_t* pSize;
@@ -188,70 +202,73 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 			m_Size = static_cast<long>(size);
 	}
 
-	m_ctrlInit = new wxButton(this, wxID_ANY,
-		L"Init",
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlInit = new wxButton(this, wxID_ANY, L"Init", wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlInit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgDigest::OnInit, this);
 
-	m_ctrlConfig = new wxStaticText(this, wxID_ANY,
-		m_Config,
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlConfig = new wxStaticText(this, wxID_ANY, m_Config, wxDefaultPosition, wxDefaultSize, 0);
 
-	wxStaticText* ctrlVersion = new wxStaticText(this, wxID_ANY,
-		L"Config Version:",
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* ctrlVersion
+		= new wxStaticText(this, wxID_ANY, L"Config Version:", wxDefaultPosition, wxDefaultSize, 0);
 
-	m_ctrlConfigVersion = new wxStaticText(this, wxID_ANY,
-		L"?",
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlConfigVersion = new wxStaticText(this, wxID_ANY, L"?", wxDefaultPosition, wxDefaultSize, 0);
 
-	wxTextCtrl* ctrlFile = new wxTextCtrl(this, wxID_ANY,
+	wxTextCtrl* ctrlFile = new wxTextCtrl(
+		this,
+		wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 260), -1), wxTE_READONLY,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 260), -1),
+		wxTE_READONLY,
 		wxTextValidator(wxFILTER_NONE, &m_File));
 
-	wxButton* ctrlFind = new wxButton(this, wxID_ANY,
-		L"Browse...",
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* ctrlFind = new wxButton(this, wxID_ANY, L"Browse...", wxDefaultPosition, wxDefaultSize, 0);
 	ctrlFind->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgDigest::OnBrowse, this);
 
-	wxStaticText* txtMD5 = new wxStaticText(this, wxID_ANY,
-		L"MD5",
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* txtMD5 = new wxStaticText(this, wxID_ANY, L"MD5", wxDefaultPosition, wxDefaultSize, 0);
 
-	wxTextCtrl* ctrlMD5 = new wxTextCtrl(this, wxID_ANY,
+	wxTextCtrl* ctrlMD5 = new wxTextCtrl(
+		this,
+		wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, wxTE_READONLY,
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxTE_READONLY,
 		wxTextValidator(wxFILTER_NONE, &m_MD5));
 	ctrlMD5->SetBackgroundColour(GetBackgroundColour());
 
-	wxStaticText* txtSHA1 = new wxStaticText(this, wxID_ANY,
-		L"SHA1",
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* txtSHA1 = new wxStaticText(this, wxID_ANY, L"SHA1", wxDefaultPosition, wxDefaultSize, 0);
 
-	wxTextCtrl* ctrlSHA1 = new wxTextCtrl(this, wxID_ANY,
+	wxTextCtrl* ctrlSHA1 = new wxTextCtrl(
+		this,
+		wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, wxTE_READONLY,
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxTE_READONLY,
 		wxTextValidator(wxFILTER_NONE, &m_SHA1));
 	ctrlSHA1->SetBackgroundColour(GetBackgroundColour());
 
-	wxStaticText* txtSHA256 = new wxStaticText(this, wxID_ANY,
-		L"SHA256",
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* txtSHA256 = new wxStaticText(this, wxID_ANY, L"SHA256", wxDefaultPosition, wxDefaultSize, 0);
 
-	wxTextCtrl* ctrlSHA256 = new wxTextCtrl(this, wxID_ANY,
+	wxTextCtrl* ctrlSHA256 = new wxTextCtrl(
+		this,
+		wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, wxTE_READONLY,
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxTE_READONLY,
 		wxTextValidator(wxFILTER_NONE, &m_SHA256));
 	ctrlSHA256->SetBackgroundColour(GetBackgroundColour());
 
-	wxStaticText* txtSize = new wxStaticText(this, wxID_ANY,
-		L"Size",
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* txtSize = new wxStaticText(this, wxID_ANY, L"Size", wxDefaultPosition, wxDefaultSize, 0);
 
-	wxTextCtrl* ctrlSize = new wxTextCtrl(this, wxID_ANY,
+	wxTextCtrl* ctrlSize = new wxTextCtrl(
+		this,
+		wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 115), -1), wxTE_READONLY,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 115), -1),
+		wxTE_READONLY,
 		CLongValidator(&m_Size));
 	ctrlSize->SetBackgroundColour(GetBackgroundColour());
 
@@ -283,11 +300,14 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	sizerGrid->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 	sizerGrid->Add(txtMD5, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerGrid->Add(ctrlMD5, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND, wxDLG_UNIT_X(this, 5));
-	sizerGrid->Add(txtSHA1, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerGrid
+		->Add(txtSHA1, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 	sizerGrid->Add(ctrlSHA1, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerGrid->Add(txtSHA256, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerGrid
+		->Add(txtSHA256, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 	sizerGrid->Add(ctrlSHA256, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerGrid->Add(txtSize, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerGrid
+		->Add(txtSize, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 	sizerGrid->Add(ctrlSize, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 5));
 	bSizer->Add(sizerGrid, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
@@ -316,12 +336,13 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 
 bool CDlgDigest::InitConfig()
 {
-	wxFileDialog file(this,
-			L"", // caption
-			L"", // default dir
-			m_Config,
-			L"XML Files (*.xml)|*.xml|All Files (*.*)|*.*||",
-			wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+	wxFileDialog file(
+		this,
+		L"", // caption
+		L"", // default dir
+		m_Config,
+		L"XML Files (*.xml)|*.xml|All Files (*.*)|*.*||",
+		wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 	if (wxID_OK != file.ShowModal())
 		return false;
 	if (m_Config != file.GetPath())
@@ -381,7 +402,8 @@ void CDlgDigest::OnBrowse(wxCommandEvent& evt)
 		wxBusyCursor wait;
 		m_File = dlg.GetPath();
 		size_t size = 0;
-		struct {
+		struct
+		{
 			ARBMsgDigest::ARBDigest type;
 			wxString* pHash;
 			size_t* pSize;
@@ -426,8 +448,13 @@ void CDlgDigest::OnCopy(wxCommandEvent& evt)
 	wxFileName filename(m_File);
 
 	fmt::wmemory_buffer str;
-	fmt::format_to(str, L"<Platform arch=\"?\" minOS=\"?\" ver=\"{}.{}.{}.{}\" config=\"{}\"\n",
-		ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD,
+	fmt::format_to(
+		str,
+		L"<Platform arch=\"?\" minOS=\"?\" ver=\"{}.{}.{}.{}\" config=\"{}\"\n",
+		ARB_VER_MAJOR,
+		ARB_VER_MINOR,
+		ARB_VER_DOT,
+		ARB_VER_BUILD,
 		m_ConfigVersion);
 	fmt::format_to(str, L"\tfile=\"http://www.agilityrecordbook.com/files/{}\"\n", filename.GetFullName().wx_str());
 	fmt::format_to(str, L"\tmd5=\"{}\"\n", m_MD5.wx_str());

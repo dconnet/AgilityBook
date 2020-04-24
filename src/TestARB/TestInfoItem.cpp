@@ -304,7 +304,7 @@ TEST_CASE("Info")
 {
 	TestInfoItemData data;
 
-	SECTION("""Load")
+	SECTION("Load")
 	{
 		if (!g_bMicroTest)
 		{

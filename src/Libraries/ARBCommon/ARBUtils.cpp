@@ -61,9 +61,7 @@ wxString GetARBResourceDir()
 }
 
 
-bool CreateBackupFile(
-		wxString const& inFilename,
-		int nBackups)
+bool CreateBackupFile(wxString const& inFilename, int nBackups)
 {
 	bool bChanged = false;
 	if (0 < nBackups)
@@ -88,7 +86,7 @@ bool CreateBackupFile(
 			wxString backup = wxString::Format(L"%s.bck%d", inFilename.c_str(), i);
 			if (wxFile::Exists(backup))
 				wxRemoveFile(backup);
-			wxString filename = wxString::Format(L"%s.bck%d", inFilename.c_str(), i-1);
+			wxString filename = wxString::Format(L"%s.bck%d", inFilename.c_str(), i - 1);
 			wxRenameFile(filename, backup);
 			bChanged = true;
 		}
@@ -104,11 +102,7 @@ bool CreateBackupFile(
 }
 
 
-bool GetFileTimes(
-		wxFileName const& filename,
-		wxDateTime* dtAccess,
-		wxDateTime* dtMod,
-		wxDateTime* dtCreate)
+bool GetFileTimes(wxFileName const& filename, wxDateTime* dtAccess, wxDateTime* dtMod, wxDateTime* dtCreate)
 {
 #if defined(__WXMSW__)
 	// Using wx to get the times on network files is really slow.

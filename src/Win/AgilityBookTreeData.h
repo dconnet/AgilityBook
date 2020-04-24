@@ -18,9 +18,9 @@
  * 2003-12-30 Implemented customized text in tree.
  */
 
-#include "AgilityBookMenu.h"
 #include "ARB/ARBDog.h"
 #include "ARB/ARBDogTrial.h"
+#include "AgilityBookMenu.h"
 #include "LibARBWin/ListData.h"
 #include <vector>
 class CAgilityBookTreeView;
@@ -43,7 +43,8 @@ class CAgilityBookTreeData : public CTreeData
 public:
 	CAgilityBookTreeData(CAgilityBookTreeView* pTree)
 		: m_pTree(pTree)
-	{}
+	{
+	}
 
 	// This removes a need for a dynamic cast
 	virtual ARBTreeDataType GetType() const = 0;
@@ -124,9 +125,7 @@ class CAgilityBookTreeDataDog : public CAgilityBookTreeData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookTreeDataDog)
 public:
-	CAgilityBookTreeDataDog(
-			CAgilityBookTreeView* pTree,
-			ARBDogPtr const& inDog);
+	CAgilityBookTreeDataDog(CAgilityBookTreeView* pTree, ARBDogPtr const& inDog);
 	~CAgilityBookTreeDataDog();
 
 	ARBTreeDataType GetType() const override
@@ -181,9 +180,7 @@ class CAgilityBookTreeDataTrial : public CAgilityBookTreeData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookTreeDataTrial)
 public:
-	CAgilityBookTreeDataTrial(
-			CAgilityBookTreeView* pTree,
-			ARBDogTrialPtr const& inTrial);
+	CAgilityBookTreeDataTrial(CAgilityBookTreeView* pTree, ARBDogTrialPtr const& inTrial);
 
 	ARBTreeDataType GetType() const override
 	{
@@ -242,9 +239,7 @@ class CAgilityBookTreeDataRun : public CAgilityBookTreeData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookTreeDataRun)
 public:
-	CAgilityBookTreeDataRun(
-			CAgilityBookTreeView* pTree,
-			ARBDogRunPtr const& inRun);
+	CAgilityBookTreeDataRun(CAgilityBookTreeView* pTree, ARBDogRunPtr const& inRun);
 	~CAgilityBookTreeDataRun();
 
 	ARBTreeDataType GetType() const override

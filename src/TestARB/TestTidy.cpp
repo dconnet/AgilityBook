@@ -20,8 +20,8 @@
 #include "TestARB.h"
 
 #include "ARBCommon/ARBUtils.h"
-#include "fmt/printf.h"
 #include "LibTidyHtml/LibTidyHtml.h"
+#include "fmt/printf.h"
 
 #include <stdarg.h>
 
@@ -45,12 +45,12 @@ TEST_CASE("LibTidy")
 			bool bOk = CConfigHandler::LoadWxFile(datafile, L"tidytest.xml", filedata);
 			REQUIRE(bOk);
 
-            std::string data(filedata.str());
+			std::string data(filedata.str());
 
 			fmt::wmemory_buffer err;
-            std::string debug;
+			std::string debug;
 			ElementNodePtr tidyTree = TidyHtmlData(data, err, &debug);
-            REQUIRE(tidyTree);
+			REQUIRE(tidyTree);
 			//if (!tidyTree)
 			//{
 			//	std::wstring msg = fmt::to_string(err);

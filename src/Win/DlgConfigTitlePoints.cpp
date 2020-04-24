@@ -42,12 +42,12 @@ wxEND_EVENT_TABLE()
 
 
 CDlgConfigTitlePoints::CDlgConfigTitlePoints(
-		ARBConfigVenuePtr const& inVenue,
-		double inValue, // Faults or Place
-		double inPoints,
-		ARBTitlePointType inType,
-		ARBPointsType inTypeNormal,
-		wxWindow* pParent)
+	ARBConfigVenuePtr const& inVenue,
+	double inValue, // Faults or Place
+	double inPoints,
+	ARBTitlePointType inType,
+	ARBPointsType inTypeNormal,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_Venue(inVenue)
 	, m_Type(inType)
@@ -72,9 +72,9 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 
 
 CDlgConfigTitlePoints::CDlgConfigTitlePoints(
-		ARBConfigVenuePtr const& inVenue,
-		ARBConfigLifetimePointsPtr const& inLifetime,
-		wxWindow* pParent)
+	ARBConfigVenuePtr const& inVenue,
+	ARBConfigLifetimePointsPtr const& inLifetime,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_Venue(inVenue)
 	, m_Type(ARBTitlePointType::Lifetime)
@@ -106,15 +106,13 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 
 	// Controls (these are done first to control tab order)
 
-	wxString caption = (ARBTitlePointType::Placement == m_Type) ? _("IDC_CONFIG_TITLEPTS_VALUE_TEXT2") : _("IDC_CONFIG_TITLEPTS_VALUE_TEXT1");
-	m_textValue = new wxStaticText(this, wxID_ANY,
-		caption,
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxString caption = (ARBTitlePointType::Placement == m_Type) ? _("IDC_CONFIG_TITLEPTS_VALUE_TEXT2")
+																: _("IDC_CONFIG_TITLEPTS_VALUE_TEXT1");
+	m_textValue = new wxStaticText(this, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, 0);
 	m_textValue->Wrap(-1);
 
-	m_ctrlValue = new CTextCtrl(this, wxID_ANY,
-		wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), 0);
+	m_ctrlValue
+		= new CTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), 0);
 	if (ARBTitlePointType::Placement == m_Type)
 		m_ctrlValue->SetValidator(CGenericValidator(&m_Place));
 	else
@@ -122,22 +120,29 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 	m_ctrlValue->SetHelpText(_("HIDC_CONFIG_TITLEPTS_VALUE"));
 	m_ctrlValue->SetToolTip(_("HIDC_CONFIG_TITLEPTS_VALUE"));
 
-	m_ctrlSpeedPts = new wxCheckBox(this, wxID_ANY,
+	m_ctrlSpeedPts = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_CONFIG_TITLEPTS_SPEEDPTS"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bSpeed));
 	m_ctrlSpeedPts->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgConfigTitlePoints::OnUseSpeedPoints, this);
 	m_ctrlSpeedPts->SetHelpText(_("HIDC_CONFIG_TITLEPTS_SPEEDPTS"));
 	m_ctrlSpeedPts->SetToolTip(_("HIDC_CONFIG_TITLEPTS_SPEEDPTS"));
 
-	m_textPoints = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_TITLEPTS_POINTS"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_textPoints
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_TITLEPTS_POINTS"), wxDefaultPosition, wxDefaultSize, 0);
 	m_textPoints->Wrap(-1);
 
-	m_ctrlPoints = new CTextCtrl(this, wxID_ANY,
+	m_ctrlPoints = new CTextCtrl(
+		this,
+		wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 20), -1), 0,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 20), -1),
+		0,
 		CGenericValidator(&m_Points));
 	m_ctrlPoints->SetHelpText(_("HIDC_CONFIG_TITLEPTS_POINTS"));
 	m_ctrlPoints->SetToolTip(_("HIDC_CONFIG_TITLEPTS_POINTS"));
@@ -147,8 +152,7 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 	types.Add(_("IDS_TITLEPOINT_LIFETIME"));
 	types.Add(_("IDS_TITLEPOINT_PLACEMENT"));
 	assert(types.size() == static_cast<size_t>(ARBTitlePointType::Max));
-	m_ctrlType = new wxChoice(this, wxID_ANY,
-		wxDefaultPosition, wxDefaultSize, types, 0);
+	m_ctrlType = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, types, 0);
 	m_ctrlType->Bind(wxEVT_COMMAND_CHOICE_SELECTED, &CDlgConfigTitlePoints::OnSelchangeTitlePoints, this);
 	m_ctrlType->SetHelpText(_("HIDC_CONFIG_TITLEPTS_TITLE_POINTS"));
 	m_ctrlType->SetToolTip(_("HIDC_CONFIG_TITLEPTS_TITLE_POINTS"));
@@ -159,8 +163,7 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 	typesNorm.Add(_("IDS_TITLEPOINT_NORMAL_T2B"));
 	typesNorm.Add(_("IDS_TITLEPOINT_NORMAL_UKI"));
 	assert(typesNorm.size() == static_cast<size_t>(ARBPointsType::Max));
-	m_ctrlTypeNormal = new wxChoice(this, wxID_ANY,
-		wxDefaultPosition, wxDefaultSize, typesNorm, 0);
+	m_ctrlTypeNormal = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, typesNorm, 0);
 	m_ctrlTypeNormal->Bind(wxEVT_COMMAND_CHOICE_SELECTED, &CDlgConfigTitlePoints::OnSelchangeTitlePoints, this);
 	m_ctrlTypeNormal->SetHelpText(_("HIDC_CONFIG_TITLEPTS_CALC"));
 	m_ctrlTypeNormal->SetToolTip(_("HIDC_CONFIG_TITLEPTS_CALC"));
@@ -168,21 +171,26 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 	if (ARBTitlePointType::Normal != m_Type)
 		m_ctrlTypeNormal->Hide();
 
-	m_textLifetimeName = new wxStaticText(this, wxID_ANY,
-		_("IDC_CONFIG_TITLEPTS_LIFETIMENAME"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_textLifetimeName
+		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_TITLEPTS_LIFETIMENAME"), wxDefaultPosition, wxDefaultSize, 0);
 	m_textLifetimeName->Wrap(-1);
 
-	m_ctrlLifetimeName = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY|wxCB_SORT,
+	m_ctrlLifetimeName = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_READONLY | wxCB_SORT,
 		CTrimValidator(&m_LifetimeName, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlLifetimeName->SetHelpText(_("HIDC_CONFIG_TITLEPTS_LIFETIMENAME"));
 	m_ctrlLifetimeName->SetToolTip(_("HIDC_CONFIG_TITLEPTS_LIFETIMENAME"));
 
 	for (ARBConfigLifetimeNameList::iterator iter = m_Venue->GetLifetimeNames().begin();
-		iter != m_Venue->GetLifetimeNames().end();
-		++iter)
+		 iter != m_Venue->GetLifetimeNames().end();
+		 ++iter)
 	{
 		wxString str = StringUtil::stringWX((*iter)->GetName());
 		bool bDefault = false;

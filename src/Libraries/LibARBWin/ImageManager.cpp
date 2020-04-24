@@ -44,10 +44,7 @@ CImageManager::CImageManager()
 }
 
 
-wxBitmap CImageManager::CreateBitmap(
-		const wxArtID& id,
-		const wxArtClient& client,
-		const wxSize& size)
+wxBitmap CImageManager::CreateBitmap(const wxArtID& id, const wxArtClient& client, const wxSize& size)
 {
 	if (m_Callback)
 	{
@@ -59,9 +56,7 @@ wxBitmap CImageManager::CreateBitmap(
 }
 
 
-wxIconBundle CImageManager::CreateIconBundle(
-		const wxArtID& id,
-		const wxArtClient& client)
+wxIconBundle CImageManager::CreateIconBundle(const wxArtID& id, const wxArtClient& client)
 {
 	if (m_Callback)
 	{

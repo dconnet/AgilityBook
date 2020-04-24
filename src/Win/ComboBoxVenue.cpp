@@ -37,7 +37,10 @@
 class CVenueComboData : public wxClientData
 {
 public:
-	CVenueComboData(ARBConfigVenuePtr const& inVenue) : m_Venue(inVenue) {}
+	CVenueComboData(ARBConfigVenuePtr const& inVenue)
+		: m_Venue(inVenue)
+	{
+	}
 	ARBConfigVenuePtr m_Venue;
 };
 
@@ -47,24 +50,27 @@ wxIMPLEMENT_CLASS(CVenueComboBox, wxComboBox)
 
 
 CVenueComboBox::CVenueComboBox(
-		wxWindow* parent,
-		ARBConfigVenueList const& inVenues,
-		wxString const& inSelectVenue,
-		bool useLongName,
-		wxValidator const& validator,
-		bool bEditable)
+	wxWindow* parent,
+	ARBConfigVenueList const& inVenues,
+	wxString const& inSelectVenue,
+	bool useLongName,
+	wxValidator const& validator,
+	bool bEditable)
 	: wxComboBox()
 {
-	wxComboBox::Create(parent, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr,
+	wxComboBox::Create(
+		parent,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
 		wxCB_DROPDOWN | (bEditable ? 0 : wxCB_READONLY) | wxCB_SORT,
 		validator);
 
 	wxArrayString choices;
-	for (ARBConfigVenueList::const_iterator iterVenue = inVenues.begin();
-		iterVenue != inVenues.end();
-		++iterVenue)
+	for (ARBConfigVenueList::const_iterator iterVenue = inVenues.begin(); iterVenue != inVenues.end(); ++iterVenue)
 	{
 		ARBConfigVenuePtr pVenue = (*iterVenue);
 		wxString wxShortName = StringUtil::stringWX(pVenue->GetName());

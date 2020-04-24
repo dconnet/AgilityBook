@@ -38,8 +38,8 @@
 #endif
 
 
-static const std::vector<CMenuHelper::ItemData> sc_items =
-{
+static const std::vector<CMenuHelper::ItemData> sc_items = {
+	// clang-format off
 	{IdMenuNone, MENU_ITEM, 0,                        wxITEM_NORMAL, 0, nullptr, arbT("MenuFile"), nullptr, nullptr},
 	{IdMenuNone, MENU_ITEM, wxID_NEW,                 wxITEM_NORMAL, 1, arbT("MenuFileNew"), arbT("MenuFileNew"), arbT("DescFileNew"), ImageMgrNew},
 	{IdMenuNone, MENU_ITEM, wxID_OPEN,                wxITEM_NORMAL, 1, arbT("MenuFileOpen"), arbT("MenuFileOpen"), arbT("DescFileOpen"), ImageMgrOpen},
@@ -281,13 +281,14 @@ static const std::vector<CMenuHelper::ItemData> sc_items =
 	{IdMenuTraining, MENU_ITEM, wxID_PASTE,                 wxITEM_NORMAL, 0, nullptr, _("MenuEditPaste"), _("DescEditPaste"), ImageMgrPaste},
 	{IdMenuTraining, MENU_ITEM, wxID_DUPLICATE,             wxITEM_NORMAL, 0, nullptr, _("MenuEditDuplicate"), _("DescEditDuplicate"), nullptr},
 	{IdMenuTraining, MENU_ITEM, ID_AGILITY_DELETE_TRAINING, wxITEM_NORMAL, 0, nullptr, arbT("MenuTrainingDelete"), arbT("DescTrainingDelete"), nullptr},
+	// clang-format on
 };
 
 // Note: The first number cannot change. It is stored to the registry.
 // Future changes all have to add new numbers. If old entries go away,
 // just comment them out (as a reserved spot).
-static const std::vector<CMenuHelper::ItemAccel> sc_accels =
-{
+static const std::vector<CMenuHelper::ItemAccel> sc_accels = {
+	// clang-format off
 	{1,  wxID_NEW,                    true, false, false, 'N'},
 	{2,  wxID_OPEN,                   true, false, false, 'O'},
 	{3,  wxID_SAVE,                   true, false, false, 'S'},
@@ -383,10 +384,11 @@ static const std::vector<CMenuHelper::ItemAccel> sc_accels =
 	{81, ID_HELP_SYSINFO,            false, false, false, 0},
 	{82, wxID_ABOUT,                 false, false, false, 0},
 	{83, ID_DETAILS,                 false, false, false, 0},
+	// clang-format on
 };
 
-static const std::vector<int> sc_toolbarItems =
-{
+static const std::vector<int> sc_toolbarItems = {
+	// clang-format off
 	wxID_NEW,
 	wxID_OPEN,
 	wxID_SAVE,
@@ -407,6 +409,7 @@ static const std::vector<int> sc_toolbarItems =
 	wxID_PRINT,
 	0,
 	wxID_ABOUT
+	// clang-format on
 };
 
 

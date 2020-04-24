@@ -60,16 +60,18 @@
 
 namespace
 {
-	class ARBDogRun_concrete : public ARBDogRun
+class ARBDogRun_concrete : public ARBDogRun
+{
+public:
+	ARBDogRun_concrete()
 	{
-	public:
-		ARBDogRun_concrete() {}
-		ARBDogRun_concrete(ARBDogRun const& rhs)
-			: ARBDogRun(rhs)
-		{
-		}
-	};
+	}
+	ARBDogRun_concrete(ARBDogRun const& rhs)
+		: ARBDogRun(rhs)
+	{
+	}
 };
+}; // namespace
 
 
 ARBDogRunPtr ARBDogRun::New()
@@ -232,6 +234,7 @@ ARBDogRun& ARBDogRun::operator=(ARBDogRun&& rhs)
 
 bool ARBDogRun::operator==(ARBDogRun const& rhs) const
 {
+	// clang-format off
 	return m_Date == rhs.m_Date
 		&& m_Club == rhs.m_Club
 		&& m_Division == rhs.m_Division
@@ -252,6 +255,7 @@ bool ARBDogRun::operator==(ARBDogRun const& rhs) const
 		&& m_Notes == rhs.m_Notes
 		&& m_RefRuns == rhs.m_RefRuns
 		&& m_Links == rhs.m_Links;
+	// clang-format on
 }
 
 
@@ -351,11 +355,11 @@ size_t ARBDogRun::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 
 
 bool ARBDogRun::Load(
-		ARBConfig const& inConfig,
-		ARBDogClubList const& inClubs,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfig const& inConfig,
+	ARBDogClubList const& inClubs,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_RUN)
@@ -368,14 +372,14 @@ bool ARBDogRun::Load(
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DATE));
 		return false;
 	case ARBAttribLookup::Invalid:
-		{
-			std::wstring attrib;
-			inTree->GetAttrib(ATTRIB_RUN_DATE, attrib);
-			std::wstring msg(Localization()->InvalidDate());
-			msg += attrib;
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_DATE, msg.c_str()));
-			return false;
-		}
+	{
+		std::wstring attrib;
+		inTree->GetAttrib(ATTRIB_RUN_DATE, attrib);
+		std::wstring msg(Localization()->InvalidDate());
+		msg += attrib;
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_DATE, msg.c_str()));
+		return false;
+	}
 	}
 
 	{
@@ -390,15 +394,13 @@ bool ARBDogRun::Load(
 		m_Club = inClubs[idx];
 	}
 
-	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_RUN_DIVISION, m_Division)
-	|| 0 == m_Division.length())
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_RUN_DIVISION, m_Division) || 0 == m_Division.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DIVISION));
 		return false;
 	}
 
-	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_RUN_LEVEL, m_Level)
-	|| 0 == m_Level.length())
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_RUN_LEVEL, m_Level) || 0 == m_Level.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_LEVEL));
 		return false;
@@ -407,8 +409,7 @@ bool ARBDogRun::Load(
 	// Height is no longer a required attribute (doc ver 8.1)
 	inTree->GetAttrib(ATTRIB_RUN_HEIGHT, m_Height);
 
-	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_RUN_EVENT, m_Event)
-	|| 0 == m_Event.length())
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_RUN_EVENT, m_Event) || 0 == m_Event.length())
 	{
 		bool bReallyError = true;
 		if (inVersion < ARBVersion(15, 0))
@@ -459,10 +460,7 @@ bool ARBDogRun::Load(
 			// Ignore any errors...
 			m_Partners.Load(inConfig, element, inVersion, ioCallback);
 		}
-		else if (name == TREE_BY_TIME
-		|| name == TREE_BY_OPENCLOSE
-		|| name == TREE_BY_POINTS
-		|| name == TREE_BY_SPEED)
+		else if (name == TREE_BY_TIME || name == TREE_BY_OPENCLOSE || name == TREE_BY_POINTS || name == TREE_BY_SPEED)
 		{
 			// Ignore any errors...
 			m_Scoring.Load(inConfig.GetVersion(), pEvent, pScoring, element, inVersion, ioCallback);
@@ -470,8 +468,7 @@ bool ARBDogRun::Load(
 		else if (name == TREE_PLACEMENT)
 		{
 			std::wstring attrib;
-			if (ARBAttribLookup::Found != element->GetAttrib(ATTRIB_PLACEMENT_Q, attrib)
-			|| 0 == attrib.length())
+			if (ARBAttribLookup::Found != element->GetAttrib(ATTRIB_PLACEMENT_Q, attrib) || 0 == attrib.length())
 			{
 				ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q));
 				return false;
@@ -480,7 +477,8 @@ bool ARBDogRun::Load(
 			{
 				std::wstring msg(Localization()->ValidValues());
 				msg += ARB_Q::GetValidTypes();
-				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q, msg.c_str()));
+				ioCallback.LogMessage(
+					Localization()->ErrorInvalidAttributeValue(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q, msg.c_str()));
 				// Warn, but keep going so data is not lost.
 			}
 			element->GetAttrib(ATTRIB_PLACEMENT_PLACE, m_Place);
@@ -526,10 +524,7 @@ bool ARBDogRun::Load(
 }
 
 
-bool ARBDogRun::Save(
-		ElementNodePtr const& ioTree,
-		ARBDogTrial const* pTrial,
-		ARBConfig const& inConfig) const
+bool ARBDogRun::Save(ElementNodePtr const& ioTree, ARBDogTrial const* pTrial, ARBConfig const& inConfig) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -609,9 +604,7 @@ bool ARBDogRun::Save(
 		return false;
 	if (!m_RefRuns.Save(run))
 		return false;
-	for (ARBDogRunLinks::const_iterator iterLink = m_Links.begin();
-		iterLink != m_Links.end();
-		++iterLink)
+	for (ARBDogRunLinks::const_iterator iterLink = m_Links.begin(); iterLink != m_Links.end(); ++iterLink)
 	{
 		if (0 < (*iterLink).length())
 		{
@@ -635,9 +628,7 @@ int ARBDogRun::NumOtherPointsInUse(std::wstring const& inOther) const
 }
 
 
-int ARBDogRun::RenameOtherPoints(
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+int ARBDogRun::RenameOtherPoints(std::wstring const& inOldName, std::wstring const& inNewName)
 {
 	int count = 0;
 	for (ARBDogRunOtherPointsList::iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end(); ++iter)
@@ -656,7 +647,7 @@ int ARBDogRun::DeleteOtherPoints(std::wstring const& inName)
 {
 	std::wstring name(inName);
 	int count = 0;
-	for (ARBDogRunOtherPointsList::iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end(); )
+	for (ARBDogRunOtherPointsList::iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end();)
 	{
 		if ((*iter)->GetName() == name)
 		{
@@ -707,9 +698,7 @@ short ARBDogRun::GetSpeedPoints(ARBConfigScoringPtr const& inScoring) const
 }
 
 
-double ARBDogRun::GetTitlePoints(
-		ARBConfigScoringPtr const& inScoring,
-		bool* outClean) const
+double ARBDogRun::GetTitlePoints(ARBConfigScoringPtr const& inScoring, bool* outClean) const
 {
 	double pts = 0.0;
 	if (outClean)
@@ -724,58 +713,73 @@ double ARBDogRun::GetTitlePoints(
 		break;
 	case ARBScoringType::ByTime:
 	case ARBScoringType::BySpeed:
+	{
+		double score = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
+		if (ARBDouble::equal(score, 0))
 		{
-			double score = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
-			if (ARBDouble::equal(score, 0))
+			if (outClean)
+				*outClean = true;
+		}
+		if (ARBScoringStyle::TimePlusFaults == inScoring->GetScoringStyle())
+		{
+			if (!(inScoring && inScoring->QsMustBeClean() && score > 0.0))
 			{
-				if (outClean)
-					*outClean = true;
-			}
-			if (ARBScoringStyle::TimePlusFaults == inScoring->GetScoringStyle())
-			{
-				if (!(inScoring && inScoring->QsMustBeClean() && score > 0.0))
+				// If SCT is 0, don't compute anything.
+				if (0.0 < m_Scoring.GetSCT())
 				{
-					// If SCT is 0, don't compute anything.
-					if (0.0 < m_Scoring.GetSCT())
-					{
-						score += m_Scoring.GetTime();
-						// Adjust the 'score' to the number of "faults" (total over SCT)
-						// This allows DOCNA's Challenge to work - it's T+F with 12 time faults allowed
-						score -= m_Scoring.GetSCT();
-						// If negative, run was faster than SCT
-						if (0.0 > score)
-							score = 0.0;
-					}
-					bool bCompute = true;
-					if (inScoring->ComputeTitlingPointsRawFaults())
-					{
-						score = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
-
-						// If using raw faults for determining title points, this implies that
-						// the run must be under SCT.
-						if (m_Scoring.GetTime() + score > m_Scoring.GetSCT())
-							bCompute = false;
-					}
-					if (bCompute)
-						pts = inScoring->GetTitlePoints().GetTitlePoints(score, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass(), GetDate(), isTourney) + bonusTitlePts;
+					score += m_Scoring.GetTime();
+					// Adjust the 'score' to the number of "faults" (total over SCT)
+					// This allows DOCNA's Challenge to work - it's T+F with 12 time faults allowed
+					score -= m_Scoring.GetSCT();
+					// If negative, run was faster than SCT
+					if (0.0 > score)
+						score = 0.0;
 				}
-			}
-			else
-			{
-				pts = inScoring->GetTitlePoints().GetTitlePoints(score, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass(), GetDate(), isTourney) + bonusTitlePts;
+				bool bCompute = true;
+				if (inScoring->ComputeTitlingPointsRawFaults())
+				{
+					score = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
+
+					// If using raw faults for determining title points, this implies that
+					// the run must be under SCT.
+					if (m_Scoring.GetTime() + score > m_Scoring.GetSCT())
+						bCompute = false;
+				}
+				if (bCompute)
+					pts = inScoring->GetTitlePoints().GetTitlePoints(
+							  score,
+							  m_Scoring.GetTime(),
+							  m_Scoring.GetSCT(),
+							  GetPlace(),
+							  GetInClass(),
+							  GetDate(),
+							  isTourney)
+						  + bonusTitlePts;
 			}
 		}
-		break;
+		else
+		{
+			pts = inScoring->GetTitlePoints().GetTitlePoints(
+					  score,
+					  m_Scoring.GetTime(),
+					  m_Scoring.GetSCT(),
+					  GetPlace(),
+					  GetInClass(),
+					  GetDate(),
+					  isTourney)
+				  + bonusTitlePts;
+		}
+	}
+	break;
 	case ARBScoringType::ByOpenClose:
 		if ((m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts()
-		&& m_Scoring.GetNeedClosePts() <= m_Scoring.GetClosePts())
-		// Allows for USDAA tournament gambles
-		|| (0 == m_Scoring.GetNeedClosePts()
-		&& m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts() + m_Scoring.GetClosePts()))
+			 && m_Scoring.GetNeedClosePts() <= m_Scoring.GetClosePts())
+			// Allows for USDAA tournament gambles
+			|| (0 == m_Scoring.GetNeedClosePts()
+				&& m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts() + m_Scoring.GetClosePts()))
 		{
 			double timeFaults = 0.0;
-			if (inScoring->ComputeTimeFaultsUnder()
-			|| inScoring->ComputeTimeFaultsOver())
+			if (inScoring->ComputeTimeFaultsUnder() || inScoring->ComputeTimeFaultsOver())
 			{
 				timeFaults = m_Scoring.GetTimeFaults(inScoring);
 				if (0.0 < timeFaults && inScoring->SubtractTimeFaultsFromScore())
@@ -783,21 +787,29 @@ double ARBDogRun::GetTitlePoints(
 					// If time faults are being subtracted from the score,
 					// recompute if we have enough points. If so, just pretend
 					// there are no time faults.
-					if (static_cast<double>(m_Scoring.GetNeedOpenPts() + m_Scoring.GetNeedClosePts()) <= GetScore(inScoring))
+					if (static_cast<double>(m_Scoring.GetNeedOpenPts() + m_Scoring.GetNeedClosePts())
+						<= GetScore(inScoring))
 						timeFaults = 0.0;
 				}
 			}
 			if (outClean)
 				*outClean = true;
-			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass(), GetDate(), isTourney) + bonusTitlePts;
+			pts = inScoring->GetTitlePoints().GetTitlePoints(
+					  timeFaults,
+					  m_Scoring.GetTime(),
+					  m_Scoring.GetSCT(),
+					  GetPlace(),
+					  GetInClass(),
+					  GetDate(),
+					  isTourney)
+				  + bonusTitlePts;
 		}
 		break;
 	case ARBScoringType::ByPoints:
 		if (m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts())
 		{
 			double timeFaults = 0.0;
-			if (inScoring->ComputeTimeFaultsUnder()
-			|| inScoring->ComputeTimeFaultsOver())
+			if (inScoring->ComputeTimeFaultsUnder() || inScoring->ComputeTimeFaultsOver())
 			{
 				timeFaults = m_Scoring.GetTimeFaults(inScoring);
 				if (0.0 < timeFaults && inScoring->SubtractTimeFaultsFromScore())
@@ -811,7 +823,15 @@ double ARBDogRun::GetTitlePoints(
 			}
 			if (outClean)
 				*outClean = true;
-			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults, m_Scoring.GetTime(), m_Scoring.GetSCT(), GetPlace(), GetInClass(), GetDate(), isTourney) + bonusTitlePts;
+			pts = inScoring->GetTitlePoints().GetTitlePoints(
+					  timeFaults,
+					  m_Scoring.GetTime(),
+					  m_Scoring.GetSCT(),
+					  GetPlace(),
+					  GetInClass(),
+					  GetDate(),
+					  isTourney)
+				  + bonusTitlePts;
 		}
 		break;
 	}
@@ -819,9 +839,7 @@ double ARBDogRun::GetTitlePoints(
 }
 
 
-double ARBDogRun::GetLifetimePoints(
-		ARBConfigScoringPtr const& inScoring,
-		std::wstring const& inLifetimeName) const
+double ARBDogRun::GetLifetimePoints(ARBConfigScoringPtr const& inScoring, std::wstring const& inLifetimeName) const
 {
 	double pts = 0.0;
 	double bonusTitlePts = inScoring->HasBonusTitlePts() ? m_Scoring.GetBonusTitlePts() : 0.0;
@@ -832,41 +850,42 @@ double ARBDogRun::GetLifetimePoints(
 	case ARBScoringType::ByTime:
 	case ARBScoringType::BySpeed:
 	{
-			double score = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
-			if (ARBScoringStyle::TimePlusFaults == inScoring->GetScoringStyle())
+		double score = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
+		if (ARBScoringStyle::TimePlusFaults == inScoring->GetScoringStyle())
+		{
+			if (!(inScoring && inScoring->QsMustBeClean() && score > 0.0))
 			{
-				if (!(inScoring && inScoring->QsMustBeClean() && score > 0.0))
+				// If SCT is 0, don't compute anything.
+				if (0.0 < m_Scoring.GetSCT())
 				{
-					// If SCT is 0, don't compute anything.
-					if (0.0 < m_Scoring.GetSCT())
-					{
-						score += m_Scoring.GetTime();
-						// Adjust the 'score' to the number of "faults" (total over SCT)
-						// This allows DOCNA's Challenge to work - it's T+F with 12 time faults allowed
-						score -= m_Scoring.GetSCT();
-						// If negative, run was faster than SCT
-						if (0.0 > score)
-							score = 0.0;
-					}
-					pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, score, GetSpeedPoints(inScoring)) + bonusTitlePts;
+					score += m_Scoring.GetTime();
+					// Adjust the 'score' to the number of "faults" (total over SCT)
+					// This allows DOCNA's Challenge to work - it's T+F with 12 time faults allowed
+					score -= m_Scoring.GetSCT();
+					// If negative, run was faster than SCT
+					if (0.0 > score)
+						score = 0.0;
 				}
-			}
-			else
-			{
-				pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, score, GetSpeedPoints(inScoring)) + bonusTitlePts;
+				pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, score, GetSpeedPoints(inScoring))
+					  + bonusTitlePts;
 			}
 		}
-		break;
+		else
+		{
+			pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, score, GetSpeedPoints(inScoring))
+				  + bonusTitlePts;
+		}
+	}
+	break;
 	case ARBScoringType::ByOpenClose:
 		if ((m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts()
-		&& m_Scoring.GetNeedClosePts() <= m_Scoring.GetClosePts())
-		// Allows for USDAA tournament gambles
-		|| (0 == m_Scoring.GetNeedClosePts()
-		&& m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts() + m_Scoring.GetClosePts()))
+			 && m_Scoring.GetNeedClosePts() <= m_Scoring.GetClosePts())
+			// Allows for USDAA tournament gambles
+			|| (0 == m_Scoring.GetNeedClosePts()
+				&& m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts() + m_Scoring.GetClosePts()))
 		{
 			double timeFaults = 0.0;
-			if (inScoring->ComputeTimeFaultsUnder()
-			|| inScoring->ComputeTimeFaultsOver())
+			if (inScoring->ComputeTimeFaultsUnder() || inScoring->ComputeTimeFaultsOver())
 			{
 				timeFaults = m_Scoring.GetTimeFaults(inScoring);
 				if (0.0 < timeFaults && inScoring->SubtractTimeFaultsFromScore())
@@ -874,19 +893,23 @@ double ARBDogRun::GetLifetimePoints(
 					// If time faults are being subtracted from the score,
 					// recompute if we have enough points. If so, just pretend
 					// there are no time faults.
-					if (static_cast<double>(m_Scoring.GetNeedOpenPts() + m_Scoring.GetNeedClosePts()) <= GetScore(inScoring))
+					if (static_cast<double>(m_Scoring.GetNeedOpenPts() + m_Scoring.GetNeedClosePts())
+						<= GetScore(inScoring))
 						timeFaults = 0.0;
 				}
 			}
-			pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, timeFaults, GetSpeedPoints(inScoring)) + bonusTitlePts;
+			pts = inScoring->GetLifetimePoints().GetLifetimePoints(
+					  inLifetimeName,
+					  timeFaults,
+					  GetSpeedPoints(inScoring))
+				  + bonusTitlePts;
 		}
 		break;
 	case ARBScoringType::ByPoints:
 		if (m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts())
 		{
 			double timeFaults = 0.0;
-			if (inScoring->ComputeTimeFaultsUnder()
-			|| inScoring->ComputeTimeFaultsOver())
+			if (inScoring->ComputeTimeFaultsUnder() || inScoring->ComputeTimeFaultsOver())
 			{
 				timeFaults = m_Scoring.GetTimeFaults(inScoring);
 				if (0.0 < timeFaults && inScoring->SubtractTimeFaultsFromScore())
@@ -898,7 +921,11 @@ double ARBDogRun::GetLifetimePoints(
 						timeFaults = 0.0;
 				}
 			}
-			pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, timeFaults, GetSpeedPoints(inScoring)) + bonusTitlePts;
+			pts = inScoring->GetLifetimePoints().GetLifetimePoints(
+					  inLifetimeName,
+					  timeFaults,
+					  GetSpeedPoints(inScoring))
+				  + bonusTitlePts;
 		}
 		break;
 	}
@@ -962,9 +989,7 @@ double ARBDogRun::GetScore(ARBConfigScoringPtr const& inScoring) const
 size_t ARBDogRun::GetMultiQs(std::vector<ARBConfigMultiQPtr>& outMultiQs) const
 {
 	outMultiQs.clear();
-	for (std::set<ARBConfigMultiQPtr>::const_iterator i = m_pMultiQs.begin();
-		i != m_pMultiQs.end();
-		++i)
+	for (std::set<ARBConfigMultiQPtr>::const_iterator i = m_pMultiQs.begin(); i != m_pMultiQs.end(); ++i)
 	{
 		outMultiQs.push_back(*i);
 	}
@@ -1008,17 +1033,17 @@ void ARBDogRun::RemoveLink(std::wstring const& inLink)
 {
 	ARBDogRunLinks::iterator iter = m_Links.find(inLink);
 	if (iter != m_Links.end())
-			m_Links.erase(iter);
+		m_Links.erase(iter);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBDogRunList::Load(
-		ARBConfig const& inConfig,
-		ARBDogClubList const& inClubs,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfig const& inConfig,
+	ARBDogClubList const& inClubs,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	ARBDogRunPtr thing(ARBDogRun::New());
 	if (!thing->Load(inConfig, inClubs, inTree, inVersion, ioCallback))
@@ -1028,15 +1053,10 @@ bool ARBDogRunList::Load(
 }
 
 
-bool ARBDogRunList::Save(
-		ElementNodePtr const& ioTree,
-		ARBDogTrial const* pTrial,
-		ARBConfig const& inConfig) const
+bool ARBDogRunList::Save(ElementNodePtr const& ioTree, ARBDogTrial const* pTrial, ARBConfig const& inConfig) const
 {
 	assert(pTrial);
-	for (ARBVector<ARBDogRunPtr>::const_iterator iter = begin();
-		iter != end();
-		++iter)
+	for (ARBVector<ARBDogRunPtr>::const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if (!(*iter)->Save(ioTree, pTrial, inConfig))
 			return false;
@@ -1049,12 +1069,9 @@ void ARBDogRunList::sort()
 {
 	if (2 > size())
 		return;
-	std::stable_sort(begin(), end(),
-		[](ARBDogRunPtr const& one, ARBDogRunPtr const& two)
-		{
-			return one->GetDate() < two->GetDate();
-		}
-	);
+	std::stable_sort(begin(), end(), [](ARBDogRunPtr const& one, ARBDogRunPtr const& two) {
+		return one->GetDate() < two->GetDate();
+	});
 }
 
 
@@ -1064,7 +1081,7 @@ ARBDate ARBDogRunList::GetStartDate() const
 	if (0 < size())
 	{
 		ARBDate date1 = (*begin())->GetDate();
-		ARBDate date2 = (*(end()-1))->GetDate();
+		ARBDate date2 = (*(end() - 1))->GetDate();
 		date = date1 < date2 ? date1 : date2;
 	}
 	return date;
@@ -1077,7 +1094,7 @@ ARBDate ARBDogRunList::GetEndDate() const
 	if (0 < size())
 	{
 		ARBDate date1 = (*begin())->GetDate();
-		ARBDate date2 = (*(end()-1))->GetDate();
+		ARBDate date2 = (*(end() - 1))->GetDate();
 		date = date1 > date2 ? date1 : date2;
 	}
 	return date;

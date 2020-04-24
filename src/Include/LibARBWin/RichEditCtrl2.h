@@ -27,12 +27,12 @@ class ARBWIN_API CRichEditCtrl2 : public CTextCtrl
 {
 public:
 	CRichEditCtrl2(
-			wxWindow* parent,
-			wxWindowID id,
-			const wxString& value = wxEmptyString,
-			const wxPoint& pos = wxDefaultPosition,
-			const wxSize& size = wxDefaultSize,
-			bool bReadOnly = true); // Initial state of readonly
+		wxWindow* parent,
+		wxWindowID id,
+		const wxString& value = wxEmptyString,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		bool bReadOnly = true); // Initial state of readonly
 
 	void SetEditable(bool editable) override;
 

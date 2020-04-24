@@ -74,10 +74,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -90,8 +87,8 @@ public:
 	 * Get the formatted URL to use to request data.
 	 */
 	std::wstring GetFormattedURL(
-			std::vector<std::wstring> const& inLocCodes,
-			std::vector<std::wstring> const& inVenueCodes) const;
+		std::vector<std::wstring> const& inLocCodes,
+		std::vector<std::wstring> const& inVenueCodes) const;
 
 	/*
 	 * Getters/setters.
@@ -171,10 +168,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Sort the list by name.
@@ -187,9 +181,7 @@ public:
 	 * @param outSite Object that was found.
 	 * @return Whether the object was found.
 	 */
-	bool FindSite(
-			std::wstring const& inSite,
-			ARBConfigCalSitePtr* outSite = nullptr) const;
+	bool FindSite(std::wstring const& inSite, ARBConfigCalSitePtr* outSite = nullptr) const;
 
 	/**
 	 * Add a site.
@@ -197,9 +189,7 @@ public:
 	 * @param outSite Pointer to new object, NULL if name already exists or is empty.
 	 * @return Whether the object was added.
 	 */
-	bool AddSite(
-			std::wstring const& inSite,
-			ARBConfigCalSitePtr* outSite = nullptr);
+	bool AddSite(std::wstring const& inSite, ARBConfigCalSitePtr* outSite = nullptr);
 
 	/**
 	 * Add a site.

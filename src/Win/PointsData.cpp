@@ -49,9 +49,9 @@
 #include "ARBCommon/ARBDate.h"
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/StringUtil.h"
+#include <wx/utils.h>
 #include <algorithm>
 #include <map>
-#include <wx/utils.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -74,11 +74,11 @@ static std::wstring Sanitize(std::wstring const& inRawData, bool nbsp = false)
 /////////////////////////////////////////////////////////////////////////////
 
 OtherPtInfo::OtherPtInfo(
-		ARBDogTrialPtr const& inTrial,
-		ARBDogRunPtr const& inRun,
-		double points,
-		bool bScore,
-		double score)
+	ARBDogTrialPtr const& inTrial,
+	ARBDogRunPtr const& inRun,
+	double points,
+	bool bScore,
+	double score)
 	: m_pTrial(inTrial)
 	, m_pRun(inRun)
 	, m_pExisting()
@@ -113,21 +113,17 @@ OtherPtInfo::OtherPtInfo(ARBDogExistingPointsPtr const& inExisting)
 
 /////////////////////////////////////////////////////////////////////////////
 
-CPointsDataTitle::CPointsDataTitle(
-		CAgilityBookDoc* pDoc,
-		ARBDogTitlePtr pTitle)
+CPointsDataTitle::CPointsDataTitle(CAgilityBookDoc* pDoc, ARBDogTitlePtr pTitle)
 	: m_refTag(fmt::format(L"ref{}", pTitle->GetGenericName()))
 	, m_pDoc(pDoc)
 	, m_pTitle(pTitle)
 {
-
 }
 
 
 void CPointsDataTitle::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 {
-	fmt::format_to(data, L"<tr>\n<td>{}</td>\n<td>",
-		Sanitize(m_pTitle->GetDate().GetString(), true));
+	fmt::format_to(data, L"<tr>\n<td>{}</td>\n<td>", Sanitize(m_pTitle->GetDate().GetString(), true));
 	if (!bNoInternalLinks)
 	{
 		fmt::format_to(data, L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, m_refTag);
@@ -144,9 +140,7 @@ void CPointsDataTitle::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 }
 
 
-bool CPointsDataTitle::Details(
-		std::wstring const& link,
-		ARBDogPtr pDog)
+bool CPointsDataTitle::Details(std::wstring const& link, ARBDogPtr pDog)
 {
 	if (link != m_refTag)
 		return false;
@@ -167,22 +161,22 @@ bool CPointsDataTitle::Details(
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataEvent::CPointsDataEvent(
-		CAgilityBookDoc* pDoc,
-		ARBDogPtr const& inDog,
-		std::list<RunInfo>& inMatching,
-		ARBConfigVenuePtr const& inVenue,
-		ARBConfigDivisionPtr const& inDiv,
-		int inDivIdx,
-		ARBConfigLevelPtr const& inLevel,
-		int inLevelIdx,
-		ARBConfigEventPtr const& inEvent,
-		int inEventIdx,
-		std::wstring const& inRunCount,
-		std::wstring const& inQcount,
-		std::wstring const& inPts,
-		std::wstring const& inSuperQ,
-		std::wstring const& inSpeed,
-		CRefTag& id)
+	CAgilityBookDoc* pDoc,
+	ARBDogPtr const& inDog,
+	std::list<RunInfo>& inMatching,
+	ARBConfigVenuePtr const& inVenue,
+	ARBConfigDivisionPtr const& inDiv,
+	int inDivIdx,
+	ARBConfigLevelPtr const& inLevel,
+	int inLevelIdx,
+	ARBConfigEventPtr const& inEvent,
+	int inEventIdx,
+	std::wstring const& inRunCount,
+	std::wstring const& inQcount,
+	std::wstring const& inPts,
+	std::wstring const& inSuperQ,
+	std::wstring const& inSpeed,
+	CRefTag& id)
 	: m_refTag(fmt::format(L"ref{}", id.GetId()))
 	, m_pDoc(pDoc)
 	, m_Dog(inDog)
@@ -217,7 +211,7 @@ void CPointsDataEvent::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 		fmt::format_to(data, L"</a>");
 	fmt::format_to(data, L"</td>\n<td>{}</td>\n", Sanitize(m_Qcount, true));
 	fmt::format_to(data, L"<td align=\"right\">{}</td>\n", Sanitize(m_Pts, true));
-	{// SuperQ/SpeedPts
+	{ // SuperQ/SpeedPts
 		std::wstring str;
 		if (0 < m_SuperQ.length())
 			str = m_SuperQ;
@@ -225,7 +219,7 @@ void CPointsDataEvent::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 			str = m_Speed;
 		fmt::format_to(data, L"<td>{}</td>\n", Sanitize(str, true));
 	}
-	{// Only used for SQ AND Speed
+	{ // Only used for SQ AND Speed
 		std::wstring str;
 		if (0 < m_SuperQ.length() && 0 < m_Speed.length())
 			str = m_Speed;
@@ -239,7 +233,8 @@ bool CPointsDataEvent::Details(std::wstring const& link)
 	if (link != m_refTag)
 		return false;
 
-	std::wstring str = fmt::format(L"{}: {}/{}/{}",
+	std::wstring str = fmt::format(
+		L"{}: {}/{}/{}",
 		_("IDS_RUNS").wx_str(),
 		m_Div->GetName(),
 		m_Level->GetName(),
@@ -253,11 +248,11 @@ bool CPointsDataEvent::Details(std::wstring const& link)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataSpeedPts::CPointsDataSpeedPts(
-		CAgilityBookDoc* pDoc,
-		ARBConfigVenuePtr const& inVenue,
-		ARBConfigDivisionPtr const& inDiv,
-		int inPts,
-		CRefTag& id)
+	CAgilityBookDoc* pDoc,
+	ARBConfigVenuePtr const& inVenue,
+	ARBConfigDivisionPtr const& inDiv,
+	int inPts,
+	CRefTag& id)
 	: m_refTag(fmt::format(L"ref{}", id.GetId()))
 	, m_pDoc(pDoc)
 	, m_Venue(inVenue)
@@ -269,7 +264,9 @@ CPointsDataSpeedPts::CPointsDataSpeedPts(
 
 void CPointsDataSpeedPts::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 {
-	fmt::format_to(data, L"<tr>\n<td colspan=\"3\">{}</td>\n<td colspan=\"3\"/>\n<td>{}</td>\n</tr>\n",
+	fmt::format_to(
+		data,
+		L"<tr>\n<td colspan=\"3\">{}</td>\n<td colspan=\"3\"/>\n<td>{}</td>\n</tr>\n",
 		Sanitize(m_Div->GetName(), true),
 		Sanitize(fmt::format(_("IDS_POINTS_SPEED").wx_str(), m_Pts), true));
 }
@@ -283,12 +280,12 @@ bool CPointsDataSpeedPts::Details(std::wstring const& link)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataMultiQs::CPointsDataMultiQs(
-		CAgilityBookDoc* pDoc,
-		ARBDogPtr const& inDog,
-		ARBConfigVenuePtr const& inVenue,
-		ARBConfigMultiQPtr const& inMultiQ,
-		std::set<MultiQdata> const& inMQs,
-		CRefTag& id)
+	CAgilityBookDoc* pDoc,
+	ARBDogPtr const& inDog,
+	ARBConfigVenuePtr const& inVenue,
+	ARBConfigMultiQPtr const& inMultiQ,
+	std::set<MultiQdata> const& inMQs,
+	CRefTag& id)
 	: m_refTag(fmt::format(L"ref{}", id.GetId()))
 	, m_pDoc(pDoc)
 	, m_Dog(inDog)
@@ -306,14 +303,23 @@ CPointsDataMultiQs::CPointsDataMultiQs(
 			dateTo = CFilterOptions::Options().GetEndFilterDate();
 	}
 	m_ExistingDblQs = m_Dog->GetExistingPoints().ExistingPoints(
-		ARBExistingPointType::MQ, m_Venue, m_MultiQ,
-		ARBConfigDivisionPtr(), ARBConfigLevelPtr(), ARBConfigEventPtr(), dateFrom, dateTo);
+		ARBExistingPointType::MQ,
+		m_Venue,
+		m_MultiQ,
+		ARBConfigDivisionPtr(),
+		ARBConfigLevelPtr(),
+		ARBConfigEventPtr(),
+		dateFrom,
+		dateTo);
 }
 
 
 void CPointsDataMultiQs::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 {
-	fmt::format_to(data, L"<tr>\n<td colspan=\"3\">{}</td>\n<td colspan=\"3\"/>\n<td>", Sanitize(m_MultiQ->GetName(), true));
+	fmt::format_to(
+		data,
+		L"<tr>\n<td colspan=\"3\">{}</td>\n<td colspan=\"3\"/>\n<td>",
+		Sanitize(m_MultiQ->GetName(), true));
 	if (!bNoInternalLinks)
 	{
 		fmt::format_to(data, L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, m_refTag);
@@ -338,10 +344,7 @@ bool CPointsDataMultiQs::Details(std::wstring const& link)
 
 /////////////////////////////////////////////////////////////////////////////
 
-CPointsDataLifetime::CPointsDataLifetime(
-		CAgilityBookDoc* pDoc,
-		ARBConfigVenuePtr const& inVenue,
-		CRefTag& id)
+CPointsDataLifetime::CPointsDataLifetime(CAgilityBookDoc* pDoc, ARBConfigVenuePtr const& inVenue, CRefTag& id)
 	: m_refTag(fmt::format(L"ref{}", id.GetId()))
 	, m_pDoc(pDoc)
 	, m_LifetimeName()
@@ -353,10 +356,10 @@ CPointsDataLifetime::CPointsDataLifetime(
 
 
 CPointsDataLifetime::CPointsDataLifetime(
-		CAgilityBookDoc* pDoc,
-		ARBConfigLifetimeNamePtr const& inLifetimeName,
-		ARBConfigVenuePtr const& inVenue,
-		CRefTag& id)
+	CAgilityBookDoc* pDoc,
+	ARBConfigLifetimeNamePtr const& inLifetimeName,
+	ARBConfigVenuePtr const& inVenue,
+	CRefTag& id)
 	: m_refTag(fmt::format(L"ref{}", id.GetId()))
 	, m_pDoc(pDoc)
 	, m_LifetimeName(inLifetimeName)
@@ -368,10 +371,10 @@ CPointsDataLifetime::CPointsDataLifetime(
 
 
 void CPointsDataLifetime::AddLifetimeInfo(
-		std::wstring const& inDiv,
-		std::wstring const& inLevel,
-		double inLifetime,
-		double inFiltered)
+	std::wstring const& inDiv,
+	std::wstring const& inLevel,
+	double inLifetime,
+	double inFiltered)
 {
 	m_Data.push_back(std::make_shared<LifeTimePointInfo>(inDiv, inLevel, inLifetime, inFiltered));
 	m_Lifetime += inLifetime;
@@ -432,21 +435,21 @@ bool CPointsDataLifetime::Details(std::wstring const& link)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataLifetimeByName::CPointsDataLifetimeByName(
-		CAgilityBookDoc* pDoc,
-		ARBConfigVenuePtr const& inVenue,
-		std::wstring const& inName,
-		CRefTag& id)
+	CAgilityBookDoc* pDoc,
+	ARBConfigVenuePtr const& inVenue,
+	std::wstring const& inName,
+	CRefTag& id)
 	: CPointsDataLifetime(pDoc, inVenue, id)
 	, m_Name(inName)
 {
 }
 
 CPointsDataLifetimeByName::CPointsDataLifetimeByName(
-		CAgilityBookDoc* pDoc,
-		ARBConfigLifetimeNamePtr const& inLifetimeName,
-		ARBConfigVenuePtr const& inVenue,
-		std::wstring const& inName,
-		CRefTag& id)
+	CAgilityBookDoc* pDoc,
+	ARBConfigLifetimeNamePtr const& inLifetimeName,
+	ARBConfigVenuePtr const& inVenue,
+	std::wstring const& inName,
+	CRefTag& id)
 	: CPointsDataLifetime(pDoc, inLifetimeName, inVenue, id)
 	, m_Name(inName)
 {
@@ -454,10 +457,10 @@ CPointsDataLifetimeByName::CPointsDataLifetimeByName(
 
 
 void CPointsDataLifetimeByName::AddLifetimeInfo(
-		std::wstring const& inSort1,
-		std::wstring const& inSort2,
-		double inLifetime,
-		double inFiltered)
+	std::wstring const& inSort1,
+	std::wstring const& inSort2,
+	double inLifetime,
+	double inFiltered)
 {
 	if (inSort1 == m_Name)
 	{
@@ -516,6 +519,7 @@ public:
 		}
 		return false;
 	}
+
 private:
 	ARBPointsViewSort m_Order[3];
 };
@@ -523,24 +527,22 @@ private:
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataVenue::CPointsDataVenue(
-		std::vector<CVenueFilter> const& venues,
-		CAgilityBookDoc* pDoc,
-		ARBDogPtr const& inDog,
-		ARBConfigVenuePtr const inVenue,
-		CRefTag& id)
+	std::vector<CVenueFilter> const& venues,
+	CAgilityBookDoc* pDoc,
+	ARBDogPtr const& inDog,
+	ARBConfigVenuePtr const inVenue,
+	CRefTag& id)
 	: m_refTag(fmt::format(L"ref{}", inVenue->GetName()))
 	, m_pDoc(pDoc)
 	, m_pDog(inDog)
 	, m_pVenue(inVenue)
 {
 	// First, titles.
-	for (ARBDogTitleList::const_iterator iterTitle = inDog->GetTitles().begin();
-		iterTitle != inDog->GetTitles().end();
-		++iterTitle)
+	for (ARBDogTitleList::const_iterator iterTitle = inDog->GetTitles().begin(); iterTitle != inDog->GetTitles().end();
+		 ++iterTitle)
 	{
 		ARBDogTitlePtr pTitle = (*iterTitle);
-		if (pTitle->GetVenue() == m_pVenue->GetName()
-		&& !pTitle->IsFiltered())
+		if (pTitle->GetVenue() == m_pVenue->GetName() && !pTitle->IsFiltered())
 		{
 			m_titles.push_back(std::make_shared<CPointsDataTitle>(m_pDoc, pTitle));
 		}
@@ -552,9 +554,8 @@ CPointsDataVenue::CPointsDataVenue(
 
 	// Then the runs.
 	std::list<ARBDogTrialPtr> trialsInVenue;
-	for (ARBDogTrialList::const_iterator iterTrial = inDog->GetTrials().begin();
-		iterTrial != inDog->GetTrials().end();
-		++iterTrial)
+	for (ARBDogTrialList::const_iterator iterTrial = inDog->GetTrials().begin(); iterTrial != inDog->GetTrials().end();
+		 ++iterTrial)
 	{
 		ARBDogTrialPtr pTrial = (*iterTrial);
 		// Don't bother subtracting "hidden" trials. Doing so
@@ -562,23 +563,22 @@ CPointsDataVenue::CPointsDataVenue(
 		if (pTrial->HasVenue(m_pVenue->GetName()))
 			trialsInVenue.push_back(pTrial);
 	}
-	if (inDog->GetExistingPoints().HasPoints(m_pVenue->GetName())
-	|| 0 < trialsInVenue.size())
+	if (inDog->GetExistingPoints().HasPoints(m_pVenue->GetName()) || 0 < trialsInVenue.size())
 	{
 		bRunsInserted = true;
 		// Show events sorted out by division/level.
 		int idxDiv = 0;
 		for (ARBConfigDivisionList::const_iterator iterDiv = m_pVenue->GetDivisions().begin();
-			iterDiv != m_pVenue->GetDivisions().end();
-			++idxDiv, ++iterDiv)
+			 iterDiv != m_pVenue->GetDivisions().end();
+			 ++idxDiv, ++iterDiv)
 		{
 			bool bHasSpeedPts = false;
 			int speedPts = 0;
 			ARBConfigDivisionPtr pDiv = (*iterDiv);
 			int idxLevel = 0;
 			for (ARBConfigLevelList::const_iterator iterLevel = pDiv->GetLevels().begin();
-				iterLevel != pDiv->GetLevels().end();
-				++idxLevel, ++iterLevel)
+				 iterLevel != pDiv->GetLevels().end();
+				 ++idxLevel, ++iterLevel)
 			{
 				ARBConfigLevelPtr pLevel = (*iterLevel);
 				ARBDate dateFrom, dateTo;
@@ -597,8 +597,8 @@ CPointsDataVenue::CPointsDataVenue(
 				// we don't know if the trial or individual runs are.
 				int idxEvent = 0;
 				for (ARBConfigEventList::const_iterator iterEvent = m_pVenue->GetEvents().begin();
-					iterEvent != m_pVenue->GetEvents().end();
-					++idxEvent, ++iterEvent)
+					 iterEvent != m_pVenue->GetEvents().end();
+					 ++idxEvent, ++iterEvent)
 				{
 					ARBConfigEventPtr pEvent = (*iterEvent);
 
@@ -620,8 +620,8 @@ CPointsDataVenue::CPointsDataVenue(
 					std::set<std::wstring> partners;
 					std::set<std::wstring> partnersQ;
 					for (ARBVector<ARBConfigScoringPtr>::iterator iterScoring = scoringItems.begin();
-						iterScoring != scoringItems.end();
-						++iterScoring)
+						 iterScoring != scoringItems.end();
+						 ++iterScoring)
 					{
 						ARBConfigScoringPtr pScoringMethod = *iterScoring;
 						ARBDate dateFrom2 = pScoringMethod->GetValidFrom();
@@ -630,36 +630,44 @@ CPointsDataVenue::CPointsDataVenue(
 							dateFrom2 = dateFrom;
 						if (!dateTo2.IsValid() || dateTo > dateTo2)
 							dateTo2 = dateTo;
-						bool bHasExistingPoints = inDog->GetExistingPoints().HasPoints(m_pVenue, pDiv, pLevel, pEvent, dateFrom2, dateTo2, false);
-						bool bHasExistingLifetimePoints = inDog->GetExistingPoints().HasPoints(m_pVenue, pDiv, pLevel, pEvent, dateFrom2, dateTo2, true);
-						if (!CFilterOptions::Options().IsVenueLevelVisible(venues, m_pVenue->GetName(), pDiv->GetName(), pLevel->GetName()))
+						bool bHasExistingPoints
+							= inDog->GetExistingPoints()
+								  .HasPoints(m_pVenue, pDiv, pLevel, pEvent, dateFrom2, dateTo2, false);
+						bool bHasExistingLifetimePoints
+							= inDog->GetExistingPoints()
+								  .HasPoints(m_pVenue, pDiv, pLevel, pEvent, dateFrom2, dateTo2, true);
+						if (!CFilterOptions::Options()
+								 .IsVenueLevelVisible(venues, m_pVenue->GetName(), pDiv->GetName(), pLevel->GetName()))
 						{
 							bHasExistingPoints = false;
 							bHasExistingLifetimePoints = false;
 						}
 						std::list<RunInfo> matching;
 						for (std::list<ARBDogTrialPtr>::const_iterator iterTrial = trialsInVenue.begin();
-							iterTrial != trialsInVenue.end();
-							++iterTrial)
+							 iterTrial != trialsInVenue.end();
+							 ++iterTrial)
 						{
 							ARBDogTrialPtr pTrial = (*iterTrial);
 							for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
-								iterRun != pTrial->GetRuns().end();
-								++iterRun)
+								 iterRun != pTrial->GetRuns().end();
+								 ++iterRun)
 							{
 								ARBDogRunPtr pRun = (*iterRun);
 								if (pRun->GetDivision() != pDiv->GetName()
-								|| (pRun->GetLevel() != pLevel->GetName() && !pLevel->GetSubLevels().FindSubLevel(pRun->GetLevel()))
-								|| pRun->GetEvent() != pEvent->GetName())
+									|| (pRun->GetLevel() != pLevel->GetName()
+										&& !pLevel->GetSubLevels().FindSubLevel(pRun->GetLevel()))
+									|| pRun->GetEvent() != pEvent->GetName())
 									continue;
 								ARBConfigScoringPtr pScoring;
 								pEvent->FindEvent(pDiv->GetName(), pLevel->GetName(), pRun->GetDate(), &pScoring);
 								assert(pScoring);
-								if (!pScoring) continue; // Shouldn't need it... Actually, we do - if a trial's venues are changed, this can cause FindEvent to fail.
+								if (!pScoring)
+									continue; // Shouldn't need it... Actually, we do - if a trial's venues are changed, this can cause FindEvent to fail.
 								if (*pScoring != *pScoringMethod)
 									continue;
-								bool bRunVisible = (!pRun->IsFiltered(ARBFilterType::IgnoreQ)
-								&& CFilterOptions::Options().IsRunVisible(venues, m_pVenue, pTrial, pRun));
+								bool bRunVisible
+									= (!pRun->IsFiltered(ARBFilterType::IgnoreQ)
+									   && CFilterOptions::Options().IsRunVisible(venues, m_pVenue, pTrial, pRun));
 								if (bRunVisible)
 								{
 									// Don't tally NA runs for titling events.
@@ -681,9 +689,10 @@ CPointsDataVenue::CPointsDataVenue(
 									// actually a 3-dog relay.
 									if (pEvent->HasPartner() && 1 == pRun->GetPartners().size())
 									{
-										for (ARBDogRunPartnerList::const_iterator iterPartner = pRun->GetPartners().begin();
-											iterPartner != pRun->GetPartners().end();
-											++iterPartner)
+										for (ARBDogRunPartnerList::const_iterator iterPartner
+											 = pRun->GetPartners().begin();
+											 iterPartner != pRun->GetPartners().end();
+											 ++iterPartner)
 										{
 											std::wstring p = (*iterPartner)->GetDog();
 											p += (*iterPartner)->GetRegNum();
@@ -695,23 +704,26 @@ CPointsDataVenue::CPointsDataVenue(
 								}
 								// Tally lifetime points, regardless of visibility.
 								if ((0 < pScoringMethod->GetLifetimePoints().size()
-								|| 0 < pScoringMethod->GetPlacements().size())
-								&& pRun->GetQ().Qualified())
+									 || 0 < pScoringMethod->GetPlacements().size())
+									&& pRun->GetQ().Qualified())
 								{
-									for (ARBConfigLifetimeNameList::iterator iterN = m_pVenue->GetLifetimeNames().begin();
-										iterN != m_pVenue->GetLifetimeNames().end();
-										++iterN)
+									for (ARBConfigLifetimeNameList::iterator iterN
+										 = m_pVenue->GetLifetimeNames().begin();
+										 iterN != m_pVenue->GetLifetimeNames().end();
+										 ++iterN)
 									{
 										double nLifetime = pRun->GetLifetimePoints(pScoringMethod, (*iterN)->GetName());
 										if (0 < nLifetime)
 										{
-											ptsLifetime.ptLifetime[(*iterN)].push_back(LifeTimePoint(pRun->GetEvent(), nLifetime, !bRunVisible));
+											ptsLifetime.ptLifetime[(*iterN)].push_back(
+												LifeTimePoint(pRun->GetEvent(), nLifetime, !bRunVisible));
 										}
 									}
 									double nPlacement = pRun->GetPlacementPoints(pScoringMethod);
 									if (0 < nPlacement)
 									{
-										ptsPlacement.ptPlacement.push_back(LifeTimePoint(pRun->GetEvent(), nPlacement, !bRunVisible));
+										ptsPlacement.ptPlacement.push_back(
+											LifeTimePoint(pRun->GetEvent(), nPlacement, !bRunVisible));
 									}
 								}
 							}
@@ -721,27 +733,47 @@ CPointsDataVenue::CPointsDataVenue(
 						{
 							nExistingPts = inDog->GetExistingPoints().ExistingPoints(
 								ARBExistingPointType::Title,
-								m_pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, pEvent, dateFrom2, dateTo2);
+								m_pVenue,
+								ARBConfigMultiQPtr(),
+								pDiv,
+								pLevel,
+								pEvent,
+								dateFrom2,
+								dateTo2);
 							if (pScoringMethod->HasSuperQ())
 								nExistingSQ += static_cast<int>(inDog->GetExistingPoints().ExistingPoints(
 									ARBExistingPointType::SQ,
-									m_pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, pEvent, dateFrom2, dateTo2));
+									m_pVenue,
+									ARBConfigMultiQPtr(),
+									pDiv,
+									pLevel,
+									pEvent,
+									dateFrom2,
+									dateTo2));
 							// Now add the existing lifetime points
-							for (ARBConfigLifetimeNameList::const_iterator iterLifetime = m_pVenue->GetLifetimeNames().begin();
-								iterLifetime != m_pVenue->GetLifetimeNames().end();
-								++iterLifetime)
+							for (ARBConfigLifetimeNameList::const_iterator iterLifetime
+								 = m_pVenue->GetLifetimeNames().begin();
+								 iterLifetime != m_pVenue->GetLifetimeNames().end();
+								 ++iterLifetime)
 							{
 								double nExistingLifetimePts = inDog->GetExistingPoints().ExistingLifetimePoints(
-									*iterLifetime, m_pVenue, pDiv, pLevel, pEvent, dateFrom2, dateTo2);
+									*iterLifetime,
+									m_pVenue,
+									pDiv,
+									pLevel,
+									pEvent,
+									dateFrom2,
+									dateTo2);
 								if (0.0 < nExistingLifetimePts)
-									ptsLifetime.ptLifetime[(*iterLifetime)].push_back(LifeTimePoint(pEvent->GetName(), nExistingLifetimePts, false));
+									ptsLifetime.ptLifetime[(*iterLifetime)].push_back(
+										LifeTimePoint(pEvent->GetName(), nExistingLifetimePts, false));
 							}
 						}
 						if (bHasExistingPoints || 0 < matching.size())
 						{
 							for (std::list<RunInfo>::const_iterator iterRun = matching.begin();
-								iterRun != matching.end();
-								++iterRun)
+								 iterRun != matching.end();
+								 ++iterRun)
 							{
 								ARBDogRunPtr pRun = get<TUPLE_RUN>(*iterRun);
 								if (pRun->GetQ().Qualified())
@@ -767,7 +799,9 @@ CPointsDataVenue::CPointsDataVenue(
 					if (0 < points || 0 < allmatching.size())
 					{
 						fmt::wmemory_buffer strRunCount;
-						fmt::format_to(strRunCount, _("IDS_POINTS_RUNS_JUDGES").wx_str(),
+						fmt::format_to(
+							strRunCount,
+							_("IDS_POINTS_RUNS_JUDGES").wx_str(),
 							allmatching.size(),
 							judges.size());
 						if (pEvent->HasPartner() && 0 < partners.size())
@@ -776,9 +810,13 @@ CPointsDataVenue::CPointsDataVenue(
 						}
 						double percentQs = 0.0;
 						if (0 < allmatching.size())
-							percentQs = (static_cast<double>(nCleanQ + nNotCleanQ) / static_cast<double>(allmatching.size())) * 100;
+							percentQs
+								= (static_cast<double>(nCleanQ + nNotCleanQ) / static_cast<double>(allmatching.size()))
+								  * 100;
 						fmt::wmemory_buffer strQcount;
-						fmt::format_to(strQcount, _("IDS_POINTS_QS").wx_str(),
+						fmt::format_to(
+							strQcount,
+							_("IDS_POINTS_QS").wx_str(),
 							nCleanQ + nNotCleanQ,
 							static_cast<int>(percentQs));
 						if (0 < nCleanQ)
@@ -805,13 +843,17 @@ CPointsDataVenue::CPointsDataVenue(
 						{
 							strSpeed = fmt::format(_("IDS_POINTS_SPEED_SUBTOTAL").wx_str(), speedPtsEvent);
 						}
-						m_events.push_back(std::make_shared<CPointsDataEvent>(pDoc,
+						m_events.push_back(std::make_shared<CPointsDataEvent>(
+							pDoc,
 							!ARBDouble::equal(0.0, nExistingPts + nExistingSQ) ? inDog : ARBDogPtr(),
 							allmatching,
 							m_pVenue,
-							pDiv, idxDiv,
-							pLevel, idxLevel,
-							pEvent, idxEvent,
+							pDiv,
+							idxDiv,
+							pLevel,
+							idxLevel,
+							pEvent,
+							idxEvent,
 							fmt::to_string(strRunCount),
 							fmt::to_string(strQcount),
 							strPts,
@@ -824,7 +866,13 @@ CPointsDataVenue::CPointsDataVenue(
 				{
 					speedPts += static_cast<int>(inDog->GetExistingPoints().ExistingPoints(
 						ARBExistingPointType::Speed,
-						m_pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, ARBConfigEventPtr(), dateFrom, dateTo));
+						m_pVenue,
+						ARBConfigMultiQPtr(),
+						pDiv,
+						pLevel,
+						ARBConfigEventPtr(),
+						dateFrom,
+						dateTo));
 				}
 				if (0 < ptsLifetime.ptLifetime.size())
 					lifetime.push_back(ptsLifetime);
@@ -842,23 +890,23 @@ CPointsDataVenue::CPointsDataVenue(
 		// If the venue has multiQs, tally them now.
 		if (0 < m_pVenue->GetMultiQs().size())
 		{
-			std::map<ARBConfigMultiQPtr, std::set<MultiQdata> > MQs;
+			std::map<ARBConfigMultiQPtr, std::set<MultiQdata>> MQs;
 			for (std::list<ARBDogTrialPtr>::const_iterator iterTrial = trialsInVenue.begin();
-				iterTrial != trialsInVenue.end();
-				++iterTrial)
+				 iterTrial != trialsInVenue.end();
+				 ++iterTrial)
 			{
 				ARBDogTrialPtr pTrial = (*iterTrial);
-				for (ARBDogRunList::const_iterator iterR = pTrial->GetRuns().begin();
-					iterR != pTrial->GetRuns().end();
-					++iterR)
+				for (ARBDogRunList::const_iterator iterR = pTrial->GetRuns().begin(); iterR != pTrial->GetRuns().end();
+					 ++iterR)
 				{
 					ARBDogRunPtr pRun = *iterR;
 					std::vector<ARBConfigMultiQPtr> multiQs;
-					if (0 < pRun->GetMultiQs(multiQs)
-					&& !pRun->IsFiltered(ARBFilterType::IgnoreQ)
-					&& CFilterOptions::Options().IsRunVisible(venues, m_pVenue, pTrial, pRun))
+					if (0 < pRun->GetMultiQs(multiQs) && !pRun->IsFiltered(ARBFilterType::IgnoreQ)
+						&& CFilterOptions::Options().IsRunVisible(venues, m_pVenue, pTrial, pRun))
 					{
-						for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin(); iMultiQ != multiQs.end(); ++iMultiQ)
+						for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin();
+							 iMultiQ != multiQs.end();
+							 ++iMultiQ)
 						{
 							std::wstring name;
 							if (pRun->GetClub())
@@ -874,7 +922,13 @@ CPointsDataVenue::CPointsDataVenue(
 				auto iterMQ = MQs.find((*iMulti));
 				if (iterMQ != MQs.end())
 				{
-					m_multiQs.push_back(std::make_shared<CPointsDataMultiQs>(pDoc, inDog, m_pVenue, (*iterMQ).first, (*iterMQ).second, id));
+					m_multiQs.push_back(std::make_shared<CPointsDataMultiQs>(
+						pDoc,
+						inDog,
+						m_pVenue,
+						(*iterMQ).first,
+						(*iterMQ).second,
+						id));
 				}
 			}
 		}
@@ -884,8 +938,8 @@ CPointsDataVenue::CPointsDataVenue(
 	if (0 < lifetime.size())
 	{
 		for (ARBConfigLifetimeNameList::iterator iterL = m_pVenue->GetLifetimeNames().begin();
-			iterL != m_pVenue->GetLifetimeNames().end();
-			++iterL)
+			 iterL != m_pVenue->GetLifetimeNames().end();
+			 ++iterL)
 		{
 			CPointsDataLifetimePtr pData = std::make_shared<CPointsDataLifetime>(pDoc, (*iterL), m_pVenue, id);
 			typedef std::map<std::wstring, CPointsDataLifetimeByNamePtr> NamedLifetime;
@@ -894,16 +948,15 @@ CPointsDataVenue::CPointsDataVenue(
 			{
 				// Gather event names
 				std::set<std::wstring> names;
-				for (LifeTimePointsList::iterator iter = lifetime.begin();
-				iter != lifetime.end();
-					++iter)
+				for (LifeTimePointsList::iterator iter = lifetime.begin(); iter != lifetime.end(); ++iter)
 				{
-					std::map<ARBConfigLifetimeNamePtr, LifeTimePointList>::iterator iterName = (*iter).ptLifetime.find((*iterL));
+					std::map<ARBConfigLifetimeNamePtr, LifeTimePointList>::iterator iterName
+						= (*iter).ptLifetime.find((*iterL));
 					if ((*iter).ptLifetime.end() != iterName)
 					{
 						for (LifeTimePointList::iterator iter2 = iterName->second.begin();
-							iter2 != iterName->second.end();
-							++iter2)
+							 iter2 != iterName->second.end();
+							 ++iter2)
 						{
 							names.insert(iter2->eventName);
 						}
@@ -913,16 +966,15 @@ CPointsDataVenue::CPointsDataVenue(
 				{
 					double pts2 = 0.0;
 					double ptFiltered2 = 0;
-					for (LifeTimePointsList::iterator iter = lifetime.begin();
-					iter != lifetime.end();
-						++iter)
+					for (LifeTimePointsList::iterator iter = lifetime.begin(); iter != lifetime.end(); ++iter)
 					{
-						std::map<ARBConfigLifetimeNamePtr, LifeTimePointList>::iterator iterName = (*iter).ptLifetime.find((*iterL));
+						std::map<ARBConfigLifetimeNamePtr, LifeTimePointList>::iterator iterName
+							= (*iter).ptLifetime.find((*iterL));
 						if ((*iter).ptLifetime.end() != iterName)
 						{
 							for (LifeTimePointList::iterator iter2 = iterName->second.begin();
-							iter2 != iterName->second.end();
-								++iter2)
+								 iter2 != iterName->second.end();
+								 ++iter2)
 							{
 								if (iter2->eventName == *iName)
 								{
@@ -936,9 +988,7 @@ CPointsDataVenue::CPointsDataVenue(
 					pData->AddLifetimeInfo(*iName, std::wstring(), pts2, ptFiltered2);
 				}
 			}
-			for (LifeTimePointsList::iterator iter = lifetime.begin();
-			iter != lifetime.end();
-				++iter)
+			for (LifeTimePointsList::iterator iter = lifetime.begin(); iter != lifetime.end(); ++iter)
 			{
 				CPointsDataLifetimeByNamePtr pNameData;
 				NamedLifetime::iterator it = subgroups.find(iter->pDiv->GetName());
@@ -948,18 +998,23 @@ CPointsDataVenue::CPointsDataVenue(
 				}
 				else
 				{
-					pNameData = std::make_shared<CPointsDataLifetimeByName>(pDoc, (*iterL), m_pVenue, iter->pDiv->GetName(), id);
+					pNameData = std::make_shared<CPointsDataLifetimeByName>(
+						pDoc,
+						(*iterL),
+						m_pVenue,
+						iter->pDiv->GetName(),
+						id);
 					subgroups.insert(NamedLifetime::value_type(iter->pDiv->GetName(), pNameData));
 				}
 
 				double pts2 = 0.0;
 				double ptFiltered2 = 0;
-				std::map<ARBConfigLifetimeNamePtr, LifeTimePointList>::iterator iterName = (*iter).ptLifetime.find((*iterL));
+				std::map<ARBConfigLifetimeNamePtr, LifeTimePointList>::iterator iterName
+					= (*iter).ptLifetime.find((*iterL));
 				if ((*iter).ptLifetime.end() != iterName)
 				{
-					for (LifeTimePointList::iterator iter2 = iterName->second.begin();
-					iter2 != iterName->second.end();
-						++iter2)
+					for (LifeTimePointList::iterator iter2 = iterName->second.begin(); iter2 != iterName->second.end();
+						 ++iter2)
 					{
 						pts2 += (*iter2).points;
 						if ((*iter2).bFiltered)
@@ -975,9 +1030,7 @@ CPointsDataVenue::CPointsDataVenue(
 			m_lifetime.push_back(pData);
 			if (1 < subgroups.size())
 			{
-				for (NamedLifetime::iterator it = subgroups.begin();
-				it != subgroups.end();
-					++it)
+				for (NamedLifetime::iterator it = subgroups.begin(); it != subgroups.end(); ++it)
 				{
 					m_lifetime.push_back(it->second);
 				}
@@ -998,13 +1051,11 @@ CPointsDataVenue::CPointsDataVenue(
 		{
 			// Gather event names
 			std::set<std::wstring> names;
-			for (PlacementPointsList::iterator iter = placement.begin();
-				iter != placement.end();
-				++iter)
+			for (PlacementPointsList::iterator iter = placement.begin(); iter != placement.end(); ++iter)
 			{
 				for (LifeTimePointList::iterator iter2 = (*iter).ptPlacement.begin();
-					iter2 != (*iter).ptPlacement.end();
-					++iter2)
+					 iter2 != (*iter).ptPlacement.end();
+					 ++iter2)
 				{
 					names.insert(iter2->eventName);
 				}
@@ -1013,13 +1064,11 @@ CPointsDataVenue::CPointsDataVenue(
 			{
 				double pts2 = 0.0;
 				double ptFiltered2 = 0;
-				for (PlacementPointsList::iterator iter = placement.begin();
-					iter != placement.end();
-					++iter)
+				for (PlacementPointsList::iterator iter = placement.begin(); iter != placement.end(); ++iter)
 				{
 					for (LifeTimePointList::iterator iter2 = (*iter).ptPlacement.begin();
-						iter2 != (*iter).ptPlacement.end();
-						++iter2)
+						 iter2 != (*iter).ptPlacement.end();
+						 ++iter2)
 					{
 						if (iter2->eventName == *iName)
 						{
@@ -1032,9 +1081,7 @@ CPointsDataVenue::CPointsDataVenue(
 				pData->AddLifetimeInfo(*iName, std::wstring(), pts2, ptFiltered2);
 			}
 		}
-		for (PlacementPointsList::iterator iter = placement.begin();
-			iter != placement.end();
-			++iter)
+		for (PlacementPointsList::iterator iter = placement.begin(); iter != placement.end(); ++iter)
 		{
 			CPointsDataLifetimeByNamePtr pNameData;
 			NamedLifetime::iterator it = subgroups.find(iter->pDiv->GetName());
@@ -1050,9 +1097,8 @@ CPointsDataVenue::CPointsDataVenue(
 
 			double pts2 = 0.0;
 			double ptFiltered2 = 0;
-			for (LifeTimePointList::iterator iter2 = (*iter).ptPlacement.begin();
-				iter2 != (*iter).ptPlacement.end();
-				++iter2)
+			for (LifeTimePointList::iterator iter2 = (*iter).ptPlacement.begin(); iter2 != (*iter).ptPlacement.end();
+				 ++iter2)
 			{
 				pts2 += (*iter2).points;
 				if ((*iter2).bFiltered)
@@ -1066,9 +1112,7 @@ CPointsDataVenue::CPointsDataVenue(
 		m_lifetime.push_back(pData);
 		if (1 < subgroups.size())
 		{
-			for (NamedLifetime::iterator it = subgroups.begin();
-				it != subgroups.end();
-				++it)
+			for (NamedLifetime::iterator it = subgroups.begin(); it != subgroups.end(); ++it)
 			{
 				m_lifetime.push_back(it->second);
 			}
@@ -1083,11 +1127,7 @@ CPointsDataVenue::CPointsDataVenue(
 
 bool CPointsDataVenue::HasData() const
 {
-	return !m_titles.empty()
-		|| !m_events.empty()
-		|| !m_speedPts.empty()
-		|| !m_multiQs.empty()
-		|| !m_lifetime.empty();
+	return !m_titles.empty() || !m_events.empty() || !m_speedPts.empty() || !m_multiQs.empty() || !m_lifetime.empty();
 }
 
 
@@ -1106,9 +1146,7 @@ void CPointsDataVenue::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 		}
 		else
 		{
-			fmt::format_to(data, L"<a href=\"{}\">{}</a>",
-				m_pVenue->GetURL(),
-				Sanitize(m_pVenue->GetName()));
+			fmt::format_to(data, L"<a href=\"{}\">{}</a>", m_pVenue->GetURL(), Sanitize(m_pVenue->GetName()));
 		}
 		if (m_pDog)
 		{
@@ -1131,9 +1169,7 @@ void CPointsDataVenue::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 
 	if (!m_titles.empty())
 	{
-		fmt::format_to(data, L"<h3>{}</h3>{}",
-			_("IDS_TITLES").wx_str(),
-			s_TableHeader);
+		fmt::format_to(data, L"<h3>{}</h3>{}", _("IDS_TITLES").wx_str(), s_TableHeader);
 
 		for (auto ptr : m_titles)
 		{
@@ -1144,9 +1180,7 @@ void CPointsDataVenue::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 
 	if (!m_events.empty() || !m_speedPts.empty() || !m_multiQs.empty() || !m_lifetime.empty())
 	{
-		fmt::format_to(data, L"<h3>{}</h3>{}",
-			_("IDS_RUNS").wx_str(),
-			s_TableHeader);
+		fmt::format_to(data, L"<h3>{}</h3>{}", _("IDS_RUNS").wx_str(), s_TableHeader);
 		for (auto ptr : m_events)
 		{
 			ptr->GetHtml(data, bNoInternalLinks);
@@ -1218,19 +1252,17 @@ bool CPointsDataVenue::Details(std::wstring const& link)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataOtherPoints::CPointsDataOtherPoints(
-		CAgilityBookDoc* pDoc,
-			ARBConfigOtherPointsPtr pOther,
-		std::list<OtherPtInfo> const& inRunList,
-		CRefTag& id)
+	CAgilityBookDoc* pDoc,
+	ARBConfigOtherPointsPtr pOther,
+	std::list<OtherPtInfo> const& inRunList,
+	CRefTag& id)
 	: m_refTag(fmt::format(L"ref{}", id.GetId()))
 	, m_pDoc(pDoc)
 	, m_pOther(pOther)
 	, m_RunList(inRunList)
 	, m_Points(0.0)
 {
-	for (std::list<OtherPtInfo>::iterator iter = m_RunList.begin();
-		iter != m_RunList.end();
-		++iter)
+	for (std::list<OtherPtInfo>::iterator iter = m_RunList.begin(); iter != m_RunList.end(); ++iter)
 	{
 		m_Points += (*iter).m_Points;
 	}
@@ -1239,10 +1271,10 @@ CPointsDataOtherPoints::CPointsDataOtherPoints(
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataOtherPointsTallyAll::CPointsDataOtherPointsTallyAll(
-		CAgilityBookDoc* pDoc,
-		ARBConfigOtherPointsPtr pOther,
-		std::list<OtherPtInfo> const& inRunList,
-		CRefTag& id)
+	CAgilityBookDoc* pDoc,
+	ARBConfigOtherPointsPtr pOther,
+	std::list<OtherPtInfo> const& inRunList,
+	CRefTag& id)
 	: CPointsDataOtherPoints(pDoc, pOther, inRunList, id)
 {
 }
@@ -1275,11 +1307,11 @@ bool CPointsDataOtherPointsTallyAll::Details(std::wstring const& link)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataOtherPointsTallyAllByEvent::CPointsDataOtherPointsTallyAllByEvent(
-		CAgilityBookDoc* pDoc,
-		ARBConfigOtherPointsPtr pOther,
-		std::wstring const& inEvent,
-		std::list<OtherPtInfo> const& inRunList,
-		CRefTag& id)
+	CAgilityBookDoc* pDoc,
+	ARBConfigOtherPointsPtr pOther,
+	std::wstring const& inEvent,
+	std::list<OtherPtInfo> const& inRunList,
+	CRefTag& id)
 	: CPointsDataOtherPoints(pDoc, pOther, inRunList, id)
 	, m_Event(inEvent)
 {
@@ -1288,7 +1320,9 @@ CPointsDataOtherPointsTallyAllByEvent::CPointsDataOtherPointsTallyAllByEvent(
 
 void CPointsDataOtherPointsTallyAllByEvent::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 {
-	fmt::format_to(data, L"<tr>\n<td>&nbsp;</td>\n<td>{}</td>\n<td align=\"right\">",
+	fmt::format_to(
+		data,
+		L"<tr>\n<td>&nbsp;</td>\n<td>{}</td>\n<td align=\"right\">",
 		Sanitize(m_RunList.begin()->m_Event, true));
 	if (!bNoInternalLinks)
 	{
@@ -1314,11 +1348,11 @@ bool CPointsDataOtherPointsTallyAllByEvent::Details(std::wstring const& link)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataOtherPointsTallyLevel::CPointsDataOtherPointsTallyLevel(
-		CAgilityBookDoc* pDoc,
-		ARBConfigOtherPointsPtr pOther,
-		std::wstring const& inLevel,
-		std::list<OtherPtInfo> const& inRunList,
-		CRefTag& id)
+	CAgilityBookDoc* pDoc,
+	ARBConfigOtherPointsPtr pOther,
+	std::wstring const& inLevel,
+	std::list<OtherPtInfo> const& inRunList,
+	CRefTag& id)
 	: CPointsDataOtherPoints(pDoc, pOther, inRunList, id)
 	, m_Level(inLevel)
 {
@@ -1327,7 +1361,9 @@ CPointsDataOtherPointsTallyLevel::CPointsDataOtherPointsTallyLevel(
 
 void CPointsDataOtherPointsTallyLevel::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 {
-	fmt::format_to(data, L"<tr>\n<td>&nbsp;</td>\n<td>{}</td>\n<td align=\"right\">",
+	fmt::format_to(
+		data,
+		L"<tr>\n<td>&nbsp;</td>\n<td>{}</td>\n<td align=\"right\">",
 		Sanitize(m_RunList.begin()->m_Level, true));
 	if (!bNoInternalLinks)
 	{
@@ -1353,12 +1389,12 @@ bool CPointsDataOtherPointsTallyLevel::Details(std::wstring const& link)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataOtherPointsTallyLevelByEvent::CPointsDataOtherPointsTallyLevelByEvent(
-		CAgilityBookDoc* pDoc,
-		ARBConfigOtherPointsPtr pOther,
-		std::wstring const& inLevel,
-		std::wstring const& inEvent,
-		std::list<OtherPtInfo> const& inRunList,
-		CRefTag& id)
+	CAgilityBookDoc* pDoc,
+	ARBConfigOtherPointsPtr pOther,
+	std::wstring const& inLevel,
+	std::wstring const& inEvent,
+	std::list<OtherPtInfo> const& inRunList,
+	CRefTag& id)
 	: CPointsDataOtherPoints(pDoc, pOther, inRunList, id)
 	, m_Level(inLevel)
 	, m_Event(inEvent)
@@ -1368,7 +1404,9 @@ CPointsDataOtherPointsTallyLevelByEvent::CPointsDataOtherPointsTallyLevelByEvent
 
 void CPointsDataOtherPointsTallyLevelByEvent::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 {
-	fmt::format_to(data, L"<tr>\n<td>&nbsp;</td>\n<td>{}</td>\n<td>{}</td>\n<td align=\"right\">",
+	fmt::format_to(
+		data,
+		L"<tr>\n<td>&nbsp;</td>\n<td>{}</td>\n<td>{}</td>\n<td align=\"right\">",
 		Sanitize(m_RunList.begin()->m_Level, true),
 		Sanitize(m_RunList.begin()->m_Event, true));
 	if (!bNoInternalLinks)
@@ -1426,8 +1464,8 @@ void CPointsDataItems::LoadData(ARBDogPtr const& inDog)
 
 	// For each venue...
 	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->Book().GetConfig().GetVenues().begin();
-		iterVenue != m_pDoc->Book().GetConfig().GetVenues().end();
-		++iterVenue)
+		 iterVenue != m_pDoc->Book().GetConfig().GetVenues().end();
+		 ++iterVenue)
 	{
 		ARBConfigVenuePtr pVenue = (*iterVenue);
 		if (!CFilterOptions::Options().IsVenueVisible(venues, pVenue->GetName()))
@@ -1442,31 +1480,29 @@ void CPointsDataItems::LoadData(ARBDogPtr const& inDog)
 	ARBConfigOtherPointsList const& other = m_pDoc->Book().GetConfig().GetOtherPoints();
 	if (0 < other.size())
 	{
-		for (ARBConfigOtherPointsList::const_iterator iterOther = other.begin();
-			iterOther != other.end();
-			++iterOther)
+		for (ARBConfigOtherPointsList::const_iterator iterOther = other.begin(); iterOther != other.end(); ++iterOther)
 		{
 			// First, just generate a list of runs with the needed info.
 			std::list<OtherPtInfo> runs;
 
 			ARBConfigOtherPointsPtr pOther = (*iterOther);
 			for (ARBDogTrialList::const_iterator iterTrial = inDog->GetTrials().begin();
-				iterTrial != inDog->GetTrials().end();
-				++iterTrial)
+				 iterTrial != inDog->GetTrials().end();
+				 ++iterTrial)
 			{
 				ARBDogTrialPtr pTrial = (*iterTrial);
 				if (!pTrial->IsFiltered())
 				{
 					for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
-						iterRun != pTrial->GetRuns().end();
-						++iterRun)
+						 iterRun != pTrial->GetRuns().end();
+						 ++iterRun)
 					{
 						ARBDogRunPtr pRun = (*iterRun);
 						if (!pRun->IsFiltered(ARBFilterType::IgnoreQ))
 						{
 							for (ARBDogRunOtherPointsList::const_iterator iterOtherPts = pRun->GetOtherPoints().begin();
-								iterOtherPts != pRun->GetOtherPoints().end();
-								++iterOtherPts)
+								 iterOtherPts != pRun->GetOtherPoints().end();
+								 ++iterOtherPts)
 							{
 								ARBDogRunOtherPointsPtr pOtherPts = (*iterOtherPts);
 								if (pOtherPts->GetName() == pOther->GetName())
@@ -1499,8 +1535,8 @@ void CPointsDataItems::LoadData(ARBDogPtr const& inDog)
 			}
 
 			for (ARBDogExistingPointsList::const_iterator iterExisting = inDog->GetExistingPoints().begin();
-				iterExisting != inDog->GetExistingPoints().end();
-				++iterExisting)
+				 iterExisting != inDog->GetExistingPoints().end();
+				 ++iterExisting)
 			{
 				if (ARBExistingPointType::OtherPoints == (*iterExisting)->GetType()
 					&& (*iterExisting)->GetTypeName() == pOther->GetName())
@@ -1519,75 +1555,84 @@ void CPointsDataItems::LoadData(ARBDogPtr const& inDog)
 				break;
 
 			case ARBOtherPointsTally::AllByEvent:
+			{
+				std::set<std::wstring> tally;
+				std::list<OtherPtInfo>::iterator iter;
+				for (iter = runs.begin(); iter != runs.end(); ++iter)
 				{
-					std::set<std::wstring> tally;
-					std::list<OtherPtInfo>::iterator iter;
+					tally.insert((*iter).m_Event);
+				}
+				for (std::set<std::wstring>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
+				{
+					std::list<OtherPtInfo> validRuns;
 					for (iter = runs.begin(); iter != runs.end(); ++iter)
 					{
-						tally.insert((*iter).m_Event);
+						if ((*iter).m_Event == (*iterTally))
+							validRuns.push_back(*iter);
 					}
-					for (std::set<std::wstring>::iterator iterTally = tally.begin();
-						iterTally != tally.end();
-						++iterTally)
-					{
-						std::list<OtherPtInfo> validRuns;
-						for (iter = runs.begin(); iter != runs.end(); ++iter)
-						{
-							if ((*iter).m_Event == (*iterTally))
-								validRuns.push_back(*iter);
-						}
-						m_otherPts.push_back(std::make_shared<CPointsDataOtherPointsTallyAllByEvent>(m_pDoc, pOther, (*iterTally), validRuns, id));
-					}
+					m_otherPts.push_back(std::make_shared<CPointsDataOtherPointsTallyAllByEvent>(
+						m_pDoc,
+						pOther,
+						(*iterTally),
+						validRuns,
+						id));
 				}
-				break;
+			}
+			break;
 
 			case ARBOtherPointsTally::Level:
+			{
+				std::set<std::wstring> tally;
+				std::list<OtherPtInfo>::iterator iter;
+				for (iter = runs.begin(); iter != runs.end(); ++iter)
 				{
-					std::set<std::wstring> tally;
-					std::list<OtherPtInfo>::iterator iter;
+					tally.insert((*iter).m_Level);
+				}
+				for (std::set<std::wstring>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
+				{
+					std::list<OtherPtInfo> validRuns;
 					for (iter = runs.begin(); iter != runs.end(); ++iter)
 					{
-						tally.insert((*iter).m_Level);
+						if ((*iter).m_Level == (*iterTally))
+							validRuns.push_back(*iter);
 					}
-					for (std::set<std::wstring>::iterator iterTally = tally.begin();
-						iterTally != tally.end();
-						++iterTally)
-					{
-						std::list<OtherPtInfo> validRuns;
-						for (iter = runs.begin(); iter != runs.end(); ++iter)
-						{
-							if ((*iter).m_Level == (*iterTally))
-								validRuns.push_back(*iter);
-						}
-						m_otherPts.push_back(std::make_shared<CPointsDataOtherPointsTallyLevel>(m_pDoc, pOther, (*iterTally), validRuns, id));
-					}
+					m_otherPts.push_back(std::make_shared<CPointsDataOtherPointsTallyLevel>(
+						m_pDoc,
+						pOther,
+						(*iterTally),
+						validRuns,
+						id));
 				}
-				break;
+			}
+			break;
 
 			case ARBOtherPointsTally::LevelByEvent:
+			{
+				typedef std::pair<std::wstring, std::wstring> LevelEvent;
+				std::set<LevelEvent> tally;
+				std::list<OtherPtInfo>::iterator iter;
+				for (iter = runs.begin(); iter != runs.end(); ++iter)
 				{
-					typedef std::pair<std::wstring, std::wstring> LevelEvent;
-					std::set<LevelEvent> tally;
-					std::list<OtherPtInfo>::iterator iter;
+					tally.insert(LevelEvent((*iter).m_Level, (*iter).m_Event));
+				}
+				for (std::set<LevelEvent>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
+				{
+					std::list<OtherPtInfo> validRuns;
 					for (iter = runs.begin(); iter != runs.end(); ++iter)
 					{
-						tally.insert(LevelEvent((*iter).m_Level, (*iter).m_Event));
+						if ((*iter).m_Level == (*iterTally).first && (*iter).m_Event == (*iterTally).second)
+							validRuns.push_back(*iter);
 					}
-					for (std::set<LevelEvent>::iterator iterTally = tally.begin();
-						iterTally != tally.end();
-						++iterTally)
-					{
-						std::list<OtherPtInfo> validRuns;
-						for (iter = runs.begin(); iter != runs.end(); ++iter)
-						{
-							if ((*iter).m_Level == (*iterTally).first
-								&& (*iter).m_Event == (*iterTally).second)
-								validRuns.push_back(*iter);
-						}
-						m_otherPts.push_back(std::make_shared<CPointsDataOtherPointsTallyLevelByEvent>(m_pDoc, pOther, (*iterTally).first, (*iterTally).second, validRuns, id));
-					}
+					m_otherPts.push_back(std::make_shared<CPointsDataOtherPointsTallyLevelByEvent>(
+						m_pDoc,
+						pOther,
+						(*iterTally).first,
+						(*iterTally).second,
+						validRuns,
+						id));
 				}
-				break;
+			}
+			break;
 			}
 		}
 	}
@@ -1602,11 +1647,17 @@ wxString CPointsDataItems::GetHtml(bool bFragment, bool bNoInternalLinks)
 	// Put header in...
 	if (!bFragment)
 	{
-		fmt::format_to(data, L"<html><head><title>{} {}</title></head><body>\n", _("IDS_TITLING_POINTS").wx_str(), today.GetString());
+		fmt::format_to(
+			data,
+			L"<html><head><title>{} {}</title></head><body>\n",
+			_("IDS_TITLING_POINTS").wx_str(),
+			today.GetString());
 	}
 
 	// Put general info about the dog in...
-	fmt::format_to(data, L"<h1 align=\"center\">{} {}</h1>",
+	fmt::format_to(
+		data,
+		L"<h1 align=\"center\">{} {}</h1>",
 		_("IDS_TITLING_POINTS").wx_str(),
 		Sanitize(today.GetString()));
 	if (m_pDog)
@@ -1631,9 +1682,7 @@ wxString CPointsDataItems::GetHtml(bool bFragment, bool bNoInternalLinks)
 	// Other Points
 	if (!m_otherPts.empty())
 	{
-		fmt::format_to(data, L"<h2>{}</h2>{}",
-			_("IDS_OTHERPOINTS").wx_str(),
-			s_TableHeader);
+		fmt::format_to(data, L"<h2>{}</h2>{}", _("IDS_OTHERPOINTS").wx_str(), s_TableHeader);
 		ARBOtherPointsTally last = static_cast<ARBOtherPointsTally>(-1);
 		for (auto other : m_otherPts)
 		{

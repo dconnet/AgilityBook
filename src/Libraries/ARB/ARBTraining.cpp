@@ -38,16 +38,18 @@
 
 namespace
 {
-	class ARBTraining_concrete : public ARBTraining
+class ARBTraining_concrete : public ARBTraining
+{
+public:
+	ARBTraining_concrete()
 	{
-	public:
-		ARBTraining_concrete() {}
-		ARBTraining_concrete(ARBTraining const& rhs)
-			: ARBTraining(rhs)
-		{
-		}
-	};
+	}
+	ARBTraining_concrete(ARBTraining const& rhs)
+		: ARBTraining(rhs)
+	{
+	}
 };
+}; // namespace
 
 
 ARBTrainingPtr ARBTraining::New()
@@ -122,10 +124,12 @@ ARBTraining& ARBTraining::operator=(ARBTraining&& rhs)
 
 bool ARBTraining::operator==(ARBTraining const& rhs) const
 {
+	// clang-format off
 	return m_Date == rhs.m_Date
 		&& m_Name == rhs.m_Name
 		&& m_SubName == rhs.m_SubName
 		&& m_Note == rhs.m_Note;
+	// clang-format on
 }
 
 
@@ -158,10 +162,7 @@ size_t ARBTraining::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 }
 
 
-bool ARBTraining::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBTraining::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_TRAINING)
@@ -174,13 +175,14 @@ bool ARBTraining::Load(
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TRAINING, ATTRIB_TRAINING_DATE));
 		return false;
 	case ARBAttribLookup::Invalid:
-		{
-			std::wstring attrib;
-			inTree->GetAttrib(ATTRIB_TRAINING_DATE, attrib);
-			std::wstring msg(Localization()->InvalidDate());
-			msg += attrib;
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TRAINING, ATTRIB_TRAINING_DATE, msg.c_str()));
-		}
+	{
+		std::wstring attrib;
+		inTree->GetAttrib(ATTRIB_TRAINING_DATE, attrib);
+		std::wstring msg(Localization()->InvalidDate());
+		msg += attrib;
+		ioCallback.LogMessage(
+			Localization()->ErrorInvalidAttributeValue(TREE_TRAINING, ATTRIB_TRAINING_DATE, msg.c_str()));
+	}
 		return false;
 	}
 
@@ -210,10 +212,7 @@ bool ARBTraining::Save(ElementNodePtr const& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool ARBTrainingList::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBTrainingList::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	ARBTrainingPtr thing(ARBTraining::New());
 	if (!thing->Load(inTree, inVersion, ioCallback))
@@ -227,12 +226,9 @@ void ARBTrainingList::sort()
 {
 	if (2 > size())
 		return;
-	std::stable_sort(begin(), end(),
-		[](ARBTrainingPtr const& one, ARBTrainingPtr const& two)
-		{
-			return one->GetDate() < two->GetDate();
-		}
-	);
+	std::stable_sort(begin(), end(), [](ARBTrainingPtr const& one, ARBTrainingPtr const& two) {
+		return one->GetDate() < two->GetDate();
+	});
 }
 
 

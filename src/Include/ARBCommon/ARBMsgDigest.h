@@ -24,16 +24,13 @@
 
 namespace ARBMsgDigest
 {
-	enum class ARBDigest
-	{
-		Unknown,
-		MD5,
-		SHA1,
-		SHA256,
-	};
-
-	ARBCOMMON_API std::wstring Compute(
-			std::istream& inFile,
-			ARBDigest type,
-			size_t* outSize = nullptr);
+enum class ARBDigest
+{
+	Unknown,
+	MD5,
+	SHA1,
+	SHA256,
 };
+
+ARBCOMMON_API std::wstring Compute(std::istream& inFile, ARBDigest type, size_t* outSize = nullptr);
+}; // namespace ARBMsgDigest

@@ -82,13 +82,13 @@ std::wstring ARBCalcPointsNormal::GetGenericName(double points, double faults) c
 
 
 double ARBCalcPointsNormal::GetPoints(
-		double inPoints,
-		double inTime,
-		double inSCT,
-		short inPlace,
-		short inClass,
-		ARBDate date,
-		bool isTourney) const
+	double inPoints,
+	double inTime,
+	double inSCT,
+	short inPlace,
+	short inClass,
+	ARBDate date,
+	bool isTourney) const
 {
 	// Pass through.
 	return inPoints;
@@ -114,13 +114,13 @@ std::wstring ARBCalcPointsT2B::GetGenericName(double points, double faults) cons
 
 
 double ARBCalcPointsT2B::GetPoints(
-		double inPoints,
-		double inTime,
-		double inSCT,
-		short inPlace,
-		short inClass,
-		ARBDate date,
-		bool isTourney) const
+	double inPoints,
+	double inTime,
+	double inSCT,
+	short inPlace,
+	short inClass,
+	ARBDate date,
+	bool isTourney) const
 {
 	if (inTime == inSCT && inPlace == 1)
 		return 10.0;
@@ -129,10 +129,11 @@ double ARBCalcPointsT2B::GetPoints(
 		// Formula from p65 of the Sept 2011 AKC rule book:
 		// The formula for the upper end of the percentage range is:
 		// (Fastest time in a jump height multiplied by the percentage)
-		long t = static_cast<long>((0.1 * i) * inSCT
-		// plus the fastest time in the jump height.
-		// Both the low and high end of the percentage range are truncated.
-		//  [static_cast takes care of that]
+		long t = static_cast<long>(
+			(0.1 * i) * inSCT
+			// plus the fastest time in the jump height.
+			// Both the low and high end of the percentage range are truncated.
+			//  [static_cast takes care of that]
 			+ inSCT);
 		// Each dog’s time gets truncated.
 		// A dog’s time falls into a percentage range if it is greater than
@@ -165,13 +166,13 @@ std::wstring ARBCalcPointsUKI::GetGenericName(double points, double faults) cons
 
 
 double ARBCalcPointsUKI::GetPoints(
-		double inPoints,
-		double inTime,
-		double inSCT,
-		short inPlace,
-		short inClass,
-		ARBDate date,
-		bool isTourney) const
+	double inPoints,
+	double inTime,
+	double inSCT,
+	short inPlace,
+	short inClass,
+	ARBDate date,
+	bool isTourney) const
 {
 	double pts = 4.0;
 	if (inClass <= 10)
@@ -232,13 +233,13 @@ std::wstring ARBCalcPointsTop10USDAA::GetGenericName(double points, double fault
 
 
 double ARBCalcPointsTop10USDAA::GetPoints(
-		double inPoints,
-		double inTime,
-		double inSCT,
-		short inPlace,
-		short inClass,
-		ARBDate date,
-		bool isTourney) const
+	double inPoints,
+	double inTime,
+	double inSCT,
+	short inPlace,
+	short inClass,
+	ARBDate date,
+	bool isTourney) const
 {
 	static const ARBDate ruleChange(2020, 1, 1);
 

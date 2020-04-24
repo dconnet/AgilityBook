@@ -1,5 +1,6 @@
 *      text=auto
 
+*.clang-format eol=lf
 *.doc  binary
 *.docx binary
 *.dox  text

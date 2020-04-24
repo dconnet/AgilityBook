@@ -36,9 +36,9 @@
 
 // The combobox for the Q on a Mac is just too small.
 #ifdef __WXMAC__
-#define DEF_Q_WIDTH	50
+#define DEF_Q_WIDTH 50
 #else
-#define DEF_Q_WIDTH	30
+#define DEF_Q_WIDTH 30
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -46,7 +46,10 @@
 class CQualifyingComboData : public wxClientData
 {
 public:
-	CQualifyingComboData(ARB_Q q) : m_Q(q) {}
+	CQualifyingComboData(ARB_Q q)
+		: m_Q(q)
+	{
+	}
 	ARB_Q m_Q;
 };
 
@@ -56,47 +59,62 @@ wxIMPLEMENT_CLASS(CQualifyingComboBox, wxChoice)
 
 
 CQualifyingComboBox::CQualifyingComboBox(
-		wxWindow* parent,
-		ARBDogReferenceRunPtr const& inRefRun,
-		wxValidator const& validator)
+	wxWindow* parent,
+	ARBDogReferenceRunPtr const& inRefRun,
+	wxValidator const& validator)
 	: wxChoice()
 	, m_refRun(inRefRun)
 	, m_Run()
 {
-	wxChoice::Create(parent, wxID_ANY,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(parent, DEF_Q_WIDTH), -1),
-		0, nullptr, 0, validator);
+	wxChoice::Create(
+		parent,
+		wxID_ANY,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(parent, DEF_Q_WIDTH), -1),
+		0,
+		nullptr,
+		0,
+		validator);
+	ResetContent(ARBConfigScoringPtr());
+}
+
+
+CQualifyingComboBox::CQualifyingComboBox(wxWindow* parent, ARBDogRunPtr const& inRun, wxValidator const& validator)
+	: wxChoice()
+	, m_refRun()
+	, m_Run(inRun)
+{
+	wxChoice::Create(
+		parent,
+		wxID_ANY,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(parent, DEF_Q_WIDTH), -1),
+		0,
+		nullptr,
+		0,
+		validator);
 	ResetContent(ARBConfigScoringPtr());
 }
 
 
 CQualifyingComboBox::CQualifyingComboBox(
-		wxWindow* parent,
-		ARBDogRunPtr const& inRun,
-		wxValidator const& validator)
+	wxWindow* parent,
+	ARBDogRunPtr const& inRun,
+	ARBConfigScoringPtr const& inScoring,
+	wxValidator const& validator)
 	: wxChoice()
 	, m_refRun()
 	, m_Run(inRun)
 {
-	wxChoice::Create(parent, wxID_ANY,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(parent, DEF_Q_WIDTH), -1),
-		0, nullptr, 0, validator);
-	ResetContent(ARBConfigScoringPtr());
-}
-
-
-CQualifyingComboBox::CQualifyingComboBox(
-		wxWindow* parent,
-		ARBDogRunPtr const& inRun,
-		ARBConfigScoringPtr const& inScoring,
-		wxValidator const& validator)
-	: wxChoice()
-	, m_refRun()
-	, m_Run(inRun)
-{
-	wxChoice::Create(parent, wxID_ANY,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(parent, DEF_Q_WIDTH), -1),
-		0, nullptr, 0, validator);
+	wxChoice::Create(
+		parent,
+		wxID_ANY,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(parent, DEF_Q_WIDTH), -1),
+		0,
+		nullptr,
+		0,
+		validator);
 	ResetContent(inScoring);
 }
 

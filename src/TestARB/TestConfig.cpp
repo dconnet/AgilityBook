@@ -28,9 +28,9 @@
 #include "TestARB.h"
 
 #include "ARB/ARBAgilityRecordBook.h"
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBDogTitle.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -43,8 +43,8 @@
 //  - Add entry in res/CompileDatListTest.txt
 // RunARBTests.py will automatically pick up all XML files in ./res/
 // Also, update "Default" test if venues/actions/etc changed.
-const wchar_t* const gc_Configs[] =
-{
+const wchar_t* const gc_Configs[] = {
+	// clang-format off
 	L"DefaultConfig.xml",
 	L"Config08_v10_2.xml",
 	L"Config09_v11_0.xml",
@@ -97,6 +97,7 @@ const wchar_t* const gc_Configs[] =
 	L"Config63_v15_0.xml",
 	L"Config64_v15_1.xml",
 	L"Config65_v15_2.xml",
+	// clang-format on
 };
 size_t gc_NumConfigs = sizeof(gc_Configs) / sizeof(gc_Configs[0]);
 
@@ -140,16 +141,16 @@ TEST_CASE("Config")
 			ARBConfig config;
 			fmt::wmemory_buffer err;
 			ARBErrorCallback callback(err);
-			REQUIRE(!config.LoadFault(ElementNodePtr(), ARBVersion(1,0), callback));
-			REQUIRE(!config.LoadFault(ElementNodePtr(), ARBVersion(2,0), callback));
-			REQUIRE(!config.LoadFault(data, ARBVersion(1,0), callback));
-			REQUIRE(!config.LoadFault(data, ARBVersion(2,0), callback));
+			REQUIRE(!config.LoadFault(ElementNodePtr(), ARBVersion(1, 0), callback));
+			REQUIRE(!config.LoadFault(ElementNodePtr(), ARBVersion(2, 0), callback));
+			REQUIRE(!config.LoadFault(data, ARBVersion(1, 0), callback));
+			REQUIRE(!config.LoadFault(data, ARBVersion(2, 0), callback));
 			data->SetName(TREE_FAULTTYPE);
 			data->SetValue(L"A fault");
-			REQUIRE(!config.LoadFault(data, ARBVersion(1,0), callback));
-			REQUIRE(config.LoadFault(data, ARBVersion(2,0), callback));
+			REQUIRE(!config.LoadFault(data, ARBVersion(1, 0), callback));
+			REQUIRE(config.LoadFault(data, ARBVersion(2, 0), callback));
 			data->AddAttrib(L"Name", L"A fault");
-			REQUIRE(config.LoadFault(data, ARBVersion(1,0), callback));
+			REQUIRE(config.LoadFault(data, ARBVersion(1, 0), callback));
 		}
 	}
 
@@ -162,16 +163,16 @@ TEST_CASE("Config")
 			ARBConfig config;
 			fmt::wmemory_buffer err;
 			ARBErrorCallback callback(err);
-			REQUIRE(!config.LoadOtherPoints(ElementNodePtr(), ARBVersion(1,0), callback));
-			REQUIRE(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+			REQUIRE(!config.LoadOtherPoints(ElementNodePtr(), ARBVersion(1, 0), callback));
+			REQUIRE(!config.LoadOtherPoints(data, ARBVersion(1, 0), callback));
 			data->SetName(TREE_OTHERPTS);
-			REQUIRE(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+			REQUIRE(!config.LoadOtherPoints(data, ARBVersion(1, 0), callback));
 			data->AddAttrib(ATTRIB_OTHERPTS_NAME, L"Some Breed points");
-			REQUIRE(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+			REQUIRE(!config.LoadOtherPoints(data, ARBVersion(1, 0), callback));
 			data->AddAttrib(ATTRIB_OTHERPTS_COUNT, L"2");
-			REQUIRE(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+			REQUIRE(!config.LoadOtherPoints(data, ARBVersion(1, 0), callback));
 			data->AddAttrib(ATTRIB_OTHERPTS_COUNT, L"All");
-			REQUIRE(config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+			REQUIRE(config.LoadOtherPoints(data, ARBVersion(1, 0), callback));
 		}
 	}
 

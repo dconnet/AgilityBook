@@ -23,13 +23,8 @@ class CTextCtrl;
 class CDlgSelectURL : public wxDialog
 {
 public:
-	CDlgSelectURL(
-			std::wstring const& name,
-			wxWindow* pParent = nullptr);
-	CDlgSelectURL(
-			std::wstring const& name,
-			bool bAllowEmpty,
-			wxWindow* pParent = nullptr);
+	CDlgSelectURL(std::wstring const& name, wxWindow* pParent = nullptr);
+	CDlgSelectURL(std::wstring const& name, bool bAllowEmpty, wxWindow* pParent = nullptr);
 
 	std::wstring Name() const;
 

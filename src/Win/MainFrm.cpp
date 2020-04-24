@@ -61,10 +61,7 @@
 
 #if wxUSE_DRAG_AND_DROP
 
-bool CFileDropTarget::OnDropFiles(
-		wxCoord x,
-		wxCoord y,
-		wxArrayString const& filenames)
+bool CFileDropTarget::OnDropFiles(wxCoord x, wxCoord y, wxArrayString const& filenames)
 {
 	if (1 != filenames.size())
 		return false;
@@ -116,17 +113,24 @@ wxEND_EVENT_TABLE()
 
 
 CMainFrame::CMainFrame(wxDocManager* manager)
-	: wxDocParentFrame(manager, nullptr, wxID_ANY, _("Agility Record Book"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE)
+	: wxDocParentFrame(
+		manager,
+		nullptr,
+		wxID_ANY,
+		_("Agility Record Book"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_FRAME_STYLE)
 	, m_manager(manager)
 	, m_Widths(NUM_STATUS_FIELDS)
 {
 	SetIcons(CImageManager::Get()->GetIconBundle(ImageMgrAppBundle));
-//#if wxUSE_HELP
-// Note: do not set help on the frame. Help will disable the min/max buttons.
-//	SetExtraStyle(wxFRAME_EX_CONTEXTHELP | GetExtraStyle());
-//#endif
+	//#if wxUSE_HELP
+	// Note: do not set help on the frame. Help will disable the min/max buttons.
+	//	SetExtraStyle(wxFRAME_EX_CONTEXTHELP | GetExtraStyle());
+	//#endif
 
-	wxMenu *menuRecent = new wxMenu;
+	wxMenu* menuRecent = new wxMenu;
 	manager->FileHistoryUseMenu(menuRecent);
 	manager->FileHistoryAddFilesToMenu();
 	wxGetApp().GetMenus().CreateMenu(this, menuRecent);
@@ -171,9 +175,7 @@ CMainFrame::~CMainFrame()
 }
 
 
-void CMainFrame::SetMessageText(
-		std::wstring const& msg,
-		bool bFiltered)
+void CMainFrame::SetMessageText(std::wstring const& msg, bool bFiltered)
 {
 	SetMessage(msg, STATUS_STATUS, true);
 	std::wstring filtered;
@@ -265,7 +267,7 @@ void CMainFrame::OnStatusBarDblClick(wxMouseEvent& evt)
 			}
 			point = statusbar->ScreenToClient(point);
 		}
-		static const int ids[] = { STATUS_FILTERED };
+		static const int ids[] = {STATUS_FILTERED};
 		CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
 		assert(pDoc);
 		if (pDoc)
@@ -291,7 +293,7 @@ void CMainFrame::OnStatusBarDblClick(wxMouseEvent& evt)
 #ifdef EVT_DPI_CHANGED
 void CMainFrame::OnDPIChanged(wxDPIChangedEvent& evt)
 {
-#pragma PRAGMA_TODO(per-monitor rendering)
+#pragma PRAGMA_TODO(per - monitor rendering)
 #if 0
 	// wParam: new DPI
 	// lParam: scaled rect of window
@@ -357,7 +359,7 @@ void CMainFrame::OnUpdateCmd(wxUpdateUIEvent& evt)
 	default:
 		// Eat std commands that haven't been implemented by a child view
 		if ((ID_BOOK_FIRST <= evt.GetId() && evt.GetId() < ID_BOOK_LAST)
-		|| (ID_ORIENT_FIRST <= evt.GetId() && evt.GetId() < ID_ORIENT_LAST))
+			|| (ID_ORIENT_FIRST <= evt.GetId() && evt.GetId() < ID_ORIENT_LAST))
 		{
 			CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
 			assert(pDoc);
@@ -377,19 +379,21 @@ void CMainFrame::OnUpdateCmd(wxUpdateUIEvent& evt)
 		bEnable = true;
 		break;
 	case ID_NEXT_PANE:
-		{
-			CAgilityBookBaseExtraView* pView = wxDynamicCast(GetDocumentManager()->GetCurrentView(), CAgilityBookBaseExtraView);
-			if (pView)
-				bEnable = pView->HasNextPane();
-		}
-		break;
+	{
+		CAgilityBookBaseExtraView* pView
+			= wxDynamicCast(GetDocumentManager()->GetCurrentView(), CAgilityBookBaseExtraView);
+		if (pView)
+			bEnable = pView->HasNextPane();
+	}
+	break;
 	case ID_PREV_PANE:
-		{
-			CAgilityBookBaseExtraView* pView = wxDynamicCast(GetDocumentManager()->GetCurrentView(), CAgilityBookBaseExtraView);
-			if (pView)
-				bEnable = pView->HasPrevPane();
-		}
-		break;
+	{
+		CAgilityBookBaseExtraView* pView
+			= wxDynamicCast(GetDocumentManager()->GetCurrentView(), CAgilityBookBaseExtraView);
+		if (pView)
+			bEnable = pView->HasPrevPane();
+	}
+	break;
 	case ID_VIEW_CUSTOMIZE_ACCEL:
 	case ID_HELP_SYSINFO:
 		bEnable = true;

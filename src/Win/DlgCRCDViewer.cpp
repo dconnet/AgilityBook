@@ -31,9 +31,7 @@
 class CMetaDataStatic : public wxStaticText
 {
 public:
-	CMetaDataStatic(
-			wxWindow* pParent,
-			HENHMETAFILE inMetaFile);
+	CMetaDataStatic(wxWindow* pParent, HENHMETAFILE inMetaFile);
 
 private:
 	HENHMETAFILE m_MetaFile;
@@ -48,14 +46,16 @@ wxBEGIN_EVENT_TABLE(CMetaDataStatic, wxStaticText)
 wxEND_EVENT_TABLE()
 
 
-CMetaDataStatic::CMetaDataStatic(
-		wxWindow* pParent,
-		HENHMETAFILE inMetaFile)
+CMetaDataStatic::CMetaDataStatic(wxWindow* pParent, HENHMETAFILE inMetaFile)
 	: m_MetaFile(inMetaFile)
 {
-	wxStaticText::Create(pParent, wxID_ANY,
+	wxStaticText::Create(
+		pParent,
+		wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxDLG_UNIT(pParent, wxSize(260, 220)), wxSUNKEN_BORDER);
+		wxDefaultPosition,
+		wxDLG_UNIT(pParent, wxSize(260, 220)),
+		wxSUNKEN_BORDER);
 	SetBackgroundStyle(wxBG_STYLE_CUSTOM);
 }
 
@@ -80,10 +80,14 @@ void CMetaDataStatic::OnPaint(wxPaintEvent& evt)
 
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgCRCDViewer::CDlgCRCDViewer(
-		HENHMETAFILE inMetaFile,
-		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_CRCD_VIEWER"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
+CDlgCRCDViewer::CDlgCRCDViewer(HENHMETAFILE inMetaFile, wxWindow* pParent)
+	: wxDialog(
+		pParent,
+		wxID_ANY,
+		_("IDD_CRCD_VIEWER"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
 {
 	// Controls (these are done first to control tab order)
 

@@ -158,9 +158,7 @@ std::wstring ARBDebug::GetEndiannessName()
 
 /////////////////////////////////////////////////////////////////////////////
 
-std::wstring ARBDebug::GetSystemInfo(
-		wxWindow const* pWindow,
-		CVersionNum const& ver)
+std::wstring ARBDebug::GetSystemInfo(wxWindow const* pWindow, CVersionNum const& ver)
 {
 	fmt::wmemory_buffer str;
 
@@ -174,13 +172,16 @@ std::wstring ARBDebug::GetSystemInfo(
 
 	// Me.
 	{
-		fmt::format_to(str, L"{}{}", wxStandardPaths::Get().GetExecutablePath().wx_str(),
+		fmt::format_to(
+			str,
+			L"{}{}",
+			wxStandardPaths::Get().GetExecutablePath().wx_str(),
 #ifdef ARB_64BIT
 			L" (64-bit): "
 #else
 			L" (32-bit): "
 #endif
-			);
+		);
 		if (ver.Valid())
 			fmt::format_to(str, L"{}\n", ver.GetVersionString());
 		else
@@ -242,9 +243,9 @@ std::wstring ARBDebug::GetRegistryInfo()
 // "DataItemName4"=-
 
 size_t ARBDebug::DumpRegistryGroup(
-		wxString const& inGroup,
-		fmt::wmemory_buffer* outData,
-		std::vector<std::wstring>* outItems)
+	wxString const& inGroup,
+	fmt::wmemory_buffer* outData,
+	std::vector<std::wstring>* outItems)
 {
 	size_t added = 0; // Added to outData
 

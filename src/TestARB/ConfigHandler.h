@@ -30,13 +30,12 @@ public:
 	 * @param outData Data from archiveFile.
 	 * @return Success
 	 */
-	static bool LoadWxFile(
-			std::wstring const& zipFile,
-			std::wstring const& archiveFile,
-			std::ostream& outData);
+	static bool LoadWxFile(std::wstring const& zipFile, std::wstring const& archiveFile, std::ostream& outData);
 
 	CConfigHandler();
-	virtual ~CConfigHandler() {}
+	virtual ~CConfigHandler()
+	{
+	}
 
 	ElementNodePtr LoadDefaultConfig() const override;
 	std::string LoadDTD() const override;

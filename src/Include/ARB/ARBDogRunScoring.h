@@ -32,11 +32,11 @@
  */
 enum class ARBScoringType
 {
-	Unknown = -1,		///< Unknown
-	ByTime = 0,			///< Scoring based on time.
-	ByOpenClose = 1,	///< Scoring based on Opening/Closing points.
-	ByPoints = 2,		///< Scoring based on points.
-	BySpeed = 3,		///< Scoring based on speed (FCAT).
+	Unknown = -1,    ///< Unknown
+	ByTime = 0,      ///< Scoring based on time.
+	ByOpenClose = 1, ///< Scoring based on Opening/Closing points.
+	ByPoints = 2,    ///< Scoring based on points.
+	BySpeed = 3,     ///< Scoring based on speed (FCAT).
 };
 
 
@@ -73,12 +73,12 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			short inConfigVersion,
-			ARBConfigEventPtr const& inEvent,
-			ARBConfigScoringPtr const& inEventScoring,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		short inConfigVersion,
+		ARBConfigEventPtr const& inEvent,
+		ARBConfigScoringPtr const& inEventScoring,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -94,9 +94,7 @@ public:
 	 * @param outYPS YPS for the run.
 	 * @return Indicates whether outYPS is valid, not all runs have YPS.
 	 */
-	bool GetMinYPS(
-			bool inTableInYPS,
-			double& outYPS) const;
+	bool GetMinYPS(bool inTableInYPS, double& outYPS) const;
 
 	/**
 	 * Get the YPS for the run.
@@ -104,9 +102,7 @@ public:
 	 * @param outYPS YPS for the run.
 	 * @return Indicates whether outYPS is valid, not all runs have YPS.
 	 */
-	bool GetYPS(
-			bool inTableInYPS,
-			double& outYPS) const;
+	bool GetYPS(bool inTableInYPS, double& outYPS) const;
 
 	/**
 	 * Get the YPS for a run simply given the time (used for RefRun).
@@ -115,10 +111,7 @@ public:
 	 * @param outYPS YPS for the run.
 	 * @return Indicates whether outYPS is valid, not all runs have YPS.
 	 */
-	bool GetYPS(
-			bool inTableInYPS,
-			double inTime,
-			double& outYPS) const;
+	bool GetYPS(bool inTableInYPS, double inTime, double& outYPS) const;
 
 	/**
 	 * Get the Obstacles per second for the run.
@@ -128,11 +121,7 @@ public:
 	 * @param outPrec Precision (hint) to use when displaying.
 	 * @return Indicates whether outOPS is valid (needs obstacle count and time)
 	 */
-	bool GetObstaclesPS(
-			bool inTableInYPS,
-			bool inRunTimeInOPS,
-			double& outOPS,
-			int& outPrec) const;
+	bool GetObstaclesPS(bool inTableInYPS, bool inRunTimeInOPS, double& outOPS, int& outPrec) const;
 
 	/**
 	 * Compute the number of time faults based on the scoring configuration.
@@ -147,9 +136,7 @@ public:
 	{
 		return m_type;
 	}
-	void SetType(
-			ARBScoringType inType,
-			bool inRound)
+	void SetType(ARBScoringType inType, bool inRound)
 	{
 		m_type = inType;
 		m_bRoundTimeFaults = inRound;

@@ -34,12 +34,12 @@
 enum class ARBExistingPointType
 {
 	Unknown,
-	OtherPoints,	///< Number of OtherPoint points.
-	Lifetime,		///< Number of Lifetime points.
-	Title,			///< Number of Titling points.
-	Speed,			///< Number of Speed points.
-	MQ,				///< Number of multi Qs.
-	SQ				///< Number of Super Qs.
+	OtherPoints, ///< Number of OtherPoint points.
+	Lifetime,    ///< Number of Lifetime points.
+	Title,       ///< Number of Titling points.
+	Speed,       ///< Number of Speed points.
+	MQ,          ///< Number of multi Qs.
+	SQ           ///< Number of Super Qs.
 };
 
 
@@ -101,10 +101,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfig const& inConfig,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -243,10 +243,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfig const& inConfig,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Sort by points/venue/division/level.
@@ -272,13 +272,13 @@ public:
 	 * @return Whether any existing points exist.
 	 */
 	bool HasPoints(
-			ARBConfigVenuePtr const& inVenue,
-			ARBConfigDivisionPtr const& inDiv,
-			ARBConfigLevelPtr const& inLevel,
-			ARBConfigEventPtr const& inEvent,
-			ARBDate inDateFrom,
-			ARBDate inDateTo,
-			bool inHasLifetime) const;
+		ARBConfigVenuePtr const& inVenue,
+		ARBConfigDivisionPtr const& inDiv,
+		ARBConfigLevelPtr const& inLevel,
+		ARBConfigEventPtr const& inEvent,
+		ARBDate inDateFrom,
+		ARBDate inDateTo,
+		bool inHasLifetime) const;
 
 	/**
 	 * Get the number of existing points.
@@ -293,14 +293,14 @@ public:
 	 * @return The number of existing points.
 	 */
 	double ExistingPoints(
-			ARBExistingPointType inType,
-			ARBConfigVenuePtr const& inVenue,
-			ARBConfigMultiQPtr const& inMultiQ,
-			ARBConfigDivisionPtr const& inDiv,
-			ARBConfigLevelPtr const& inLevel,
-			ARBConfigEventPtr const& inEvent,
-			ARBDate inDateFrom,
-			ARBDate inDateTo) const;
+		ARBExistingPointType inType,
+		ARBConfigVenuePtr const& inVenue,
+		ARBConfigMultiQPtr const& inMultiQ,
+		ARBConfigDivisionPtr const& inDiv,
+		ARBConfigLevelPtr const& inLevel,
+		ARBConfigEventPtr const& inEvent,
+		ARBDate inDateFrom,
+		ARBDate inDateTo) const;
 
 	/**
 	 * Get the number of existing points.
@@ -314,13 +314,13 @@ public:
 	 * @return The number of existing points.
 	 */
 	double ExistingLifetimePoints(
-			ARBConfigLifetimeNamePtr const& inName,
-			ARBConfigVenuePtr const& inVenue,
-			ARBConfigDivisionPtr const& inDiv,
-			ARBConfigLevelPtr const& inLevel,
-			ARBConfigEventPtr const& inEvent,
-			ARBDate inDateFrom,
-			ARBDate inDateTo) const;
+		ARBConfigLifetimeNamePtr const& inName,
+		ARBConfigVenuePtr const& inVenue,
+		ARBConfigDivisionPtr const& inDiv,
+		ARBConfigLevelPtr const& inLevel,
+		ARBConfigEventPtr const& inEvent,
+		ARBDate inDateFrom,
+		ARBDate inDateTo) const;
 
 	/**
 	 * Get the number of existing point items in a venue.
@@ -335,9 +335,7 @@ public:
 	 * @param inNewVenue New venue name.
 	 * @return Number of items changed.
 	 */
-	int RenameVenue(
-			std::wstring const& inOldVenue,
-			std::wstring const& inNewVenue);
+	int RenameVenue(std::wstring const& inOldVenue, std::wstring const& inNewVenue);
 
 	/**
 	 * Delete a venue, remove any dependent objects.
@@ -353,9 +351,7 @@ public:
 	 * @param inDiv Division to tally.
 	 * @return Number of objects, not points.
 	 */
-	int NumExistingPointsInDivision(
-			ARBConfigVenuePtr const& inVenue,
-			std::wstring const& inDiv) const;
+	int NumExistingPointsInDivision(ARBConfigVenuePtr const& inVenue, std::wstring const& inDiv) const;
 
 	/**
 	 * Rename a division.
@@ -364,10 +360,7 @@ public:
 	 * @param inNewDiv New division name.
 	 * @return Number of items updated.
 	 */
-	int RenameDivision(
-			std::wstring const& inVenue,
-			std::wstring const& inOldDiv,
-			std::wstring const& inNewDiv);
+	int RenameDivision(std::wstring const& inVenue, std::wstring const& inOldDiv, std::wstring const& inNewDiv);
 
 	/**
 	 * Delete a division.
@@ -375,9 +368,7 @@ public:
 	 * @param inDiv Division name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteDivision(
-			std::wstring const& inVenue,
-			std::wstring const& inDiv);
+	int DeleteDivision(std::wstring const& inVenue, std::wstring const& inDiv);
 
 	/**
 	 * Number of levels in use.
@@ -387,10 +378,7 @@ public:
 	 * @param inLevel Level to tally.
 	 * @return Number of objects.
 	 */
-	int NumLevelsInUse(
-			std::wstring const& inVenue,
-			std::wstring const& inDiv,
-			std::wstring const& inLevel) const;
+	int NumLevelsInUse(std::wstring const& inVenue, std::wstring const& inDiv, std::wstring const& inLevel) const;
 
 	/**
 	 * Rename a level, rename any dependent objects.
@@ -401,10 +389,10 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameLevel(
-			std::wstring const& inVenue,
-			std::wstring const& inDiv,
-			std::wstring const& inOldLevel,
-			std::wstring const& inNewLevel);
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inOldLevel,
+		std::wstring const& inNewLevel);
 
 	/**
 	 * Delete a level, remove any dependent objects.
@@ -413,10 +401,7 @@ public:
 	 * @param inLevel Level name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteLevel(
-			std::wstring const& inVenue,
-			std::wstring const& inDiv,
-			std::wstring const& inLevel);
+	int DeleteLevel(std::wstring const& inVenue, std::wstring const& inDiv, std::wstring const& inLevel);
 
 	/**
 	 * Number of events in use.
@@ -425,9 +410,7 @@ public:
 	 * @param inEvent Event to tally.
 	 * @return Number of objects.
 	 */
-	int NumEventsInUse(
-			std::wstring const& inVenue,
-			std::wstring const& inEvent) const;
+	int NumEventsInUse(std::wstring const& inVenue, std::wstring const& inEvent) const;
 
 	/**
 	 * Rename an event, rename any dependent objects.
@@ -436,10 +419,7 @@ public:
 	 * @param inNewEvent New event name.
 	 * @return Number of items changed.
 	 */
-	int RenameEvent(
-			std::wstring const& inVenue,
-			std::wstring const& inOldEvent,
-			std::wstring const& inNewEvent);
+	int RenameEvent(std::wstring const& inVenue, std::wstring const& inOldEvent, std::wstring const& inNewEvent);
 
 	/**
 	 * Delete an event, remove any dependent objects.
@@ -447,9 +427,7 @@ public:
 	 * @param inEvent Event name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteEvent(
-			std::wstring const& inVenue,
-			std::wstring const& inEvent);
+	int DeleteEvent(std::wstring const& inVenue, std::wstring const& inEvent);
 
 	/**
 	 * Number of OtherPoint objects in use.
@@ -465,9 +443,7 @@ public:
 	 * @param inNewOther New OtherPoint name.
 	 * @return Number of items changed.
 	 */
-	int RenameOtherPoints(
-			std::wstring const& inOldOther,
-			std::wstring const& inNewOther);
+	int RenameOtherPoints(std::wstring const& inOldOther, std::wstring const& inNewOther);
 
 	/**
 	 * Delete an OtherPoint, remove any dependent objects.
@@ -491,10 +467,7 @@ public:
 	 * @param inNewName New Lifetime name.
 	 * @return Number of items changed.
 	 */
-	int RenameLifetimeName(
-			std::wstring const& inVenue,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
+	int RenameLifetimeName(std::wstring const& inVenue, std::wstring const& inOldName, std::wstring const& inNewName);
 
 	/**
 	 * Delete a Lifetime name.
@@ -502,9 +475,7 @@ public:
 	 * @param inName Lifetime name to delete.
 	 * @return Number of items removed.
 	 */
-	int DeleteLifetimeName(
-			std::wstring const& inVenue,
-			std::wstring const& inName);
+	int DeleteLifetimeName(std::wstring const& inVenue, std::wstring const& inName);
 
 	/**
 	 * Number of MultiQ objects in use.
@@ -513,9 +484,7 @@ public:
 	 * @param inMultiQ Name of item to look for.
 	 * @return Number of objects, not points.
 	 */
-	int NumMultiQsInUse(
-			std::wstring const& inVenue,
-			std::wstring const& inMultiQ) const;
+	int NumMultiQsInUse(std::wstring const& inVenue, std::wstring const& inMultiQ) const;
 
 	/**
 	 * Rename a MultiQ, rename any dependent objects.
@@ -524,10 +493,7 @@ public:
 	 * @param inNewMultiQ New MultiQ name.
 	 * @return Number of items changed.
 	 */
-	int RenameMultiQs(
-			std::wstring const& inVenue,
-			std::wstring const& inOldMultiQ,
-			std::wstring const& inNewMultiQ);
+	int RenameMultiQs(std::wstring const& inVenue, std::wstring const& inOldMultiQ, std::wstring const& inNewMultiQ);
 
 	/**
 	 * Delete any MultiQs no longer in venue.
@@ -535,9 +501,7 @@ public:
 	 * @param inVenue Venue in which MultiQ was deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteMultiQs(
-			ARBConfig const& inConfig,
-			std::wstring const& inVenue);
+	int DeleteMultiQs(ARBConfig const& inConfig, std::wstring const& inVenue);
 
 	/**
 	 * Add an existing point object.

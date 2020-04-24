@@ -73,10 +73,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -118,10 +115,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Verify the name exists.
@@ -136,9 +130,7 @@ public:
 	 * @param outLifetimeName Pointer to found object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindLifetimeName(
-			std::wstring const& inName,
-			ARBConfigLifetimeNamePtr* outLifetimeName = nullptr) const;
+	bool FindLifetimeName(std::wstring const& inName, ARBConfigLifetimeNamePtr* outLifetimeName = nullptr) const;
 
 	/**
 	 * Add a Lifetime name.
@@ -146,9 +138,7 @@ public:
 	 * @param outLifetimeName Pointer to object, NULL if name already exists or is empty.
 	 * @return Whether the fault was added.
 	 */
-	bool AddLifetimeName(
-			std::wstring const& inName,
-			ARBConfigLifetimeNamePtr* outLifetimeName = nullptr);
+	bool AddLifetimeName(std::wstring const& inName, ARBConfigLifetimeNamePtr* outLifetimeName = nullptr);
 
 	/**
 	 * Delete the Lifetime name.

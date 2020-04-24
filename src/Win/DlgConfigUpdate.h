@@ -24,7 +24,10 @@ class CDlgConfigUpdate : public wxDialog
 public:
 	CDlgConfigUpdate(wxWindow* parent = nullptr);
 
-	ARBConfig& GetConfig()		{return m_Book.GetConfig();}
+	ARBConfig& GetConfig()
+	{
+		return m_Book.GetConfig();
+	}
 	// This should not be called if the dialog was flown. It is intended
 	// to allow loading config data without flying the dialog (for instance,
 	// from the import menu item).

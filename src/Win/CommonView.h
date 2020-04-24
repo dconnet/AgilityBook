@@ -46,20 +46,31 @@ public:
 
 	// These handle doc/view destruction so we can shut down properly.
 	// (virtual starting here)
-	virtual void DetachView() {}
+	virtual void DetachView()
+	{
+	}
 
 	/**
 	 * Used so the current view can report whether it is filtering or not.
 	 */
-	virtual bool IsFiltered() const {return false;}
+	virtual bool IsFiltered() const
+	{
+		return false;
+	}
 	/**
 	 * Get a status message for the current view.
 	 */
-	virtual bool GetMessage(std::wstring& msg) const {return false;}
+	virtual bool GetMessage(std::wstring& msg) const
+	{
+		return false;
+	}
 	/**
 	 * Get a second status message for the current view.
 	 */
-	virtual bool GetMessage2(std::wstring& msg) const {return false;}
+	virtual bool GetMessage2(std::wstring& msg) const
+	{
+		return false;
+	}
 };
 
 
@@ -71,65 +82,54 @@ class CAgilityBookBaseExtraView : public CAgilityBookBaseView
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookBaseExtraView)
 
 public:
-	CAgilityBookBaseExtraView(
-			CTabView* pTabView,
-			wxDocument* doc);
+	CAgilityBookBaseExtraView(CTabView* pTabView, wxDocument* doc);
 	/// Derived class must call this at end of their work.
 	virtual bool Create(
-			CBasePanel* parentOfView,
-			wxWindow* parentOfCtrl,
-			wxDocument* doc,
-			long flags,
-			wxSizer* sizer,
-			int proportion = 0,
-			int sizerFlags = 0,
-			int border = 0);
+		CBasePanel* parentOfView,
+		wxWindow* parentOfCtrl,
+		wxDocument* doc,
+		long flags,
+		wxSizer* sizer,
+		int proportion = 0,
+		int sizerFlags = 0,
+		int border = 0);
 
 	virtual wxWindow* GetControl() = 0;
-	virtual bool HasPrevPane() const	{return false;}
-	virtual bool PrevPane()				{return false;}
-	virtual bool HasNextPane() const	{return false;}
-	virtual bool NextPane()				{return false;}
+	virtual bool HasPrevPane() const
+	{
+		return false;
+	}
+	virtual bool PrevPane()
+	{
+		return false;
+	}
+	virtual bool HasNextPane() const
+	{
+		return false;
+	}
+	virtual bool NextPane()
+	{
+		return false;
+	}
 
 	// The base class implements, we want to make sure all these classes override
 	virtual void DetachView() = 0;
 
 	virtual bool AllowStatusContext(int field) const = 0;
 
-	void OnActivateView(
-			bool activate,
-			wxView* activeView,
-			wxView* deactiveView) override;
+	void OnActivateView(bool activate, wxView* activeView, wxView* deactiveView) override;
 
-	virtual void DoActivateView(
-			bool activate,
-			wxView* activeView,
-			wxView* deactiveView) = 0;
+	virtual void DoActivateView(bool activate, wxView* activeView, wxView* deactiveView) = 0;
 
 	void UpdateMessages();
 
 protected:
 	// Returns points in client coordinates
-	bool GetMenuPosition(
-			wxPoint& outPos,
-			CListCtrl& ctrl,
-			wxContextMenuEvent const& evt);
-	bool GetMenuPosition(
-			wxPoint& outPos,
-			CListCtrl& ctrl,
-			wxListEvent const& evt);
-	bool GetMenuPosition(
-			wxPoint& outPos,
-			CTreeCtrl& ctrl,
-			wxContextMenuEvent const& evt);
-	bool GetMenuPosition(
-			wxPoint& outPos,
-			CTreeCtrl& ctrl,
-			wxTreeEvent const& evt);
-	bool GetMenuPosition(
-			wxPoint& outPos,
-			wxWindow const* ctrl,
-			wxContextMenuEvent const& evt);
+	bool GetMenuPosition(wxPoint& outPos, CListCtrl& ctrl, wxContextMenuEvent const& evt);
+	bool GetMenuPosition(wxPoint& outPos, CListCtrl& ctrl, wxListEvent const& evt);
+	bool GetMenuPosition(wxPoint& outPos, CTreeCtrl& ctrl, wxContextMenuEvent const& evt);
+	bool GetMenuPosition(wxPoint& outPos, CTreeCtrl& ctrl, wxTreeEvent const& evt);
+	bool GetMenuPosition(wxPoint& outPos, wxWindow const* ctrl, wxContextMenuEvent const& evt);
 
 	CTabView* m_pTabView;
 	CBasePanel* m_parentPanel;

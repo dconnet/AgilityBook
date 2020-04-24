@@ -28,8 +28,8 @@
 #include <map>
 #include <string>
 #include <vector>
-class CVersionNum;		// ARB/VersionNum.h
-class IProgressMeter;	// Include/IProgressMeter.h
+class CVersionNum;    // ARB/VersionNum.h
+class IProgressMeter; // Include/IProgressMeter.h
 
 
 class ICalendarSite
@@ -68,8 +68,7 @@ public:
 	 * @note First item is the value that will be passed
 	 *       in the query. Second item is a pretty name.
 	 */
-	virtual size_t GetLocationCodes(
-			std::map<std::wstring, std::wstring>& locCodes) const = 0;
+	virtual size_t GetLocationCodes(std::map<std::wstring, std::wstring>& locCodes) const = 0;
 
 	/**
 	 * Get a list of venue codes.
@@ -78,8 +77,7 @@ public:
 	 *       item is the mapping to ARBs venue code. If they are the same,
 	 *       specifying the 2nd item is optional.
 	 */
-	virtual size_t GetVenueCodes(
-			std::map<std::wstring, std::wstring>& venueCodes) const = 0;
+	virtual size_t GetVenueCodes(std::map<std::wstring, std::wstring>& venueCodes) const = 0;
 
 	/**
 	 * Get the processed data. The returned data should be in the form of
@@ -93,8 +91,8 @@ public:
 	 * updates (during the executable's current session)
 	 */
 	virtual std::string Process(
-			std::vector<std::wstring> const& inLocCodes,
-			std::vector<std::wstring> const& inVenueCodes,
-			IProgressMeter* progress) const = 0;
+		std::vector<std::wstring> const& inLocCodes,
+		std::vector<std::wstring> const& inVenueCodes,
+		IProgressMeter* progress) const = 0;
 };
 typedef std::shared_ptr<ICalendarSite> ICalendarSitePtr;

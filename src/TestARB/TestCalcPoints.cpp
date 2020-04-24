@@ -238,7 +238,14 @@ TEST_CASE("CalcPoints")
 			for (size_t i = 0; i < nPoints; ++i)
 			{
 				// Fields 1-3 ignored.
-				double pt = p->GetPoints(0.0, 0.0, 0.0, points[i].place, points[i].inCls, points[i].date, points[i].isTourney);
+				double pt = p->GetPoints(
+					0.0,
+					0.0,
+					0.0,
+					points[i].place,
+					points[i].inCls,
+					points[i].date,
+					points[i].isTourney);
 				REQUIRE(pt == points[i].pts);
 			}
 		}

@@ -27,7 +27,6 @@
  * 2003-11-26 Changed version number to a complex value.
  */
 
-#include "ARB_Q.h"
 #include "ARBBase.h"
 #include "ARBDogNotes.h"
 #include "ARBDogReferenceRun.h"
@@ -35,6 +34,7 @@
 #include "ARBDogRunPartner.h"
 #include "ARBDogRunScoring.h"
 #include "ARBTypes2.h"
+#include "ARB_Q.h"
 #include "LibwxARB.h"
 
 #include "ARBCommon/ARBDate.h"
@@ -93,11 +93,11 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfig const& inConfig,
-			ARBDogClubList const& inClubs,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfig const& inConfig,
+		ARBDogClubList const& inClubs,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -107,10 +107,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogRun element will be created in ioTree.
 	 */
-	bool Save(
-			ElementNodePtr const& ioTree,
-			ARBDogTrial const* pTrial,
-			ARBConfig const& inConfig) const;
+	bool Save(ElementNodePtr const& ioTree, ARBDogTrial const* pTrial, ARBConfig const& inConfig) const;
 
 	/**
 	 * Number of OtherPoint objects in use.
@@ -126,9 +123,7 @@ public:
 	 * @param inNewName New OtherPoint name.
 	 * @return Number of items changed.
 	 */
-	int RenameOtherPoints(
-			std::wstring const& inOldName,
-			std::wstring const& inNewName);
+	int RenameOtherPoints(std::wstring const& inOldName, std::wstring const& inNewName);
 
 	/**
 	 * Delete an OtherPoint, remove any dependent objects.
@@ -150,9 +145,7 @@ public:
 	 * @param outClean Was this a clean run?
 	 * @return Number of title points earned.
 	 */
-	double GetTitlePoints(
-			ARBConfigScoringPtr const& inScoring,
-			bool* outClean = nullptr) const;
+	double GetTitlePoints(ARBConfigScoringPtr const& inScoring, bool* outClean = nullptr) const;
 
 	/**
 	* Get the number of lifetime points earned in this run.
@@ -160,9 +153,7 @@ public:
 	* @param inLifetimeName Name of Lifetime points to tally.
 	* @return Number of lifetime points earned.
 	*/
-	double GetLifetimePoints(
-			ARBConfigScoringPtr const& inScoring,
-			std::wstring const& inLifetimeName) const;
+	double GetLifetimePoints(ARBConfigScoringPtr const& inScoring, std::wstring const& inLifetimeName) const;
 
 	/**
 	* Get the number of lifetime placement points earned in this run.
@@ -417,11 +408,11 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfig const& inConfig,
-			ARBDogClubList const& inClubs,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfig const& inConfig,
+		ARBDogClubList const& inClubs,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -431,10 +422,7 @@ public:
 	 * @return Success
 	 * @post The T element will be created in ioTree.
 	 */
-	bool Save(
-			ElementNodePtr const& ioTree,
-			ARBDogTrial const* pTrial,
-			ARBConfig const& inConfig) const;
+	bool Save(ElementNodePtr const& ioTree, ARBDogTrial const* pTrial, ARBConfig const& inConfig) const;
 
 	/**
 	 * Sort the list by date in ascending order. The user interface handles

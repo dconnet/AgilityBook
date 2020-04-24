@@ -24,10 +24,7 @@
 class CDlgFault : public wxDialog
 {
 public:
-	CDlgFault(
-			std::set<std::wstring>& faults,
-			std::wstring const& fault,
-			wxWindow* pParent = nullptr);
+	CDlgFault(std::set<std::wstring>& faults, std::wstring const& fault, wxWindow* pParent = nullptr);
 	std::wstring GetFault() const;
 
 private:

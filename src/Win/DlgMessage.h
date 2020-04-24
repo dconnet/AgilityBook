@@ -18,8 +18,5 @@
 class CDlgMessage : public wxDialog
 {
 public:
-	CDlgMessage(
-			std::wstring const& msg,
-			wxWindow* pParent = nullptr,
-			std::wstring caption = std::wstring());
+	CDlgMessage(std::wstring const& msg, wxWindow* pParent = nullptr, std::wstring caption = std::wstring());
 };

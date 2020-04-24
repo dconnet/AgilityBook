@@ -77,10 +77,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -97,10 +94,7 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(
-			int indent,
-			ARBConfigSubLevelPtr const& inLevelNew,
-			std::wstring& ioInfo);
+	bool Update(int indent, ARBConfigSubLevelPtr const& inLevelNew, std::wstring& ioInfo);
 
 	/*
 	 * Getters/setters.
@@ -143,10 +137,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Reorder the list based on 'inList'
@@ -160,9 +151,7 @@ public:
 	 * @param outLevel Pointer to object, NULL if not found.
 	 * @return Whether name exists.
 	 */
-	bool FindSubLevel(
-			std::wstring const& inName,
-			ARBConfigSubLevelPtr* outLevel = nullptr) const;
+	bool FindSubLevel(std::wstring const& inName, ARBConfigSubLevelPtr* outLevel = nullptr) const;
 
 	/**
 	 * Find a sublevel.
@@ -170,9 +159,7 @@ public:
 	 * @param outLevel Pointer to object, NULL if not found.
 	 * @return Whether the object was added.
 	 */
-	bool AddSubLevel(
-			std::wstring const& inName,
-			ARBConfigSubLevelPtr* outLevel = nullptr);
+	bool AddSubLevel(std::wstring const& inName, ARBConfigSubLevelPtr* outLevel = nullptr);
 
 	/**
 	 * Delete a sublevel.

@@ -33,23 +33,23 @@
 #include "ARBCommon/VersionNum.h"
 #include "LibARBWin/ReadHttp.h"
 #include "LibTidyHtml/LibTidyHtml.h"
-#include <errno.h>
 #include <wx/ffile.h>
 #include <wx/mstream.h>
 #include <wx/wfstream.h>
+#include <errno.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
 
-#define CAL_VER_MAJOR		2
-#define CAL_VER_MINOR		2
-#define CAL_VER_DOT			0
+#define CAL_VER_MAJOR 2
+#define CAL_VER_MINOR 2
+#define CAL_VER_DOT   0
 
-#define GENERATE_TESTDATA	0
-#define USE_TESTDATA 		0
-#define TESTDATANAME		L"c:\\AgilityBook\\testdata\\usdaa-raw"
-#define DEBUG_TIDY			1
+#define GENERATE_TESTDATA 0
+#define USE_TESTDATA      0
+#define TESTDATANAME      L"c:\\AgilityBook\\testdata\\usdaa-raw"
+#define DEBUG_TIDY        1
 #if GENERATE_TESTDATA && USE_TESTDATA
 #error "Choose one!"
 #endif
@@ -128,20 +128,20 @@ std::wstring CCalendarSiteUSDAA::GetName() const
 
 std::wstring CCalendarSiteUSDAA::GetDescription() const
 {
-	return fmt::format(_("Get all the events from USDAA. This will parse the HTML returned from {}").wx_str(), k_eventURL);
+	return fmt::format(
+		_("Get all the events from USDAA. This will parse the HTML returned from {}").wx_str(),
+		k_eventURL);
 }
 
 
-size_t CCalendarSiteUSDAA::GetLocationCodes(
-		std::map<std::wstring, std::wstring>& locCodes) const
+size_t CCalendarSiteUSDAA::GetLocationCodes(std::map<std::wstring, std::wstring>& locCodes) const
 {
 	locCodes.clear();
 	return locCodes.size();
 }
 
 
-size_t CCalendarSiteUSDAA::GetVenueCodes(
-		std::map<std::wstring, std::wstring>& venueCodes) const
+size_t CCalendarSiteUSDAA::GetVenueCodes(std::map<std::wstring, std::wstring>& venueCodes) const
 {
 	venueCodes.clear();
 	venueCodes[L"USDAA"] = L"USDAA";
@@ -150,11 +150,12 @@ size_t CCalendarSiteUSDAA::GetVenueCodes(
 
 
 static ElementNodePtr ReadData(
-		std::wstring const& inAddress
+	std::wstring const& inAddress
 #if GENERATE_TESTDATA
-		, std::wstring const& outTestData
+	,
+	std::wstring const& outTestData
 #endif
-		)
+)
 {
 	ElementNodePtr tree;
 
@@ -210,9 +211,9 @@ static ElementNodePtr ReadData(
 // The only filtering of calendar events the website has is by type
 // (titling/tourny/etc). So just ignore any supplied codes.
 std::string CCalendarSiteUSDAA::Process(
-		std::vector<std::wstring> const& /*inLocCodes*/,
-		std::vector<std::wstring> const& /*inVenueCodes*/,
-		IProgressMeter* progress) const
+	std::vector<std::wstring> const& /*inLocCodes*/,
+	std::vector<std::wstring> const& /*inVenueCodes*/,
+	IProgressMeter* progress) const
 {
 	if (progress)
 		progress->SetMessage(fmt::format(L"Reading {}", k_eventURL).c_str());
@@ -253,7 +254,7 @@ std::string CCalendarSiteUSDAA::Process(
 	static const std::wstring name(L"Event Calendar");
 	if (tree->FindElementDeep(parentElement, idxEventCalH4tag, tag, &name))
 	{
-		int idxTable = parentElement->FindElement(L"table", idxEventCalH4tag+1);
+		int idxTable = parentElement->FindElement(L"table", idxEventCalH4tag + 1);
 		if (0 <= idxTable)
 		{
 			ElementNodePtr table = parentElement->GetElementNode(idxTable);
@@ -280,18 +281,18 @@ std::string CCalendarSiteUSDAA::Process(
 							dates = tr->GetElement(td)->GetValue();
 							break;
 						case 1:
+						{
+							int idxA = tr->GetElementNode(td)->FindElement(L"a");
+							if (0 <= idxA)
 							{
-								int idxA = tr->GetElementNode(td)->FindElement(L"a");
-								if (0 <= idxA)
-								{
-									club = tr->GetElementNode(td)->GetElement(idxA)->GetValue();
-									tr->GetElementNode(td)->GetElementNode(idxA)->GetAttrib(L"href", detail);
-								}
-								else
-									club = tr->GetElement(td)->GetValue();
-								StripNewlines(club);
+								club = tr->GetElementNode(td)->GetElement(idxA)->GetValue();
+								tr->GetElementNode(td)->GetElementNode(idxA)->GetAttrib(L"href", detail);
 							}
-							break;
+							else
+								club = tr->GetElement(td)->GetValue();
+							StripNewlines(club);
+						}
+						break;
 						case 2:
 							location = StringUtil::Trim(tr->GetElement(td)->GetValue());
 							StripNewlines(location);
@@ -313,7 +314,7 @@ std::string CCalendarSiteUSDAA::Process(
 							break;
 						case 3:
 							// <td><a>type</a></td>
-//Text[0]=["Event Type","1 - Titling Only Event&lt;BR&gt;2 - Titling Event with Tournament Classes&lt;BR&gt;3 - Titling Event with Junior Handler Classes&lt;BR&gt;4 - Titling Event with Tournament &amp; Junior Handler Classes&lt;BR&gt;5 - Tournament Only Event&lt;BR&gt;6 - Tournament Event with Junior Handler Classes&lt;BR&gt;7 - Junior Handler Only Event&lt;BR&gt;8 - Seminar&lt;BR&gt;9 - Seminar with Non-titling Match&lt;BR&gt;0 - Non-titling Match"];
+							//Text[0]=["Event Type","1 - Titling Only Event&lt;BR&gt;2 - Titling Event with Tournament Classes&lt;BR&gt;3 - Titling Event with Junior Handler Classes&lt;BR&gt;4 - Titling Event with Tournament &amp; Junior Handler Classes&lt;BR&gt;5 - Tournament Only Event&lt;BR&gt;6 - Tournament Event with Junior Handler Classes&lt;BR&gt;7 - Junior Handler Only Event&lt;BR&gt;8 - Seminar&lt;BR&gt;9 - Seminar with Non-titling Match&lt;BR&gt;0 - Non-titling Match"];
 							break;
 						}
 						++idx;
@@ -324,7 +325,7 @@ std::string CCalendarSiteUSDAA::Process(
 					bOk = true;
 					ElementNodePtr cal = calTree->AddElementNode(TREE_CALENDAR);
 					cal->AddAttrib(ATTRIB_CAL_START, mdy2ymd(dates.substr(0, pos)));
-					cal->AddAttrib(ATTRIB_CAL_END, mdy2ymd(dates.substr(pos+1)));
+					cal->AddAttrib(ATTRIB_CAL_END, mdy2ymd(dates.substr(pos + 1)));
 					cal->AddAttrib(ATTRIB_CAL_VENUE, L"USDAA");
 					cal->AddAttrib(ATTRIB_CAL_CLUB, club);
 					cal->AddAttrib(ATTRIB_CAL_LOCATION, location);
@@ -343,7 +344,7 @@ std::string CCalendarSiteUSDAA::Process(
 	}
 
 	int idxCal = -1;
-	while (0 <= (idxCal = calTree->FindElement(TREE_CALENDAR, idxCal+1)))
+	while (0 <= (idxCal = calTree->FindElement(TREE_CALENDAR, idxCal + 1)))
 	{
 		if (progress)
 		{
@@ -369,7 +370,7 @@ std::string CCalendarSiteUSDAA::Process(
 #if GENERATE_TESTDATA || USE_TESTDATA
 		testData = TESTDATANAME;
 		size_t idxAddr = address.find('=');
-		testData += address.substr(idxAddr+1);
+		testData += address.substr(idxAddr + 1);
 		testData += L".xml";
 #if USE_TESTDATA
 		ElementNodePtr treeDetail = ReadData(testData);
@@ -417,39 +418,39 @@ std::string CCalendarSiteUSDAA::Process(
 							case 2: // Location
 								break;
 							case 3: // Closing date
+							{
+								int idxDate;
+								ElementNode const* parentCloseDate;
+								if (div->FindElementDeep(parentCloseDate, idxDate, L"span"))
 								{
-									int idxDate;
-									ElementNode const* parentCloseDate;
-									if (div->FindElementDeep(parentCloseDate, idxDate, L"span"))
-									{
-										ElementNodePtr closeDate = parentCloseDate->GetElementNode(idxDate);
-										std::wstring date = closeDate->GetValue();
-										cal->AddAttrib(ATTRIB_CAL_CLOSING, mdy2ymd(date));
-									}
+									ElementNodePtr closeDate = parentCloseDate->GetElementNode(idxDate);
+									std::wstring date = closeDate->GetValue();
+									cal->AddAttrib(ATTRIB_CAL_CLOSING, mdy2ymd(date));
 								}
-								break;
+							}
+							break;
 							case 4: // 2nd closing
 								break;
 							case 5: // Secretary
+							{
+								int idxHref;
+								ElementNode const* parentTagA;
+								if (div->FindElementDeep(parentTagA, idxHref, L"a"))
 								{
-									int idxHref;
-									ElementNode const* parentTagA;
-									if (div->FindElementDeep(parentTagA, idxHref, L"a"))
-									{
-										ElementNodePtr tagA = parentTagA->GetElementNode(idxHref);
-										std::wstring email;
-										tagA->GetAttrib(L"href", email);
-										cal->AddAttrib(ATTRIB_CAL_SECEMAIL, email);
-									}
+									ElementNodePtr tagA = parentTagA->GetElementNode(idxHref);
+									std::wstring email;
+									tagA->GetAttrib(L"href", email);
+									cal->AddAttrib(ATTRIB_CAL_SECEMAIL, email);
 								}
-								break;
+							}
+							break;
 							}
 							++idx;
 						}
 					}
 				}
 #if OLD_USDAA_FORMAT // Changed Late-Oct 2010
-				int idxTable = parent->FindElement(L"table", idxEventCalH3tag+1);
+				int idxTable = parent->FindElement(L"table", idxEventCalH3tag + 1);
 				if (0 <= idxTable)
 				{
 					ElementNodePtr table = parent->GetElementNode(idxTable);
@@ -483,7 +484,7 @@ std::string CCalendarSiteUSDAA::Process(
 								//   <td>mm/dd/yyyy</td>
 								{
 									int iTD = table->GetElementNode(i)->FindElement(L"td", 0);
-									iTD = table->GetElementNode(i)->FindElement(L"td", iTD+1);
+									iTD = table->GetElementNode(i)->FindElement(L"td", iTD + 1);
 									if (0 <= iTD)
 									{
 										std::wstring date = table->GetElementNode(i)->GetElement(iTD)->GetValue();
@@ -502,7 +503,7 @@ std::string CCalendarSiteUSDAA::Process(
 								//   <td><a href="mailto...">name</a><br/>addr<br/></td>
 								{
 									int iTD = table->GetElementNode(i)->FindElement(L"td", 0);
-									iTD = table->GetElementNode(i)->FindElement(L"td", iTD+1);
+									iTD = table->GetElementNode(i)->FindElement(L"td", iTD + 1);
 									ElementNodePtr td = table->GetElementNode(i)->GetElementNode(iTD);
 									if (td)
 									{

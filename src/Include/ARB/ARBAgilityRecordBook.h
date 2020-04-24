@@ -60,12 +60,12 @@
 
 enum class ARBFileInfo
 {
-	Book = 0,		// ARB document version
-	OS = 1,			// OS name (with some info)0
-	Platform = 2,	// Platform (arch) 
-	TimeStamp = 3,	// File written
-	Version = 4,	// Version of ARB that wrote file
-	Max = 5,		// Version of ARB that wrote file
+	Book = 0,      // ARB document version
+	OS = 1,        // OS name (with some info)0
+	Platform = 2,  // Platform (arch)
+	TimeStamp = 3, // File written
+	Version = 4,   // Version of ARB that wrote file
+	Max = 5,       // Version of ARB that wrote file
 };
 
 
@@ -166,10 +166,10 @@ public:
 	 *       Existing runs may be modified or deleted.
 	 */
 	bool Update(
-			int indent,
-			ARBConfig const& inConfigNew,
-			fmt::wmemory_buffer& ioInfo,
-			IConfigActionCallback& ioCallBack);
+		int indent,
+		ARBConfig const& inConfigNew,
+		fmt::wmemory_buffer& ioInfo,
+		IConfigActionCallback& ioCallBack);
 
 	//
 	// Convenience functions that do some data accumulation.
@@ -182,10 +182,7 @@ public:
 	 * @param bVisibleOnly When including ARBInfo, only get visible items.
 	 * @return Number of clubs.
 	 */
-	size_t GetAllClubNames(
-			std::set<std::wstring>& outClubs,
-			bool bInfo,
-			bool bVisibleOnly) const;
+	size_t GetAllClubNames(std::set<std::wstring>& outClubs, bool bInfo, bool bVisibleOnly) const;
 
 	/**
 	 * Get all trial locations in use from existing trials and calendar entries.
@@ -194,10 +191,7 @@ public:
 	 * @param bVisibleOnly When including ARBInfo, only get visible items.
 	 * @return Number of locations.
 	 */
-	size_t GetAllTrialLocations(
-			std::set<std::wstring>& outLocations,
-			bool bInfo,
-			bool bVisibleOnly) const;
+	size_t GetAllTrialLocations(std::set<std::wstring>& outLocations, bool bInfo, bool bVisibleOnly) const;
 
 	/**
 	 * Get all the subnames in use for the given event.
@@ -207,9 +201,9 @@ public:
 	 * @return Number of subnames.
 	 */
 	size_t GetAllEventSubNames(
-			std::wstring const& inVenue,
-			ARBConfigEventPtr const& inEvent,
-			std::set<std::wstring>& outNames) const;
+		std::wstring const& inVenue,
+		ARBConfigEventPtr const& inEvent,
+		std::set<std::wstring>& outNames) const;
 
 	/**
 	 * Get all heights in use from existing runs.
@@ -239,10 +233,7 @@ public:
 	 * @param bVisibleOnly When including ARBInfo, only get visible items.
 	 * @return Number of judges.
 	 */
-	size_t GetAllJudges(
-			std::set<std::wstring>& outJudges,
-			bool bInfo,
-			bool bVisibleOnly) const;
+	size_t GetAllJudges(std::set<std::wstring>& outJudges, bool bInfo, bool bVisibleOnly) const;
 
 	/**
 	 * Get all handlers in use from existing runs.
@@ -256,9 +247,7 @@ public:
 	 * @param outPartners List of handlers.
 	 * @param outDogs List of dogs.
 	 */
-	void GetAllPartners(
-			std::set<std::wstring>& outPartners,
-			std::set<std::wstring>& outDogs) const;
+	void GetAllPartners(std::set<std::wstring>& outPartners, std::set<std::wstring>& outDogs) const;
 
 	/**
 	 * Get all fault types in use from existing runs and configuration.

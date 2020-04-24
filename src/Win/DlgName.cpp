@@ -29,38 +29,42 @@
 #endif
 
 
-CDlgName::CDlgName(
-		std::wstring const& name,
-		wxWindow* pParent)
+CDlgName::CDlgName(std::wstring const& name, wxWindow* pParent)
 	: m_Name(StringUtil::stringWX(name))
 {
 	Create(_("IDD_NAME"), pParent);
 }
 
 
-CDlgName::CDlgName(
-		std::wstring const& name,
-		wxString const& caption,
-		wxWindow* pParent)
+CDlgName::CDlgName(std::wstring const& name, wxString const& caption, wxWindow* pParent)
 	: m_Name(StringUtil::stringWX(name))
 {
 	Create(caption, pParent);
 }
 
 
-bool CDlgName::Create(
-		wxString const& caption,
-		wxWindow* pParent)
+bool CDlgName::Create(wxString const& caption, wxWindow* pParent)
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	if (!wxDialog::Create(pParent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER))
+	if (!wxDialog::Create(
+			pParent,
+			wxID_ANY,
+			caption,
+			wxDefaultPosition,
+			wxDefaultSize,
+			wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER))
 		return false;
 
 	// Controls (these are done first to control tab order)
 
-	CTextCtrl* textCtrl = new CTextCtrl(this, wxID_ANY, m_Name,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 170), -1), 0,
+	CTextCtrl* textCtrl = new CTextCtrl(
+		this,
+		wxID_ANY,
+		m_Name,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 170), -1),
+		0,
 		CTrimValidator(&m_Name, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));
 	textCtrl->SetHelpText(_("HIDC_NAME"));
 	textCtrl->SetToolTip(_("HIDC_NAME"));

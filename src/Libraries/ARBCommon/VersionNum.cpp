@@ -42,7 +42,7 @@ bool CVersionNum::Parse(std::wstring const& inVer)
 	std::vector<std::wstring> fields;
 	if (4 == BreakLine(L'.', inVer, fields))
 	{
-		VERSION_NUMBER version = { 0, 0, 0, 0 };
+		VERSION_NUMBER version = {0, 0, 0, 0};
 		for (size_t i = 0; i < fields.size(); ++i)
 		{
 			version[i] = static_cast<unsigned short>(StringUtil::ToCLong(fields[i]));
@@ -55,9 +55,5 @@ bool CVersionNum::Parse(std::wstring const& inVer)
 
 std::wstring CVersionNum::GetVersionString() const
 {
-	return fmt::format(L"{}.{}.{}.{}",
-		m_Version[0],
-		m_Version[1],
-		m_Version[2],
-		m_Version[3]);
+	return fmt::format(L"{}.{}.{}.{}", m_Version[0], m_Version[1], m_Version[2], m_Version[3]);
 }

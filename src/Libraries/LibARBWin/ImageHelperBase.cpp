@@ -43,11 +43,7 @@ wxSize GetScaledSize(wxWindow const* pWindow, wxSize const& szLogical)
 }
 
 
-wxBitmap GetBitmap(
-		wxWindow* pWindow,
-		const wxArtID& id,
-		const wxArtClient& client,
-		const wxSize& size)
+wxBitmap GetBitmap(wxWindow* pWindow, const wxArtID& id, const wxArtClient& client, const wxSize& size)
 {
 	wxSize sz(size);
 	if (sz == wxDefaultSize)
@@ -60,11 +56,7 @@ wxBitmap GetBitmap(
 }
 
 
-wxIcon GetIcon(
-		wxWindow* pWindow,
-		const wxArtID& id,
-		const wxArtClient& client,
-		const wxSize& size)
+wxIcon GetIcon(wxWindow* pWindow, const wxArtID& id, const wxArtClient& client, const wxSize& size)
 {
 	wxSize sz(size);
 	if (sz == wxDefaultSize)
@@ -86,10 +78,7 @@ wxIcon CreateIconFromBitmap(const wxBitmap& bitmap)
 
 
 #if defined(__WINDOWS__)
-void LoadLocalBitmap(
-		wxWindow const* pWindow,
-		wchar_t const* const pImageName,
-		wxBitmap& outBmp)
+void LoadLocalBitmap(wxWindow const* pWindow, wchar_t const* const pImageName, wxBitmap& outBmp)
 {
 	wxLogNull suppress;
 	unsigned int scale = DPI::GetScale(pWindow);
@@ -118,4 +107,4 @@ void LoadLocalBitmap(
 }
 #endif
 
-};
+}; // namespace ImageHelper

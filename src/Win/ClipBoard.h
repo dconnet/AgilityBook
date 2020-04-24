@@ -21,7 +21,7 @@
 #include <wx/clipbrd.h>
 
 // Name of root element when writing Elements.
-#define CLIPDATA	L"ClipData"
+#define CLIPDATA L"ClipData"
 
 // Special clipboard formats
 enum class ARBClipFormat
@@ -53,7 +53,10 @@ public:
 	/**
 	 * Check if clipboard is ready for use.
 	 */
-	bool isOkay() const	{return m_bOkay;}
+	bool isOkay() const
+	{
+		return m_bOkay;
+	}
 
 protected:
 	bool m_bOkay;
@@ -68,9 +71,7 @@ public:
 
 	static bool IsFormatAvailable(ARBClipFormat clpFmt);
 
-	bool GetData(
-			ARBClipFormat clpFmt,
-			ElementNodePtr const& outTree);
+	bool GetData(ARBClipFormat clpFmt, ElementNodePtr const& outTree);
 
 	bool GetData(std::wstring& outData);
 };
@@ -91,6 +92,7 @@ public:
 	void EndLine();
 	void Cell(int nCol, std::wstring const& inData);
 	bool Write(CClipboardDataWriter& writer, bool bCommit);
+
 private:
 	bool m_Closed;
 	std::wstring& m_ioText;
@@ -107,14 +109,10 @@ public:
 	CClipboardDataWriter();
 	~CClipboardDataWriter();
 
-	bool AddData(
-			ARBClipFormat clpFmt,
-			ElementNodePtr const& inTree);
+	bool AddData(ARBClipFormat clpFmt, ElementNodePtr const& inTree);
 
 	// Used to write special data.
-	bool AddData(
-			ARBClipFormat clpFmt,
-			std::wstring const& inData);
+	bool AddData(ARBClipFormat clpFmt, std::wstring const& inData);
 
 	bool AddData(std::wstring const& inData);
 

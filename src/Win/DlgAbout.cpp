@@ -52,52 +52,80 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 
 	// Controls (these are done first to control tab order)
 
-	wxStaticBitmap* icon = new wxStaticBitmap(this, wxID_ANY,
+	wxStaticBitmap* icon = new wxStaticBitmap(
+		this,
+		wxID_ANY,
 		CImageManager::Get()->GetIcon(ImageMgrApp, wxART_MESSAGE_BOX),
-		wxDLG_UNIT(this, wxPoint(2, 1)), wxDefaultSize, 0);
+		wxDLG_UNIT(this, wxPoint(2, 1)),
+		wxDefaultSize,
+		0);
 
-	wxStaticText* version = new wxStaticText(this, wxID_ANY,
-		fmt::format(_("AboutVersion").wx_str(), ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD, _("Agility Record Book").wx_str()),
-		wxDefaultPosition, wxDefaultSize, 0);
- 	version->Wrap(wxDLG_UNIT_X(this, 250));
+	wxStaticText* version = new wxStaticText(
+		this,
+		wxID_ANY,
+		fmt::format(
+			_("AboutVersion").wx_str(),
+			ARB_VER_MAJOR,
+			ARB_VER_MINOR,
+			ARB_VER_DOT,
+			ARB_VER_BUILD,
+			_("Agility Record Book").wx_str()),
+		wxDefaultPosition,
+		wxDefaultSize,
+		0);
+	version->Wrap(wxDLG_UNIT_X(this, 250));
 
-	wxHyperlinkCtrl* link1 = new wxHyperlinkCtrl(this, wxID_ANY,
-		_("LinkGroupText"), _("LinkGroupUrl"),
-		wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
+	wxHyperlinkCtrl* link1 = new wxHyperlinkCtrl(
+		this,
+		wxID_ANY,
+		_("LinkGroupText"),
+		_("LinkGroupUrl"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxHL_DEFAULT_STYLE);
 	link1->SetToolTip(_("LinkGroupUrl"));
 	link1->SetHelpText(_("LinkGroupUrl"));
 
-	wxHyperlinkCtrl* link2 = new wxHyperlinkCtrl(this, wxID_ANY,
-		_("LinkHelpText"), _("LinkHelpUrl"),
-		wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
+	wxHyperlinkCtrl* link2 = new wxHyperlinkCtrl(
+		this,
+		wxID_ANY,
+		_("LinkHelpText"),
+		_("LinkHelpUrl"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxHL_DEFAULT_STYLE);
 	link2->SetToolTip(_("LinkHelpUrl"));
 	link2->SetHelpText(_("LinkHelpUrl"));
 	link2->Bind(wxEVT_COMMAND_HYPERLINK, &CDlgAbout::OnHelpEmail, this);
 
-	wxStaticText* usefulLinks = new wxStaticText(this, wxID_ANY,
-		_("UsefulLinks"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* usefulLinks = new wxStaticText(this, wxID_ANY, _("UsefulLinks"), wxDefaultPosition, wxDefaultSize, 0);
 	usefulLinks->Wrap(-1);
 
-	wxHyperlinkCtrl* link3 = new wxHyperlinkCtrl(this, wxID_ANY,
-		_("LinkArbText"), _("LinkArbUrl"),
-		wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
+	wxHyperlinkCtrl* link3 = new wxHyperlinkCtrl(
+		this,
+		wxID_ANY,
+		_("LinkArbText"),
+		_("LinkArbUrl"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxHL_DEFAULT_STYLE);
 	link3->SetToolTip(_("LinkArbUrl"));
 	link3->SetHelpText(_("LinkArbUrl"));
 
-	wxHyperlinkCtrl* link4 = new wxHyperlinkCtrl(this, wxID_ANY,
-		_("LinkArbDownloadText"), _("LinkArbDownloadUrl"),
-		wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
+	wxHyperlinkCtrl* link4 = new wxHyperlinkCtrl(
+		this,
+		wxID_ANY,
+		_("LinkArbDownloadText"),
+		_("LinkArbDownloadUrl"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxHL_DEFAULT_STYLE);
 	link4->SetToolTip(_("LinkArbDownloadUrl"));
 	link4->SetHelpText(_("LinkArbDownloadUrl"));
 
-	wxStaticText* credits = new wxStaticText(this, wxID_ANY,
-		_("AboutCredits"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* credits = new wxStaticText(this, wxID_ANY, _("AboutCredits"), wxDefaultPosition, wxDefaultSize, 0);
 
-	wxButton* updates = new wxButton(this, wxID_ANY,
-		_("CheckForUpdates"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* updates = new wxButton(this, wxID_ANY, _("CheckForUpdates"), wxDefaultPosition, wxDefaultSize, 0);
 	updates->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgAbout::OnCheckForUpdates, this);
 	updates->SetHelpText(_("HIDC_ABOUT_UPDATE"));
 

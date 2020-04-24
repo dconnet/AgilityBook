@@ -48,11 +48,11 @@ class CDlgFindLinksData : public CListData
 {
 public:
 	CDlgFindLinksData(
-			ARBDogPtr const& inDog,
-			ARBDogTrialPtr const& inTrial,
-			ARBDogRunPtr const& inRun,
-			std::wstring const& inLink,
-			int image)
+		ARBDogPtr const& inDog,
+		ARBDogTrialPtr const& inTrial,
+		ARBDogRunPtr const& inRun,
+		std::wstring const& inLink,
+		int image)
 		: m_pDog(inDog)
 		, m_pTrial(inTrial)
 		, m_pRun(inRun)
@@ -72,10 +72,10 @@ public:
 	int m_Image;
 };
 
-#define COL_LINK	0
-#define COL_DOG		1
-#define COL_TRIAL	2
-#define COL_RUN		3
+#define COL_LINK  0
+#define COL_DOG   1
+#define COL_TRIAL 2
+#define COL_RUN   3
 
 std::wstring CDlgFindLinksData::OnNeedText(long iCol) const
 {
@@ -104,26 +104,24 @@ void CDlgFindLinksData::OnNeedListItem(long iCol, wxListItem& info) const
 		info.SetMask(info.GetMask() | wxLIST_MASK_IMAGE);
 		info.SetImage(m_Image);
 	}
-
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 namespace
 {
-	static struct
-	{
-		int col;
-		wchar_t const* info;
-	} colLinkInfo[] =
-	{
-		{COL_LINK, arbT("IDS_COL_NAME")},
-		{COL_DOG, arbT("IDS_COL_DOG")},
-		{COL_TRIAL, arbT("IDS_COL_TRIAL")},
-		{COL_RUN, arbT("IDS_COL_EVENT")},
-	};
-	constexpr int nColLinkInfo = sizeof(colLinkInfo) / sizeof(colLinkInfo[0]);
-}
+static struct
+{
+	int col;
+	wchar_t const* info;
+} colLinkInfo[] = {
+	{COL_LINK, arbT("IDS_COL_NAME")},
+	{COL_DOG, arbT("IDS_COL_DOG")},
+	{COL_TRIAL, arbT("IDS_COL_TRIAL")},
+	{COL_RUN, arbT("IDS_COL_EVENT")},
+};
+constexpr int nColLinkInfo = sizeof(colLinkInfo) / sizeof(colLinkInfo[0]);
+} // namespace
 
 struct FindSortInfo : public SortInfo
 {
@@ -171,9 +169,7 @@ wxBEGIN_EVENT_TABLE(CDlgFindLinks, wxDialog)
 wxEND_EVENT_TABLE()
 
 
-CDlgFindLinks::CDlgFindLinks(
-		ARBDogList& inDogs,
-		wxWindow* pParent)
+CDlgFindLinks::CDlgFindLinks(ARBDogList& inDogs, wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlLinks(nullptr)
 	, m_ctrlEdit(nullptr)
@@ -184,16 +180,26 @@ CDlgFindLinks::CDlgFindLinks(
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDD_FIND_LINKS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		_("IDD_FIND_LINKS"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	wxBusyCursor wait;
 	m_sortLinks.Initialize(nColLinkInfo);
 
 	// Controls (these are done first to control tab order)
 
-	m_ctrlLinks = new CReportListCtrl(this,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(250, 85)),
-		true, CReportListCtrl::SortHeader::Sort, true);
+	m_ctrlLinks = new CReportListCtrl(
+		this,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(250, 85)),
+		true,
+		CReportListCtrl::SortHeader::Sort,
+		true);
 	m_ctrlLinks->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgFindLinks::OnColumnClick, this);
 	m_ctrlLinks->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgFindLinks::OnItemSelected, this);
 	m_ctrlLinks->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgFindLinks::OnItemActivated, this);
@@ -207,23 +213,17 @@ CDlgFindLinks::CDlgFindLinks(
 
 	wxButton* btnCancel = new wxButton(this, wxID_CANCEL);
 
-	wxButton* btnCopy = new wxButton(this, wxID_ANY,
-		_("IDC_FINDLINKS_COPY"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* btnCopy = new wxButton(this, wxID_ANY, _("IDC_FINDLINKS_COPY"), wxDefaultPosition, wxDefaultSize, 0);
 	btnCopy->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgFindLinks::OnCopy, this);
 	btnCopy->SetHelpText(_("HIDC_FINDLINKS_COPY"));
 	btnCopy->SetToolTip(_("HIDC_FINDLINKS_COPY"));
 
-	m_ctrlEdit = new wxButton(this, wxID_ANY,
-		_("IDC_FINDLINKS_EDIT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlEdit = new wxButton(this, wxID_ANY, _("IDC_FINDLINKS_EDIT"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgFindLinks::OnEdit, this);
 	m_ctrlEdit->SetHelpText(_("HIDC_FINDLINKS_EDIT"));
 	m_ctrlEdit->SetToolTip(_("HIDC_FINDLINKS_EDIT"));
 
-	m_ctrlOpen = new wxButton(this, wxID_ANY,
-		_("IDC_FINDLINKS_OPEN"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlOpen = new wxButton(this, wxID_ANY, _("IDC_FINDLINKS_OPEN"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlOpen->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgFindLinks::OnOpen, this);
 	m_ctrlOpen->SetHelpText(_("HIDC_FINDLINKS_OPEN"));
 	m_ctrlOpen->SetToolTip(_("HIDC_FINDLINKS_OPEN"));
@@ -261,26 +261,20 @@ CDlgFindLinks::CDlgFindLinks(
 		m_ctrlLinks->InsertColumn(i, wxGetTranslation(colLinkInfo[i].info));
 	}
 
-	for (ARBDogList::iterator iterDog = inDogs.begin();
-		iterDog != inDogs.end();
-		++iterDog)
+	for (ARBDogList::iterator iterDog = inDogs.begin(); iterDog != inDogs.end(); ++iterDog)
 	{
 		ARBDogPtr pDog = *iterDog;
-		for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin();
-			iterTrial != pDog->GetTrials().end();
-			++iterTrial)
+		for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin(); iterTrial != pDog->GetTrials().end();
+			 ++iterTrial)
 		{
 			ARBDogTrialPtr pTrial = *iterTrial;
-			for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin();
-				iterRun != pTrial->GetRuns().end();
-				++iterRun)
+			for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin(); iterRun != pTrial->GetRuns().end();
+				 ++iterRun)
 			{
 				ARBDogRunPtr pRun = *iterRun;
 				std::set<std::wstring> links;
 				pRun->GetLinks(links);
-				for (std::set<std::wstring>::iterator iter = links.begin();
-					iter != links.end();
-					++iter)
+				for (std::set<std::wstring>::iterator iter = links.begin(); iter != links.end(); ++iter)
 				{
 					int image = GetImageIndex(*iter);
 					m_Data.push_back(std::make_shared<CDlgFindLinksData>(pDog, pTrial, pRun, *iter, image));
@@ -332,7 +326,8 @@ void CDlgFindLinks::SetColumnHeaders()
 {
 	for (int i = 0; i < nColLinkInfo; ++i)
 	{
-		std::wstring str = fmt::format(L"{} ({})",
+		std::wstring str = fmt::format(
+			L"{} ({})",
 			wxGetTranslation(colLinkInfo[i].info).wx_str(),
 			m_sortLinks.FindColumnOrder(i) + 1);
 		wxListItem item;

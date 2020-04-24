@@ -34,16 +34,18 @@
 
 namespace
 {
-	class ARBDogReferenceRun_concrete : public ARBDogReferenceRun
+class ARBDogReferenceRun_concrete : public ARBDogReferenceRun
+{
+public:
+	ARBDogReferenceRun_concrete()
 	{
-	public:
-		ARBDogReferenceRun_concrete() {}
-		ARBDogReferenceRun_concrete(ARBDogReferenceRun const& rhs)
-			: ARBDogReferenceRun(rhs)
-		{
-		}
-	};
+	}
+	ARBDogReferenceRun_concrete(ARBDogReferenceRun const& rhs)
+		: ARBDogReferenceRun(rhs)
+	{
+	}
 };
+}; // namespace
 
 
 ARBDogReferenceRunPtr ARBDogReferenceRun::New()
@@ -138,6 +140,7 @@ ARBDogReferenceRun& ARBDogReferenceRun::operator=(ARBDogReferenceRun&& rhs)
 
 bool ARBDogReferenceRun::operator==(ARBDogReferenceRun const& rhs) const
 {
+	// clang-format off
 	return m_Q == rhs.m_Q
 		&& m_Place == rhs.m_Place
 		&& m_Name == rhs.m_Name
@@ -146,6 +149,7 @@ bool ARBDogReferenceRun::operator==(ARBDogReferenceRun const& rhs) const
 		&& m_Time == rhs.m_Time
 		&& m_Score == rhs.m_Score
 		&& m_Note == rhs.m_Note;
+	// clang-format on
 }
 
 
@@ -182,10 +186,10 @@ size_t ARBDogReferenceRun::GetSearchStrings(std::set<std::wstring>& ioStrings) c
 
 
 bool ARBDogReferenceRun::Load(
-		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfig const& inConfig,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_REF_RUN)
@@ -273,10 +277,10 @@ bool ARBDogReferenceRun::Save(ElementNodePtr const& ioTree) const
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBDogReferenceRunList::Load(
-		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfig const& inConfig,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	ARBDogReferenceRunPtr thing(ARBDogReferenceRun::New());
 	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))

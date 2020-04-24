@@ -61,16 +61,13 @@ class CDlgDog : public wxDialog
 	friend class CDlgDogDataTitle;
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgDog)
 public:
-	CDlgDog(
-			CAgilityBookDoc* pDoc,
-			ARBDogPtr const& inDog,
-			wxWindow* pParent = nullptr,
-			int iSelectPage = 0);
+	CDlgDog(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog, wxWindow* pParent = nullptr, int iSelectPage = 0);
 	~CDlgDog();
 
 	CDlgDogDataTitlePtr GetTitleData(long index) const;
 	CDlgDogDataRegNumPtr GetRegNumData(long index) const;
 	CDlgDogDataPointPtr GetPointData(long index) const;
+
 private:
 	void UpdateAge();
 	void UpdateDeceased();

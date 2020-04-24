@@ -56,11 +56,11 @@ wxEND_EVENT_TABLE()
 
 // If inClub is NULL, we're creating a new entry. Otherwise, we're editing an existing.
 CDlgClub::CDlgClub(
-		CAgilityBookDoc* pDoc,
-		ARBDogClubList& inClubs,
-		ARBDogClubPtr const& inClub,
-		bool bShowCoSanction,
-		wxWindow* pParent)
+	CAgilityBookDoc* pDoc,
+	ARBDogClubList& inClubs,
+	ARBDogClubPtr const& inClub,
+	bool bShowCoSanction,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_pClub(inClub)
@@ -73,7 +73,13 @@ CDlgClub::CDlgClub(
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDD_CLUB"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		_("IDD_CLUB"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	if (m_pClub)
 	{
@@ -118,26 +124,31 @@ CDlgClub::CDlgClub(
 
 	// Controls (these are done first to control tab order)
 
-	wxStaticText* textName = new wxStaticText(this, wxID_ANY,
-		_("IDC_CLUB_CLUBS"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textName = new wxStaticText(this, wxID_ANY, _("IDC_CLUB_CLUBS"), wxDefaultPosition, wxDefaultSize, 0);
 	textName->Wrap(-1);
 
-	m_ctrlClubs = new wxComboBox(this, wxID_ANY, m_Club,
-		wxDefaultPosition, wxDefaultSize,
-		clubs, wxCB_DROPDOWN|wxCB_SORT,
+	m_ctrlClubs = new wxComboBox(
+		this,
+		wxID_ANY,
+		m_Club,
+		wxDefaultPosition,
+		wxDefaultSize,
+		clubs,
+		wxCB_DROPDOWN | wxCB_SORT,
 		CTrimValidator(&m_Club, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));
 	m_ctrlClubs->SetHelpText(_("HIDC_CLUB_CLUBS"));
 	m_ctrlClubs->SetToolTip(_("HIDC_CLUB_CLUBS"));
 	m_ctrlClubs->AutoComplete(clubs);
 
-	wxStaticText* textVenue = new wxStaticText(this, wxID_ANY,
-		_("IDC_CLUB_VENUES"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textVenue
+		= new wxStaticText(this, wxID_ANY, _("IDC_CLUB_VENUES"), wxDefaultPosition, wxDefaultSize, 0);
 	textVenue->Wrap(-1);
 
-	m_ctrlVenues = new CVenueComboBox(this,
-		m_pDoc->Book().GetConfig().GetVenues(), m_Venue, false,
+	m_ctrlVenues = new CVenueComboBox(
+		this,
+		m_pDoc->Book().GetConfig().GetVenues(),
+		m_Venue,
+		false,
 		wxGenericValidator(&m_Venue));
 	m_ctrlVenues->SetHelpText(_("HIDC_CLUB_VENUES"));
 	m_ctrlVenues->SetToolTip(_("HIDC_CLUB_VENUES"));
@@ -145,17 +156,27 @@ CDlgClub::CDlgClub(
 	wxCheckBox* ctrl = nullptr;
 	if (bEnableCosanction)
 	{
-		ctrl = new wxCheckBox(this, wxID_ANY,
+		ctrl = new wxCheckBox(
+			this,
+			wxID_ANY,
 			_("IDS_CLUB_COSANCTION"),
-			wxDefaultPosition, wxDefaultSize, 0,
+			wxDefaultPosition,
+			wxDefaultSize,
+			0,
 			wxGenericValidator(&m_bCoSanction));
 		ctrl->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgClub::OnClickedPrimary, this);
 		ctrl->SetHelpText(_("HIDC_CLUB_COSANCTION"));
 		ctrl->SetToolTip(_("HIDC_CLUB_COSANCTION"));
 
-		m_ctrlPrimary = new wxComboBox(this, wxID_ANY,
-			wxString(), wxDefaultPosition, wxDefaultSize,
-			0, nullptr, wxCB_DROPDOWN | wxCB_READONLY);
+		m_ctrlPrimary = new wxComboBox(
+			this,
+			wxID_ANY,
+			wxString(),
+			wxDefaultPosition,
+			wxDefaultSize,
+			0,
+			nullptr,
+			wxCB_DROPDOWN | wxCB_READONLY);
 		m_ctrlPrimary->SetHelpText(_("HIDC_CLUB_PRIMARY"));
 		m_ctrlPrimary->SetToolTip(_("HIDC_CLUB_PRIMARY"));
 		m_ctrlPrimary->Show(m_bCoSanction);

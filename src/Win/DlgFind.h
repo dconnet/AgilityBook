@@ -33,19 +33,54 @@ public:
 		, m_bDown(true)
 	{
 	}
-	virtual ~IFindCallback() {}
+	virtual ~IFindCallback()
+	{
+	}
 
-	virtual std::wstring const& GetCaption() const	{return m_strCaption;}
-	virtual std::wstring const& Text() const		{return m_strSearch;}
-	virtual void Text(std::wstring const& text)		{m_strSearch = text;}
-	virtual bool MatchCase() const					{return m_bMatchCase;}
-	virtual void MatchCase(bool bCase)				{m_bMatchCase = bCase;}
-	virtual bool EnableSearch() const				{return m_bEnableSearch;}
-	virtual bool SearchAll() const					{return m_bSearchAll;}
-	virtual void SearchAll(bool bAll)				{m_bSearchAll = bAll;}
-	virtual bool EnableDirection() const			{return m_bEnableDirection;}
-	virtual bool SearchDown() const					{return m_bDown;}
-	virtual void SearchDown(bool bDown)				{m_bDown = bDown;}
+	virtual std::wstring const& GetCaption() const
+	{
+		return m_strCaption;
+	}
+	virtual std::wstring const& Text() const
+	{
+		return m_strSearch;
+	}
+	virtual void Text(std::wstring const& text)
+	{
+		m_strSearch = text;
+	}
+	virtual bool MatchCase() const
+	{
+		return m_bMatchCase;
+	}
+	virtual void MatchCase(bool bCase)
+	{
+		m_bMatchCase = bCase;
+	}
+	virtual bool EnableSearch() const
+	{
+		return m_bEnableSearch;
+	}
+	virtual bool SearchAll() const
+	{
+		return m_bSearchAll;
+	}
+	virtual void SearchAll(bool bAll)
+	{
+		m_bSearchAll = bAll;
+	}
+	virtual bool EnableDirection() const
+	{
+		return m_bEnableDirection;
+	}
+	virtual bool SearchDown() const
+	{
+		return m_bDown;
+	}
+	virtual void SearchDown(bool bDown)
+	{
+		m_bDown = bDown;
+	}
 
 	virtual bool Search(CDlgFind* pDlg) const = 0;
 
@@ -63,9 +98,7 @@ protected:
 class CDlgFind : public wxDialog
 {
 public:
-	CDlgFind(
-			IFindCallback& callback,
-			wxWindow* pParent = nullptr);
+	CDlgFind(IFindCallback& callback, wxWindow* pParent = nullptr);
 
 private:
 	IFindCallback& m_Callback;

@@ -58,7 +58,8 @@ std::wstring GetDataFile()
 {
 #if defined(__WXWINDOWS__)
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	std::wstring datafile = wxString(GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat").wx_str();
+	std::wstring datafile
+		= wxString(GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat").wx_str();
 #else
 #pragma PRAGMA_TODO(write LoadXMLData)
 #ifdef WIN32
@@ -116,8 +117,7 @@ bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config)
 
 ElementNodePtr CreateActionList()
 {
-	static char const* const configData =
-"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<RootNode>\n\
+	static char const* const configData = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<RootNode>\n\
 <Action NewName=\"SSA\" OldName=\"Sweepstakes\" Verb=\"RenameVenue\" />\n\
 <Action NewName=\"MXF\" OldName=\"MF\" Venue=\"AKC\" Verb=\"RenameTitle\" />\n\
 <Action NewName=\"ATCH\" OldName=\"V-ATCH\" Venue=\"ASCA\" Verb=\"DeleteTitle\" />\n\

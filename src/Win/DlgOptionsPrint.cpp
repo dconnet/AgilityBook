@@ -76,29 +76,33 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 
 	wxStaticBox* boxFont = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_PRINT_FONT_GROUP"));
 
-	m_ctrlFontPrint = new wxStaticText(this, wxID_ANY,
+	m_ctrlFontPrint = new wxStaticText(
+		this,
+		wxID_ANY,
 		_("IDC_OPT_PRINT_FONT_TEXT"),
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(100, 30)), wxALIGN_CENTRE | wxST_NO_AUTORESIZE | wxSUNKEN_BORDER);
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(100, 30)),
+		wxALIGN_CENTRE | wxST_NO_AUTORESIZE | wxSUNKEN_BORDER);
 	m_ctrlFontPrint->SetFont(m_fontPrint);
 	m_ctrlFontPrint->Wrap(-1);
 
-	wxButton* btnFont = new wxButton(this, wxID_ANY,
-		_("IDC_OPT_PRINT_FONT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* btnFont = new wxButton(this, wxID_ANY, _("IDC_OPT_PRINT_FONT"), wxDefaultPosition, wxDefaultSize, 0);
 	btnFont->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgOptionsPrint::OnFontPrint, this);
 	btnFont->SetHelpText(_("HIDC_OPT_PRINT_FONT"));
 	btnFont->SetToolTip(_("HIDC_OPT_PRINT_FONT"));
 
-	wxString m_OrientationChoices[] =
-	{
-		_("IDC_OPT_PRINT_PORT"),
-		_("IDC_OPT_PRINT_LAND")
-	};
+	wxString m_OrientationChoices[] = {_("IDC_OPT_PRINT_PORT"), _("IDC_OPT_PRINT_LAND")};
 	int m_OrientationNChoices = sizeof(m_OrientationChoices) / sizeof(m_OrientationChoices[0]);
-	m_Orientation = new wxRadioBox(this, wxID_ANY,
+	m_Orientation = new wxRadioBox(
+		this,
+		wxID_ANY,
 		_("IDC_OPT_PRINT_ORIENT"),
-		wxDefaultPosition, wxDefaultSize,
-		m_OrientationNChoices, m_OrientationChoices, 1, wxRA_SPECIFY_COLS);
+		wxDefaultPosition,
+		wxDefaultSize,
+		m_OrientationNChoices,
+		m_OrientationChoices,
+		1,
+		wxRA_SPECIFY_COLS);
 	m_Orientation->SetHelpText(_("HIDC_OPT_PRINT_ORIENT"));
 	m_Orientation->SetToolTip(_("HIDC_OPT_PRINT_ORIENT"));
 	if (m_PrintData.GetPrintData().GetOrientation() == wxLANDSCAPE)
@@ -106,18 +110,20 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	else
 		m_Orientation->SetSelection(0);
 
-	wxString m_MetricChoices[] =
-	{
-		_("IDC_OPT_PRINT_INCHES"),
-		_("IDC_OPT_PRINT_METRIC")
-	};
+	wxString m_MetricChoices[] = {_("IDC_OPT_PRINT_INCHES"), _("IDC_OPT_PRINT_METRIC")};
 	int m_MetricNChoices = sizeof(m_MetricChoices) / sizeof(m_MetricChoices[0]);
 	m_idxIn = 0; // Must agree with above
 	m_idxMM = 1;
-	m_Metric = new wxRadioBox(this, wxID_ANY,
+	m_Metric = new wxRadioBox(
+		this,
+		wxID_ANY,
 		_("IDC_OPT_PRINT_UNITS"),
-		wxDefaultPosition, wxDefaultSize,
-		m_MetricNChoices, m_MetricChoices, 1, wxRA_SPECIFY_COLS);
+		wxDefaultPosition,
+		wxDefaultSize,
+		m_MetricNChoices,
+		m_MetricChoices,
+		1,
+		wxRA_SPECIFY_COLS);
 	m_Metric->Bind(wxEVT_COMMAND_RADIOBOX_SELECTED, &CDlgOptionsPrint::OnUnitsChange, this);
 	m_Metric->SetHelpText(_("HIDC_OPT_PRINT_UNITS"));
 	m_Metric->SetToolTip(_("HIDC_OPT_PRINT_UNITS"));
@@ -125,70 +131,94 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 
 	wxStaticBox* boxPageSize = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_PRINT_RUNPAGE"));
 
-	wxStaticText* textWidth = new wxStaticText(this, wxID_ANY,
-		_("IDC_OPT_PRINT_RUNPAGE_W"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textWidth
+		= new wxStaticText(this, wxID_ANY, _("IDC_OPT_PRINT_RUNPAGE_W"), wxDefaultPosition, wxDefaultSize, 0);
 	textWidth->Wrap(-1);
 
-	CTextCtrl* ctrlWidth = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
+	CTextCtrl* ctrlWidth = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 30), -1),
+		0,
 		CGenericValidator(&m_PageRunWidth));
 	ctrlWidth->SetHelpText(_("HIDC_OPT_PRINT_RUNPAGE_W"));
 	ctrlWidth->SetToolTip(_("HIDC_OPT_PRINT_RUNPAGE_W"));
 
-	wxStaticText* textHeight = new wxStaticText(this, wxID_ANY,
-		_("IDC_OPT_PRINT_RUNPAGE_H"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textHeight
+		= new wxStaticText(this, wxID_ANY, _("IDC_OPT_PRINT_RUNPAGE_H"), wxDefaultPosition, wxDefaultSize, 0);
 	textHeight->Wrap(-1);
-	
-	CTextCtrl* ctrlHeight = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
+
+	CTextCtrl* ctrlHeight = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 30), -1),
+		0,
 		CGenericValidator(&m_PageRunHeight));
 	ctrlHeight->SetHelpText(_("HIDC_OPT_PRINT_RUNPAGE_H"));
 	ctrlHeight->SetToolTip(_("HIDC_OPT_PRINT_RUNPAGE_H"));
 
 	wxStaticBox* boxMargins = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_PRINT_MARGIN"));
 
-	wxStaticText* textLeft = new wxStaticText(this, wxID_ANY,
-		_("IDC_OPT_PRINT_MARGIN_L"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textLeft
+		= new wxStaticText(this, wxID_ANY, _("IDC_OPT_PRINT_MARGIN_L"), wxDefaultPosition, wxDefaultSize, 0);
 	textLeft->Wrap(-1);
 
-	CTextCtrl* ctrlLeft = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
+	CTextCtrl* ctrlLeft = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 30), -1),
+		0,
 		CGenericValidator(&m_Left));
 	ctrlLeft->SetHelpText(_("HIDC_OPT_PRINT_MARGIN_L"));
 	ctrlLeft->SetToolTip(_("HIDC_OPT_PRINT_MARGIN_L"));
 
-	wxStaticText* textRight = new wxStaticText(this, wxID_ANY,
-		_("IDC_OPT_PRINT_MARGIN_R"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textRight
+		= new wxStaticText(this, wxID_ANY, _("IDC_OPT_PRINT_MARGIN_R"), wxDefaultPosition, wxDefaultSize, 0);
 	textRight->Wrap(-1);
 
-	CTextCtrl* ctrlRight = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
+	CTextCtrl* ctrlRight = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 30), -1),
+		0,
 		CGenericValidator(&m_Right));
 	ctrlRight->SetHelpText(_("HIDC_OPT_PRINT_MARGIN_R"));
 	ctrlRight->SetToolTip(_("HIDC_OPT_PRINT_MARGIN_R"));
 
-	wxStaticText* textTop = new wxStaticText(this, wxID_ANY,
-		_("IDC_OPT_PRINT_MARGIN_T"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textTop
+		= new wxStaticText(this, wxID_ANY, _("IDC_OPT_PRINT_MARGIN_T"), wxDefaultPosition, wxDefaultSize, 0);
 	textTop->Wrap(-1);
 
-	CTextCtrl* ctrlTop = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
+	CTextCtrl* ctrlTop = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 30), -1),
+		0,
 		CGenericValidator(&m_Top));
 	ctrlTop->SetHelpText(_("HIDC_OPT_PRINT_MARGIN_T"));
 	ctrlTop->SetToolTip(_("HIDC_OPT_PRINT_MARGIN_T"));
 
-	wxStaticText* textBottom = new wxStaticText(this, wxID_ANY,
-		_("IDC_OPT_PRINT_MARGIN_B"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textBottom
+		= new wxStaticText(this, wxID_ANY, _("IDC_OPT_PRINT_MARGIN_B"), wxDefaultPosition, wxDefaultSize, 0);
 	textBottom->Wrap(-1);
 
-	CTextCtrl* ctrlBottom = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
+	CTextCtrl* ctrlBottom = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 30), -1),
+		0,
 		CGenericValidator(&m_Bottom));
 	ctrlBottom->SetHelpText(_("HIDC_OPT_PRINT_MARGIN_B"));
 	ctrlBottom->SetToolTip(_("HIDC_OPT_PRINT_MARGIN_B"));

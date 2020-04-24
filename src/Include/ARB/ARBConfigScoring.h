@@ -43,14 +43,14 @@
  */
 enum class ARBScoringStyle
 {
-	Unknown,			///< Unknown scoring method.
-	FaultsThenTime,		///< By faults then time.
-	Faults100ThenTime,	///< By faults then time (AKC).
-	Faults200ThenTime,	///< By faults then time (UKC).
-	OCScoreThenTime,	///< Open/Closing points then time.
-	ScoreThenTime,		///< Points then time.
-	TimePlusFaults,		///< Time plus faults.
-	TimeNoPlaces,		///< Time, no placement (AKC FCAT).
+	Unknown,           ///< Unknown scoring method.
+	FaultsThenTime,    ///< By faults then time.
+	Faults100ThenTime, ///< By faults then time (AKC).
+	Faults200ThenTime, ///< By faults then time (UKC).
+	OCScoreThenTime,   ///< Open/Closing points then time.
+	ScoreThenTime,     ///< Points then time.
+	TimePlusFaults,    ///< Time plus faults.
+	TimeNoPlaces,      ///< Time, no placement (AKC FCAT).
 };
 
 
@@ -113,10 +113,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfigDivisionList const& inDivisions,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfigDivisionList const& inDivisions,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -133,8 +133,7 @@ public:
 	bool IsValidOn(ARBDate inDate) const
 	{
 		if (inDate.IsValid()
-		&& ((m_ValidFrom.IsValid() && inDate < m_ValidFrom)
-		|| (m_ValidTo.IsValid() && inDate > m_ValidTo)))
+			&& ((m_ValidFrom.IsValid() && inDate < m_ValidFrom) || (m_ValidTo.IsValid() && inDate > m_ValidTo)))
 		{
 			return false;
 		}
@@ -379,10 +378,10 @@ private:
 	bool m_bDoubleQ;
 	bool m_bSpeedPts;
 	bool m_bBonusTitlePts;
-	ARBConfigPlaceInfoList m_PlaceInfo;		///< Used for speed points
+	ARBConfigPlaceInfoList m_PlaceInfo; ///< Used for speed points
 	ARBConfigTitlePointsList m_TitlePoints;
 	ARBConfigLifetimePointsList m_LifePoints;
-	ARBConfigPlaceInfoList m_Placements;	///< Used for place points
+	ARBConfigPlaceInfoList m_Placements; ///< Used for place points
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -403,10 +402,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfigDivisionList const& inDivisions,
-			ElementNodePtr const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+		ARBConfigDivisionList const& inDivisions,
+		ElementNodePtr const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Find all the scoring methods that match.
@@ -418,11 +417,11 @@ public:
 	 * @return Number of items found.
 	 */
 	size_t FindAllEvents(
-			std::wstring const& inDivision,
-			std::wstring const& inLevel,
-			ARBDate const& inDate,
-			bool inTitlePoints,
-			ARBVector<ARBConfigScoringPtr>& outList) const;
+		std::wstring const& inDivision,
+		std::wstring const& inLevel,
+		ARBDate const& inDate,
+		bool inTitlePoints,
+		ARBVector<ARBConfigScoringPtr>& outList) const;
 
 	/**
 	 * Find an event.
@@ -433,10 +432,10 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindEvent(
-			std::wstring const& inDivision,
-			std::wstring const& inLevel,
-			ARBDate const& inDate,
-			ARBConfigScoringPtr* outEvent = nullptr) const;
+		std::wstring const& inDivision,
+		std::wstring const& inLevel,
+		ARBDate const& inDate,
+		ARBConfigScoringPtr* outEvent = nullptr) const;
 
 	/**
 	 * Verify a scoring method exists.
@@ -445,10 +444,7 @@ public:
 	 * @param inDate Date for requested scoring.
 	 * @return true if FindAllEvents() > 0.
 	 */
-	bool VerifyEvent(
-			std::wstring const& inDivision,
-			std::wstring const& inLevel,
-			ARBDate const& inDate) const;
+	bool VerifyEvent(std::wstring const& inDivision, std::wstring const& inLevel, ARBDate const& inDate) const;
 
 	/**
 	 * Create a new scoring method.

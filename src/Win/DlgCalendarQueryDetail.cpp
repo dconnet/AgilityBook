@@ -27,8 +27,8 @@
 #include "ARB/ARBConfig.h"
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/ListCtrl.h"
-#include <algorithm>
 #include <wx/listctrl.h>
+#include <algorithm>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -41,10 +41,10 @@ wxEND_EVENT_TABLE()
 
 
 CDlgCalendarQueryDetail::CDlgCalendarQueryDetail(
-		ARBConfig const& inConfig,
-		std::map<std::wstring, std::wstring> const& inLocCodes,
-		std::map<std::wstring, std::wstring> const& inVenueCodes,
-		wxWindow* pParent)
+	ARBConfig const& inConfig,
+	std::map<std::wstring, std::wstring> const& inLocCodes,
+	std::map<std::wstring, std::wstring> const& inVenueCodes,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_EditCodes(true)
 	, m_Config(inConfig)
@@ -66,12 +66,12 @@ CDlgCalendarQueryDetail::CDlgCalendarQueryDetail(
 
 
 CDlgCalendarQueryDetail::CDlgCalendarQueryDetail(
-		ARBConfig const& inConfig,
-		std::map<std::wstring, std::wstring> const& inLocCodes,
-		std::vector<std::wstring> const& inSelectedLocCodes,
-		std::map<std::wstring, std::wstring> const& inVenueCodes,
-		std::vector<std::wstring> const& inSelectedVenueCodes,
-		wxWindow* pParent)
+	ARBConfig const& inConfig,
+	std::map<std::wstring, std::wstring> const& inLocCodes,
+	std::vector<std::wstring> const& inSelectedLocCodes,
+	std::map<std::wstring, std::wstring> const& inVenueCodes,
+	std::vector<std::wstring> const& inSelectedVenueCodes,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_EditCodes(false)
 	, m_Config(inConfig)
@@ -96,13 +96,18 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	wxDialog::Create(pParent, wxID_ANY, _("IDD_CALENDAR_QUERY_DETAIL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+	wxDialog::Create(
+		pParent,
+		wxID_ANY,
+		_("IDD_CALENDAR_QUERY_DETAIL"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first                to control tab order)
 
-	wxStaticText* textLocCodes = new wxStaticText(this, wxID_ANY,
-		_("IDC_QUERY_LOCATIONS"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textLocCodes
+		= new wxStaticText(this, wxID_ANY, _("IDC_QUERY_LOCATIONS"), wxDefaultPosition, wxDefaultSize, 0);
 	textLocCodes->Wrap(-1);
 
 	m_ctrlLocations = new CCheckListCtrl(this, wxDefaultPosition, wxDLG_UNIT(this, wxSize(180, 75)), !m_EditCodes);
@@ -129,31 +134,25 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 
 	if (m_EditCodes)
 	{
-		m_ctrlNewLoc = new wxButton(this, wxID_ANY,
-			_("IDC_QUERY_LOCCODE_NEW"),
-			wxDefaultPosition, wxDefaultSize, 0);
+		m_ctrlNewLoc = new wxButton(this, wxID_ANY, _("IDC_QUERY_LOCCODE_NEW"), wxDefaultPosition, wxDefaultSize, 0);
 		m_ctrlNewLoc->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarQueryDetail::OnNewLocationCode, this);
 		m_ctrlNewLoc->SetHelpText(_("HIDC_QUERY_LOCCODE_NEW"));
 		m_ctrlNewLoc->SetToolTip(_("HIDC_QUERY_LOCCODE_NEW"));
 
-		m_ctrlEditLoc = new wxButton(this, wxID_ANY,
-			_("IDC_QUERY_LOCCODE_EDIT"),
-			wxDefaultPosition, wxDefaultSize, 0);
+		m_ctrlEditLoc = new wxButton(this, wxID_ANY, _("IDC_QUERY_LOCCODE_EDIT"), wxDefaultPosition, wxDefaultSize, 0);
 		m_ctrlEditLoc->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarQueryDetail::OnEditLocationCode, this);
 		m_ctrlEditLoc->SetHelpText(_("HIDC_QUERY_LOCCODE_EDIT"));
 		m_ctrlEditLoc->SetToolTip(_("HIDC_QUERY_LOCCODE_EDIT"));
 
-		m_ctrlDeleteLoc = new wxButton(this, wxID_ANY,
-			_("IDC_QUERY_LOCCODE_DELETE"),
-			wxDefaultPosition, wxDefaultSize, 0);
+		m_ctrlDeleteLoc
+			= new wxButton(this, wxID_ANY, _("IDC_QUERY_LOCCODE_DELETE"), wxDefaultPosition, wxDefaultSize, 0);
 		m_ctrlDeleteLoc->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarQueryDetail::OnDeleteLocationCode, this);
 		m_ctrlDeleteLoc->SetHelpText(_("HIDC_QUERY_LOCCODE_DELETE"));
 		m_ctrlDeleteLoc->SetToolTip(_("HIDC_QUERY_LOCCODE_DELETE"));
 	}
 
-	wxStaticText* textVenueCodes = new wxStaticText(this, wxID_ANY,
-		_("IDC_QUERY_VENUES"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textVenueCodes
+		= new wxStaticText(this, wxID_ANY, _("IDC_QUERY_VENUES"), wxDefaultPosition, wxDefaultSize, 0);
 	textVenueCodes->Wrap(-1);
 
 	m_ctrlVenues = new CCheckListCtrl(this, wxDefaultPosition, wxDLG_UNIT(this, wxSize(180, 75)), !m_EditCodes);
@@ -178,23 +177,18 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 
 	if (m_EditCodes)
 	{
-		m_ctrlNewVenue = new wxButton(this, wxID_ANY,
-			_("IDC_QUERY_VENUE_NEW"),
-			wxDefaultPosition, wxDefaultSize, 0);
+		m_ctrlNewVenue = new wxButton(this, wxID_ANY, _("IDC_QUERY_VENUE_NEW"), wxDefaultPosition, wxDefaultSize, 0);
 		m_ctrlNewVenue->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarQueryDetail::OnNewVenueCode, this);
 		m_ctrlNewVenue->SetHelpText(_("HIDC_QUERY_VENUE_NEW"));
 		m_ctrlNewVenue->SetToolTip(_("HIDC_QUERY_VENUE_NEW"));
 
-		m_ctrlEditVenue = new wxButton(this, wxID_ANY,
-			_("IDC_QUERY_VENUE_EDIT"),
-			wxDefaultPosition, wxDefaultSize, 0);
+		m_ctrlEditVenue = new wxButton(this, wxID_ANY, _("IDC_QUERY_VENUE_EDIT"), wxDefaultPosition, wxDefaultSize, 0);
 		m_ctrlEditVenue->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarQueryDetail::OnEditVenueCode, this);
 		m_ctrlEditVenue->SetHelpText(_("HIDC_QUERY_VENUE_EDIT"));
 		m_ctrlEditVenue->SetToolTip(_("HIDC_QUERY_VENUE_EDIT"));
 
-		m_ctrlDeleteVenue = new wxButton(this, wxID_ANY,
-			_("IDC_QUERY_VENUE_DELETE"),
-			wxDefaultPosition, wxDefaultSize, 0);
+		m_ctrlDeleteVenue
+			= new wxButton(this, wxID_ANY, _("IDC_QUERY_VENUE_DELETE"), wxDefaultPosition, wxDefaultSize, 0);
 		m_ctrlDeleteVenue->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarQueryDetail::OnDeleteVenueCode, this);
 		m_ctrlDeleteVenue->SetHelpText(_("HIDC_QUERY_VENUE_DELETE"));
 		m_ctrlDeleteVenue->SetToolTip(_("HIDC_QUERY_VENUE_DELETE"));
@@ -283,7 +277,11 @@ void CDlgCalendarQueryDetail::EditLocationCode()
 	long idx = m_ctrlLocations->GetFirstSelected();
 	if (0 <= idx)
 	{
-		CDlgQueryDetail dlg(!m_EditCodes, GetListColumnText(m_ctrlLocations, idx, 0).c_str(), GetListColumnText(m_ctrlLocations, idx, 1).c_str(), this);
+		CDlgQueryDetail dlg(
+			!m_EditCodes,
+			GetListColumnText(m_ctrlLocations, idx, 0).c_str(),
+			GetListColumnText(m_ctrlLocations, idx, 1).c_str(),
+			this);
 		if (wxID_OK == dlg.ShowModal())
 		{
 			SetListColumnText(m_ctrlLocations, idx, 0, dlg.GetDetailCode());
@@ -299,7 +297,12 @@ void CDlgCalendarQueryDetail::EditVenueCode()
 	long idx = m_ctrlVenues->GetFirstSelected();
 	if (0 <= idx)
 	{
-		CDlgQueryDetail dlg(!m_EditCodes, GetListColumnText(m_ctrlVenues, idx, 0).c_str(), GetListColumnText(m_ctrlVenues, idx, 1).c_str(), this, &m_Config);
+		CDlgQueryDetail dlg(
+			!m_EditCodes,
+			GetListColumnText(m_ctrlVenues, idx, 0).c_str(),
+			GetListColumnText(m_ctrlVenues, idx, 1).c_str(),
+			this,
+			&m_Config);
 		if (wxID_OK == dlg.ShowModal())
 		{
 			SetListColumnText(m_ctrlVenues, idx, 0, dlg.GetDetailCode());
@@ -339,7 +342,8 @@ void CDlgCalendarQueryDetail::OnNewLocationCode(wxCommandEvent& evt)
 	CDlgQueryDetail dlg(!m_EditCodes, L"", L"", this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		long idx = m_ctrlLocations->InsertItem(m_ctrlLocations->GetItemCount(), StringUtil::stringWX(dlg.GetDetailCode()));
+		long idx
+			= m_ctrlLocations->InsertItem(m_ctrlLocations->GetItemCount(), StringUtil::stringWX(dlg.GetDetailCode()));
 		SetListColumnText(m_ctrlLocations, idx, 1, dlg.GetDetailName());
 		UpdateButtons();
 	}

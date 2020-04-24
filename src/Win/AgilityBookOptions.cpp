@@ -46,9 +46,9 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "AgilityBookOptions.h"
 
+#include "AgilityBook.h"
 #include "DlgAssignColumns.h"
 #include "RegItems.h"
 #include "VersionNumber.h"
@@ -71,75 +71,102 @@
 
 namespace
 {
-	// Calendar Defaults
-	constexpr bool sc_AutoDeleteCalEntries = false;
-	constexpr bool sc_ViewAllCalEntries = true;
-	constexpr bool sc_ViewAllCalOpening = true;
-	constexpr bool sc_ViewAllCalClosing = true;
-	constexpr long sc_DaysTillEntryIsPast = 5;
-	constexpr bool sc_HideOverlapping = false;
-	// xcode5 dies on any static wx objects
-	static const wxColour sc_CalColorPast() {return wxColour(128,128,128);} // gray
-	static const wxColour sc_CalColorNotEntered() {return wxColour(0,0,0);} // Black
-	static const wxColour sc_CalColorPlanning() {return wxColour(255,128,0);} // Orange
-	static const wxColour sc_CalColorPending() {return wxColour(128,0,255);} // Blue-ish
-	static const wxColour sc_CalColorEntered() {return wxColour(0,0,255);} // Blue
-	static const wxColour sc_CalColorOpening() {return wxColour(0,128,0);} // Dk Green
-	static const wxColour sc_CalColorClosing() {return wxColour(255,0,0);} // Red
-	constexpr long sc_CalOpeningNear = 4;
-	constexpr long sc_CalClosingNear = 10;
-	static const wxColour sc_CalColorOpeningNear() {return wxColour(0,0,255);}
-	static const wxColour sc_CalColorClosingNear() {return wxColour(255,0,0);}
+// Calendar Defaults
+constexpr bool sc_AutoDeleteCalEntries = false;
+constexpr bool sc_ViewAllCalEntries = true;
+constexpr bool sc_ViewAllCalOpening = true;
+constexpr bool sc_ViewAllCalClosing = true;
+constexpr long sc_DaysTillEntryIsPast = 5;
+constexpr bool sc_HideOverlapping = false;
+// xcode5 dies on any static wx objects
+static const wxColour sc_CalColorPast()
+{
+	return wxColour(128, 128, 128);
+} // gray
+static const wxColour sc_CalColorNotEntered()
+{
+	return wxColour(0, 0, 0);
+} // Black
+static const wxColour sc_CalColorPlanning()
+{
+	return wxColour(255, 128, 0);
+} // Orange
+static const wxColour sc_CalColorPending()
+{
+	return wxColour(128, 0, 255);
+} // Blue-ish
+static const wxColour sc_CalColorEntered()
+{
+	return wxColour(0, 0, 255);
+} // Blue
+static const wxColour sc_CalColorOpening()
+{
+	return wxColour(0, 128, 0);
+} // Dk Green
+static const wxColour sc_CalColorClosing()
+{
+	return wxColour(255, 0, 0);
+} // Red
+constexpr long sc_CalOpeningNear = 4;
+constexpr long sc_CalClosingNear = 10;
+static const wxColour sc_CalColorOpeningNear()
+{
+	return wxColour(0, 0, 255);
+}
+static const wxColour sc_CalColorClosingNear()
+{
+	return wxColour(255, 0, 0);
+}
 
-	// Common
-	constexpr ARBDayOfWeek sc_FirstDayOfWeek = ARBDayOfWeek::Sunday;
+// Common
+constexpr ARBDayOfWeek sc_FirstDayOfWeek = ARBDayOfWeek::Sunday;
 
-	// Runs/points
-	constexpr ARBViewRuns sc_ViewRunsStyle = ARBViewRuns::RunsByTrial;
-	constexpr bool sc_NewestDatesFirst = true;
-	constexpr ARBPointsViewSort sc_PointsViewSort1 = ARBPointsViewSort::Division;
-	constexpr ARBPointsViewSort sc_PointsViewSort2 = ARBPointsViewSort::Level;
-	constexpr ARBPointsViewSort sc_PointsViewSort3 = ARBPointsViewSort::Event;
-	constexpr bool sc_ViewHiddenTitles = false;
-	constexpr bool sc_ViewLifetimePointsByEvent = true;
-	constexpr bool sc_TableInYPS = false;
-	constexpr bool sc_RunTimeInOPS = false;
-	constexpr bool sc_IncludeCRCDImage = false;
-	constexpr bool sc_ShowCoSanctioning = false;
+// Runs/points
+constexpr ARBViewRuns sc_ViewRunsStyle = ARBViewRuns::RunsByTrial;
+constexpr bool sc_NewestDatesFirst = true;
+constexpr ARBPointsViewSort sc_PointsViewSort1 = ARBPointsViewSort::Division;
+constexpr ARBPointsViewSort sc_PointsViewSort2 = ARBPointsViewSort::Level;
+constexpr ARBPointsViewSort sc_PointsViewSort3 = ARBPointsViewSort::Event;
+constexpr bool sc_ViewHiddenTitles = false;
+constexpr bool sc_ViewLifetimePointsByEvent = true;
+constexpr bool sc_TableInYPS = false;
+constexpr bool sc_RunTimeInOPS = false;
+constexpr bool sc_IncludeCRCDImage = false;
+constexpr bool sc_ShowCoSanctioning = false;
 
-	// Font
-	constexpr wchar_t sc_FontPrinterName[] = L"Times New Roman";
-	constexpr int sc_FontPrinterSize = 8;
-	constexpr bool sc_FontPrinterItalic = false;
-	constexpr bool sc_FontPrinterBold = false;
-	constexpr bool sc_UnitsAsMM = false;
-	constexpr bool sc_MarginAsMM = false;
-	constexpr long sc_MarginLeft = 50;
-	constexpr long sc_MarginRight = 50;
-	constexpr long sc_MarginTop = 50;
-	constexpr long sc_MarginBottom = 50;
-	constexpr bool sc_RunPageAsMM = false;
-	constexpr long sc_RunPageWidth = 0;
-	constexpr long sc_RunPageHeight = 0;
-	constexpr wchar_t sc_FontCalName[] = L"Times New Roman";
-	constexpr int sc_FontCalSize = 8;
-	constexpr bool sc_FontCalItalic = false;
-	constexpr bool sc_FontCalBold = false;
+// Font
+constexpr wchar_t sc_FontPrinterName[] = L"Times New Roman";
+constexpr int sc_FontPrinterSize = 8;
+constexpr bool sc_FontPrinterItalic = false;
+constexpr bool sc_FontPrinterBold = false;
+constexpr bool sc_UnitsAsMM = false;
+constexpr bool sc_MarginAsMM = false;
+constexpr long sc_MarginLeft = 50;
+constexpr long sc_MarginRight = 50;
+constexpr long sc_MarginTop = 50;
+constexpr long sc_MarginBottom = 50;
+constexpr bool sc_RunPageAsMM = false;
+constexpr long sc_RunPageWidth = 0;
+constexpr long sc_RunPageHeight = 0;
+constexpr wchar_t sc_FontCalName[] = L"Times New Roman";
+constexpr int sc_FontCalSize = 8;
+constexpr bool sc_FontCalItalic = false;
+constexpr bool sc_FontCalBold = false;
 
-	// Import/export
-	constexpr long sc_ImportStartRow = 1;
-	constexpr ARBImportExportDelim sc_ImportExportDelim = ARBImportExportDelim::Tab;
-	constexpr ARBDateFormat sc_ImportExportFormat = ARBDateFormat::ISO;
-	// Note: Default column order is defined in GetColumnOrder()
+// Import/export
+constexpr long sc_ImportStartRow = 1;
+constexpr ARBImportExportDelim sc_ImportExportDelim = ARBImportExportDelim::Tab;
+constexpr ARBDateFormat sc_ImportExportFormat = ARBDateFormat::ISO;
+// Note: Default column order is defined in GetColumnOrder()
 
-	// Program
-	constexpr long sc_MRUCount = 4;
-	constexpr bool sc_AutoUpdateCheck = true;
-	constexpr long sc_NumBackup = 3;
-	constexpr bool sc_ShowPropOnNewTitle = false;
-	constexpr bool sc_UseProxy = false;
-	constexpr bool sc_UseAltRowColor = true;
-};
+// Program
+constexpr long sc_MRUCount = 4;
+constexpr bool sc_AutoUpdateCheck = true;
+constexpr long sc_NumBackup = 3;
+constexpr bool sc_ShowPropOnNewTitle = false;
+constexpr bool sc_UseProxy = false;
+constexpr bool sc_UseAltRowColor = true;
+}; // namespace
 
 
 static void ExportConfigItem(wxString const& entry, ElementNodePtr const& inTree)
@@ -149,39 +176,39 @@ static void ExportConfigItem(wxString const& entry, ElementNodePtr const& inTree
 	default:
 		break;
 	case wxConfigBase::Type_String:
-		{
-			ElementNodePtr item = inTree->AddElementNode(StringUtil::stringW(entry));
-			item->AddAttrib(L"type", L"s");
-			item->SetValue(wxConfig::Get()->Read(entry, wxEmptyString));
-		}
-		break;
+	{
+		ElementNodePtr item = inTree->AddElementNode(StringUtil::stringW(entry));
+		item->AddAttrib(L"type", L"s");
+		item->SetValue(wxConfig::Get()->Read(entry, wxEmptyString));
+	}
+	break;
 	case wxConfigBase::Type_Boolean:
-		{
-			ElementNodePtr item = inTree->AddElementNode(StringUtil::stringW(entry));
-			item->AddAttrib(L"type", L"b");
-			bool val;
-			wxConfig::Get()->Read(entry, &val);
-			item->AddAttrib(L"val", val);
-		}
-		break;
+	{
+		ElementNodePtr item = inTree->AddElementNode(StringUtil::stringW(entry));
+		item->AddAttrib(L"type", L"b");
+		bool val;
+		wxConfig::Get()->Read(entry, &val);
+		item->AddAttrib(L"val", val);
+	}
+	break;
 	case wxConfigBase::Type_Integer:
-		{
-			ElementNodePtr item = inTree->AddElementNode(StringUtil::stringW(entry));
-			item->AddAttrib(L"type", L"i");
-			long val;
-			wxConfig::Get()->Read(entry, &val);
-			item->AddAttrib(L"val", val);
-		}
-		break;
+	{
+		ElementNodePtr item = inTree->AddElementNode(StringUtil::stringW(entry));
+		item->AddAttrib(L"type", L"i");
+		long val;
+		wxConfig::Get()->Read(entry, &val);
+		item->AddAttrib(L"val", val);
+	}
+	break;
 	case wxConfigBase::Type_Float:
-		{
-			ElementNodePtr item = inTree->AddElementNode(StringUtil::stringW(entry));
-			item->AddAttrib(L"type", L"f");
-			double val;
-			wxConfig::Get()->Read(entry, &val);
-			item->AddAttrib(L"val", val);
-		}
-		break;
+	{
+		ElementNodePtr item = inTree->AddElementNode(StringUtil::stringW(entry));
+		item->AddAttrib(L"type", L"f");
+		double val;
+		wxConfig::Get()->Read(entry, &val);
+		item->AddAttrib(L"val", val);
+	}
+	break;
 	}
 }
 
@@ -216,23 +243,21 @@ static void ExportConfig(wxString const& key, ElementNodePtr const& inRoot)
 
 
 static ElementNodePtr FindElementName(
-		ElementNodePtr const& inTree,
-		long numConfigs,
-		std::wstring const& name,
-		const wchar_t *const eleItem,
-		const wchar_t *const eleName)
+	ElementNodePtr const& inTree,
+	long numConfigs,
+	std::wstring const& name,
+	const wchar_t* const eleItem,
+	const wchar_t* const eleName)
 {
 	for (long i = 0; i < numConfigs; ++i)
 	{
 		std::wstring configName = fmt::format(L"{}{}", eleItem, i);
 		int idxConfig = inTree->FindElement(configName);
-		if (0 <= idxConfig
-		&& ARBElementType::Node == inTree->GetElement(idxConfig)->GetType())
+		if (0 <= idxConfig && ARBElementType::Node == inTree->GetElement(idxConfig)->GetType())
 		{
 			ElementNodePtr nodeConfig = inTree->GetElementNode(idxConfig);
 			int idxName = nodeConfig->FindElement(L"name");
-			if (0 <= idxName
-			&& name == nodeConfig->GetElementNode(idxName)->GetValue())
+			if (0 <= idxName && name == nodeConfig->GetElementNode(idxName)->GetValue())
 			{
 				return nodeConfig;
 			}
@@ -281,15 +306,15 @@ static bool ImportColumnInfo(ElementNodePtr const& inTree)
 	{
 		std::wstring configName = fmt::format(CFG_KEY_CONFIG L"{}", i);
 		int idxConfig = inTree->FindElement(configName);
-		if (0 <= idxConfig
-		&& ARBElementType::Node == inTree->GetElement(idxConfig)->GetType())
+		if (0 <= idxConfig && ARBElementType::Node == inTree->GetElement(idxConfig)->GetType())
 		{
 			ElementNodePtr nodeConfig = inTree->GetElementNode(idxConfig);
 			int idxName = nodeConfig->FindElement(L"name");
 			if (0 > idxName)
 				continue; // Ignore no-name configs.
 			std::wstring name = nodeConfig->GetElementNode(idxName)->GetValue();
-			ElementNodePtr existingConfig = FindElementName(existing, numExistingConfigs, name, CFG_KEY_CONFIG, L"name");
+			ElementNodePtr existingConfig
+				= FindElementName(existing, numExistingConfigs, name, CFG_KEY_CONFIG, L"name");
 			if (existingConfig)
 			{
 				CConfigPathHelper config(StringUtil::stringWX(existingConfig->GetName()));
@@ -359,8 +384,7 @@ static bool MergeFilters(ElementNodePtr const& inTree)
 	{
 		std::wstring configName = fmt::format(CFG_KEY_FILTER L"{}", i);
 		int idxFilter = inTree->FindElement(configName);
-		if (0 <= idxFilter
-		&& ARBElementType::Node == inTree->GetElement(idxFilter)->GetType())
+		if (0 <= idxFilter && ARBElementType::Node == inTree->GetElement(idxFilter)->GetType())
 		{
 			ElementNodePtr nodeFilter = inTree->GetElementNode(idxFilter);
 			int idxName = nodeFilter->FindElement(L"Name");
@@ -432,8 +456,7 @@ static void ImportConfig(ElementNodePtr const& inTree, bool bClobberFilters)
 					continue;
 				bool bSkip = false;
 				if (!bClobberFilters && bCommon
-				&& (node->GetName() == L"numFilters"
-				|| node->GetName() == L"CurrentFilter"))
+					&& (node->GetName() == L"numFilters" || node->GetName() == L"CurrentFilter"))
 				{
 					bSkip = true;
 				}
@@ -515,7 +538,7 @@ ElementNodePtr CAgilityBookOptions::ExportSettings()
 		CFG_KEY_IMPORTLOG,
 		CFG_KEY_SORTING,
 		CFG_KEY_ACCELERATORS,
-		nullptr
+		nullptr,
 	};
 	for (int i = 0; sections[i]; ++i)
 	{
@@ -544,7 +567,7 @@ ElementNodePtr CAgilityBookOptions::ExportSettings()
 		L"View",
 		L"ViewOrient",
 		L"ViewType",
-		nullptr
+		nullptr,
 	};
 	for (int i = 0; items[i]; ++i)
 	{
@@ -571,9 +594,7 @@ void CFontInfo::CreateFont(wxFont& font)
 }
 
 
-void CFontInfo::CreateFont(
-		wxFontDialog& dlg,
-		wxFont& font)
+void CFontInfo::CreateFont(wxFontDialog& dlg, wxFont& font)
 {
 	font = dlg.GetFontData().GetChosenFont();
 	size = font.GetPointSize();
@@ -716,7 +737,7 @@ static wxColour CalItemColor(ARBCalColorItem inItem)
 		return sc_CalColorClosing();
 	}
 	assert(0);
-	return wxColour(0,0,0);
+	return wxColour(0, 0, 0);
 }
 
 
@@ -830,7 +851,8 @@ void CAgilityBookOptions::SetFirstDayOfWeek(ARBDayOfWeek day)
 
 ARBViewRuns CAgilityBookOptions::GetViewRunsStyle()
 {
-	return static_cast<ARBViewRuns>(wxConfig::Get()->Read(CFG_COMMON_VIEWRUNSBYTRIAL, static_cast<long>(sc_ViewRunsStyle)));
+	return static_cast<ARBViewRuns>(
+		wxConfig::Get()->Read(CFG_COMMON_VIEWRUNSBYTRIAL, static_cast<long>(sc_ViewRunsStyle)));
 }
 
 
@@ -855,20 +877,23 @@ void CAgilityBookOptions::SetNewestDatesFirst(bool bNewest)
 
 
 void CAgilityBookOptions::GetPointsViewSort(
-		ARBPointsViewSort& outPrimary,
-		ARBPointsViewSort& outSecondary,
-		ARBPointsViewSort& outTertiary)
+	ARBPointsViewSort& outPrimary,
+	ARBPointsViewSort& outSecondary,
+	ARBPointsViewSort& outTertiary)
 {
-	outPrimary = static_cast<ARBPointsViewSort>(wxConfig::Get()->Read(CFG_COMMON_SORTPTVW1, static_cast<long>(sc_PointsViewSort1)));
-	outSecondary = static_cast<ARBPointsViewSort>(wxConfig::Get()->Read(CFG_COMMON_SORTPTVW2, static_cast<long>(sc_PointsViewSort2)));
-	outTertiary = static_cast<ARBPointsViewSort>(wxConfig::Get()->Read(CFG_COMMON_SORTPTVW3, static_cast<long>(sc_PointsViewSort3)));
+	outPrimary = static_cast<ARBPointsViewSort>(
+		wxConfig::Get()->Read(CFG_COMMON_SORTPTVW1, static_cast<long>(sc_PointsViewSort1)));
+	outSecondary = static_cast<ARBPointsViewSort>(
+		wxConfig::Get()->Read(CFG_COMMON_SORTPTVW2, static_cast<long>(sc_PointsViewSort2)));
+	outTertiary = static_cast<ARBPointsViewSort>(
+		wxConfig::Get()->Read(CFG_COMMON_SORTPTVW3, static_cast<long>(sc_PointsViewSort3)));
 }
 
 
 void CAgilityBookOptions::SetPointsViewSort(
-		ARBPointsViewSort inPrimary,
-		ARBPointsViewSort inSecondary,
-		ARBPointsViewSort inTertiary)
+	ARBPointsViewSort inPrimary,
+	ARBPointsViewSort inSecondary,
+	ARBPointsViewSort inTertiary)
 {
 	wxConfig::Get()->Write(CFG_COMMON_SORTPTVW1, static_cast<long>(inPrimary));
 	wxConfig::Get()->Write(CFG_COMMON_SORTPTVW2, static_cast<long>(inSecondary));
@@ -1011,12 +1036,12 @@ static long ConvertMetric(long val, bool bToMM)
 
 
 void CAgilityBookOptions::GetPrinterMargins(
-		bool bAsMM, // In .01in or millimeters, ignored if DC is set
-		long& outLeft,
-		long& outRight,
-		long& outTop,
-		long& outBottom,
-		wxDC const* pDC)
+	bool bAsMM, // In .01in or millimeters, ignored if DC is set
+	long& outLeft,
+	long& outRight,
+	long& outTop,
+	long& outBottom,
+	wxDC const* pDC)
 {
 	bool bInMM = sc_MarginAsMM;
 	wxConfig::Get()->Read(CFG_COMMON_MARGINS_MM, &bInMM);
@@ -1057,11 +1082,11 @@ void CAgilityBookOptions::GetPrinterMargins(
 
 
 void CAgilityBookOptions::SetPrinterMargins(
-		bool bAsMM, // In .01 inches or millimeters
-		long inLeft,
-		long inRight,
-		long inTop,
-		long inBottom)
+	bool bAsMM, // In .01 inches or millimeters
+	long inLeft,
+	long inRight,
+	long inTop,
+	long inBottom)
 {
 	wxConfig::Get()->Write(CFG_COMMON_MARGINS_MM, bAsMM);
 	wxConfig::Get()->Write(CFG_COMMON_MARGINS_L, inLeft);
@@ -1071,11 +1096,7 @@ void CAgilityBookOptions::SetPrinterMargins(
 }
 
 
-void CAgilityBookOptions::GetRunPageSize(
-		bool bAsMM,
-		long& outWidth,
-		long& outHeight,
-		wxDC const* pDC)
+void CAgilityBookOptions::GetRunPageSize(bool bAsMM, long& outWidth, long& outHeight, wxDC const* pDC)
 {
 	bool bInMM = sc_RunPageAsMM;
 	wxConfig::Get()->Read(CFG_COMMON_RUNPAGE_MM, &bInMM);
@@ -1104,10 +1125,7 @@ void CAgilityBookOptions::GetRunPageSize(
 }
 
 
-void CAgilityBookOptions::SetRunPageSize(
-		bool bAsMM,
-		long inWidth,
-		long inHeight)
+void CAgilityBookOptions::SetRunPageSize(bool bAsMM, long inWidth, long inHeight)
 {
 	wxConfig::Get()->Write(CFG_COMMON_RUNPAGE_MM, bAsMM);
 	wxConfig::Get()->Write(CFG_COMMON_RUNPAGE_W, inWidth);
@@ -1141,11 +1159,11 @@ void CAgilityBookOptions::SetCalendarFontInfo(CFontInfo const& info)
 // Last entered options
 
 static std::wstring GetLastKey(
-		ARBDogPtr const& inDog,
-		ARBConfigVenuePtr const& inVenue,
-		wchar_t const* keyGroup,
-		wchar_t const* keyDefault,
-		bool bFallback)
+	ARBDogPtr const& inDog,
+	ARBConfigVenuePtr const& inVenue,
+	wchar_t const* keyGroup,
+	wchar_t const* keyDefault,
+	bool bFallback)
 {
 	assert(keyGroup && keyDefault);
 	std::wstring key(keyDefault);
@@ -1169,10 +1187,10 @@ static std::wstring GetLastKey(
 
 
 static std::wstring GetLastValue(
-		ARBDogPtr const& inDog,
-		ARBConfigVenuePtr const& inVenue,
-		wchar_t const* keyDog,
-		wchar_t const* keyDefault)
+	ARBDogPtr const& inDog,
+	ARBConfigVenuePtr const& inVenue,
+	wchar_t const* keyDog,
+	wchar_t const* keyDefault)
 {
 	std::wstring key = GetLastKey(inDog, inVenue, keyDog, keyDefault, true);
 	return StringUtil::stringW(wxConfig::Get()->Read(key, wxString()));
@@ -1180,11 +1198,11 @@ static std::wstring GetLastValue(
 
 
 static void WriteLastValue(
-		ARBDogPtr const& inDog,
-		ARBConfigVenuePtr const& inVenue,
-		wchar_t const* keyDog,
-		wchar_t const* keyDefault,
-		wchar_t const* inLast)
+	ARBDogPtr const& inDog,
+	ARBConfigVenuePtr const& inVenue,
+	wchar_t const* keyDog,
+	wchar_t const* keyDefault,
+	wchar_t const* inLast)
 {
 	std::wstring key = GetLastKey(inDog, inVenue, keyDog, keyDefault, false);
 	if (inLast)
@@ -1198,52 +1216,46 @@ static void WriteLastValue(
 }
 
 
-std::wstring CAgilityBookOptions::GetLastEnteredDivision(
-		ARBDogPtr const& inDog,
-		ARBConfigVenuePtr const& inVenue)
+std::wstring CAgilityBookOptions::GetLastEnteredDivision(ARBDogPtr const& inDog, ARBConfigVenuePtr const& inVenue)
 {
 	return GetLastValue(inDog, inVenue, CFG_LAST_DIVISION_KEY, CFG_LAST_DIVISION);
 }
 
 
 void CAgilityBookOptions::SetLastEnteredDivision(
-		ARBDogPtr const& inDog,
-		ARBConfigVenuePtr const& inVenue,
-		wchar_t const* inLast)
+	ARBDogPtr const& inDog,
+	ARBConfigVenuePtr const& inVenue,
+	wchar_t const* inLast)
 {
 	WriteLastValue(inDog, inVenue, CFG_LAST_DIVISION_KEY, CFG_LAST_DIVISION, inLast);
 }
 
 
-std::wstring CAgilityBookOptions::GetLastEnteredLevel(
-		ARBDogPtr const& inDog,
-		ARBConfigVenuePtr const& inVenue)
+std::wstring CAgilityBookOptions::GetLastEnteredLevel(ARBDogPtr const& inDog, ARBConfigVenuePtr const& inVenue)
 {
 	return GetLastValue(inDog, inVenue, CFG_LAST_LEVEL_KEY, CFG_LAST_LEVEL);
 }
 
 
 void CAgilityBookOptions::SetLastEnteredLevel(
-		ARBDogPtr const& inDog,
-		ARBConfigVenuePtr const& inVenue,
-		wchar_t const* inLast)
+	ARBDogPtr const& inDog,
+	ARBConfigVenuePtr const& inVenue,
+	wchar_t const* inLast)
 {
 	WriteLastValue(inDog, inVenue, CFG_LAST_LEVEL_KEY, CFG_LAST_LEVEL, inLast);
 }
 
 
-std::wstring CAgilityBookOptions::GetLastEnteredHeight(
-		ARBDogPtr const& inDog,
-		ARBConfigVenuePtr const& inVenue)
+std::wstring CAgilityBookOptions::GetLastEnteredHeight(ARBDogPtr const& inDog, ARBConfigVenuePtr const& inVenue)
 {
 	return GetLastValue(inDog, inVenue, CFG_LAST_HEIGHT_KEY, CFG_LAST_HEIGHT);
 }
 
 
 void CAgilityBookOptions::SetLastEnteredHeight(
-		ARBDogPtr const& inDog,
-		ARBConfigVenuePtr const& inVenue,
-		wchar_t const* inLast)
+	ARBDogPtr const& inDog,
+	ARBConfigVenuePtr const& inVenue,
+	wchar_t const* inLast)
 {
 	WriteLastValue(inDog, inVenue, CFG_LAST_HEIGHT_KEY, CFG_LAST_HEIGHT, inLast);
 }
@@ -1285,9 +1297,7 @@ std::wstring CAgilityBookOptions::GetLastEnteredHandler(ARBDogPtr const& inDog)
 }
 
 
-void CAgilityBookOptions::SetLastEnteredHandler(
-		ARBDogPtr const& inDog,
-		wchar_t const* inLast)
+void CAgilityBookOptions::SetLastEnteredHandler(ARBDogPtr const& inDog, wchar_t const* inLast)
 {
 	WriteLastValue(inDog, ARBConfigVenuePtr(), CFG_LAST_HANDLER_KEY, CFG_LAST_HANDLER, inLast);
 }
@@ -1298,19 +1308,19 @@ void CAgilityBookOptions::SetLastEnteredHandler(
 
 namespace
 {
-	static const struct
-	{
-		wchar_t const* key;
-		wchar_t const* def;
-		bool hasVenueKey;
-	} sc_Keys[] = {
-		{CFG_LAST_DIVISION_KEY, CFG_LAST_DIVISION, true},
-		{CFG_LAST_LEVEL_KEY, CFG_LAST_LEVEL, true},
-		{CFG_LAST_HEIGHT_KEY, CFG_LAST_HEIGHT, true},
-		{CFG_LAST_HANDLER_KEY, CFG_LAST_HANDLER, false},
-	};
-	constexpr size_t sc_KeysCount = _countof(sc_Keys);
-}
+static const struct
+{
+	wchar_t const* key;
+	wchar_t const* def;
+	bool hasVenueKey;
+} sc_Keys[] = {
+	{CFG_LAST_DIVISION_KEY, CFG_LAST_DIVISION, true},
+	{CFG_LAST_LEVEL_KEY, CFG_LAST_LEVEL, true},
+	{CFG_LAST_HEIGHT_KEY, CFG_LAST_HEIGHT, true},
+	{CFG_LAST_HANDLER_KEY, CFG_LAST_HANDLER, false},
+};
+constexpr size_t sc_KeysCount = _countof(sc_Keys);
+} // namespace
 
 
 void CAgilityBookOptions::CleanLastItems(std::wstring const& callName)
@@ -1387,9 +1397,8 @@ void CAgilityBookOptions::CleanLastItems(ARBConfig const& inConfig)
 							}
 						} while (wxConfig::Get()->GetNextEntry(strVenue, idxVenue));
 					}
-					for (std::vector<wxString>::iterator iter = deleteVenues.begin();
-						iter != deleteVenues.end();
-						++iter)
+					for (std::vector<wxString>::iterator iter = deleteVenues.begin(); iter != deleteVenues.end();
+						 ++iter)
 					{
 						wxConfig::Get()->DeleteEntry(*iter);
 					}
@@ -1417,15 +1426,13 @@ void CAgilityBookOptions::SetImportStartRow(long row)
 }
 
 
-void CAgilityBookOptions::GetImportExportDelimiters(
-		bool bImport,
-		ARBImportExportDelim& delim,
-		std::wstring& delimiter)
+void CAgilityBookOptions::GetImportExportDelimiters(bool bImport, ARBImportExportDelim& delim, std::wstring& delimiter)
 {
 	std::wstring section = fmt::format(L"{}/", bImport ? CFG_KEY_IMPORT : CFG_KEY_EXPORT);
 	delim = sc_ImportExportDelim;
 	delimiter.clear();
-	delim = static_cast<ARBImportExportDelim>(wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DELIM, static_cast<long>(delim)));
+	delim = static_cast<ARBImportExportDelim>(
+		wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DELIM, static_cast<long>(delim)));
 	delimiter = StringUtil::stringW(wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DELIMITER, delimiter.c_str()));
 	if (1 < delimiter.length())
 		delimiter = delimiter.substr(0, 1);
@@ -1433,9 +1440,9 @@ void CAgilityBookOptions::GetImportExportDelimiters(
 
 
 void CAgilityBookOptions::SetImportExportDelimiters(
-		bool bImport,
-		ARBImportExportDelim delim,
-		std::wstring const& delimiter)
+	bool bImport,
+	ARBImportExportDelim delim,
+	std::wstring const& delimiter)
 {
 	std::wstring section = fmt::format(L"{}/", bImport ? CFG_KEY_IMPORT : CFG_KEY_EXPORT);
 	wxConfig::Get()->Write(section + CFG_IMPORT_EXPORT_DELIM, static_cast<long>(delim));
@@ -1443,20 +1450,17 @@ void CAgilityBookOptions::SetImportExportDelimiters(
 }
 
 
-void CAgilityBookOptions::GetImportExportDateFormat(
-		bool bImport,
-		ARBDateFormat& outFormat)
+void CAgilityBookOptions::GetImportExportDateFormat(bool bImport, ARBDateFormat& outFormat)
 {
 	std::wstring section = fmt::format(L"{}/", bImport ? CFG_KEY_IMPORT : CFG_KEY_EXPORT);
-	outFormat = static_cast<ARBDateFormat>(wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DATEFORMAT, static_cast<long>(sc_ImportExportFormat)));
+	outFormat = static_cast<ARBDateFormat>(
+		wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DATEFORMAT, static_cast<long>(sc_ImportExportFormat)));
 	if (ARBDateFormat::Reserved14 == outFormat)
 		outFormat = ARBDateFormat::Locale;
 }
 
 
-void CAgilityBookOptions::SetImportExportDateFormat(
-		bool bImport,
-		ARBDateFormat inFormat)
+void CAgilityBookOptions::SetImportExportDateFormat(bool bImport, ARBDateFormat inFormat)
 {
 	std::wstring section = fmt::format(L"{}/", bImport ? CFG_KEY_IMPORT : CFG_KEY_EXPORT);
 	wxConfig::Get()->Write(section + CFG_IMPORT_EXPORT_DATEFORMAT, static_cast<long>(inFormat));
@@ -1495,11 +1499,11 @@ static wchar_t const* const GetColumnName(CAgilityBookOptions::ColumnOrder eOrde
 
 
 void CAgilityBookOptions::GetColumnOrder(
-		ColumnOrder eOrder,
-		size_t idxColumn,
-		std::wstring const& namedColumn,
-		std::vector<long>& outValues,
-		bool bDefaultValues)
+	ColumnOrder eOrder,
+	size_t idxColumn,
+	std::wstring const& namedColumn,
+	std::vector<long>& outValues,
+	bool bDefaultValues)
 {
 	outValues.clear();
 	if (!bDefaultValues)
@@ -1516,7 +1520,7 @@ void CAgilityBookOptions::GetColumnOrder(
 			long val;
 			StringUtil::ToCLong(data, val, true);
 			outValues.push_back(val);
-			data = data.substr(idx+1);
+			data = data.substr(idx + 1);
 			idx = data.find(',');
 		}
 		if (0 < data.length())
@@ -1775,10 +1779,10 @@ void CAgilityBookOptions::GetColumnOrder(
 
 
 void CAgilityBookOptions::SetColumnOrder(
-		ColumnOrder eOrder,
-		size_t idxColumn,
-		std::wstring const& namedColumn,
-		std::vector<long> const& inValues)
+	ColumnOrder eOrder,
+	size_t idxColumn,
+	std::wstring const& namedColumn,
+	std::vector<long> const& inValues)
 {
 	fmt::wmemory_buffer data;
 	for (size_t i = 0; i < inValues.size(); ++i)
@@ -1875,9 +1879,7 @@ std::wstring CAgilityBookOptions::GetUserName(std::wstring const& hint)
 }
 
 
-void CAgilityBookOptions::SetUserName(
-		std::wstring const& hint,
-		std::wstring const& userName)
+void CAgilityBookOptions::SetUserName(std::wstring const& hint, std::wstring const& userName)
 {
 	std::wstring section = fmt::format(L"{}/{}", CFG_KEY_USERNAMES, hint);
 	wxConfig::Get()->Write(section, userName.c_str());
@@ -1922,9 +1924,7 @@ std::wstring CAgilityBookOptions::GetProxy()
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool CAgilityBookOptions::IsCalSiteVisible(
-		std::wstring const& filename,
-		CVersionNum const& inVer)
+bool CAgilityBookOptions::IsCalSiteVisible(std::wstring const& filename, CVersionNum const& inVer)
 {
 	assert(inVer.Valid());
 	if (filename.empty())
@@ -1945,9 +1945,7 @@ bool CAgilityBookOptions::IsCalSiteVisible(
 }
 
 
-void CAgilityBookOptions::SuppressCalSite(
-		std::wstring const& filename,
-		bool bSuppress)
+void CAgilityBookOptions::SuppressCalSite(std::wstring const& filename, bool bSuppress)
 {
 	if (filename.empty())
 		return;
@@ -1971,9 +1969,9 @@ CVersionNum CAgilityBookOptions::GetCalSitePermanentStatus(std::wstring const& f
 
 
 void CAgilityBookOptions::SuppressCalSitePermanently(
-		std::wstring const& filename,
-		CVersionNum const& inVer,
-		bool bSuppress)
+	std::wstring const& filename,
+	CVersionNum const& inVer,
+	bool bSuppress)
 {
 	if (filename.empty())
 		return;

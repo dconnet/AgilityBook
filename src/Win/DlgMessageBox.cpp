@@ -31,11 +31,7 @@
 class CDlgMessageBox : public wxDialog
 {
 public:
-	CDlgMessageBox(
-			wxString const& inText,
-			long inFlags,
-			IMessageBoxCallback* inCallback,
-			wxWindow* inParent);
+	CDlgMessageBox(wxString const& inText, long inFlags, IMessageBoxCallback* inCallback, wxWindow* inParent);
 
 private:
 	IMessageBoxCallback* m_Callback;
@@ -45,20 +41,25 @@ private:
 
 
 CDlgMessageBox::CDlgMessageBox(
-		wxString const& inText,
-		long inFlags,
-		IMessageBoxCallback* inCallback,
-		wxWindow* inParent)
+	wxString const& inText,
+	long inFlags,
+	IMessageBoxCallback* inCallback,
+	wxWindow* inParent)
 	: wxDialog()
 	, m_Callback(inCallback)
 {
-	Create(inParent, wxID_ANY, _("Agility Record Book"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	Create(
+		inParent,
+		wxID_ANY,
+		_("Agility Record Book"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
 
 	wxStaticBitmap* ctrlIcon = nullptr;
-	if (inFlags & (wxICON_EXCLAMATION | wxICON_HAND | wxICON_ERROR
-		| wxICON_QUESTION | wxICON_INFORMATION))
+	if (inFlags & (wxICON_EXCLAMATION | wxICON_HAND | wxICON_ERROR | wxICON_QUESTION | wxICON_INFORMATION))
 	{
 		wxIcon icon;
 		if (inFlags & wxICON_EXCLAMATION)
@@ -69,19 +70,16 @@ CDlgMessageBox::CDlgMessageBox(
 			icon = ImageHelper::GetIcon(this, wxART_QUESTION);
 		else if (inFlags & wxICON_INFORMATION)
 			icon = ImageHelper::GetIcon(this, wxART_INFORMATION);
-		ctrlIcon = new wxStaticBitmap(this, wxID_ANY, icon,
-			wxDefaultPosition, wxDefaultSize, 0);
+		ctrlIcon = new wxStaticBitmap(this, wxID_ANY, icon, wxDefaultPosition, wxDefaultSize, 0);
 	}
 
-	wxStaticText* ctrlText = new wxStaticText(this, wxID_ANY, inText,
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* ctrlText = new wxStaticText(this, wxID_ANY, inText, wxDefaultPosition, wxDefaultSize, 0);
 	ctrlText->Wrap(-1);
 
 	wxButton* ctrlDetails = nullptr;
 	if (inCallback)
 	{
-		ctrlDetails = new wxButton(this, wxID_ANY, _("IDC_MESSAGE_BOX_DETAILS"),
-			wxDefaultPosition, wxDefaultSize, 0);
+		ctrlDetails = new wxButton(this, wxID_ANY, _("IDC_MESSAGE_BOX_DETAILS"), wxDefaultPosition, wxDefaultSize, 0);
 		ctrlDetails->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgMessageBox::OnDetails, this);
 	}
 
@@ -121,11 +119,7 @@ void CDlgMessageBox::OnDetails(wxCommandEvent& evt)
 
 /////////////////////////////////////////////////////////////////////////////
 
-int AfxMessageBox2(
-		wxString const& inText,
-		long inFlags,
-		IMessageBoxCallback* inCallback,
-		wxWindow* inParent)
+int AfxMessageBox2(wxString const& inText, long inFlags, IMessageBoxCallback* inCallback, wxWindow* inParent)
 {
 	CDlgMessageBox dlg(inText, inFlags, inCallback, inParent);
 	return dlg.ShowModal();

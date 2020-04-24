@@ -35,11 +35,11 @@
 #include "stdafx.h"
 #include "LibARBWin/ListCtrl.h"
 
-#include "fmt/format.h"
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/DPI.h"
 #include "LibARBWin/ImageHelperBase.h"
 #include "LibARBWin/ListData.h"
+#include "fmt/format.h"
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -53,34 +53,42 @@ bool CReportListCtrl::m_enableRowColors = true;
 
 void CReportListCtrl::EnableRowColors(bool bEnable)
 {
-    m_enableRowColors = bEnable;
+	m_enableRowColors = bEnable;
 }
 
 
 CReportListCtrl::CReportListCtrl(
-		wxWindow *parent,
-		bool bSingleSel,
-		SortHeader sortHeader,
-		bool bHasBorder,
-		bool bHasImageList)
+	wxWindow* parent,
+	bool bSingleSel,
+	SortHeader sortHeader,
+	bool bHasBorder,
+	bool bHasImageList)
 	: CListCtrl()
 	, m_ImageList()
 	, m_imgEmpty(-1)
 	, m_imgSortUp(-1)
 	, m_imgSortDn(-1)
 {
-	Create(parent, wxDefaultPosition, wxDefaultSize, bSingleSel, sortHeader, bHasBorder, bHasImageList, m_enableRowColors);
+	Create(
+		parent,
+		wxDefaultPosition,
+		wxDefaultSize,
+		bSingleSel,
+		sortHeader,
+		bHasBorder,
+		bHasImageList,
+		m_enableRowColors);
 }
 
 
 CReportListCtrl::CReportListCtrl(
-		wxWindow *parent,
-		const wxPoint& pos,
-		const wxSize& size,
-		bool bSingleSel,
-		SortHeader sortHeader,
-		bool bHasBorder,
-		bool bHasImageList)
+	wxWindow* parent,
+	const wxPoint& pos,
+	const wxSize& size,
+	bool bSingleSel,
+	SortHeader sortHeader,
+	bool bHasBorder,
+	bool bHasImageList)
 	: CListCtrl()
 	, m_ImageList()
 	, m_imgEmpty(-1)
@@ -92,19 +100,20 @@ CReportListCtrl::CReportListCtrl(
 
 
 bool CReportListCtrl::Create(
-		wxWindow *parent,
-		const wxPoint& pos,
-		const wxSize& size,
-		bool bSingleSel,
-		SortHeader sortHeader,
-		bool bHasBorder,
-		bool bHasImageList,
-		bool bEnableRowColors)
+	wxWindow* parent,
+	const wxPoint& pos,
+	const wxSize& size,
+	bool bSingleSel,
+	SortHeader sortHeader,
+	bool bHasBorder,
+	bool bHasImageList,
+	bool bEnableRowColors)
 {
-	long style = wxLC_REPORT | wxLC_VIRTUAL
-		| (bSingleSel ? wxLC_SINGLE_SEL : 0)
-		| ((sortHeader == SortHeader::Sort) ? 0 : (sortHeader == SortHeader::NoSort) ? wxLC_NO_SORT_HEADER : wxLC_NO_HEADER)
-		| (bHasBorder ? wxBORDER : wxNO_BORDER);
+	long style = wxLC_REPORT | wxLC_VIRTUAL | (bSingleSel ? wxLC_SINGLE_SEL : 0)
+				 | ((sortHeader == SortHeader::Sort)
+						? 0
+						: (sortHeader == SortHeader::NoSort) ? wxLC_NO_SORT_HEADER : wxLC_NO_HEADER)
+				 | (bHasBorder ? wxBORDER : wxNO_BORDER);
 
 	if (!CListCtrl::Create(parent, wxID_ANY, pos, size, style))
 	{
@@ -223,11 +232,12 @@ bool CReportListCtrl::SortItems(CListCtrlCompare fnSortCallBack, SortInfo const*
 		realItems.push_back(GetData(item));
 	CListDataPtr pFocusItem = itemFocus >= 0 ? GetData(itemFocus) : nullptr;
 
-	std::stable_sort(m_items.begin(), m_items.end(), [fnSortCallBack, pSortInfo](CListDataPtr const& one, CListDataPtr const& two)
-					 {
-						 return fnSortCallBack(one, two, pSortInfo) < 0;
-					 }
-	);
+	std::stable_sort(
+		m_items.begin(),
+		m_items.end(),
+		[fnSortCallBack, pSortInfo](CListDataPtr const& one, CListDataPtr const& two) {
+			return fnSortCallBack(one, two, pSortInfo) < 0;
+		});
 
 	// Now, restore selection/focus.
 	items.clear();
@@ -303,10 +313,7 @@ void CReportListCtrl::SelectAll()
 }
 
 
-void CReportListCtrl::SetSelection(
-		long index,
-		bool bEnsureVisible,
-		bool bSetFocus)
+void CReportListCtrl::SetSelection(long index, bool bEnsureVisible, bool bSetFocus)
 {
 	std::vector<long> indices;
 	indices.push_back(index);
@@ -357,11 +364,7 @@ CListDataPtr CReportListCtrl::GetData(long item) const
 }
 
 
-static void PushData(
-		fmt::wmemory_buffer& data,
-		CReportListCtrl const* ctrl,
-		int item,
-		bool bBold)
+static void PushData(fmt::wmemory_buffer& data, CReportListCtrl const* ctrl, int item, bool bBold)
 {
 	fmt::format_to(data, L"<tr>");
 	std::vector<std::wstring> line;
@@ -393,9 +396,7 @@ std::wstring CReportListCtrl::GetPrintDataAsHtmlTable(bool bFirstLineIsHeader) c
 
 
 // This allows a derived class to print a subset of columns if it wants.
-void CReportListCtrl::GetPrintLine(
-		long item,
-		std::vector<std::wstring>& line) const
+void CReportListCtrl::GetPrintLine(long item, std::vector<std::wstring>& line) const
 {
 	line.clear();
 	CListDataPtr data = GetData(item);
@@ -456,11 +457,7 @@ void CReportListCtrl::OnDeleteItem(wxListEvent& evt)
 wxIMPLEMENT_CLASS(CCheckListCtrl, CListCtrl)
 
 
-CCheckListCtrl::CCheckListCtrl(
-		wxWindow *parent,
-		const wxPoint& pos,
-		const wxSize& size,
-		bool bHasChecks)
+CCheckListCtrl::CCheckListCtrl(wxWindow* parent, const wxPoint& pos, const wxSize& size, bool bHasChecks)
 	: m_HasChecks(bHasChecks)
 	, m_ImageList()
 	, m_imgEmpty(-1)

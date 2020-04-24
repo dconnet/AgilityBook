@@ -41,9 +41,9 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-#define MAX_LANGS	2
+#define MAX_LANGS 2
 
-#define NUM_PREC	2
+#define NUM_PREC 2
 static const struct
 {
 	double val;
@@ -52,6 +52,7 @@ static const struct
 	wchar_t const* unitBinary[NUM_PREC];
 	wchar_t const* unitTrue[NUM_PREC];
 } sc_FormatUnits[] = {
+	// clang-format off
 	{0.0,             {1, 2}, {L"0 B", L"0 B"},            {L"0 B", L"0 B"},            {L"0 B", L"0 B"}},
 	{27.0,            {1, 2}, {L"27 B", L"27 B"},          {L"27 B", L"27 B"},          {L"27 B", L"27 B"}},
 	{999.0,           {1, 2}, {L"999 B", L"999 B"},        {L"999 B", L"999 B"},        {L"999 B", L"999 B"}},
@@ -72,6 +73,7 @@ static const struct
 	{452984832.0,     {1, 2}, {L"453 MB", L"452.98 MB"},   {L"432 MiB", L"432 MiB"},    {L"432 MB", L"432 MB"}},
 	{28991029248.0,	  {1, 2}, {L"29 GB", L"28.99 GB"},     {L"27 GiB", L"27 GiB"},      {L"27 GB", L"27 GB"}},
 	{1855425871872.0, {1, 2}, {L"1.9 TB", L"1.86 TB"},     {L"1.7 TiB", L"1.69 TiB"},   {L"1.7 TB", L"1.69 TB"}}
+	// clang-format on
 };
 
 
@@ -113,9 +115,24 @@ TEST_CASE("Misc")
 			{
 				for (size_t iPrec = 0; iPrec < NUM_PREC; ++iPrec)
 				{
-					REQUIRE(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::ByteSizeStyle::Binary) == sc_FormatUnits[i].unitBinary[iPrec]);
-					REQUIRE(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::ByteSizeStyle::SI) == sc_FormatUnits[i].unitSI[iPrec]);
-					REQUIRE(StringUtil::FormatBytes(sc_FormatUnits[i].val, sc_FormatUnits[i].prec[iPrec], StringUtil::ByteSizeStyle::True) == sc_FormatUnits[i].unitTrue[iPrec]);
+					REQUIRE(
+						StringUtil::FormatBytes(
+							sc_FormatUnits[i].val,
+							sc_FormatUnits[i].prec[iPrec],
+							StringUtil::ByteSizeStyle::Binary)
+						== sc_FormatUnits[i].unitBinary[iPrec]);
+					REQUIRE(
+						StringUtil::FormatBytes(
+							sc_FormatUnits[i].val,
+							sc_FormatUnits[i].prec[iPrec],
+							StringUtil::ByteSizeStyle::SI)
+						== sc_FormatUnits[i].unitSI[iPrec]);
+					REQUIRE(
+						StringUtil::FormatBytes(
+							sc_FormatUnits[i].val,
+							sc_FormatUnits[i].prec[iPrec],
+							StringUtil::ByteSizeStyle::True)
+						== sc_FormatUnits[i].unitTrue[iPrec]);
 				}
 			}
 		}
@@ -131,7 +148,7 @@ TEST_CASE("Misc")
 			std::wstring s2(StringUtil::GetTranslation(arbT("IDS_ARB_UNKNOWN_VERSION")));
 			REQUIRE(s1 != s2);
 #else
-#pragma PRAGMA_TODO(implement non-wx version)
+#pragma PRAGMA_TODO(implement non - wx version)
 #endif
 		}
 	}
@@ -143,12 +160,15 @@ TEST_CASE("Misc")
 		if (!g_bMicroTest)
 		{
 			// Update as more languages are added.
-			static struct {
+			static struct
+			{
 				wxChar const* lang;
 				wxLanguage langid;
 			} langs[MAX_LANGS] = {
+				// clang-format off
 				{L"en_US", wxLANGUAGE_FRENCH},
 				{L"fr_FR", wxLANGUAGE_ENGLISH_US}
+				// clang-format on
 			};
 			struct
 			{
@@ -167,9 +187,7 @@ TEST_CASE("Misc")
 					{
 						langdata[i].Desc[j] = info->Description;
 						langdata[i].ArbDesc[j] = wxGetTranslation(info->Description);
-						fmt::format_to(out, L"{} {} {} {}\n",
-							i, j,
-							langdata[i].Desc[j], langdata[i].ArbDesc[j]);
+						fmt::format_to(out, L"{} {} {} {}\n", i, j, langdata[i].Desc[j], langdata[i].ArbDesc[j]);
 					}
 				}
 			}
@@ -267,8 +285,8 @@ TEST_CASE("Misc")
 			{
 				short val;
 				wchar_t const* roman;
-			} testValues[] =
-			{
+			} testValues[] = {
+				// clang-format off
 				{ -42, L"" },
 				{ 0, L""},
 				{ 1, L"I"},
@@ -306,6 +324,7 @@ TEST_CASE("Misc")
 				{ 999, L"CMXCIX" },
 				{ 2999, L"MMCMXCIX" },
 				{ 3999, L"MMMCMXCIX" }
+				// clang-format on
 			};
 			for (size_t i = 0; i < _countof(testValues); ++i)
 			{

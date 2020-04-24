@@ -34,10 +34,7 @@ public:
 	/**
 	 * Iterate through all the active sites and add the desired entries.
 	 */
-	bool FindEntries(
-			CAgilityBookDoc* pDoc,
-			ARBCalendarList& inCalendar,
-			wxWindow* pParent = nullptr);
+	bool FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, wxWindow* pParent = nullptr);
 
 private:
 	std::unique_ptr<CCalendarSitesImpl> m_Impl;

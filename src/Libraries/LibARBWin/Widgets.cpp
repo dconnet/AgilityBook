@@ -40,10 +40,7 @@ wxIMPLEMENT_CLASS(CTextCtrl, wxTextCtrl)
 wxIMPLEMENT_CLASS(CSpellCheckCtrl, CTextCtrl)
 
 
-static bool ComputeTreeHeight(
-		wxTreeCtrl* tree,
-		wxTreeItemId item,
-		int& height)
+static bool ComputeTreeHeight(wxTreeCtrl* tree, wxTreeItemId item, int& height)
 {
 	if (!item.IsOk())
 		return false;

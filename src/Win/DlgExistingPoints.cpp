@@ -74,9 +74,7 @@ public:
 		, m_SubLevel()
 	{
 	}
-	CDlgPointsLevelData(
-			ARBConfigLevelPtr const& inLevel,
-			ARBConfigSubLevelPtr const& inSubLevel)
+	CDlgPointsLevelData(ARBConfigLevelPtr const& inLevel, ARBConfigSubLevelPtr const& inSubLevel)
 		: m_Level(inLevel)
 		, m_SubLevel(inSubLevel)
 	{
@@ -131,9 +129,9 @@ wxEND_EVENT_TABLE()
 
 // Controls (all are readonly, except subname):
 // ARBDogExistingPoints::eOtherPoints:
-//  Venue  Division  Level  Event          OtherPts 
+//  Venue  Division  Level  Event          OtherPts
 // ARBDogExistingPoints::eLifetime:
-//  Venue  Division  Level  Event          OtherPts 
+//  Venue  Division  Level  Event          OtherPts
 // ARBDogExistingPoints::eTitle:
 //  Venue  Division  Level  Event  SubName
 // ARBDogExistingPoints::eSQ:
@@ -145,10 +143,10 @@ wxEND_EVENT_TABLE()
 
 // If inExistingPoints is NULL, we're creating a new entry. Otherwise, we're editing an existing.
 CDlgExistingPoints::CDlgExistingPoints(
-		CAgilityBookDoc* pDoc,
-		ARBDogExistingPointsList& points,
-		ARBDogExistingPointsPtr const& inExistingPoints,
-		wxWindow* pParent)
+	CAgilityBookDoc* pDoc,
+	ARBDogExistingPointsList& points,
+	ARBDogExistingPointsPtr const& inExistingPoints,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_PointsList(points)
@@ -189,27 +187,30 @@ CDlgExistingPoints::CDlgExistingPoints(
 
 	// Controls (these are done first to control tab order)
 
-	wxStaticText* textType = new wxStaticText(this, wxID_ANY,
-		_("IDC_EXISTING_TYPE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textType
+		= new wxStaticText(this, wxID_ANY, _("IDC_EXISTING_TYPE"), wxDefaultPosition, wxDefaultSize, 0);
 	textType->Wrap(-1);
 
-	m_ctrlType = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY|wxCB_SORT);
+	m_ctrlType = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_READONLY | wxCB_SORT);
 	m_ctrlType->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgExistingPoints::OnSelchangeType, this);
 	m_ctrlType->SetHelpText(_("HIDC_EXISTING_TYPE"));
 	m_ctrlType->SetToolTip(_("HIDC_EXISTING_TYPE"));
 	// Set the contents of the type combo.
-	ARBExistingPointType types[] =
-	{
-		ARBExistingPointType::OtherPoints,
-		ARBExistingPointType::Lifetime,
-		ARBExistingPointType::Title,
-		ARBExistingPointType::Speed,
-		//ARBExistingPointType::MQ, Not here - will be added later as long as a venue supports it
-		ARBExistingPointType::SQ
-	};
+	ARBExistingPointType types[]
+		= {ARBExistingPointType::OtherPoints,
+		   ARBExistingPointType::Lifetime,
+		   ARBExistingPointType::Title,
+		   ARBExistingPointType::Speed,
+		   //ARBExistingPointType::MQ, Not here - will be added later as long as a venue supports it
+		   ARBExistingPointType::SQ};
 	int nTypes = sizeof(types) / sizeof(types[0]);
 	for (int i = 0; i < nTypes; ++i)
 	{
@@ -223,106 +224,152 @@ CDlgExistingPoints::CDlgExistingPoints(
 	if (wxNOT_FOUND == m_ctrlType->GetSelection())
 		m_ctrlType->SetSelection(0);
 
-	wxStaticText* textEarned = new wxStaticText(this, wxID_ANY,
-		_("IDC_EXISTING_DATE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textEarned
+		= new wxStaticText(this, wxID_ANY, _("IDC_EXISTING_DATE"), wxDefaultPosition, wxDefaultSize, 0);
 	textEarned->Wrap(-1);
 
 	wxDateTime date;
 	m_Date.GetDate(date);
-	m_ctrlDate = new wxDatePickerCtrl(this, wxID_ANY,
+	m_ctrlDate = new wxDatePickerCtrl(
+		this,
+		wxID_ANY,
 		date,
-		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY);
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDP_DROPDOWN | wxDP_SHOWCENTURY);
 	m_ctrlDate->Bind(wxEVT_DATE_CHANGED, &CDlgExistingPoints::OnDateChanged, this);
 	m_ctrlDate->SetHelpText(_("HIDC_EXISTING_DATE"));
 	m_ctrlDate->SetToolTip(_("HIDC_EXISTING_DATE"));
 
-	wxStaticText* textPoints = new wxStaticText(this, wxID_ANY,
-		_("IDC_EXISTING_POINTS"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textPoints
+		= new wxStaticText(this, wxID_ANY, _("IDC_EXISTING_POINTS"), wxDefaultPosition, wxDefaultSize, 0);
 	textPoints->Wrap(-1);
 
-	CTextCtrl* ctrlPoints = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 30), -1), 0,
+	CTextCtrl* ctrlPoints = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(wxDLG_UNIT_X(this, 30), -1),
+		0,
 		CGenericValidator(&m_Points));
 	ctrlPoints->SetHelpText(_("HIDC_EXISTING_POINTS"));
 	ctrlPoints->SetToolTip(_("HIDC_EXISTING_POINTS"));
 
 	wxStaticBox* boxWhere = new wxStaticBox(this, wxID_ANY, _("IDC_EXISTING_POINTS_WHERE"));
 
-	wxStaticText* textVenue = new wxStaticText(this, wxID_ANY,
-		_("IDC_EXISTING_VENUES"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textVenue
+		= new wxStaticText(this, wxID_ANY, _("IDC_EXISTING_VENUES"), wxDefaultPosition, wxDefaultSize, 0);
 	textVenue->Wrap(-1);
 
-	m_ctrlVenues = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY,
+	m_ctrlVenues = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_READONLY,
 		wxGenericValidator(&m_TextVenue));
 	m_ctrlVenues->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgExistingPoints::OnSelchangeVenue, this);
 	m_ctrlVenues->SetHelpText(_("HIDC_EXISTING_VENUES"));
 	m_ctrlVenues->SetToolTip(_("HIDC_EXISTING_VENUES"));
 
-	m_textDivMultiQs = new wxStaticText(this, wxID_ANY, L"",
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_textDivMultiQs = new wxStaticText(this, wxID_ANY, L"", wxDefaultPosition, wxDefaultSize, 0);
 	m_textDivMultiQs->Wrap(-1);
 
-	m_ctrlDivMultiQs = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY,
+	m_ctrlDivMultiQs = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_READONLY,
 		wxGenericValidator(&m_TextDivMultiQ));
 	m_ctrlDivMultiQs->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgExistingPoints::OnSelchangeDivMultiQ, this);
 
-	wxStaticText* textLevel = new wxStaticText(this, wxID_ANY, _("IDC_EXISTING_LEVEL"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textLevel
+		= new wxStaticText(this, wxID_ANY, _("IDC_EXISTING_LEVEL"), wxDefaultPosition, wxDefaultSize, 0);
 	textLevel->Wrap(-1);
 
-	m_ctrlLevels = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY,
+	m_ctrlLevels = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_READONLY,
 		wxGenericValidator(&m_TextLevel));
 	m_ctrlLevels->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgExistingPoints::OnSelchangeLevel, this);
 	m_ctrlLevels->SetHelpText(_("HIDC_EXISTING_LEVEL"));
 	m_ctrlLevels->SetToolTip(_("HIDC_EXISTING_LEVEL"));
 
-	wxStaticText* textEvent = new wxStaticText(this, wxID_ANY, _("IDC_EXISTING_EVENT"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textEvent
+		= new wxStaticText(this, wxID_ANY, _("IDC_EXISTING_EVENT"), wxDefaultPosition, wxDefaultSize, 0);
 	textEvent->Wrap(-1);
 
-	m_ctrlEvents = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY,
+	m_ctrlEvents = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_READONLY,
 		wxGenericValidator(&m_TextEvent));
 	m_ctrlEvents->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgExistingPoints::OnSelchangeEvent, this);
 	m_ctrlEvents->SetHelpText(_("HIDC_EXISTING_EVENT"));
 	m_ctrlEvents->SetToolTip(_("HIDC_EXISTING_EVENT"));
 
-	wxStaticText* textSubName = new wxStaticText(this, wxID_ANY, _("IDC_EXISTING_SUBNAME"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textSubName
+		= new wxStaticText(this, wxID_ANY, _("IDC_EXISTING_SUBNAME"), wxDefaultPosition, wxDefaultSize, 0);
 	textSubName->Wrap(-1);
 
-	m_ctrlSubNames = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY,
+	m_ctrlSubNames = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_READONLY,
 		wxGenericValidator(&m_TextSubName));
 	m_ctrlSubNames->SetHelpText(_("HIDC_EXISTING_SUBNAME"));
 	m_ctrlSubNames->SetToolTip(_("HIDC_EXISTING_SUBNAME"));
 
-	wxStaticText* textOther = new wxStaticText(this, wxID_ANY, _("IDC_EXISTING_TYPENAME"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textOther
+		= new wxStaticText(this, wxID_ANY, _("IDC_EXISTING_TYPENAME"), wxDefaultPosition, wxDefaultSize, 0);
 	textOther->Wrap(-1);
 
-	m_ctrlTypeNames = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr, wxCB_DROPDOWN|wxCB_READONLY,
+	m_ctrlTypeNames = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_READONLY,
 		wxGenericValidator(&m_TextTypeName));
 	m_ctrlTypeNames->SetHelpText(_("HIDC_EXISTING_TYPENAME"));
 	m_ctrlTypeNames->SetToolTip(_("HIDC_EXISTING_TYPENAME"));
 
 	wxStaticBox* boxComment = new wxStaticBox(this, wxID_ANY, _("IDC_EXISTING_COMMENTS"));
 
-	CSpellCheckCtrl* ctrlNote = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(120, 70)), wxTE_MULTILINE | wxTE_WORDWRAP,
+	CSpellCheckCtrl* ctrlNote = new CSpellCheckCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(120, 70)),
+		wxTE_MULTILINE | wxTE_WORDWRAP,
 		CTrimValidator(&m_Comments, TRIMVALIDATOR_TRIM_RIGHT));
 	ctrlNote->SetHelpText(_("HIDC_EXISTING_COMMENTS"));
 	ctrlNote->SetToolTip(_("HIDC_EXISTING_COMMENTS"));
@@ -384,13 +431,14 @@ CDlgExistingPoints::CDlgExistingPoints(
 
 	// Add MultiQ to types if at least one venue supports it.
 	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->Book().GetConfig().GetVenues().begin();
-		iterVenue != m_pDoc->Book().GetConfig().GetVenues().end();
-		++iterVenue)
+		 iterVenue != m_pDoc->Book().GetConfig().GetVenues().end();
+		 ++iterVenue)
 	{
 		ARBConfigVenuePtr pVenue = (*iterVenue);
 		if (0 < pVenue->GetMultiQs().size())
 		{
-			int index = m_ctrlType->Append(StringUtil::stringWX(ARBDogExistingPoints::GetPointTypeName(ARBExistingPointType::MQ)));
+			int index = m_ctrlType->Append(
+				StringUtil::stringWX(ARBDogExistingPoints::GetPointTypeName(ARBExistingPointType::MQ)));
 			m_ctrlType->SetClientData(index, reinterpret_cast<void*>(ARBExistingPointType::MQ));
 			if (m_pExistingPoints && m_pExistingPoints->GetType() == ARBExistingPointType::MQ)
 				m_ctrlType->SetSelection(index);
@@ -484,19 +532,23 @@ ARBConfigScoringPtr CDlgExistingPoints::GetConfigScoring() const
 		return scoring;
 
 	ARBConfigEventPtr pEvent = GetEventData(index)->m_Event;
-	pEvent->FindEvent(GetDivisionData(index)->m_Div->GetName(), GetLevelData(index)->m_Level->GetName(), m_Date, &scoring);
+	pEvent->FindEvent(
+		GetDivisionData(index)->m_Div->GetName(),
+		GetLevelData(index)->m_Level->GetName(),
+		m_Date,
+		&scoring);
 	return scoring;
 }
 
 
 void CDlgExistingPoints::SetEnableLists(
-		bool& outVenue,
-		bool& outDivMQ,
-		bool& outLevel,
-		bool& outEvent,
-		bool& outSubName,
-		bool& outTypeName,
-		bool bSet)
+	bool& outVenue,
+	bool& outDivMQ,
+	bool& outLevel,
+	bool& outEvent,
+	bool& outSubName,
+	bool& outTypeName,
+	bool bSet)
 {
 	outVenue = false;
 	outDivMQ = false;
@@ -610,8 +662,8 @@ void CDlgExistingPoints::FillVenues()
 	ARBExistingPointType type = GetCurrentType();
 
 	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->Book().GetConfig().GetVenues().begin();
-		iterVenue != m_pDoc->Book().GetConfig().GetVenues().end();
-		++iterVenue)
+		 iterVenue != m_pDoc->Book().GetConfig().GetVenues().end();
+		 ++iterVenue)
 	{
 		ARBConfigVenuePtr pVenue = (*iterVenue);
 		if (ARBExistingPointType::MQ != type || 0 < pVenue->GetMultiQs().size())
@@ -651,8 +703,8 @@ void CDlgExistingPoints::FillDivMultiQ()
 		if (ARBExistingPointType::MQ == type)
 		{
 			for (ARBConfigMultiQList::const_iterator iterQ = pVenue->GetMultiQs().begin();
-				iterQ != pVenue->GetMultiQs().end();
-				++iterQ)
+				 iterQ != pVenue->GetMultiQs().end();
+				 ++iterQ)
 			{
 				ARBConfigMultiQPtr pMulti = *iterQ;
 				int idx = m_ctrlDivMultiQs->Append(StringUtil::stringWX(pMulti->GetName()));
@@ -664,8 +716,8 @@ void CDlgExistingPoints::FillDivMultiQ()
 		else
 		{
 			for (ARBConfigDivisionList::const_iterator iterDiv = pVenue->GetDivisions().begin();
-				iterDiv != pVenue->GetDivisions().end();
-				++iterDiv)
+				 iterDiv != pVenue->GetDivisions().end();
+				 ++iterDiv)
 			{
 				ARBConfigDivisionPtr pDiv = (*iterDiv);
 				int idx = m_ctrlDivMultiQs->Append(StringUtil::stringWX(pDiv->GetName()));
@@ -694,16 +746,15 @@ void CDlgExistingPoints::FillLevels()
 	if (wxNOT_FOUND != idxDiv)
 	{
 		ARBConfigDivisionPtr pDiv = GetDivisionData(idxDiv)->m_Div;
-		for (ARBConfigLevelList::const_iterator iter = pDiv->GetLevels().begin();
-			iter != pDiv->GetLevels().end();
-			++iter)
+		for (ARBConfigLevelList::const_iterator iter = pDiv->GetLevels().begin(); iter != pDiv->GetLevels().end();
+			 ++iter)
 		{
 			ARBConfigLevelPtr pLevel = (*iter);
 			if (0 < pLevel->GetSubLevels().size())
 			{
 				for (ARBConfigSubLevelList::const_iterator iterSub = pLevel->GetSubLevels().begin();
-					iterSub != pLevel->GetSubLevels().end();
-					++iterSub)
+					 iterSub != pLevel->GetSubLevels().end();
+					 ++iterSub)
 				{
 					ARBConfigSubLevelPtr pSubLevel = (*iterSub);
 					CDlgPointsLevelData* pData = new CDlgPointsLevelData(pLevel, pSubLevel);
@@ -750,8 +801,8 @@ void CDlgExistingPoints::FillEvents()
 			{
 				CDlgPointsLevelData* pData = GetLevelData(idxLevel);
 				for (ARBConfigEventList::const_iterator iter = pVenue->GetEvents().begin();
-					iter != pVenue->GetEvents().end();
-					++iter)
+					 iter != pVenue->GetEvents().end();
+					 ++iter)
 				{
 					ARBConfigEventPtr pEvent = (*iter);
 					if (pEvent->FindEvent(pDiv->GetName(), pData->m_Level->GetName(), m_Date))
@@ -793,9 +844,7 @@ void CDlgExistingPoints::FillSubNames()
 		m_ctrlSubNames->Enable(true);
 		std::set<std::wstring> names;
 		m_pDoc->Book().GetAllEventSubNames(pVenue->GetName(), pEvent, names);
-		for (std::set<std::wstring>::const_iterator iter = names.begin();
-			iter != names.end();
-			++iter)
+		for (std::set<std::wstring>::const_iterator iter = names.begin(); iter != names.end(); ++iter)
 		{
 			index = m_ctrlSubNames->Append(StringUtil::stringWX(*iter));
 			if (m_pExistingPoints && *iter == m_pExistingPoints->GetSubName())
@@ -828,8 +877,8 @@ void CDlgExistingPoints::FillTypeNames()
 
 	case ARBExistingPointType::OtherPoints:
 		for (ARBConfigOtherPointsList::const_iterator iterOther = m_pDoc->Book().GetConfig().GetOtherPoints().begin();
-			iterOther != m_pDoc->Book().GetConfig().GetOtherPoints().end();
-			++iterOther)
+			 iterOther != m_pDoc->Book().GetConfig().GetOtherPoints().end();
+			 ++iterOther)
 		{
 			ARBConfigOtherPointsPtr pOther = (*iterOther);
 			int idxName = m_ctrlTypeNames->Append(StringUtil::stringWX(pOther->GetName()));
@@ -845,8 +894,8 @@ void CDlgExistingPoints::FillTypeNames()
 	case ARBExistingPointType::Lifetime:
 		if (pVenue)
 			for (ARBConfigLifetimeNameList::const_iterator iterOther = pVenue->GetLifetimeNames().begin();
-				iterOther != pVenue->GetLifetimeNames().end();
-				++iterOther)
+				 iterOther != pVenue->GetLifetimeNames().end();
+				 ++iterOther)
 			{
 				ARBConfigLifetimeNamePtr pOther = (*iterOther);
 				int idxName = m_ctrlTypeNames->Append(StringUtil::stringWX(pOther->GetName()));

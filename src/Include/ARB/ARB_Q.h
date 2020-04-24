@@ -24,13 +24,13 @@
 
 enum class Q
 {
-	UNK,	///< Unknown / not set. This must be first.
-	NA,		///< Cannot qualify in this run.
-	DNR,	///< Did Not Run.
-	E,		///< Eliminated.
-	NQ,		///< Not qualified.
-	Q,		///< Qualified.
-	SuperQ,	///< Super Qualifier (USDAA Snooker top 15%).
+	UNK,    ///< Unknown / not set. This must be first.
+	NA,     ///< Cannot qualify in this run.
+	DNR,    ///< Did Not Run.
+	E,      ///< Eliminated.
+	NQ,     ///< Not qualified.
+	Q,      ///< Qualified.
+	SuperQ, ///< Super Qualifier (USDAA Snooker top 15%).
 	FEO,    ///< For Exhibition Only.
 };
 
@@ -70,16 +70,20 @@ public:
 	 */
 	static ARB_Q GetValidType(int inIndex);
 
-	ARB_Q() : m_Q(Q::UNK)
+	ARB_Q()
+		: m_Q(Q::UNK)
 	{
 	}
-	ARB_Q(Q inQ) : m_Q(inQ)
+	ARB_Q(Q inQ)
+		: m_Q(inQ)
 	{
 	}
-	ARB_Q(ARB_Q const& rhs) : m_Q(rhs.m_Q)
+	ARB_Q(ARB_Q const& rhs)
+		: m_Q(rhs.m_Q)
 	{
 	}
-	ARB_Q(ARB_Q&& rhs) : m_Q(rhs.m_Q)
+	ARB_Q(ARB_Q&& rhs)
+		: m_Q(rhs.m_Q)
 	{
 		rhs.m_Q = Q::UNK;
 	}
@@ -144,10 +148,7 @@ public:
 	 */
 	bool ShouldComputeScore()
 	{
-		return Qualified()
-			|| Q::NQ == m_Q
-			|| Q::FEO == m_Q
-			|| Q::NA == m_Q;
+		return Qualified() || Q::NQ == m_Q || Q::FEO == m_Q || Q::NA == m_Q;
 	}
 
 	/**
@@ -156,9 +157,7 @@ public:
 	 */
 	bool AllowTally() const
 	{
-		return Q::UNK != m_Q
-			&& Q::NA != m_Q
-			&& Q::DNR != m_Q;
+		return Q::UNK != m_Q && Q::NA != m_Q && Q::DNR != m_Q;
 	}
 
 	/**
@@ -167,11 +166,7 @@ public:
 	 */
 	bool AllowForNonTitling() const
 	{
-		return Q::UNK == m_Q
-			|| Q::NA == m_Q
-			|| Q::DNR == m_Q
-			|| Q::E == m_Q
-			|| Q::FEO == m_Q;
+		return Q::UNK == m_Q || Q::NA == m_Q || Q::DNR == m_Q || Q::E == m_Q || Q::FEO == m_Q;
 	}
 
 	operator Q() const
@@ -191,10 +186,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(
-			std::wstring const& inAttrib,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	bool Load(std::wstring const& inAttrib, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -203,9 +195,7 @@ public:
 	 * @return Success
 	 * @post The ARB_Q attribute will be added to ioTree.
 	 */
-	bool Save(
-			ElementNodePtr const& ioTree,
-			wchar_t const* const inAttribName) const;
+	bool Save(ElementNodePtr const& ioTree, wchar_t const* const inAttribName) const;
 
 private:
 	Q m_Q;

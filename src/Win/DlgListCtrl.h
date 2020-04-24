@@ -42,39 +42,25 @@ enum class ARBWhatToList
 class CDlgListCtrl : public wxDialog
 {
 	friend class CDlgListCtrlDataCalendar; // To allow easy access to image icons
-	friend class CDlgListCtrlDataFaults; // To allow access to GetItemListData
+	friend class CDlgListCtrlDataFaults;   // To allow access to GetItemListData
 public:
 	// Calendar
 	CDlgListCtrl(
-			CAgilityBookDoc* pDoc,
-			ARBDate const& date,
-			std::vector<ARBCalendarPtr> const* entries,
-			CTabView* pTabView,
-			wxWindow* pParent = nullptr);
+		CAgilityBookDoc* pDoc,
+		ARBDate const& date,
+		std::vector<ARBCalendarPtr> const* entries,
+		CTabView* pTabView,
+		wxWindow* pParent = nullptr);
 	// Faults, Partners
-	CDlgListCtrl(
-			ARBWhatToList inType,
-			CAgilityBookDoc* pDoc,
-			ARBDogRunPtr const& inRun,
-			wxWindow* pParent = nullptr);
+	CDlgListCtrl(ARBWhatToList inType, CAgilityBookDoc* pDoc, ARBDogRunPtr const& inRun, wxWindow* pParent = nullptr);
 	// OtherPoints
-	CDlgListCtrl(
-			ARBConfig& pConfig,
-			ARBDogRunPtr const& inRun,
-			wxWindow* pParent = nullptr);
+	CDlgListCtrl(ARBConfig& pConfig, ARBDogRunPtr const& inRun, wxWindow* pParent = nullptr);
 
-	void GetAllPartners(
-			std::set<std::wstring>& ioPartners,
-			std::set<std::wstring>& ioDogs) const;
+	void GetAllPartners(std::set<std::wstring>& ioPartners, std::set<std::wstring>& ioDogs) const;
 
 private:
-	bool Create(
-			std::wstring const& inCaption,
-			wxWindow* pParent,
-			bool bHasImageList);
-	void FinishCreate(
-			int nCols,
-			std::vector<CDlgListCtrlDataPtr>& items);
+	bool Create(std::wstring const& inCaption, wxWindow* pParent, bool bHasImageList);
+	void FinishCreate(int nCols, std::vector<CDlgListCtrlDataPtr>& items);
 	CDlgListCtrlDataPtr GetItemListData(long item) const;
 	void UpdateControls();
 	void DoEdit();

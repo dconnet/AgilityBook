@@ -36,19 +36,11 @@ public:
 	virtual void SetMessage(std::wstring const& inMessage) = 0;
 
 	// Progress bar interface (these are thin wrappers on the progress bar)
-	virtual void SetRange(
-			short inBar,
-			int inRange) = 0;
-	virtual void SetStep(
-			short inBar,
-			int inStep) = 0;
+	virtual void SetRange(short inBar, int inRange) = 0;
+	virtual void SetStep(short inBar, int inStep) = 0;
 	virtual void StepIt(short inBar) = 0;
-	virtual void OffsetPos(
-			short inBar,
-			int inDelta) = 0;
-	virtual void SetPos(
-			short inBar,
-			int inPos) = 0;
+	virtual void OffsetPos(short inBar, int inDelta) = 0;
+	virtual void SetPos(short inBar, int inPos) = 0;
 	virtual int GetPos(short inBar) = 0;
 	// Returns state before trying to change state.
 	virtual bool EnableCancel(bool bEnable = true) = 0;

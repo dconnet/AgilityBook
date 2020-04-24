@@ -23,9 +23,7 @@
 class CDlgCRCDViewer : public wxDialog
 {
 public:
-	CDlgCRCDViewer(
-			HENHMETAFILE inMetaFile,
-			wxWindow* pParent = nullptr);
+	CDlgCRCDViewer(HENHMETAFILE inMetaFile, wxWindow* pParent = nullptr);
 };
 
 #endif

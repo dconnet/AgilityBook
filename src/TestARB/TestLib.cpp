@@ -26,8 +26,8 @@
 #define CATCH_CONFIG_RUNNER
 #include "TestLib.h"
 
-#include "TestARB.h"
 #include "Local.h"
+#include "TestARB.h"
 
 #include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/Element.h"
@@ -58,6 +58,7 @@ class CLangManager
 #endif
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CLangManager);
+
 public:
 	CLangManager(CLocalization& localization)
 		: m_Localization(localization)

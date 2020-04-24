@@ -36,48 +36,43 @@ class CAgilityBookCalendarView : public CAgilityBookBaseExtraView
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookCalendarView)
 
 public:
-	CAgilityBookCalendarView(
-			CTabView* pTabView,
-			wxDocument* doc);
+	CAgilityBookCalendarView(CTabView* pTabView, wxDocument* doc);
 	~CAgilityBookCalendarView();
 
 	bool Create(
-			CBasePanel* parentView,
-			wxWindow* parentCtrl,
-			wxDocument* doc,
-			long flags,
-			wxSizer* sizer,
-			int proportion = 0,
-			int sizerFlags = 0,
-			int border = 0) override;
+		CBasePanel* parentView,
+		wxWindow* parentCtrl,
+		wxDocument* doc,
+		long flags,
+		wxSizer* sizer,
+		int proportion = 0,
+		int sizerFlags = 0,
+		int border = 0) override;
 	wxWindow* GetControl() override;
-	bool HasPrevPane() const override	{return true;}
+	bool HasPrevPane() const override
+	{
+		return true;
+	}
 	bool PrevPane() override;
-	bool HasNextPane() const override	{return true;}
+	bool HasNextPane() const override
+	{
+		return true;
+	}
 	bool NextPane() override;
 	void DetachView() override;
 
 	ARBDate GetCurrentDate() const;
-	bool SetCurrentDate(
-			ARBDate const& date,
-			bool bEnsureVisible);
+	bool SetCurrentDate(ARBDate const& date, bool bEnsureVisible);
 
 	bool IsFiltered() const override;
 	bool GetMessage(std::wstring& msg) const override;
 	bool GetMessage2(std::wstring& msg) const override;
 	bool AllowStatusContext(int field) const override;
 
-	bool OnCreate(
-			wxDocument* doc,
-			long flags) override;
-	void DoActivateView(
-			bool activate,
-			wxView* activeView,
-			wxView* deactiveView) override;
+	bool OnCreate(wxDocument* doc, long flags) override;
+	void DoActivateView(bool activate, wxView* activeView, wxView* deactiveView) override;
 	void OnDraw(wxDC* dc) override;
-	void OnUpdate(
-			wxView* sender,
-			wxObject* inHint = nullptr) override;
+	void OnUpdate(wxView* sender, wxObject* inHint = nullptr) override;
 
 private:
 	void SetupColumns();

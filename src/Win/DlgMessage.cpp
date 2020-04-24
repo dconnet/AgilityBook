@@ -25,20 +25,27 @@
 #endif
 
 
-CDlgMessage::CDlgMessage(
-		std::wstring const& msg,
-		wxWindow* pParent,
-		std::wstring caption)
+CDlgMessage::CDlgMessage(std::wstring const& msg, wxWindow* pParent, std::wstring caption)
 	: wxDialog()
 {
 	if (caption.empty())
 		caption = StringUtil::stringW(_("IDD_MESSAGE"));
-	Create(pParent, wxID_ANY, caption.c_str(), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		caption.c_str(),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 	// Controls (these are done first to control tab order)
 
-	CTextCtrl* textCtrl = new CTextCtrl(this, wxID_ANY, msg.c_str(),
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(260, 160)),
-		wxTE_MULTILINE|wxTE_READONLY|wxTE_WORDWRAP);
+	CTextCtrl* textCtrl = new CTextCtrl(
+		this,
+		wxID_ANY,
+		msg.c_str(),
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(260, 160)),
+		wxTE_MULTILINE | wxTE_READONLY | wxTE_WORDWRAP);
 
 	wxButton* btnClose = new wxButton(this, wxID_OK, _("IDC_MESSAGE_CLOSE"));
 	btnClose->SetDefault();

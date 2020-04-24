@@ -52,7 +52,10 @@
 class CTitleTitleData : public wxClientData
 {
 public:
-	CTitleTitleData(ARBConfigTitlePtr const& inTitle) : m_Title(inTitle) {}
+	CTitleTitleData(ARBConfigTitlePtr const& inTitle)
+		: m_Title(inTitle)
+	{
+	}
 	ARBConfigTitlePtr m_Title;
 };
 
@@ -64,11 +67,7 @@ wxEND_EVENT_TABLE()
 
 
 // If inTitle is NULL, we're creating a new entry. Otherwise, we're editing an existing.
-CDlgTitle::CDlgTitle(
-		ARBConfig const& config,
-		ARBDogTitleList& titles,
-		ARBDogTitlePtr const& inTitle,
-		wxWindow* pParent)
+CDlgTitle::CDlgTitle(ARBConfig const& config, ARBDogTitleList& titles, ARBDogTitlePtr const& inTitle, wxWindow* pParent)
 	: wxDialog()
 	, m_Titles(titles)
 	, m_pTitle(inTitle)
@@ -86,7 +85,13 @@ CDlgTitle::CDlgTitle(
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDD_TITLE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		_("IDD_TITLE"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	wxDateTime date(wxDateTime::Now());
 	if (m_pTitle)
@@ -104,67 +109,85 @@ CDlgTitle::CDlgTitle(
 
 	// Controls (these are done first to control tab order)
 
-	wxCheckBox* checkEarned = new wxCheckBox(this, wxID_ANY,
+	wxCheckBox* checkEarned = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_TITLE_EARNED"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bEarned));
 	checkEarned->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgTitle::OnClickedEarned, this);
 	checkEarned->SetHelpText(_("HIDC_TITLE_EARNED"));
 	checkEarned->SetToolTip(_("HIDC_TITLE_EARNED"));
 
-	m_ctrlDate = new wxDatePickerCtrl(this, wxID_ANY, date,
-		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY);
+	m_ctrlDate = new wxDatePickerCtrl(
+		this,
+		wxID_ANY,
+		date,
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDP_DROPDOWN | wxDP_SHOWCENTURY);
 	m_ctrlDate->Bind(wxEVT_DATE_CHANGED, &CDlgTitle::OnTitleDateChanged, this);
 	m_ctrlDate->SetHelpText(_("HIDC_TITLE_DATE"));
 	m_ctrlDate->SetToolTip(_("HIDC_TITLE_DATE"));
 	if (!m_bEarned)
 		m_ctrlDate->Enable(false);
 
-	m_ctrlHide = new wxCheckBox(this, wxID_ANY,
+	m_ctrlHide = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_TITLE_HIDDEN"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bHidden));
 	m_ctrlHide->SetHelpText(_("HIDC_TITLE_HIDDEN"));
 	m_ctrlHide->SetToolTip(_("HIDC_TITLE_HIDDEN"));
 	if (!m_bEarned)
 		m_ctrlHide->Enable(false);
 
-	m_ctrlReceived = new wxCheckBox(this, wxID_ANY,
+	m_ctrlReceived = new wxCheckBox(
+		this,
+		wxID_ANY,
 		_("IDC_TITLE_RECEIVED"),
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
 		wxGenericValidator(&m_bReceived));
 	m_ctrlReceived->SetHelpText(_("HIDC_TITLE_RECEIVED"));
 	m_ctrlReceived->SetToolTip(_("HIDC_TITLE_RECEIVED"));
 	if (!m_bEarned)
 		m_ctrlReceived->Enable(false);
 
-	wxStaticText* textVenue = new wxStaticText(this, wxID_ANY,
-		_("IDC_TITLE_VENUES"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textVenue
+		= new wxStaticText(this, wxID_ANY, _("IDC_TITLE_VENUES"), wxDefaultPosition, wxDefaultSize, 0);
 	textVenue->Wrap(-1);
 
-	m_ctrlVenues = new CVenueComboBox(this,
-		config.GetVenues(), m_Venue, false,
-		wxGenericValidator(&m_Venue));
+	m_ctrlVenues = new CVenueComboBox(this, config.GetVenues(), m_Venue, false, wxGenericValidator(&m_Venue));
 	m_ctrlVenues->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgTitle::OnSelchangeVenues, this);
 	m_ctrlVenues->SetHelpText(_("HIDC_TITLE_VENUES"));
 	m_ctrlVenues->SetToolTip(_("HIDC_TITLE_VENUES"));
 
-	wxStaticText* textTitle = new wxStaticText(this, wxID_ANY,
-		_("IDC_TITLE_TITLES"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textTitle
+		= new wxStaticText(this, wxID_ANY, _("IDC_TITLE_TITLES"), wxDefaultPosition, wxDefaultSize, 0);
 	textTitle->Wrap(-1);
 
-	m_ctrlTitles = new wxComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr,
-		wxCB_DROPDOWN|wxCB_READONLY);
+	m_ctrlTitles = new wxComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_READONLY);
 	m_ctrlTitles->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgTitle::OnSelchangeTitles, this);
 	m_ctrlTitles->SetHelpText(_("HIDC_TITLE_TITLES"));
 	m_ctrlTitles->SetToolTip(_("HIDC_TITLE_TITLES"));
 
-	m_ctrlDesc = new CRichEditCtrl2(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(260, 65)), true);
+	m_ctrlDesc
+		= new CRichEditCtrl2(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDLG_UNIT(this, wxSize(260, 65)), true);
 	m_ctrlDesc->SetHelpText(_("HIDC_TITLE_DESC"));
 	m_ctrlDesc->SetToolTip(_("HIDC_TITLE_DESC"));
 
@@ -256,21 +279,20 @@ void CDlgTitle::FillTitles(bool bIniting)
 		ARBConfigVenuePtr pVenue = m_ctrlVenues->GetVenue(index);
 		assert(pVenue);
 		for (ARBConfigTitleList::const_iterator iterTitle = pVenue->GetTitles().begin();
-			iterTitle != pVenue->GetTitles().end();
-			++iterTitle)
+			 iterTitle != pVenue->GetTitles().end();
+			 ++iterTitle)
 		{
 			ARBConfigTitlePtr pTitle = (*iterTitle);
 			// Suppress any titles we already have.
-			if (pTitle->IsRecurring()
-			|| 0 == m_Titles.NumTitlesInUse(pVenue->GetName(), pTitle->GetName())
-			|| (m_pTitle && m_pTitle->GetRawName() == pTitle->GetName()))
+			if (pTitle->IsRecurring() || 0 == m_Titles.NumTitlesInUse(pVenue->GetName(), pTitle->GetName())
+				|| (m_pTitle && m_pTitle->GetRawName() == pTitle->GetName()))
 			{
 				if (pTitle->IsValidOn(date))
 				{
 					int idx = m_ctrlTitles->Append(StringUtil::stringWX(pTitle->GetCompleteName()));
 					m_ctrlTitles->SetClientObject(idx, new CTitleTitleData(pTitle));
 					if ((bIniting && m_pTitle && m_pTitle->GetRawName() == pTitle->GetName())
-					|| (!bIniting && pSelTitle && pSelTitle->GetName() == pTitle->GetName()))
+						|| (!bIniting && pSelTitle && pSelTitle->GetName() == pTitle->GetName()))
 					{
 						m_ctrlTitles->SetSelection(idx);
 						FillTitleInfo();
@@ -305,9 +327,7 @@ void CDlgTitle::FillTitleInfo()
 }
 
 
-short CDlgTitle::GetInstance(
-		ARBConfigTitlePtr const& inTitle,
-		std::vector<short>* outMissing) const
+short CDlgTitle::GetInstance(ARBConfigTitlePtr const& inTitle, std::vector<short>* outMissing) const
 {
 	short instance = 0;
 	int index = m_ctrlVenues->GetSelection();

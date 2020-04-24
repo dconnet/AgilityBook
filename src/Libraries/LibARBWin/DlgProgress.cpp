@@ -25,8 +25,8 @@
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/TaskbarProgress.h"
-#include <vector>
 #include <wx/utils.h>
+#include <vector>
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -37,7 +37,9 @@ static int _defWidth = 250;
 /////////////////////////////////////////////////////////////////////////////
 // I used the wxProgressDialog as a guide
 
-class CDlgProgress : public wxDialog, public IDlgProgress
+class CDlgProgress
+	: public wxDialog
+	, public IDlgProgress
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgProgress)
 public:
@@ -48,19 +50,11 @@ public:
 
 	void SetCaption(std::wstring const& inCaption) override;
 	void SetMessage(std::wstring const& inMessage) override;
-	void SetRange(
-			short inBar,
-			int inRange) override;
-	void SetStep(
-			short inBar,
-			int inStep) override;
+	void SetRange(short inBar, int inRange) override;
+	void SetStep(short inBar, int inStep) override;
 	void StepIt(short inBar) override;
-	void OffsetPos(
-			short inBar,
-			int inDelta) override;
-	void SetPos(
-			short inBar,
-			int inPos) override;
+	void OffsetPos(short inBar, int inDelta) override;
+	void SetPos(short inBar, int inPos) override;
 	int GetPos(short inBar) override;
 	bool EnableCancel(bool bEnable = true) override;
 	bool HasCanceled() const override;
@@ -71,8 +65,18 @@ public:
 private:
 	struct GaugeData
 	{
-		GaugeData() : gauge(nullptr), step(1), pos(0) {}
-		GaugeData(wxGauge* inGauge) : gauge(inGauge), step(1), pos(0) {}
+		GaugeData()
+			: gauge(nullptr)
+			, step(1)
+			, pos(0)
+		{
+		}
+		GaugeData(wxGauge* inGauge)
+			: gauge(inGauge)
+			, step(1)
+			, pos(0)
+		{
+		}
 		wxGauge* gauge;
 		int step;
 		int pos;
@@ -80,7 +84,7 @@ private:
 	wxGauge* GetBar(short inBar)
 	{
 		if (1 <= inBar && static_cast<size_t>(inBar) <= m_ctrlBars.size())
-			return m_ctrlBars[inBar-1].gauge;
+			return m_ctrlBars[inBar - 1].gauge;
 		return nullptr;
 	}
 	void ReenableOtherWindows();
@@ -122,9 +126,21 @@ CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 	m_ctrlMessage = new wxStaticText(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlMessage->Wrap(-1);
 
-	m_ctrlBars.push_back(GaugeData(new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxDLG_UNIT(this, wxSize(_defWidth,-1)), wxGA_HORIZONTAL|wxGA_SMOOTH)));
+	m_ctrlBars.push_back(GaugeData(new wxGauge(
+		this,
+		wxID_ANY,
+		10,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(_defWidth, -1)),
+		wxGA_HORIZONTAL | wxGA_SMOOTH)));
 	for (int nBar = 1; nBar < nBars; ++nBar)
-		m_ctrlBars.push_back(GaugeData(new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxDLG_UNIT(this, wxSize(_defWidth,-1)), wxGA_HORIZONTAL|wxGA_SMOOTH)));
+		m_ctrlBars.push_back(GaugeData(new wxGauge(
+			this,
+			wxID_ANY,
+			10,
+			wxDefaultPosition,
+			wxDLG_UNIT(this, wxSize(_defWidth, -1)),
+			wxGA_HORIZONTAL | wxGA_SMOOTH)));
 
 	// Sizers
 
@@ -147,7 +163,7 @@ CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 	CenterOnParent();
 
 	//if (appmodal)
-		m_winDisabler = new wxWindowDisabler(this);
+	m_winDisabler = new wxWindowDisabler(this);
 	//else
 	//{
 	//	if (m_parentTop)
@@ -232,7 +248,7 @@ void CDlgProgress::SetStep(short inBar, int inStep)
 	wxGauge* pBar = GetBar(inBar);
 	if (pBar)
 	{
-		m_ctrlBars[inBar-1].step = inStep;
+		m_ctrlBars[inBar - 1].step = inStep;
 	}
 }
 
@@ -242,10 +258,10 @@ void CDlgProgress::StepIt(short inBar)
 	wxGauge* pBar = GetBar(inBar);
 	if (pBar)
 	{
-		m_ctrlBars[inBar-1].pos += m_ctrlBars[inBar-1].step;
+		m_ctrlBars[inBar - 1].pos += m_ctrlBars[inBar - 1].step;
 		if (m_pTaskbar)
-			m_pTaskbar->SetProgressValue(m_ctrlBars[inBar-1].pos, m_ctrlBars[inBar-1].gauge->GetRange());
-		pBar->SetValue(m_ctrlBars[inBar-1].pos);
+			m_pTaskbar->SetProgressValue(m_ctrlBars[inBar - 1].pos, m_ctrlBars[inBar - 1].gauge->GetRange());
+		pBar->SetValue(m_ctrlBars[inBar - 1].pos);
 		Update();
 	}
 }
@@ -256,10 +272,10 @@ void CDlgProgress::OffsetPos(short inBar, int inDelta)
 	wxGauge* pBar = GetBar(inBar);
 	if (pBar)
 	{
-		m_ctrlBars[inBar-1].pos += inDelta;
+		m_ctrlBars[inBar - 1].pos += inDelta;
 		if (m_pTaskbar)
-			m_pTaskbar->SetProgressValue(m_ctrlBars[inBar-1].pos, m_ctrlBars[inBar-1].gauge->GetRange());
-		pBar->SetValue(m_ctrlBars[inBar-1].pos);
+			m_pTaskbar->SetProgressValue(m_ctrlBars[inBar - 1].pos, m_ctrlBars[inBar - 1].gauge->GetRange());
+		pBar->SetValue(m_ctrlBars[inBar - 1].pos);
 		Update();
 	}
 }
@@ -270,10 +286,10 @@ void CDlgProgress::SetPos(short inBar, int inPos)
 	wxGauge* pBar = GetBar(inBar);
 	if (pBar)
 	{
-		m_ctrlBars[inBar-1].pos = inPos;
+		m_ctrlBars[inBar - 1].pos = inPos;
 		if (m_pTaskbar)
-			m_pTaskbar->SetProgressValue(m_ctrlBars[inBar-1].pos, m_ctrlBars[inBar-1].gauge->GetRange());
-		pBar->SetValue(m_ctrlBars[inBar-1].pos);
+			m_pTaskbar->SetProgressValue(m_ctrlBars[inBar - 1].pos, m_ctrlBars[inBar - 1].gauge->GetRange());
+		pBar->SetValue(m_ctrlBars[inBar - 1].pos);
 		Update();
 	}
 }
@@ -286,7 +302,7 @@ int CDlgProgress::GetPos(short inBar)
 	if (pBar)
 	{
 		pos = pBar->GetValue();
-		m_ctrlBars[inBar-1].pos = pos;
+		m_ctrlBars[inBar - 1].pos = pos;
 	}
 	return pos;
 }

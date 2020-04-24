@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBDogExistingPoints.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -34,7 +34,7 @@ TEST_CASE("DogExistingPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBDogExistingPointsPtr New();
+			//	static ARBDogExistingPointsPtr New();
 		}
 	}
 
@@ -44,7 +44,7 @@ TEST_CASE("DogExistingPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogExistingPointsPtr Clone() const;
+			//	ARBDogExistingPointsPtr Clone() const;
 		}
 	}
 
@@ -54,7 +54,7 @@ TEST_CASE("DogExistingPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogExistingPoints& operator=(ARBDogExistingPoints const& rhs);
+			//	ARBDogExistingPoints& operator=(ARBDogExistingPoints const& rhs);
 		}
 	}
 
@@ -64,8 +64,8 @@ TEST_CASE("DogExistingPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBDogExistingPoints const& rhs) const;
-		//	bool operator!=(ARBDogExistingPoints const& rhs) const
+			//	bool operator==(ARBDogExistingPoints const& rhs) const;
+			//	bool operator!=(ARBDogExistingPoints const& rhs) const
 		}
 	}
 
@@ -75,7 +75,7 @@ TEST_CASE("DogExistingPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const
+			//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -85,11 +85,11 @@ TEST_CASE("DogExistingPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig const& inConfig,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig const& inConfig,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -99,7 +99,7 @@ TEST_CASE("DogExistingPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 
@@ -109,7 +109,7 @@ TEST_CASE("DogExistingPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static std::wstring GetPointTypeName(ARBExistingPointType inType);
+			//	static std::wstring GetPointTypeName(ARBExistingPointType inType);
 		}
 	}
 }
@@ -122,11 +122,11 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig const& inConfig,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig const& inConfig,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -145,7 +145,7 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void sort();
+			//	void sort();
 		}
 	}
 
@@ -155,15 +155,15 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool HasPoints(std::wstring const& inVenue) const;
-		//	bool HasPoints(
-		//			ARBConfigVenuePtr inVenue,
-		//			ARBConfigDivisionPtr inDiv,
-		//			ARBConfigLevelPtr inLevel,
-		//			ARBConfigEventPtr inEvent,
-		//			ARBDate inDateFrom,
-		//			ARBDate inDateTo,
-		//			bool inHasLifetime) const;
+			//	bool HasPoints(std::wstring const& inVenue) const;
+			//	bool HasPoints(
+			//			ARBConfigVenuePtr inVenue,
+			//			ARBConfigDivisionPtr inDiv,
+			//			ARBConfigLevelPtr inLevel,
+			//			ARBConfigEventPtr inEvent,
+			//			ARBDate inDateFrom,
+			//			ARBDate inDateTo,
+			//			bool inHasLifetime) const;
 		}
 	}
 
@@ -173,15 +173,15 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	double ExistingPoints(
-		//			ARBExistingPointType inType,
-		//			ARBConfigVenuePtr inVenue,
-		//			ARBConfigMultiQPtr inMultiQ,
-		//			ARBConfigDivisionPtr inDiv,
-		//			ARBConfigLevelPtr inLevel,
-		//			ARBConfigEventPtr inEvent,
-		//			ARBDate inDateFrom,
-		//			ARBDate inDateTo) const;
+			//	double ExistingPoints(
+			//			ARBExistingPointType inType,
+			//			ARBConfigVenuePtr inVenue,
+			//			ARBConfigMultiQPtr inMultiQ,
+			//			ARBConfigDivisionPtr inDiv,
+			//			ARBConfigLevelPtr inLevel,
+			//			ARBConfigEventPtr inEvent,
+			//			ARBDate inDateFrom,
+			//			ARBDate inDateTo) const;
 		}
 	}
 
@@ -191,7 +191,7 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int NumExistingPointsInVenue(std::wstring const& inVenue) const;
+			//	int NumExistingPointsInVenue(std::wstring const& inVenue) const;
 		}
 	}
 
@@ -201,9 +201,9 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameVenue(
-		//			std::wstring const& inOldVenue,
-		//			std::wstring const& inNewVenue);
+			//	int RenameVenue(
+			//			std::wstring const& inOldVenue,
+			//			std::wstring const& inNewVenue);
 		}
 	}
 
@@ -213,7 +213,7 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteVenue(std::wstring const& inVenue);
+			//	int DeleteVenue(std::wstring const& inVenue);
 		}
 	}
 
@@ -223,9 +223,9 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int NumExistingPointsInDivision(
-		//			ARBConfigVenuePtr inVenue,
-		//			std::wstring const& inDiv) const;
+			//	int NumExistingPointsInDivision(
+			//			ARBConfigVenuePtr inVenue,
+			//			std::wstring const& inDiv) const;
 		}
 	}
 
@@ -235,10 +235,10 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameDivision(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inOldDiv,
-		//			std::wstring const& inNewDiv);
+			//	int RenameDivision(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inOldDiv,
+			//			std::wstring const& inNewDiv);
 		}
 	}
 
@@ -248,9 +248,9 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteDivision(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inDiv);
+			//	int DeleteDivision(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inDiv);
 		}
 	}
 
@@ -260,10 +260,10 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int NumLevelsInUse(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inDiv,
-		//			std::wstring const& inLevel) const;
+			//	int NumLevelsInUse(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inDiv,
+			//			std::wstring const& inLevel) const;
 		}
 	}
 
@@ -273,11 +273,11 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameLevel(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inDiv,
-		//			std::wstring const& inOldLevel,
-		//			std::wstring const& inNewLevel);
+			//	int RenameLevel(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inDiv,
+			//			std::wstring const& inOldLevel,
+			//			std::wstring const& inNewLevel);
 		}
 	}
 
@@ -287,10 +287,10 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteLevel(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inDiv,
-		//			std::wstring const& inLevel);
+			//	int DeleteLevel(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inDiv,
+			//			std::wstring const& inLevel);
 		}
 	}
 
@@ -300,9 +300,9 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int NumEventsInUse(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inEvent) const;
+			//	int NumEventsInUse(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inEvent) const;
 		}
 	}
 
@@ -312,10 +312,10 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameEvent(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inOldEvent,
-		//			std::wstring const& inNewEvent);
+			//	int RenameEvent(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inOldEvent,
+			//			std::wstring const& inNewEvent);
 		}
 	}
 
@@ -325,9 +325,9 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteEvent(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inEvent);
+			//	int DeleteEvent(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inEvent);
 		}
 	}
 
@@ -337,7 +337,7 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int NumOtherPointsInUse(std::wstring const& inOther) const;
+			//	int NumOtherPointsInUse(std::wstring const& inOther) const;
 		}
 	}
 
@@ -347,9 +347,9 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameOtherPoints(
-		//			std::wstring const& inOldOther,
-		//			std::wstring const& inNewOther);
+			//	int RenameOtherPoints(
+			//			std::wstring const& inOldOther,
+			//			std::wstring const& inNewOther);
 		}
 	}
 
@@ -359,7 +359,7 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteOtherPoints(std::wstring const& inOther);
+			//	int DeleteOtherPoints(std::wstring const& inOther);
 		}
 	}
 
@@ -369,9 +369,9 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int NumMultiQsInUse(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inMultiQ) const;
+			//	int NumMultiQsInUse(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inMultiQ) const;
 		}
 	}
 
@@ -381,10 +381,10 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameMultiQs(
-		//			std::wstring const& inVenue,
-		//			std::wstring const& inOldMultiQ,
-		//			std::wstring const& inNewMultiQ);
+			//	int RenameMultiQs(
+			//			std::wstring const& inVenue,
+			//			std::wstring const& inOldMultiQ,
+			//			std::wstring const& inNewMultiQ);
 		}
 	}
 
@@ -394,9 +394,9 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteMultiQs(
-		//			ARBConfig const& inConfig,
-		//			std::wstring const& inVenue);
+			//	int DeleteMultiQs(
+			//			ARBConfig const& inConfig,
+			//			std::wstring const& inVenue);
 		}
 	}
 
@@ -406,8 +406,8 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddExistingPoints(ARBDogExistingPointsPtr inExistingPoints);
-		//	bool DeleteExistingPoints(ARBDogExistingPointsPtr inExistingPoints);
+			//	bool AddExistingPoints(ARBDogExistingPointsPtr inExistingPoints);
+			//	bool DeleteExistingPoints(ARBDogExistingPointsPtr inExistingPoints);
 		}
 	}
 }

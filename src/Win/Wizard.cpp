@@ -30,10 +30,7 @@
 
 
 #include "Platform/arbWarningPush.h"
-CWizard::CWizard(
-		CAgilityBookDoc* pDoc,
-		std::vector<ARBCalendarPtr>* pCalEntries,
-		wxWindow* pParent)
+CWizard::CWizard(CAgilityBookDoc* pDoc, std::vector<ARBCalendarPtr>* pCalEntries, wxWindow* pParent)
 	: wxWizard()
 	, m_pDoc(pDoc)
 	, m_CalEntries(pCalEntries)
@@ -47,7 +44,13 @@ CWizard::CWizard(
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDD_WIZARD_START"), wxNullBitmap, wxDefaultPosition, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		_("IDD_WIZARD_START"),
+		wxNullBitmap,
+		wxDefaultPosition,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	m_Finish = wxDynamicCast(FindWindow(wxID_FORWARD), wxButton);
 	assert(m_Finish);

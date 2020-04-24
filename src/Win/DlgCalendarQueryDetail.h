@@ -18,9 +18,9 @@
  */
 
 #include "ARB/ARBTypes2.h"
+#include <wx/listctrl.h>
 #include <map>
 #include <vector>
-#include <wx/listctrl.h>
 class ARBConfig;
 class CCheckListCtrl;
 
@@ -30,18 +30,18 @@ class CDlgCalendarQueryDetail : public wxDialog
 public:
 	// For configuring what codes are available
 	CDlgCalendarQueryDetail(
-			ARBConfig const& inConfig,
-			std::map<std::wstring, std::wstring> const& inLocCodes,
-			std::map<std::wstring, std::wstring> const& inVenueCodes,
-			wxWindow* pParent = nullptr);
+		ARBConfig const& inConfig,
+		std::map<std::wstring, std::wstring> const& inLocCodes,
+		std::map<std::wstring, std::wstring> const& inVenueCodes,
+		wxWindow* pParent = nullptr);
 	// For selecting from available list
 	CDlgCalendarQueryDetail(
-			ARBConfig const& inConfig,
-			std::map<std::wstring, std::wstring> const& inLocCodes,
-			std::vector<std::wstring> const& inSelectedLocCodes,
-			std::map<std::wstring, std::wstring> const& inVenueCodes,
-			std::vector<std::wstring> const& inSelectedVenueCodes,
-			wxWindow* pParent = nullptr);
+		ARBConfig const& inConfig,
+		std::map<std::wstring, std::wstring> const& inLocCodes,
+		std::vector<std::wstring> const& inSelectedLocCodes,
+		std::map<std::wstring, std::wstring> const& inVenueCodes,
+		std::vector<std::wstring> const& inSelectedVenueCodes,
+		wxWindow* pParent = nullptr);
 
 	std::map<std::wstring, std::wstring> const& GetLocationCodes() const
 	{

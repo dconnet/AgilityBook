@@ -26,10 +26,7 @@
 #endif
 
 
-std::wstring ARBMsgDigest::Compute(
-		std::istream& inFile,
-		ARBDigest type,
-		size_t* outSize)
+std::wstring ARBMsgDigest::Compute(std::istream& inFile, ARBDigest type, size_t* outSize)
 {
 	if (outSize)
 		*outSize = 0;

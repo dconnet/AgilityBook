@@ -30,9 +30,7 @@ wxIMPLEMENT_CLASS(CAgilityBookBaseView, wxView)
 wxIMPLEMENT_CLASS(CAgilityBookBaseExtraView, CAgilityBookBaseView)
 
 
-CAgilityBookBaseExtraView::CAgilityBookBaseExtraView(
-		CTabView* pTabView,
-		wxDocument* doc)
+CAgilityBookBaseExtraView::CAgilityBookBaseExtraView(CTabView* pTabView, wxDocument* doc)
 	: m_pTabView(pTabView)
 	, m_parentPanel(nullptr)
 	, m_bIgnore(false)
@@ -42,14 +40,14 @@ CAgilityBookBaseExtraView::CAgilityBookBaseExtraView(
 
 
 bool CAgilityBookBaseExtraView::Create(
-		CBasePanel* parentOfView,
-		wxWindow* parentOfCtrl,
-		wxDocument* doc,
-		long flags,
-		wxSizer* sizer,
-		int proportion,
-		int sizerFlags,
-		int border)
+	CBasePanel* parentOfView,
+	wxWindow* parentOfCtrl,
+	wxDocument* doc,
+	long flags,
+	wxSizer* sizer,
+	int proportion,
+	int sizerFlags,
+	int border)
 {
 	m_parentPanel = parentOfView;
 	if (!OnCreate(doc, flags))
@@ -59,10 +57,7 @@ bool CAgilityBookBaseExtraView::Create(
 }
 
 
-void CAgilityBookBaseExtraView::OnActivateView(
-		bool activate,
-		wxView* activeView,
-		wxView* deactiveView)
+void CAgilityBookBaseExtraView::OnActivateView(bool activate, wxView* activeView, wxView* deactiveView)
 {
 	// Derived controls may call SetFocus on their internal controls, which
 	// may call wxView::Activate, which comes back in here. The internal
@@ -95,10 +90,7 @@ void CAgilityBookBaseExtraView::UpdateMessages()
 }
 
 
-bool CAgilityBookBaseExtraView::GetMenuPosition(
-		wxPoint& outPos,
-		CListCtrl& ctrl,
-		wxContextMenuEvent const& evt)
+bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, CListCtrl& ctrl, wxContextMenuEvent const& evt)
 {
 	bool bOk = true;
 	outPos = evt.GetPosition(); // in screen
@@ -134,10 +126,7 @@ bool CAgilityBookBaseExtraView::GetMenuPosition(
 }
 
 
-bool CAgilityBookBaseExtraView::GetMenuPosition(
-		wxPoint& outPos,
-		CListCtrl& ctrl,
-		wxListEvent const& evt)
+bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, CListCtrl& ctrl, wxListEvent const& evt)
 {
 	bool bOk = true;
 	outPos = evt.GetPoint(); // in client
@@ -172,10 +161,7 @@ bool CAgilityBookBaseExtraView::GetMenuPosition(
 }
 
 
-bool CAgilityBookBaseExtraView::GetMenuPosition(
-		wxPoint& outPos,
-		CTreeCtrl& ctrl,
-		wxContextMenuEvent const& evt)
+bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, CTreeCtrl& ctrl, wxContextMenuEvent const& evt)
 {
 	bool bOk = true;
 	outPos = evt.GetPosition(); // in screen
@@ -211,18 +197,14 @@ bool CAgilityBookBaseExtraView::GetMenuPosition(
 }
 
 
-bool CAgilityBookBaseExtraView::GetMenuPosition(
-		wxPoint& outPos,
-		CTreeCtrl& ctrl,
-		wxTreeEvent const& evt)
+bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, CTreeCtrl& ctrl, wxTreeEvent const& evt)
 {
 	bool bOk = true;
 	outPos = evt.GetPoint(); // in client
 	wxTreeItemId item = evt.GetItem();
 	// Adjust the menu position so it's on the selected item.
 	wxRect rect;
-	if (wxDefaultPosition == outPos || !item.IsOk()
-	|| !ctrl.GetBoundingRect(item, rect))
+	if (wxDefaultPosition == outPos || !item.IsOk() || !ctrl.GetBoundingRect(item, rect))
 	{
 		rect = ctrl.GetScreenRect();
 		outPos = ::wxGetMousePosition();
@@ -244,10 +226,7 @@ bool CAgilityBookBaseExtraView::GetMenuPosition(
 }
 
 
-bool CAgilityBookBaseExtraView::GetMenuPosition(
-		wxPoint& outPos,
-		wxWindow const* ctrl,
-		wxContextMenuEvent const& evt)
+bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, wxWindow const* ctrl, wxContextMenuEvent const& evt)
 {
 	outPos = evt.GetPosition(); // in screen
 	if (!ctrl)

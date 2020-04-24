@@ -34,16 +34,18 @@
 
 namespace
 {
-	class ARBConfigSubLevel_concrete : public ARBConfigSubLevel
+class ARBConfigSubLevel_concrete : public ARBConfigSubLevel
+{
+public:
+	ARBConfigSubLevel_concrete()
 	{
-	public:
-		ARBConfigSubLevel_concrete() {}
-		ARBConfigSubLevel_concrete(ARBConfigSubLevel const& rhs)
-			: ARBConfigSubLevel(rhs)
-		{
-		}
-	};
+	}
+	ARBConfigSubLevel_concrete(ARBConfigSubLevel const& rhs)
+		: ARBConfigSubLevel(rhs)
+	{
+	}
 };
+}; // namespace
 
 
 ARBConfigSubLevelPtr ARBConfigSubLevel::New()
@@ -108,21 +110,16 @@ ARBConfigSubLevel& ARBConfigSubLevel::operator=(ARBConfigSubLevel&& rhs)
 
 bool ARBConfigSubLevel::operator==(ARBConfigSubLevel const& rhs) const
 {
-	return m_Name == rhs.m_Name
-		&& m_ShortName == rhs.m_ShortName;
+	return m_Name == rhs.m_Name && m_ShortName == rhs.m_ShortName;
 }
 
 
-bool ARBConfigSubLevel::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBConfigSubLevel::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_SUBLEVEL)
 		return false;
-	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_SUBLEVEL_NAME, m_Name)
-	|| 0 == m_Name.length())
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_SUBLEVEL_NAME, m_Name) || 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_SUBLEVEL, ATTRIB_SUBLEVEL_NAME));
 		return false;
@@ -145,10 +142,7 @@ bool ARBConfigSubLevel::Save(ElementNodePtr const& ioTree) const
 }
 
 
-bool ARBConfigSubLevel::Update(
-		int indent,
-		ARBConfigSubLevelPtr const& inLevelNew,
-		std::wstring& ioInfo)
+bool ARBConfigSubLevel::Update(int indent, ARBConfigSubLevelPtr const& inLevelNew, std::wstring& ioInfo)
 {
 	std::wstring info;
 	if (GetName() != inLevelNew->GetName())
@@ -168,9 +162,9 @@ bool ARBConfigSubLevel::Update(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigSubLevelList::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	ARBConfigSubLevelPtr thing(ARBConfigSubLevel::New());
 	if (!thing->Load(inTree, inVersion, ioCallback))
@@ -186,9 +180,7 @@ void ARBConfigSubLevelList::ReorderBy(ARBConfigSubLevelList const& inList)
 	{
 		ARBConfigSubLevelList tmp;
 		tmp.reserve(size());
-		for (ARBConfigSubLevelList::const_iterator i = inList.begin();
-			i != inList.end();
-			++i)
+		for (ARBConfigSubLevelList::const_iterator i = inList.begin(); i != inList.end(); ++i)
 		{
 			ARBConfigSubLevelPtr level;
 			if (FindSubLevel((*i)->GetName(), &level))
@@ -206,9 +198,7 @@ void ARBConfigSubLevelList::ReorderBy(ARBConfigSubLevelList const& inList)
 }
 
 
-bool ARBConfigSubLevelList::FindSubLevel(
-		std::wstring const& inName,
-		ARBConfigSubLevelPtr* outLevel) const
+bool ARBConfigSubLevelList::FindSubLevel(std::wstring const& inName, ARBConfigSubLevelPtr* outLevel) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -223,9 +213,7 @@ bool ARBConfigSubLevelList::FindSubLevel(
 }
 
 
-bool ARBConfigSubLevelList::AddSubLevel(
-		std::wstring const& inName,
-		ARBConfigSubLevelPtr* outLevel)
+bool ARBConfigSubLevelList::AddSubLevel(std::wstring const& inName, ARBConfigSubLevelPtr* outLevel)
 {
 	if (outLevel)
 		outLevel->reset();

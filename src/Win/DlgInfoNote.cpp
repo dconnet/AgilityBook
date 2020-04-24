@@ -62,11 +62,7 @@ wxBEGIN_EVENT_TABLE(CDlgInfoNote, wxDialog)
 wxEND_EVENT_TABLE()
 
 
-CDlgInfoNote::CDlgInfoNote(
-		CAgilityBookDoc* pDoc,
-		ARBInfoType inType,
-		std::wstring const& inSelect,
-		wxWindow* pParent)
+CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstring const& inSelect, wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_Type(inType)
@@ -127,41 +123,53 @@ CDlgInfoNote::CDlgInfoNote(
 
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	wxDialog::Create(pParent, wxID_ANY, caption.c_str(), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	wxDialog::Create(
+		pParent,
+		wxID_ANY,
+		caption.c_str(),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
 
-	m_ctrlNames = new wxBitmapComboBox(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		0, nullptr,
-		wxCB_DROPDOWN|wxCB_READONLY|wxCB_SORT);
+	m_ctrlNames = new wxBitmapComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_READONLY | wxCB_SORT);
 	m_ctrlNames->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgInfoNote::OnSelchangeName, this);
 	m_ctrlNames->SetHelpText(_("HIDC_INFONOTE"));
 	m_ctrlNames->SetToolTip(_("HIDC_INFONOTE"));
 
-	wxButton* ctrlNew = new wxButton(this, wxID_ANY,
-		_("IDC_INFONOTE_NEW"),
-		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	wxButton* ctrlNew
+		= new wxButton(this, wxID_ANY, _("IDC_INFONOTE_NEW"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
 	ctrlNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgInfoNote::OnNewItem, this);
 	ctrlNew->SetHelpText(_("HIDC_INFONOTE_NEW"));
 	ctrlNew->SetToolTip(_("HIDC_INFONOTE_NEW"));
 
-	m_ctrlDelete = new wxButton(this, wxID_ANY,
-		_("IDC_INFONOTE_DELETE"),
-		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	m_ctrlDelete
+		= new wxButton(this, wxID_ANY, _("IDC_INFONOTE_DELETE"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
 	m_ctrlDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgInfoNote::OnDeleteItem, this);
 	m_ctrlDelete->SetHelpText(_("HIDC_INFONOTE_DELETE"));
 	m_ctrlDelete->SetToolTip(_("HIDC_INFONOTE_DELETE"));
 
-	m_ctrlVisible = new wxCheckBox(this, wxID_ANY,
-		_("IDC_INFONOTE_VISIBLE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlVisible = new wxCheckBox(this, wxID_ANY, _("IDC_INFONOTE_VISIBLE"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlVisible->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgInfoNote::OnClickedJudgeVisible, this);
 	m_ctrlVisible->SetHelpText(_("HIDC_INFONOTE_VISIBLE"));
 	m_ctrlVisible->SetToolTip(_("HIDC_INFONOTE_VISIBLE"));
 
-	m_ctrlNotes = new CSpellCheckCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(180, 60)), wxTE_MULTILINE);
+	m_ctrlNotes = new CSpellCheckCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(180, 60)),
+		wxTE_MULTILINE);
 	m_ctrlNotes->Bind(wxEVT_COMMAND_TEXT_UPDATED, &CDlgInfoNote::OnEnChangeComments, this);
 	m_ctrlNotes->SetHelpText(_("HIDC_INFONOTE_COMMENTS"));
 	m_ctrlNotes->SetToolTip(_("HIDC_INFONOTE_COMMENTS"));

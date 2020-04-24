@@ -59,7 +59,7 @@ static long GetDefaultBook()
 #elif wxUSE_TOOLBOOK
 	return ID_BOOK_TOOLBOOK;
 #elif
-	#error "No books enabled in wxWidgets build!"
+#error "No books enabled in wxWidgets build!"
 #endif
 }
 
@@ -127,10 +127,22 @@ void CTabView::OnOrient(int id)
 class CIgnore
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CIgnore);
+
 public:
-	CIgnore(bool& ignore) : m_Ignore(ignore) { m_Ignore = true; }
-	~CIgnore()								{ reset(); }
-	void reset()							{ m_Ignore = false; }
+	CIgnore(bool& ignore)
+		: m_Ignore(ignore)
+	{
+		m_Ignore = true;
+	}
+	~CIgnore()
+	{
+		reset();
+	}
+	void reset()
+	{
+		m_Ignore = false;
+	}
+
 private:
 	bool& m_Ignore;
 };
@@ -159,7 +171,7 @@ void CTabView::RecreateBook(wxDocument* doc, long inFlags, bool bOnCreate)
 	if (m_type == ID_BOOK_NOTEBOOK)
 		flags |= wxNB_MULTILINE;
 
-	wxBookCtrlBase *oldBook = m_ctrlBook;
+	wxBookCtrlBase* oldBook = m_ctrlBook;
 
 	m_ctrlBook = nullptr;
 	CIgnore ignore(m_bIgnoreEvents);
@@ -219,19 +231,28 @@ void CTabView::RecreateBook(wxDocument* doc, long inFlags, bool bOnCreate)
 	else
 		sel = wxConfig::Get()->Read(CFG_SETTINGS_VIEW, 0L);
 
-	CBasePanel* pages[4]{ nullptr };
+	CBasePanel* pages[4]{nullptr};
 	m_ctrlBook->AddPage(
 		(pages[IDX_PANE_RUNS] = new CAgilityBookPanelRuns(this, m_ctrlBook, doc, inFlags, views[IDX_PANE_RUNS])),
-		_("IDS_RUNS"), false, IDX_PANE_RUNS);
+		_("IDS_RUNS"),
+		false,
+		IDX_PANE_RUNS);
 	m_ctrlBook->AddPage(
 		(pages[IDX_PANE_POINTS] = new CAgilityBookPanelPoints(this, m_ctrlBook, doc, inFlags, views[IDX_PANE_POINTS])),
-		_("IDS_POINTS"), false, IDX_PANE_POINTS);
+		_("IDS_POINTS"),
+		false,
+		IDX_PANE_POINTS);
 	m_ctrlBook->AddPage(
-		(pages[IDX_PANE_CALENDAR] = new CAgilityBookPanelCalendar(this, m_ctrlBook, doc, inFlags, views[IDX_PANE_CALENDAR])),
-		_("IDS_CALENDAR"), false, IDX_PANE_CALENDAR);
+		(pages[IDX_PANE_CALENDAR]
+		 = new CAgilityBookPanelCalendar(this, m_ctrlBook, doc, inFlags, views[IDX_PANE_CALENDAR])),
+		_("IDS_CALENDAR"),
+		false,
+		IDX_PANE_CALENDAR);
 	m_ctrlBook->AddPage(
 		(pages[IDX_PANE_LOG] = new CAgilityBookPanelTraining(this, m_ctrlBook, doc, inFlags, views[IDX_PANE_LOG])),
-		_("IDS_TRAINING"), false, IDX_PANE_LOG);
+		_("IDS_TRAINING"),
+		false,
+		IDX_PANE_LOG);
 	ignore.reset();
 
 	if (sel != wxNOT_FOUND)
@@ -257,9 +278,7 @@ bool CTabView::ShowPointsAsHtml(bool bHtml)
 		CBasePanel* panel = wxDynamicCast(m_ctrlBook->GetPage(IDX_PANE_POINTS), CBasePanel);
 		std::vector<CAgilityBookBaseExtraView*> views;
 		panel->DetachViews(views);
-		for (std::vector<CAgilityBookBaseExtraView*>::iterator iView = views.begin();
-			iView != views.end();
-			++iView)
+		for (std::vector<CAgilityBookBaseExtraView*>::iterator iView = views.begin(); iView != views.end(); ++iView)
 		{
 			pDoc->RemoveView(*iView);
 			delete *iView;

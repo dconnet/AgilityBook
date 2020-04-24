@@ -28,28 +28,18 @@ class ARBWIN_API CCheckTreeCtrl : public CTreeCtrl
 	DECLARE_CLASS(CCheckTreeCtrl)
 	DECLARE_NO_COPY_IMPLEMENTED(CCheckTreeCtrl)
 public:
-	CCheckTreeCtrl(
-			wxWindow* pParent,
-			const wxPoint& pos = wxDefaultPosition,
-			const wxSize& size = wxDefaultSize);
+	CCheckTreeCtrl(wxWindow* pParent, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize);
 	~CCheckTreeCtrl();
 
-	void ShowCheckbox(
-			wxTreeItemId hItem,
-			bool bShow = true);
+	void ShowCheckbox(wxTreeItemId hItem, bool bShow = true);
 	bool IsCheckVisible(wxTreeItemId hItem);
 	bool GetChecked(wxTreeItemId hItem);
-	bool SetChecked(
-			wxTreeItemId hItem,
-			bool bChecked,
-			bool bCascade = true);
+	bool SetChecked(wxTreeItemId hItem, bool bChecked, bool bCascade = true);
 
 private:
 	void SendDispInfo(wxTreeItemId hItem);
 	void CheckParentCheck(wxTreeItemId hItem);
-	int Cascade(
-			wxTreeItemId hItem,
-			bool bChecked);
+	int Cascade(wxTreeItemId hItem, bool bChecked);
 	// Hide the standard versions to make sure any usage to this tree
 	// shows/hides the checkboxes properly.
 	// (It's not quite a straight-drop in for wxTreeCtrl)

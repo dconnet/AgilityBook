@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBConfigEvent.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -34,7 +34,7 @@ TEST_CASE("ConfigEvent")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBConfigEventPtr New();
+			//	static ARBConfigEventPtr New();
 		}
 	}
 
@@ -44,7 +44,7 @@ TEST_CASE("ConfigEvent")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigEventPtr Clone() const;
+			//	ARBConfigEventPtr Clone() const;
 		}
 	}
 
@@ -54,7 +54,7 @@ TEST_CASE("ConfigEvent")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBConfigEvent& operator=(ARBConfigEvent const& rhs);
+			//	ARBConfigEvent& operator=(ARBConfigEvent const& rhs);
 		}
 	}
 
@@ -64,8 +64,8 @@ TEST_CASE("ConfigEvent")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBConfigEvent const& rhs) const;
-		//	bool operator!=(ARBConfigEvent const& rhs) const
+			//	bool operator==(ARBConfigEvent const& rhs) const;
+			//	bool operator!=(ARBConfigEvent const& rhs) const
 		}
 	}
 
@@ -75,7 +75,7 @@ TEST_CASE("ConfigEvent")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const
+			//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -85,11 +85,11 @@ TEST_CASE("ConfigEvent")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfigDivisionList const& inDivisions,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfigDivisionList const& inDivisions,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -99,7 +99,7 @@ TEST_CASE("ConfigEvent")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 
@@ -109,10 +109,10 @@ TEST_CASE("ConfigEvent")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Update(
-		//			int indent,
-		//			ARBConfigEventPtr inEventNew,
-		//			std::wstring& ioInfo);
+			//	bool Update(
+			//			int indent,
+			//			ARBConfigEventPtr inEventNew,
+			//			std::wstring& ioInfo);
 		}
 	}
 
@@ -122,12 +122,12 @@ TEST_CASE("ConfigEvent")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	size_t FindAllEvents(
-		//			std::wstring const& inDivision,
-		//			std::wstring const& inLevel,
-		//			ARBDate const& inDate,
-		//			bool inTitlePoints,
-		//			ARBVector<ARBConfigScoringPtr>& outList) const
+			//	size_t FindAllEvents(
+			//			std::wstring const& inDivision,
+			//			std::wstring const& inLevel,
+			//			ARBDate const& inDate,
+			//			bool inTitlePoints,
+			//			ARBVector<ARBConfigScoringPtr>& outList) const
 		}
 	}
 
@@ -137,10 +137,10 @@ TEST_CASE("ConfigEvent")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool VerifyEvent(
-		//			std::wstring const& inDivision,
-		//			std::wstring const& inLevel,
-		//			ARBDate const& inDate) const
+			//	bool VerifyEvent(
+			//			std::wstring const& inDivision,
+			//			std::wstring const& inLevel,
+			//			ARBDate const& inDate) const
 		}
 	}
 
@@ -150,11 +150,11 @@ TEST_CASE("ConfigEvent")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindEvent(
-		//			std::wstring const& inDivision,
-		//			std::wstring const& inLevel,
-		//			ARBDate const& inDate,
-		//			ARBConfigScoringPtr* outScoring = nullptr) const
+			//	bool FindEvent(
+			//			std::wstring const& inDivision,
+			//			std::wstring const& inLevel,
+			//			ARBDate const& inDate,
+			//			ARBConfigScoringPtr* outScoring = nullptr) const
 		}
 	}
 }
@@ -167,11 +167,11 @@ TEST_CASE("ConfigEventList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfigDivisionList const& inDivisions,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfigDivisionList const& inDivisions,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -181,7 +181,7 @@ TEST_CASE("ConfigEventList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	void ReorderBy(ARBConfigEventList const& inList);
+			//	void ReorderBy(ARBConfigEventList const& inList);
 			// Make sure the target config has an event that the source config does not
 		}
 	}
@@ -192,11 +192,11 @@ TEST_CASE("ConfigEventList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool VerifyEvent(
-		//			std::wstring const& inEvent,
-		//			std::wstring const& inDivision,
-		//			std::wstring const& inLevel,
-		//			ARBDate const& inDate) const;
+			//	bool VerifyEvent(
+			//			std::wstring const& inEvent,
+			//			std::wstring const& inDivision,
+			//			std::wstring const& inLevel,
+			//			ARBDate const& inDate) const;
 		}
 	}
 
@@ -206,16 +206,16 @@ TEST_CASE("ConfigEventList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	 bool FindEvent(
-		//			std::wstring const& inEvent,
-		//			std::wstring const& inDivision,
-		//			std::wstring const& inLevel,
-		//			ARBDate const& inDate,
-		//			ARBConfigEventPtr* outEvent = nullptr,
-		//			ARBConfigScoringPtr* outScoring = nullptr) const;
-		//	bool FindEvent(
-		//			std::wstring const& inEvent,
-		//			ARBConfigEventPtr* outEvent = nullptr) const;
+			//	 bool FindEvent(
+			//			std::wstring const& inEvent,
+			//			std::wstring const& inDivision,
+			//			std::wstring const& inLevel,
+			//			ARBDate const& inDate,
+			//			ARBConfigEventPtr* outEvent = nullptr,
+			//			ARBConfigScoringPtr* outScoring = nullptr) const;
+			//	bool FindEvent(
+			//			std::wstring const& inEvent,
+			//			ARBConfigEventPtr* outEvent = nullptr) const;
 		}
 	}
 
@@ -225,9 +225,9 @@ TEST_CASE("ConfigEventList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameDivision(
-		//			std::wstring const& inOldDiv,
-		//			std::wstring const& inNewDiv);
+			//	int RenameDivision(
+			//			std::wstring const& inOldDiv,
+			//			std::wstring const& inNewDiv);
 		}
 	}
 
@@ -237,7 +237,7 @@ TEST_CASE("ConfigEventList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteDivision(std::wstring const& inDiv);
+			//	int DeleteDivision(std::wstring const& inDiv);
 		}
 	}
 
@@ -247,10 +247,10 @@ TEST_CASE("ConfigEventList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int RenameLevel(
-		//			std::wstring const& inOldDiv,
-		//			std::wstring const& inOldLevel,
-		//			std::wstring const& inNewLevel);
+			//	int RenameLevel(
+			//			std::wstring const& inOldDiv,
+			//			std::wstring const& inOldLevel,
+			//			std::wstring const& inNewLevel);
 		}
 	}
 
@@ -260,9 +260,9 @@ TEST_CASE("ConfigEventList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteLevel(
-		//			std::wstring const& inDiv,
-		//			std::wstring const& inLevel);
+			//	int DeleteLevel(
+			//			std::wstring const& inDiv,
+			//			std::wstring const& inLevel);
 		}
 	}
 
@@ -272,8 +272,8 @@ TEST_CASE("ConfigEventList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddEvent(ARBConfigEventPtr inEvent);
-		//	bool DeleteEvent(std::wstring const& inEvent);
+			//	bool AddEvent(ARBConfigEventPtr inEvent);
+			//	bool DeleteEvent(std::wstring const& inEvent);
 		}
 	}
 }

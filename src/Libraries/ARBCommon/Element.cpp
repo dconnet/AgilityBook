@@ -60,28 +60,28 @@
 #include <sstream>
 
 #if defined(USE_LIBXML2)
-#define __USE_LIBXML2	1
-#define __USE_EXPAT		0
-#define __USE_POCO		0
-#define __USE_WX		0
+#define __USE_LIBXML2 1
+#define __USE_EXPAT   0
+#define __USE_POCO    0
+#define __USE_WX      0
 
 #elif defined(USE_EXPAT)
-#define __USE_LIBXML2	0
-#define __USE_EXPAT		1
-#define __USE_POCO		0
-#define __USE_WX		0
+#define __USE_LIBXML2 0
+#define __USE_EXPAT   1
+#define __USE_POCO    0
+#define __USE_WX      0
 
 #elif defined(USE_POCO)
-#define __USE_LIBXML2	0
-#define __USE_EXPAT		0
-#define __USE_POCO		1
-#define __USE_WX		0
+#define __USE_LIBXML2 0
+#define __USE_EXPAT   0
+#define __USE_POCO    1
+#define __USE_WX      0
 
 #elif defined(__WXWINDOWS__)
-#define __USE_LIBXML2	0
-#define __USE_EXPAT		0
-#define __USE_POCO		0
-#define __USE_WX		1
+#define __USE_LIBXML2 0
+#define __USE_EXPAT   0
+#define __USE_POCO    0
+#define __USE_WX      1
 
 #else
 #error No idea what XML parser you want!
@@ -100,37 +100,38 @@
 #pragma comment(lib, "libxml2.lib")
 #else
 #pragma comment(lib, "libxml2_a.lib")
-#pragma message ( "Compiling Element with libxml2 " LIBXML_DOTTED_VERSION )
+#pragma message("Compiling Element with libxml2 " LIBXML_DOTTED_VERSION)
 #endif
 
 #elif __USE_EXPAT
 //#define XML_STATIC -> defined in .props file
 #include "expat.h"
 #pragma comment(lib, "libexpatMT.lib")
-#pragma message ( "Compiling Element with expat " STRING(XML_MAJOR_VERSION) "." STRING(XML_MINOR_VERSION) "." STRING(XML_MICRO_VERSION))
+#pragma message("Compiling Element with expat " STRING(XML_MAJOR_VERSION) "." STRING(XML_MINOR_VERSION) "." STRING( \
+	XML_MICRO_VERSION))
 
 #elif __USE_POCO
 #include "Poco/DOM/AutoPtr.h"
-#include "Poco/DOM/Document.h"
 #include "Poco/DOM/DOMParser.h"
+#include "Poco/DOM/DOMWriter.h"
+#include "Poco/DOM/Document.h"
 #include "Poco/DOM/Element.h"
 #include "Poco/DOM/NamedNodeMap.h"
 #include "Poco/DOM/Node.h"
 #include "Poco/DOM/Text.h"
 #include "Poco/DOM/TreeWalker.h"
-#include "Poco/DOM/DOMWriter.h"
 #include "Poco/SAX/InputSource.h"
-#include "Poco/XML/XMLWriter.h"
 #include "Poco/UTF8Encoding.h"
 #include "Poco/Version.h"
-#pragma message ( "Compiling Element with POCO " STRING(POCO_VERSION) )
+#include "Poco/XML/XMLWriter.h"
+#pragma message("Compiling Element with POCO " STRING(POCO_VERSION))
 
 #else
 #include <wx/mstream.h>
 #include <wx/stream.h>
 #include <wx/wfstream.h>
 #include <wx/xml/xml.h>
-#pragma message ( "Compiling Element with wxWidgets " wxVERSION_NUM_DOT_STRING )
+#pragma message("Compiling Element with wxWidgets " wxVERSION_NUM_DOT_STRING)
 #endif
 
 #if defined(__WXMSW__)
@@ -155,8 +156,8 @@ static void OutputDebugString(wchar_t const* msg)
 class wxInputStdStream : public wxInputStream
 {
 public:
-	wxInputStdStream(std::istream& stream) :
-		m_stream(stream)
+	wxInputStdStream(std::istream& stream)
+		: m_stream(stream)
 	{
 	}
 
@@ -192,8 +193,8 @@ protected:
 class wxOutputStdStream : public wxOutputStream
 {
 public:
-	wxOutputStdStream(std::ostream& stream) :
-		m_stream(stream)
+	wxOutputStdStream(std::ostream& stream)
+		: m_stream(stream)
 	{
 	}
 
@@ -265,7 +266,9 @@ Element::~Element()
 class XMLstring : public std::basic_string<xmlChar>
 {
 public:
-	XMLstring() {}
+	XMLstring()
+	{
+	}
 	XMLstring(std::string const& inStr)
 		: std::basic_string<xmlChar>((xmlChar*)inStr.c_str())
 	{
@@ -303,7 +306,9 @@ public:
 class StringDOM : public std::wstring
 {
 public:
-	StringDOM() {}
+	StringDOM()
+	{
+	}
 	StringDOM(const xmlChar* inStr)
 #ifndef UNICODE
 		: std::string((const char*)inStr)
@@ -362,22 +367,22 @@ static void CreateDoc(xmlTextWriterPtr formatter, xmlOutputBufferPtr outputBuffe
 		switch (element->GetType())
 		{
 		case ARBElementType::Node:
-			{
-				XMLstring name(element->GetName());
-				xmlTextWriterStartElement(formatter, name.c_str());
-				xmlOutputBufferFlush(outputBuffer);
-				CreateDoc(formatter, outputBuffer, *(dynamic_cast<ElementNode*>(element.get())));
-				xmlTextWriterEndElement(formatter);
-				xmlOutputBufferFlush(outputBuffer);
-			}
-			break;
+		{
+			XMLstring name(element->GetName());
+			xmlTextWriterStartElement(formatter, name.c_str());
+			xmlOutputBufferFlush(outputBuffer);
+			CreateDoc(formatter, outputBuffer, *(dynamic_cast<ElementNode*>(element.get())));
+			xmlTextWriterEndElement(formatter);
+			xmlOutputBufferFlush(outputBuffer);
+		}
+		break;
 		case ARBElementType::Text:
-			{
-				XMLstring value(element->GetValue());
-				xmlTextWriterWriteString(formatter, value.c_str());
-				xmlOutputBufferFlush(outputBuffer);
-			}
-			break;
+		{
+			XMLstring value(element->GetValue());
+			xmlTextWriterWriteString(formatter, value.c_str());
+			xmlOutputBufferFlush(outputBuffer);
+		}
+		break;
 		}
 	}
 }
@@ -406,13 +411,13 @@ static void ReadDoc(Poco::XML::Document* pDoc, Poco::XML::Node* inNode, ElementN
 		switch (pChild->nodeType())
 		{
 		case Poco::XML::Node::ELEMENT_NODE:
-			{
-				if (tree.HasTextNodes())
-					tree.RemoveAllElements();
-				ElementNodePtr subtree = tree.AddElementNode(StringUtil::stringW(pChild->nodeName()));
-				ReadDoc(pDoc, pChild, *subtree);
-			}
-			break;
+		{
+			if (tree.HasTextNodes())
+				tree.RemoveAllElements();
+			ElementNodePtr subtree = tree.AddElementNode(StringUtil::stringW(pChild->nodeName()));
+			ReadDoc(pDoc, pChild, *subtree);
+		}
+		break;
 		case Poco::XML::Node::TEXT_NODE:
 			if (tree.HasTextNodes() || 0 == tree.GetElementCount())
 			{
@@ -442,20 +447,20 @@ static void CreateDoc(Poco::XML::Document* pDoc, Poco::XML::Element* node, Eleme
 		switch (element->GetType())
 		{
 		case ARBElementType::Node:
-			{
-				Poco::XML::XMLString name(StringUtil::stringA(element->GetName()));
-				Poco::XML::AutoPtr<Poco::XML::Element> pChild = pDoc->createElement(name);
-				node->appendChild(pChild);
-				CreateDoc(pDoc, pChild, *(dynamic_cast<ElementNode*>(element.get())));
-			}
-			break;
+		{
+			Poco::XML::XMLString name(StringUtil::stringA(element->GetName()));
+			Poco::XML::AutoPtr<Poco::XML::Element> pChild = pDoc->createElement(name);
+			node->appendChild(pChild);
+			CreateDoc(pDoc, pChild, *(dynamic_cast<ElementNode*>(element.get())));
+		}
+		break;
 		case ARBElementType::Text:
-			{
-				Poco::XML::XMLString value(StringUtil::stringA(element->GetValue()));
-				Poco::XML::AutoPtr<Poco::XML::Text> pText = pDoc->createTextNode(value);
-				node->appendChild(pText);
-			}
-			break;
+		{
+			Poco::XML::XMLString value(StringUtil::stringA(element->GetValue()));
+			Poco::XML::AutoPtr<Poco::XML::Text> pText = pDoc->createTextNode(value);
+			node->appendChild(pText);
+		}
+		break;
 		}
 	}
 }
@@ -503,22 +508,26 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 		switch (element->GetType())
 		{
 		case ARBElementType::Node:
-			{
-				wxXmlNode* child = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, StringUtil::stringWX(element->GetName()));
-				if (lastChild)
-					lastChild->SetNext(child);
-				else
-					node->AddChild(child);
-				lastChild = child;
-				CreateDoc(child, *(dynamic_cast<ElementNode*>(element.get())));
-			}
-			break;
-		case ARBElementType::Text:
-			{
-				wxXmlNode* child = new wxXmlNode(nullptr, wxXML_TEXT_NODE, StringUtil::stringWX(element->GetName()), StringUtil::stringWX(element->GetValue()));
+		{
+			wxXmlNode* child = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, StringUtil::stringWX(element->GetName()));
+			if (lastChild)
+				lastChild->SetNext(child);
+			else
 				node->AddChild(child);
-			}
-			break;
+			lastChild = child;
+			CreateDoc(child, *(dynamic_cast<ElementNode*>(element.get())));
+		}
+		break;
+		case ARBElementType::Text:
+		{
+			wxXmlNode* child = new wxXmlNode(
+				nullptr,
+				wxXML_TEXT_NODE,
+				StringUtil::stringWX(element->GetName()),
+				StringUtil::stringWX(element->GetValue()));
+			node->AddChild(child);
+		}
+		break;
 		}
 	}
 }
@@ -553,17 +562,18 @@ static void LogMessage(fmt::wmemory_buffer& msg)
 
 namespace
 {
-	class ElementNode_concrete : public ElementNode
+class ElementNode_concrete : public ElementNode
+{
+public:
+	ElementNode_concrete()
 	{
-	public:
-		ElementNode_concrete()
-		{
-		}
-		ElementNode_concrete(std::wstring const& inName) : ElementNode(inName)
-		{
-		}
-	};
-}
+	}
+	ElementNode_concrete(std::wstring const& inName)
+		: ElementNode(inName)
+	{
+	}
+};
+} // namespace
 
 
 ElementNodePtr ElementNode::New()
@@ -591,9 +601,7 @@ ElementNode::ElementNode(std::wstring const& inName)
 
 void ElementNode::RemoveAllTextNodes()
 {
-	for (std::vector<ElementPtr>::iterator i = m_Elements.begin();
-		i != m_Elements.end();
-		)
+	for (std::vector<ElementPtr>::iterator i = m_Elements.begin(); i != m_Elements.end();)
 	{
 		if (ARBElementType::Text == (*i)->GetType())
 			i = m_Elements.erase(i);
@@ -617,7 +625,7 @@ void ElementNode::Dump(int inLevel) const
 	LogMessage(msg);
 	for (i = 0; i < GetElementCount(); ++i)
 	{
-		GetElement(i)->Dump(inLevel+1);
+		GetElement(i)->Dump(inLevel + 1);
 	}
 }
 
@@ -729,10 +737,7 @@ int ElementNode::GetAttribCount() const
 }
 
 
-ARBAttribLookup ElementNode::GetNthAttrib(
-		int inIndex,
-		std::wstring& outName,
-		std::wstring& outValue) const
+ARBAttribLookup ElementNode::GetNthAttrib(int inIndex, std::wstring& outName, std::wstring& outValue) const
 {
 	MyAttributes::const_iterator iter = m_Attribs.begin();
 	while (0 < inIndex)
@@ -751,9 +756,7 @@ ARBAttribLookup ElementNode::GetNthAttrib(
 }
 
 
-ARBAttribLookup ElementNode::GetAttrib(
-		std::wstring const& inName,
-		std::wstring& outValue) const
+ARBAttribLookup ElementNode::GetAttrib(std::wstring const& inName, std::wstring& outValue) const
 {
 	MyAttributes::const_iterator iter = m_Attribs.find(inName);
 	if (iter != m_Attribs.end())
@@ -766,9 +769,7 @@ ARBAttribLookup ElementNode::GetAttrib(
 }
 
 
-ARBAttribLookup ElementNode::GetAttrib(
-		std::wstring const& inName,
-		ARBVersion& outValue) const
+ARBAttribLookup ElementNode::GetAttrib(std::wstring const& inName, ARBVersion& outValue) const
 {
 	std::wstring value;
 	ARBAttribLookup rc = GetAttrib(inName, value);
@@ -780,9 +781,7 @@ ARBAttribLookup ElementNode::GetAttrib(
 }
 
 
-ARBAttribLookup ElementNode::GetAttrib(
-		std::wstring const& inName,
-		ARBDate& outValue) const
+ARBAttribLookup ElementNode::GetAttrib(std::wstring const& inName, ARBDate& outValue) const
 {
 	std::wstring value;
 	ARBAttribLookup rc = GetAttrib(inName, value);
@@ -798,9 +797,7 @@ ARBAttribLookup ElementNode::GetAttrib(
 }
 
 
-ARBAttribLookup ElementNode::GetAttrib(
-		std::wstring const& inName,
-		bool& outValue) const
+ARBAttribLookup ElementNode::GetAttrib(std::wstring const& inName, bool& outValue) const
 {
 	std::wstring value;
 	ARBAttribLookup rc = GetAttrib(inName, value);
@@ -817,9 +814,7 @@ ARBAttribLookup ElementNode::GetAttrib(
 }
 
 
-ARBAttribLookup ElementNode::GetAttrib(
-		std::wstring const& inName,
-		short& outValue) const
+ARBAttribLookup ElementNode::GetAttrib(std::wstring const& inName, short& outValue) const
 {
 	std::wstring value;
 	ARBAttribLookup rc = GetAttrib(inName, value);
@@ -834,9 +829,7 @@ ARBAttribLookup ElementNode::GetAttrib(
 }
 
 
-ARBAttribLookup ElementNode::GetAttrib(
-		std::wstring const& inName,
-		unsigned short& outValue) const
+ARBAttribLookup ElementNode::GetAttrib(std::wstring const& inName, unsigned short& outValue) const
 {
 	std::wstring value;
 	ARBAttribLookup rc = GetAttrib(inName, value);
@@ -851,9 +844,7 @@ ARBAttribLookup ElementNode::GetAttrib(
 }
 
 
-ARBAttribLookup ElementNode::GetAttrib(
-		std::wstring const& inName,
-		long& outValue) const
+ARBAttribLookup ElementNode::GetAttrib(std::wstring const& inName, long& outValue) const
 {
 	std::wstring value;
 	ARBAttribLookup rc = GetAttrib(inName, value);
@@ -871,9 +862,7 @@ ARBAttribLookup ElementNode::GetAttrib(
 }
 
 
-ARBAttribLookup ElementNode::GetAttrib(
-		std::wstring const& inName,
-		unsigned long& outValue) const
+ARBAttribLookup ElementNode::GetAttrib(std::wstring const& inName, unsigned long& outValue) const
 {
 	std::wstring value;
 	ARBAttribLookup rc = GetAttrib(inName, value);
@@ -891,9 +880,7 @@ ARBAttribLookup ElementNode::GetAttrib(
 }
 
 
-ARBAttribLookup ElementNode::GetAttrib(
-		std::wstring const& inName,
-		double& outValue) const
+ARBAttribLookup ElementNode::GetAttrib(std::wstring const& inName, double& outValue) const
 {
 	std::wstring value;
 	ARBAttribLookup rc = GetAttrib(inName, value);
@@ -911,9 +898,7 @@ ARBAttribLookup ElementNode::GetAttrib(
 }
 
 
-bool ElementNode::AddAttrib(
-		std::wstring const& inName,
-		std::wstring const& inValue)
+bool ElementNode::AddAttrib(std::wstring const& inName, std::wstring const& inValue)
 {
 	if (inName.empty())
 		return false;
@@ -922,9 +907,7 @@ bool ElementNode::AddAttrib(
 }
 
 
-bool ElementNode::AddAttrib(
-		std::wstring const& inName,
-		wchar_t const* const inValue)
+bool ElementNode::AddAttrib(std::wstring const& inName, wchar_t const* const inValue)
 {
 	if (inName.empty())
 		return false;
@@ -936,17 +919,13 @@ bool ElementNode::AddAttrib(
 }
 
 
-bool ElementNode::AddAttrib(
-		std::wstring const& inName,
-		ARBVersion const& inValue)
+bool ElementNode::AddAttrib(std::wstring const& inName, ARBVersion const& inValue)
 {
 	return AddAttrib(inName, inValue.str());
 }
 
 
-bool ElementNode::AddAttrib(
-		std::wstring const& inName,
-		ARBDate const& inValue)
+bool ElementNode::AddAttrib(std::wstring const& inName, ARBDate const& inValue)
 {
 	if (inValue.IsValid())
 		AddAttrib(inName, inValue.GetString(ARBDateFormat::DashYMD));
@@ -954,9 +933,7 @@ bool ElementNode::AddAttrib(
 }
 
 
-bool ElementNode::AddAttrib(
-		std::wstring const& inName,
-		bool inValue)
+bool ElementNode::AddAttrib(std::wstring const& inName, bool inValue)
 {
 	if (inName.empty())
 		return false;
@@ -968,9 +945,7 @@ bool ElementNode::AddAttrib(
 }
 
 
-bool ElementNode::AddAttrib(
-		std::wstring const& inName,
-		short inValue)
+bool ElementNode::AddAttrib(std::wstring const& inName, short inValue)
 {
 	if (inName.empty())
 		return false;
@@ -979,9 +954,7 @@ bool ElementNode::AddAttrib(
 }
 
 
-bool ElementNode::AddAttrib(
-		std::wstring const& inName,
-		unsigned short inValue)
+bool ElementNode::AddAttrib(std::wstring const& inName, unsigned short inValue)
 {
 	if (inName.empty())
 		return false;
@@ -990,9 +963,7 @@ bool ElementNode::AddAttrib(
 }
 
 
-bool ElementNode::AddAttrib(
-		std::wstring const& inName,
-		long inValue)
+bool ElementNode::AddAttrib(std::wstring const& inName, long inValue)
 {
 	if (inName.empty())
 		return false;
@@ -1001,9 +972,7 @@ bool ElementNode::AddAttrib(
 }
 
 
-bool ElementNode::AddAttrib(
-		std::wstring const& inName,
-		unsigned long inValue)
+bool ElementNode::AddAttrib(std::wstring const& inName, unsigned long inValue)
 {
 	if (inName.empty())
 		return false;
@@ -1012,10 +981,7 @@ bool ElementNode::AddAttrib(
 }
 
 
-bool ElementNode::AddAttrib(
-		std::wstring const& inName,
-		double inValue,
-		int inPrec)
+bool ElementNode::AddAttrib(std::wstring const& inName, double inValue, int inPrec)
 {
 	if (inName.empty())
 		return false;
@@ -1052,9 +1018,7 @@ int ElementNode::GetElementCount() const
 int ElementNode::GetNodeCount(ARBElementType type) const
 {
 	int nCount = 0;
-	for (std::vector<ElementPtr>::const_iterator iter = m_Elements.begin();
-		iter != m_Elements.end();
-		++iter)
+	for (std::vector<ElementPtr>::const_iterator iter = m_Elements.begin(); iter != m_Elements.end(); ++iter)
 	{
 		if (type == (*iter)->GetType())
 			++nCount;
@@ -1065,9 +1029,7 @@ int ElementNode::GetNodeCount(ARBElementType type) const
 
 bool ElementNode::HasTextNodes() const
 {
-	for (std::vector<ElementPtr>::const_iterator iter = m_Elements.begin();
-		iter != m_Elements.end();
-		++iter)
+	for (std::vector<ElementPtr>::const_iterator iter = m_Elements.begin(); iter != m_Elements.end(); ++iter)
 	{
 		if (ARBElementType::Text == (*iter)->GetType())
 			return true;
@@ -1114,7 +1076,6 @@ ElementNodePtr ElementNode::GetNthElementNode(int inIndex) const
 		}
 	}
 	return ElementNodePtr();
-
 }
 
 
@@ -1125,9 +1086,7 @@ ElementNodePtr ElementNode::GetNthElementNode(int inIndex)
 }
 
 
-ElementNodePtr ElementNode::AddElementNode(
-		std::wstring const& inName,
-		int inAt)
+ElementNodePtr ElementNode::AddElementNode(std::wstring const& inName, int inAt)
 {
 	size_t index = 0;
 	std::vector<ElementPtr>::iterator iter = m_Elements.begin();
@@ -1148,9 +1107,7 @@ ElementNodePtr ElementNode::AddElementNode(
 }
 
 
-ElementTextPtr ElementNode::AddElementText(
-		std::wstring const& inText,
-		int inAt)
+ElementTextPtr ElementNode::AddElementText(std::wstring const& inText, int inAt)
 {
 	assert(0 == m_Value.length());
 	size_t index = 0;
@@ -1192,9 +1149,7 @@ void ElementNode::RemoveAllElements()
 }
 
 
-int ElementNode::FindElement(
-		std::wstring const& inName,
-		int inStartFrom) const
+int ElementNode::FindElement(std::wstring const& inName, int inStartFrom) const
 {
 	if (0 > inStartFrom)
 		inStartFrom = 0;
@@ -1208,10 +1163,10 @@ int ElementNode::FindElement(
 
 
 bool ElementNode::FindElementDeep(
-		ElementNode const*& outParentNode,
-		int& outElementIndex,
-		std::wstring const& inName,
-		std::wstring const* inValue) const
+	ElementNode const*& outParentNode,
+	int& outElementIndex,
+	std::wstring const& inName,
+	std::wstring const* inValue) const
 {
 	int nCount = GetElementCount();
 	for (int i = 0; i < nCount; ++i)
@@ -1219,8 +1174,7 @@ bool ElementNode::FindElementDeep(
 		ElementNodePtr element = GetElementNode(i);
 		if (!element)
 			continue;
-		if (element->GetName() == inName &&
-		(!inValue || (inValue && element->GetValue() == *inValue)))
+		if (element->GetName() == inName && (!inValue || (inValue && element->GetValue() == *inValue)))
 		{
 			outParentNode = this;
 			outElementIndex = i;
@@ -1235,10 +1189,7 @@ bool ElementNode::FindElementDeep(
 
 #if __USE_LIBXML2
 
-static bool LoadXMLNode(
-		ElementNode& node,
-		xmlDocPtr inSource,
-		fmt::wmemory_buffer& ioErrMsg)
+static bool LoadXMLNode(ElementNode& node, xmlDocPtr inSource, fmt::wmemory_buffer& ioErrMsg)
 {
 	node.clear();
 
@@ -1259,7 +1210,7 @@ struct CExpatData
 	std::string m_data;
 };
 
-static void XMLCALL ExpatStart(void *data, const char *el, const char **attr)
+static void XMLCALL ExpatStart(void* data, const char* el, const char** attr)
 {
 	CExpatData* pData = reinterpret_cast<CExpatData*>(data);
 	pData->m_data.clear();
@@ -1274,12 +1225,13 @@ static void XMLCALL ExpatStart(void *data, const char *el, const char **attr)
 		node = pData->m_elements.front()->AddElementNode(StringUtil::stringW(std::string(el))).get();
 	pData->m_elements.push_front(node);
 
-	for (int i = 0; attr[i]; i += 2) {
+	for (int i = 0; attr[i]; i += 2)
+	{
 		node->AddAttrib(StringUtil::stringW(std::string(attr[i])), StringUtil::stringW(std::string(attr[i + 1])));
 	}
 }
 
-static void XMLCALL ExpatEnd(void *data, const char *el)
+static void XMLCALL ExpatEnd(void* data, const char* el)
 {
 	CExpatData* pData = reinterpret_cast<CExpatData*>(data);
 	if (!pData->m_data.empty())
@@ -1299,10 +1251,7 @@ static void XMLCALL ExpatHandleData(void* data, const char* content, int length)
 
 #elif __USE_POCO
 
-static bool LoadXMLNode(
-		ElementNode& node,
-		Poco::XML::Document* pDoc,
-		fmt::wmemory_buffer& ioErrMsg)
+static bool LoadXMLNode(ElementNode& node, Poco::XML::Document* pDoc, fmt::wmemory_buffer& ioErrMsg)
 {
 	node.clear();
 
@@ -1320,10 +1269,7 @@ static bool LoadXMLNode(
 
 #elif __USE_WX
 
-static bool LoadXMLNode(
-		ElementNode& node,
-		wxXmlDocument& inSource,
-		fmt::wmemory_buffer& ioErrMsg)
+static bool LoadXMLNode(ElementNode& node, wxXmlDocument& inSource, fmt::wmemory_buffer& ioErrMsg)
 {
 	node.clear();
 
@@ -1339,9 +1285,7 @@ static bool LoadXMLNode(
 #endif
 
 
-bool ElementNode::LoadXML(
-		std::istream& inStream,
-		fmt::wmemory_buffer& ioErrMsg)
+bool ElementNode::LoadXML(std::istream& inStream, fmt::wmemory_buffer& ioErrMsg)
 {
 	if (!inStream.good())
 		return false;
@@ -1394,14 +1338,20 @@ bool ElementNode::LoadXML(
 	XML_SetCharacterDataHandler(source, ExpatHandleData);
 
 	bool bOk = true;
-	while (bOk) {
+	while (bOk)
+	{
 		inStream.read(buffer, _countof(buffer));
 		int len = static_cast<int>(inStream.gcount());
 		if (0 >= len)
 			break;
 
-		if (XML_Parse(source, buffer, len, 0) == XML_STATUS_ERROR) {
-			fmt::format_to(ioErrMsg, L"Parse error at line {}: {}", XML_GetCurrentLineNumber(source), XML_ErrorString(XML_GetErrorCode(source)));
+		if (XML_Parse(source, buffer, len, 0) == XML_STATUS_ERROR)
+		{
+			fmt::format_to(
+				ioErrMsg,
+				L"Parse error at line {}: {}",
+				XML_GetCurrentLineNumber(source),
+				XML_ErrorString(XML_GetErrorCode(source)));
 			bOk = false;
 			break;
 		}
@@ -1450,10 +1400,7 @@ bool ElementNode::LoadXML(
 }
 
 
-bool ElementNode::LoadXML(
-		char const* inData,
-		size_t nData,
-		fmt::wmemory_buffer& ioErrMsg)
+bool ElementNode::LoadXML(char const* inData, size_t nData, fmt::wmemory_buffer& ioErrMsg)
 {
 	if (!inData || 0 == nData)
 		return false;
@@ -1470,9 +1417,7 @@ bool ElementNode::LoadXML(
 }
 
 
-bool ElementNode::LoadXML(
-		wchar_t const* inFileName,
-		fmt::wmemory_buffer& ioErrMsg)
+bool ElementNode::LoadXML(wchar_t const* inFileName, fmt::wmemory_buffer& ioErrMsg)
 {
 	if (!inFileName)
 		return false;
@@ -1521,9 +1466,7 @@ static int BufferCloseCallback(void* context)
 #endif
 
 
-bool ElementNode::SaveXML(
-		std::ostream& outOutput,
-		std::string const& inDTD) const
+bool ElementNode::SaveXML(std::ostream& outOutput, std::string const& inDTD) const
 {
 #if __USE_LIBXML2
 	// On Win32, an XMLCh is a UNICODE character.
@@ -1539,7 +1482,8 @@ bool ElementNode::SaveXML(
 		outOutput << inDTD;
 		outOutput << "\n]>\n";
 	}
-	xmlOutputBufferPtr outputBuffer = xmlOutputBufferCreateIO(BufferWriteCallback, BufferCloseCallback, (void*)(&outOutput), nullptr);
+	xmlOutputBufferPtr outputBuffer
+		= xmlOutputBufferCreateIO(BufferWriteCallback, BufferCloseCallback, (void*)(&outOutput), nullptr);
 	xmlTextWriterPtr formatter = xmlNewTextWriter(outputBuffer);
 	xmlTextWriterSetIndent(formatter, 2); // Only puts out 1 space no matter what.
 	xmlTextWriterSetIndentString(formatter, BAD_CAST "\t");
@@ -1614,9 +1558,7 @@ bool ElementNode::SaveXML(std::wstring const& outFile) const
 }
 
 
-bool ElementNode::SaveXML(
-		std::wstring const& outFile,
-		std::string const& inDTD) const
+bool ElementNode::SaveXML(std::wstring const& outFile, std::string const& inDTD) const
 {
 	bool bOk = false;
 	if (outFile.empty())
@@ -1651,17 +1593,18 @@ bool ElementNode::SaveXML(
 
 namespace
 {
-	class ElementText_concrete : public ElementText
+class ElementText_concrete : public ElementText
+{
+public:
+	ElementText_concrete()
 	{
-	public:
-		ElementText_concrete()
-		{
-		}
-		ElementText_concrete(std::wstring const& inText) : ElementText(inText)
-		{
-		}
-	};
-}
+	}
+	ElementText_concrete(std::wstring const& inText)
+		: ElementText(inText)
+	{
+	}
+};
+} // namespace
 
 
 ElementTextPtr ElementText::New()
@@ -1763,9 +1706,7 @@ void ElementText::SetValue(unsigned long inValue)
 }
 
 
-void ElementText::SetValue(
-		double inValue,
-		int inPrec)
+void ElementText::SetValue(double inValue, int inPrec)
 {
 	m_Value = ARBDouble::ToString(inValue, inPrec, false);
 }

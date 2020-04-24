@@ -35,16 +35,18 @@
 
 namespace
 {
-	class ARBDogRunPartner_concrete : public ARBDogRunPartner
+class ARBDogRunPartner_concrete : public ARBDogRunPartner
+{
+public:
+	ARBDogRunPartner_concrete()
 	{
-	public:
-		ARBDogRunPartner_concrete() {}
-		ARBDogRunPartner_concrete(ARBDogRunPartner const& rhs)
-			: ARBDogRunPartner(rhs)
-		{
-		}
-	};
+	}
+	ARBDogRunPartner_concrete(ARBDogRunPartner const& rhs)
+		: ARBDogRunPartner(rhs)
+	{
+	}
 };
+}; // namespace
 
 
 ARBDogRunPartnerPtr ARBDogRunPartner::New()
@@ -114,9 +116,7 @@ ARBDogRunPartner& ARBDogRunPartner::operator=(ARBDogRunPartner&& rhs)
 
 bool ARBDogRunPartner::operator==(ARBDogRunPartner const& rhs) const
 {
-	return m_Handler == rhs.m_Handler
-		&& m_Dog == rhs.m_Dog
-		&& m_RegNum == rhs.m_RegNum;
+	return m_Handler == rhs.m_Handler && m_Dog == rhs.m_Dog && m_RegNum == rhs.m_RegNum;
 }
 
 
@@ -147,23 +147,21 @@ size_t ARBDogRunPartner::GetSearchStrings(std::set<std::wstring>& ioStrings) con
 
 
 bool ARBDogRunPartner::Load(
-		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfig const& inConfig,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_PARTNER)
 		return false;
-	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_PARTNER_HANDLER, m_Handler)
-	|| 0 == m_Handler.length())
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_PARTNER_HANDLER, m_Handler) || 0 == m_Handler.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_PARTNER, ATTRIB_PARTNER_HANDLER));
 		return false;
 	}
 
-	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_PARTNER_DOG, m_Dog)
-	|| 0 == m_Dog.length())
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_PARTNER_DOG, m_Dog) || 0 == m_Dog.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_PARTNER, ATTRIB_PARTNER_DOG));
 		return false;
@@ -191,10 +189,10 @@ bool ARBDogRunPartner::Save(ElementNodePtr const& ioTree) const
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBDogRunPartnerList::Load(
-		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfig const& inConfig,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	ARBDogRunPartnerPtr thing(ARBDogRunPartner::New());
 	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))

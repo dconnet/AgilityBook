@@ -29,13 +29,13 @@ class CHtmlWindow : public wxHtmlWindow
 {
 public:
 	CHtmlWindow(
-			CAgilityBookPointsView* pView,
-			wxWindow *parent,
-			wxWindowID id = wxID_ANY,
-			const wxPoint& pos = wxDefaultPosition,
-			const wxSize& size = wxDefaultSize,
-			long style = wxHW_DEFAULT_STYLE,
-			const wxString& name = L"htmlWindow")
+		CAgilityBookPointsView* pView,
+		wxWindow* parent,
+		wxWindowID id = wxID_ANY,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxHW_DEFAULT_STYLE,
+		const wxString& name = L"htmlWindow")
 		: wxHtmlWindow(parent, id, pos, size, style, name)
 		, m_pView(pView)
 	{
@@ -57,21 +57,22 @@ class CAgilityBookPointsView : public CAgilityBookBaseExtraView
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookPointsView)
 
 public:
-	CAgilityBookPointsView(
-			CTabView* pTabView,
-			wxDocument* doc);
+	CAgilityBookPointsView(CTabView* pTabView, wxDocument* doc);
 	~CAgilityBookPointsView();
 
 	bool Create(
-			CBasePanel* parentView,
-			wxWindow* parentCtrl,
-			wxDocument* doc,
-			long flags,
-			wxSizer* sizer,
-			int proportion = 0,
-			int sizerFlags = 0,
-			int border = 0) override;
-	wxWindow* GetControl() override		{return m_Ctrl;}
+		CBasePanel* parentView,
+		wxWindow* parentCtrl,
+		wxDocument* doc,
+		long flags,
+		wxSizer* sizer,
+		int proportion = 0,
+		int sizerFlags = 0,
+		int border = 0) override;
+	wxWindow* GetControl() override
+	{
+		return m_Ctrl;
+	}
 	void DetachView() override;
 
 	bool IsFiltered() const override;
@@ -79,17 +80,10 @@ public:
 	bool GetMessage2(std::wstring& msg) const override;
 	bool AllowStatusContext(int field) const override;
 
-	bool OnCreate(
-			wxDocument* doc,
-			long flags) override;
-	void DoActivateView(
-			bool activate,
-			wxView* activeView,
-			wxView* deactiveView) override;
+	bool OnCreate(wxDocument* doc, long flags) override;
+	void DoActivateView(bool activate, wxView* activeView, wxView* deactiveView) override;
 	void OnDraw(wxDC* dc) override;
-	void OnUpdate(
-			wxView* sender,
-			wxObject* inHint = nullptr) override;
+	void OnUpdate(wxView* sender, wxObject* inHint = nullptr) override;
 
 private:
 	void LoadData();

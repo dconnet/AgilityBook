@@ -36,7 +36,10 @@ class CARBHelpApp : public CBaseApp
 	DECLARE_NO_COPY_IMPLEMENTED(CARBHelpApp)
 public:
 	CARBHelpApp();
-	bool InitLanguage() override {return true;}
+	bool InitLanguage() override
+	{
+		return true;
+	}
 	bool OnInit() override;
 };
 
@@ -58,10 +61,9 @@ bool CARBHelpApp::OnInit()
 
 	wxImage::AddHandler(new wxPNGHandler);
 
-	static const wxCmdLineEntryDesc cmdLineDesc[] =
-	{
+	static const wxCmdLineEntryDesc cmdLineDesc[] = {
 		{wxCMD_LINE_SWITCH, "decode", nullptr, "Decode ARBHelp data from clipboard"},
-		{wxCMD_LINE_NONE}
+		{wxCMD_LINE_NONE},
 	};
 	wxCmdLineParser cmdline(cmdLineDesc, argc, argv);
 	if (0 != cmdline.Parse(true))

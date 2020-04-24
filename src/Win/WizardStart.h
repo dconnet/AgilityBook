@@ -27,12 +27,16 @@ class CWizardStart : public wxWizardPage
 {
 	DECLARE_CLASS(CWizardStart)
 public:
-	CWizardStart(
-			CWizard* pSheet,
-			CAgilityBookDoc* pDoc);
+	CWizardStart(CWizard* pSheet, CAgilityBookDoc* pDoc);
 
-	wxWizardPage* GetPrev() const override {return nullptr;}
-	wxWizardPage* GetNext() const override {return m_Next;}
+	wxWizardPage* GetPrev() const override
+	{
+		return nullptr;
+	}
+	wxWizardPage* GetNext() const override
+	{
+		return m_Next;
+	}
 
 private:
 	void UpdateList(bool bInit = false);

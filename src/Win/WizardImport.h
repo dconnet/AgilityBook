@@ -21,8 +21,8 @@
  */
 
 #include "AgilityBookOptions.h"
-#include <vector>
 #include <wx/wizard.h>
+#include <vector>
 class CAgilityBookDoc;
 class CListCtrl;
 class CTextCtrl;
@@ -35,10 +35,7 @@ class CWizardImport : public wxWizardPageSimple
 {
 	DECLARE_CLASS(CWizardImport)
 public:
-	CWizardImport(
-			CWizard* pSheet,
-			CAgilityBookDoc* pDoc,
-			wxWizardPage* prev);
+	CWizardImport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPage* prev);
 	void ResetData();
 
 private:
@@ -52,8 +49,8 @@ private:
 	CWizard* m_pSheet;
 	CAgilityBookDoc* m_pDoc;
 	std::wstring m_FileName;
-	std::vector<std::wstring> m_FileData; ///< For reading generic text files.
-	std::vector< std::vector<std::wstring> > m_ExcelData; ///< For reading excel directly.
+	std::vector<std::wstring> m_FileData;               ///< For reading generic text files.
+	std::vector<std::vector<std::wstring>> m_ExcelData; ///< For reading excel directly.
 	long m_Row;
 	wxSpinCtrl* m_ctrlRow;
 	ARBImportExportDelim m_Delim;

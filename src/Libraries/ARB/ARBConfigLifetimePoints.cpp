@@ -33,29 +33,26 @@
 
 namespace
 {
-	class ARBConfigLifetimePoints_concrete : public ARBConfigLifetimePoints
+class ARBConfigLifetimePoints_concrete : public ARBConfigLifetimePoints
+{
+public:
+	ARBConfigLifetimePoints_concrete()
 	{
-	public:
-		ARBConfigLifetimePoints_concrete() {}
-		ARBConfigLifetimePoints_concrete(
-				std::wstring const& name,
-				double inPoints,
-				double inFaults)
-			: ARBConfigLifetimePoints(name, inPoints, inFaults)
-		{
-		}
-		ARBConfigLifetimePoints_concrete(
-				std::wstring const& name,
-				double inFaults)
-			: ARBConfigLifetimePoints(name, inFaults)
-		{
-		}
-		ARBConfigLifetimePoints_concrete(ARBConfigLifetimePoints const& rhs)
-			: ARBConfigLifetimePoints(rhs)
-		{
-		}
-	};
+	}
+	ARBConfigLifetimePoints_concrete(std::wstring const& name, double inPoints, double inFaults)
+		: ARBConfigLifetimePoints(name, inPoints, inFaults)
+	{
+	}
+	ARBConfigLifetimePoints_concrete(std::wstring const& name, double inFaults)
+		: ARBConfigLifetimePoints(name, inFaults)
+	{
+	}
+	ARBConfigLifetimePoints_concrete(ARBConfigLifetimePoints const& rhs)
+		: ARBConfigLifetimePoints(rhs)
+	{
+	}
 };
+}; // namespace
 
 
 ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New()
@@ -64,18 +61,13 @@ ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New()
 }
 
 
-ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New(
-		std::wstring const& name,
-		double inPoints,
-		double inFaults)
+ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New(std::wstring const& name, double inPoints, double inFaults)
 {
 	return std::make_shared<ARBConfigLifetimePoints_concrete>(name, inPoints, inFaults);
 }
 
 
-ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New(
-		std::wstring const& name,
-		double inFaults)
+ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New(std::wstring const& name, double inFaults)
 {
 	return std::make_shared<ARBConfigLifetimePoints_concrete>(name, inFaults);
 }
@@ -90,10 +82,7 @@ ARBConfigLifetimePoints::ARBConfigLifetimePoints()
 }
 
 
-ARBConfigLifetimePoints::ARBConfigLifetimePoints(
-		std::wstring const& name,
-		double inPoints,
-		double inFaults)
+ARBConfigLifetimePoints::ARBConfigLifetimePoints(std::wstring const& name, double inPoints, double inFaults)
 	: m_Name(name)
 	, m_UseSpeedPts(false)
 	, m_Points(inPoints)
@@ -102,9 +91,7 @@ ARBConfigLifetimePoints::ARBConfigLifetimePoints(
 }
 
 
-ARBConfigLifetimePoints::ARBConfigLifetimePoints(
-		std::wstring const& name,
-		double inFaults)
+ARBConfigLifetimePoints::ARBConfigLifetimePoints(std::wstring const& name, double inFaults)
 	: m_Name(name)
 	, m_UseSpeedPts(true)
 	, m_Points(0)
@@ -170,10 +157,12 @@ ARBConfigLifetimePoints& ARBConfigLifetimePoints::operator=(ARBConfigLifetimePoi
 
 bool ARBConfigLifetimePoints::operator==(ARBConfigLifetimePoints const& rhs) const
 {
+	// clang-format off
 	return m_Name == rhs.m_Name
 		&& m_UseSpeedPts == rhs.m_UseSpeedPts
 		&& m_Points == rhs.m_Points
 		&& m_Faults == rhs.m_Faults;
+	// clang-format on
 }
 
 
@@ -187,9 +176,9 @@ std::wstring ARBConfigLifetimePoints::GetGenericName() const
 
 
 bool ARBConfigLifetimePoints::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree)
@@ -202,7 +191,8 @@ bool ARBConfigLifetimePoints::Load(
 		// pre-v14.4: Points is required. v14.4+ is not.
 		if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_LIFETIME_POINTS_POINTS, m_Points))
 		{
-			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_LIFETIME_POINTS, ATTRIB_LIFETIME_POINTS_POINTS));
+			ioCallback.LogMessage(
+				Localization()->ErrorMissingAttribute(TREE_LIFETIME_POINTS, ATTRIB_LIFETIME_POINTS_POINTS));
 			return false;
 		}
 	}
@@ -220,7 +210,8 @@ bool ARBConfigLifetimePoints::Load(
 
 	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_LIFETIME_POINTS_FAULTS, m_Faults))
 	{
-		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_LIFETIME_POINTS, ATTRIB_LIFETIME_POINTS_FAULTS));
+		ioCallback.LogMessage(
+			Localization()->ErrorMissingAttribute(TREE_LIFETIME_POINTS, ATTRIB_LIFETIME_POINTS_FAULTS));
 		return false;
 	}
 	return true;
@@ -245,9 +236,9 @@ bool ARBConfigLifetimePoints::Save(ElementNodePtr const& ioTree) const
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigLifetimePointsList::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	ARBConfigLifetimePointsPtr thing(ARBConfigLifetimePoints::New());
 	if (!thing->Load(inTree, inVersion, ioCallback))
@@ -261,27 +252,21 @@ void ARBConfigLifetimePointsList::sort()
 {
 	if (2 > size())
 		return;
-	std::stable_sort(begin(), end(),
-		[](ARBConfigLifetimePointsPtr const& one, ARBConfigLifetimePointsPtr const& two)
-		{
-			if (one->GetName() == two->GetName())
-				return one->GetFaults() < two->GetFaults();
-			return one->GetName() < two->GetName();
-		}
-	);
+	std::stable_sort(begin(), end(), [](ARBConfigLifetimePointsPtr const& one, ARBConfigLifetimePointsPtr const& two) {
+		if (one->GetName() == two->GetName())
+			return one->GetFaults() < two->GetFaults();
+		return one->GetName() < two->GetName();
+	});
 }
 
 
-double ARBConfigLifetimePointsList::GetLifetimePoints(
-		std::wstring const& inName,
-		double inFaults,
-		short inSpeedPts) const
+double ARBConfigLifetimePointsList::GetLifetimePoints(std::wstring const& inName, double inFaults, short inSpeedPts)
+	const
 {
 	// This is why we keep the list sorted!
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetName() == inName
-		&& inFaults <= static_cast<double>((*iter)->GetFaults()))
+		if ((*iter)->GetName() == inName && inFaults <= static_cast<double>((*iter)->GetFaults()))
 		{
 			if ((*iter)->UseSpeedPts())
 				return inSpeedPts;
@@ -294,16 +279,15 @@ double ARBConfigLifetimePointsList::GetLifetimePoints(
 
 
 bool ARBConfigLifetimePointsList::FindLifetimePoints(
-		std::wstring const& inName,
-		double inFaults,
-		ARBConfigLifetimePointsPtr* outPoints) const
+	std::wstring const& inName,
+	double inFaults,
+	ARBConfigLifetimePointsPtr* outPoints) const
 {
 	if (outPoints)
 		outPoints->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetName() == inName
-		&& ARBDouble::equal((*iter)->GetFaults(), inFaults))
+		if ((*iter)->GetName() == inName && ARBDouble::equal((*iter)->GetFaults(), inFaults))
 		{
 			if (outPoints)
 				*outPoints = *iter;
@@ -315,11 +299,11 @@ bool ARBConfigLifetimePointsList::FindLifetimePoints(
 
 
 bool ARBConfigLifetimePointsList::AddLifetimePoints(
-		std::wstring const& inName,
-		bool inUseSpeedPts,
-		double inPoints,
-		double inFaults,
-		ARBConfigLifetimePointsPtr* outPoints)
+	std::wstring const& inName,
+	bool inUseSpeedPts,
+	double inPoints,
+	double inFaults,
+	ARBConfigLifetimePointsPtr* outPoints)
 {
 	if (outPoints)
 		outPoints->reset();
@@ -338,14 +322,11 @@ bool ARBConfigLifetimePointsList::AddLifetimePoints(
 }
 
 
-bool ARBConfigLifetimePointsList::DeleteLifetimePoints(
-		std::wstring const& inName,
-		double inFaults)
+bool ARBConfigLifetimePointsList::DeleteLifetimePoints(std::wstring const& inName, double inFaults)
 {
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetName() == inName
-		&& ARBDouble::equal((*iter)->GetFaults(), inFaults))
+		if ((*iter)->GetName() == inName && ARBDouble::equal((*iter)->GetFaults(), inFaults))
 		{
 			erase(iter);
 			return true;

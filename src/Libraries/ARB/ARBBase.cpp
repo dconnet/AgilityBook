@@ -63,9 +63,7 @@ bool ARBBase::IsFiltered(ARBFilterType inFilterType) const
 }
 
 
-void ARBBase::SetFiltered(
-	ARBFilterType inFilterType,
-	bool bFiltered)
+void ARBBase::SetFiltered(ARBFilterType inFilterType, bool bFiltered)
 {
 	m_bFiltered[FilterToIndex(inFilterType)] = bFiltered;
 }

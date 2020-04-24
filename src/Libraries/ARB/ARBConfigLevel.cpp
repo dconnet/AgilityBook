@@ -37,16 +37,18 @@
 
 namespace
 {
-	class ARBConfigLevel_concrete : public ARBConfigLevel
+class ARBConfigLevel_concrete : public ARBConfigLevel
+{
+public:
+	ARBConfigLevel_concrete()
 	{
-	public:
-		ARBConfigLevel_concrete() {}
-		ARBConfigLevel_concrete(ARBConfigLevel const& rhs)
-			: ARBConfigLevel(rhs)
-		{
-		}
-	};
+	}
+	ARBConfigLevel_concrete(ARBConfigLevel const& rhs)
+		: ARBConfigLevel(rhs)
+	{
+	}
 };
+}; // namespace
 
 
 ARBConfigLevelPtr ARBConfigLevel::New()
@@ -117,9 +119,7 @@ ARBConfigLevel& ARBConfigLevel::operator=(ARBConfigLevel&& rhs)
 
 bool ARBConfigLevel::operator==(ARBConfigLevel const& rhs) const
 {
-	return m_Name == rhs.m_Name
-		&& m_ShortName == rhs.m_ShortName
-		&& m_SubLevels == rhs.m_SubLevels;
+	return m_Name == rhs.m_Name && m_ShortName == rhs.m_ShortName && m_SubLevels == rhs.m_SubLevels;
 }
 
 
@@ -131,16 +131,12 @@ void ARBConfigLevel::clear()
 }
 
 
-bool ARBConfigLevel::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBConfigLevel::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_LEVEL)
 		return false;
-	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_LEVEL_NAME, m_Name)
-	|| 0 == m_Name.length())
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_LEVEL_NAME, m_Name) || 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_LEVEL, ATTRIB_LEVEL_NAME));
 		return false;
@@ -176,17 +172,14 @@ bool ARBConfigLevel::Save(ElementNodePtr const& ioTree) const
 }
 
 
-bool ARBConfigLevel::Update(
-		int indent,
-		ARBConfigLevelPtr const& inLevelNew,
-		std::wstring& ioInfo)
+bool ARBConfigLevel::Update(int indent, ARBConfigLevelPtr const& inLevelNew, std::wstring& ioInfo)
 {
 	std::wstring info;
 	if (GetName() != inLevelNew->GetName())
 		return false;
 
 	std::wstring indentBuffer, indentName;
-	for (int i = 0; i < indent-1; ++i)
+	for (int i = 0; i < indent - 1; ++i)
 		indentName += L"   ";
 	indentBuffer = indentName + L"   ";
 	indentName += L"-";
@@ -205,8 +198,8 @@ bool ARBConfigLevel::Update(
 		std::wstring info2;
 		int nChanged = 0, nAdded = 0, nSkipped = 0;
 		for (ARBConfigSubLevelList::const_iterator iterSub = inLevelNew->GetSubLevels().begin();
-			iterSub != inLevelNew->GetSubLevels().end();
-			++iterSub)
+			 iterSub != inLevelNew->GetSubLevels().end();
+			 ++iterSub)
 		{
 			ARBConfigSubLevelPtr pSubLevel;
 			if (GetSubLevels().FindSubLevel((*iterSub)->GetName(), &pSubLevel))
@@ -215,7 +208,7 @@ bool ARBConfigLevel::Update(
 					++nSkipped;
 				else
 				{
-					if (pSubLevel->Update(indent+1, *iterSub, info2))
+					if (pSubLevel->Update(indent + 1, *iterSub, info2))
 						++nChanged;
 				}
 			}
@@ -256,10 +249,7 @@ bool ARBConfigLevel::Update(
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool ARBConfigLevelList::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBConfigLevelList::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	ARBConfigLevelPtr thing(ARBConfigLevel::New());
 	if (!thing->Load(inTree, inVersion, ioCallback))
@@ -275,9 +265,7 @@ void ARBConfigLevelList::ReorderBy(ARBConfigLevelList const& inList)
 	{
 		ARBConfigLevelList tmp;
 		tmp.reserve(size());
-		for (ARBConfigLevelList::const_iterator i = inList.begin();
-			i != inList.end();
-			++i)
+		for (ARBConfigLevelList::const_iterator i = inList.begin(); i != inList.end(); ++i)
 		{
 			ARBConfigLevelPtr level;
 			if (FindLevel((*i)->GetName(), &level))
@@ -295,9 +283,7 @@ void ARBConfigLevelList::ReorderBy(ARBConfigLevelList const& inList)
 }
 
 
-bool ARBConfigLevelList::VerifyLevel(
-		std::wstring const& inName,
-		bool inAllowWildCard) const
+bool ARBConfigLevelList::VerifyLevel(std::wstring const& inName, bool inAllowWildCard) const
 {
 	// Wildcards are only used in the ARBConfigScoring object.
 	if (inAllowWildCard && inName == WILDCARD_LEVEL)
@@ -311,9 +297,7 @@ bool ARBConfigLevelList::VerifyLevel(
 }
 
 
-bool ARBConfigLevelList::FindLevel(
-		std::wstring const& inName,
-		ARBConfigLevelPtr* outLevel) const
+bool ARBConfigLevelList::FindLevel(std::wstring const& inName, ARBConfigLevelPtr* outLevel) const
 {
 	if (outLevel)
 		outLevel->reset();
@@ -330,9 +314,7 @@ bool ARBConfigLevelList::FindLevel(
 }
 
 
-bool ARBConfigLevelList::FindSubLevel(
-		std::wstring const& inName,
-		ARBConfigLevelPtr* outLevel) const
+bool ARBConfigLevelList::FindSubLevel(std::wstring const& inName, ARBConfigLevelPtr* outLevel) const
 {
 	if (outLevel)
 		outLevel->reset();
@@ -361,9 +343,7 @@ bool ARBConfigLevelList::FindSubLevel(
 }
 
 
-bool ARBConfigLevelList::AddLevel(
-		std::wstring const& inName,
-		ARBConfigLevelPtr* outLevel)
+bool ARBConfigLevelList::AddLevel(std::wstring const& inName, ARBConfigLevelPtr* outLevel)
 {
 	if (outLevel)
 		outLevel->reset();
@@ -392,9 +372,9 @@ bool ARBConfigLevelList::AddLevel(ARBConfigLevelPtr const& inLevel)
 
 
 bool ARBConfigLevelList::DeleteLevel(
-		std::wstring const& inDiv,
-		std::wstring const& inName,
-		ARBConfigEventList& ioEvents)
+	std::wstring const& inDiv,
+	std::wstring const& inName,
+	ARBConfigEventList& ioEvents)
 {
 	std::wstring name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -412,15 +392,15 @@ bool ARBConfigLevelList::DeleteLevel(
 }
 
 
-bool ARBConfigLevelList::DeleteSubLevel(
-		std::wstring const& inName,
-		bool& outLevelModified)
+bool ARBConfigLevelList::DeleteSubLevel(std::wstring const& inName, bool& outLevelModified)
 {
 	std::wstring name(inName);
 	outLevelModified = false;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
-		for (ARBConfigSubLevelList::iterator iterSub = (*iter)->GetSubLevels().begin(); iterSub != (*iter)->GetSubLevels().end(); ++iterSub)
+		for (ARBConfigSubLevelList::iterator iterSub = (*iter)->GetSubLevels().begin();
+			 iterSub != (*iter)->GetSubLevels().end();
+			 ++iterSub)
 		{
 			if ((*iterSub)->GetName() == name)
 			{

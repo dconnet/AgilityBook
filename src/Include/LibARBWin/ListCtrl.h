@@ -25,9 +25,9 @@
 
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
+#include <wx/imaglist.h>
 #include <map>
 #include <vector>
-#include <wx/imaglist.h>
 
 ARB_TYPEDEF(CListData)
 
@@ -49,13 +49,15 @@ struct SortInfo
 	}
 	DECLARE_NO_COPY_IMPLEMENTED(SortInfo)
 };
-typedef int (wxCALLBACK *CListCtrlCompare)(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo);
+typedef int(
+	wxCALLBACK* CListCtrlCompare)(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo);
 
 // wxListView adds some convenient functions to wxListCtrl
 class ARBWIN_API CReportListCtrl : public CListCtrl
 {
 	DECLARE_CLASS(CReportListCtrl)
 	static bool m_enableRowColors;
+
 public:
 	static void EnableRowColors(bool bEnable);
 
@@ -66,23 +68,32 @@ public:
 		Sort    ///< Full sort header
 	};
 	CReportListCtrl(
-			wxWindow *parent,
-			bool bSingleSel,
-			SortHeader sortHeader = SortHeader::Sort,
-			bool bHasBorder = false,
-			bool bHasImageList = true);
+		wxWindow* parent,
+		bool bSingleSel,
+		SortHeader sortHeader = SortHeader::Sort,
+		bool bHasBorder = false,
+		bool bHasImageList = true);
 	CReportListCtrl(
-			wxWindow *parent,
-			const wxPoint& pos = wxDefaultPosition,
-			const wxSize& size = wxDefaultSize,
-			bool bSingleSel = false,
-			SortHeader sortHeader = SortHeader::Sort,
-			bool bHasBorder = false,
-			bool bHasImageList = true);
+		wxWindow* parent,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		bool bSingleSel = false,
+		SortHeader sortHeader = SortHeader::Sort,
+		bool bHasBorder = false,
+		bool bHasImageList = true);
 
-	int ImageEmpty() const			{return m_imgEmpty;}
-	int ImageSortUp() const			{return m_imgSortUp;}
-	int ImageSortDown() const		{return m_imgSortDn;}
+	int ImageEmpty() const
+	{
+		return m_imgEmpty;
+	}
+	int ImageSortUp() const
+	{
+		return m_imgSortUp;
+	}
+	int ImageSortDown() const
+	{
+		return m_imgSortDn;
+	}
 	int AddIcon(wxIcon const& icon)
 	{
 		return m_ImageList.Add(icon);
@@ -104,8 +115,7 @@ public:
 		std::vector<long> indices;
 		GetSelection(indices);
 		bool bSingle = (bRestricted || HasFlag(wxLC_SINGLE_SEL));
-		if ((bSingle && 1 == indices.size())
-		|| (!bSingle && 0 < indices.size()))
+		if ((bSingle && 1 == indices.size()) || (!bSingle && 0 < indices.size()))
 			return indices[0];
 		else
 			return -1;
@@ -129,10 +139,7 @@ public:
 	bool CanSelectAll() const;
 	void SelectAll();
 
-	void SetSelection(
-			long index,
-			bool bEnsureVisible = false,
-			bool bSetFocus = true);
+	void SetSelection(long index, bool bEnsureVisible = false, bool bSetFocus = true);
 	void SetSelection(std::vector<long>& indices);
 	void ClearSelection();
 
@@ -144,15 +151,11 @@ public:
 	/**
 	 * Returns the data required to print/copy a line.
 	 */
-	void GetPrintLine(
-			long item,
-			std::vector<std::wstring>& line) const;
+	void GetPrintLine(long item, std::vector<std::wstring>& line) const;
 
 	void RefreshItem(long item);
 
-	void SwapEntries(
-			long oldIndex,
-			long newIndex)
+	void SwapEntries(long oldIndex, long newIndex)
 	{
 		if (oldIndex == newIndex)
 			return;
@@ -177,14 +180,14 @@ public:
 
 protected:
 	bool Create(
-			wxWindow *parent,
-			const wxPoint& pos,
-			const wxSize& size,
-			bool bSingleSel,
-			SortHeader sortHeader,
-			bool bHasBorder,
-			bool bHasImageList,
-			bool bEnableRowColors);
+		wxWindow* parent,
+		const wxPoint& pos,
+		const wxSize& size,
+		bool bSingleSel,
+		SortHeader sortHeader,
+		bool bHasBorder,
+		bool bHasImageList,
+		bool bEnableRowColors);
 	wxItemAttr* OnGetItemAttr(long item) const override;
 #if defined(__WXMSW__)
 	// Only defined in the MSW and QT ports
@@ -213,7 +216,9 @@ private:
 	long InsertItem(long index, int imageIndex);
 	long InsertItem(long index, const wxString& label, int imageIndex);
 	// 2.9.4 changed this to virtual
-	void SetImageList(wxImageList* imageList, int which) override {}
+	void SetImageList(wxImageList* imageList, int which) override
+	{
+	}
 };
 
 
@@ -224,14 +229,23 @@ class ARBWIN_API CCheckListCtrl : public CListCtrl
 	DECLARE_CLASS(CCheckListCtrl)
 public:
 	CCheckListCtrl(
-			wxWindow *parent,
-			const wxPoint& pos = wxDefaultPosition,
-			const wxSize& size = wxDefaultSize,
-			bool bHasChecks = true);
+		wxWindow* parent,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		bool bHasChecks = true);
 
-	int ImageEmpty() const			{return m_imgEmpty;}
-	int ImageNoCheck() const		{return m_imgNoCheck;}
-	int ImageChecked() const		{return m_imgChecked;}
+	int ImageEmpty() const
+	{
+		return m_imgEmpty;
+	}
+	int ImageNoCheck() const
+	{
+		return m_imgNoCheck;
+	}
+	int ImageChecked() const
+	{
+		return m_imgChecked;
+	}
 	int AddIcon(wxIcon const& icon)
 	{
 		return m_ImageList.Add(icon);
@@ -258,7 +272,9 @@ private:
 	// these are NOT virtual! Do not implement.
 	long InsertItem(wxListItem& info);
 	long InsertItem(long index, int imageIndex);
-	void SetImageList(wxImageList* imageList, int which) override {}
+	void SetImageList(wxImageList* imageList, int which) override
+	{
+	}
 
 	void OnClick(wxMouseEvent& evt);
 	void OnKeyDown(wxKeyEvent& evt);

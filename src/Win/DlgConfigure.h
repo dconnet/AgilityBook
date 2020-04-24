@@ -17,9 +17,9 @@
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  */
 
-#include "IconList.h"
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBTypes2.h"
+#include "IconList.h"
 class ARBAgilityRecordBook;
 class CAgilityBookDoc;
 class CDlgConfigureDataBase;
@@ -31,10 +31,7 @@ class CDlgConfigure : public wxDialog
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgConfigure)
 	friend class CDlgConfigureDataRoot; // For 'Action' access
 public:
-	CDlgConfigure(
-			CAgilityBookDoc* pDoc,
-			ARBAgilityRecordBook& book,
-			wxWindow* pParent = nullptr);
+	CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book, wxWindow* pParent = nullptr);
 	~CDlgConfigure();
 
 private:
@@ -52,15 +49,9 @@ private:
 	void UpdateButtons();
 	void LoadData(Action dataToLoad);
 	void DoEdit();
-	wxTreeItemId FindCurrentVenue(
-			ARBConfigVenuePtr const& inVenue,
-			bool bSet);
-	wxTreeItemId FindCurrentFault(
-			ARBConfigFaultPtr const& inFault,
-			bool bSet);
-	wxTreeItemId FindCurrentOtherPoints(
-			ARBConfigOtherPointsPtr const& inOther,
-			bool bSet);
+	wxTreeItemId FindCurrentVenue(ARBConfigVenuePtr const& inVenue, bool bSet);
+	wxTreeItemId FindCurrentFault(ARBConfigFaultPtr const& inFault, bool bSet);
+	wxTreeItemId FindCurrentOtherPoints(ARBConfigOtherPointsPtr const& inOther, bool bSet);
 
 	CAgilityBookDoc* m_pDoc;
 	ARBAgilityRecordBook& m_Book;

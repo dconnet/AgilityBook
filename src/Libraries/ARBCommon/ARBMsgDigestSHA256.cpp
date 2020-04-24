@@ -26,6 +26,8 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+// clang-format off
+
 // Turn off a bunch of static analysis messages.
 #ifdef _MSC_VER
 #pragma warning (disable : 6297) // Arithmetic overflow : 32 - bit value is shifted, then cast to 64 - bit value.Results might not be an expected value.
@@ -1335,13 +1337,12 @@ char* SHA384_Data(const sha2_byte* data, size_t len, char digest[SHA384_DIGEST_S
 
 };
 
+// clang-format on
 /////////////////////////////////////////////////////////////////////////////
 
 // Note, error checking of arguments handled in ARBMsgDigest::Compute
 
-std::wstring ARBMsgDigestComputeSHA256(
-		std::istream& inFile,
-		size_t* outSize)
+std::wstring ARBMsgDigestComputeSHA256(std::istream& inFile, size_t* outSize)
 {
 	SHA256_CTX ctx256;
 	SHA256_Init(&ctx256);

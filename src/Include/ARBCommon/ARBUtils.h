@@ -57,9 +57,7 @@ wxString GetARBResourceDir();
  * @param nBackups Number of backups to keep.
  * @return Backup files reorganized.
  */
-ARBCOMMON_API bool CreateBackupFile(
-		wxString const& inFilename,
-		int nBackups);
+ARBCOMMON_API bool CreateBackupFile(wxString const& inFilename, int nBackups);
 
 
 /**
@@ -72,10 +70,10 @@ ARBCOMMON_API bool CreateBackupFile(
  * @return Success
  */
 ARBCOMMON_API bool GetFileTimes(
-		wxFileName const& filename,
-		wxDateTime* dtAccess,
-		wxDateTime* dtMod,
-		wxDateTime* dtCreate);
+	wxFileName const& filename,
+	wxDateTime* dtAccess,
+	wxDateTime* dtMod,
+	wxDateTime* dtCreate);
 
 /////////////////////////////////////////////////////////////////////////////
 // Debugging performance aid
@@ -91,17 +89,20 @@ ARBCOMMON_API bool GetFileTimes(
 #endif
 
 #if USE_STACKTRACER && defined(WIN32)
+// clang-format off
 #pragma warning(push)
 #pragma warning (disable : 26447) // The function is declared 'noexcept' but calls function 'wx_str()' which may throw exceptions(f.6).
 #pragma warning (disable : 28159) // Consider using 'GetTickCount64' instead of 'GetTickCount'. Reason: GetTickCount overflows roughly every 49 days.  Code that does not take that into account can loop indefinitely.  GetTickCount64 operates on 64 bit values and does not have that problem
+// clang-format on
 class ARBCOMMON_API CStackTracer
 {
 public:
-	CStackTracer(wxString const& msg) : fMsg(msg)
+	CStackTracer(wxString const& msg)
+		: fMsg(msg)
 	{
 		fTics = fTickle = GetTickCount();
 		++fIndent;
-		OutputDebugString(fmt::format(L"{:{}s}{}: Enter\n", L" ", fIndent, fMsg.wx_str()).c_str());		
+		OutputDebugString(fmt::format(L"{:{}s}{}: Enter\n", L" ", fIndent, fMsg.wx_str()).c_str());
 	}
 	void Tickle(wxString const& msg)
 	{
@@ -111,9 +112,11 @@ public:
 	}
 	~CStackTracer()
 	{
-		OutputDebugString(fmt::format(L"{:{}s}{}: Leave [{}]\n", L" ", fIndent, fMsg.wx_str(), GetTickCount() - fTics).c_str());
+		OutputDebugString(
+			fmt::format(L"{:{}s}{}: Leave [{}]\n", L" ", fIndent, fMsg.wx_str(), GetTickCount() - fTics).c_str());
 		--fIndent;
 	}
+
 private:
 	wxString fMsg;
 	DWORD fTics;
@@ -128,7 +131,7 @@ private:
 };
 #pragma warning(pop)
 
-#define STACK_TRACE(name, msg)	CStackTracer name(msg)
+#define STACK_TRACE(name, msg)  CStackTracer name(msg)
 #define STACK_TICKLE(name, msg) name.Tickle(msg)
 
 #else

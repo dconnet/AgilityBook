@@ -27,8 +27,8 @@
 #include "ARB/ARBDog.h"
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/StringUtil.h"
-#include <algorithm>
 #include <wx/config.h>
+#include <algorithm>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -40,10 +40,7 @@ wxBEGIN_EVENT_TABLE(CDlgSelectDog, wxDialog)
 wxEND_EVENT_TABLE()
 
 
-CDlgSelectDog::CDlgSelectDog(
-		CAgilityBookDoc* pDoc,
-		std::vector<ARBDogPtr>& outDogs,
-		wxWindow* pParent)
+CDlgSelectDog::CDlgSelectDog(CAgilityBookDoc* pDoc, std::vector<ARBDogPtr>& outDogs, wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_outDogs(outDogs)
@@ -52,7 +49,13 @@ CDlgSelectDog::CDlgSelectDog(
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDD_DOG_PICKER"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		_("IDD_DOG_PICKER"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	m_Dogs.insert(m_Dogs.end(), pDoc->Book().GetDogs().begin(), pDoc->Book().GetDogs().end());
 
@@ -72,10 +75,13 @@ CDlgSelectDog::CDlgSelectDog(
 	{
 		checkListChoices.Add(StringUtil::stringWX((*iter)->GetCallName()));
 	}
-	m_checkList = new wxCheckListBox(this, wxID_ANY,
-		wxDefaultPosition, wxDefaultSize,
+	m_checkList = new wxCheckListBox(
+		this,
+		wxID_ANY,
+		wxDefaultPosition,
+		wxDefaultSize,
 		checkListChoices,
-		wxLB_EXTENDED|wxLB_NEEDED_SB);
+		wxLB_EXTENDED | wxLB_NEEDED_SB);
 	for (int index = 0; index < static_cast<int>(m_Dogs.size()); ++index)
 	{
 		if (selection.end() != std::find(selection.begin(), selection.end(), m_Dogs[index]->GetCallName()))

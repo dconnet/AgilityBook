@@ -44,16 +44,18 @@
 
 namespace
 {
-	class ARBDogTitle_concrete : public ARBDogTitle
+class ARBDogTitle_concrete : public ARBDogTitle
+{
+public:
+	ARBDogTitle_concrete()
 	{
-	public:
-		ARBDogTitle_concrete() {}
-		ARBDogTitle_concrete(ARBDogTitle const& rhs)
-			: ARBDogTitle(rhs)
-		{
-		}
-	};
+	}
+	ARBDogTitle_concrete(ARBDogTitle const& rhs)
+		: ARBDogTitle(rhs)
+	{
+	}
 };
+}; // namespace
 
 
 ARBDogTitlePtr ARBDogTitle::New()
@@ -163,6 +165,7 @@ ARBDogTitle& ARBDogTitle::operator=(ARBDogTitle&& rhs)
 
 bool ARBDogTitle::operator==(ARBDogTitle const& rhs) const
 {
+	// clang-format off
 	return m_Date == rhs.m_Date
 		&& m_Venue == rhs.m_Venue
 		&& m_Name == rhs.m_Name
@@ -174,12 +177,20 @@ bool ARBDogTitle::operator==(ARBDogTitle const& rhs) const
 		&& m_MultipleSeparator == rhs.m_MultipleSeparator
 		&& m_bReceived == rhs.m_bReceived
 		&& m_bHidden == rhs.m_bHidden;
+	// clang-format on
 }
 
 
 std::wstring ARBDogTitle::GetGenericName() const
 {
-	std::wstring name = m_Name + TitleInstance(m_bShowInstanceOne, m_Instance, m_MultipleStartAt, m_MultipleIncrement, m_MultipleStyle, m_MultipleSeparator);
+	std::wstring name = m_Name
+						+ TitleInstance(
+							m_bShowInstanceOne,
+							m_Instance,
+							m_MultipleStartAt,
+							m_MultipleIncrement,
+							m_MultipleStyle,
+							m_MultipleSeparator);
 	return name;
 }
 
@@ -202,16 +213,15 @@ size_t ARBDogTitle::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 
 
 bool ARBDogTitle::Load(
-		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfig const& inConfig,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_TITLE)
 		return false;
-	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_TITLE_VENUE, m_Venue)
-	|| 0 == m_Venue.length())
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_TITLE_VENUE, m_Venue) || 0 == m_Venue.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_VENUE));
 		return false;
@@ -225,8 +235,7 @@ bool ARBDogTitle::Load(
 		return false;
 	}
 
-	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_TITLE_NAME, m_Name)
-	|| 0 == m_Name.length())
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_TITLE_NAME, m_Name) || 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_NAME));
 		return false;
@@ -250,14 +259,14 @@ bool ARBDogTitle::Load(
 		m_bHidden = true;
 		break;
 	case ARBAttribLookup::Invalid:
-		{
-			std::wstring attrib;
-			inTree->GetAttrib(ATTRIB_TITLE_DATE, attrib);
-			std::wstring msg(Localization()->InvalidDate());
-			msg += attrib;
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_DATE, msg.c_str()));
-			return false;
-		}
+	{
+		std::wstring attrib;
+		inTree->GetAttrib(ATTRIB_TITLE_DATE, attrib);
+		std::wstring msg(Localization()->InvalidDate());
+		msg += attrib;
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_DATE, msg.c_str()));
+		return false;
+	}
 	}
 
 	inTree->GetAttrib(ATTRIB_TITLE_INSTANCE, m_Instance);
@@ -269,7 +278,10 @@ bool ARBDogTitle::Load(
 
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_RECEIVED, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
+			TREE_TITLE,
+			ATTRIB_TITLE_RECEIVED,
+			Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 
@@ -299,7 +311,8 @@ bool ARBDogTitle::Load(
 			msg += m_Venue;
 			msg += L"/";
 			msg += m_Name;
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_NAME, msg.c_str()));
+			ioCallback.LogMessage(
+				Localization()->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_NAME, msg.c_str()));
 			return false;
 		}
 	}
@@ -343,10 +356,7 @@ bool ARBDogTitle::Save(ElementNodePtr const& ioTree) const
 }
 
 
-void ARBDogTitle::SetName(
-		std::wstring const& inName,
-		short inInstance,
-		ARBConfigTitlePtr const& inConfigTitle)
+void ARBDogTitle::SetName(std::wstring const& inName, short inInstance, ARBConfigTitlePtr const& inConfigTitle)
 {
 	m_Name = inName;
 	m_Instance = inInstance;
@@ -360,10 +370,10 @@ void ARBDogTitle::SetName(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBDogTitleList::Load(
-		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfig const& inConfig,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	ARBDogTitlePtr thing(ARBDogTitle::New());
 	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
@@ -376,7 +386,9 @@ bool ARBDogTitleList::Load(
 class SortTitle
 {
 public:
-	SortTitle() {}
+	SortTitle()
+	{
+	}
 	bool operator()(ARBDogTitlePtr const& one, ARBDogTitlePtr const& two) const
 	{
 		if (one->GetDate() == two->GetDate())
@@ -412,10 +424,8 @@ int ARBDogTitleList::NumTitlesInVenue(std::wstring const& inVenue) const
 }
 
 
-bool ARBDogTitleList::FindTitle(
-		std::wstring const& inVenue,
-		std::wstring const& inTitle,
-		ARBDogTitlePtr* outTitle) const
+bool ARBDogTitleList::FindTitle(std::wstring const& inVenue, std::wstring const& inTitle, ARBDogTitlePtr* outTitle)
+	const
 {
 	if (outTitle)
 		outTitle->reset();
@@ -423,8 +433,7 @@ bool ARBDogTitleList::FindTitle(
 	int maxInstance = -1;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetVenue() == inVenue
-		&& (*iter)->GetRawName() == inTitle)
+		if ((*iter)->GetVenue() == inVenue && (*iter)->GetRawName() == inTitle)
 		{
 			if (maxInstance < (*iter)->GetInstance())
 			{
@@ -440,16 +449,15 @@ bool ARBDogTitleList::FindTitle(
 
 
 short ARBDogTitleList::FindMaxInstance(
-		std::wstring const& inVenue,
-		std::wstring const& inTitle,
-		std::vector<short>* outMissing) const
+	std::wstring const& inVenue,
+	std::wstring const& inTitle,
+	std::vector<short>* outMissing) const
 {
 	std::set<short> instances;
 	short inst = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetVenue() == inVenue
-		&& (*iter)->GetRawName() == inTitle)
+		if ((*iter)->GetVenue() == inVenue && (*iter)->GetRawName() == inTitle)
 		{
 			if ((*iter)->GetInstance() > inst)
 			{
@@ -474,9 +482,7 @@ short ARBDogTitleList::FindMaxInstance(
 }
 
 
-int ARBDogTitleList::RenameVenue(
-		std::wstring const& inOldVenue,
-		std::wstring const& inNewVenue)
+int ARBDogTitleList::RenameVenue(std::wstring const& inOldVenue, std::wstring const& inNewVenue)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -495,7 +501,7 @@ int ARBDogTitleList::DeleteVenue(std::wstring const& inVenue)
 {
 	std::wstring venue(inVenue);
 	int count = 0;
-	for (iterator iter = begin(); iter != end(); )
+	for (iterator iter = begin(); iter != end();)
 	{
 		if ((*iter)->GetVenue() == venue)
 		{
@@ -509,9 +515,7 @@ int ARBDogTitleList::DeleteVenue(std::wstring const& inVenue)
 }
 
 
-int ARBDogTitleList::NumTitlesInUse(
-		std::wstring const& inVenue,
-		std::wstring const& inTitle) const
+int ARBDogTitleList::NumTitlesInUse(std::wstring const& inVenue, std::wstring const& inTitle) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -524,9 +528,9 @@ int ARBDogTitleList::NumTitlesInUse(
 
 
 int ARBDogTitleList::RenameTitle(
-		std::wstring const& inVenue,
-		std::wstring const& inOldTitle,
-		std::wstring const& inNewTitle)
+	std::wstring const& inVenue,
+	std::wstring const& inOldTitle,
+	std::wstring const& inNewTitle)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -554,9 +558,7 @@ bool ARBDogTitleList::AddTitle(ARBDogTitlePtr const& inTitle)
 }
 
 
-bool ARBDogTitleList::DeleteTitle(
-		ARBConfigVenuePtr const& inVenue,
-		ARBDogTitlePtr const& inTitle)
+bool ARBDogTitleList::DeleteTitle(ARBConfigVenuePtr const& inVenue, ARBDogTitlePtr const& inTitle)
 {
 	bool bDeleted = false;
 	if (!inTitle)

@@ -28,7 +28,6 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgListViewer.h"
 
 #include "AgilityBook.h"
@@ -54,36 +53,36 @@
 
 // Run/MQ are shared in the DataExisting class, hence they need to use
 // the same column values.
-#define COL_RUN_MQ_DATE			0
-#define COL_RUN_MQ_STATUS		1
-#define COL_RUN_MQ_DOG			2
-#define COL_RUN_MQ_Q			3
-#define COL_RUN_MQ_TITLE_PTS	4
-#define COL_RUN_MQ_VENUE		5
-#define COL_RUN_MQ_DIV			6
-#define COL_RUN_MQ_LEVEL		7
-#define COL_RUN_MQ_EVENT		8
-#define COL_RUN_MQ_SUBNAME		9
-#define COL_RUN_MQ_LOCATION		10
-#define COL_RUN_MQ_CLUB			11
-#define COL_RUN_MQ_JUDGE		12
-#define COL_RUN_MQ_PLACE		13
-#define COL_RUN_MQ_INCLASS		14
-#define COL_RUN_MQ_QD			15
-#define COL_RUN_MQ_SPEED		16
-#define COL_RUN_MQ_PARTNERS		17
-#define COL_OTHER_DATE			0
-#define COL_OTHER_NAME			1 // Trial, existing pt
-#define COL_OTHER_CLUB			2
-#define COL_OTHER_VENUE			3
-#define COL_OTHER_DIV			4
-#define COL_OTHER_LEVEL			5
-#define COL_OTHER_EVENT			6
-#define COL_OTHER_PTS			7
-#define COL_OTHER_SCORE			8 // Run score
-#define COL_ITEM_TYPE			0
-#define COL_ITEM_NAME			1
-#define COL_ITEM_COMMENT		2
+#define COL_RUN_MQ_DATE      0
+#define COL_RUN_MQ_STATUS    1
+#define COL_RUN_MQ_DOG       2
+#define COL_RUN_MQ_Q         3
+#define COL_RUN_MQ_TITLE_PTS 4
+#define COL_RUN_MQ_VENUE     5
+#define COL_RUN_MQ_DIV       6
+#define COL_RUN_MQ_LEVEL     7
+#define COL_RUN_MQ_EVENT     8
+#define COL_RUN_MQ_SUBNAME   9
+#define COL_RUN_MQ_LOCATION  10
+#define COL_RUN_MQ_CLUB      11
+#define COL_RUN_MQ_JUDGE     12
+#define COL_RUN_MQ_PLACE     13
+#define COL_RUN_MQ_INCLASS   14
+#define COL_RUN_MQ_QD        15
+#define COL_RUN_MQ_SPEED     16
+#define COL_RUN_MQ_PARTNERS  17
+#define COL_OTHER_DATE       0
+#define COL_OTHER_NAME       1 // Trial, existing pt
+#define COL_OTHER_CLUB       2
+#define COL_OTHER_VENUE      3
+#define COL_OTHER_DIV        4
+#define COL_OTHER_LEVEL      5
+#define COL_OTHER_EVENT      6
+#define COL_OTHER_PTS        7
+#define COL_OTHER_SCORE      8 // Run score
+#define COL_ITEM_TYPE        0
+#define COL_ITEM_NAME        1
+#define COL_ITEM_COMMENT     2
 
 
 class CDlgListViewerDataColumns
@@ -95,12 +94,11 @@ public:
 		if (0 < inInitSize)
 			m_Columns.reserve(inInitSize);
 	}
-	~CDlgListViewerDataColumns() {}
+	~CDlgListViewerDataColumns()
+	{
+	}
 
-	bool InsertColumn(
-			CReportListCtrl* inList,
-			int inIndex,
-			wxString const& inName)
+	bool InsertColumn(CReportListCtrl* inList, int inIndex, wxString const& inName)
 	{
 		int col = static_cast<int>(m_Columns.size());
 		for (int i = 0; i < col; ++i)
@@ -121,7 +119,10 @@ public:
 			return m_Columns[inColumn];
 		return -1;
 	}
-	int NumColumns() const	{return static_cast<int>(m_Columns.size());}
+	int NumColumns() const
+	{
+		return static_cast<int>(m_Columns.size());
+	}
 
 private:
 	std::vector<int> m_Columns;
@@ -134,15 +135,17 @@ class CDlgListViewerData : public CListData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgListViewerData)
 public:
-	CDlgListViewerData() {}
-	~CDlgListViewerData() {}
+	CDlgListViewerData()
+	{
+	}
+	~CDlgListViewerData()
+	{
+	}
 
 	void OnNeedListItem(long iCol, wxListItem& info) const override;
 
 	virtual int OnNeedIcon() const = 0;
-	virtual int Compare(
-			CDlgListViewerDataPtr const& inRow2,
-			int inCol) const = 0;
+	virtual int Compare(CDlgListViewerDataPtr const& inRow2, int inCol) const = 0;
 };
 
 
@@ -160,19 +163,19 @@ class CDlgListViewerDataExisting : public CDlgListViewerData
 	friend class CDlgListViewerDataMultiQ;
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgListViewerDataExisting)
 public:
-	CDlgListViewerDataExisting(
-			CDlgListViewerDataColumnsPtr const& inColData,
-			ARBDogExistingPointsPtr const& inExisting)
+	CDlgListViewerDataExisting(CDlgListViewerDataColumnsPtr const& inColData, ARBDogExistingPointsPtr const& inExisting)
 		: m_ColData(inColData)
 		, m_Existing(inExisting)
 	{
 		assert(m_ColData);
 	}
 	std::wstring OnNeedText(long iCol) const override;
-	int OnNeedIcon() const override {return -1;}
-	int Compare(
-			CDlgListViewerDataPtr const& inRow2,
-			int inCol) const override;
+	int OnNeedIcon() const override
+	{
+		return -1;
+	}
+	int Compare(CDlgListViewerDataPtr const& inRow2, int inCol) const override;
+
 private:
 	CDlgListViewerDataColumnsPtr m_ColData;
 	ARBDogExistingPointsPtr m_Existing;
@@ -221,12 +224,12 @@ class CDlgListViewerDataRun : public CDlgListViewerData
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgListViewerDataRun)
 public:
 	CDlgListViewerDataRun(
-			CDlgListViewerDataColumnsPtr const& inColData,
-			ARBDogPtr const& inDog,
-			ARBDogTrialPtr const& inTrial,
-			ARBDogRunPtr const& inRun,
-			ARBConfigScoringPtr const& inScoring,
-			ScoringRunInfo::ScoringDetail inScoringDetail)
+		CDlgListViewerDataColumnsPtr const& inColData,
+		ARBDogPtr const& inDog,
+		ARBDogTrialPtr const& inTrial,
+		ARBDogRunPtr const& inRun,
+		ARBConfigScoringPtr const& inScoring,
+		ScoringRunInfo::ScoringDetail inScoringDetail)
 		: m_ColData(inColData)
 		, m_Dog(inDog)
 		, m_Trial(inTrial)
@@ -241,10 +244,12 @@ public:
 		//assert(inScoring);
 	}
 	std::wstring OnNeedText(long iCol) const override;
-	int OnNeedIcon() const override {return -1;}
-	int Compare(
-			CDlgListViewerDataPtr const& inRow2,
-			int inCol) const override;
+	int OnNeedIcon() const override
+	{
+		return -1;
+	}
+	int Compare(CDlgListViewerDataPtr const& inRow2, int inCol) const override;
+
 private:
 	CDlgListViewerDataColumnsPtr m_ColData;
 	ARBDogPtr m_Dog;
@@ -330,19 +335,19 @@ std::wstring CDlgListViewerDataRun::OnNeedText(long iCol) const
 			str = fmt::format(L"{}", m_Run->GetSpeedPoints(m_Scoring));
 		break;
 	case COL_RUN_MQ_PARTNERS:
+	{
+		fmt::wmemory_buffer buffer;
+		for (ARBDogRunPartnerList::const_iterator iter2 = m_Run->GetPartners().begin();
+			 iter2 != m_Run->GetPartners().end();
+			 ++iter2)
 		{
-			fmt::wmemory_buffer buffer;
-			for (ARBDogRunPartnerList::const_iterator iter2 = m_Run->GetPartners().begin();
-				iter2 != m_Run->GetPartners().end();
-				++iter2)
-			{
-				if (iter2 != m_Run->GetPartners().begin())
-					fmt::format_to(buffer, L", ");
-				fmt::format_to(buffer, L"{}/{}", (*iter2)->GetHandler(), (*iter2)->GetDog());
-			}
-			str = fmt::to_string(buffer);
+			if (iter2 != m_Run->GetPartners().begin())
+				fmt::format_to(buffer, L", ");
+			fmt::format_to(buffer, L"{}/{}", (*iter2)->GetHandler(), (*iter2)->GetDog());
 		}
-		break;
+		str = fmt::to_string(buffer);
+	}
+	break;
 	}
 	return str;
 }
@@ -355,10 +360,10 @@ class CDlgListViewerDataMultiQ : public CDlgListViewerData
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgListViewerDataMultiQ)
 public:
 	CDlgListViewerDataMultiQ(
-			CDlgListViewerDataColumnsPtr const& inColData,
-			ARBDate const& inDate,
-			ARBDogTrialPtr const& inTrial,
-			std::wstring const& inClub)
+		CDlgListViewerDataColumnsPtr const& inColData,
+		ARBDate const& inDate,
+		ARBDogTrialPtr const& inTrial,
+		std::wstring const& inClub)
 		: m_ColData(inColData)
 		, m_Date(inDate)
 		, m_Trial(inTrial)
@@ -367,10 +372,12 @@ public:
 		assert(m_ColData);
 	}
 	std::wstring OnNeedText(long iCol) const override;
-	int OnNeedIcon() const override {return -1;}
-	int Compare(
-			CDlgListViewerDataPtr const& inRow2,
-			int inCol) const override;
+	int OnNeedIcon() const override
+	{
+		return -1;
+	}
+	int Compare(CDlgListViewerDataPtr const& inRow2, int inCol) const override;
+
 private:
 	CDlgListViewerDataColumnsPtr m_ColData;
 	ARBDate m_Date;
@@ -403,59 +410,59 @@ std::wstring CDlgListViewerDataMultiQ::OnNeedText(long iCol) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-int CDlgListViewerDataExisting::Compare(
-		CDlgListViewerDataPtr const& inRow2,
-		int inCol) const
+int CDlgListViewerDataExisting::Compare(CDlgListViewerDataPtr const& inRow2, int inCol) const
 {
-	CDlgListViewerDataExistingPtr pDataExisting = std::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(inRow2);
+	CDlgListViewerDataExistingPtr pDataExisting
+		= std::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(inRow2);
 	CDlgListViewerDataRunPtr pDataRun = std::dynamic_pointer_cast<CDlgListViewerDataRun, CDlgListViewerData>(inRow2);
-	CDlgListViewerDataMultiQPtr pDataMultiQ = std::dynamic_pointer_cast<CDlgListViewerDataMultiQ, CDlgListViewerData>(inRow2);
+	CDlgListViewerDataMultiQPtr pDataMultiQ
+		= std::dynamic_pointer_cast<CDlgListViewerDataMultiQ, CDlgListViewerData>(inRow2);
 	if (!pDataExisting && !pDataRun && !pDataMultiQ)
 		return 0;
 	std::wstring str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
 	case COL_RUN_MQ_DATE:
-		{
-			ARBDate date1 = m_Existing->GetDate();
-			ARBDate date2;
-			if (pDataExisting)
-				date2 = pDataExisting->m_Existing->GetDate();
-			else if (pDataRun)
-				date2 = pDataRun->m_Run->GetDate();
-			else if (pDataMultiQ)
-				date2 = pDataMultiQ->m_Date;
-			if (date1 < date2)
-				return -1;
-			else if (date1 > date2)
-				return 1;
-			else
-				return 0;
-		}
-		break;
+	{
+		ARBDate date1 = m_Existing->GetDate();
+		ARBDate date2;
+		if (pDataExisting)
+			date2 = pDataExisting->m_Existing->GetDate();
+		else if (pDataRun)
+			date2 = pDataRun->m_Run->GetDate();
+		else if (pDataMultiQ)
+			date2 = pDataMultiQ->m_Date;
+		if (date1 < date2)
+			return -1;
+		else if (date1 > date2)
+			return 1;
+		else
+			return 0;
+	}
+	break;
 	case COL_RUN_MQ_TITLE_PTS:
+	{
+		double pts1 = m_Existing->GetPoints();
+		double pts2 = 0.0;
+		if (pDataExisting)
+			pts2 = pDataExisting->m_Existing->GetPoints();
+		else if (pDataRun)
 		{
-			double pts1 = m_Existing->GetPoints();
-			double pts2 = 0.0;
-			if (pDataExisting)
-				pts2 = pDataExisting->m_Existing->GetPoints();
-			else if (pDataRun)
-			{
-				if (pDataRun->m_Run->GetQ().Qualified() && pDataRun->m_Scoring)
-					pts2 = pDataRun->m_Run->GetTitlePoints(pDataRun->m_Scoring);
-			}
-			else if (pDataMultiQ)
-			{
-				pts2 = 1.0;
-			}
-			if (pts1 < pts2)
-				return -1;
-			else if (pts1 > pts2)
-				return 1;
-			else
-				return 0;
+			if (pDataRun->m_Run->GetQ().Qualified() && pDataRun->m_Scoring)
+				pts2 = pDataRun->m_Run->GetTitlePoints(pDataRun->m_Scoring);
 		}
-		break;
+		else if (pDataMultiQ)
+		{
+			pts2 = 1.0;
+		}
+		if (pts1 < pts2)
+			return -1;
+		else if (pts1 > pts2)
+			return 1;
+		else
+			return 0;
+	}
+	break;
 
 	default:
 	case COL_RUN_MQ_STATUS:
@@ -488,11 +495,10 @@ int CDlgListViewerDataExisting::Compare(
 
 /////////////////////////////////////////////////////////////////////////////
 
-int CDlgListViewerDataRun::Compare(
-		CDlgListViewerDataPtr const& inRow2,
-		int inCol) const
+int CDlgListViewerDataRun::Compare(CDlgListViewerDataPtr const& inRow2, int inCol) const
 {
-	CDlgListViewerDataExistingPtr pDataExisting = std::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(inRow2);
+	CDlgListViewerDataExistingPtr pDataExisting
+		= std::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(inRow2);
 	CDlgListViewerDataRunPtr pDataRun = std::dynamic_pointer_cast<CDlgListViewerDataRun, CDlgListViewerData>(inRow2);
 	if (!pDataExisting && !pDataRun)
 		return 0;
@@ -500,21 +506,21 @@ int CDlgListViewerDataRun::Compare(
 	switch (m_ColData->GetIndex(inCol))
 	{
 	case COL_RUN_MQ_DATE:
-		{
-			ARBDate date1 = m_Run->GetDate();
-			ARBDate date2;
-			if (pDataExisting)
-				date2 = pDataExisting->m_Existing->GetDate();
-			else
-				date2 = pDataRun->m_Run->GetDate();
-			if (date1 < date2)
-				return -1;
-			else if (date1 > date2)
-				return 1;
-			else
-				return 0;
-		}
-		break;
+	{
+		ARBDate date1 = m_Run->GetDate();
+		ARBDate date2;
+		if (pDataExisting)
+			date2 = pDataExisting->m_Existing->GetDate();
+		else
+			date2 = pDataRun->m_Run->GetDate();
+		if (date1 < date2)
+			return -1;
+		else if (date1 > date2)
+			return 1;
+		else
+			return 0;
+	}
+	break;
 	case COL_RUN_MQ_Q:
 		if (pDataRun)
 		{
@@ -529,26 +535,26 @@ int CDlgListViewerDataRun::Compare(
 			return 1;
 		break;
 	case COL_RUN_MQ_TITLE_PTS:
+	{
+		double pts1 = 0.0;
+		if (m_Run->GetQ().Qualified() && m_Scoring)
+			pts1 = m_Run->GetTitlePoints(m_Scoring);
+		double pts2 = 0.0;
+		if (pDataExisting)
+			pts2 = pDataExisting->m_Existing->GetPoints();
+		else
 		{
-			double pts1 = 0.0;
-			if (m_Run->GetQ().Qualified() && m_Scoring)
-				pts1 = m_Run->GetTitlePoints(m_Scoring);
-			double pts2 = 0.0;
-			if (pDataExisting)
-				pts2 = pDataExisting->m_Existing->GetPoints();
-			else
-			{
-				if (pDataRun->m_Run->GetQ().Qualified() && pDataRun->m_Scoring)
-					pts2 = pDataRun->m_Run->GetTitlePoints(pDataRun->m_Scoring);
-			}
-			if (pts1 < pts2)
-				return -1;
-			else if (pts1 > pts2)
-				return 1;
-			else
-				return 0;
+			if (pDataRun->m_Run->GetQ().Qualified() && pDataRun->m_Scoring)
+				pts2 = pDataRun->m_Run->GetTitlePoints(pDataRun->m_Scoring);
 		}
-		break;
+		if (pts1 < pts2)
+			return -1;
+		else if (pts1 > pts2)
+			return 1;
+		else
+			return 0;
+	}
+	break;
 	case COL_RUN_MQ_PLACE:
 		if (pDataRun)
 		{
@@ -633,11 +639,10 @@ int CDlgListViewerDataRun::Compare(
 }
 
 
-int CDlgListViewerDataMultiQ::Compare(
-		CDlgListViewerDataPtr const& inRow2,
-		int inCol) const
+int CDlgListViewerDataMultiQ::Compare(CDlgListViewerDataPtr const& inRow2, int inCol) const
 {
-	CDlgListViewerDataExistingPtr pDataExisting = std::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(inRow2);
+	CDlgListViewerDataExistingPtr pDataExisting
+		= std::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(inRow2);
 	CDlgListViewerDataMultiQPtr pData = std::dynamic_pointer_cast<CDlgListViewerDataMultiQ, CDlgListViewerData>(inRow2);
 	if (!pDataExisting && !pData)
 		return 0;
@@ -645,21 +650,21 @@ int CDlgListViewerDataMultiQ::Compare(
 	switch (m_ColData->GetIndex(inCol))
 	{
 	case COL_RUN_MQ_DATE:
-		{
-			ARBDate date1 = m_Date;
-			ARBDate date2;
-			if (pDataExisting)
-				date2 = pDataExisting->m_Existing->GetDate();
-			else
-				date2 = pData->m_Date;
-			if (date1 < date2)
-				return -1;
-			else if (date1 > date2)
-				return 1;
-			else
-				return 0;
-		}
-		break;
+	{
+		ARBDate date1 = m_Date;
+		ARBDate date2;
+		if (pDataExisting)
+			date2 = pDataExisting->m_Existing->GetDate();
+		else
+			date2 = pData->m_Date;
+		if (date1 < date2)
+			return -1;
+		else if (date1 > date2)
+			return 1;
+		else
+			return 0;
+	}
+	break;
 	default:
 	case COL_RUN_MQ_CLUB:
 	case COL_RUN_MQ_LOCATION:
@@ -681,19 +686,19 @@ class CDlgListViewerDataLifetime : public CDlgListViewerData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgListViewerDataLifetime)
 public:
-	CDlgListViewerDataLifetime(
-			CDlgListViewerDataColumnsPtr const& inColData,
-			LifeTimePointInfoPtr const& info)
+	CDlgListViewerDataLifetime(CDlgListViewerDataColumnsPtr const& inColData, LifeTimePointInfoPtr const& info)
 		: m_ColData(inColData)
 		, m_info(info)
 	{
 		assert(m_ColData);
 	}
 	std::wstring OnNeedText(long iCol) const override;
-	int OnNeedIcon() const override {return -1;}
-	int Compare(
-			CDlgListViewerDataPtr const& inRow2,
-			int inCol) const override;
+	int OnNeedIcon() const override
+	{
+		return -1;
+	}
+	int Compare(CDlgListViewerDataPtr const& inRow2, int inCol) const override;
+
 private:
 	CDlgListViewerDataColumnsPtr m_ColData;
 	LifeTimePointInfoPtr m_info;
@@ -726,11 +731,10 @@ std::wstring CDlgListViewerDataLifetime::OnNeedText(long iCol) const
 }
 
 
-int CDlgListViewerDataLifetime::Compare(
-		CDlgListViewerDataPtr const& inRow2,
-		int inCol) const
+int CDlgListViewerDataLifetime::Compare(CDlgListViewerDataPtr const& inRow2, int inCol) const
 {
-	CDlgListViewerDataLifetimePtr pData = std::dynamic_pointer_cast<CDlgListViewerDataLifetime, CDlgListViewerData>(inRow2);
+	CDlgListViewerDataLifetimePtr pData
+		= std::dynamic_pointer_cast<CDlgListViewerDataLifetime, CDlgListViewerData>(inRow2);
 	if (!pData)
 		return 0;
 	std::wstring str1, str2;
@@ -767,19 +771,19 @@ class CDlgListViewerDataOther : public CDlgListViewerData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgListViewerDataOther)
 public:
-	CDlgListViewerDataOther(
-			CDlgListViewerDataColumnsPtr const& inColData,
-			OtherPtInfo const& info)
+	CDlgListViewerDataOther(CDlgListViewerDataColumnsPtr const& inColData, OtherPtInfo const& info)
 		: m_ColData(inColData)
 		, m_info(info)
 	{
 		assert(m_ColData);
 	}
 	std::wstring OnNeedText(long iCol) const override;
-	int OnNeedIcon() const override {return -1;}
-	int Compare(
-			CDlgListViewerDataPtr const& inRow2,
-			int inCol) const override;
+	int OnNeedIcon() const override
+	{
+		return -1;
+	}
+	int Compare(CDlgListViewerDataPtr const& inRow2, int inCol) const override;
+
 private:
 	CDlgListViewerDataColumnsPtr m_ColData;
 	OtherPtInfo m_info;
@@ -834,9 +838,7 @@ std::wstring CDlgListViewerDataOther::OnNeedText(long iCol) const
 }
 
 
-int CDlgListViewerDataOther::Compare(
-		CDlgListViewerDataPtr const& inRow2,
-		int inCol) const
+int CDlgListViewerDataOther::Compare(CDlgListViewerDataPtr const& inRow2, int inCol) const
 {
 	CDlgListViewerDataOtherPtr pData = std::dynamic_pointer_cast<CDlgListViewerDataOther, CDlgListViewerData>(inRow2);
 	if (!pData)
@@ -846,23 +848,23 @@ int CDlgListViewerDataOther::Compare(
 	{
 	default:
 	case COL_OTHER_DATE:
-		{
-			ARBDate date1, date2;
-			if (m_info.m_pExisting)
-				date1 = m_info.m_pExisting->GetDate();
-			else
-				date1 = m_info.m_pRun->GetDate();
-			if (pData->m_info.m_pExisting)
-				date2 = pData->m_info.m_pExisting->GetDate();
-			else
-				date2 = pData->m_info.m_pRun->GetDate();
-			if (date1 < date2)
-				return -1;
-			else if (date1 > date2)
-				return 1;
-			else
-				return 0;
-		}
+	{
+		ARBDate date1, date2;
+		if (m_info.m_pExisting)
+			date1 = m_info.m_pExisting->GetDate();
+		else
+			date1 = m_info.m_pRun->GetDate();
+		if (pData->m_info.m_pExisting)
+			date2 = pData->m_info.m_pExisting->GetDate();
+		else
+			date2 = pData->m_info.m_pRun->GetDate();
+		if (date1 < date2)
+			return -1;
+		else if (date1 > date2)
+			return 1;
+		else
+			return 0;
+	}
 	case COL_OTHER_NAME: // Trial/Existing Points
 		if (m_info.m_pExisting)
 			str1 = m_info.m_pExisting->GetTypeName();
@@ -933,19 +935,19 @@ class CDlgListViewerDataItem : public CDlgListViewerData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgListViewerDataItem)
 public:
-	CDlgListViewerDataItem(
-			CDlgListViewerDataColumnsPtr const& inColData,
-			CFindItemInfo const& info)
+	CDlgListViewerDataItem(CDlgListViewerDataColumnsPtr const& inColData, CFindItemInfo const& info)
 		: m_ColData(inColData)
 		, m_info(info)
 	{
 		assert(m_ColData);
 	}
 	std::wstring OnNeedText(long iCol) const override;
-	int OnNeedIcon() const override {return -1;}
-	int Compare(
-			CDlgListViewerDataPtr const& inRow2,
-			int inCol) const override;
+	int OnNeedIcon() const override
+	{
+		return -1;
+	}
+	int Compare(CDlgListViewerDataPtr const& inRow2, int inCol) const override;
+
 private:
 	CDlgListViewerDataColumnsPtr m_ColData;
 	CFindItemInfo m_info;
@@ -959,21 +961,21 @@ std::wstring CDlgListViewerDataItem::OnNeedText(long iCol) const
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_ITEM_TYPE:
+	{
+		switch (m_info.type)
 		{
-			switch (m_info.type)
-			{
-			case ARBInfoType::Club:
-				str = _("IDS_COL_CLUB");
-				break;
-			case ARBInfoType::Judge:
-				str = _("IDS_COL_JUDGE");
-				break;
-			case ARBInfoType::Location:
-				str = _("IDS_COL_LOCATION");
-				break;
-			}
+		case ARBInfoType::Club:
+			str = _("IDS_COL_CLUB");
+			break;
+		case ARBInfoType::Judge:
+			str = _("IDS_COL_JUDGE");
+			break;
+		case ARBInfoType::Location:
+			str = _("IDS_COL_LOCATION");
+			break;
 		}
-		break;
+	}
+	break;
 
 	case COL_ITEM_NAME:
 		str = m_info.name;
@@ -988,9 +990,7 @@ std::wstring CDlgListViewerDataItem::OnNeedText(long iCol) const
 }
 
 
-int CDlgListViewerDataItem::Compare(
-		CDlgListViewerDataPtr const& inRow2,
-		int inCol) const
+int CDlgListViewerDataItem::Compare(CDlgListViewerDataPtr const& inRow2, int inCol) const
 {
 	CDlgListViewerDataItemPtr pData = std::dynamic_pointer_cast<CDlgListViewerDataItem, CDlgListViewerData>(inRow2);
 	if (!pData)
@@ -1081,18 +1081,18 @@ int wxCALLBACK CompareRows(CListDataPtr const& item1, CListDataPtr const& item2,
 /////////////////////////////////////////////////////////////////////////////
 
 static void InsertRun(
-		CAgilityBookDoc* pDoc,
-		CReportListCtrl* ctrlList,
-		CDlgListViewerDataColumnsPtr const& pColData,
-		int& iItem,
-		ARBDogPtr const& pDog,
-		ARBDogTrialPtr const& pTrial,
-		ARBDogRunPtr const& pRun,
-		ScoringRunInfo::ScoringDetail scoringDetail)
+	CAgilityBookDoc* pDoc,
+	CReportListCtrl* ctrlList,
+	CDlgListViewerDataColumnsPtr const& pColData,
+	int& iItem,
+	ARBDogPtr const& pDog,
+	ARBDogTrialPtr const& pTrial,
+	ARBDogRunPtr const& pRun,
+	ScoringRunInfo::ScoringDetail scoringDetail)
 {
 	ARBConfigScoringPtr pScoring;
 	if (pRun->GetClub())
-		 pDoc->Book().GetConfig().GetVenues().FindEvent(
+		pDoc->Book().GetConfig().GetVenues().FindEvent(
 			pRun->GetClub()->GetVenue(),
 			pRun->GetEvent(),
 			pRun->GetDivision(),
@@ -1108,7 +1108,8 @@ static void InsertRun(
 	if (0 < pRun->GetPartners().size())
 		pColData->InsertColumn(ctrlList, COL_RUN_MQ_PARTNERS, _("IDS_PARTNERS"));
 
-	CDlgListViewerDataRunPtr data(std::make_shared<CDlgListViewerDataRun>(pColData, pDog, pTrial, pRun, pScoring, scoringDetail));
+	CDlgListViewerDataRunPtr data(
+		std::make_shared<CDlgListViewerDataRun>(pColData, pDog, pTrial, pRun, pScoring, scoringDetail));
 	ctrlList->InsertItem(data);
 }
 
@@ -1116,11 +1117,11 @@ static void InsertRun(
 // Viewing runs
 
 CDlgListViewer::CDlgListViewer(
-		CAgilityBookDoc* inDoc,
-		std::wstring const& inCaption,
-		RunInfoData const* inData,
-		std::list<RunInfo> const& inRuns,
-		wxWindow* pParent)
+	CAgilityBookDoc* inDoc,
+	std::wstring const& inCaption,
+	RunInfoData const* inData,
+	std::list<RunInfo> const& inRuns,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
 	, m_ctrlCopy(nullptr)
@@ -1141,16 +1142,16 @@ CDlgListViewer::CDlgListViewer(
 	if (inData)
 	{
 		for (ARBDogExistingPointsList::const_iterator iter = inData->m_Dog->GetExistingPoints().begin();
-			iter != inData->m_Dog->GetExistingPoints().end();
-			++iter)
+			 iter != inData->m_Dog->GetExistingPoints().end();
+			 ++iter)
 		{
 			ARBDogExistingPointsPtr pExisting = *iter;
 			if (ARBExistingPointType::Title == pExisting->GetType()
-			&& pExisting->GetVenue() == inData->m_Venue->GetName()
-			&& pExisting->GetDivision() == inData->m_Div->GetName()
-			&& (pExisting->GetLevel() == inData->m_Level->GetName()
-			|| inData->m_Level->GetSubLevels().FindSubLevel(pExisting->GetLevel()))
-			&& pExisting->GetEvent() == inData->m_Event->GetName())
+				&& pExisting->GetVenue() == inData->m_Venue->GetName()
+				&& pExisting->GetDivision() == inData->m_Div->GetName()
+				&& (pExisting->GetLevel() == inData->m_Level->GetName()
+					|| inData->m_Level->GetSubLevels().FindSubLevel(pExisting->GetLevel()))
+				&& pExisting->GetEvent() == inData->m_Event->GetName())
 			{
 				existingRuns.push_back(pExisting);
 				if (0 < pExisting->GetSubName().length())
@@ -1178,9 +1179,8 @@ CDlgListViewer::CDlgListViewer(
 	int iItem = 0;
 	if (inData)
 	{
-		for (std::vector<ARBDogExistingPointsPtr>::iterator iter = existingRuns.begin();
-			iter != existingRuns.end();
-			++iter)
+		for (std::vector<ARBDogExistingPointsPtr>::iterator iter = existingRuns.begin(); iter != existingRuns.end();
+			 ++iter)
 		{
 			CDlgListViewerDataExistingPtr data(std::make_shared<CDlgListViewerDataExisting>(pColData, *iter));
 			m_ctrlList->InsertItem(data);
@@ -1195,8 +1195,7 @@ CDlgListViewer::CDlgListViewer(
 			if (pRun->IsFiltered())
 				continue;
 		}
-		InsertRun(m_pDoc, m_ctrlList, pColData, iItem,
-			ARBDogPtr(), pTrial, pRun, ScoringRunInfo::ScoringDetail::None);
+		InsertRun(m_pDoc, m_ctrlList, pColData, iItem, ARBDogPtr(), pTrial, pRun, ScoringRunInfo::ScoringDetail::None);
 	}
 	pColData->SetColumnWidths(m_ctrlList);
 
@@ -1206,10 +1205,10 @@ CDlgListViewer::CDlgListViewer(
 
 // Viewing runs affected by configuration changes
 CDlgListViewer::CDlgListViewer(
-		CAgilityBookDoc* inDoc,
-		std::wstring const& inCaption,
-		std::list<ScoringRunInfo> const& inScoringRuns,
-		wxWindow* pParent)
+	CAgilityBookDoc* inDoc,
+	std::wstring const& inCaption,
+	std::list<ScoringRunInfo> const& inScoringRuns,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
 	, m_ctrlCopy(nullptr)
@@ -1248,8 +1247,7 @@ CDlgListViewer::CDlgListViewer(
 	for (iter = inScoringRuns.begin(); iter != inScoringRuns.end(); ++iter)
 	{
 		ScoringRunInfo const& info = *iter;
-		InsertRun(m_pDoc, m_ctrlList, pColData, iItem,
-			info.m_Dog, info.m_Trial, info.m_Run, info.m_ScoringDetail);
+		InsertRun(m_pDoc, m_ctrlList, pColData, iItem, info.m_Dog, info.m_Trial, info.m_Run, info.m_ScoringDetail);
 	}
 	pColData->SetColumnWidths(m_ctrlList);
 
@@ -1259,11 +1257,11 @@ CDlgListViewer::CDlgListViewer(
 
 // Viewing multi-Qs
 CDlgListViewer::CDlgListViewer(
-		CAgilityBookDoc* inDoc,
-		std::wstring const& inCaption,
-		MultiQInfoData const* inData,
-		std::set<MultiQdata> const& inMQs,
-		wxWindow* pParent)
+	CAgilityBookDoc* inDoc,
+	std::wstring const& inCaption,
+	MultiQInfoData const* inData,
+	std::set<MultiQdata> const& inMQs,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
 	, m_ctrlCopy(nullptr)
@@ -1276,13 +1274,12 @@ CDlgListViewer::CDlgListViewer(
 	if (inData)
 	{
 		for (ARBDogExistingPointsList::const_iterator iter = inData->m_Dog->GetExistingPoints().begin();
-			iter != inData->m_Dog->GetExistingPoints().end();
-			++iter)
+			 iter != inData->m_Dog->GetExistingPoints().end();
+			 ++iter)
 		{
 			ARBDogExistingPointsPtr pExisting = *iter;
-			if (ARBExistingPointType::MQ == pExisting->GetType()
-			&& pExisting->GetVenue() == inData->m_Venue->GetName()
-			&& pExisting->GetMultiQ() == inData->m_MultiQ->GetName())
+			if (ARBExistingPointType::MQ == pExisting->GetType() && pExisting->GetVenue() == inData->m_Venue->GetName()
+				&& pExisting->GetMultiQ() == inData->m_MultiQ->GetName())
 			{
 				existingRuns2.push_back(pExisting);
 			}
@@ -1297,19 +1294,17 @@ CDlgListViewer::CDlgListViewer(
 	pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_CLUB, _("IDS_COL_CLUB"));
 	if (inData)
 	{
-		for (std::vector<ARBDogExistingPointsPtr>::iterator iter = existingRuns2.begin();
-			iter != existingRuns2.end();
-			++iter)
+		for (std::vector<ARBDogExistingPointsPtr>::iterator iter = existingRuns2.begin(); iter != existingRuns2.end();
+			 ++iter)
 		{
 			CDlgListViewerDataExistingPtr data(std::make_shared<CDlgListViewerDataExisting>(pColData, *iter));
 			m_ctrlList->InsertItem(data);
 		}
 	}
-	for (std::set<MultiQdata>::const_iterator iter = inMQs.begin();
-		iter != inMQs.end();
-		++iter)
+	for (std::set<MultiQdata>::const_iterator iter = inMQs.begin(); iter != inMQs.end(); ++iter)
 	{
-		CDlgListViewerDataMultiQPtr data(std::make_shared<CDlgListViewerDataMultiQ>(pColData, iter->date, iter->trial, iter->club));
+		CDlgListViewerDataMultiQPtr data(
+			std::make_shared<CDlgListViewerDataMultiQ>(pColData, iter->date, iter->trial, iter->club));
 		m_ctrlList->InsertItem(data);
 	}
 	pColData->SetColumnWidths(m_ctrlList);
@@ -1320,10 +1315,10 @@ CDlgListViewer::CDlgListViewer(
 
 // Viewing lifetime data
 CDlgListViewer::CDlgListViewer(
-		CAgilityBookDoc* inDoc,
-		std::wstring const& inCaption,
-		std::list<LifeTimePointInfoPtr> const& inLifetime,
-		wxWindow* pParent)
+	CAgilityBookDoc* inDoc,
+	std::wstring const& inCaption,
+	std::list<LifeTimePointInfoPtr> const& inLifetime,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
 	, m_ctrlCopy(nullptr)
@@ -1343,9 +1338,7 @@ CDlgListViewer::CDlgListViewer(
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_LEVEL, _("IDS_COL_LEVEL"));
 	}
 	pColData->InsertColumn(m_ctrlList, COL_OTHER_PTS, _("IDS_COL_POINTS"));
-	for (std::list<LifeTimePointInfoPtr>::const_iterator iter = inLifetime.begin();
-		iter != inLifetime.end();
-		++iter)
+	for (std::list<LifeTimePointInfoPtr>::const_iterator iter = inLifetime.begin(); iter != inLifetime.end(); ++iter)
 	{
 		CDlgListViewerDataLifetimePtr data(std::make_shared<CDlgListViewerDataLifetime>(pColData, *iter));
 		m_ctrlList->InsertItem(data);
@@ -1358,10 +1351,10 @@ CDlgListViewer::CDlgListViewer(
 
 // Viewing other points
 CDlgListViewer::CDlgListViewer(
-		CAgilityBookDoc* inDoc,
-		std::wstring const& inCaption,
-		std::list<OtherPtInfo> const& inRunList,
-		wxWindow* pParent)
+	CAgilityBookDoc* inDoc,
+	std::wstring const& inCaption,
+	std::list<OtherPtInfo> const& inRunList,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
 	, m_ctrlCopy(nullptr)
@@ -1381,9 +1374,7 @@ CDlgListViewer::CDlgListViewer(
 	pColData->InsertColumn(m_ctrlList, COL_OTHER_EVENT, _("IDS_COL_EVENT"));
 	pColData->InsertColumn(m_ctrlList, COL_OTHER_PTS, _("IDS_COL_POINTS"));
 	pColData->InsertColumn(m_ctrlList, COL_OTHER_SCORE, _("IDS_COL_SCORE"));
-	for (std::list<OtherPtInfo>::const_iterator iter = inRunList.begin();
-		iter != inRunList.end();
-		++iter)
+	for (std::list<OtherPtInfo>::const_iterator iter = inRunList.begin(); iter != inRunList.end(); ++iter)
 	{
 		CDlgListViewerDataOtherPtr data(std::make_shared<CDlgListViewerDataOther>(pColData, *iter));
 		m_ctrlList->InsertItem(data);
@@ -1395,10 +1386,10 @@ CDlgListViewer::CDlgListViewer(
 
 
 CDlgListViewer::CDlgListViewer(
-		CAgilityBookDoc* inDoc,
-		std::wstring const& inCaption,
-		std::vector<CFindItemInfo> const& inItems,
-		wxWindow* pParent)
+	CAgilityBookDoc* inDoc,
+	std::wstring const& inCaption,
+	std::vector<CFindItemInfo> const& inItems,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
 	, m_ctrlCopy(nullptr)
@@ -1412,9 +1403,7 @@ CDlgListViewer::CDlgListViewer(
 	m_SortColumn = pColData->NumColumns();
 	pColData->InsertColumn(m_ctrlList, COL_ITEM_NAME, _("IDS_COL_NAME"));
 	pColData->InsertColumn(m_ctrlList, COL_ITEM_COMMENT, _("IDS_COL_COMMENTS"));
-	for (std::vector<CFindItemInfo>::const_iterator iter = inItems.begin();
-		iter != inItems.end();
-		++iter)
+	for (std::vector<CFindItemInfo>::const_iterator iter = inItems.begin(); iter != inItems.end(); ++iter)
 	{
 		CDlgListViewerDataItemPtr data(std::make_shared<CDlgListViewerDataItem>(pColData, *iter));
 		m_ctrlList->InsertItem(data);
@@ -1425,35 +1414,39 @@ CDlgListViewer::CDlgListViewer(
 }
 
 
-bool CDlgListViewer::Create(
-		std::wstring const& inCaption,
-		wxWindow* pParent)
+bool CDlgListViewer::Create(std::wstring const& inCaption, wxWindow* pParent)
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	if (!wxDialog::Create(pParent, wxID_ANY, inCaption.c_str(), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER))
+	if (!wxDialog::Create(
+			pParent,
+			wxID_ANY,
+			inCaption.c_str(),
+			wxDefaultPosition,
+			wxDefaultSize,
+			wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER))
 		return false;
 
 	// Controls (these are done first to control tab order)
 
-	m_ctrlList = new CReportListCtrl(this,
-		wxDefaultPosition, wxDLG_UNIT(this, wxSize(300, 100)),
-		false, CReportListCtrl::SortHeader::Sort, true);
+	m_ctrlList = new CReportListCtrl(
+		this,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(300, 100)),
+		false,
+		CReportListCtrl::SortHeader::Sort,
+		true);
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgListViewer::OnColumnClick, this);
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgListViewer::OnItemSelected, this);
 	m_ctrlList->SetHelpText(_("HIDC_LIST_VIEWER"));
 	m_ctrlList->SetToolTip(_("HIDC_LIST_VIEWER"));
 
-	m_ctrlCopy = new wxButton(this, wxID_ANY,
-		_("IDC_LIST_COPY"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlCopy = new wxButton(this, wxID_ANY, _("IDC_LIST_COPY"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlCopy->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgListViewer::OnCopy, this);
 	m_ctrlCopy->SetHelpText(_("HIDC_LIST_COPY"));
 	m_ctrlCopy->SetToolTip(_("HIDC_LIST_COPY"));
 
-	wxButton* btnClose = new wxButton(this, wxID_OK,
-		_("IDC_LIST_CLOSE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* btnClose = new wxButton(this, wxID_OK, _("IDC_LIST_CLOSE"), wxDefaultPosition, wxDefaultSize, 0);
 	btnClose->SetDefault();
 
 	// Sizers
@@ -1524,8 +1517,7 @@ void CDlgListViewer::OnCopy(wxCommandEvent& evt)
 		std::wstring html;
 		CClipboardDataTable table(data, html);
 
-		if (1 < indices.size()
-		|| indices.size() == static_cast<size_t>(m_ctrlList->GetItemCount()))
+		if (1 < indices.size() || indices.size() == static_cast<size_t>(m_ctrlList->GetItemCount()))
 		{
 			std::vector<std::wstring> line;
 			m_ctrlList->GetPrintLine(-1, line);

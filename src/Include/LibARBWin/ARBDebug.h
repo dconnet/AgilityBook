@@ -34,9 +34,7 @@ public:
 	static std::wstring GetArchName();
 	static std::wstring GetEndiannessName();
 
-	static std::wstring GetSystemInfo(
-			wxWindow const* pWindow,
-			CVersionNum const& ver);
+	static std::wstring GetSystemInfo(wxWindow const* pWindow, CVersionNum const& ver);
 	static std::wstring GetRegistryInfo();
 
 	/**
@@ -47,7 +45,7 @@ public:
 	 * @return Number of registry items added to outData.
 	 */
 	static size_t DumpRegistryGroup(
-			wxString const& inGroup,
-			fmt::wmemory_buffer* outData,
-			std::vector<std::wstring>* outItems);
+		wxString const& inGroup,
+		fmt::wmemory_buffer* outData,
+		std::vector<std::wstring>* outItems);
 };

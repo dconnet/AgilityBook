@@ -21,10 +21,10 @@
 #include <wx/imaglist.h>
 class CMainFrame;
 
-#define IDX_PANE_RUNS		0
-#define IDX_PANE_POINTS		1
-#define IDX_PANE_CALENDAR	2
-#define IDX_PANE_LOG		3
+#define IDX_PANE_RUNS     0
+#define IDX_PANE_POINTS   1
+#define IDX_PANE_CALENDAR 2
+#define IDX_PANE_LOG      3
 
 
 class CTabView : public CAgilityBookBaseView
@@ -44,8 +44,14 @@ public:
 	void OnUpdate(wxView* sender, wxObject* inHint = nullptr) override;
 
 	// Menu ids
-	int GetType() const		{return m_type;}
-	int GetOrient() const	{return m_orient;}
+	int GetType() const
+	{
+		return m_type;
+	}
+	int GetOrient() const
+	{
+		return m_orient;
+	}
 
 	void OnType(int id);
 	void OnOrient(int id);
@@ -63,18 +69,33 @@ private:
 
 	void OnBookCtrlChanged(wxBookCtrlEvent& evt);
 #if wxUSE_NOTEBOOK
-	void OnNotebookChanged(wxBookCtrlEvent& evt)	{OnBookCtrlChanged(evt);}
+	void OnNotebookChanged(wxBookCtrlEvent& evt)
+	{
+		OnBookCtrlChanged(evt);
+	}
 #endif
 #if wxUSE_CHOICEBOOK
-	void OnChoicebookChanged(wxBookCtrlEvent& evt)	{OnBookCtrlChanged(evt);}
+	void OnChoicebookChanged(wxBookCtrlEvent& evt)
+	{
+		OnBookCtrlChanged(evt);
+	}
 #endif
 #if wxUSE_LISTBOOK
-	void OnListbookChanged(wxBookCtrlEvent& evt)	{OnBookCtrlChanged(evt);}
+	void OnListbookChanged(wxBookCtrlEvent& evt)
+	{
+		OnBookCtrlChanged(evt);
+	}
 #endif
 #if wxUSE_TREEBOOK
-	void OnTreebookChanged(wxBookCtrlEvent& evt)	{OnBookCtrlChanged(evt);}
+	void OnTreebookChanged(wxBookCtrlEvent& evt)
+	{
+		OnBookCtrlChanged(evt);
+	}
 #endif
 #if wxUSE_TOOLBOOK
-	void OnToolbookChanged(wxBookCtrlEvent& evt)	{OnBookCtrlChanged(evt);}
+	void OnToolbookChanged(wxBookCtrlEvent& evt)
+	{
+		OnBookCtrlChanged(evt);
+	}
 #endif
 };

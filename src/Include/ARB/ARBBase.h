@@ -31,8 +31,8 @@
 // Filtered state
 enum class ARBFilterType
 {
-	Full,		// Full filter
-	IgnoreQ,	// Ignore Q status when filtering
+	Full,    // Full filter
+	IgnoreQ, // Ignore Q status when filtering
 };
 
 ARB_API unsigned short GetFilterMask(ARBFilterType type);
@@ -75,9 +75,7 @@ public:
 	 * @param inFilterType The filtered type to set.
 	 * @param bFiltered Filtered state of the object.
 	 */
-	virtual void SetFiltered(
-			ARBFilterType inFilterType,
-			bool bFiltered);
+	virtual void SetFiltered(ARBFilterType inFilterType, bool bFiltered);
 
 	/**
 	 * Get the filtered state of this object.

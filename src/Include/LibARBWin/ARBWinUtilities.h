@@ -37,9 +37,7 @@ class wxTreeCtrl;
  * @param sizer The sizer to recursively search.
  * @param id Id of window to return.
  */
-ARBWIN_API wxWindow* FindWindowInSizer(
-		wxSizer* sizer,
-		int id);
+ARBWIN_API wxWindow* FindWindowInSizer(wxSizer* sizer, int id);
 
 
 /**
@@ -47,31 +45,21 @@ ARBWIN_API wxWindow* FindWindowInSizer(
  * This is just a simple wrapper around wxListItem/GetItem
  * @note index = -1 implies getting the column header text
  */
-ARBWIN_API std::wstring GetListColumnText(
-		CListCtrl const* list,
-		long index,
-		long col);
+ARBWIN_API std::wstring GetListColumnText(CListCtrl const* list, long index, long col);
 
 
 /**
  * Set the text for a column.
  * This is just a simple wrapper around wxListItem/SetItem
  */
-ARBWIN_API bool SetListColumnText(
-		CListCtrl* list,
-		long index,
-		long col,
-		std::wstring const& text);
+ARBWIN_API bool SetListColumnText(CListCtrl* list, long index, long col, std::wstring const& text);
 
 
 /**
  * Refresh tree data - in Windows we used getdispinfo, in wxWindows that doesn't
  * work. So the old code that simply invalidated the window no longer works.
  */
-ARBWIN_API void RefreshTreeItem(
-		wxTreeCtrl* tree,
-		wxTreeItemId item,
-		bool bRecurse = false);
+ARBWIN_API void RefreshTreeItem(wxTreeCtrl* tree, wxTreeItemId item, bool bRecurse = false);
 
 
 /**
@@ -82,9 +70,4 @@ ARBWIN_API void RefreshTreeItem(
  * @param flags Flags to pass to DrawLabel
  * @param bCalc Determine rectangle or do actual drawing
  */
-ARBWIN_API void DrawBetterLabel(
-		wxDC* pDC,
-		wxString const& inStr,
-		wxRect& rect,
-		int flags,
-		bool bCalc);
+ARBWIN_API void DrawBetterLabel(wxDC* pDC, wxString const& inStr, wxRect& rect, int flags, bool bCalc);

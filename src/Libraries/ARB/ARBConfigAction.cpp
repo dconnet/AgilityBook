@@ -40,14 +40,14 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-#define ACTION_VERB_DELETE_CALPLUGIN	L"DeleteCalPlugin"
-#define ACTION_VERB_DELETE_TITLE		L"DeleteTitle"
-#define ACTION_VERB_RENAME_TITLE		L"RenameTitle"
-#define ACTION_VERB_DELETE_EVENT		L"DeleteEvent"
-#define ACTION_VERB_RENAME_EVENT		L"RenameEvent"
-#define ACTION_VERB_RENAME_LEVEL		L"RenameLevel"
-#define ACTION_VERB_RENAME_DIV			L"RenameDivision"
-#define ACTION_VERB_RENAME_VENUE		L"RenameVenue"
+#define ACTION_VERB_DELETE_CALPLUGIN L"DeleteCalPlugin"
+#define ACTION_VERB_DELETE_TITLE     L"DeleteTitle"
+#define ACTION_VERB_RENAME_TITLE     L"RenameTitle"
+#define ACTION_VERB_DELETE_EVENT     L"DeleteEvent"
+#define ACTION_VERB_RENAME_EVENT     L"RenameEvent"
+#define ACTION_VERB_RENAME_LEVEL     L"RenameLevel"
+#define ACTION_VERB_RENAME_DIV       L"RenameDivision"
+#define ACTION_VERB_RENAME_VENUE     L"RenameVenue"
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -95,15 +95,13 @@ public:
 };
 
 
-ARBConfigActionPtr ARBConfigActionDeleteCalPlugin::New(
-		std::wstring const& inName)
+ARBConfigActionPtr ARBConfigActionDeleteCalPlugin::New(std::wstring const& inName)
 {
 	return std::make_shared<ARBConfigActionDeleteCalPlugin_concrete>(inName);
 }
 
 
-ARBConfigActionDeleteCalPlugin::ARBConfigActionDeleteCalPlugin(
-		std::wstring const& inName)
+ARBConfigActionDeleteCalPlugin::ARBConfigActionDeleteCalPlugin(std::wstring const& inName)
 	: ARBConfigAction(0)
 	, m_Name(inName)
 {
@@ -124,10 +122,10 @@ ARBConfigActionPtr ARBConfigActionDeleteCalPlugin::Clone() const
 
 
 bool ARBConfigActionDeleteCalPlugin::Apply(
-		ARBConfig& ioConfig,
-		ARBDogList* ioDogs,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const
+	ARBConfig& ioConfig,
+	ARBDogList* ioDogs,
+	fmt::wmemory_buffer& ioInfo,
+	IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
 	if (ioConfig.GetCalSites().DeleteSite(m_Name))
@@ -144,14 +142,13 @@ class ARBConfigActionRenameOtherPoints_concrete : public ARBConfigActionRenameOt
 {
 public:
 	ARBConfigActionRenameOtherPoints_concrete(
-			short configVersion,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName)
+		short configVersion,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 		: ARBConfigActionRenameOtherPoints(configVersion, inOldName, inNewName)
 	{
 	}
-	ARBConfigActionRenameOtherPoints_concrete(
-			ARBConfigActionRenameOtherPoints const& rhs)
+	ARBConfigActionRenameOtherPoints_concrete(ARBConfigActionRenameOtherPoints const& rhs)
 		: ARBConfigActionRenameOtherPoints(rhs)
 	{
 	}
@@ -159,21 +156,18 @@ public:
 
 
 ARBConfigActionPtr ARBConfigActionRenameOtherPoints::New(
-		short configVersion,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 {
-	return std::make_shared<ARBConfigActionRenameOtherPoints_concrete>(
-		configVersion,
-		inOldName,
-		inNewName);
+	return std::make_shared<ARBConfigActionRenameOtherPoints_concrete>(configVersion, inOldName, inNewName);
 }
 
 
 ARBConfigActionRenameOtherPoints::ARBConfigActionRenameOtherPoints(
-		short configVersion,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 	: ARBConfigAction(configVersion)
 	, m_OldName(inOldName)
 	, m_NewName(inNewName)
@@ -191,18 +185,15 @@ ARBConfigActionRenameOtherPoints::ARBConfigActionRenameOtherPoints(ARBConfigActi
 
 ARBConfigActionPtr ARBConfigActionRenameOtherPoints::Clone() const
 {
-	return std::make_shared<ARBConfigActionRenameOtherPoints_concrete>(
-		m_configVersion,
-		m_OldName,
-		m_NewName);
+	return std::make_shared<ARBConfigActionRenameOtherPoints_concrete>(m_configVersion, m_OldName, m_NewName);
 }
 
 
 bool ARBConfigActionRenameOtherPoints::Apply(
-		ARBConfig& ioConfig,
-		ARBDogList* ioDogs,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const
+	ARBConfig& ioConfig,
+	ARBDogList* ioDogs,
+	fmt::wmemory_buffer& ioInfo,
+	IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
 	ARBConfigOtherPointsPtr oldPoints;
@@ -232,33 +223,24 @@ bool ARBConfigActionRenameOtherPoints::Apply(
 class ARBConfigActionDeleteOtherPoints_concrete : public ARBConfigActionDeleteOtherPoints
 {
 public:
-	ARBConfigActionDeleteOtherPoints_concrete(
-			short configVersion,
-			std::wstring const& inName)
+	ARBConfigActionDeleteOtherPoints_concrete(short configVersion, std::wstring const& inName)
 		: ARBConfigActionDeleteOtherPoints(configVersion, inName)
 	{
 	}
-	ARBConfigActionDeleteOtherPoints_concrete(
-			ARBConfigActionDeleteOtherPoints const& rhs)
+	ARBConfigActionDeleteOtherPoints_concrete(ARBConfigActionDeleteOtherPoints const& rhs)
 		: ARBConfigActionDeleteOtherPoints(rhs)
 	{
 	}
 };
 
 
-ARBConfigActionPtr ARBConfigActionDeleteOtherPoints::New(
-		short configVersion,
-		std::wstring const& inName)
+ARBConfigActionPtr ARBConfigActionDeleteOtherPoints::New(short configVersion, std::wstring const& inName)
 {
-	return std::make_shared<ARBConfigActionDeleteOtherPoints_concrete>(
-		configVersion,
-		inName);
+	return std::make_shared<ARBConfigActionDeleteOtherPoints_concrete>(configVersion, inName);
 }
 
 
-ARBConfigActionDeleteOtherPoints::ARBConfigActionDeleteOtherPoints(
-		short configVersion,
-		std::wstring const& inName)
+ARBConfigActionDeleteOtherPoints::ARBConfigActionDeleteOtherPoints(short configVersion, std::wstring const& inName)
 	: ARBConfigAction(configVersion)
 	, m_Name(inName)
 {
@@ -274,17 +256,15 @@ ARBConfigActionDeleteOtherPoints::ARBConfigActionDeleteOtherPoints(ARBConfigActi
 
 ARBConfigActionPtr ARBConfigActionDeleteOtherPoints::Clone() const
 {
-	return std::make_shared<ARBConfigActionDeleteOtherPoints_concrete>(
-		m_configVersion,
-		m_Name);
+	return std::make_shared<ARBConfigActionDeleteOtherPoints_concrete>(m_configVersion, m_Name);
 }
 
 
 bool ARBConfigActionDeleteOtherPoints::Apply(
-		ARBConfig& ioConfig,
-		ARBDogList* ioDogs,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const
+	ARBConfig& ioConfig,
+	ARBDogList* ioDogs,
+	fmt::wmemory_buffer& ioInfo,
+	IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
 	ARBConfigOtherPointsPtr oldPoints;
@@ -305,7 +285,6 @@ bool ARBConfigActionDeleteOtherPoints::Apply(
 		bChanged = true;
 		fmt::format_to(ioInfo, L"{}\n", Localization()->ActionDeleteOtherPoints(m_Name));
 		ioConfig.GetOtherPoints().DeleteOtherPoints(m_Name);
-
 	}
 	return bChanged;
 }
@@ -316,14 +295,13 @@ class ARBConfigActionRenameVenue_concrete : public ARBConfigActionRenameVenue
 {
 public:
 	ARBConfigActionRenameVenue_concrete(
-			short configVersion,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName)
+		short configVersion,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 		: ARBConfigActionRenameVenue(configVersion, inOldName, inNewName)
 	{
 	}
-	ARBConfigActionRenameVenue_concrete(
-			ARBConfigActionRenameVenue const& rhs)
+	ARBConfigActionRenameVenue_concrete(ARBConfigActionRenameVenue const& rhs)
 		: ARBConfigActionRenameVenue(rhs)
 	{
 	}
@@ -331,21 +309,18 @@ public:
 
 
 ARBConfigActionPtr ARBConfigActionRenameVenue::New(
-		short configVersion,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 {
-	return std::make_shared<ARBConfigActionRenameVenue_concrete>(
-		configVersion,
-		inOldName,
-		inNewName);
+	return std::make_shared<ARBConfigActionRenameVenue_concrete>(configVersion, inOldName, inNewName);
 }
 
 
 ARBConfigActionRenameVenue::ARBConfigActionRenameVenue(
-		short configVersion,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 	: ARBConfigAction(configVersion)
 	, m_OldName(inOldName)
 	, m_NewName(inNewName)
@@ -363,18 +338,15 @@ ARBConfigActionRenameVenue::ARBConfigActionRenameVenue(ARBConfigActionRenameVenu
 
 ARBConfigActionPtr ARBConfigActionRenameVenue::Clone() const
 {
-	return std::make_shared<ARBConfigActionRenameVenue_concrete>(
-		m_configVersion,
-		m_OldName,
-		m_NewName);
+	return std::make_shared<ARBConfigActionRenameVenue_concrete>(m_configVersion, m_OldName, m_NewName);
 }
 
 
 bool ARBConfigActionRenameVenue::Apply(
-		ARBConfig& ioConfig,
-		ARBDogList* ioDogs,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const
+	ARBConfig& ioConfig,
+	ARBDogList* ioDogs,
+	fmt::wmemory_buffer& ioInfo,
+	IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
 	ARBConfigVenuePtr oldVenue;
@@ -384,10 +356,8 @@ bool ARBConfigActionRenameVenue::Apply(
 		int nVenues = 0;
 		if (ioDogs)
 		{
-			nVenues = ioDogs->NumExistingPointsInVenue(m_OldName)
-				+ ioDogs->NumRegNumsInVenue(m_OldName)
-				+ ioDogs->NumTitlesInVenue(m_OldName)
-				+ ioDogs->NumTrialsInVenue(m_OldName);
+			nVenues = ioDogs->NumExistingPointsInVenue(m_OldName) + ioDogs->NumRegNumsInVenue(m_OldName)
+					  + ioDogs->NumTitlesInVenue(m_OldName) + ioDogs->NumTrialsInVenue(m_OldName);
 		}
 		if (0 < nVenues && ioDogs)
 		{
@@ -406,10 +376,10 @@ bool ARBConfigActionRenameVenue::Apply(
 
 
 bool ARBConfigActionRenameVenue::Update(
-		ARBConfig const& inConfigCurrent,
-		std::wstring& ioVenue,
-		std::wstring& ioDivision,
-		std::wstring& ioSubLevel) const
+	ARBConfig const& inConfigCurrent,
+	std::wstring& ioVenue,
+	std::wstring& ioDivision,
+	std::wstring& ioSubLevel) const
 {
 	bool bChanged = false;
 	if (!ioVenue.empty() && ioVenue == m_OldName)
@@ -425,33 +395,24 @@ bool ARBConfigActionRenameVenue::Update(
 class ARBConfigActionDeleteVenue_concrete : public ARBConfigActionDeleteVenue
 {
 public:
-	ARBConfigActionDeleteVenue_concrete(
-			short configVersion,
-			std::wstring const& inName)
+	ARBConfigActionDeleteVenue_concrete(short configVersion, std::wstring const& inName)
 		: ARBConfigActionDeleteVenue(configVersion, inName)
 	{
 	}
-	ARBConfigActionDeleteVenue_concrete(
-			ARBConfigActionDeleteVenue const& rhs)
+	ARBConfigActionDeleteVenue_concrete(ARBConfigActionDeleteVenue const& rhs)
 		: ARBConfigActionDeleteVenue(rhs)
 	{
 	}
 };
 
 
-ARBConfigActionPtr ARBConfigActionDeleteVenue::New(
-		short configVersion,
-		std::wstring const& inName)
+ARBConfigActionPtr ARBConfigActionDeleteVenue::New(short configVersion, std::wstring const& inName)
 {
-	return std::make_shared<ARBConfigActionDeleteVenue_concrete>(
-		configVersion,
-		inName);
+	return std::make_shared<ARBConfigActionDeleteVenue_concrete>(configVersion, inName);
 }
 
 
-ARBConfigActionDeleteVenue::ARBConfigActionDeleteVenue(
-		short configVersion,
-		std::wstring const& inName)
+ARBConfigActionDeleteVenue::ARBConfigActionDeleteVenue(short configVersion, std::wstring const& inName)
 	: ARBConfigAction(configVersion)
 	, m_Name(inName)
 {
@@ -467,17 +428,15 @@ ARBConfigActionDeleteVenue::ARBConfigActionDeleteVenue(ARBConfigActionDeleteVenu
 
 ARBConfigActionPtr ARBConfigActionDeleteVenue::Clone() const
 {
-	return std::make_shared<ARBConfigActionDeleteVenue_concrete>(
-		m_configVersion,
-		m_Name);
+	return std::make_shared<ARBConfigActionDeleteVenue_concrete>(m_configVersion, m_Name);
 }
 
 
 bool ARBConfigActionDeleteVenue::Apply(
-		ARBConfig& ioConfig,
-		ARBDogList* ioDogs,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const
+	ARBConfig& ioConfig,
+	ARBDogList* ioDogs,
+	fmt::wmemory_buffer& ioInfo,
+	IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
 	ARBConfigVenuePtr oldVenue;
@@ -486,10 +445,8 @@ bool ARBConfigActionDeleteVenue::Apply(
 		int nVenues = 0;
 		if (ioDogs)
 		{
-			nVenues = ioDogs->NumExistingPointsInVenue(m_Name)
-				+ ioDogs->NumRegNumsInVenue(m_Name)
-				+ ioDogs->NumTitlesInVenue(m_Name)
-				+ ioDogs->NumTrialsInVenue(m_Name);
+			nVenues = ioDogs->NumExistingPointsInVenue(m_Name) + ioDogs->NumRegNumsInVenue(m_Name)
+					  + ioDogs->NumTitlesInVenue(m_Name) + ioDogs->NumTrialsInVenue(m_Name);
 		}
 		if (0 < nVenues && ioDogs)
 		{
@@ -513,15 +470,14 @@ class ARBConfigActionRenameMultiQ_concrete : public ARBConfigActionRenameMultiQ
 {
 public:
 	ARBConfigActionRenameMultiQ_concrete(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName)
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 		: ARBConfigActionRenameMultiQ(configVersion, inVenue, inOldName, inNewName)
 	{
 	}
-	ARBConfigActionRenameMultiQ_concrete(
-			ARBConfigActionRenameMultiQ const& rhs)
+	ARBConfigActionRenameMultiQ_concrete(ARBConfigActionRenameMultiQ const& rhs)
 		: ARBConfigActionRenameMultiQ(rhs)
 	{
 	}
@@ -529,24 +485,20 @@ public:
 
 
 ARBConfigActionPtr ARBConfigActionRenameMultiQ::New(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 {
-	return std::make_shared<ARBConfigActionRenameMultiQ_concrete>(
-		configVersion,
-		inVenue,
-		inOldName,
-		inNewName);
+	return std::make_shared<ARBConfigActionRenameMultiQ_concrete>(configVersion, inVenue, inOldName, inNewName);
 }
 
 
 ARBConfigActionRenameMultiQ::ARBConfigActionRenameMultiQ(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_OldName(inOldName)
@@ -566,19 +518,15 @@ ARBConfigActionRenameMultiQ::ARBConfigActionRenameMultiQ(ARBConfigActionRenameMu
 
 ARBConfigActionPtr ARBConfigActionRenameMultiQ::Clone() const
 {
-	return std::make_shared<ARBConfigActionRenameMultiQ_concrete>(
-		m_configVersion,
-		m_Venue,
-		m_OldName,
-		m_NewName);
+	return std::make_shared<ARBConfigActionRenameMultiQ_concrete>(m_configVersion, m_Venue, m_OldName, m_NewName);
 }
 
 
 bool ARBConfigActionRenameMultiQ::Apply(
-		ARBConfig& ioConfig,
-		ARBDogList* ioDogs,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const
+	ARBConfig& ioConfig,
+	ARBDogList* ioDogs,
+	fmt::wmemory_buffer& ioInfo,
+	IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
 	ARBConfigVenuePtr venue;
@@ -596,7 +544,10 @@ bool ARBConfigActionRenameMultiQ::Apply(
 			{
 				ioDogs->RenameMultiQs(m_Venue, m_OldName, m_NewName);
 			}
-			fmt::format_to(ioInfo, L"{}\n", Localization()->ActionRenameMultiQ(m_Venue, m_OldName, m_NewName, nMultiQs));
+			fmt::format_to(
+				ioInfo,
+				L"{}\n",
+				Localization()->ActionRenameMultiQ(m_Venue, m_OldName, m_NewName, nMultiQs));
 			// If the new multi exists, just delete the old.
 			// Otherwise, rename the old to new.
 			if (venue->GetMultiQs().FindMultiQ(m_NewName, false))
@@ -613,15 +564,11 @@ bool ARBConfigActionRenameMultiQ::Apply(
 class ARBConfigActionDeleteMultiQ_concrete : public ARBConfigActionDeleteMultiQ
 {
 public:
-	ARBConfigActionDeleteMultiQ_concrete(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inName)
+	ARBConfigActionDeleteMultiQ_concrete(short configVersion, std::wstring const& inVenue, std::wstring const& inName)
 		: ARBConfigActionDeleteMultiQ(configVersion, inVenue, inName)
 	{
 	}
-	ARBConfigActionDeleteMultiQ_concrete(
-			ARBConfigActionDeleteMultiQ const& rhs)
+	ARBConfigActionDeleteMultiQ_concrete(ARBConfigActionDeleteMultiQ const& rhs)
 		: ARBConfigActionDeleteMultiQ(rhs)
 	{
 	}
@@ -629,21 +576,18 @@ public:
 
 
 ARBConfigActionPtr ARBConfigActionDeleteMultiQ::New(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inName)
 {
-	return std::make_shared<ARBConfigActionDeleteMultiQ_concrete>(
-		configVersion,
-		inVenue,
-		inName);
+	return std::make_shared<ARBConfigActionDeleteMultiQ_concrete>(configVersion, inVenue, inName);
 }
 
 
 ARBConfigActionDeleteMultiQ::ARBConfigActionDeleteMultiQ(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_Name(inName)
@@ -661,18 +605,15 @@ ARBConfigActionDeleteMultiQ::ARBConfigActionDeleteMultiQ(ARBConfigActionDeleteMu
 
 ARBConfigActionPtr ARBConfigActionDeleteMultiQ::Clone() const
 {
-	return std::make_shared<ARBConfigActionDeleteMultiQ_concrete>(
-		m_configVersion,
-		m_Venue,
-		m_Name);
+	return std::make_shared<ARBConfigActionDeleteMultiQ_concrete>(m_configVersion, m_Venue, m_Name);
 }
 
 
 bool ARBConfigActionDeleteMultiQ::Apply(
-		ARBConfig& ioConfig,
-		ARBDogList* ioDogs,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const
+	ARBConfig& ioConfig,
+	ARBDogList* ioDogs,
+	fmt::wmemory_buffer& ioInfo,
+	IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
 	ARBConfigVenuePtr venue;
@@ -708,10 +649,10 @@ class ARBConfigActionRenameDivision_concrete : public ARBConfigActionRenameDivis
 {
 public:
 	ARBConfigActionRenameDivision_concrete(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName)
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 		: ARBConfigActionRenameDivision(configVersion, inVenue, inOldName, inNewName)
 	{
 	}
@@ -723,24 +664,20 @@ public:
 
 
 ARBConfigActionPtr ARBConfigActionRenameDivision::New(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 {
-	return std::make_shared<ARBConfigActionRenameDivision_concrete>(
-		configVersion,
-		inVenue,
-		inOldName,
-		inNewName);
+	return std::make_shared<ARBConfigActionRenameDivision_concrete>(configVersion, inVenue, inOldName, inNewName);
 }
 
 
 ARBConfigActionRenameDivision::ARBConfigActionRenameDivision(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_OldName(inOldName)
@@ -760,19 +697,15 @@ ARBConfigActionRenameDivision::ARBConfigActionRenameDivision(ARBConfigActionRena
 
 ARBConfigActionPtr ARBConfigActionRenameDivision::Clone() const
 {
-	return std::make_shared<ARBConfigActionRenameDivision_concrete>(
-		m_configVersion,
-		m_Venue,
-		m_OldName,
-		m_NewName);
+	return std::make_shared<ARBConfigActionRenameDivision_concrete>(m_configVersion, m_Venue, m_OldName, m_NewName);
 }
 
 
 bool ARBConfigActionRenameDivision::Apply(
-		ARBConfig& ioConfig,
-		ARBDogList* ioDogs,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const
+	ARBConfig& ioConfig,
+	ARBDogList* ioDogs,
+	fmt::wmemory_buffer& ioInfo,
+	IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
 
@@ -792,7 +725,7 @@ bool ARBConfigActionRenameDivision::Apply(
 			{
 				ioDogs->RenameDivision(venue, m_OldName, m_NewName);
 			}
-			fmt::format_to(ioInfo, L"{}\n", Localization()->ActionRenameDivision(m_Venue, m_OldName, m_NewName,nRuns));
+			fmt::format_to(ioInfo, L"{}\n", Localization()->ActionRenameDivision(m_Venue, m_OldName, m_NewName, nRuns));
 			// If the new division exists, just delete the old.
 			// Otherwise, rename the old to new.
 			if (venue->GetDivisions().FindDivision(m_NewName))
@@ -807,14 +740,13 @@ bool ARBConfigActionRenameDivision::Apply(
 
 
 bool ARBConfigActionRenameDivision::Update(
-		ARBConfig const& inConfigCurrent,
-		std::wstring& ioVenue,
-		std::wstring& ioDivision,
-		std::wstring& ioSubLevel) const
+	ARBConfig const& inConfigCurrent,
+	std::wstring& ioVenue,
+	std::wstring& ioDivision,
+	std::wstring& ioSubLevel) const
 {
 	bool bChanged = false;
-	if (!ioVenue.empty() && ioVenue == m_Venue
-		&& !ioDivision.empty() && ioDivision == m_OldName)
+	if (!ioVenue.empty() && ioVenue == m_Venue && !ioDivision.empty() && ioDivision == m_OldName)
 	{
 		bChanged = true;
 		ioDivision = m_NewName;
@@ -827,15 +759,11 @@ bool ARBConfigActionRenameDivision::Update(
 class ARBConfigActionDeleteDivision_concrete : public ARBConfigActionDeleteDivision
 {
 public:
-	ARBConfigActionDeleteDivision_concrete(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inName)
+	ARBConfigActionDeleteDivision_concrete(short configVersion, std::wstring const& inVenue, std::wstring const& inName)
 		: ARBConfigActionDeleteDivision(configVersion, inVenue, inName)
 	{
 	}
-	ARBConfigActionDeleteDivision_concrete(
-			ARBConfigActionDeleteDivision const& rhs)
+	ARBConfigActionDeleteDivision_concrete(ARBConfigActionDeleteDivision const& rhs)
 		: ARBConfigActionDeleteDivision(rhs)
 	{
 	}
@@ -843,21 +771,18 @@ public:
 
 
 ARBConfigActionPtr ARBConfigActionDeleteDivision::New(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inName)
 {
-	return std::make_shared<ARBConfigActionDeleteDivision_concrete>(
-		configVersion,
-		inVenue,
-		inName);
+	return std::make_shared<ARBConfigActionDeleteDivision_concrete>(configVersion, inVenue, inName);
 }
 
 
 ARBConfigActionDeleteDivision::ARBConfigActionDeleteDivision(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_Name(inName)
@@ -875,18 +800,15 @@ ARBConfigActionDeleteDivision::ARBConfigActionDeleteDivision(ARBConfigActionDele
 
 ARBConfigActionPtr ARBConfigActionDeleteDivision::Clone() const
 {
-	return std::make_shared<ARBConfigActionDeleteDivision_concrete>(
-		m_configVersion,
-		m_Venue,
-		m_Name);
+	return std::make_shared<ARBConfigActionDeleteDivision_concrete>(m_configVersion, m_Venue, m_Name);
 }
 
 
 bool ARBConfigActionDeleteDivision::Apply(
-		ARBConfig& ioConfig,
-		ARBDogList* ioDogs,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const
+	ARBConfig& ioConfig,
+	ARBDogList* ioDogs,
+	fmt::wmemory_buffer& ioInfo,
+	IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
 	ARBConfigVenuePtr venue;
@@ -926,28 +848,27 @@ class ARBConfigActionRenameLevel_concrete : public ARBConfigActionRenameLevel
 {
 public:
 	ARBConfigActionRenameLevel_concrete(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inDiv,
-			std::wstring const& inLevel,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName)
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inLevel,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 		: ARBConfigActionRenameLevel(configVersion, inVenue, inDiv, inLevel, inOldName, inNewName)
 	{
 	}
-	ARBConfigActionRenameLevel_concrete(
-			ARBConfigActionRenameLevel const& rhs)
+	ARBConfigActionRenameLevel_concrete(ARBConfigActionRenameLevel const& rhs)
 		: ARBConfigActionRenameLevel(rhs)
 	{
 	}
 };
 
 ARBConfigActionPtr ARBConfigActionRenameLevel::NewLevel(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inDiv,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inDiv,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 {
 	return std::make_shared<ARBConfigActionRenameLevel_concrete>(
 		configVersion,
@@ -960,12 +881,12 @@ ARBConfigActionPtr ARBConfigActionRenameLevel::NewLevel(
 
 
 ARBConfigActionPtr ARBConfigActionRenameLevel::NewSubLevel(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inDiv,
-		std::wstring const& inLevel,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inDiv,
+	std::wstring const& inLevel,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 {
 	return std::make_shared<ARBConfigActionRenameLevel_concrete>(
 		configVersion,
@@ -978,12 +899,12 @@ ARBConfigActionPtr ARBConfigActionRenameLevel::NewSubLevel(
 
 
 ARBConfigActionRenameLevel::ARBConfigActionRenameLevel(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inDiv,
-		std::wstring const& inLevel,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inDiv,
+	std::wstring const& inLevel,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_Div(inDiv)
@@ -1017,10 +938,10 @@ ARBConfigActionPtr ARBConfigActionRenameLevel::Clone() const
 
 
 bool ARBConfigActionRenameLevel::Apply(
-		ARBConfig& ioConfig,
-		ARBDogList* ioDogs,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const
+	ARBConfig& ioConfig,
+	ARBDogList* ioDogs,
+	fmt::wmemory_buffer& ioInfo,
+	IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
 	ARBConfigVenuePtr venue;
@@ -1054,7 +975,10 @@ bool ARBConfigActionRenameLevel::Apply(
 					nRuns += ioDogs->NumLevelsInUse(m_Venue, m_Div, m_OldName);
 					ioDogs->RenameLevel(m_Venue, m_Div, m_OldName, m_NewName);
 				}
-				fmt::format_to(ioInfo, L"{}\n", Localization()->ActionRenameLevel(m_Venue, m_OldName, m_NewName, nRuns));
+				fmt::format_to(
+					ioInfo,
+					L"{}\n",
+					Localization()->ActionRenameLevel(m_Venue, m_OldName, m_NewName, nRuns));
 				// Only update when the actual level (not sublevel) changes
 				if (m_Level.empty())
 					venue->GetEvents().RenameLevel(m_Div, m_OldName, m_NewName);
@@ -1083,15 +1007,13 @@ bool ARBConfigActionRenameLevel::Apply(
 
 
 bool ARBConfigActionRenameLevel::Update(
-		ARBConfig const& inConfigCurrent,
-		std::wstring& ioVenue,
-		std::wstring& ioDivision,
-		std::wstring& ioSubLevel) const
+	ARBConfig const& inConfigCurrent,
+	std::wstring& ioVenue,
+	std::wstring& ioDivision,
+	std::wstring& ioSubLevel) const
 {
 	bool bChanged = false;
-	if (!ioVenue.empty() && ioVenue == m_Venue
-		&& !ioDivision.empty() && ioDivision == m_Div
-		&& !ioSubLevel.empty())
+	if (!ioVenue.empty() && ioVenue == m_Venue && !ioDivision.empty() && ioDivision == m_Div && !ioSubLevel.empty())
 	{
 		ARBConfigVenuePtr venue;
 		if (inConfigCurrent.GetVenues().FindVenue(m_Venue, &venue))
@@ -1126,16 +1048,15 @@ class ARBConfigActionDeleteLevel_concrete : public ARBConfigActionDeleteLevel
 {
 public:
 	ARBConfigActionDeleteLevel_concrete(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inDiv,
-			std::wstring const& inLevel,
-			std::wstring const& inName)
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inLevel,
+		std::wstring const& inName)
 		: ARBConfigActionDeleteLevel(configVersion, inVenue, inDiv, inLevel, inName)
 	{
 	}
-	ARBConfigActionDeleteLevel_concrete(
-			ARBConfigActionDeleteLevel const& rhs)
+	ARBConfigActionDeleteLevel_concrete(ARBConfigActionDeleteLevel const& rhs)
 		: ARBConfigActionDeleteLevel(rhs)
 	{
 	}
@@ -1143,42 +1064,32 @@ public:
 
 
 ARBConfigActionPtr ARBConfigActionDeleteLevel::NewLevel(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inDiv,
-		std::wstring const& inName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inDiv,
+	std::wstring const& inName)
 {
-	return std::make_shared<ARBConfigActionDeleteLevel_concrete>(
-		configVersion,
-		inVenue,
-		inDiv,
-		std::wstring(),
-		inName);
+	return std::make_shared<ARBConfigActionDeleteLevel_concrete>(configVersion, inVenue, inDiv, std::wstring(), inName);
 }
 
 
 ARBConfigActionPtr ARBConfigActionDeleteLevel::NewSubLevel(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inDiv,
-		std::wstring const& inLevel,
-		std::wstring const& inName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inDiv,
+	std::wstring const& inLevel,
+	std::wstring const& inName)
 {
-	return std::make_shared<ARBConfigActionDeleteLevel_concrete>(
-		configVersion,
-		inVenue,
-		inDiv,
-		inLevel,
-		inName);
+	return std::make_shared<ARBConfigActionDeleteLevel_concrete>(configVersion, inVenue, inDiv, inLevel, inName);
 }
 
 
 ARBConfigActionDeleteLevel::ARBConfigActionDeleteLevel(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inDiv,
-		std::wstring const& inLevel,
-		std::wstring const& inName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inDiv,
+	std::wstring const& inLevel,
+	std::wstring const& inName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_Div(inDiv)
@@ -1200,20 +1111,15 @@ ARBConfigActionDeleteLevel::ARBConfigActionDeleteLevel(ARBConfigActionDeleteLeve
 
 ARBConfigActionPtr ARBConfigActionDeleteLevel::Clone() const
 {
-	return std::make_shared<ARBConfigActionDeleteLevel_concrete>(
-		m_configVersion,
-		m_Venue,
-		m_Div,
-		m_Level,
-		m_Name);
+	return std::make_shared<ARBConfigActionDeleteLevel_concrete>(m_configVersion, m_Venue, m_Div, m_Level, m_Name);
 }
 
 
 bool ARBConfigActionDeleteLevel::Apply(
-		ARBConfig& ioConfig,
-		ARBDogList* ioDogs,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const
+	ARBConfig& ioConfig,
+	ARBDogList* ioDogs,
+	fmt::wmemory_buffer& ioInfo,
+	IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
 	ARBConfigVenuePtr venue;
@@ -1232,8 +1138,8 @@ bool ARBConfigActionDeleteLevel::Apply(
 					if (0 < level->GetSubLevels().size())
 					{
 						for (ARBConfigSubLevelList::const_iterator i = level->GetSubLevels().begin();
-							i != level->GetSubLevels().end();
-							++i)
+							 i != level->GetSubLevels().end();
+							 ++i)
 						{
 							sublevels.push_back((*i)->GetName());
 						}
@@ -1250,9 +1156,7 @@ bool ARBConfigActionDeleteLevel::Apply(
 			int nRuns = 0;
 			if (ioDogs)
 			{
-				for (std::vector<std::wstring>::iterator i = sublevels.begin();
-					i != sublevels.end();
-					++i)
+				for (std::vector<std::wstring>::iterator i = sublevels.begin(); i != sublevels.end(); ++i)
 				{
 					nRuns += ioDogs->NumLevelsInUse(m_Venue, m_Div, *i);
 				}
@@ -1264,9 +1168,7 @@ bool ARBConfigActionDeleteLevel::Apply(
 				if (!ioCallBack.CanContinue())
 					return bChanged;
 				fmt::format_to(ioInfo, L"{}\n", msg);
-				for (std::vector<std::wstring>::iterator i = sublevels.begin();
-					i != sublevels.end();
-					++i)
+				for (std::vector<std::wstring>::iterator i = sublevels.begin(); i != sublevels.end(); ++i)
 				{
 					ioDogs->DeleteLevel(m_Venue, m_Div, *i);
 				}
@@ -1302,10 +1204,10 @@ class ARBConfigActionRenameTitle_concrete : public ARBConfigActionRenameTitle
 {
 public:
 	ARBConfigActionRenameTitle_concrete(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName)
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 		: ARBConfigActionRenameTitle(configVersion, inVenue, inOldName, inNewName)
 	{
 	}
@@ -1317,24 +1219,20 @@ public:
 
 
 ARBConfigActionPtr ARBConfigActionRenameTitle::New(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 {
-	return std::make_shared<ARBConfigActionRenameTitle_concrete>(
-		configVersion,
-		inVenue,
-		inOldName,
-		inNewName);
+	return std::make_shared<ARBConfigActionRenameTitle_concrete>(configVersion, inVenue, inOldName, inNewName);
 }
 
 
 ARBConfigActionRenameTitle::ARBConfigActionRenameTitle(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_OldName(inOldName)
@@ -1354,19 +1252,15 @@ ARBConfigActionRenameTitle::ARBConfigActionRenameTitle(ARBConfigActionRenameTitl
 
 ARBConfigActionPtr ARBConfigActionRenameTitle::Clone() const
 {
-	return std::make_shared<ARBConfigActionRenameTitle_concrete>(
-		m_configVersion,
-		m_Venue,
-		m_OldName,
-		m_NewName);
+	return std::make_shared<ARBConfigActionRenameTitle_concrete>(m_configVersion, m_Venue, m_OldName, m_NewName);
 }
 
 
 bool ARBConfigActionRenameTitle::Apply(
-		ARBConfig& ioConfig,
-		ARBDogList* ioDogs,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const
+	ARBConfig& ioConfig,
+	ARBDogList* ioDogs,
+	fmt::wmemory_buffer& ioInfo,
+	IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
 
@@ -1392,7 +1286,7 @@ bool ARBConfigActionRenameTitle::Apply(
 			{
 				ioDogs->RenameTitle(m_Venue, m_OldName, m_NewName);
 			}
-			fmt::format_to(ioInfo, L"{}\n", Localization()->ActionRenameTitle(m_Venue, m_OldName, m_NewName,nTitles));
+			fmt::format_to(ioInfo, L"{}\n", Localization()->ActionRenameTitle(m_Venue, m_OldName, m_NewName, nTitles));
 			// If the new title exists, just delete the old.
 			// Otherwise, rename the old to new.
 			if (venue->GetTitles().FindTitle(m_NewName))
@@ -1411,16 +1305,15 @@ class ARBConfigActionDeleteTitle_concrete : public ARBConfigActionDeleteTitle
 {
 public:
 	ARBConfigActionDeleteTitle_concrete(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inDiv,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName)
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 		: ARBConfigActionDeleteTitle(configVersion, inVenue, inDiv, inOldName, inNewName)
 	{
 	}
-	ARBConfigActionDeleteTitle_concrete(
-			ARBConfigActionDeleteTitle const& rhs)
+	ARBConfigActionDeleteTitle_concrete(ARBConfigActionDeleteTitle const& rhs)
 		: ARBConfigActionDeleteTitle(rhs)
 	{
 	}
@@ -1428,27 +1321,22 @@ public:
 
 
 ARBConfigActionPtr ARBConfigActionDeleteTitle::New(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inDiv,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inDiv,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 {
-	return std::make_shared<ARBConfigActionDeleteTitle_concrete>(
-		configVersion,
-		inVenue,
-		inDiv,
-		inOldName,
-		inNewName);
+	return std::make_shared<ARBConfigActionDeleteTitle_concrete>(configVersion, inVenue, inDiv, inOldName, inNewName);
 }
 
 
 ARBConfigActionDeleteTitle::ARBConfigActionDeleteTitle(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inDiv,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inDiv,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_Div(inDiv)
@@ -1470,20 +1358,15 @@ ARBConfigActionDeleteTitle::ARBConfigActionDeleteTitle(ARBConfigActionDeleteTitl
 
 ARBConfigActionPtr ARBConfigActionDeleteTitle::Clone() const
 {
-	return std::make_shared<ARBConfigActionDeleteTitle_concrete>(
-		m_configVersion,
-		m_Venue,
-		m_Div,
-		m_OldName,
-		m_NewName);
+	return std::make_shared<ARBConfigActionDeleteTitle_concrete>(m_configVersion, m_Venue, m_Div, m_OldName, m_NewName);
 }
 
 
 bool ARBConfigActionDeleteTitle::Apply(
-		ARBConfig& ioConfig,
-		ARBDogList* ioDogs,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const
+	ARBConfig& ioConfig,
+	ARBDogList* ioDogs,
+	fmt::wmemory_buffer& ioInfo,
+	IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
 
@@ -1507,7 +1390,10 @@ bool ARBConfigActionDeleteTitle::Apply(
 				// There's no way to differentiate existing titles.
 				if (0 < m_NewName.length())
 				{
-					fmt::format_to(ioInfo, L"{}\n", Localization()->ActionRenameTitle(m_Venue, m_OldName, m_NewName, nTitles));
+					fmt::format_to(
+						ioInfo,
+						L"{}\n",
+						Localization()->ActionRenameTitle(m_Venue, m_OldName, m_NewName, nTitles));
 					ioDogs->RenameTitle(m_Venue, m_OldName, m_NewName);
 				}
 				else
@@ -1535,15 +1421,14 @@ class ARBConfigActionRenameEvent_concrete : public ARBConfigActionRenameEvent
 {
 public:
 	ARBConfigActionRenameEvent_concrete(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName)
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 		: ARBConfigActionRenameEvent(configVersion, inVenue, inOldName, inNewName)
 	{
 	}
-	ARBConfigActionRenameEvent_concrete(
-			ARBConfigActionRenameEvent const& rhs)
+	ARBConfigActionRenameEvent_concrete(ARBConfigActionRenameEvent const& rhs)
 		: ARBConfigActionRenameEvent(rhs)
 	{
 	}
@@ -1551,24 +1436,20 @@ public:
 
 
 ARBConfigActionPtr ARBConfigActionRenameEvent::New(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 {
-	return std::make_shared<ARBConfigActionRenameEvent_concrete>(
-		configVersion,
-		inVenue,
-		inOldName,
-		inNewName);
+	return std::make_shared<ARBConfigActionRenameEvent_concrete>(configVersion, inVenue, inOldName, inNewName);
 }
 
 
 ARBConfigActionRenameEvent::ARBConfigActionRenameEvent(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_OldName(inOldName)
@@ -1588,19 +1469,15 @@ ARBConfigActionRenameEvent::ARBConfigActionRenameEvent(ARBConfigActionRenameEven
 
 ARBConfigActionPtr ARBConfigActionRenameEvent::Clone() const
 {
-	return std::make_shared<ARBConfigActionRenameEvent_concrete>(
-		m_configVersion,
-		m_Venue,
-		m_OldName,
-		m_NewName);
+	return std::make_shared<ARBConfigActionRenameEvent_concrete>(m_configVersion, m_Venue, m_OldName, m_NewName);
 }
 
 
 bool ARBConfigActionRenameEvent::Apply(
-		ARBConfig& ioConfig,
-		ARBDogList* ioDogs,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const
+	ARBConfig& ioConfig,
+	ARBDogList* ioDogs,
+	fmt::wmemory_buffer& ioInfo,
+	IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
 
@@ -1637,15 +1514,11 @@ bool ARBConfigActionRenameEvent::Apply(
 class ARBConfigActionDeleteEvent_concrete : public ARBConfigActionDeleteEvent
 {
 public:
-	ARBConfigActionDeleteEvent_concrete(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inName)
+	ARBConfigActionDeleteEvent_concrete(short configVersion, std::wstring const& inVenue, std::wstring const& inName)
 		: ARBConfigActionDeleteEvent(configVersion, inVenue, inName)
 	{
 	}
-	ARBConfigActionDeleteEvent_concrete(
-			ARBConfigActionDeleteEvent const& rhs)
+	ARBConfigActionDeleteEvent_concrete(ARBConfigActionDeleteEvent const& rhs)
 		: ARBConfigActionDeleteEvent(rhs)
 	{
 	}
@@ -1653,21 +1526,18 @@ public:
 
 
 ARBConfigActionPtr ARBConfigActionDeleteEvent::New(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inName)
 {
-	return std::make_shared<ARBConfigActionDeleteEvent_concrete>(
-		configVersion,
-		inVenue,
-		inName);
+	return std::make_shared<ARBConfigActionDeleteEvent_concrete>(configVersion, inVenue, inName);
 }
 
 
 ARBConfigActionDeleteEvent::ARBConfigActionDeleteEvent(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_Name(inName)
@@ -1685,18 +1555,15 @@ ARBConfigActionDeleteEvent::ARBConfigActionDeleteEvent(ARBConfigActionDeleteEven
 
 ARBConfigActionPtr ARBConfigActionDeleteEvent::Clone() const
 {
-	return std::make_shared<ARBConfigActionDeleteEvent_concrete>(
-		m_configVersion,
-		m_Venue,
-		m_Name);
+	return std::make_shared<ARBConfigActionDeleteEvent_concrete>(m_configVersion, m_Venue, m_Name);
 }
 
 
 bool ARBConfigActionDeleteEvent::Apply(
-		ARBConfig& ioConfig,
-		ARBDogList* ioDogs,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const
+	ARBConfig& ioConfig,
+	ARBDogList* ioDogs,
+	fmt::wmemory_buffer& ioInfo,
+	IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
 
@@ -1735,15 +1602,14 @@ class ARBConfigActionRenameLifetimeName_concrete : public ARBConfigActionRenameL
 {
 public:
 	ARBConfigActionRenameLifetimeName_concrete(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inOldName,
-			std::wstring const& inNewName)
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 		: ARBConfigActionRenameLifetimeName(configVersion, inVenue, inOldName, inNewName)
 	{
 	}
-	ARBConfigActionRenameLifetimeName_concrete(
-			ARBConfigActionRenameLifetimeName const& rhs)
+	ARBConfigActionRenameLifetimeName_concrete(ARBConfigActionRenameLifetimeName const& rhs)
 		: ARBConfigActionRenameLifetimeName(rhs)
 	{
 	}
@@ -1751,24 +1617,20 @@ public:
 
 
 ARBConfigActionPtr ARBConfigActionRenameLifetimeName::New(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 {
-	return std::make_shared<ARBConfigActionRenameLifetimeName_concrete>(
-		configVersion,
-		inVenue,
-		inOldName,
-		inNewName);
+	return std::make_shared<ARBConfigActionRenameLifetimeName_concrete>(configVersion, inVenue, inOldName, inNewName);
 }
 
 
 ARBConfigActionRenameLifetimeName::ARBConfigActionRenameLifetimeName(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inOldName,
-		std::wstring const& inNewName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inOldName,
+	std::wstring const& inNewName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_OldName(inOldName)
@@ -1788,19 +1650,15 @@ ARBConfigActionRenameLifetimeName::ARBConfigActionRenameLifetimeName(ARBConfigAc
 
 ARBConfigActionPtr ARBConfigActionRenameLifetimeName::Clone() const
 {
-	return std::make_shared<ARBConfigActionRenameLifetimeName_concrete>(
-		m_configVersion,
-		m_Venue,
-		m_OldName,
-		m_NewName);
+	return std::make_shared<ARBConfigActionRenameLifetimeName_concrete>(m_configVersion, m_Venue, m_OldName, m_NewName);
 }
 
 
 bool ARBConfigActionRenameLifetimeName::Apply(
-		ARBConfig& ioConfig,
-		ARBDogList* ioDogs,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const
+	ARBConfig& ioConfig,
+	ARBDogList* ioDogs,
+	fmt::wmemory_buffer& ioInfo,
+	IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
 
@@ -1813,7 +1671,10 @@ bool ARBConfigActionRenameLifetimeName::Apply(
 			bChanged = true;
 			oldLifetimeName->SetName(m_NewName);
 			int nEvents = venue->GetEvents().RenameLifetimeName(m_OldName, m_NewName);
-			fmt::format_to(ioInfo, L"{}\n", Localization()->ActionRenameLifetimeName(m_Venue, m_OldName, m_NewName, nEvents));
+			fmt::format_to(
+				ioInfo,
+				L"{}\n",
+				Localization()->ActionRenameLifetimeName(m_Venue, m_OldName, m_NewName, nEvents));
 			if (ioDogs)
 				ioDogs->RenameLifetimeName(m_Venue, m_OldName, m_NewName);
 		}
@@ -1829,14 +1690,13 @@ class ARBConfigActionDeleteLifetimeName_concrete : public ARBConfigActionDeleteL
 {
 public:
 	ARBConfigActionDeleteLifetimeName_concrete(
-			short configVersion,
-			std::wstring const& inVenue,
-			std::wstring const& inName)
+		short configVersion,
+		std::wstring const& inVenue,
+		std::wstring const& inName)
 		: ARBConfigActionDeleteLifetimeName(configVersion, inVenue, inName)
 	{
 	}
-	ARBConfigActionDeleteLifetimeName_concrete(
-			ARBConfigActionDeleteLifetimeName const& rhs)
+	ARBConfigActionDeleteLifetimeName_concrete(ARBConfigActionDeleteLifetimeName const& rhs)
 		: ARBConfigActionDeleteLifetimeName(rhs)
 	{
 	}
@@ -1844,21 +1704,18 @@ public:
 
 
 ARBConfigActionPtr ARBConfigActionDeleteLifetimeName::New(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inName)
 {
-	return std::make_shared<ARBConfigActionDeleteLifetimeName_concrete>(
-		configVersion,
-		inVenue,
-		inName);
+	return std::make_shared<ARBConfigActionDeleteLifetimeName_concrete>(configVersion, inVenue, inName);
 }
 
 
 ARBConfigActionDeleteLifetimeName::ARBConfigActionDeleteLifetimeName(
-		short configVersion,
-		std::wstring const& inVenue,
-		std::wstring const& inName)
+	short configVersion,
+	std::wstring const& inVenue,
+	std::wstring const& inName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_Name(inName)
@@ -1876,18 +1733,15 @@ ARBConfigActionDeleteLifetimeName::ARBConfigActionDeleteLifetimeName(ARBConfigAc
 
 ARBConfigActionPtr ARBConfigActionDeleteLifetimeName::Clone() const
 {
-	return std::make_shared<ARBConfigActionDeleteLifetimeName_concrete>(
-		m_configVersion,
-		m_Venue,
-		m_Name);
+	return std::make_shared<ARBConfigActionDeleteLifetimeName_concrete>(m_configVersion, m_Venue, m_Name);
 }
 
 
 bool ARBConfigActionDeleteLifetimeName::Apply(
-		ARBConfig& ioConfig,
-		ARBDogList* ioDogs,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const
+	ARBConfig& ioConfig,
+	ARBDogList* ioDogs,
+	fmt::wmemory_buffer& ioInfo,
+	IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
 
@@ -1909,17 +1763,13 @@ bool ARBConfigActionDeleteLifetimeName::Apply(
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool ARBConfigActionList::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARBConfigActionList::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_ACTION)
 		return false;
 	std::wstring verb;
-	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_ACTION_VERB, verb)
-	|| 0 == verb.length())
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_ACTION_VERB, verb) || 0 == verb.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_ACTION, ATTRIB_ACTION_VERB));
 		return false;
@@ -2007,15 +1857,13 @@ bool ARBConfigActionList::Load(
 
 
 int ARBConfigActionList::Apply(
-		ARBConfig& ioConfig,
-		ARBDogList* ioDogs,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const
+	ARBConfig& ioConfig,
+	ARBDogList* ioDogs,
+	fmt::wmemory_buffer& ioInfo,
+	IConfigActionCallback& ioCallBack) const
 {
 	int nChanges = 0;
-	for (ARBConfigActionList::const_iterator iterAction = begin();
-			iterAction != end();
-			++iterAction)
+	for (ARBConfigActionList::const_iterator iterAction = begin(); iterAction != end(); ++iterAction)
 	{
 		if (0 != (*iterAction)->GetVersion() && ioConfig.GetVersion() >= (*iterAction)->GetVersion())
 			continue;
@@ -2031,24 +1879,20 @@ int ARBConfigActionList::Apply(
 
 
 bool ARBConfigActionList::Update(
-		short configVersionPreUpdate,
-		ARBConfig const& inConfigCurrent,
-		std::wstring& ioVenue,
-		std::wstring& ioDivision,
-		std::wstring& ioSubLevel) const
+	short configVersionPreUpdate,
+	ARBConfig const& inConfigCurrent,
+	std::wstring& ioVenue,
+	std::wstring& ioDivision,
+	std::wstring& ioSubLevel) const
 {
 	std::wstring inVenue(ioVenue);
 	std::wstring inDivision(ioDivision);
 	std::wstring inSubLevel(ioSubLevel);
-	for (ARBConfigActionList::const_iterator iterAction = begin();
-			iterAction != end();
-			++iterAction)
+	for (ARBConfigActionList::const_iterator iterAction = begin(); iterAction != end(); ++iterAction)
 	{
 		if (0 != (*iterAction)->GetVersion() && configVersionPreUpdate >= (*iterAction)->GetVersion())
 			continue;
 		(*iterAction)->Update(inConfigCurrent, ioVenue, ioDivision, ioSubLevel);
 	}
-	return inVenue != ioVenue ||
-		inDivision != ioDivision ||
-		inSubLevel != ioSubLevel;
+	return inVenue != ioVenue || inDivision != ioDivision || inSubLevel != ioSubLevel;
 }

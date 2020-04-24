@@ -18,8 +18,8 @@
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  */
 
-#include "ARB/ARB_Q.h"
 #include "ARB/ARBTypes2.h"
+#include "ARB/ARB_Q.h"
 #include <set>
 class CAgilityBookDoc;
 class CTextCtrl;
@@ -29,13 +29,13 @@ class CDlgReferenceRun : public wxDialog
 {
 public:
 	CDlgReferenceRun(
-			CAgilityBookDoc* pDoc,
-			ARBDogRunPtr const& inRun,
-			std::set<std::wstring> const& inHeights,
-			std::set<std::wstring> const& inNames,
-			std::set<std::wstring> const& inBreeds,
-			ARBDogReferenceRunPtr const& inRef,
-			wxWindow* pParent = nullptr);
+		CAgilityBookDoc* pDoc,
+		ARBDogRunPtr const& inRun,
+		std::set<std::wstring> const& inHeights,
+		std::set<std::wstring> const& inNames,
+		std::set<std::wstring> const& inBreeds,
+		ARBDogReferenceRunPtr const& inRef,
+		wxWindow* pParent = nullptr);
 
 private:
 	CAgilityBookDoc* m_pDoc;

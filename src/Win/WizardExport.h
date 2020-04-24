@@ -33,19 +33,13 @@ class CWizardExport : public wxWizardPageSimple
 {
 	DECLARE_CLASS(CWizardExport)
 public:
-	CWizardExport(
-			CWizard* pSheet,
-			CAgilityBookDoc* pDoc,
-			wxWizardPage* prev);
+	CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPage* prev);
 
 private:
 	CAgilityBookOptions::ColumnOrder GetColumnInfo() const;
 	wchar_t GetDelim() const;
 	void UpdateButtons();
-	std::wstring AddPreviewData(
-			long inLine,
-			long inCol,
-			std::wstring inData);
+	std::wstring AddPreviewData(long inLine, long inCol, std::wstring inData);
 	void UpdatePreview();
 	bool DoWizardFinish();
 

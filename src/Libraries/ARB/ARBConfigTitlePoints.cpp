@@ -36,19 +36,19 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-namespace {
+namespace
+{
 static struct PointsEnum
 {
-	wchar_t const* pPoints;	///< Actual text in file
-	ARBPointsType type;		///< Enum type
-} const sc_Points[] =
-{
+	wchar_t const* pPoints; ///< Actual text in file
+	ARBPointsType type;     ///< Enum type
+} const sc_Points[] = {
 	{ATTRIB_TITLE_POINTS_TYPE_NORMAL, ARBPointsType::Normal},
 	{ATTRIB_TITLE_POINTS_TYPE_T2B, ARBPointsType::T2B},
-	{ATTRIB_TITLE_POINTS_TYPE_UKI, ARBPointsType::UKI}
+	{ATTRIB_TITLE_POINTS_TYPE_UKI, ARBPointsType::UKI},
 };
 constexpr size_t sc_nPoints = sizeof(sc_Points) / sizeof(sc_Points[0]);
-}
+} // namespace
 
 
 static ARBPointsType PointsToType(std::wstring const& str)
@@ -78,23 +78,22 @@ static std::wstring TypeToPoints(ARBPointsType type)
 
 namespace
 {
-	class ARBConfigTitlePoints_concrete : public ARBConfigTitlePoints
+class ARBConfigTitlePoints_concrete : public ARBConfigTitlePoints
+{
+public:
+	ARBConfigTitlePoints_concrete()
 	{
-	public:
-		ARBConfigTitlePoints_concrete() {}
-		ARBConfigTitlePoints_concrete(
-				double inPoints,
-				double inFaults,
-				ARBPointsType inType)
-			: ARBConfigTitlePoints(inPoints, inFaults, inType)
-		{
-		}
-		ARBConfigTitlePoints_concrete(ARBConfigTitlePoints const& rhs)
-			: ARBConfigTitlePoints(rhs)
-		{
-		}
-	};
+	}
+	ARBConfigTitlePoints_concrete(double inPoints, double inFaults, ARBPointsType inType)
+		: ARBConfigTitlePoints(inPoints, inFaults, inType)
+	{
+	}
+	ARBConfigTitlePoints_concrete(ARBConfigTitlePoints const& rhs)
+		: ARBConfigTitlePoints(rhs)
+	{
+	}
 };
+}; // namespace
 
 ARBConfigTitlePointsPtr ARBConfigTitlePoints::New()
 {
@@ -102,10 +101,7 @@ ARBConfigTitlePointsPtr ARBConfigTitlePoints::New()
 }
 
 
-ARBConfigTitlePointsPtr ARBConfigTitlePoints::New(
-		double inPoints,
-		double inFaults,
-		ARBPointsType inType)
+ARBConfigTitlePointsPtr ARBConfigTitlePoints::New(double inPoints, double inFaults, ARBPointsType inType)
 {
 	return std::make_shared<ARBConfigTitlePoints_concrete>(inPoints, inFaults, inType);
 }
@@ -119,10 +115,7 @@ ARBConfigTitlePoints::ARBConfigTitlePoints()
 }
 
 
-ARBConfigTitlePoints::ARBConfigTitlePoints(
-		double inPoints,
-		double inFaults,
-		ARBPointsType inType)
+ARBConfigTitlePoints::ARBConfigTitlePoints(double inPoints, double inFaults, ARBPointsType inType)
 	: m_Points(inPoints)
 	, m_Faults(inFaults)
 	, m_Calc(ARBCalcPoints::New(inType))
@@ -183,9 +176,7 @@ ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(ARBConfigTitlePoints&& rhs
 
 bool ARBConfigTitlePoints::operator==(ARBConfigTitlePoints const& rhs) const
 {
-	return m_Points == rhs.m_Points
-		&& m_Faults == rhs.m_Faults
-		&& m_Calc->GetType() == rhs.m_Calc->GetType();
+	return m_Points == rhs.m_Points && m_Faults == rhs.m_Faults && m_Calc->GetType() == rhs.m_Calc->GetType();
 }
 
 
@@ -196,10 +187,10 @@ std::wstring ARBConfigTitlePoints::GetGenericName() const
 
 
 bool ARBConfigTitlePoints::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback,
-		ARBConfigLifetimePointsList& ioLifetimePoints)
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback,
+	ARBConfigLifetimePointsList& ioLifetimePoints)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_TITLE_POINTS)
@@ -223,7 +214,7 @@ bool ARBConfigTitlePoints::Load(
 			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_FAULTS));
 			return false;
 		}
-		if (inVersion < ARBVersion(10,0))
+		if (inVersion < ARBVersion(10, 0))
 		{
 			bool bLifetime;
 			if (ARBAttribLookup::Found == inTree->GetAttrib(L"LifeTime", bLifetime))
@@ -272,10 +263,10 @@ bool ARBConfigTitlePoints::SetPoints(double inPoints)
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigTitlePointsList::Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback,
-		ARBConfigLifetimePointsList& ioLifetimePoints)
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback,
+	ARBConfigLifetimePointsList& ioLifetimePoints)
 {
 	ARBConfigTitlePointsPtr thing(ARBConfigTitlePoints::New());
 	if (!thing->Load(inTree, inVersion, ioCallback, ioLifetimePoints))
@@ -289,12 +280,9 @@ void ARBConfigTitlePointsList::sort()
 {
 	if (2 > size())
 		return;
-	std::stable_sort(begin(), end(),
-		[](ARBConfigTitlePointsPtr const& one, ARBConfigTitlePointsPtr const& two)
-		{
-			return one->GetFaults() < two->GetFaults();
-		}
-	);
+	std::stable_sort(begin(), end(), [](ARBConfigTitlePointsPtr const& one, ARBConfigTitlePointsPtr const& two) {
+		return one->GetFaults() < two->GetFaults();
+	});
 }
 
 
@@ -338,13 +326,13 @@ void ARBConfigTitlePointsList::SetType(ARBPointsType inType)
 
 
 double ARBConfigTitlePointsList::GetTitlePoints(
-		double inFaults,
-		double inTime,
-		double inSCT,
-		short inPlace,
-		short inClass,
-		ARBDate inDate,
-		bool isTourney) const
+	double inFaults,
+	double inTime,
+	double inSCT,
+	short inPlace,
+	short inClass,
+	ARBDate inDate,
+	bool isTourney) const
 {
 	double pts = 0.0;
 	// This is why we keep the list sorted!
@@ -363,9 +351,7 @@ double ARBConfigTitlePointsList::GetTitlePoints(
 }
 
 
-bool ARBConfigTitlePointsList::FindTitlePoints(
-		double inFaults,
-		ARBConfigTitlePointsPtr* outPoints) const
+bool ARBConfigTitlePointsList::FindTitlePoints(double inFaults, ARBConfigTitlePointsPtr* outPoints) const
 {
 	if (outPoints)
 		outPoints->reset();
@@ -386,16 +372,12 @@ bool ARBConfigTitlePointsList::FindTitlePoints(
 }
 
 
-bool ARBConfigTitlePointsList::AddTitlePoints(
-		double inPoints,
-		double inFaults,
-		ARBConfigTitlePointsPtr* outPoints)
+bool ARBConfigTitlePointsList::AddTitlePoints(double inPoints, double inFaults, ARBConfigTitlePointsPtr* outPoints)
 {
 	if (outPoints)
 		outPoints->reset();
 	ARBCalcPointsPtr calc = GetCalc();
-	if ((calc && !calc->AllowConfiguration())
-	|| FindTitlePoints(inFaults))
+	if ((calc && !calc->AllowConfiguration()) || FindTitlePoints(inFaults))
 		return false;
 	ARBConfigTitlePointsPtr pTitle(ARBConfigTitlePoints::New(inPoints, inFaults, ARBPointsType::Normal));
 	push_back(pTitle);
@@ -406,9 +388,7 @@ bool ARBConfigTitlePointsList::AddTitlePoints(
 }
 
 
-bool ARBConfigTitlePointsList::DeleteTitlePoints(
-		ARBPointsType inType,
-		double inFaults)
+bool ARBConfigTitlePointsList::DeleteTitlePoints(ARBPointsType inType, double inFaults)
 {
 	ARBCalcPointsPtr calc = GetCalc();
 	if (!calc || calc->AllowConfiguration())

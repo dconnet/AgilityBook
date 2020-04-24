@@ -30,14 +30,15 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-namespace {
+namespace
+{
 static struct Q2Enum
 {
-	wchar_t const* pQ;		///< Actual text in file
-	Q q;					///< Enum type
-	wchar_t const* trans;	///< Translation
-} const sc_Qs[] =
-{
+	wchar_t const* pQ;    ///< Actual text in file
+	Q q;                  ///< Enum type
+	wchar_t const* trans; ///< Translation
+} const sc_Qs[] = {
+	// clang-format off
 	{nullptr,          Q::UNK,    nullptr},
 	{ATTRIB_QTYPE_SQ,  Q::SuperQ, arbT("IDS_QTYPE_SQ")},
 	{ATTRIB_QTYPE_Q,   Q::Q,      arbT("IDS_QTYPE_Q")},
@@ -46,9 +47,10 @@ static struct Q2Enum
 	{ATTRIB_QTYPE_FEO, Q::FEO,    arbT("IDS_QTYPE_FEO")},
 	{ATTRIB_QTYPE_DNR, Q::DNR,    arbT("IDS_QTYPE_DNR")},
 	{ATTRIB_QTYPE_NA,  Q::NA,     arbT("IDS_QTYPE_NA")},
+	// clang-format on
 }; ///< This is a list of the various types of "Q"s we support.
 constexpr int sc_nQs = sizeof(sc_Qs) / sizeof(sc_Qs[0]);
-}
+} // namespace
 
 
 std::wstring ARB_Q::GetValidTypes()
@@ -117,10 +119,7 @@ std::wstring ARB_Q::str() const
 }
 
 
-bool ARB_Q::Load(
-		std::wstring const& inAttrib,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+bool ARB_Q::Load(std::wstring const& inAttrib, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	for (int i = 0; i < sc_nQs; ++i)
 	{
@@ -136,9 +135,7 @@ bool ARB_Q::Load(
 }
 
 
-bool ARB_Q::Save(
-		ElementNodePtr const& ioTree,
-		wchar_t const* const inAttribName) const
+bool ARB_Q::Save(ElementNodePtr const& ioTree, wchar_t const* const inAttribName) const
 {
 	assert(!!inAttribName);
 	bool bOk = false;

@@ -28,9 +28,7 @@
 wxIMPLEMENT_CLASS(CQualifyingValidator, wxValidator)
 
 
-CQualifyingValidator::CQualifyingValidator(
-		ARB_Q* valPtr,
-		bool bAllowNoSel)
+CQualifyingValidator::CQualifyingValidator(ARB_Q* valPtr, bool bAllowNoSel)
 	: m_pQ(valPtr)
 	, m_bAllowNoSel(bAllowNoSel)
 {

@@ -43,8 +43,8 @@ static ElementNodePtr CreateNode()
 
 struct CalData
 {
-	ElementNodePtr CalData1; // v1.0
-	ElementNodePtr CalData2; // v2.0+
+	ElementNodePtr CalData1;  // v1.0
+	ElementNodePtr CalData2;  // v2.0+
 	ElementNodePtr CalData1a; // v1.0 with v2 data
 	CalData();
 };
@@ -123,7 +123,7 @@ TEST_CASE("Calendar")
 			REQUIRE(*cal == *cal2);
 			ARBDate n = ARBDate::Today();
 			cal2->SetStartDate(n);
-			cal2->SetEndDate(n+1);
+			cal2->SetEndDate(n + 1);
 			REQUIRE(*cal < *cal2);
 			REQUIRE(*cal < cal2->GetStartDate());
 			REQUIRE(*cal != *cal2);

@@ -40,10 +40,10 @@ wxEND_EVENT_TABLE()
 
 
 CDlgPartner::CDlgPartner(
-		ARBDogRunPartnerPtr const& inPartner,
-		std::set<std::wstring> const& inHandlers,
-		std::set<std::wstring> const& inDogs,
-		wxWindow* pParent)
+	ARBDogRunPartnerPtr const& inPartner,
+	std::set<std::wstring> const& inHandlers,
+	std::set<std::wstring> const& inDogs,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_Handler(StringUtil::stringWX(inPartner->GetHandler()))
 	, m_Dog(StringUtil::stringWX(inPartner->GetDog()))
@@ -52,7 +52,13 @@ CDlgPartner::CDlgPartner(
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDD_PARTNER"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+	Create(
+		pParent,
+		wxID_ANY,
+		_("IDD_PARTNER"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	wxArrayString handlers;
 	std::set<std::wstring>::const_iterator iter;
@@ -71,40 +77,46 @@ CDlgPartner::CDlgPartner(
 
 	// Controls (these are done first to control tab order)
 
-	wxStaticText* textHandler = new wxStaticText(this, wxID_ANY,
-		_("IDC_PARTNER_NAME"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textHandler
+		= new wxStaticText(this, wxID_ANY, _("IDC_PARTNER_NAME"), wxDefaultPosition, wxDefaultSize, 0);
 	textHandler->Wrap(-1);
 
-	wxComboBox* ctrlHandler = new wxComboBox(this, wxID_ANY, m_Handler,
-		wxDefaultPosition, wxDefaultSize,
-		handlers, wxCB_DROPDOWN|wxCB_SORT,
+	wxComboBox* ctrlHandler = new wxComboBox(
+		this,
+		wxID_ANY,
+		m_Handler,
+		wxDefaultPosition,
+		wxDefaultSize,
+		handlers,
+		wxCB_DROPDOWN | wxCB_SORT,
 		CTrimValidator(&m_Handler, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));
 	ctrlHandler->SetHelpText(_("HIDC_PARTNER_NAME"));
 	ctrlHandler->SetToolTip(_("HIDC_PARTNER_NAME"));
 	ctrlHandler->AutoComplete(handlers);
 
-	wxStaticText* textDog = new wxStaticText(this, wxID_ANY,
-		_("IDC_PARTNER_CALLNAME"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textDog
+		= new wxStaticText(this, wxID_ANY, _("IDC_PARTNER_CALLNAME"), wxDefaultPosition, wxDefaultSize, 0);
 	textDog->Wrap(-1);
 
-	wxComboBox* ctrlDog = new wxComboBox(this, wxID_ANY, m_Dog,
-		wxDefaultPosition, wxDefaultSize,
-		dogs, wxCB_DROPDOWN|wxCB_SORT,
+	wxComboBox* ctrlDog = new wxComboBox(
+		this,
+		wxID_ANY,
+		m_Dog,
+		wxDefaultPosition,
+		wxDefaultSize,
+		dogs,
+		wxCB_DROPDOWN | wxCB_SORT,
 		CTrimValidator(&m_Dog, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));
 	ctrlDog->SetHelpText(_("HIDC_PARTNER_CALLNAME"));
 	ctrlDog->SetToolTip(_("HIDC_PARTNER_CALLNAME"));
 	ctrlDog->AutoComplete(dogs);
 
-	wxStaticText* textNumber = new wxStaticText(this, wxID_ANY,
-		_("IDC_PARTNER_REG_NUM"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textNumber
+		= new wxStaticText(this, wxID_ANY, _("IDC_PARTNER_REG_NUM"), wxDefaultPosition, wxDefaultSize, 0);
 	textNumber->Wrap(-1);
 
-	CTextCtrl* ctrlNumber = new CTextCtrl(this, wxID_ANY, m_RegNum,
-		wxDefaultPosition, wxDefaultSize, 0,
-		wxGenericValidator(&m_RegNum));
+	CTextCtrl* ctrlNumber
+		= new CTextCtrl(this, wxID_ANY, m_RegNum, wxDefaultPosition, wxDefaultSize, 0, wxGenericValidator(&m_RegNum));
 	ctrlNumber->SetHelpText(_("HIDC_PARTNER_REG_NUM"));
 	ctrlNumber->SetToolTip(_("HIDC_PARTNER_REG_NUM"));
 

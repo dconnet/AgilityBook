@@ -29,11 +29,11 @@
 #include "ARBCommon/BinaryData.h"
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
-#include "fmt/format.h"
 #include "LibARBWin/Widgets.h"
-#include <algorithm>
+#include "fmt/format.h"
 #include <wx/ffile.h>
 #include <wx/filename.h>
+#include <algorithm>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -46,7 +46,13 @@ wxEND_EVENT_TABLE()
 
 
 CDlgPageDecode::CDlgPageDecode()
-	: wxDialog(nullptr, wxID_ANY, L"Decode", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
+	: wxDialog(
+		nullptr,
+		wxID_ANY,
+		L"Decode",
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
 {
 	// Controls (these are done first to control tab order)
 
@@ -56,29 +62,29 @@ CDlgPageDecode::CDlgPageDecode()
 	str += STREAM_DATA_END;
 	str += L"' and copy here. Make sure to include those strings! Then press 'Decode'.";
 
-	wxStaticText* staticText = new wxStaticText(this, wxID_ANY, str,
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* staticText = new wxStaticText(this, wxID_ANY, str, wxDefaultPosition, wxDefaultSize, 0);
 	staticText->Wrap(wxDLG_UNIT_X(this, 345));
 
-	m_ctrlEncoded = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
+	m_ctrlEncoded = new CTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
 	m_ctrlEncoded->SetMaxLength(0);
 	wxFont font = m_ctrlEncoded->GetFont();
 	m_ctrlEncoded->SetFont(wxFont(font.GetPointSize(), wxFONTFAMILY_MODERN, font.GetStyle(), font.GetWeight()));
 
-	m_ctrlDecoded = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, 110)),
-		wxHSCROLL|wxTE_MULTILINE|wxTE_READONLY);
+	m_ctrlDecoded = new CTextCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxSize(-1, wxDLG_UNIT_Y(this, 110)),
+		wxHSCROLL | wxTE_MULTILINE | wxTE_READONLY);
 	m_ctrlDecoded->SetMaxLength(0);
 	font = m_ctrlDecoded->GetFont();
 	m_ctrlDecoded->SetFont(wxFont(font.GetPointSize(), wxFONTFAMILY_MODERN, font.GetStyle(), font.GetWeight()));
 
-	wxButton* btnDecode = new wxButton(this, wxID_ANY, L"Decode",
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* btnDecode = new wxButton(this, wxID_ANY, L"Decode", wxDefaultPosition, wxDefaultSize, 0);
 	btnDecode->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgPageDecode::OnDecode, this);
 
-	wxButton* btnClose = new wxButton(this, wxID_CANCEL, L"Close",
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxButton* btnClose = new wxButton(this, wxID_CANCEL, L"Close", wxDefaultPosition, wxDefaultSize, 0);
 
 	// Sizers
 
@@ -134,7 +140,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 		} sc_sections[] = {
 			{STREAM_SYSTEM_BEGIN, STREAM_SYSTEM_END},
 			{STREAM_REGISTRY_BEGIN, STREAM_REGISTRY_END},
-			{L"", L""}
+			{L"", L""},
 		};
 		for (int idx = 0; !sc_sections[idx].begin.empty(); ++idx)
 		{
@@ -200,7 +206,12 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				else
 				{
 					std::string tmp(binData.begin(), binData.end());
-					fmt::format_to(editData, L"{}\n{}{}\n\n", STREAM_FILE_BEGIN, StringUtil::stringW(tmp), STREAM_FILE_END);
+					fmt::format_to(
+						editData,
+						L"{}\n{}{}\n\n",
+						STREAM_FILE_BEGIN,
+						StringUtil::stringW(tmp),
+						STREAM_FILE_END);
 				}
 			}
 		}

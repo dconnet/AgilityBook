@@ -40,11 +40,11 @@ wxEND_EVENT_TABLE()
 
 
 CDlgQueryDetail::CDlgQueryDetail(
-		bool bReadOnly,
-		const wchar_t* inCode,
-		const wchar_t* inName,
-		wxWindow* pParent,
-		ARBConfig const* inConfig)
+	bool bReadOnly,
+	const wchar_t* inCode,
+	const wchar_t* inName,
+	wxWindow* pParent,
+	ARBConfig const* inConfig)
 	: wxDialog()
 	, m_ReadOnly(bReadOnly)
 	, m_Config(inConfig)
@@ -57,17 +57,21 @@ CDlgQueryDetail::CDlgQueryDetail(
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	wxDialog::Create(pParent, wxID_ANY, _("IDD_QUERY_DETAIL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+	wxDialog::Create(
+		pParent,
+		wxID_ANY,
+		_("IDD_QUERY_DETAIL"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
 
-	wxStaticText* textCode = new wxStaticText(this, wxID_ANY,
-		_("IDC_QUERYDETAIL_CODE"),
-		wxDefaultPosition, wxDefaultSize, 0);
+	wxStaticText* textCode
+		= new wxStaticText(this, wxID_ANY, _("IDC_QUERYDETAIL_CODE"), wxDefaultPosition, wxDefaultSize, 0);
 	textCode->Wrap(-1);
 
-	m_ctrlCode = new CTextCtrl(this, wxID_ANY, m_strCode,
-		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlCode = new CTextCtrl(this, wxID_ANY, m_strCode, wxDefaultPosition, wxDefaultSize, 0);
 	if (bReadOnly)
 		m_ctrlCode->SetEditable(false);
 	else
@@ -75,9 +79,13 @@ CDlgQueryDetail::CDlgQueryDetail(
 	m_ctrlCode->SetHelpText(_("HIDC_QUERYDETAIL_CODE"));
 	m_ctrlCode->SetToolTip(_("HIDC_QUERYDETAIL_CODE"));
 
-	wxStaticText* textLocation = new wxStaticText(this, wxID_ANY,
+	wxStaticText* textLocation = new wxStaticText(
+		this,
+		wxID_ANY,
 		m_Config ? _("IDS_COL_VENUE") : _("IDS_COL_LOCATION"),
-		wxDefaultPosition, wxDefaultSize, 0);
+		wxDefaultPosition,
+		wxDefaultSize,
+		0);
 	textLocation->Wrap(-1);
 
 	wxWindow* ctrlLocationOrVenue = nullptr;
@@ -85,9 +93,13 @@ CDlgQueryDetail::CDlgQueryDetail(
 	{
 		if (m_Name.empty())
 			m_strName = m_strCode;
-		m_ctrlVenues = new CVenueComboBox(this,
-			m_Config->GetVenues(), wxEmptyString, true,
-			CTrimValidator(&m_strName, TRIMVALIDATOR_TRIM_BOTH), true);
+		m_ctrlVenues = new CVenueComboBox(
+			this,
+			m_Config->GetVenues(),
+			wxEmptyString,
+			true,
+			CTrimValidator(&m_strName, TRIMVALIDATOR_TRIM_BOTH),
+			true);
 		m_ctrlVenues->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgQueryDetail::OnSelchangeVenues, this);
 		m_ctrlVenues->SetHelpText(_("HIDC_QUERYDETAIL_COMBO"));
 		m_ctrlVenues->SetToolTip(_("HIDC_QUERYDETAIL_COMBO"));
@@ -95,8 +107,8 @@ CDlgQueryDetail::CDlgQueryDetail(
 	}
 	else
 	{
-		CTextCtrl* ctrlLocation = new CTextCtrl(this, wxID_ANY, m_strName,
-			wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 150), -1), 0);
+		CTextCtrl* ctrlLocation
+			= new CTextCtrl(this, wxID_ANY, m_strName, wxDefaultPosition, wxSize(wxDLG_UNIT_X(this, 150), -1), 0);
 		if (bReadOnly)
 			ctrlLocation->SetEditable(false);
 		else
@@ -111,7 +123,7 @@ CDlgQueryDetail::CDlgQueryDetail(
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerCode = new wxBoxSizer(wxHORIZONTAL);
-	sizerCode->Add(textCode, 0, wxALIGN_CENTER_VERTICAL |  wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerCode->Add(textCode, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerCode->Add(m_ctrlCode, 0, wxALIGN_CENTER_VERTICAL, 0);
 
 	bSizer->Add(sizerCode, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
@@ -179,7 +191,7 @@ void CDlgQueryDetail::OnOk(wxCommandEvent& evt)
 	if (!m_ReadOnly)
 	{
 		if (!Validate() || !TransferDataFromWindow())
-		return;
+			return;
 
 		if (m_Config && m_strCode.empty())
 			m_strCode = m_strName;

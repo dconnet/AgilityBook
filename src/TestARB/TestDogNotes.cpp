@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBDogNotes.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -34,9 +34,9 @@ TEST_CASE("DogNotes")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBMetaDataPtr MetaData();
-		//	size_t length() const				{return m_Bytes;}
-		//	unsigned char const* data() const	{return m_Data;}
+			//	static ARBMetaDataPtr MetaData();
+			//	size_t length() const				{return m_Bytes;}
+			//	unsigned char const* data() const	{return m_Data;}
 		}
 	}
 
@@ -46,8 +46,8 @@ TEST_CASE("DogNotes")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogNotes();
-		//	ARBDogNotes(ARBDogNotes const& rhs);
+			//	ARBDogNotes();
+			//	ARBDogNotes(ARBDogNotes const& rhs);
 		}
 	}
 
@@ -57,7 +57,7 @@ TEST_CASE("DogNotes")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogNotes& operator=(ARBDogNotes const& rhs);
+			//	ARBDogNotes& operator=(ARBDogNotes const& rhs);
 		}
 	}
 
@@ -67,8 +67,8 @@ TEST_CASE("DogNotes")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBDogNotes const& rhs) const;
-		//	bool operator!=(ARBDogNotes const& rhs) const
+			//	bool operator==(ARBDogNotes const& rhs) const;
+			//	bool operator!=(ARBDogNotes const& rhs) const
 		}
 	}
 
@@ -78,11 +78,11 @@ TEST_CASE("DogNotes")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig const& inConfig,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig const& inConfig,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -92,7 +92,7 @@ TEST_CASE("DogNotes")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 }

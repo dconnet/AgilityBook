@@ -92,8 +92,8 @@ bool CIconList::Create(wxWindow const* pWindow)
 	{
 		int* index;
 		int assertIndex;
-	} icons[] =
-	{
+	} icons[] = {
+		// clang-format off
 		// Note: The order of these icons CANNOT be changed. The index
 		// is saved in the ARB file to associate an icon with a venue.
 		{&m_idxDog,				0},
@@ -116,6 +116,7 @@ bool CIconList::Create(wxWindow const* pWindow)
 		{&m_idxVenueCKCSC,		17},
 		{&m_idxVenueUKI,		18},
 		{&m_idxVenueVALOR,		19},
+		// clang-format on
 	};
 	int nIcons = sizeof(icons) / sizeof(icons[0]);
 

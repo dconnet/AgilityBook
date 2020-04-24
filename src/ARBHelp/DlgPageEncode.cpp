@@ -29,12 +29,12 @@
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBDebug.h"
-#include <set>
 #include <wx/config.h>
 #include <wx/dir.h>
 #include <wx/filename.h>
 #include <wx/platinfo.h>
 #include <wx/stdpaths.h>
+#include <set>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -42,14 +42,12 @@
 
 
 // Recurse directory
-static void SearchFor(
-		CDlgARBHelp* pParent,
-		wxString const& inFullPath)
+static void SearchFor(CDlgARBHelp* pParent, wxString const& inFullPath)
 {
 	wxArrayString files;
 	if (wxDir::Exists(inFullPath))
 	{
-		wxDir::GetAllFiles(inFullPath, &files, L"*.arb*", wxDIR_DIRS|wxDIR_FILES);
+		wxDir::GetAllFiles(inFullPath, &files, L"*.arb*", wxDIR_DIRS | wxDIR_FILES);
 		for (size_t n = 0; n < files.GetCount(); ++n)
 			pParent->SetARBFileStatus(StringUtil::stringW(files[n]));
 	}
@@ -62,14 +60,22 @@ CDlgPageEncode::CDlgPageEncode(CDlgARBHelp* pParent)
 	, m_Parent(pParent)
 	, m_DiskChoices(nullptr)
 {
-	wxStaticText* text1 = new wxStaticText(this, wxID_ANY,
+	wxStaticText* text1 = new wxStaticText(
+		this,
+		wxID_ANY,
 		L"When Agility Record Book has a problem, this program helps by gathering information that may be useful in determining what when wrong.",
-		wxDefaultPosition, wxDefaultSize, 0);
+		wxDefaultPosition,
+		wxDefaultSize,
+		0);
 	text1->Wrap(wxDLG_UNIT_X(this, 345));
 
-	wxStaticText* text2 = new wxStaticText(this, wxID_ANY,
+	wxStaticText* text2 = new wxStaticText(
+		this,
+		wxID_ANY,
 		L"In addition to any ARB files you select in the following dialog, basic system information from the registry will be included.",
-		wxDefaultPosition, wxSize(-1, wxDLG_UNIT_Y(this, 120)), 0);
+		wxDefaultPosition,
+		wxSize(-1, wxDLG_UNIT_Y(this, 120)),
+		0);
 	text2->Wrap(wxDLG_UNIT_X(this, 345));
 
 	// Sizers
@@ -97,11 +103,11 @@ bool CDlgPageEncode::TransferDataFromWindow()
 	std::set<wxString> directories;
 	// exe
 	directories.insert(wxStandardPaths::Get().GetDataDir());
-	// C:\Documents and Settings\username\Documents 
+	// C:\Documents and Settings\username\Documents
 	directories.insert(wxStandardPaths::Get().GetDocumentsDir());
-	// C:\Documents and Settings\All Users\Application Data 
+	// C:\Documents and Settings\All Users\Application Data
 	directories.insert(wxStandardPaths::Get().GetConfigDir());
-	// C:\Documents and Settings\username\Application Data 
+	// C:\Documents and Settings\username\Application Data
 	directories.insert(wxStandardPaths::Get().GetUserConfigDir());
 	// C:\Documents and Settings\username\Local Settings\Application Data\appname
 	directories.insert(wxStandardPaths::Get().GetUserLocalDataDir());
@@ -116,9 +122,7 @@ bool CDlgPageEncode::TransferDataFromWindow()
 		bool bFound = false;
 		if (!wxFileName::IsCaseSensitive())
 		{
-			for (std::set<wxString>::iterator iDir = directories.begin();
-					!bFound && iDir != directories.end();
-					++iDir)
+			for (std::set<wxString>::iterator iDir = directories.begin(); !bFound && iDir != directories.end(); ++iDir)
 			{
 				if (0 == name.GetPath().CmpNoCase(*iDir))
 					bFound = true;

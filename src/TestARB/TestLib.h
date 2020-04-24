@@ -24,13 +24,17 @@
 #include "ARBCommon/ARBTypes.h"
 
 // Set this to 1 to cause TODO_TESTs to fail
-#define FAIL_TODO_TEST	0
+#define FAIL_TODO_TEST 0
 
 extern bool g_bMicroTest;
 extern void SetLang(wxLanguage langId);
 
 #if FAIL_TODO_TEST
-#define TODO_TEST	{bool TODO = false; REQUIRE(TODO);}
+#define TODO_TEST \
+	{ \
+		bool TODO = false; \
+		REQUIRE(TODO); \
+	}
 #else
 #define TODO_TEST
 #endif

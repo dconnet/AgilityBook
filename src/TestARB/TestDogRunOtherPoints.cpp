@@ -18,8 +18,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
-#include "ARB/ARBStructure.h"
 #include "ARB/ARBDogRunOtherPoints.h"
+#include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
 
 #ifdef __WXMSW__
@@ -34,7 +34,7 @@ TEST_CASE("DogRunOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	static ARBDogRunOtherPointsPtr New();
+			//	static ARBDogRunOtherPointsPtr New();
 		}
 	}
 
@@ -44,7 +44,7 @@ TEST_CASE("DogRunOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogRunOtherPointsPtr Clone() const;
+			//	ARBDogRunOtherPointsPtr Clone() const;
 		}
 	}
 
@@ -54,7 +54,7 @@ TEST_CASE("DogRunOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	ARBDogRunOtherPoints& operator=(ARBDogRunOtherPoints const& rhs);
+			//	ARBDogRunOtherPoints& operator=(ARBDogRunOtherPoints const& rhs);
 		}
 	}
 
@@ -64,8 +64,8 @@ TEST_CASE("DogRunOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool operator==(ARBDogRunOtherPoints const& rhs) const;
-		//	bool operator!=(ARBDogRunOtherPoints const& rhs) const
+			//	bool operator==(ARBDogRunOtherPoints const& rhs) const;
+			//	bool operator!=(ARBDogRunOtherPoints const& rhs) const
 		}
 	}
 
@@ -75,7 +75,7 @@ TEST_CASE("DogRunOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual std::wstring GetGenericName() const
+			//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -85,11 +85,11 @@ TEST_CASE("DogRunOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig const& inConfig,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig const& inConfig,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -99,7 +99,7 @@ TEST_CASE("DogRunOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Save(ElementNodePtr ioTree) const;
+			//	bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 }
@@ -112,11 +112,11 @@ TEST_CASE("DogRunOtherPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool Load(
-		//			ARBConfig const& inConfig,
-		//			ElementNodePtr inTree,
-		//			ARBVersion const& inVersion,
-		//			ARBErrorCallback& ioCallback);
+			//	bool Load(
+			//			ARBConfig const& inConfig,
+			//			ElementNodePtr inTree,
+			//			ARBVersion const& inVersion,
+			//			ARBErrorCallback& ioCallback);
 		}
 	}
 
@@ -135,7 +135,7 @@ TEST_CASE("DogRunOtherPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool AddOtherPoints(ARBDogRunOtherPointsPtr inOther);
+			//	bool AddOtherPoints(ARBDogRunOtherPointsPtr inOther);
 		}
 	}
 }

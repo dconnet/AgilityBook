@@ -50,16 +50,18 @@
 
 namespace
 {
-	class ARBConfigVenue_concrete : public ARBConfigVenue
+class ARBConfigVenue_concrete : public ARBConfigVenue
+{
+public:
+	ARBConfigVenue_concrete()
 	{
-	public:
-		ARBConfigVenue_concrete() {}
-		ARBConfigVenue_concrete(ARBConfigVenue const& rhs)
-			: ARBConfigVenue(rhs)
-		{
-		}
-	};
+	}
+	ARBConfigVenue_concrete(ARBConfigVenue const& rhs)
+		: ARBConfigVenue(rhs)
+	{
+	}
 };
+}; // namespace
 
 
 ARBConfigVenuePtr ARBConfigVenue::New()
@@ -167,6 +169,7 @@ ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue&& rhs)
 
 bool ARBConfigVenue::operator==(ARBConfigVenue const& rhs) const
 {
+	// clang-format off
 	return m_Name == rhs.m_Name
 		&& m_LongName == rhs.m_LongName
 		&& m_URL == rhs.m_URL
@@ -177,6 +180,7 @@ bool ARBConfigVenue::operator==(ARBConfigVenue const& rhs) const
 		&& m_Divisions == rhs.m_Divisions
 		&& m_Events == rhs.m_Events
 		&& m_MultiQs == rhs.m_MultiQs;
+	// clang-format on
 }
 
 
@@ -196,17 +200,16 @@ void ARBConfigVenue::clear()
 
 
 bool ARBConfigVenue::Load(
-		ARBConfig& ioConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfig& ioConfig,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_VENUE)
 		return false;
 	// Get the venue name.
-	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_VENUE_NAME, m_Name)
-	|| 0 == m_Name.length())
+	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_VENUE_NAME, m_Name) || 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_VENUE, ATTRIB_VENUE_NAME));
 		return false;
@@ -217,7 +220,7 @@ bool ARBConfigVenue::Load(
 	inTree->GetAttrib(ATTRIB_VENUE_URL, m_URL);
 	// LifetimeName added in v12.6, removed in 14.4
 	bool bAddLifetime = false;
-	if (inVersion < ARBVersion(14,4))
+	if (inVersion < ARBVersion(14, 4))
 	{
 		std::wstring lifetimeName;
 		if (ARBAttribLookup::Found == inTree->GetAttrib(L"LifetimeName", lifetimeName))
@@ -259,15 +262,14 @@ bool ARBConfigVenue::Load(
 			// Ignore any errors...
 			m_Events.Load(m_Divisions, element, inVersion, ioCallback);
 			// Look for any lifetime points for conversion.
-			if (inVersion < ARBVersion(14,4))
+			if (inVersion < ARBVersion(14, 4))
 			{
-				for (ARBConfigEventList::iterator iter = m_Events.begin();
-					!bAddLifetime && iter != m_Events.end();
-					++iter)
+				for (ARBConfigEventList::iterator iter = m_Events.begin(); !bAddLifetime && iter != m_Events.end();
+					 ++iter)
 				{
 					for (ARBConfigScoringList::iterator iterS = (*iter)->GetScorings().begin();
-						!bAddLifetime && iterS != (*iter)->GetScorings().end();
-						++iterS)
+						 !bAddLifetime && iterS != (*iter)->GetScorings().end();
+						 ++iterS)
 					{
 						if (!(*iterS)->GetLifetimePoints().empty())
 							bAddLifetime = true;
@@ -280,7 +282,7 @@ bool ARBConfigVenue::Load(
 			// Ignore any errors...
 			m_MultiQs.Load(*this, element, inVersion, ioCallback);
 		}
-		if (inVersion < ARBVersion(3,0))
+		if (inVersion < ARBVersion(3, 0))
 		{
 			if (name == TREE_FAULTTYPE)
 			{
@@ -306,22 +308,20 @@ bool ARBConfigVenue::Load(
 		m_LifetimeNames.AddLifetimeName(L"");
 
 	// Finish lifetime name conversion.
-	if (inVersion < ARBVersion(14,4))
+	if (inVersion < ARBVersion(14, 4))
 	{
 		if (1 == m_LifetimeNames.size() && !m_LifetimeNames.front()->GetName().empty())
 		{
 			std::wstring name = m_LifetimeNames.front()->GetName();
-			for (ARBConfigEventList::iterator iter = m_Events.begin();
-				iter != m_Events.end();
-				++iter)
+			for (ARBConfigEventList::iterator iter = m_Events.begin(); iter != m_Events.end(); ++iter)
 			{
 				for (ARBConfigScoringList::iterator iterS = (*iter)->GetScorings().begin();
-					iterS != (*iter)->GetScorings().end();
-					++iterS)
+					 iterS != (*iter)->GetScorings().end();
+					 ++iterS)
 				{
 					for (ARBConfigLifetimePointsList::iterator iterL = (*iterS)->GetLifetimePoints().begin();
-						iterL != (*iterS)->GetLifetimePoints().end();
-						++iterL)
+						 iterL != (*iterS)->GetLifetimePoints().end();
+						 ++iterL)
 					{
 						if ((*iterL)->GetName().empty())
 						{
@@ -337,13 +337,11 @@ bool ARBConfigVenue::Load(
 	if (inVersion < ARBVersion(11, 0))
 	{
 		ARBConfigMultiQPtr pMulti;
-		for (ARBConfigEventList::iterator iter = m_Events.begin();
-			iter != m_Events.end();
-			++iter)
+		for (ARBConfigEventList::iterator iter = m_Events.begin(); iter != m_Events.end(); ++iter)
 		{
 			for (ARBConfigScoringList::iterator iterS = (*iter)->GetScorings().begin();
-				iterS != (*iter)->GetScorings().end();
-				++iterS)
+				 iterS != (*iter)->GetScorings().end();
+				 ++iterS)
 			{
 				if ((*iterS)->ConvertDoubleQ())
 				{
@@ -394,17 +392,14 @@ bool ARBConfigVenue::Save(ElementNodePtr const& ioTree) const
 }
 
 
-bool ARBConfigVenue::Update(
-		int indent,
-		ARBConfigVenuePtr const& inVenueNew,
-		std::wstring& ioInfo)
+bool ARBConfigVenue::Update(int indent, ARBConfigVenuePtr const& inVenueNew, std::wstring& ioInfo)
 {
 	std::wstring info;
 	if (GetName() != inVenueNew->GetName())
 		return false;
 
 	std::wstring indentBuffer, indentName;
-	for (int i = 0; i < indent-1; ++i)
+	for (int i = 0; i < indent - 1; ++i)
 		indentName += L"   ";
 	indentBuffer = indentName + L"   ";
 	indentName += L"-";
@@ -434,8 +429,8 @@ bool ARBConfigVenue::Update(
 		int nChanges = 0;
 		int nSkipped = 0;
 		for (ARBConfigLifetimeNameList::const_iterator iter = inVenueNew->GetLifetimeNames().begin();
-			iter != inVenueNew->GetLifetimeNames().end();
-			++iter)
+			 iter != inVenueNew->GetLifetimeNames().end();
+			 ++iter)
 		{
 			if (!GetLifetimeNames().FindLifetimeName((*iter)->GetName()))
 			{
@@ -451,7 +446,6 @@ bool ARBConfigVenue::Update(
 			ioInfo += Localization()->UpdateLifetimeNames(nNew, nSkipped);
 			ioInfo += L"\n";
 		}
-
 	}
 
 	if (GetIcon() != inVenueNew->GetIcon())
@@ -465,8 +459,8 @@ bool ARBConfigVenue::Update(
 	{
 		int nChanged = 0, nAdded = 0, nSkipped = 0;
 		for (ARBConfigTitleList::const_iterator iterTitle = inVenueNew->GetTitles().begin();
-			iterTitle != inVenueNew->GetTitles().end();
-			++iterTitle)
+			 iterTitle != inVenueNew->GetTitles().end();
+			 ++iterTitle)
 		{
 			ARBConfigTitlePtr pTitle;
 			if (GetTitles().FindTitle((*iterTitle)->GetName(), &pTitle))
@@ -479,7 +473,9 @@ bool ARBConfigVenue::Update(
 					pTitle->SetLongName((*iterTitle)->GetLongName());
 					pTitle->SetMultipleStartAt((*iterTitle)->GetMultipleStartAt());
 					pTitle->SetMultipleIncrement((*iterTitle)->GetMultipleIncrement());
-					pTitle->SetMultipleStyle((*iterTitle)->GetMultipleStyle(), (*iterTitle)->GetMultipleStyleSeparator());
+					pTitle->SetMultipleStyle(
+						(*iterTitle)->GetMultipleStyle(),
+						(*iterTitle)->GetMultipleStyleSeparator());
 					pTitle->SetPrefix((*iterTitle)->GetPrefix());
 					pTitle->SetValidFrom((*iterTitle)->GetValidFrom());
 					pTitle->SetValidTo((*iterTitle)->GetValidTo());
@@ -514,8 +510,8 @@ bool ARBConfigVenue::Update(
 		std::wstring info2;
 		int nChanged = 0, nAdded = 0, nSkipped = 0;
 		for (ARBConfigDivisionList::const_iterator iterDiv = inVenueNew->GetDivisions().begin();
-			iterDiv != inVenueNew->GetDivisions().end();
-			++iterDiv)
+			 iterDiv != inVenueNew->GetDivisions().end();
+			 ++iterDiv)
 		{
 			ARBConfigDivisionPtr pDiv;
 			if (GetDivisions().FindDivision((*iterDiv)->GetName(), &pDiv))
@@ -524,7 +520,7 @@ bool ARBConfigVenue::Update(
 					++nSkipped;
 				else
 				{
-					if (pDiv->Update(indent+1, (*iterDiv), info2))
+					if (pDiv->Update(indent + 1, (*iterDiv), info2))
 						++nChanged;
 				}
 			}
@@ -561,8 +557,8 @@ bool ARBConfigVenue::Update(
 		std::wstring info2;
 		int nChanged = 0, nAdded = 0, nSkipped = 0;
 		for (ARBConfigEventList::const_iterator iterEvent = inVenueNew->GetEvents().begin();
-			iterEvent != inVenueNew->GetEvents().end();
-			++iterEvent)
+			 iterEvent != inVenueNew->GetEvents().end();
+			 ++iterEvent)
 		{
 			ARBConfigEventPtr pEvent;
 			if (GetEvents().FindEvent((*iterEvent)->GetName(), &pEvent))
@@ -571,7 +567,7 @@ bool ARBConfigVenue::Update(
 					++nSkipped;
 				else
 				{
-					if (pEvent->Update(indent+1, (*iterEvent), info2))
+					if (pEvent->Update(indent + 1, (*iterEvent), info2))
 						++nChanged;
 				}
 			}
@@ -666,10 +662,10 @@ bool ARBConfigVenue::Update(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigVenueList::Load(
-		ARBConfig& ioConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+	ARBConfig& ioConfig,
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
 {
 	ARBConfigVenuePtr thing(ARBConfigVenue::New());
 	if (!thing->Load(ioConfig, inTree, inVersion, ioCallback))
@@ -683,19 +679,14 @@ void ARBConfigVenueList::sort()
 {
 	if (2 > size())
 		return;
-	std::stable_sort(begin(), end(),
-		[](ARBConfigVenuePtr const& one, ARBConfigVenuePtr const& two)
-		{
-			return StringUtil::CompareNoCase(one->GetName(), two->GetName()) < 0;
-		}
-	);
+	std::stable_sort(begin(), end(), [](ARBConfigVenuePtr const& one, ARBConfigVenuePtr const& two) {
+		return StringUtil::CompareNoCase(one->GetName(), two->GetName()) < 0;
+	});
 }
 
 
-bool ARBConfigVenueList::VerifyMultiQ(
-		std::wstring const& inVenue,
-		std::wstring const& inMultiQ,
-		bool inUseShortName) const
+bool ARBConfigVenueList::VerifyMultiQ(std::wstring const& inVenue, std::wstring const& inMultiQ, bool inUseShortName)
+	const
 {
 	ARBConfigVenuePtr pVenue;
 	if (FindVenue(inVenue, &pVenue))
@@ -705,9 +696,9 @@ bool ARBConfigVenueList::VerifyMultiQ(
 
 
 bool ARBConfigVenueList::VerifyLevel(
-		std::wstring const& inVenue,
-		std::wstring const& inDivision,
-		std::wstring const& inLevel) const
+	std::wstring const& inVenue,
+	std::wstring const& inDivision,
+	std::wstring const& inLevel) const
 {
 	ARBConfigVenuePtr pVenue;
 	if (FindVenue(inVenue, &pVenue))
@@ -717,11 +708,11 @@ bool ARBConfigVenueList::VerifyLevel(
 
 
 bool ARBConfigVenueList::VerifyEvent(
-		std::wstring const& inVenue,
-		std::wstring const& inDivision,
-		std::wstring const& inLevel,
-		std::wstring const& inEvent,
-		ARBDate const& inDate) const
+	std::wstring const& inVenue,
+	std::wstring const& inDivision,
+	std::wstring const& inLevel,
+	std::wstring const& inEvent,
+	ARBDate const& inDate) const
 {
 	ARBConfigVenuePtr pVenue;
 	bool bFound = false;
@@ -743,10 +734,10 @@ bool ARBConfigVenueList::VerifyEvent(
 
 
 bool ARBConfigVenueList::FindTitleCompleteName(
-		std::wstring const& inVenue,
-		std::wstring const& inName,
-		bool bAbbrevFirst,
-		ARBConfigTitlePtr* outTitle) const
+	std::wstring const& inVenue,
+	std::wstring const& inName,
+	bool bAbbrevFirst,
+	ARBConfigTitlePtr* outTitle) const
 {
 	if (outTitle)
 		outTitle->reset();
@@ -767,9 +758,9 @@ bool ARBConfigVenueList::FindTitleCompleteName(
 
 
 bool ARBConfigVenueList::FindTitle(
-		std::wstring const& inVenue,
-		std::wstring const& inTitle,
-		ARBConfigTitlePtr* outTitle) const
+	std::wstring const& inVenue,
+	std::wstring const& inTitle,
+	ARBConfigTitlePtr* outTitle) const
 {
 	if (outTitle)
 		outTitle->reset();
@@ -795,9 +786,7 @@ bool ARBConfigVenueList::DeleteTitle(std::wstring const& inTitle)
 }
 
 
-bool ARBConfigVenueList::FindVenue(
-		std::wstring const& inVenue,
-		ARBConfigVenuePtr* outVenue) const
+bool ARBConfigVenueList::FindVenue(std::wstring const& inVenue, ARBConfigVenuePtr* outVenue) const
 {
 	if (outVenue)
 		outVenue->reset();
@@ -814,9 +803,7 @@ bool ARBConfigVenueList::FindVenue(
 }
 
 
-bool ARBConfigVenueList::AddVenue(
-		std::wstring const& inVenue,
-		ARBConfigVenuePtr* outVenue)
+bool ARBConfigVenueList::AddVenue(std::wstring const& inVenue, ARBConfigVenuePtr* outVenue)
 {
 	if (outVenue)
 		outVenue->reset();
@@ -865,13 +852,13 @@ int ARBConfigVenueList::DeleteVenue(std::wstring const& inVenue)
 // This is the only 'FindEvent' that takes a true level. All others take
 // a ARBConfigLevel.
 bool ARBConfigVenueList::FindEvent(
-		std::wstring const& inVenue,
-		std::wstring const& inEvent,
-		std::wstring const& inDivision,
-		std::wstring const& inLevel,
-		ARBDate const& inDate,
-		ARBConfigEventPtr* outEvent,
-		ARBConfigScoringPtr* outScoring) const
+	std::wstring const& inVenue,
+	std::wstring const& inEvent,
+	std::wstring const& inDivision,
+	std::wstring const& inLevel,
+	ARBDate const& inDate,
+	ARBConfigEventPtr* outEvent,
+	ARBConfigScoringPtr* outScoring) const
 {
 	if (outEvent)
 		outEvent->reset();
@@ -888,7 +875,8 @@ bool ARBConfigVenueList::FindEvent(
 			ARBConfigLevelPtr pLevel;
 			if (pDiv->GetLevels().FindSubLevel(inLevel, &pLevel))
 			{
-				bFound = pVenue->GetEvents().FindEvent(inEvent, inDivision, pLevel->GetName(), inDate, outEvent, outScoring);
+				bFound = pVenue->GetEvents()
+							 .FindEvent(inEvent, inDivision, pLevel->GetName(), inDate, outEvent, outScoring);
 			}
 			// Note, some users have changed NADAC to remove Novice A/B and only
 			// have Novice (no sublevels). This means during a config update,

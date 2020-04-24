@@ -35,38 +35,32 @@ class ARBWIN_API CGenericValidator : public wxValidator
 	DECLARE_CLASS(CGenericValidator)
 	DECLARE_NO_ASSIGN_IMPLEMENTED(CGenericValidator)
 	CGenericValidator(CGenericValidator&& rhs) = delete;
+
 public:
 	CGenericValidator(
-			unsigned short* val,
-			unsigned short defVal = 0,
-			bool bUseDefOnEmpty = true,
-			wxChar const* errMsg = nullptr);
+		unsigned short* val,
+		unsigned short defVal = 0,
+		bool bUseDefOnEmpty = true,
+		wxChar const* errMsg = nullptr);
+	CGenericValidator(short* val, short defVal = 0, bool bUseDefOnEmpty = true, wxChar const* errMsg = nullptr);
+	CGenericValidator(long* val, long defVal = 0, bool bUseDefOnEmpty = true, wxChar const* errMsg = nullptr);
 	CGenericValidator(
-			short* val,
-			short defVal = 0,
-			bool bUseDefOnEmpty = true,
-			wxChar const* errMsg = nullptr);
-	CGenericValidator(
-			long* val,
-			long defVal = 0,
-			bool bUseDefOnEmpty = true,
-			wxChar const* errMsg = nullptr);
-	CGenericValidator(
-			double* val,
-			int inPrec = 2,
-			double defVal = 0.0,
-			bool bUseDefOnEmpty = true,
-			wxChar const* errMsg = nullptr);
-	CGenericValidator(
-			ARBDate* val,
-			wxChar const* errMsg = nullptr);
-	CGenericValidator(
-			wxDateTime* val,
-			wxChar const* errMsg = nullptr);
+		double* val,
+		int inPrec = 2,
+		double defVal = 0.0,
+		bool bUseDefOnEmpty = true,
+		wxChar const* errMsg = nullptr);
+	CGenericValidator(ARBDate* val, wxChar const* errMsg = nullptr);
+	CGenericValidator(wxDateTime* val, wxChar const* errMsg = nullptr);
 	CGenericValidator(CGenericValidator const& rhs);
-	~CGenericValidator() {}
+	~CGenericValidator()
+	{
+	}
 
-	wxObject *Clone() const override {return new CGenericValidator(*this);}
+	wxObject* Clone() const override
+	{
+		return new CGenericValidator(*this);
+	}
 	bool Copy(CGenericValidator const& val);
 
 	bool TransferFromWindow() override;
@@ -93,12 +87,12 @@ private:
 };
 
 
-#define TRIMVALIDATOR_NONE			0x0000
-#define TRIMVALIDATOR_TRIM_LEFT		0x0001
-#define TRIMVALIDATOR_TRIM_RIGHT	0x0002
-#define TRIMVALIDATOR_TRIM_BOTH		(TRIMVALIDATOR_TRIM_LEFT | TRIMVALIDATOR_TRIM_RIGHT)
-#define TRIMVALIDATOR_NONEMPTY		0x0004
-#define TRIMVALIDATOR_DEFAULT		(TRIMVALIDATOR_TRIM_BOTH | TRIMVALIDATOR_NONEMPTY)
+#define TRIMVALIDATOR_NONE       0x0000
+#define TRIMVALIDATOR_TRIM_LEFT  0x0001
+#define TRIMVALIDATOR_TRIM_RIGHT 0x0002
+#define TRIMVALIDATOR_TRIM_BOTH  (TRIMVALIDATOR_TRIM_LEFT | TRIMVALIDATOR_TRIM_RIGHT)
+#define TRIMVALIDATOR_NONEMPTY   0x0004
+#define TRIMVALIDATOR_DEFAULT    (TRIMVALIDATOR_TRIM_BOTH | TRIMVALIDATOR_NONEMPTY)
 
 
 class ARBWIN_API CTrimValidator : public wxGenericValidator
@@ -106,15 +100,21 @@ class ARBWIN_API CTrimValidator : public wxGenericValidator
 	DECLARE_CLASS(CTrimValidator)
 	DECLARE_NO_ASSIGN_IMPLEMENTED(CTrimValidator)
 	CTrimValidator(CTrimValidator&& rhs) = delete;
+
 public:
 	CTrimValidator(
-			wxString* valPtr = nullptr,
-			long trimStyle = TRIMVALIDATOR_DEFAULT,
-			wxChar const* errMsg = nullptr); // Message to use when validation fails
+		wxString* valPtr = nullptr,
+		long trimStyle = TRIMVALIDATOR_DEFAULT,
+		wxChar const* errMsg = nullptr); // Message to use when validation fails
 	CTrimValidator(CTrimValidator const& rhs);
-	~CTrimValidator() {}
+	~CTrimValidator()
+	{
+	}
 
-	wxObject *Clone() const override {return new CTrimValidator(*this);}
+	wxObject* Clone() const override
+	{
+		return new CTrimValidator(*this);
+	}
 	bool Copy(CTrimValidator const& val);
 
 	bool TransferFromWindow() override;

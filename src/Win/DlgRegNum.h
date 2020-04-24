@@ -25,10 +25,10 @@ class CDlgRegNum : public wxDialog
 {
 public:
 	CDlgRegNum(
-			ARBConfig const& config,
-			ARBDogRegNumList& regnums,
-			ARBDogRegNumPtr const& inRegNum,
-			wxWindow* pParent = nullptr);
+		ARBConfig const& config,
+		ARBDogRegNumList& regnums,
+		ARBDogRegNumPtr const& inRegNum,
+		wxWindow* pParent = nullptr);
 
 private:
 	ARBDogRegNumList& m_RegNums;
