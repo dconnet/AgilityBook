@@ -10,6 +10,7 @@ Additional software packages required (all free):
 - Windows Installer XML toolset
 - Doxygen (optional)
 - GraphViz (optional)
+- clang-format (optional, but helpful)
 - C++14 compiler
 [See "Compiler notes" at bottom of file for supported compilers]
 
@@ -131,6 +132,15 @@ GraphViz: http://www.graphviz.org
 Used to create source code documentation. AgilityBook.dox uses v2.38.0
 Earlier versions may work. (I used 2.14.1 with no problems for a while)
 [Install to default location]
+
+--------------------
+LLVM: https://releases.llvm.org/download.html
+Currently using v9.0.1 (because Ubuntu 18.04 only has 9.0 available)
+[Install to default location]
+- clang-format -i *.h *.cpp
+This will run the formatter and rewrite the files.
+(VS2019 automatically detected the .clang-format file.
+  Edit->Advanced->Format Document)
 
 
 Compiler notes
