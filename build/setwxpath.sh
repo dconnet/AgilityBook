@@ -1,23 +1,37 @@
+# History
+# 2020-05-07 Support any wx version (made script more generic)
+# (finally put some history in here)
+
 export BUILDDIR
 export WXWIN
 
-USAGE="Usage $0 trunk|3.1.2|3.1.3 [release|debug]"
+USAGE="Usage $0 trunk|<wxWidgets-Version> [release|debug]"
 
-if test "x$1" = "xtrunk"; then
-	WXWIN=~/devtools/wx/trunk
-elif test "x$1" = "x3.1.2"; then
-	WXWIN=~/devtools/wx/wxWidgets-3.1.2
-elif test "x$1" = "x3.1.3"; then
-	WXWIN=~/devtools/wx/wxWidgets-3.1.3
-else
+if [[ "x$1" = "x" ]]
+then
 	echo $USAGE
 	return
 fi
+
+WXWIN=~/devtools/wx/$1
+if [[ ! -d "$WXWIN" = "xtrunk" ]]
+then
+	OLD=$WXWIN
+	WXWIN=~/devtools/wx/wxWidgets-$1
+	if [[ ! -d "$WXWIN" = "xtrunk" ]]
+	then
+		echo Neither $OLD or $WXWIN exist!
+		return
+	fi
+fi
+
 BUILDDIR="$WXWIN/build"
 
-if test "x$2" = "xdebug"; then
+if [[ "x$2" = "xdebug" ]]
+then
 	BUILDDIR+="-debug"
-elif test "x$2" = "xrelease"; then
+elif [[ "x$2" = "xrelease" ]]
+then
 	BUILDDIR+="-release"
 	DUMMY=0
 else
