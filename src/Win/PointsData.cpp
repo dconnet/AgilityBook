@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-05-12 Fix formatting of doubles.
  * 2019-05-04 Reworked PointsData usage.
  * 2018-12-16 Convert to fmt.
  * 2017-08-20 Add CPointsDataHeader, Fix MultiQ sorting.
@@ -324,7 +325,11 @@ void CPointsDataMultiQs::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLink
 	{
 		fmt::format_to(data, L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, m_refTag);
 	}
-	fmt::format_to(data, L"{} {}", m_ExistingDblQs + m_MQs.size(), Sanitize(m_MultiQ->GetShortName()));
+	fmt::format_to(
+		data,
+		L"{} {}",
+		ARBDouble::ToString(m_ExistingDblQs + m_MQs.size()),
+		Sanitize(m_MultiQ->GetShortName()));
 	if (!bNoInternalLinks)
 		fmt::format_to(data, L"</a>");
 	fmt::format_to(data, L"</td>\n</tr>\n");
@@ -401,9 +406,9 @@ void CPointsDataLifetime::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLin
 	}
 	fmt::format_to(data, L"{}: ", _("IDS_TOTAL").wx_str());
 	if (0 < m_Filtered)
-		fmt::format_to(data, L"{} ({})", m_Lifetime - m_Filtered, m_Lifetime);
+		fmt::format_to(data, L"{} ({})", ARBDouble::ToString(m_Lifetime - m_Filtered), ARBDouble::ToString(m_Lifetime));
 	else
-		fmt::format_to(data, L"{}", m_Lifetime);
+		fmt::format_to(data, L"{}", ARBDouble::ToString(m_Lifetime));
 	if (!bNoInternalLinks)
 		fmt::format_to(data, L"</a>");
 	fmt::format_to(data, L"</td>\n</tr>\n");
@@ -476,9 +481,9 @@ void CPointsDataLifetimeByName::GetHtml(fmt::wmemory_buffer& data, bool bNoInter
 	fmt::format_to(data, L"<tr>\n<td>&nbsp;</td>\n<td align=\"right\">");
 	fmt::format_to(data, L"{}: ", Sanitize(m_Name, true));
 	if (0 < m_Filtered)
-		fmt::format_to(data, L"{} ({})", m_Lifetime - m_Filtered, m_Lifetime);
+		fmt::format_to(data, L"{} ({})", ARBDouble::ToString(m_Lifetime - m_Filtered), ARBDouble::ToString(m_Lifetime));
 	else
-		fmt::format_to(data, L"{}", m_Lifetime);
+		fmt::format_to(data, L"{}", ARBDouble::ToString(m_Lifetime));
 	fmt::format_to(data, L"</td>\n</tr>\n");
 }
 
@@ -831,7 +836,7 @@ CPointsDataVenue::CPointsDataVenue(
 						{
 							fmt::format_to(strQcount, _("IDS_POINTS_PARTNERS").wx_str(), partnersQ.size());
 						}
-						std::wstring strPts = fmt::format(L"{}", points + nExistingSQ);
+						std::wstring strPts = fmt::format(L"{}", ARBDouble::ToString(points + nExistingSQ));
 						std::wstring strSuperQ;
 						if (hasSQs)
 						{
@@ -1287,7 +1292,7 @@ void CPointsDataOtherPointsTallyAll::GetHtml(fmt::wmemory_buffer& data, bool bNo
 	{
 		fmt::format_to(data, L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, m_refTag);
 	}
-	fmt::format_to(data, L"{}", m_Points);
+	fmt::format_to(data, L"{}", ARBDouble::ToString(m_Points));
 	if (!bNoInternalLinks)
 		fmt::format_to(data, L"</a>");
 	fmt::format_to(data, L"</td>\n</tr>\n");
@@ -1328,7 +1333,7 @@ void CPointsDataOtherPointsTallyAllByEvent::GetHtml(fmt::wmemory_buffer& data, b
 	{
 		fmt::format_to(data, L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, m_refTag);
 	}
-	fmt::format_to(data, L"{}", m_Points);
+	fmt::format_to(data, L"{}", ARBDouble::ToString(m_Points));
 	if (!bNoInternalLinks)
 		fmt::format_to(data, L"</a>");
 	fmt::format_to(data, L"</td>\n</tr>\n");
@@ -1369,7 +1374,7 @@ void CPointsDataOtherPointsTallyLevel::GetHtml(fmt::wmemory_buffer& data, bool b
 	{
 		fmt::format_to(data, L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, m_refTag);
 	}
-	fmt::format_to(data, L"{}", m_Points);
+	fmt::format_to(data, L"{}", ARBDouble::ToString(m_Points));
 	if (!bNoInternalLinks)
 		fmt::format_to(data, L"</a>");
 	fmt::format_to(data, L"</td>\n</tr>\n");
@@ -1413,7 +1418,7 @@ void CPointsDataOtherPointsTallyLevelByEvent::GetHtml(fmt::wmemory_buffer& data,
 	{
 		fmt::format_to(data, L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, m_refTag);
 	}
-	fmt::format_to(data, L"{}", m_Points);
+	fmt::format_to(data, L"{}", ARBDouble::ToString(m_Points));
 	if (!bNoInternalLinks)
 		fmt::format_to(data, L"</a>");
 	fmt::format_to(data, L"</td>\n</tr>\n");
