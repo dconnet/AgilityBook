@@ -171,9 +171,9 @@ TEST_CASE("Double")
 			REQUIRE(L"1,234,567,890" == fmt::format(std::locale("en_US"), L"{:L}", 1234567890));
 			REQUIRE(L"1.234.567.890" == fmt::format(std::locale("de_DE"), L"{:L}", 1234567890));
 			REQUIRE(L"1234567890" == fmt::format(L"{}", 1234567890));
-#if (FMT_VERSION > 60200)
-			// This causes an 'invalid type specifier' exception in v6.2
-			d = 1.2;
+#if (FMT_VERSION > 60201)
+			// This causes an 'invalid type specifier' exception in v6.2 and 6.2.1
+			double d = 1.2;
 			REQUIRE(L"1.2" == fmt::format(std::locale("en_US"), L"{:L}", d));
 #endif
 #endif
