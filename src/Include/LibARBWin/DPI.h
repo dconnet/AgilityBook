@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-05-20 Change GetScale from uint to int.
  * 2018-10-11 Moved to Win LibARBWin
  * 2014-12-27 Created.
  */
@@ -35,5 +36,5 @@ ARBWIN_API int Scale(int x);
 ARBWIN_API int UnScale(wxWindow const* pWindow, int x);
 
 /// Current scaling (200 == 200%)
-ARBWIN_API unsigned int GetScale(wxWindow const* pWindow);
+ARBWIN_API int GetScale(wxWindow const* pWindow);
 }; // namespace DPI

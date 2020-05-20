@@ -1,4 +1,7 @@
-1/26/2020: v3.5.1.<develop>
+5/20/2020: v3.5.1.<develop>
+- Bug fixes:
+  - Remembering window position failed with negative coordinates.
+    (2K primary, 4K 2nd, monitors aligned at bottom - causes negative Y values)
 
 1/26/2020: v3.5.0.113
 - Bumped file version to 15.2:

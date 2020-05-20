@@ -14,6 +14,7 @@
  * user32.dll, winuser.h
  *
  * Revision History
+ * 2020-05-20 Change GetScale from uint to int (otherwise a negative coord is munged)
  * 2019-01-01 GetContentScaleFactor is causing a problem on Mac (wx3.1.2)
  * 2018-10-11 Moved to Win LibARBWin
  * 2014-12-27 Created.
@@ -217,7 +218,7 @@ int UnScale(wxWindow const* pWindow, int x)
 }
 
 
-unsigned int GetScale(wxWindow const* pWindow)
+int GetScale(wxWindow const* pWindow)
 {
 	//this is basically wxScreenDC::GetPPI()
 #pragma PRAGMA_TODO(Fix on mac)
