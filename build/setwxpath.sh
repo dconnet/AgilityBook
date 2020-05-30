@@ -1,24 +1,25 @@
 # History
+# 2020-05-03 Fix directory test
 # 2020-05-07 Support any wx version (made script more generic)
 # (finally put some history in here)
 
 export BUILDDIR
 export WXWIN
 
-USAGE="Usage $0 trunk|<wxWidgets-Version> [release|debug]"
+USAGE=$'Usage setwxpath.sh <directory>|wxWidgets-<version> [release|debug]\nex: setwxpath.sh trunk release\nex: setwxpath.sh 3.1.3 release'
 
 if [[ "x$1" = "x" ]]
 then
-	echo $USAGE
+	echo "$USAGE"
 	return
 fi
 
 WXWIN=~/devtools/wx/$1
-if [[ ! -d "$WXWIN" = "xtrunk" ]]
+if [[ ! -d "$WXWIN" ]]
 then
 	OLD=$WXWIN
 	WXWIN=~/devtools/wx/wxWidgets-$1
-	if [[ ! -d "$WXWIN" = "xtrunk" ]]
+	if [[ ! -d "$WXWIN" ]]
 	then
 		echo Neither $OLD or $WXWIN exist!
 		return
@@ -35,7 +36,7 @@ then
 	BUILDDIR+="-release"
 	DUMMY=0
 else
-	echo $USAGE
+	echo "$USAGE"
 	return
 fi
 
