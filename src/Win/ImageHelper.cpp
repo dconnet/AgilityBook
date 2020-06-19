@@ -35,26 +35,26 @@
 #include "images/AgilityBook256_png.c"
 #include "images/AgilityBook32_png.c"
 #include "images/AgilityBook48_png.c"
-#include "images/CalEmpty_png.c"
-#include "images/CalEnteredTentative_png.c"
-#include "images/CalEntered_png.c"
-#include "images/CalPendingTentative_png.c"
-#include "images/CalPending_png.c"
-#include "images/CalPlanTentative_png.c"
-#include "images/CalPlan_png.c"
-#include "images/CalTentative_png.c"
-#include "images/HdrDown_png.c"
-#include "images/HdrUp_png.c"
-#include "images/NoteAdded_png.c"
-#include "images/NoteNoteAdded_png.c"
-#include "images/NoteNote_png.c"
-#include "images/Note_png.c"
+#include "images/blank_png.c"
 #include "images/calendar_png.c"
+#include "images/CalEntered_png.c"
+#include "images/CalEnteredTentative_png.c"
+#include "images/CalPending_png.c"
+#include "images/CalPendingTentative_png.c"
+#include "images/CalPlanTentative_png.c"
+#include "images/check_png.c"
 #include "images/checked_png.c"
 #include "images/crcd_png.c"
 #include "images/dog_png.c"
+#include "images/HdrDown_png.c"
+#include "images/HdrUp_png.c"
 #include "images/hidden_png.c"
+#include "images/Note_png.c"
+#include "images/NoteAdded_png.c"
+#include "images/NoteNote_png.c"
+#include "images/NoteNoteAdded_png.c"
 #include "images/points_png.c"
+#include "images/question_png.c"
 #include "images/run_png.c"
 #include "images/title_hidden_have_png.c"
 #include "images/title_hidden_png.c"
@@ -203,7 +203,7 @@ bool CImageHelper::DoCreateBitmap(
 	else if (id == ImageMgrCRCD)
 		LOAD_BITMAP_PNG(pWindow, crcd, outBmp);
 	else if (id == ImageMgrBlank)
-		LOAD_BITMAP_PNG(pWindow, CalEmpty, outBmp);
+		LOAD_BITMAP_PNG(pWindow, blank, outBmp);
 	else if (id == ImageMgrChecked)
 		LOAD_BITMAP_PNG(pWindow, checked, outBmp);
 	else if (id == ImageMgrUnChecked)
@@ -223,11 +223,11 @@ bool CImageHelper::DoCreateBitmap(
 	else if (id == ImageMgrCalPendingTentative)
 		LOAD_BITMAP_PNG(pWindow, CalPendingTentative, outBmp);
 	else if (id == ImageMgrCheck)
-		LOAD_BITMAP_PNG(pWindow, CalPlan, outBmp);
+		LOAD_BITMAP_PNG(pWindow, check, outBmp);
 	else if (id == ImageMgrCalPlanTentative)
 		LOAD_BITMAP_PNG(pWindow, CalPlanTentative, outBmp);
 	else if (id == ImageMgrQuestion)
-		LOAD_BITMAP_PNG(pWindow, CalTentative, outBmp);
+		LOAD_BITMAP_PNG(pWindow, question, outBmp);
 	else if (id == ImageMgrHeaderDown)
 		LOAD_BITMAP_PNG(pWindow, HdrDown, outBmp);
 	else if (id == ImageMgrHeaderUp)

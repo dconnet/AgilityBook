@@ -214,7 +214,7 @@ bool CReadHttpThread::ReadData(wxString& outErrMsg, wxString* output)
 					{
 						auto eventProgress = new wxThreadEvent(wxEVT_THREAD, m_id);
 						eventProgress->SetInt(static_cast<int>(CReadHttp::Status::Read));
-						eventProgress->SetExtraLong(read);
+						eventProgress->SetExtraLong(static_cast<long>(read));
 						wxQueueEvent(m_pParent, eventProgress);
 						m_outStream->Write(buffer.get(), read);
 					}
