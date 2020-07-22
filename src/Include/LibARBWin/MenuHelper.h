@@ -47,7 +47,7 @@ public:
 		wchar_t const* toolbar; ///< Toolbar text
 		wchar_t const* menu;    ///< Menu text
 		wchar_t const* help;    ///< Tooltip help (and status help)
-		char const* artId;      ///< Toolbar/menu bitmap artid (wxArtId/wxString)
+		wxArtID const artId;    ///< Toolbar/menu bitmap artid
 		ItemData()
 			: menuId(0)
 			, flags(0)
@@ -57,7 +57,7 @@ public:
 			, toolbar(nullptr)
 			, menu(nullptr)
 			, help(nullptr)
-			, artId(nullptr)
+			, artId()
 		{
 		}
 		ItemData(
@@ -70,6 +70,27 @@ public:
 			wchar_t const* _menu,
 			wchar_t const* _help,
 			char const* _artId)
+			: menuId(_menuId)
+			, flags(_flags)
+			, id(_id)
+			, kind(_kind)
+			, menuLevel(_menuLevel)
+			, toolbar(_toolbar)
+			, menu(_menu)
+			, help(_help)
+			, artId(_artId)
+		{
+		}
+		ItemData(
+			int _menuId,
+			unsigned int _flags,
+			int _id,
+			wxItemKind _kind,
+			size_t _menuLevel,
+			wchar_t const* _toolbar,
+			wchar_t const* _menu,
+			wchar_t const* _help,
+			wxString const& _artId)
 			: menuId(_menuId)
 			, flags(_flags)
 			, id(_id)
