@@ -1,4 +1,6 @@
-5/20/2020: v3.5.1.<develop>
+7/22/2020: v3.5.1.<develop>
+- New features / Enhancements:
+  - Support wx3.1.4
 - Bug fixes:
   - Remembering window position failed with negative coordinates.
     (2K primary, 4K 2nd, monitors aligned at bottom - causes negative Y values)

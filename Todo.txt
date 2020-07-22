@@ -1,4 +1,7 @@
-Last Updated: 9/21/2019
+Last Updated: 7/21/2020
+
+- Enter 100 for faults (as in F, to get 0 score) - if overtime, then score is
+  negative. Prevent negative scores. (happened in JWW)
 
 - Allow assigning a club as the "primary" - this is what will used for the icon in the list.
 

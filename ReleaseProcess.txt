@@ -40,9 +40,9 @@ Commit all changes to GitHub.
 
 Switch to build machine, do a full rebuild and verify it.
 - cd src\Projects\Installer
-- 'BuildAll.py -w %WXBASE%\wxWidgets-3.1.3 -b fullupdate' [runs VC142 compile]
+- 'BuildAll.py -w %WXBASE%\wxWidgets-3.1.4 -b fullupdate' [runs VC142 compile]
   - BuildAll options: -w wxwin [-b fullupdate | clean] compiler*
-      -w wxwin: Root of wx tree, normally %WXBASE%\wxWidgets-3.1.3'
+      -w wxwin: Root of wx tree, normally %WXBASE%\wxWidgets-3.1.4'
                 Default is %WXWIN%
       -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
       -t:       Testing, just print commands to run

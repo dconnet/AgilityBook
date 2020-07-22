@@ -228,9 +228,14 @@ int GetScale(wxWindow const* pWindow)
 	if (!pWindow)
 		return GetDPI().GetScale();
 	else
+	{
+#if wxCHECK_VERSION(3, 1, 4)
+		return static_cast<unsigned int>(pWindow->GetDPIScaleFactor() * 100);
+#else
 		return static_cast<unsigned int>(pWindow->GetContentScaleFactor() * 100);
 #endif
-	//return GetDPI().GetScale();
+	}
+#endif
 }
 
 }; // namespace DPI

@@ -27,7 +27,7 @@ Currently using version 3.8.2
 - Note, also install pyWin32 from https://sourceforge.net/projects/pywin32/files/pywin32/
 
 wxWidgets: http://www.wxwidgets.org/
-I'm currently using version 3.1.3. Min supported is 3.1.2.
+I'm currently using version 3.1.4. Min supported is 3.1.2.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR) IMPORTANT: This means the directory name in fr_FR
@@ -35,6 +35,7 @@ Make sure WXWIN is set to wxWidgets root directory.
 - Mac/Unix: Use .../build/setupwx.sh to setup WX build. And ". setwxpath.sh" to
   set the ARB compile environment.
 
+=== Changes to 3.1.4:
 === Changes to 3.1.3:
   - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
   - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)

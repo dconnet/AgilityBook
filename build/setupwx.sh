@@ -6,6 +6,7 @@
 # (I put this script in my home dir)
 #
 # History
+# 2020-07-22 Upgraded 3.1.3 to 3.1.4
 # 2019-10-28 Upgraded 3.1.2 to 3.1.3
 # 2019-08-24 Make gtk3 the default.
 # 2019-08-17 Remove carbon
@@ -25,7 +26,7 @@ export TARGETSDK=
 export VERSION=
 export WXWIN=
 
-USAGE="Usage $0 trunk|3.1.2|3.1.3 [debug|release]"
+USAGE="Usage $0 trunk|3.1.2|3.1.3|3.1.4 [debug|release]"
 
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/devtools/wx/trunk
@@ -35,6 +36,9 @@ elif test "x$1" = "x3.1.2"; then
 	VERSION="--disable-compat28 --disable-compat30"
 elif test "x$1" = "x3.1.3"; then
 	WXWIN=~/devtools/wx/wxWidgets-3.1.3
+	VERSION="--disable-compat28 --disable-compat30"
+elif test "x$1" = "x3.1.4"; then
+	WXWIN=~/devtools/wx/wxWidgets-3.1.4
 	VERSION="--disable-compat28 --disable-compat30"
 else
 	echo $USAGE
