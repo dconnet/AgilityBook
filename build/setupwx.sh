@@ -6,7 +6,7 @@
 # (I put this script in my home dir)
 #
 # History
-# 2020-07-22 Upgraded 3.1.3 to 3.1.4
+# 2020-07-23 Upgraded 3.1.3 to 3.1.4
 # 2019-10-28 Upgraded 3.1.2 to 3.1.3
 # 2019-08-24 Make gtk3 the default.
 # 2019-08-17 Remove carbon
@@ -21,25 +21,33 @@
 export BUILDDIR=
 export DEBUG=
 export LIBRARIES=
+export MAC_CONFIG_PARAMS=
+export MAC_MIN_OS=
 export TARGETARCH=
 export TARGETSDK=
 export VERSION=
 export WXWIN=
 
-USAGE="Usage $0 trunk|3.1.2|3.1.3|3.1.4 [debug|release]"
+USAGE="Usage $0 trunk|3.1.4|3.1.3|3.1.2 [debug|release]"
 
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/devtools/wx/trunk
 	VERSION="--disable-compat28 --disable-compat30"
-elif test "x$1" = "x3.1.2"; then
-	WXWIN=~/devtools/wx/wxWidgets-3.1.2
-	VERSION="--disable-compat28 --disable-compat30"
-elif test "x$1" = "x3.1.3"; then
-	WXWIN=~/devtools/wx/wxWidgets-3.1.3
-	VERSION="--disable-compat28 --disable-compat30"
+	MAC_CONFIG_PARAMS=" --disable-nativedvc"
+	MAC_MIN_OS=10.10
 elif test "x$1" = "x3.1.4"; then
 	WXWIN=~/devtools/wx/wxWidgets-3.1.4
 	VERSION="--disable-compat28 --disable-compat30"
+	MAC_CONFIG_PARAMS=" --disable-nativedvc"
+	MAC_MIN_OS=10.10
+elif test "x$1" = "x3.1.3"; then
+	WXWIN=~/devtools/wx/wxWidgets-3.1.3
+	VERSION="--disable-compat28 --disable-compat30"
+	MAC_MIN_OS=10.7
+elif test "x$1" = "x3.1.2"; then
+	WXWIN=~/devtools/wx/wxWidgets-3.1.2
+	VERSION="--disable-compat28 --disable-compat30"
+	MAC_MIN_OS=10.7
 else
 	echo $USAGE
 	exit
@@ -51,7 +59,7 @@ CONFIG_PARAMS=" --disable-mediactrl --disable-shared --enable-unicode"
 case `uname` in
 Darwin*)
 	# There are known bugs with the native wxDVC under Cocoa, use generic
-	CONFIG_PARAMS+=" --with-osx --disable-nativedvc"
+	CONFIG_PARAMS+=" --with-osx"$MAC_CONFIG_PARAMS
 	;;
 Linux)
 	CONFIG_PARAMS+=" --with-gtk=3"
@@ -84,7 +92,7 @@ Darwin*)
 		export LDFLAGS="-stdlib=libc++"
 		export LIBS="-lc++"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk
-		MINSDK=10.7
+		MIN_OS=$MAC_MIN_OS
 		TARGETARCH="--enable-macosx_arch=x86_64"
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk; then
@@ -94,7 +102,7 @@ Darwin*)
 		export LDFLAGS="-stdlib=libc++"
 		export LIBS="-lc++"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk
-		MINSDK=10.7
+		MIN_OS=$MAC_MIN_OS
 		TARGETARCH="--enable-macosx_arch=x86_64"
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk; then
@@ -104,7 +112,7 @@ Darwin*)
 		export LDFLAGS="-stdlib=libc++"
 		export LIBS="-lc++"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk
-		MINSDK=10.7
+		MIN_OS=$MAC_MIN_OS
 		TARGETARCH="--enable-macosx_arch=x86_64"
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk; then
@@ -114,7 +122,7 @@ Darwin*)
 		export LDFLAGS="-stdlib=libc++"
 		export LIBS="-lc++"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk
-		MINSDK=10.7
+		MIN_OS=$MAC_MIN_OS
 		TARGETARCH="--enable-macosx_arch=x86_64"
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk; then
@@ -124,7 +132,7 @@ Darwin*)
 		export LDFLAGS="-stdlib=libc++"
 		export LIBS="-lc++"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
-		MINSDK=10.7
+		MIN_OS=$MAC_MIN_OS
 		TARGETARCH="--enable-macosx_arch=x86_64"
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk; then
@@ -134,7 +142,7 @@ Darwin*)
 		export LDFLAGS="-stdlib=libc++"
 		export LIBS="-lc++"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk
-		MINSDK=10.7
+		MIN_OS=$MAC_MIN_OS
 		TARGETARCH="--enable-macosx_arch=x86_64"
 	fi
 
@@ -143,7 +151,7 @@ Darwin*)
 		exit
 	fi
 
-	CONFIG_PARAMS+=" --with-macosx-version-min=$MINSDK --with-macosx-sdk=$TARGETSDK"
+	CONFIG_PARAMS+=" --with-macosx-version-min=$MIN_OS --with-macosx-sdk=$TARGETSDK"
 	;;
 
 Linux)
