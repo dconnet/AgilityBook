@@ -222,7 +222,7 @@ int GetScale(wxWindow const* pWindow)
 {
 	//this is basically wxScreenDC::GetPPI()
 #pragma PRAGMA_TODO(Fix on mac)
-#if defined(__WXMAC__)
+#if defined(__WXMAC__) && !wxCHECK_VERSION(3, 1, 4)
 	return GetDPI().GetScale(); // GetContentScaleFactor on Mac keeps returning 0 on destroy (and sometimes on create)
 #else
 	if (!pWindow)
