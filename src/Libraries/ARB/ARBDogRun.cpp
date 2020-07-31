@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-07-31 On Faults[12]00ThenTime, don't allow score to go negative.
  * 2017-12-31 Add support for using raw faults when determining title points.
  * 2017-09-04 Change default DogsInClass to -1 (allows for DNR runs with 0 dogs)
  * 2016-01-06 Add support for named lifetime points.
@@ -965,9 +966,13 @@ double ARBDogRun::GetScore(ARBConfigScoringPtr const& inScoring) const
 			break;
 		case ARBScoringStyle::Faults100ThenTime:
 			pts = 100 - pts;
+			if (0 > pts)
+				pts = 0;
 			break;
 		case ARBScoringStyle::Faults200ThenTime:
 			pts = 200 - pts;
+			if (0 > pts)
+				pts = 0;
 			break;
 		}
 		break;
