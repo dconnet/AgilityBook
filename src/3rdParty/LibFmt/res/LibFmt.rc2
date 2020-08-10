@@ -14,8 +14,8 @@
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 7, 0, 2, 0
- PRODUCTVERSION 7, 0, 2, 0
+ FILEVERSION 7, 0, 3, 0
+ PRODUCTVERSION 7, 0, 3, 0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -31,7 +31,7 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "FileDescription", "https://github.com/fmtlib/fmt"
-            VALUE "FileVersion", "7.0.2"
+            VALUE "FileVersion", "7.0.3"
             VALUE "InternalName", "LibFmt.dll"
             VALUE "LegalCopyright", "Copyright (c) 2012 - present, Victor Zverovich"
             VALUE "OriginalFilename", "LibFmt.dll"
