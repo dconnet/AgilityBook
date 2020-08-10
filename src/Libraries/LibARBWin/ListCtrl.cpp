@@ -46,10 +46,11 @@
 #endif
 
 
+bool CReportListCtrl::m_enableRowColors = true;
+
+// Note to self: If this is immediately after includes, doxygen throws a hissy fit.
 wxIMPLEMENT_CLASS(CReportListCtrl, CListCtrl)
 
-
-bool CReportListCtrl::m_enableRowColors = true;
 
 void CReportListCtrl::EnableRowColors(bool bEnable)
 {
