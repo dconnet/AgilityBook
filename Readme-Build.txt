@@ -36,6 +36,9 @@ Make sure WXWIN is set to wxWidgets root directory.
   set the ARB compile environment.
 
 === Changes to 3.1.4:
+  - Apply all 3.1.3 changes
+  - Mac fix: https://github.com/wxWidgets/wxWidgets/commit/bb406996
+
 === Changes to 3.1.3:
   - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
   - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
