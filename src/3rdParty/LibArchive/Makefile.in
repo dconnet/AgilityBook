@@ -17,7 +17,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/Include -I$(TOPSRCDIR)/3rdParty/LibArchive/include -I$(SRCDIR)
+INCLUDES += -I$(TOPSRCDIR)/Include -I$(TOPSRCDIR)/3rdParty/LibArchive/include -I$(SRCDIR)/src
 
 ##########
 # List of programs and archives to link
@@ -38,7 +38,7 @@ libarchive_SRCS = src/LibArchive.cpp
 ##########
 # Precompiled headers
 ##########
-PRECOMP_HEADER = $(TOPSRCDIR)/3rdParty/LibArchive/stdafx.h
+PRECOMP_HEADER = $(TOPSRCDIR)/3rdParty/LibArchive/src/stdafx.h
 
 
 ##########
