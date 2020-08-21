@@ -17,7 +17,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/3rdParty/LibFmt/include -I$(SRCDIR)/src
+INCLUDES += -I$(TOPSRCDIR)/Include -I$(TOPSRCDIR)/3rdParty/LibFmt/include -I$(SRCDIR)
 
 ##########
 # List of programs and archives to link
@@ -41,7 +41,7 @@ libfmt_SRCS = src/format.cpp \
 ##########
 # Precompiled headers
 ##########
-#PRECOMP_HEADER = $(TOPSRCDIR)/src/3rdParty/LibFmt/src/stdafx.h
+#PRECOMP_HEADER = $(TOPSRCDIR)/3rdParty/LibFmt/src/stdafx.h
 
 
 ##########

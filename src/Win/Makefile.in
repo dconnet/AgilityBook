@@ -21,7 +21,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/3rdParty/LibFmt/include -I$(TOPSRCDIR)/src/3rdParty/LibArchive/include -I$(TOPSRCDIR)/src/3rdParty/LibTidyHtml/include
+INCLUDES += -I$(TOPSRCDIR)/Include -I$(TOPSRCDIR)/3rdParty/LibFmt/include -I$(TOPSRCDIR)/3rdParty/LibArchive/include -I$(TOPSRCDIR)/3rdParty/LibTidyHtml/include
 
 ##########
 # List of programs and archives to link
@@ -120,12 +120,12 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-@PACKAGE_ARB_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/Libraries/LibARBWin -larbwin -L$(TOPBUILDDIR)/src/Libraries/ARB -larb -L$(TOPBUILDDIR)/src/Libraries/ARBCommon -larbcommon -L$(TOPBUILDDIR)/src/3rdParty/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/src/3rdParty/LibArchive -larchive -L$(TOPBUILDDIR)/src/3rdParty/LibFmt -lfmt
+@PACKAGE_ARB_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/Libraries/LibARBWin -larbwin -L$(TOPBUILDDIR)/Libraries/ARB -larb -L$(TOPBUILDDIR)/Libraries/ARBCommon -larbcommon -L$(TOPBUILDDIR)/3rdParty/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/3rdParty/LibArchive -larchive -L$(TOPBUILDDIR)/3rdParty/LibFmt -lfmt
 
 ##########
 # Precompiled headers
 ##########
-PRECOMP_HEADER = $(TOPSRCDIR)/src/Win/stdafx.h
+PRECOMP_HEADER = $(TOPSRCDIR)/Win/stdafx.h
 
 ##########
 # Stuff to install
@@ -142,8 +142,8 @@ PRECOMP_HEADER = $(TOPSRCDIR)/src/Win/stdafx.h
 
 resources: @PACKAGE_ARB_SHORTNAME@
 	echo "LANGDIR $(CURDIR)"
-	python3 $(TOPSRCDIR)/src/lang/CompileLang.py -w $(WXWIN) -s $(TOPSRCDIR)/src/lang arb.po $(CURDIR) @PACKAGE_ARB_SHORTNAME@
-	python3 $(TOPSRCDIR)/src/lang/CompileDatafile.py -x $(TOPSRCDIR)/src/lang/CompileDatList.txt $(CURDIR) @PACKAGE_ARB_SHORTNAME@
+	python3 $(TOPSRCDIR)/lang/CompileLang.py -w $(WXWIN) -s $(TOPSRCDIR)/lang arb.po $(CURDIR) @PACKAGE_ARB_SHORTNAME@
+	python3 $(TOPSRCDIR)/lang/CompileDatafile.py -x $(TOPSRCDIR)/lang/CompileDatList.txt $(CURDIR) @PACKAGE_ARB_SHORTNAME@
 
 all: @PACKAGE_ARB_SHORTNAME@ resources
 
@@ -155,8 +155,8 @@ dist:: all $(PHONY)
 	# Note: "echo -n 'APPL????'" puts the '-n' in the file too (on Mac).
 	echo 'APPL????\c' > $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/PkgInfo
 	cp @PACKAGE_ARB_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/MacOS/@PACKAGE_ARB_SHORTNAME@
-	cp $(TOPSRCDIR)/src/Win/res/@PACKAGE_ARB_SHORTNAME@.icns $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
-	cp $(TOPSRCDIR)/src/Include/images/*.png $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
+	cp $(TOPSRCDIR)/Win/res/@PACKAGE_ARB_SHORTNAME@.icns $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
+	cp $(TOPSRCDIR)/Include/images/*.png $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 	cp -pR lang $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 	cp @PACKAGE_ARB_SHORTNAME@.dat $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 

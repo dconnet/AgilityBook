@@ -5,7 +5,7 @@ root. (Mine is "d:\dcon\www\agilityrecordbook\")
 
 On new year, update copyright year in:
 - License.txt
-- configure.in
+- src/configure.in
 - src/Include/VersionNumber.h
 - src/Projects/xcode*/AgilityBook/AgilityBook/AgilityBook-Info.plist
 - src/Projects/xcode*/ARBHelp/ARBHelp/ARBHelp-Info.plist
@@ -63,7 +63,7 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
   - NOTE: xcode is no longer updating CFBundleGetInfoString or
     CFBundleLongVersionString. Edit the plist files directly.
 - export PATH=$WXWIN/build-release:$PATH
-- cd .../AgilityBook
+- cd .../AgilityBook/src
 - autoconf
 - rm -rf build-rel
 - mkdir build-rel

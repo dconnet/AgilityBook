@@ -17,7 +17,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/3rdParty/LibFmt/include
+INCLUDES += -I$(TOPSRCDIR)/Include -I$(TOPSRCDIR)/3rdParty/LibFmt/include
 
 ##########
 # List of programs and archives to link
@@ -37,12 +37,12 @@ PROGRAMS = @PACKAGE_HLP_SHORTNAME@
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-@PACKAGE_HLP_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/Libraries/LibARBWin -larbwin -L$(TOPBUILDDIR)/src/Libraries/ARB -larb -L$(TOPBUILDDIR)/src/Libraries/ARBCommon -larbcommon -L$(TOPBUILDDIR)/src/3rdParty/LibFmt -lfmt
+@PACKAGE_HLP_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/Libraries/LibARBWin -larbwin -L$(TOPBUILDDIR)/Libraries/ARB -larb -L$(TOPBUILDDIR)/Libraries/ARBCommon -larbcommon -L$(TOPBUILDDIR)/3rdParty/LibFmt -lfmt
 
 ##########
 # Precompiled headers
 ##########
-PRECOMP_HEADER = $(TOPSRCDIR)/src/ARBHelp/stdafx.h
+PRECOMP_HEADER = $(TOPSRCDIR)/ARBHelp/stdafx.h
 
 ##########
 # Stuff to install
@@ -61,8 +61,8 @@ dist:: all $(PHONY)
 	# Note: "echo -n 'APPL????'" puts the '-n' in the file too (on Mac).
 	echo 'APPL????\c' > $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/PkgInfo
 	cp @PACKAGE_HLP_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/MacOS/@PACKAGE_HLP_SHORTNAME@
-	cp $(TOPSRCDIR)/src/Win/res/AgilityBook.icns $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/
-	cp $(TOPSRCDIR)/src/Include/images/AgilityBook*.png $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/
+	cp $(TOPSRCDIR)/Win/res/AgilityBook.icns $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/
+	cp $(TOPSRCDIR)/Include/images/AgilityBook*.png $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/
 
 ################################################################################
 # End of File: Makefile                                                        #

@@ -17,7 +17,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/3rdParty/LibFmt/include
+INCLUDES += -I$(TOPSRCDIR)/Include -I$(TOPSRCDIR)/3rdParty/LibFmt/include
 
 ##########
 # List of programs and archives to link
@@ -60,7 +60,7 @@ libarbwin_SRCS = ARBDebug.cpp \
 ##########
 # Precompiled headers
 ##########
-PRECOMP_HEADER = $(TOPSRCDIR)/src/Libraries/LibARBWin/stdafx.h
+PRECOMP_HEADER = $(TOPSRCDIR)/Libraries/LibARBWin/stdafx.h
 
 
 ##########

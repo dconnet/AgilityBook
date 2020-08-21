@@ -8,7 +8,7 @@
 ################################################################################
 AC_INIT(Agility Record Book, 3.5.0.113, [help@agilityrecordbook.com])
 
-AC_CONFIG_SRCDIR(src/Win/stdafx.cpp)
+AC_CONFIG_SRCDIR(Win/stdafx.cpp)
 
 AC_SUBST(PACKAGE_ARB_SHORTNAME, "AgilityBook")
 AC_SUBST(PACKAGE_HLP_SHORTNAME, "ARBHelp")
@@ -166,20 +166,19 @@ AC_SUBST_FILE(NAM_RULES)
 # subsequent command to generate those files.                                  #
 ################################################################################
 AC_CONFIG_FILES([NAM_rules.mk Makefile \
-	src/Makefile \
-	src/3rdParty/Makefile \
-	src/3rdParty/LibArchive/Makefile \
-	src/3rdParty/LibFmt/Makefile \
-	src/3rdParty/LibTidyHtml/Makefile \
-	src/Libraries/ARB/Makefile \
-	src/Libraries/ARBCommon/Makefile \
-	src/Libraries/LibARBWin/Makefile \
-	src/ARBHelp/Makefile \
-	src/TestARB/Makefile \
-	src/Win/Makefile \
-	src/ARBHelp/Info.plist \
-	src/ARBHelp/version.plist \
-	src/Win/Info.plist \
-	src/Win/version.plist])
+	3rdParty/Makefile \
+	3rdParty/LibArchive/Makefile \
+	3rdParty/LibFmt/Makefile \
+	3rdParty/LibTidyHtml/Makefile \
+	Libraries/ARB/Makefile \
+	Libraries/ARBCommon/Makefile \
+	Libraries/LibARBWin/Makefile \
+	ARBHelp/Makefile \
+	TestARB/Makefile \
+	Win/Makefile \
+	ARBHelp/Info.plist \
+	ARBHelp/version.plist \
+	Win/Info.plist \
+	Win/version.plist])
 
 AC_OUTPUT

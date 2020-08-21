@@ -208,7 +208,7 @@ OSX 10.9:
   Must reboot after modifying.
 ===
 setenv WXBASE /Users/dconnet/devtools/wx
-setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.2
+setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.4
 ====
 OSX 10.10+:
 - launchd.conf has been deprecated.
@@ -229,7 +229,7 @@ OSX 10.10+:
     <string>-c</string>
     <string>
     launchctl setenv WXBASE /Users/dconnet/devtools/wx
-    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.2
+    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.4
     </string>
   </array>
   <key>RunAtLoad</key>

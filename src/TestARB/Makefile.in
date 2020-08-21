@@ -17,7 +17,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/3rdParty/LibFmt/include -I$(TOPSRCDIR)/src/3rdParty/LibArchive/include -I$(TOPSRCDIR)/src/3rdParty/LibTidyHtml/include
+INCLUDES += -I$(TOPSRCDIR)/Include -I$(TOPSRCDIR)/3rdParty/LibFmt/include -I$(TOPSRCDIR)/3rdParty/LibArchive/include -I$(TOPSRCDIR)/3rdParty/LibTidyHtml/include
 
 ##########
 # List of programs and archives to link
@@ -82,12 +82,12 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-@PACKAGE_TEST_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/Libraries/LibARBWin -larbwin -L$(TOPBUILDDIR)/src/Libraries/ARB -larb -L$(TOPBUILDDIR)/src/Libraries/ARBCommon -larbcommon -L$(TOPBUILDDIR)/src/3rdParty/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/src/3rdParty/LibArchive -larchive -L$(TOPBUILDDIR)/src/3rdParty/LibFmt -lfmt
+@PACKAGE_TEST_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/Libraries/LibARBWin -larbwin -L$(TOPBUILDDIR)/Libraries/ARB -larb -L$(TOPBUILDDIR)/Libraries/ARBCommon -larbcommon -L$(TOPBUILDDIR)/3rdParty/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/3rdParty/LibArchive -larchive -L$(TOPBUILDDIR)/3rdParty/LibFmt -lfmt
 
 ##########
 # Precompiled headers
 ##########
-PRECOMP_HEADER = $(TOPSRCDIR)/src/TestARB/stdafx.h
+PRECOMP_HEADER = $(TOPSRCDIR)/TestARB/stdafx.h
 
 ##########
 # Stuff to install
@@ -98,11 +98,11 @@ INSTALL_BIN = @PACKAGE_TEST_SHORTNAME@
 
 resources: @PACKAGE_TEST_SHORTNAME@
 	echo "LANGDIR $(CURDIR)"
-	python3 $(TOPSRCDIR)/src/lang/CompileLang.py -w $(WXWIN) -s $(TOPSRCDIR)/src/lang arb.po $(CURDIR) @PACKAGE_TEST_SHORTNAME@
-	python3 $(TOPSRCDIR)/src/lang/CompileDatafile.py -x -f "$(TOPSRCDIR)/src/TestARB/res/CompileDatListTest.txt"  $(TOPSRCDIR)/src/lang/CompileDatList.txt $(CURDIR) @PACKAGE_TEST_SHORTNAME@
+	python3 $(TOPSRCDIR)/lang/CompileLang.py -w $(WXWIN) -s $(TOPSRCDIR)/lang arb.po $(CURDIR) @PACKAGE_TEST_SHORTNAME@
+	python3 $(TOPSRCDIR)/lang/CompileDatafile.py -x -f "$(TOPSRCDIR)/TestARB/res/CompileDatListTest.txt"  $(TOPSRCDIR)/lang/CompileDatList.txt $(CURDIR) @PACKAGE_TEST_SHORTNAME@
 
 all: @PACKAGE_TEST_SHORTNAME@ resources
-	python3 $(TOPSRCDIR)/src/Projects/RunARBTests.py $(TOPSRCDIR)/src $(CURDIR) @PACKAGE_TEST_SHORTNAME@ Mac
+	python3 $(TOPSRCDIR)/Projects/RunARBTests.py $(TOPSRCDIR) $(CURDIR) @PACKAGE_TEST_SHORTNAME@ Mac
 
 dist:: @PACKAGE_TEST_SHORTNAME@ resources
 

@@ -17,7 +17,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/3rdParty/LibFmt/include -I$(TOPSRCDIR)/src/3rdParty/LibTidyHtml/include -I$(SRCDIR)/src -I$(SRCDIR)/tidy/include -I$(SRCDIR)/tidy/src -DSUPPORT_UTF16_ENCODINGS -DSUPPORT_ASIAN_ENCODINGS -DSUPPORT_ACCESSIBILITY_CHECKS
+INCLUDES += -I$(TOPSRCDIR)/Include -I$(TOPSRCDIR)/3rdParty/LibFmt/include -I$(TOPSRCDIR)/3rdParty/LibTidyHtml/include -I$(SRCDIR) -I$(SRCDIR)/tidy/include -I$(SRCDIR)/tidy/src -DSUPPORT_UTF16_ENCODINGS -DSUPPORT_ASIAN_ENCODINGS -DSUPPORT_ACCESSIBILITY_CHECKS
 
 ##########
 # List of programs and archives to link
@@ -64,7 +64,7 @@ libtidyhtml_SRCS = src/LibTidyHtml.cpp \
 ##########
 # Precompiled headers
 ##########
-#PRECOMP_HEADER = $(TOPSRCDIR)/src/3rdParty/LibTidyHtml/stdafx.h
+#PRECOMP_HEADER = $(TOPSRCDIR)/3rdParty/LibTidyHtml/stdafx.h
 
 
 ##########

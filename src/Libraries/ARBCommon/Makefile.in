@@ -17,7 +17,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/3rdParty/LibFmt/include
+INCLUDES += -I$(TOPSRCDIR)/Include -I$(TOPSRCDIR)/3rdParty/LibFmt/include
 
 ##########
 # List of programs and archives to link
@@ -51,7 +51,7 @@ libarbcommon_SRCS = ARBBase64.cpp \
 ##########
 # Precompiled headers
 ##########
-PRECOMP_HEADER = $(TOPSRCDIR)/src/Libraries/ARBCommon/stdafx.h
+PRECOMP_HEADER = $(TOPSRCDIR)/Libraries/ARBCommon/stdafx.h
 
 
 ##########

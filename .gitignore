@@ -12,13 +12,13 @@
 .vscode
 
 # Ignore (recommended and things I do) Mac build directory (and generated files)
-/build-cocoa/*
-/build-cocoa-debug/*
-/build-rel/*
-/build-debug/*
+/src/build-cocoa/*
+/src/build-cocoa-debug/*
+/src/build-rel/*
+/src/build-debug/*
 
-/autom4te.cache/*
-/configure
+/src/autom4te.cache/*
+/src/configure
 
 xcuserdata/
 /src/Projects/xcode*/build/*

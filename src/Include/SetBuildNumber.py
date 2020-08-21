@@ -1,8 +1,9 @@
 # Update build number in VersionNumber.h
-# and ../../configure.in
+# and ../configure.in
 #
 # This assumes the current directory is 'Include'
 #
+# 2020-08-21 Moved configure.in into src (moved top build directory down)
 # 2019-08-24 Fix writing configure.in
 # 2016-06-10 Convert to Python3
 # 2016-03-28 Cleanup lockfile on exception
@@ -134,8 +135,8 @@ def doWork():
 		os.remove('VersionNumber.h.new')
 
 	update = 0
-	conf = open('../../configure.in', 'r')
-	confOut = open('../../configure.in.new', 'w', newline='\n')
+	conf = open('../configure.in', 'r')
+	confOut = open('../configure.in.new', 'w', newline='\n')
 	while 1:
 		line = conf.readline()
 		if not line:
@@ -161,12 +162,12 @@ def doWork():
 	confOut.close()
 
 	if update:
-		print("../../configure.in updated to " + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB)
-		os.remove('../../configure.in')
-		os.rename('../../configure.in.new', '../../configure.in')
+		print("../configure.in updated to " + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB)
+		os.remove('../configure.in')
+		os.rename('../configure.in.new', '../configure.in')
 	else:
-		print("../../configure.in is up-to-date")
-		os.remove('../../configure.in.new')
+		print("../configure.in is up-to-date")
+		os.remove('../configure.in.new')
 
 	return 0
 
