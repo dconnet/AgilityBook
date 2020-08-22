@@ -36,10 +36,6 @@ Make sure WXWIN is set to wxWidgets root directory.
   set the ARB compile environment.
 
 === Changes to 3.1.4:
-  - Apply all 3.1.3 changes
-  - Mac fix: https://github.com/wxWidgets/wxWidgets/commit/bb406996
-
-=== Changes to 3.1.3:
   - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
   - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
@@ -48,6 +44,7 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Set wxUSE_MEDIACTRL to 0 (currently 1)
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
   - Set wxUSE_INKEDIT to 1 (currently 0)
+  - Mac fix: https://github.com/wxWidgets/wxWidgets/commit/bb406996
 
 > src/msw/textctrl.cpp
 >diff textctrl.old textctrl.cpp
@@ -56,6 +53,24 @@ Make sure WXWIN is set to wxWidgets root directory.
 >     if (m_isInkEdit)
 >         DissociateHandle();
 > #endif
+>
+
+> src\msw\toolbar.cpp (note: this fix also applies to 3.1.2)
+> diff toolbar.old toolbar.cpp
+454a455,468
+> #if wxUSE_TOOLTIPS
+>     // MSW "helpfully" handles ampersands as mnemonics in the tooltips
+>     // (officially in order to allow using the same string as the menu item and
+>     // a toolbar item tip), but we don't want this, so force TTS_NOPREFIX to be
+>     // on to preserve all ampersands.
+>     HWND hwndTTip = (HWND)::SendMessage(GetHwnd(), TB_GETTOOLTIPS, 0, 0);
+>     if ( hwndTTip )
+>     {
+>         long styleTTip = ::GetWindowLong(hwndTTip, GWL_STYLE);
+>         styleTTip |= TTS_NOPREFIX;
+>         ::SetWindowLong(hwndTTip, GWL_STYLE, styleTTip);
+>     }
+> #endif // wxUSE_TOOLTIPS
 >
 
 === Changes to 3.1.2:
