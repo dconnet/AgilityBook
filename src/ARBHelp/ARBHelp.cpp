@@ -68,7 +68,7 @@ bool CARBHelpApp::OnInit()
 	wxCmdLineParser cmdline(cmdLineDesc, argc, argv);
 	if (0 != cmdline.Parse(true))
 	{
-		BaseAppCleanup();
+		BaseAppCleanup(true);
 		return false;
 	}
 

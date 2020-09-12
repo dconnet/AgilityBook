@@ -17,7 +17,7 @@
  */
 
 #include "ARB/ARBTypes2.h"
-class CAgilityBookDoc;
+class ARBAgilityRecordBook;
 class CCalendarSitesImpl;
 
 
@@ -34,7 +34,7 @@ public:
 	/**
 	 * Iterate through all the active sites and add the desired entries.
 	 */
-	bool FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, wxWindow* pParent = nullptr);
+	bool FindEntries(ARBAgilityRecordBook& book, wxWindow* pParent = nullptr);
 
 private:
 	std::unique_ptr<CCalendarSitesImpl> m_Impl;

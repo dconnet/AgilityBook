@@ -57,7 +57,7 @@ public:
 public:
 	CDlgAssignColumns(
 		CAgilityBookOptions::ColumnOrder eOrder,
-		wxWindow* pParent = nullptr,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc = nullptr,
 		int initSelection = 0); // IO_TYPE list to initially select (if multiple)
 

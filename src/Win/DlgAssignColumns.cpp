@@ -93,7 +93,6 @@ Training Log:
 #include "stdafx.h"
 #include "DlgAssignColumns.h"
 
-#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 
@@ -845,8 +844,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 	, m_btnUp(nullptr)
 	, m_btnDown(nullptr)
 {
-	if (!pParent)
-		pParent = wxGetApp().GetTopWindow();
+	assert(pParent);
 	Create(
 		pParent,
 		wxID_ANY,

@@ -1,0 +1,91 @@
+// Microsoft Visual C++ generated resource script.
+//
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+#define wxUSE_NO_MANIFEST 1
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#define wxUSE_NO_MANIFEST 1\r\n\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#include ""res/CalSites.rc2""\r\n"
+    "#include ""wx/msw/wx.rc""\r\n\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Resources
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+AGILITYBOOK             ICON                    "../Win/res/AgilityBook.ico"
+
+CALSITES_EN_US          MOFILE                  "lang/en_US/CalSites.mo"
+CALSITES_FR_FR          MOFILE                  "lang/fr_FR/CalSites.mo"
+
+CALSITES_DAT            DATAFILE                "CalSites.dat"
+
+AGILITYBOOK16           RCDATA                  "images/AgilityBook16.png"
+AGILITYBOOK16_2         RCDATA                  "images/AgilityBook16@2.png"
+AGILITYBOOK32           RCDATA                  "images/AgilityBook32.png"
+AGILITYBOOK32_2         RCDATA                  "images/AgilityBook32@2.png"
+AGILITYBOOK48           RCDATA                  "images/AgilityBook48.png"
+AGILITYBOOK48_2         RCDATA                  "images/AgilityBook48@2.png"
+AGILITYBOOK256          RCDATA                  "images/AgilityBook256.png"
+
+BLANK                   RCDATA                  "images/blank.png"
+CHECKED                 RCDATA                  "images/checked.png"
+CHECKED_2               RCDATA                  "images/checked@2.png"
+UNCHECKED               RCDATA                  "images/unchecked.png"
+UNCHECKED_2             RCDATA                  "images/unchecked@2.png"
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "res/CalSites.rc2"
+#include "wx/msw/wx.rc"
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED

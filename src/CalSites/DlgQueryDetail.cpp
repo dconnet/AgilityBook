@@ -21,9 +21,9 @@
 #include "stdafx.h"
 #include "DlgQueryDetail.h"
 
-#include "AgilityBook.h"
-#include "ComboBoxVenue.h"
+#include "CalSites.h"
 
+#include "../Win/ComboBoxVenue.h"
 #include "ARB/ARBConfig.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/Validators.h"

@@ -67,7 +67,7 @@ bool CARBUpdaterApp::OnInit()
 	wxCmdLineParser cmdline(cmdLineDesc, argc, argv);
 	if (0 != cmdline.Parse(true))
 	{
-		BaseAppCleanup();
+		BaseAppCleanup(true);
 		return false;
 	}
 
@@ -113,6 +113,6 @@ bool CARBUpdaterApp::OnInit()
 		// handle that by sleeping for a moment and trying again.
 	}
 
-	BaseAppCleanup();
+	BaseAppCleanup(true);
 	return false;
 }

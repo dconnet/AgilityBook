@@ -212,9 +212,6 @@
     <ClInclude Include="..\..\Include\Platform\SetupWX.h">
       <Filter>Include\Platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\ICalendarSite.h">
-      <Filter>Include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\IProgressMeter.h">
       <Filter>Include</Filter>
     </ClInclude>

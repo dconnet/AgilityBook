@@ -22,7 +22,7 @@
 #include "stdafx.h"
 #include "DlgPluginDetails.h"
 
-#include "AgilityBook.h"
+#include "CalSites.h"
 #include "DlgCalendarQueryDetail.h"
 
 #include "ARB/ARBConfig.h"

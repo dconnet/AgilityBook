@@ -21,7 +21,7 @@
 #include "stdafx.h"
 #include "DlgCalendarQueryDetail.h"
 
-#include "AgilityBook.h"
+#include "CalSites.h"
 #include "DlgQueryDetail.h"
 
 #include "ARB/ARBConfig.h"

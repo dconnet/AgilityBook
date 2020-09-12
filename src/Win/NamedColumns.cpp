@@ -17,7 +17,6 @@
 #include "stdafx.h"
 #include "NamedColumns.h"
 
-#include "AgilityBook.h"
 #include "AgilityBookOptions.h"
 #include "DlgAssignColumns.h"
 #include "RegItems.h"

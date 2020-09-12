@@ -1,53 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="DebugDLL|ARM64">
-      <Configuration>DebugDLL</Configuration>
-      <Platform>ARM64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugDLL|Win32">
-      <Configuration>DebugDLL</Configuration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugDLL|x64">
-      <Configuration>DebugDLL</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|ARM64">
-      <Configuration>Debug</Configuration>
-      <Platform>ARM64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|x64">
-      <Configuration>Debug</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseDLL|ARM64">
-      <Configuration>ReleaseDLL</Configuration>
-      <Platform>ARM64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="ReleaseDLL|Win32">
       <Configuration>ReleaseDLL</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugDLL|Win32">
+      <Configuration>DebugDLL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="ReleaseDLL|x64">
       <Configuration>ReleaseDLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugDLL|x64">
+      <Configuration>DebugDLL</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|ARM64">
       <Configuration>Release</Configuration>
       <Platform>ARM64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
+    <ProjectConfiguration Include="ReleaseDLL|ARM64">
+      <Configuration>ReleaseDLL</Configuration>
+      <Platform>ARM64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|x64">
-      <Configuration>Release</Configuration>
-      <Platform>x64</Platform>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugDLL|ARM64">
+      <Configuration>DebugDLL</Configuration>
+      <Platform>ARM64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -91,6 +91,16 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
@@ -101,16 +111,6 @@
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v141</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
@@ -174,22 +174,6 @@
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonReleaseLibARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
-    <Import Project="$(SolutionDir)\..\props\wxWidgetsLibARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
-    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonReleaseDllARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
-    <Import Project="$(SolutionDir)\..\props\wxWidgetsDllARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
-    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonDebugLib64.props" />
@@ -203,6 +187,22 @@
     <Import Project="$(SolutionDir)\..\props\CommonDebugDll64.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDll64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
+    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonReleaseLibARM64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
+    <Import Project="$(SolutionDir)\..\props\wxWidgetsLibARM64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
+    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonReleaseDllARM64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
+    <Import Project="$(SolutionDir)\..\props\wxWidgetsDllARM64.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
@@ -227,99 +227,8 @@
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ClCompile>
-      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
-    </PreBuildEvent>
-    <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
-      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
-      <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
-    </CustomBuildStep>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
-    <ClCompile>
-      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
-    </PreBuildEvent>
-    <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
-      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
-      <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
-    </CustomBuildStep>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
-    </PreBuildEvent>
-    <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
-      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
-      <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
-    </CustomBuildStep>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
-    <ClCompile>
-      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
-    </PreBuildEvent>
-    <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
-      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
-      <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
-    </CustomBuildStep>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-    <ClCompile>
-      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
-    </PreBuildEvent>
-    <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
-      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
-      <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
-    </CustomBuildStep>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">
-    <ClCompile>
-      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
-    </PreBuildEvent>
-    <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
-      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
-      <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
-    </CustomBuildStep>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
@@ -337,7 +246,6 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
@@ -353,9 +261,36 @@
       <Command>python "$(ProjectDir)..\SignStuff.py" "$(TargetPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <PreBuildEvent>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Message>Generating Data File</Message>
+      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <PreBuildEvent>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Message>Generating Data File</Message>
+      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
@@ -373,7 +308,6 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
@@ -389,9 +323,36 @@
       <Command>python "$(ProjectDir)..\SignStuff.py" "$(TargetPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <PreBuildEvent>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Message>Generating Data File</Message>
+      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <PreBuildEvent>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Message>Generating Data File</Message>
+      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
@@ -409,7 +370,6 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
@@ -425,6 +385,34 @@
       <Command>python "$(ProjectDir)..\SignStuff.py" "$(TargetPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <PreBuildEvent>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Message>Generating Data File</Message>
+      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <PreBuildEvent>
+      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Message>Generating Data File</Message>
+      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Win\AgilityBook.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookCalendarListView.cpp" />
@@ -438,8 +426,6 @@
     <ClCompile Include="..\..\Win\AgilityBookTrainingView.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookTreeData.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookTreeView.cpp" />
-    <ClCompile Include="..\..\Win\CalendarSites.cpp" />
-    <ClCompile Include="..\..\Win\CalendarSiteUSDAA.cpp" />
     <ClCompile Include="..\..\Win\ClipBoard.cpp" />
     <ClCompile Include="..\..\Win\ComboBoxQ.cpp" />
     <ClCompile Include="..\..\Win\ComboBoxVenue.cpp" />
@@ -448,7 +434,6 @@
     <ClCompile Include="..\..\Win\DlgAbout.cpp" />
     <ClCompile Include="..\..\Win\DlgAssignColumns.cpp" />
     <ClCompile Include="..\..\Win\DlgCalendar.cpp" />
-    <ClCompile Include="..\..\Win\DlgCalendarQueryDetail.cpp" />
     <ClCompile Include="..\..\Win\DlgClub.cpp" />
     <ClCompile Include="..\..\Win\DlgConfigEvent.cpp" />
     <ClCompile Include="..\..\Win\DlgConfigEventMethod.cpp" />
@@ -482,9 +467,7 @@
     <ClCompile Include="..\..\Win\DlgOptionsProgram.cpp" />
     <ClCompile Include="..\..\Win\DlgOtherPoint.cpp" />
     <ClCompile Include="..\..\Win\DlgPartner.cpp" />
-    <ClCompile Include="..\..\Win\DlgPluginDetails.cpp" />
     <ClCompile Include="..\..\Win\DlgPointsViewSort.cpp" />
-    <ClCompile Include="..\..\Win\DlgQueryDetail.cpp" />
     <ClCompile Include="..\..\Win\DlgReferenceRun.cpp" />
     <ClCompile Include="..\..\Win\DlgRegNum.cpp" />
     <ClCompile Include="..\..\Win\DlgReorder.cpp" />
@@ -504,30 +487,30 @@
     <ClCompile Include="..\..\Win\PointsData.cpp" />
     <ClCompile Include="..\..\Win\Print.cpp" />
     <ClCompile Include="..\..\Win\stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">Create</PrecompiledHeader>
-      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</MultiProcessorCompilation>
-      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">false</MultiProcessorCompilation>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">Create</PrecompiledHeader>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">false</MultiProcessorCompilation>
-      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</MultiProcessorCompilation>
-      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">false</MultiProcessorCompilation>
-      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">false</MultiProcessorCompilation>
-      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">false</MultiProcessorCompilation>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</MultiProcessorCompilation>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">false</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">false</MultiProcessorCompilation>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</MultiProcessorCompilation>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">false</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">false</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">false</MultiProcessorCompilation>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">false</MultiProcessorCompilation>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">false</MultiProcessorCompilation>
     </ClCompile>
     <ClCompile Include="..\..\Win\TabView.cpp" />
     <ClCompile Include="..\..\Win\UpdateInfo.cpp" />
@@ -544,7 +527,6 @@
     <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
     <ClInclude Include="..\..\Include\Platform\SetupMessages.h" />
     <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
-    <ClInclude Include="..\..\Include\ICalendarSite.h" />
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
     <ClInclude Include="..\..\Include\VersionInfoARB.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />
@@ -560,8 +542,6 @@
     <ClInclude Include="..\..\Win\AgilityBookTrainingView.h" />
     <ClInclude Include="..\..\Win\AgilityBookTreeData.h" />
     <ClInclude Include="..\..\Win\AgilityBookTreeView.h" />
-    <ClInclude Include="..\..\Win\CalendarSites.h" />
-    <ClInclude Include="..\..\Win\CalendarSiteUSDAA.h" />
     <ClInclude Include="..\..\Win\ClipBoard.h" />
     <ClInclude Include="..\..\Win\ComboBoxQ.h" />
     <ClInclude Include="..\..\Win\ComboBoxVenue.h" />
@@ -570,7 +550,6 @@
     <ClInclude Include="..\..\Win\DlgAbout.h" />
     <ClInclude Include="..\..\Win\DlgAssignColumns.h" />
     <ClInclude Include="..\..\Win\DlgCalendar.h" />
-    <ClInclude Include="..\..\Win\DlgCalendarQueryDetail.h" />
     <ClInclude Include="..\..\Win\DlgClub.h" />
     <ClInclude Include="..\..\Win\DlgConfigEvent.h" />
     <ClInclude Include="..\..\Win\DlgConfigEventMethod.h" />
@@ -604,9 +583,7 @@
     <ClInclude Include="..\..\Win\DlgOptionsProgram.h" />
     <ClInclude Include="..\..\Win\DlgOtherPoint.h" />
     <ClInclude Include="..\..\Win\DlgPartner.h" />
-    <ClInclude Include="..\..\Win\DlgPluginDetails.h" />
     <ClInclude Include="..\..\Win\DlgPointsViewSort.h" />
-    <ClInclude Include="..\..\Win\DlgQueryDetail.h" />
     <ClInclude Include="..\..\Win\DlgReferenceRun.h" />
     <ClInclude Include="..\..\Win\DlgRegNum.h" />
     <ClInclude Include="..\..\Win\DlgReorder.h" />
@@ -636,189 +613,197 @@
     <ClInclude Include="..\..\Win\WizardStart.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\Win\res\AccConfirm%402.png" />
-    <Image Include="..\..\Win\res\AccNone%402.png" />
-    <Image Include="..\..\Win\res\AccTodo%402.png" />
-    <Image Include="..\..\Win\res\AgilityBook16%402.png" />
-    <Image Include="..\..\Win\res\AgilityBook32%402.png" />
-    <Image Include="..\..\Win\res\AgilityBook48%402.png" />
-    <Image Include="..\..\Win\res\calendar%402.png" />
-    <Image Include="..\..\Win\res\CalEntered%402.png" />
-    <Image Include="..\..\Win\res\CalEnteredTentative%402.png" />
-    <Image Include="..\..\Win\res\CalPending%402.png" />
-    <Image Include="..\..\Win\res\CalPendingTentative%402.png" />
-    <Image Include="..\..\Win\res\CalPlan%402.png" />
-    <Image Include="..\..\Win\res\CalPlanTentative%402.png" />
-    <Image Include="..\..\Win\res\CalTentative%402.png" />
-    <Image Include="..\..\Win\res\checked%402.png" />
-    <Image Include="..\..\Win\res\crcd%402.png" />
-    <Image Include="..\..\Win\res\dog%402.png" />
-    <Image Include="..\..\Win\res\HdrDown%402.png" />
-    <Image Include="..\..\Win\res\HdrUp%402.png" />
-    <Image Include="..\..\Win\res\hidden%402.png" />
-    <Image Include="..\..\Win\res\Note%402.png" />
-    <Image Include="..\..\Win\res\NoteAdded%402.png" />
-    <Image Include="..\..\Win\res\NoteNote%402.png" />
-    <Image Include="..\..\Win\res\NoteNoteAdded%402.png" />
-    <Image Include="..\..\Win\res\points%402.png" />
-    <Image Include="..\..\Win\res\run%402.png" />
-    <Image Include="..\..\Win\res\title_hidden%402.png" />
-    <Image Include="..\..\Win\res\title_hidden.png" />
-    <Image Include="..\..\Win\res\title_hidden_have%402.png" />
-    <Image Include="..\..\Win\res\title_hidden_have.png" />
-    <Image Include="..\..\Win\res\title_visible%402.png" />
-    <Image Include="..\..\Win\res\title_visible.png" />
-    <Image Include="..\..\Win\res\title_visible_have%402.png" />
-    <Image Include="..\..\Win\res\title_visible_have.png" />
-    <Image Include="..\..\Win\res\toolbarAbout%402.png" />
-    <Image Include="..\..\Win\res\toolbarCalendar%402.png" />
-    <Image Include="..\..\Win\res\toolbarCopy%402.png" />
-    <Image Include="..\..\Win\res\toolbarCut%402.png" />
-    <Image Include="..\..\Win\res\toolbarDog%402.png" />
-    <Image Include="..\..\Win\res\toolbarNew%402.png" />
-    <Image Include="..\..\Win\res\toolbarOpen%402.png" />
-    <Image Include="..\..\Win\res\toolbarPaste%402.png" />
-    <Image Include="..\..\Win\res\toolbarPreview%402.png" />
-    <Image Include="..\..\Win\res\toolbarPrint%402.png" />
-    <Image Include="..\..\Win\res\toolbarRun%402.png" />
-    <Image Include="..\..\Win\res\toolbarSave%402.png" />
-    <Image Include="..\..\Win\res\toolbarTitle%402.png" />
-    <Image Include="..\..\Win\res\toolbarTraining%402.png" />
-    <Image Include="..\..\Win\res\toolbarTrial%402.png" />
-    <Image Include="..\..\Win\res\training%402.png" />
-    <Image Include="..\..\Win\res\trial%402.png" />
-    <Image Include="..\..\Win\res\unchecked%402.png" />
-    <Image Include="..\..\Win\res\venue_aac%402.png" />
-    <Image Include="..\..\Win\res\venue_aac.png" />
-    <Image Include="..\..\Win\res\venue_akc%402.png" />
-    <Image Include="..\..\Win\res\venue_akc.png" />
-    <Image Include="..\..\Win\res\venue_asca%402.png" />
-    <Image Include="..\..\Win\res\venue_asca.png" />
-    <Image Include="..\..\Win\res\venue_ckc%402.png" />
-    <Image Include="..\..\Win\res\venue_ckc.png" />
-    <Image Include="..\..\Win\res\venue_cpe%402.png" />
-    <Image Include="..\..\Win\res\venue_cpe.png" />
-    <Image Include="..\..\Win\res\venue_docna%402.png" />
-    <Image Include="..\..\Win\res\venue_docna.png" />
-    <Image Include="..\..\Win\res\venue_fci%402.png" />
-    <Image Include="..\..\Win\res\venue_fci.png" />
-    <Image Include="..\..\Win\res\venue_nadac%402.png" />
-    <Image Include="..\..\Win\res\venue_nadac.png" />
-    <Image Include="..\..\Win\res\venue_scc%402.png" />
-    <Image Include="..\..\Win\res\venue_scc.png" />
-    <Image Include="..\..\Win\res\venue_sweep%402.png" />
-    <Image Include="..\..\Win\res\venue_sweep.png" />
-    <Image Include="..\..\Win\res\venue_tdaa%402.png" />
-    <Image Include="..\..\Win\res\venue_tdaa.png" />
-    <Image Include="..\..\Win\res\venue_ukc%402.png" />
-    <Image Include="..\..\Win\res\venue_ukc.png" />
-    <Image Include="..\..\Win\res\venue_usdaa%402.png" />
-    <Image Include="..\..\Win\res\venue_usdaa.png" />
-    <Image Include="..\..\Win\res\AccConfirm.png" />
-    <Image Include="..\..\Win\res\AccNone.png" />
-    <Image Include="..\..\Win\res\AccTodo.png" />
-    <Image Include="..\..\Win\res\AgilityBook16.png" />
-    <Image Include="..\..\Win\res\AgilityBook256.png" />
-    <Image Include="..\..\Win\res\AgilityBook32.png" />
-    <Image Include="..\..\Win\res\AgilityBook48.png" />
-    <Image Include="..\..\Win\res\CalEmpty.png" />
-    <Image Include="..\..\Win\res\calendar.png" />
-    <Image Include="..\..\Win\res\CalEntered.png" />
-    <Image Include="..\..\Win\res\CalEnteredTentative.png" />
-    <Image Include="..\..\Win\res\CalPending.png" />
-    <Image Include="..\..\Win\res\CalPendingTentative.png" />
-    <Image Include="..\..\Win\res\CalPlan.png" />
-    <Image Include="..\..\Win\res\CalPlanTentative.png" />
-    <Image Include="..\..\Win\res\CalTentative.png" />
-    <Image Include="..\..\Win\res\checked.png" />
-    <Image Include="..\..\Win\res\crcd.png" />
-    <Image Include="..\..\Win\res\dog.png" />
-    <Image Include="..\..\Win\res\HdrDown.png" />
-    <Image Include="..\..\Win\res\HdrUp.png" />
-    <Image Include="..\..\Win\res\hidden.png" />
-    <Image Include="..\..\Win\res\Note.png" />
-    <Image Include="..\..\Win\res\NoteAdded.png" />
-    <Image Include="..\..\Win\res\NoteNote.png" />
-    <Image Include="..\..\Win\res\NoteNoteAdded.png" />
-    <Image Include="..\..\Win\res\points.png" />
-    <Image Include="..\..\Win\res\run.png" />
-    <Image Include="..\..\Win\res\Splash.png" />
-    <Image Include="..\..\Win\res\toolbarAbout.png" />
-    <Image Include="..\..\Win\res\toolbarCalendar.png" />
-    <Image Include="..\..\Win\res\toolbarCopy.png" />
-    <Image Include="..\..\Win\res\toolbarCut.png" />
-    <Image Include="..\..\Win\res\toolbarDog.png" />
-    <Image Include="..\..\Win\res\toolbarNew.png" />
-    <Image Include="..\..\Win\res\toolbarOpen.png" />
-    <Image Include="..\..\Win\res\toolbarPaste.png" />
-    <Image Include="..\..\Win\res\toolbarPreview.png" />
-    <Image Include="..\..\Win\res\toolbarPrint.png" />
-    <Image Include="..\..\Win\res\toolbarRun.png" />
-    <Image Include="..\..\Win\res\toolbarSave.png" />
-    <Image Include="..\..\Win\res\toolbarTitle.png" />
-    <Image Include="..\..\Win\res\toolbarTraining.png" />
-    <Image Include="..\..\Win\res\toolbarTrial.png" />
-    <Image Include="..\..\Win\res\training.png" />
-    <Image Include="..\..\Win\res\trial.png" />
-    <Image Include="..\..\Win\res\unchecked.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Image Include="..\..\Include\images\AccConfirm%402.png" />
+    <Image Include="..\..\Include\images\AccConfirm.png" />
+    <Image Include="..\..\Include\images\AccNone%402.png" />
+    <Image Include="..\..\Include\images\AccNone.png" />
+    <Image Include="..\..\Include\images\AccTodo%402.png" />
+    <Image Include="..\..\Include\images\AccTodo.png" />
+    <Image Include="..\..\Include\images\AgilityBook16%402.png" />
+    <Image Include="..\..\Include\images\AgilityBook16.png" />
+    <Image Include="..\..\Include\images\AgilityBook256.png" />
+    <Image Include="..\..\Include\images\AgilityBook32%402.png" />
+    <Image Include="..\..\Include\images\AgilityBook32.png" />
+    <Image Include="..\..\Include\images\AgilityBook48%402.png" />
+    <Image Include="..\..\Include\images\AgilityBook48.png" />
+    <Image Include="..\..\Include\images\blank.png" />
+    <Image Include="..\..\Include\images\calendar%402.png" />
+    <Image Include="..\..\Include\images\calendar.png" />
+    <Image Include="..\..\Include\images\CalEntered%402.png" />
+    <Image Include="..\..\Include\images\CalEntered.png" />
+    <Image Include="..\..\Include\images\CalEnteredTentative%402.png" />
+    <Image Include="..\..\Include\images\CalEnteredTentative.png" />
+    <Image Include="..\..\Include\images\CalPending%402.png" />
+    <Image Include="..\..\Include\images\CalPending.png" />
+    <Image Include="..\..\Include\images\CalPendingTentative%402.png" />
+    <Image Include="..\..\Include\images\CalPendingTentative.png" />
+    <Image Include="..\..\Include\images\CalPlanTentative%402.png" />
+    <Image Include="..\..\Include\images\CalPlanTentative.png" />
+    <Image Include="..\..\Include\images\check%402.png" />
+    <Image Include="..\..\Include\images\check.png" />
+    <Image Include="..\..\Include\images\checked%402.png" />
+    <Image Include="..\..\Include\images\checked.png" />
+    <Image Include="..\..\Include\images\crcd%402.png" />
+    <Image Include="..\..\Include\images\crcd.png" />
+    <Image Include="..\..\Include\images\dog%402.png" />
+    <Image Include="..\..\Include\images\dog.png" />
+    <Image Include="..\..\Include\images\HdrDown%402.png" />
+    <Image Include="..\..\Include\images\HdrDown.png" />
+    <Image Include="..\..\Include\images\HdrUp%402.png" />
+    <Image Include="..\..\Include\images\HdrUp.png" />
+    <Image Include="..\..\Include\images\hidden%402.png" />
+    <Image Include="..\..\Include\images\hidden.png" />
+    <Image Include="..\..\Include\images\Note%402.png" />
+    <Image Include="..\..\Include\images\Note.png" />
+    <Image Include="..\..\Include\images\NoteAdded%402.png" />
+    <Image Include="..\..\Include\images\NoteAdded.png" />
+    <Image Include="..\..\Include\images\NoteNote%402.png" />
+    <Image Include="..\..\Include\images\NoteNote.png" />
+    <Image Include="..\..\Include\images\NoteNoteAdded%402.png" />
+    <Image Include="..\..\Include\images\NoteNoteAdded.png" />
+    <Image Include="..\..\Include\images\points%402.png" />
+    <Image Include="..\..\Include\images\points.png" />
+    <Image Include="..\..\Include\images\question%402.png" />
+    <Image Include="..\..\Include\images\question.png" />
+    <Image Include="..\..\Include\images\run%402.png" />
+    <Image Include="..\..\Include\images\run.png" />
+    <Image Include="..\..\Include\images\Splash.png" />
+    <Image Include="..\..\Include\images\title_hidden%402.png" />
+    <Image Include="..\..\Include\images\title_hidden.png" />
+    <Image Include="..\..\Include\images\title_hidden_have%402.png" />
+    <Image Include="..\..\Include\images\title_hidden_have.png" />
+    <Image Include="..\..\Include\images\title_visible%402.png" />
+    <Image Include="..\..\Include\images\title_visible.png" />
+    <Image Include="..\..\Include\images\title_visible_have%402.png" />
+    <Image Include="..\..\Include\images\title_visible_have.png" />
+    <Image Include="..\..\Include\images\toolbarAbout%402.png" />
+    <Image Include="..\..\Include\images\toolbarAbout.png" />
+    <Image Include="..\..\Include\images\toolbarCalendar%402.png" />
+    <Image Include="..\..\Include\images\toolbarCalendar.png" />
+    <Image Include="..\..\Include\images\toolbarCopy%402.png" />
+    <Image Include="..\..\Include\images\toolbarCopy.png" />
+    <Image Include="..\..\Include\images\toolbarCut%402.png" />
+    <Image Include="..\..\Include\images\toolbarCut.png" />
+    <Image Include="..\..\Include\images\toolbarDelete%402.png" />
+    <Image Include="..\..\Include\images\toolbarDelete.png" />
+    <Image Include="..\..\Include\images\toolbarDog%402.png" />
+    <Image Include="..\..\Include\images\toolbarDog.png" />
+    <Image Include="..\..\Include\images\toolbarNew%402.png" />
+    <Image Include="..\..\Include\images\toolbarNew.png" />
+    <Image Include="..\..\Include\images\toolbarOpen%402.png" />
+    <Image Include="..\..\Include\images\toolbarOpen.png" />
+    <Image Include="..\..\Include\images\toolbarPaste%402.png" />
+    <Image Include="..\..\Include\images\toolbarPaste.png" />
+    <Image Include="..\..\Include\images\toolbarPreview%402.png" />
+    <Image Include="..\..\Include\images\toolbarPreview.png" />
+    <Image Include="..\..\Include\images\toolbarPrint%402.png" />
+    <Image Include="..\..\Include\images\toolbarPrint.png" />
+    <Image Include="..\..\Include\images\toolbarRun%402.png" />
+    <Image Include="..\..\Include\images\toolbarRun.png" />
+    <Image Include="..\..\Include\images\toolbarSave%402.png" />
+    <Image Include="..\..\Include\images\toolbarSave.png" />
+    <Image Include="..\..\Include\images\toolbarTitle%402.png" />
+    <Image Include="..\..\Include\images\toolbarTitle.png" />
+    <Image Include="..\..\Include\images\toolbarTraining%402.png" />
+    <Image Include="..\..\Include\images\toolbarTraining.png" />
+    <Image Include="..\..\Include\images\toolbarTrial%402.png" />
+    <Image Include="..\..\Include\images\toolbarTrial.png" />
+    <Image Include="..\..\Include\images\training%402.png" />
+    <Image Include="..\..\Include\images\training.png" />
+    <Image Include="..\..\Include\images\trial%402.png" />
+    <Image Include="..\..\Include\images\trial.png" />
+    <Image Include="..\..\Include\images\unchecked%402.png" />
+    <Image Include="..\..\Include\images\unchecked.png" />
+    <Image Include="..\..\Include\images\venue_aac%402.png" />
+    <Image Include="..\..\Include\images\venue_aac.png" />
+    <Image Include="..\..\Include\images\venue_akc%402.png" />
+    <Image Include="..\..\Include\images\venue_akc.png" />
+    <Image Include="..\..\Include\images\venue_asca%402.png" />
+    <Image Include="..\..\Include\images\venue_asca.png" />
+    <Image Include="..\..\Include\images\venue_bha%402.png" />
+    <Image Include="..\..\Include\images\venue_bha.png" />
+    <Image Include="..\..\Include\images\venue_ckc%402.png" />
+    <Image Include="..\..\Include\images\venue_ckc.png" />
+    <Image Include="..\..\Include\images\venue_ckcsc%402.png" />
+    <Image Include="..\..\Include\images\venue_ckcsc.png" />
+    <Image Include="..\..\Include\images\venue_cpe%402.png" />
+    <Image Include="..\..\Include\images\venue_cpe.png" />
+    <Image Include="..\..\Include\images\venue_docna%402.png" />
+    <Image Include="..\..\Include\images\venue_docna.png" />
+    <Image Include="..\..\Include\images\venue_fci%402.png" />
+    <Image Include="..\..\Include\images\venue_fci.png" />
+    <Image Include="..\..\Include\images\venue_nadac%402.png" />
+    <Image Include="..\..\Include\images\venue_nadac.png" />
+    <Image Include="..\..\Include\images\venue_scc%402.png" />
+    <Image Include="..\..\Include\images\venue_scc.png" />
+    <Image Include="..\..\Include\images\venue_sweep%402.png" />
+    <Image Include="..\..\Include\images\venue_sweep.png" />
+    <Image Include="..\..\Include\images\venue_tdaa%402.png" />
+    <Image Include="..\..\Include\images\venue_tdaa.png" />
+    <Image Include="..\..\Include\images\venue_ukc%402.png" />
+    <Image Include="..\..\Include\images\venue_ukc.png" />
+    <Image Include="..\..\Include\images\venue_uki%402.png" />
+    <Image Include="..\..\Include\images\venue_uki.png" />
+    <Image Include="..\..\Include\images\venue_usdaa%402.png" />
+    <Image Include="..\..\Include\images\venue_usdaa.png" />
+    <Image Include="..\..\Include\images\venue_valor%402.png" />
+    <Image Include="..\..\Include\images\venue_valor.png" />
     <Image Include="..\..\Win\res\AgilityBook.ico" />
     <None Include="..\..\lang\CompileDatafile.py">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">true</ExcludedFromBuild>
     </None>
     <None Include="..\..\lang\CompileLang.py">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">true</ExcludedFromBuild>
     </None>
     <None Include="..\..\lang\en_US\arb.po">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">true</ExcludedFromBuild>
     </None>
     <None Include="..\..\lang\fr_FR\arb.po">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">true</ExcludedFromBuild>
     </None>
     <None Include="..\..\Win\res\AgilityBook.rc2" />
     <None Include="..\..\Win\res\AgilityRecordBook.dtd" />
@@ -834,18 +819,18 @@
     <Text Include="..\..\..\ReleaseProcess.txt" />
     <Text Include="..\..\..\Todo.txt" />
     <Text Include="..\..\lang\CompileDatList.txt">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">true</ExcludedFromBuild>
     </Text>
   </ItemGroup>
   <ItemGroup>
@@ -869,9 +854,6 @@
     </ProjectReference>
     <ProjectReference Include="LibwxArchive.vcxproj">
       <Project>{0b172fdd-7b2e-4d76-a32c-1b2f627ccf1c}</Project>
-    </ProjectReference>
-    <ProjectReference Include="LibTidyHtml.vcxproj">
-      <Project>{05967875-9726-4f06-8ec8-db6170c00bf3}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

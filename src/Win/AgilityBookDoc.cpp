@@ -201,8 +201,6 @@ wxBEGIN_EVENT_TABLE(CAgilityBookDoc, wxDocument)
 	EVT_MENU(ID_AGILITY_NEW_DOG, CAgilityBookDoc::OnCmd)
 	EVT_UPDATE_UI(ID_AGILITY_NEW_CALENDAR, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(ID_AGILITY_NEW_CALENDAR, CAgilityBookDoc::OnCmd)
-	EVT_UPDATE_UI(ID_AGILITY_UPDATE_CALENDAR, CAgilityBookDoc::OnUpdateCmdTrue)
-	EVT_MENU(ID_AGILITY_UPDATE_CALENDAR, CAgilityBookDoc::OnCmd)
 	EVT_UPDATE_UI(ID_AGILITY_NEW_TRAINING, CAgilityBookDoc::OnUpdateCmdTrue)
 	EVT_MENU(ID_AGILITY_NEW_TRAINING, CAgilityBookDoc::OnCmd)
 	EVT_UPDATE_UI(ID_NOTES_CLUBS, CAgilityBookDoc::OnUpdateCmdTrue)
@@ -234,7 +232,6 @@ wxEND_EVENT_TABLE()
 
 CAgilityBookDoc::CAgilityBookDoc()
 	: m_Records()
-	, m_CalSites()
 	, m_StatusData(nullptr)
 	, m_pCurrentDog()
 {
@@ -2175,10 +2172,6 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 		}
 	}
 	break;
-
-	case ID_AGILITY_UPDATE_CALENDAR:
-		m_CalSites.FindEntries(this, m_Records.GetCalendar());
-		break;
 
 	case ID_AGILITY_NEW_TRAINING:
 	{

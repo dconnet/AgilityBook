@@ -25,16 +25,16 @@
 #include "stdafx.h"
 #include "CalendarSites.h"
 
-#include "AgilityBook.h"
-#include "AgilityBookDoc.h"
-#include "AgilityBookOptions.h"
+#include "CalSites.h"
 #include "CalendarSiteUSDAA.h"
-#include "DlgAssignColumns.h"
 #include "DlgCalendarQueryDetail.h"
 #include "DlgPluginDetails.h"
 #include "ICalendarSite.h"
 #include "IProgressMeter.h"
 
+#include "../Win/AgilityBookOptions.h"
+#include "../Win/DlgAssignColumns.h"
+#include "../Win/ImageHelper.h"
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBConfig.h"
 #include "ARBCommon/Element.h"
@@ -155,12 +155,16 @@ class CSortCheckTreeCtrl;
 class CDlgCalendarPlugins : public wxDialog
 {
 public:
-	CDlgCalendarPlugins(CAgilityBookDoc* pDoc, std::vector<CalSiteDataPtr>& directAccess, wxWindow* pParent = nullptr);
+	CDlgCalendarPlugins(
+		ARBAgilityRecordBook& book,
+		std::vector<CalSiteDataPtr>& directAccess,
+		wxWindow* pParent = nullptr);
 
 private:
 	void UpdateControls();
 	void EditPlugin();
 
+	ARBAgilityRecordBook& m_book;
 	CSortCheckTreeCtrl* m_ctrlPlugins;
 	CTextCtrl* m_ctrlDetails;
 	wxButton* m_ctrlRead;
@@ -169,7 +173,6 @@ private:
 	wxButton* m_ctrlQuery;
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlDelete;
-	CAgilityBookDoc* m_pDoc;
 	std::vector<CalSiteDataPtr>& m_DirectAccess;
 
 	void OnSelectionChanged(wxTreeEvent& evt);
@@ -365,7 +368,7 @@ public:
 	CCalendarSitesImpl();
 	~CCalendarSitesImpl();
 
-	bool FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, wxWindow* pParent);
+	bool FindEntries(ARBAgilityRecordBook& book, wxWindow* pParent);
 
 private:
 	std::vector<CalSiteDataPtr> m_DirectAccess;
@@ -385,9 +388,9 @@ CCalendarSitesImpl::~CCalendarSitesImpl()
 }
 
 
-bool CCalendarSitesImpl::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, wxWindow* pParent)
+bool CCalendarSitesImpl::FindEntries(ARBAgilityRecordBook& book, wxWindow* pParent)
 {
-	CDlgCalendarPlugins dlg(pDoc, m_DirectAccess, pParent);
+	CDlgCalendarPlugins dlg(book, m_DirectAccess, pParent);
 	if (wxID_OK != dlg.ShowModal())
 		return false;
 	return true;
@@ -469,8 +472,8 @@ protected:
 class CPluginConfigData : public CPluginData
 {
 public:
-	CPluginConfigData(CAgilityBookDoc* pDoc, ARBConfigCalSitePtr const& inSite)
-		: m_pDoc(pDoc)
+	CPluginConfigData(ARBAgilityRecordBook& book, ARBConfigCalSitePtr const& inSite)
+		: m_book(book)
 		, m_OrigSite(inSite)
 		, m_Site(inSite->Clone())
 		, m_Enabled(true)
@@ -536,7 +539,7 @@ public:
 	}
 
 private:
-	CAgilityBookDoc* m_pDoc;
+	ARBAgilityRecordBook& m_book;
 	ARBConfigCalSitePtr m_OrigSite;
 	ARBConfigCalSitePtr m_Site;
 	bool m_Enabled;
@@ -558,7 +561,9 @@ std::string CPluginConfigData::Process(IProgressMeter* progress)
 
 bool CPluginConfigData::Edit(wxWindow* pParent)
 {
-	CDlgPluginDetails dlg(m_pDoc->Book().GetConfig(), m_Site, pParent);
+#pragma PRAGMA_TODO(agilitybookdoc)
+	ARBAgilityRecordBook book;
+	CDlgPluginDetails dlg(book.GetConfig(), m_Site, pParent);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		m_Name = m_Site->GetName();
@@ -566,7 +571,7 @@ bool CPluginConfigData::Edit(wxWindow* pParent)
 		TranslateCodeMap(QueryLocationCodes(), m_LocationCodes);
 		TranslateCodeMap(QueryVenueCodes(), m_VenueCodes);
 		*m_OrigSite = *m_Site;
-		m_pDoc->Modify(true);
+		//m_pDoc->Modify(true);
 		return true;
 	}
 	else
@@ -576,9 +581,9 @@ bool CPluginConfigData::Edit(wxWindow* pParent)
 
 bool CPluginConfigData::Delete()
 {
-	if (m_pDoc->Book().GetConfig().GetCalSites().DeleteSite(m_OrigSite->GetName()))
+	if (m_book.GetConfig().GetCalSites().DeleteSite(m_OrigSite->GetName()))
 	{
-		m_pDoc->Modify(true);
+		//m_pDoc->Modify(true);
 		m_OrigSite.reset();
 		return true;
 	}
@@ -756,10 +761,11 @@ int CSortCheckTreeCtrl::OnCompareItems(const wxTreeItemId& item1, const wxTreeIt
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgCalendarPlugins::CDlgCalendarPlugins(
-	CAgilityBookDoc* pDoc,
+	ARBAgilityRecordBook& book,
 	std::vector<CalSiteDataPtr>& directAccess,
 	wxWindow* pParent)
 	: wxDialog()
+	, m_book(book)
 	, m_ctrlPlugins(nullptr)
 	, m_ctrlDetails(nullptr)
 	, m_ctrlRead(nullptr)
@@ -768,7 +774,6 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	, m_ctrlQuery(nullptr)
 	, m_ctrlEdit(nullptr)
 	, m_ctrlDelete(nullptr)
-	, m_pDoc(pDoc)
 	, m_DirectAccess(directAccess)
 {
 	Create(
@@ -778,6 +783,13 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 		wxDefaultPosition,
 		wxDefaultSize,
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+
+	wxIconBundle icons;
+	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook16)));
+	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook32)));
+	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook48)));
+	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook256)));
+	SetIcons(icons);
 
 	// Controls (these are done first to control tab order)
 
@@ -837,11 +849,11 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	wxButton* btnClose = new wxButton(this, wxID_CANCEL, _("IDC_PLUGIN_CLOSE"), wxDefaultPosition, wxDefaultSize, 0);
 
 	wxTreeItemId root = m_ctrlPlugins->AddRoot(L"root");
-	for (ARBConfigCalSiteList::const_iterator iConfig = m_pDoc->Book().GetConfig().GetCalSites().begin();
-		 iConfig != m_pDoc->Book().GetConfig().GetCalSites().end();
+	for (ARBConfigCalSiteList::const_iterator iConfig = m_book.GetConfig().GetCalSites().begin();
+		 iConfig != m_book.GetConfig().GetCalSites().end();
 		 ++iConfig)
 	{
-		CPluginConfigData* pData = new CPluginConfigData(m_pDoc, *iConfig);
+		CPluginConfigData* pData = new CPluginConfigData(m_book, *iConfig);
 		wxTreeItemId hItem = m_ctrlPlugins->AppendItem(root, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
 		m_ctrlPlugins->ShowCheckbox(hItem, true);
 		m_ctrlPlugins->SetChecked(hItem, true, false);
@@ -1104,11 +1116,11 @@ void CDlgCalendarPlugins::OnPluginAddCalEntry(wxCommandEvent& evt)
 				{
 					ARBCalendarPtr cal = pData->CalEntry();
 					ARBCalendarPtr calFound;
-					if (!m_pDoc->Book().GetCalendar().FindCalendar(cal, false, &calFound))
+					if (!m_book.GetCalendar().FindCalendar(cal, false, &calFound))
 					{
 						if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
 						{
-							m_pDoc->Book().GetCalendar().AddCalendar(cal);
+							m_book.GetCalendar().AddCalendar(cal);
 							++nAdded;
 						}
 					}
@@ -1128,10 +1140,10 @@ void CDlgCalendarPlugins::OnPluginAddCalEntry(wxCommandEvent& evt)
 	}
 	if (0 < nAdded + nUpdated)
 	{
-		m_pDoc->Book().GetCalendar().sort();
-		CUpdateHint hint(UPDATE_CALENDAR_VIEW);
-		m_pDoc->UpdateAllViews(nullptr, &hint);
-		m_pDoc->Modify(true);
+		m_book.GetCalendar().sort();
+		//CUpdateHint hint(UPDATE_CALENDAR_VIEW);
+		//m_pDoc->UpdateAllViews(nullptr, &hint);
+		//m_pDoc->Modify(true);
 	}
 	std::wstring str = fmt::format(_("IDS_UPDATED_CAL_ITEMS").wx_str(), nAdded, nUpdated);
 	wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
@@ -1168,7 +1180,7 @@ void CDlgCalendarPlugins::OnPluginQueryDetails(wxCommandEvent& evt)
 		if (pData && pData->HasQueryDetails())
 		{
 			CDlgCalendarQueryDetail dlg(
-				m_pDoc->Book().GetConfig(),
+				m_book.GetConfig(),
 				pData->QueryLocationCodes(),
 				pData->LocationCodes(),
 				pData->QueryVenueCodes(),
@@ -1187,12 +1199,12 @@ void CDlgCalendarPlugins::OnPluginQueryDetails(wxCommandEvent& evt)
 void CDlgCalendarPlugins::OnPluginNew(wxCommandEvent& evt)
 {
 	ARBConfigCalSitePtr site = ARBConfigCalSite::New();
-	CDlgPluginDetails dlg(m_pDoc->Book().GetConfig(), site, this);
+	CDlgPluginDetails dlg(m_book.GetConfig(), site, this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		m_pDoc->Book().GetConfig().GetCalSites().AddSite(site);
-		m_pDoc->Modify(true);
-		CPluginConfigData* pData = new CPluginConfigData(m_pDoc, site);
+		m_book.GetConfig().GetCalSites().AddSite(site);
+		//m_pDoc->Modify(true);
+		CPluginConfigData* pData = new CPluginConfigData(m_book, site);
 		wxTreeItemId hItem
 			= m_ctrlPlugins
 				  ->AppendItem(m_ctrlPlugins->GetRootItem(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
@@ -1237,9 +1249,7 @@ CCalendarSites::~CCalendarSites()
 }
 
 
-bool CCalendarSites::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, wxWindow* pParent)
+bool CCalendarSites::FindEntries(ARBAgilityRecordBook& book, wxWindow* pParent)
 {
-	if (!pDoc->OnSaveModified())
-		return false;
-	return m_Impl->FindEntries(pDoc, inCalendar, pParent);
+	return m_Impl->FindEntries(book, pParent);
 }

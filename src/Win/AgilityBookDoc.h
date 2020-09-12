@@ -33,8 +33,6 @@
  *            prevent constant re-evaluation.
  */
 
-#include "CalendarSites.h"
-
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARBCommon/ARBTypes.h"
 #include <wx/docview.h>
@@ -186,7 +184,6 @@ private:
 
 	std::wstring m_fileHash;
 	ARBAgilityRecordBook m_Records; ///< The real records.
-	CCalendarSites m_CalSites;
 	CStatusHandler* m_StatusData;
 	ARBDogPtr m_pCurrentDog;
 
