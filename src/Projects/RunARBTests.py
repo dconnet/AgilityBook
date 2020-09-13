@@ -2,7 +2,7 @@
 # This script is called in the post-build step to run the unittest program
 #
 # Typical usage from VC project file:
-#  python $(ProjectDir)RunARBTests.py "$(ProjectDir)..\.." "$(OutDir) " "$(TargetName) " $(PlatformName)
+#  python $(ProjectDir)RunARBTests.py "$(ProjectDir)..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)
 #
 # Note, using "$(TargetDir)" is bad - you have "c:\...\dir\" - that final
 # slash-quote causes a serious command line parsing problem when this is
@@ -14,9 +14,9 @@
 # 2014-11-19 DAT file is now embedded on Windows. Don't generate file here.
 # 2011-01-22 Allow 32bit to run on 64bit.
 # 2009-03-05 Moved bat file to python (removes dependency on wzzip)
-"""RunARBTests.py SourceDir TargetDirectory TargetName PlatformName
+"""RunARBTests.py SourceDir TargetDirectory TargetName PlatformShortName
 SourceDir = .../AgilityBook/src
-PlatformName = Win32 x64 Mac"""
+PlatformShortName = x86 x64 Mac"""
 
 import glob
 import os, os.path
@@ -58,11 +58,11 @@ def main():
 	targetname = str.strip(sys.argv[3])
 	platform = sys.argv[4]
 
-	if not "Win32" == platform and not "x64" == platform and not "ARM64" == platform and not "Mac" == platform:
+	if not "x86" == platform and not "x64" == platform and not "ARM64" == platform and not "Mac" == platform:
 		print('Unknown platform:', platform)
 		return 1
 
-	if not "Win32" == platform and not "x64" == platform:
+	if not "x86" == platform and not "x64" == platform:
 		# Create "TestARB.dat"
 		zip = zipfile.ZipFile(os.path.join(executableDir, targetname + '.dat'), 'w')
 		zip.write(srcDir + r'/Win/res/DefaultConfig.xml', 'DefaultConfig.xml')
@@ -73,7 +73,7 @@ def main():
 
 	os.chdir(executableDir)
 
-	if "Win32" == platform:
+	if "x86" == platform:
 		cmd = [os.path.join(executableDir, targetname + '.exe')]
 		return RunCommand(cmd, 0)
 

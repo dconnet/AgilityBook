@@ -4,7 +4,7 @@
     <Import Project="CommonMacros.props" />
   </ImportGroup>
   <PropertyGroup>
-    <OutDir>$(SolutionDir)..\..\..\bin\$(OutputPlatform)$(PlatformName)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)..\..\..\bin\$(OutputPlatform)$(PlatformShortName)\$(Configuration)\</OutDir>
     <IntDir>$(OutDir)$(ProjectName)\</IntDir>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>

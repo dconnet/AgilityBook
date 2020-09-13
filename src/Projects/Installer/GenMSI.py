@@ -100,9 +100,9 @@ WiXdir = r'c:\Tools\wix3'
 WinSrcDir = AgilityBookDir + r'\src'
 
 # Code:
-#  1: Win32/Unicode
-#  2: Win32/MBCS
-#  3: Win64/Unicode
+#  1: x86/Unicode
+#  2: x86/MBCS
+#  3: x64/Unicode
 code32 = 1
 code64 = 3
 
@@ -191,8 +191,8 @@ def getoutputvars(code, version, platformTools):
 	outputFile = ''
 	baseDir = ''
 	if code32 == code:
-		outputFile = 'AgilityBook-' + version + '-win'
-		baseDir = AgilityBookDir + r'\bin\vc' + platformTools + 'Win32\Release'
+		outputFile = 'AgilityBook-' + version + '-x86'
+		baseDir = AgilityBookDir + r'\bin\vc' + platformTools + 'x86\Release'
 		distDir = 'vc' + platformTools
 	elif code64 == code:
 		outputFile = 'AgilityBook-' + version + '-x64'

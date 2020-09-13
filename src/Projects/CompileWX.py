@@ -10,6 +10,7 @@
 # an EXE that will run on XP.
 #
 # Revision History
+# 2020-09-13 Make default vc142.
 # 2019-02-28 Add vc142 support
 # 2018-11-16 Added ARM64 support.
 # 2018-10-06 Dropping support for pre VS2017 (and XP).
@@ -41,12 +42,12 @@
 """CompileWX.py -w wxwin [-e] [-a] [-p] [-d] [-m] [-s name]* [-r config] compiler*
 	-w wxwin: Root of wx tree, normally %WXWIN%
 	-e:       Just show the environment, don't do it
-	-a:       Compile all (vc141, vc141x64)
+	-a:       Compile all (vc142, vc142x64)
 	-d:       Compile as DLLs (default: static)
 	-m:       Compile as MBCS (default: Unicode)
 	-s name:  Compile sample 'name'
 	-r config: config: release/debug
-	compiler: vc141, vc141x64, vc141arm64
+	compiler: vc142, vc142x64, vc142arm64
 """
 
 import getopt
@@ -166,7 +167,7 @@ def GetCompilerPaths(c, verbose = True):
 		# Can target specific SDKs
 		#extraargs = ' 10.0.14393.0'
 		platformDir = 'vc141'
-		platform = 'Win32'
+		platform = 'x86'
 
 	elif c == 'vc141x64':
 		baseDir = GetVSDir("15.0")
@@ -187,7 +188,7 @@ def GetCompilerPaths(c, verbose = True):
 		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = GetTarget(baseDir, False, False)
 		platformDir = 'vc142'
-		platform = 'Win32'
+		platform = 'x86'
 
 	elif c == 'vc142x64':
 		baseDir = GetVSDir("16.0")
@@ -231,9 +232,9 @@ def AddCompiler(compilers, c):
 		return False
 
 	# Sanity test
-	if c == 'vc141x64':
+	if c == 'vc142x64':
 		if not useUnicode:
-			print('ERROR: VC141x64 does not do MBCS')
+			print('ERROR: VC142x64 does not do MBCS')
 			return False
 
 	compilers.add(c)
@@ -262,8 +263,8 @@ def main():
 		elif '-w' == o:
 			wxwin = a
 		elif '-a' == o:
-			AddCompiler(compilers, 'vc141')
-			AddCompiler(compilers, 'vc141x64')
+			AddCompiler(compilers, 'vc142')
+			AddCompiler(compilers, 'vc142x64')
 		elif '-d' == o:
 			useStatic = False
 		elif '-m' == o:

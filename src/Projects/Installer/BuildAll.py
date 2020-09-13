@@ -166,7 +166,7 @@ def GetCompilerPaths(c):
 		# Can target specific SDKs
 		#extraargs = ' 10.0.14393.0'
 		platformDir = 'vc141'
-		platform = 'Win32'
+		platform = 'x86'
 
 	elif c == 'vc141x64':
 		baseDir = GetVSDir("15.0")
@@ -180,7 +180,7 @@ def GetCompilerPaths(c):
 		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = 'x86'
 		platformDir = 'vc142'
-		platform = 'Win32'
+		platform = 'x86'
 
 	elif c == 'vc142x64':
 		baseDir = GetVSDir("16.0")
@@ -295,7 +295,7 @@ def main():
 	# Targets:
 	# VC141
 	#  Configuration: 'Release'/'Debug'
-	#  Platform: Win32, x64
+	#  Platform: x86, x64
 	#  Targets: AgilityBook, ARBHelp, ARBUpdater, LibARB, LibTidy, TestARB
 
 	for compiler in compilers:
