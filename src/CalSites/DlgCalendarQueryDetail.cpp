@@ -41,13 +41,13 @@ wxEND_EVENT_TABLE()
 
 
 CDlgCalendarQueryDetail::CDlgCalendarQueryDetail(
-	ARBConfig const& inConfig,
+	ARBConfigCalSiteList const& sites,
 	std::map<std::wstring, std::wstring> const& inLocCodes,
 	std::map<std::wstring, std::wstring> const& inVenueCodes,
 	wxWindow* pParent)
 	: wxDialog()
 	, m_EditCodes(true)
-	, m_Config(inConfig)
+	, m_sites(sites)
 	, m_LocCodes(inLocCodes)
 	, m_VenueCodes(inVenueCodes)
 	, m_Locations()
@@ -66,7 +66,7 @@ CDlgCalendarQueryDetail::CDlgCalendarQueryDetail(
 
 
 CDlgCalendarQueryDetail::CDlgCalendarQueryDetail(
-	ARBConfig const& inConfig,
+	ARBConfigCalSiteList const& sites,
 	std::map<std::wstring, std::wstring> const& inLocCodes,
 	std::vector<std::wstring> const& inSelectedLocCodes,
 	std::map<std::wstring, std::wstring> const& inVenueCodes,
@@ -74,7 +74,7 @@ CDlgCalendarQueryDetail::CDlgCalendarQueryDetail(
 	wxWindow* pParent)
 	: wxDialog()
 	, m_EditCodes(false)
-	, m_Config(inConfig)
+	, m_sites(sites)
 	, m_LocCodes(inLocCodes)
 	, m_VenueCodes(inVenueCodes)
 	, m_Locations(inSelectedLocCodes)
@@ -302,7 +302,7 @@ void CDlgCalendarQueryDetail::EditVenueCode()
 			GetListColumnText(m_ctrlVenues, idx, 0).c_str(),
 			GetListColumnText(m_ctrlVenues, idx, 1).c_str(),
 			this,
-			&m_Config);
+			&m_sites);
 		if (wxID_OK == dlg.ShowModal())
 		{
 			SetListColumnText(m_ctrlVenues, idx, 0, dlg.GetDetailCode());
@@ -369,7 +369,7 @@ void CDlgCalendarQueryDetail::OnDeleteLocationCode(wxCommandEvent& evt)
 
 void CDlgCalendarQueryDetail::OnNewVenueCode(wxCommandEvent& evt)
 {
-	CDlgQueryDetail dlg(!m_EditCodes, L"", L"", this, &m_Config);
+	CDlgQueryDetail dlg(!m_EditCodes, L"", L"", this, &m_sites);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		wxString code = StringUtil::stringWX(dlg.GetDetailCode());

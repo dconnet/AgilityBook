@@ -85,14 +85,6 @@
 //	Obsolete ST PrintFontTextName
 //	Obsolete DW PrintFontTextSize
 
-//CalSites
-#define CFG_KEY_CALSITES				L"CalSites"
-//	DW (DLL names in EXE directory)
-
-//CalSites2 - used for permanently disabling a version
-#define CFG_KEY_CALSITES2				L"CalSites2"
-//	ST (DLL names in EXE directory)
-
 //Columns
 #define CFG_KEY_COLUMNS					L"Columns"
 //	ST col[n]

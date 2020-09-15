@@ -40,7 +40,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-#define ACTION_VERB_DELETE_CALPLUGIN L"DeleteCalPlugin"
+#define ACTION_VERB_DELETE_CALPLUGIN L"DeleteCalPlugin" // Obsolete
 #define ACTION_VERB_DELETE_TITLE     L"DeleteTitle"
 #define ACTION_VERB_RENAME_TITLE     L"RenameTitle"
 #define ACTION_VERB_DELETE_EVENT     L"DeleteEvent"
@@ -77,63 +77,6 @@ ARBConfigAction::ARBConfigAction(ARBConfigAction const& rhs)
 
 ARBConfigAction::~ARBConfigAction()
 {
-}
-
-/////////////////////////////////////////////////////////////////////////////
-
-class ARBConfigActionDeleteCalPlugin_concrete : public ARBConfigActionDeleteCalPlugin
-{
-public:
-	ARBConfigActionDeleteCalPlugin_concrete(std::wstring const& inName)
-		: ARBConfigActionDeleteCalPlugin(inName)
-	{
-	}
-	ARBConfigActionDeleteCalPlugin_concrete(ARBConfigActionDeleteCalPlugin const& rhs)
-		: ARBConfigActionDeleteCalPlugin(rhs)
-	{
-	}
-};
-
-
-ARBConfigActionPtr ARBConfigActionDeleteCalPlugin::New(std::wstring const& inName)
-{
-	return std::make_shared<ARBConfigActionDeleteCalPlugin_concrete>(inName);
-}
-
-
-ARBConfigActionDeleteCalPlugin::ARBConfigActionDeleteCalPlugin(std::wstring const& inName)
-	: ARBConfigAction(0)
-	, m_Name(inName)
-{
-}
-
-
-ARBConfigActionDeleteCalPlugin::ARBConfigActionDeleteCalPlugin(ARBConfigActionDeleteCalPlugin const& rhs)
-	: ARBConfigAction(rhs)
-	, m_Name(rhs.m_Name)
-{
-}
-
-
-ARBConfigActionPtr ARBConfigActionDeleteCalPlugin::Clone() const
-{
-	return std::make_shared<ARBConfigActionDeleteCalPlugin_concrete>(m_Name);
-}
-
-
-bool ARBConfigActionDeleteCalPlugin::Apply(
-	ARBConfig& ioConfig,
-	ARBDogList* ioDogs,
-	fmt::wmemory_buffer& ioInfo,
-	IConfigActionCallback& ioCallBack) const
-{
-	bool bChanged = false;
-	if (ioConfig.GetCalSites().DeleteSite(m_Name))
-	{
-		bChanged = true;
-		fmt::format_to(ioInfo, L"{}\n", Localization()->ActionDeleteCalPlugin(m_Name));
-	}
-	return bChanged;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1796,7 +1739,7 @@ bool ARBConfigActionList::Load(ElementNodePtr const& inTree, ARBVersion const& i
 	ARBConfigActionPtr item;
 	if (ACTION_VERB_DELETE_CALPLUGIN == verb)
 	{
-		item = ARBConfigActionDeleteCalPlugin::New(oldName);
+		// Obsolete.
 	}
 	else if (ACTION_VERB_DELETE_TITLE == verb)
 	{
@@ -1829,8 +1772,6 @@ bool ARBConfigActionList::Load(ElementNodePtr const& inTree, ARBVersion const& i
 	else
 	{
 		std::wstring msg(Localization()->ValidValues());
-		msg += ACTION_VERB_DELETE_CALPLUGIN;
-		msg += L", ";
 		msg += ACTION_VERB_DELETE_TITLE;
 		msg += L", ";
 		msg += ACTION_VERB_RENAME_TITLE;

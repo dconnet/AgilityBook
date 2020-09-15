@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-12 12:03-0700\n"
-"PO-Revision-Date: 2020-09-12 12:04-0700\n"
+"POT-Creation-Date: 2020-09-15 09:58-0700\n"
+"PO-Revision-Date: 2020-09-15 09:58-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -32,48 +32,48 @@ msgstr ""
 msgid "Get all the events from USDAA. This will parse the HTML returned from {}"
 msgstr ""
 
-#: CalSites/CalendarSiteUSDAA.cpp:203 CalSites/CalendarSites.cpp:1070
+#: CalSites/CalendarSiteUSDAA.cpp:203 CalSites/CalendarSites.cpp:1054
 msgid "IDS_ERR_PARSING_DATA"
 msgstr "Erreur parsing {} data"
 
-#: CalSites/CalendarSites.cpp:660 CalSites/CalendarSites.cpp:673
+#: CalSites/CalendarSites.cpp:645 CalSites/CalendarSites.cpp:658
 msgid "IDS_DISABLED"
 msgstr "Eteindre"
 
 # DlgCalendarPlugins (CalendarSites.cpp)
-#: CalSites/CalendarSites.cpp:782
+#: CalSites/CalendarSites.cpp:767
 msgid "IDD_CALENDAR_PLUGINS"
 msgstr "Plugins calendrier"
 
-#: CalSites/CalendarSites.cpp:800 CalSites/CalendarSites.cpp:801
+#: CalSites/CalendarSites.cpp:785 CalSites/CalendarSites.cpp:786
 msgid "HIDC_PLUGIN_TREE"
 msgstr "Liste de plugins calendrier disponible et leurs entrées de calendrier."
 
-#: CalSites/CalendarSites.cpp:811 CalSites/CalendarSites.cpp:812
+#: CalSites/CalendarSites.cpp:796 CalSites/CalendarSites.cpp:797
 msgid "HIDC_PLUGIN_DETAILS"
 msgstr "Les détails pour l'article choisi dans larborescence."
 
-#: CalSites/CalendarSites.cpp:814
+#: CalSites/CalendarSites.cpp:799
 msgid "IDC_PLUGIN_READ"
 msgstr "&Lire Entrées"
 
-#: CalSites/CalendarSites.cpp:816 CalSites/CalendarSites.cpp:817
+#: CalSites/CalendarSites.cpp:801 CalSites/CalendarSites.cpp:802
 msgid "HIDC_PLUGIN_READ"
 msgstr "Lire les entrées calendrier à partir des plugins choisis."
 
-#: CalSites/CalendarSites.cpp:819
+#: CalSites/CalendarSites.cpp:804
 msgid "IDC_PLUGIN_ADD"
 msgstr "&Rajouter Entrées"
 
-#: CalSites/CalendarSites.cpp:821 CalSites/CalendarSites.cpp:822
+#: CalSites/CalendarSites.cpp:806 CalSites/CalendarSites.cpp:807
 msgid "HIDC_PLUGIN_ADD"
 msgstr "Ajouter les entrées calendrier choisies dans le programme."
 
-#: CalSites/CalendarSites.cpp:824
+#: CalSites/CalendarSites.cpp:809
 msgid "IDC_PLUGIN_ENABLE"
 msgstr "&Activer"
 
-#: CalSites/CalendarSites.cpp:826 CalSites/CalendarSites.cpp:827
+#: CalSites/CalendarSites.cpp:811 CalSites/CalendarSites.cpp:812
 msgid "HIDC_PLUGIN_ENABLE"
 msgstr ""
 "Activer le plugin choisi. Les Plugins peuvent être désactivés si le format du "
@@ -81,51 +81,51 @@ msgstr ""
 "Normalement, un plugin ne devrait être activé que si la dernière version de ce "
 "plugin a été téléchargée."
 
-#: CalSites/CalendarSites.cpp:829
+#: CalSites/CalendarSites.cpp:814
 msgid "IDC_PLUGIN_QUERYDETAILS"
 msgstr "&Détails..."
 
-#: CalSites/CalendarSites.cpp:831 CalSites/CalendarSites.cpp:832
+#: CalSites/CalendarSites.cpp:816 CalSites/CalendarSites.cpp:817
 msgid "HIDC_PLUGIN_QUERYDETAILS"
 msgstr "Éditer l'information détaillée pour le plugin choisi, si disponible."
 
-#: CalSites/CalendarSites.cpp:834
+#: CalSites/CalendarSites.cpp:819
 msgid "IDC_PLUGIN_NEW"
 msgstr "Nouveau..."
 
-#: CalSites/CalendarSites.cpp:836 CalSites/CalendarSites.cpp:837
+#: CalSites/CalendarSites.cpp:821 CalSites/CalendarSites.cpp:822
 msgid "HIDC_PLUGIN_NEW"
 msgstr "Rajouter un nouveau plugin Calendrier à la configuration actuelle."
 
-#: CalSites/CalendarSites.cpp:839
+#: CalSites/CalendarSites.cpp:824
 msgid "IDC_PLUGIN_EDIT"
 msgstr "Édition..."
 
-#: CalSites/CalendarSites.cpp:841 CalSites/CalendarSites.cpp:842
+#: CalSites/CalendarSites.cpp:826 CalSites/CalendarSites.cpp:827
 msgid "HIDC_PLUGIN_EDIT"
 msgstr ""
 "Éditer le plugin Calendrier sélectionné. (Sapplique seulement aux plugins dans "
 "la configuration.)"
 
-#: CalSites/CalendarSites.cpp:844
+#: CalSites/CalendarSites.cpp:829
 msgid "IDC_PLUGIN_DELETE"
 msgstr "Supprimer"
 
-#: CalSites/CalendarSites.cpp:846 CalSites/CalendarSites.cpp:847
+#: CalSites/CalendarSites.cpp:831 CalSites/CalendarSites.cpp:832
 msgid "HIDC_PLUGIN_DELETE"
 msgstr ""
 "Supprimer le plugin Calendrier sélectionné. (Sapplique seulement aux plugins "
 "dans la configuration.)"
 
-#: CalSites/CalendarSites.cpp:849
+#: CalSites/CalendarSites.cpp:834
 msgid "IDC_PLUGIN_CLOSE"
 msgstr "Quitter"
 
-#: CalSites/CalendarSites.cpp:1079
+#: CalSites/CalendarSites.cpp:1063
 msgid "IDS_USE_PLUGIN"
 msgstr "Voulez-vous continuer d'utiliser ce plugin?"
 
-#: CalSites/CalendarSites.cpp:1148 Win/AgilityBookDoc.cpp:1270
+#: CalSites/CalendarSites.cpp:1134 Win/AgilityBookDoc.cpp:1270
 msgid "IDS_UPDATED_CAL_ITEMS"
 msgstr "{0} nouveaux entrés calendrier rajouté, {1} entrés mis a jour."
 
@@ -236,34 +236,34 @@ msgid "HIDC_QUERY_VENUE_DELETE"
 msgstr "Supprimer lentrée code Organisation sélectionné."
 
 # DlgPluginDetails
-#: CalSites/DlgPluginDetails.cpp:60
+#: CalSites/DlgPluginDetails.cpp:63
 msgid "IDD_CALENDAR_PLUGIN_DETAIL"
 msgstr "Détails Plugin"
 
-#: CalSites/DlgPluginDetails.cpp:79
+#: CalSites/DlgPluginDetails.cpp:82
 msgid "IDC_PLUGINDETAIL_NAME"
 msgstr "Nom"
 
-#: CalSites/DlgPluginDetails.cpp:84 CalSites/DlgPluginDetails.cpp:85
+#: CalSites/DlgPluginDetails.cpp:87 CalSites/DlgPluginDetails.cpp:88
 msgid "HIDC_PLUGINDETAIL_NAME"
 msgstr "Nom du plugin."
 
-#: CalSites/DlgPluginDetails.cpp:88
+#: CalSites/DlgPluginDetails.cpp:91
 msgid "IDC_PLUGINDETAIL_DESC"
 msgstr "Description"
 
-#: CalSites/DlgPluginDetails.cpp:99 CalSites/DlgPluginDetails.cpp:100
+#: CalSites/DlgPluginDetails.cpp:102 CalSites/DlgPluginDetails.cpp:103
 msgid "HIDC_PLUGINDETAIL_DESC"
 msgstr "Description du plugin."
 
-#: CalSites/DlgPluginDetails.cpp:103
+#: CalSites/DlgPluginDetails.cpp:106
 msgid "IDC_PLUGINDETAIL_SEARCH"
 msgstr ""
 "Chercher URL\n"
 "  !L!: Rajouter les codes endroit sélectionnés: 'code1+code2+...'\n"
 "  !V!: Rajouter les codes organisation sélectionnés: 'code1+code2+...'"
 
-#: CalSites/DlgPluginDetails.cpp:114 CalSites/DlgPluginDetails.cpp:115
+#: CalSites/DlgPluginDetails.cpp:117 CalSites/DlgPluginDetails.cpp:118
 msgid "HIDC_PLUGINDETAIL_SEARCH"
 msgstr ""
 "Cet adresse URL est utilisée pour lire des données de lInternet. Les textes \"!"
@@ -271,13 +271,13 @@ msgstr ""
 "sélectionnés par lutilisateur. Plusieurs codes seront assemblés en utilisant "
 "le caractère + entre les codes."
 
-#: CalSites/DlgPluginDetails.cpp:118
+#: CalSites/DlgPluginDetails.cpp:121
 msgid "IDC_PLUGINDETAIL_HELP"
 msgstr ""
 "Aide URL\n"
 "  Si configuré, utilisé pour donner info supplémentaire."
 
-#: CalSites/DlgPluginDetails.cpp:129 CalSites/DlgPluginDetails.cpp:130
+#: CalSites/DlgPluginDetails.cpp:132 CalSites/DlgPluginDetails.cpp:133
 msgid "HIDC_PLUGINDETAIL_HELP"
 msgstr ""
 "URL spécial pour diriger lutilisateur vers un site Internet externe pour plus "
@@ -285,19 +285,19 @@ msgstr ""
 "limite les données accessibles gratuites et vend des données supplémentaires "
 "de ce site."
 
-#: CalSites/DlgPluginDetails.cpp:132
+#: CalSites/DlgPluginDetails.cpp:135
 msgid "IDC_PLUGINDETAIL_CODES"
 msgstr "Codes..."
 
-#: CalSites/DlgPluginDetails.cpp:134 CalSites/DlgPluginDetails.cpp:135
+#: CalSites/DlgPluginDetails.cpp:137 CalSites/DlgPluginDetails.cpp:138
 msgid "HIDC_PLUGINDETAIL_CODES"
 msgstr "Configurer les codes Endroit et Organisation qui sont permis."
 
-#: CalSites/DlgPluginDetails.cpp:189
+#: CalSites/DlgPluginDetails.cpp:192
 msgid "IDC_PLUGINDETAIL_CODES_TEXT"
 msgstr "{0} Code(s) Endroit et {1} Organisation"
 
-#: CalSites/DlgPluginDetails.cpp:230 Win/DlgConfigEvent.cpp:1616
+#: CalSites/DlgPluginDetails.cpp:232 Win/DlgConfigEvent.cpp:1616
 #: Win/DlgConfigLifetimeName.cpp:134 Win/DlgConfigMultiQ.cpp:396
 #: Win/DlgConfigOtherPoints.cpp:68 Win/DlgConfigVenue.cpp:102
 #: Win/DlgConfigVenue.cpp:193 Win/DlgConfigVenue.cpp:690 Win/DlgConfigure.cpp:432
@@ -322,22 +322,22 @@ msgstr ""
 "Ceci est le code qui va être transmis au site web faisant parti de la query "
 "URL."
 
-#: CalSites/DlgQueryDetail.cpp:104 CalSites/DlgQueryDetail.cpp:105
+#: CalSites/DlgQueryDetail.cpp:110 CalSites/DlgQueryDetail.cpp:111
 msgid "HIDC_QUERYDETAIL_COMBO"
 msgstr ""
 "Ceci est le nom qui va être affiché à lutilisateur pour sélectionner un code."
 
-#: CalSites/DlgQueryDetail.cpp:116 CalSites/DlgQueryDetail.cpp:117
+#: CalSites/DlgQueryDetail.cpp:122 CalSites/DlgQueryDetail.cpp:123
 msgid "HIDC_QUERYDETAIL_NAME"
 msgstr ""
 "Ceci est le nom qui va être affiché à lutilisateur pour sélectionner un code."
 
-#: CalSites/DlgQueryDetail.cpp:202 Libraries/LibARBWin/Validators.cpp:426
+#: CalSites/DlgQueryDetail.cpp:208 Libraries/LibARBWin/Validators.cpp:426
 #: Libraries/LibARBWin/Validators.cpp:524
 msgid "Please enter a value"
 msgstr "Renseignez le champ, svp."
 
-#: CalSites/DlgQueryDetail.cpp:202 Libraries/LibARBWin/Validators.cpp:431
+#: CalSites/DlgQueryDetail.cpp:208 Libraries/LibARBWin/Validators.cpp:431
 #: Libraries/LibARBWin/Validators.cpp:530 Win/DlgClub.cpp:286 Win/DlgClub.cpp:295
 #: Win/DlgConfigOtherPoints.cpp:68 Win/DlgConfigPlaceInfo.cpp:68
 #: Win/DlgConfigPlaceInfo.cpp:74 Win/DlgConfigPlaceInfo.cpp:112
@@ -737,287 +737,279 @@ msgstr "Multiple Q"
 msgid "IDS_EXISTING_POINTS_SQ"
 msgstr "Super Q"
 
-#: TestARB/Local.cpp:121 Win/Localization.cpp:117
-msgid "IDS_UPDATE_CALSITES"
-msgstr "Sites calendrier"
-
-#: TestARB/Local.cpp:122 TestARB/Local.cpp:133 TestARB/Local.cpp:143
-#: TestARB/Local.cpp:154 TestARB/Local.cpp:165 TestARB/Local.cpp:175
-#: TestARB/Local.cpp:195 TestARB/Local.cpp:215 TestARB/Local.cpp:235
-#: TestARB/Local.cpp:255 TestARB/Local.cpp:275 TestARB/Local.cpp:295
-#: Win/Localization.cpp:118 Win/Localization.cpp:129 Win/Localization.cpp:139
-#: Win/Localization.cpp:150 Win/Localization.cpp:161 Win/Localization.cpp:171
-#: Win/Localization.cpp:188 Win/Localization.cpp:205 Win/Localization.cpp:222
-#: Win/Localization.cpp:239 Win/Localization.cpp:256 Win/Localization.cpp:273
-msgid "IDS_UPDATE_ADDED"
-msgstr "{} rajouté"
-
-#: TestARB/Local.cpp:123 TestARB/Local.cpp:144 TestARB/Local.cpp:155
-#: TestARB/Local.cpp:176 TestARB/Local.cpp:196 TestARB/Local.cpp:236
-#: TestARB/Local.cpp:256 TestARB/Local.cpp:276 TestARB/Local.cpp:297
-#: Win/Localization.cpp:119 Win/Localization.cpp:140 Win/Localization.cpp:151
-#: Win/Localization.cpp:172 Win/Localization.cpp:189 Win/Localization.cpp:223
-#: Win/Localization.cpp:240 Win/Localization.cpp:257 Win/Localization.cpp:275
-msgid "IDS_UPDATE_UPDATED"
-msgstr "{} mis a jours"
-
-#: TestARB/Local.cpp:124 TestARB/Local.cpp:134 TestARB/Local.cpp:145
-#: TestARB/Local.cpp:156 TestARB/Local.cpp:166 TestARB/Local.cpp:177
-#: TestARB/Local.cpp:197 TestARB/Local.cpp:217 TestARB/Local.cpp:237
-#: TestARB/Local.cpp:257 TestARB/Local.cpp:277 TestARB/Local.cpp:298
-#: Win/Localization.cpp:120 Win/Localization.cpp:130 Win/Localization.cpp:141
-#: Win/Localization.cpp:152 Win/Localization.cpp:162 Win/Localization.cpp:173
-#: Win/Localization.cpp:190 Win/Localization.cpp:207 Win/Localization.cpp:224
-#: Win/Localization.cpp:241 Win/Localization.cpp:258 Win/Localization.cpp:276
-msgid "IDS_UPDATE_IDENTICAL"
-msgstr "{} identique"
-
-#: TestARB/Local.cpp:132 Win/DlgAssignColumns.cpp:300 Win/DlgConfigure.cpp:230
-#: Win/Localization.cpp:128 Win/Print.cpp:272
+#: TestARB/Local.cpp:121 Win/DlgAssignColumns.cpp:300 Win/DlgConfigure.cpp:230
+#: Win/Localization.cpp:117 Win/Print.cpp:272
 msgid "IDS_COL_FAULTS"
 msgstr "Fautes"
 
-#: TestARB/Local.cpp:142 Win/DlgConfigure.cpp:238 Win/DlgDog.cpp:140
-#: Win/DlgListCtrl.cpp:551 Win/Localization.cpp:138 Win/PointsData.cpp:1307
+#: TestARB/Local.cpp:122 TestARB/Local.cpp:132 TestARB/Local.cpp:143
+#: TestARB/Local.cpp:154 TestARB/Local.cpp:164 TestARB/Local.cpp:184
+#: TestARB/Local.cpp:204 TestARB/Local.cpp:224 TestARB/Local.cpp:244
+#: TestARB/Local.cpp:264 TestARB/Local.cpp:284 Win/Localization.cpp:118
+#: Win/Localization.cpp:128 Win/Localization.cpp:139 Win/Localization.cpp:150
+#: Win/Localization.cpp:160 Win/Localization.cpp:177 Win/Localization.cpp:194
+#: Win/Localization.cpp:211 Win/Localization.cpp:228 Win/Localization.cpp:245
+#: Win/Localization.cpp:262
+msgid "IDS_UPDATE_ADDED"
+msgstr "{} rajouté"
+
+#: TestARB/Local.cpp:123 TestARB/Local.cpp:134 TestARB/Local.cpp:145
+#: TestARB/Local.cpp:155 TestARB/Local.cpp:166 TestARB/Local.cpp:186
+#: TestARB/Local.cpp:206 TestARB/Local.cpp:226 TestARB/Local.cpp:246
+#: TestARB/Local.cpp:266 TestARB/Local.cpp:287 Win/Localization.cpp:119
+#: Win/Localization.cpp:130 Win/Localization.cpp:141 Win/Localization.cpp:151
+#: Win/Localization.cpp:162 Win/Localization.cpp:179 Win/Localization.cpp:196
+#: Win/Localization.cpp:213 Win/Localization.cpp:230 Win/Localization.cpp:247
+#: Win/Localization.cpp:265
+msgid "IDS_UPDATE_IDENTICAL"
+msgstr "{} identique"
+
+#: TestARB/Local.cpp:131 Win/DlgConfigure.cpp:238 Win/DlgDog.cpp:140
+#: Win/DlgListCtrl.cpp:551 Win/Localization.cpp:127 Win/PointsData.cpp:1307
 #: Win/PointsData.cpp:1348 Win/PointsData.cpp:1389 Win/PointsData.cpp:1433
 #: Win/PointsData.cpp:1690
 msgid "IDS_OTHERPOINTS"
 msgstr "Autres Points"
 
-#: TestARB/Local.cpp:153 Win/DlgConfigure.cpp:221 Win/Localization.cpp:149
+#: TestARB/Local.cpp:133 TestARB/Local.cpp:144 TestARB/Local.cpp:165
+#: TestARB/Local.cpp:185 TestARB/Local.cpp:225 TestARB/Local.cpp:245
+#: TestARB/Local.cpp:265 TestARB/Local.cpp:286 Win/Localization.cpp:129
+#: Win/Localization.cpp:140 Win/Localization.cpp:161 Win/Localization.cpp:178
+#: Win/Localization.cpp:212 Win/Localization.cpp:229 Win/Localization.cpp:246
+#: Win/Localization.cpp:264
+msgid "IDS_UPDATE_UPDATED"
+msgstr "{} mis a jours"
+
+#: TestARB/Local.cpp:142 Win/DlgConfigure.cpp:221 Win/Localization.cpp:138
 msgid "IDS_COL_VENUES"
 msgstr "Organisations"
 
-#: TestARB/Local.cpp:164 Win/Localization.cpp:160
+#: TestARB/Local.cpp:153 Win/Localization.cpp:149
 #, fuzzy
 msgid "IDS_LIFETIMENAMES"
 msgstr "Lifetime Names"
 
-#: TestARB/Local.cpp:174 TestARB/Local.cpp:185 Win/Localization.cpp:170
-#: Win/Localization.cpp:179
+#: TestARB/Local.cpp:163 TestARB/Local.cpp:174 Win/Localization.cpp:159
+#: Win/Localization.cpp:168
 msgid "IDS_COL_DIVISIONS"
 msgstr "Niveaux conducteurs"
 
-#: TestARB/Local.cpp:186 TestARB/Local.cpp:206 TestARB/Local.cpp:226
-#: TestARB/Local.cpp:246 TestARB/Local.cpp:266 TestARB/Local.cpp:286
-#: Win/Localization.cpp:179 Win/Localization.cpp:196 Win/Localization.cpp:213
-#: Win/Localization.cpp:230 Win/Localization.cpp:247 Win/Localization.cpp:264
+#: TestARB/Local.cpp:175 TestARB/Local.cpp:195 TestARB/Local.cpp:215
+#: TestARB/Local.cpp:235 TestARB/Local.cpp:255 TestARB/Local.cpp:275
+#: Win/Localization.cpp:168 Win/Localization.cpp:185 Win/Localization.cpp:202
+#: Win/Localization.cpp:219 Win/Localization.cpp:236 Win/Localization.cpp:253
 msgid "IDS_REORDERED"
 msgstr "Reordered"
 
-#: TestARB/Local.cpp:194 TestARB/Local.cpp:205 Win/Localization.cpp:187
-#: Win/Localization.cpp:196
+#: TestARB/Local.cpp:183 TestARB/Local.cpp:194 Win/Localization.cpp:176
+#: Win/Localization.cpp:185
 msgid "IDS_COL_EVENTS"
 msgstr "Epreuves"
 
-#: TestARB/Local.cpp:214 TestARB/Local.cpp:225 Win/Localization.cpp:204
-#: Win/Localization.cpp:213
+#: TestARB/Local.cpp:203 TestARB/Local.cpp:214 Win/Localization.cpp:193
+#: Win/Localization.cpp:202
 msgid "IDS_COL_MULTIQS"
 msgstr "MultiQs"
 
-#: TestARB/Local.cpp:216 TestARB/Local.cpp:296 Win/Localization.cpp:206
-#: Win/Localization.cpp:274
+#: TestARB/Local.cpp:205 TestARB/Local.cpp:285 Win/Localization.cpp:195
+#: Win/Localization.cpp:263
 msgid "IDS_UPDATE_DELETED"
 msgstr "{} supprimé"
 
-#: TestARB/Local.cpp:234 TestARB/Local.cpp:245 Win/Localization.cpp:221
-#: Win/Localization.cpp:230
+#: TestARB/Local.cpp:223 TestARB/Local.cpp:234 Win/Localization.cpp:210
+#: Win/Localization.cpp:219
 msgid "IDS_COL_LEVELS"
 msgstr "Degrés"
 
-#: TestARB/Local.cpp:254 TestARB/Local.cpp:265 Win/Localization.cpp:238
-#: Win/Localization.cpp:247 Win/PointsData.cpp:1177
+#: TestARB/Local.cpp:243 TestARB/Local.cpp:254 Win/Localization.cpp:227
+#: Win/Localization.cpp:236 Win/PointsData.cpp:1177
 msgid "IDS_TITLES"
 msgstr "Distinctions"
 
-#: TestARB/Local.cpp:274 TestARB/Local.cpp:285 Win/DlgConfigureData.cpp:323
-#: Win/DlgConfigureData.cpp:492 Win/Localization.cpp:255 Win/Localization.cpp:264
+#: TestARB/Local.cpp:263 TestARB/Local.cpp:274 Win/DlgConfigureData.cpp:323
+#: Win/DlgConfigureData.cpp:492 Win/Localization.cpp:244 Win/Localization.cpp:253
 msgid "IDS_SUBLEVEL_NAME"
 msgstr "SousDegré"
 
-#: TestARB/Local.cpp:294 Win/Localization.cpp:272
+#: TestARB/Local.cpp:283 Win/Localization.cpp:261
 msgid "IDS_UPDATE_RULES"
 msgstr "regles"
 
-#: TestARB/Local.cpp:304 Win/Localization.cpp:282
-msgid "IDS_ACTION_DELETE_CALPLUGIN"
-msgstr "Action: Suppression Plugin [{}]"
-
-#: TestARB/Local.cpp:314 Win/Localization.cpp:292
+#: TestARB/Local.cpp:297 Win/Localization.cpp:275
 msgid "IDS_ACTION_RENAME_OTHERPTS"
 msgstr "Action: Changer nom autres points [{0}] pour [{1}]"
 
-#: TestARB/Local.cpp:317 Win/Localization.cpp:295
+#: TestARB/Local.cpp:300 Win/Localization.cpp:278
 msgid "IDS_ACTION_RENAME_OTHERPTS2"
 msgstr ", mise à jours {} Autres points"
 
-#: TestARB/Local.cpp:325 Win/Localization.cpp:303
+#: TestARB/Local.cpp:308 Win/Localization.cpp:286
 msgid "IDS_ACTION_PREDELETE_OTHERPTS"
 msgstr "SUPPRESSION: Autres points [{0}] {1} Objets"
 
-#: TestARB/Local.cpp:331 Win/Localization.cpp:309
+#: TestARB/Local.cpp:314 Win/Localization.cpp:292
 msgid "IDS_ACTION_DELETE_OTHERPTS"
 msgstr "Action: Suppression Autres points [{}]"
 
-#: TestARB/Local.cpp:339 Win/Localization.cpp:317
+#: TestARB/Local.cpp:322 Win/Localization.cpp:300
 msgid "IDS_ACTION_RENAME_VENUE"
 msgstr "Action: Changer nom organisaton [{0}] pour [{1}]"
 
-#: TestARB/Local.cpp:342 Win/Localization.cpp:320
+#: TestARB/Local.cpp:325 Win/Localization.cpp:303
 msgid "IDS_ACTION_RENAME_VENUE2"
 msgstr ", mise à jours {} objects associés"
 
-#: TestARB/Local.cpp:350 Win/Localization.cpp:328
+#: TestARB/Local.cpp:333 Win/Localization.cpp:311
 msgid "IDS_ACTION_PREDELETE_VENUE"
 msgstr "SUPPRESSION: Organisation [{0}] {1} objets"
 
-#: TestARB/Local.cpp:356 Win/Localization.cpp:334
+#: TestARB/Local.cpp:339 Win/Localization.cpp:317
 msgid "IDS_ACTION_DELETE_VENUE"
 msgstr "Action: Suppression organisation [{}]"
 
-#: TestARB/Local.cpp:367 Win/Localization.cpp:345
+#: TestARB/Local.cpp:350 Win/Localization.cpp:328
 msgid "IDS_ACTION_RENAME_MULTIQ"
 msgstr "Action: Changer nom {0} MultiQ [{1}] pour [{2}]"
 
-#: TestARB/Local.cpp:370 Win/Localization.cpp:348
+#: TestARB/Local.cpp:353 Win/Localization.cpp:331
 msgid "IDS_ACTION_RENAME_MULTIQ2"
 msgstr ", mise à jours {} MultiQs"
 
-#: TestARB/Local.cpp:379 Win/Localization.cpp:357
+#: TestARB/Local.cpp:362 Win/Localization.cpp:340
 msgid "IDS_ACTION_PREDELETE_MULTIQ"
 msgstr "SUPPRESSION: {0} MultiQ [{1}] {2} Objets"
 
-#: TestARB/Local.cpp:385 Win/Localization.cpp:363
+#: TestARB/Local.cpp:368 Win/Localization.cpp:346
 msgid "IDS_ACTION_DELETE_MULTIQ"
 msgstr "Action: Suppression {0} MultiQ [{1}]"
 
-#: TestARB/Local.cpp:396 Win/Localization.cpp:374
+#: TestARB/Local.cpp:379 Win/Localization.cpp:357
 msgid "IDS_ACTION_RENAME_DIV"
 msgstr "Action: Changement nom niveau conducteur {0} [{1}] pour [{2}]"
 
-#: TestARB/Local.cpp:399 Win/Localization.cpp:377
+#: TestARB/Local.cpp:382 Win/Localization.cpp:360
 msgid "IDS_ACTION_RENAME_DIV2"
 msgstr ", mise à jours {} parcours"
 
-#: TestARB/Local.cpp:408 Win/Localization.cpp:386
+#: TestARB/Local.cpp:391 Win/Localization.cpp:369
 msgid "IDS_ACTION_PREDELETE_DIV"
 msgstr "SUPPRESSION: {0} Niveau conducteur [{1}] {2} parcours et points existant"
 
-#: TestARB/Local.cpp:414 Win/Localization.cpp:392
+#: TestARB/Local.cpp:397 Win/Localization.cpp:375
 msgid "IDS_ACTION_DELETE_DIV"
 msgstr "Action: Suppression {0} Niveau conducteur [{1}]"
 
-#: TestARB/Local.cpp:425 Win/Localization.cpp:403
+#: TestARB/Local.cpp:408 Win/Localization.cpp:386
 msgid "IDS_ACTION_RENAME_LEVEL"
 msgstr "Action: Changement de noms {0} Degré [{1}] pour [{2}]"
 
-#: TestARB/Local.cpp:428 Win/Localization.cpp:406
+#: TestARB/Local.cpp:411 Win/Localization.cpp:389
 msgid "IDS_ACTION_RENAME_LEVEL2"
 msgstr ", mise a jour {} parcours"
 
-#: TestARB/Local.cpp:437 Win/Localization.cpp:415
+#: TestARB/Local.cpp:420 Win/Localization.cpp:398
 msgid "IDS_ACTION_PREDELETE_LEVEL"
 msgstr "SUPPRESSION: {0} Degré [{1}] {2} parcours"
 
-#: TestARB/Local.cpp:443 Win/Localization.cpp:421
+#: TestARB/Local.cpp:426 Win/Localization.cpp:404
 msgid "IDS_ACTION_DELETE_LEVEL"
 msgstr "Action: Suppression {0} Degré [{1}]"
 
-#: TestARB/Local.cpp:454 Win/Localization.cpp:432
+#: TestARB/Local.cpp:437 Win/Localization.cpp:415
 msgid "IDS_ACTION_RENAME_TITLE"
 msgstr "Action: Changement de noms {0} Distinction [{1}] pour [{2}]"
 
-#: TestARB/Local.cpp:457 Win/Localization.cpp:435
+#: TestARB/Local.cpp:440 Win/Localization.cpp:418
 msgid "IDS_ACTION_RENAME_TITLE2"
 msgstr ", mise à jours {} Distinction"
 
-#: TestARB/Local.cpp:466 Win/Localization.cpp:444
+#: TestARB/Local.cpp:449 Win/Localization.cpp:427
 msgid "IDS_ACTION_PREDELETE_TITLE"
 msgstr "SUPPRESSION: {0} Distinction [{1}] {2} distinctions"
 
-#: TestARB/Local.cpp:472 Win/Localization.cpp:450
+#: TestARB/Local.cpp:455 Win/Localization.cpp:433
 msgid "IDS_ACTION_DELETE_TITLE"
 msgstr "Action: Suppression {0} Distinction [{1}]"
 
-#: TestARB/Local.cpp:483 Win/Localization.cpp:461
+#: TestARB/Local.cpp:466 Win/Localization.cpp:444
 msgid "IDS_ACTION_RENAME_EVENT"
 msgstr "Action: Changement de noms {0} Epreuve [{1}] pour [{2}]"
 
-#: TestARB/Local.cpp:486 Win/Localization.cpp:464
+#: TestARB/Local.cpp:469 Win/Localization.cpp:447
 msgid "IDS_ACTION_RENAME_EVENT2"
 msgstr ", mise à jours {} epreuves"
 
-#: TestARB/Local.cpp:495 Win/Localization.cpp:473
+#: TestARB/Local.cpp:478 Win/Localization.cpp:456
 msgid "IDS_ACTION_PREDELETE_EVENT"
 msgstr "SUPPRESSION: {0} Epreuve [{1}] {2} epreuves"
 
-#: TestARB/Local.cpp:501 Win/Localization.cpp:479
+#: TestARB/Local.cpp:484 Win/Localization.cpp:462
 msgid "IDS_ACTION_DELETE_EVENT"
 msgstr "Action: Suppression {0} Epreuve [{1}]"
 
-#: TestARB/Local.cpp:513 Win/Localization.cpp:490
+#: TestARB/Local.cpp:496 Win/Localization.cpp:473
 #, fuzzy
 msgid "IDS_ACTION_RENAME_LIFETIMENAME_0"
 msgstr "Action: Renaming Lifetime Name '{0}' to '{1}' [{2}]"
 
-#: TestARB/Local.cpp:519 Win/Localization.cpp:492
+#: TestARB/Local.cpp:502 Win/Localization.cpp:475
 #, fuzzy
 msgid "IDS_ACTION_RENAME_LIFETIMENAME_N"
 msgstr "Action: Renaming Lifetime Name '{0}' to '{1}' in {3} events [{2}]"
 
-#: TestARB/Local.cpp:533 Win/Localization.cpp:502
+#: TestARB/Local.cpp:516 Win/Localization.cpp:485
 #, fuzzy
 msgid "IDS_ACTION_DELETE_LIFETIMENAME_0"
 msgstr "Action: Deleting Lifetime Name '{0}' [{1}]"
 
-#: TestARB/Local.cpp:536 Win/Localization.cpp:504
+#: TestARB/Local.cpp:519 Win/Localization.cpp:487
 #, fuzzy
 msgid "IDS_ACTION_DELETE_LIFETIMENAME_N"
 msgstr "Action: Deleting Lifetime Name '{0}' from {2} events [{1}]"
 
-#: TestARB/Local.cpp:545 Win/Localization.cpp:510
+#: TestARB/Local.cpp:528 Win/Localization.cpp:493
 msgid "IDS_TITLEPOINTSNAME"
 msgstr "{0:g} points avec {1:g} fautes"
 
-#: TestARB/Local.cpp:552 TestARB/Local.cpp:561 Win/Localization.cpp:517
-#: Win/Localization.cpp:526
+#: TestARB/Local.cpp:535 TestARB/Local.cpp:544 Win/Localization.cpp:500
+#: Win/Localization.cpp:509
 msgid "IDS_LIFETITLEPOINTSNAME"
 msgstr "{0} points pour la vie avec {1:g} fautes"
 
-#: TestARB/Local.cpp:553 Win/DlgAssignColumns.cpp:405 Win/Localization.cpp:518
+#: TestARB/Local.cpp:536 Win/DlgAssignColumns.cpp:405 Win/Localization.cpp:501
 msgid "IDS_COL_SPEED"
 msgstr "Vitesse"
 
-#: TestARB/Local.cpp:567 Win/Localization.cpp:532
+#: TestARB/Local.cpp:550 Win/Localization.cpp:515
 msgid "IDS_PLACEMENTPOINTSNAME"
 msgstr "{0:g} points avec rang {1}"
 
-#: TestARB/Local.cpp:575 Win/Localization.cpp:538
+#: TestARB/Local.cpp:558 Win/Localization.cpp:521
 msgid "IDS_WARN_DELETED_RUNS"
 msgstr ""
 "ATTENTION\n"
 "\n"
 "{} parcour(s) suprimmé a cause de changement configuration."
 
-#: TestARB/Local.cpp:584 Win/Localization.cpp:544
+#: TestARB/Local.cpp:567 Win/Localization.cpp:527
 #, fuzzy
 msgid "IDS_UPDATE_TEAM_RUNS"
 msgstr ""
 "Updated {} Team runs.\n"
 "(Date, Venue, Event, Division/Level)"
 
-#: TestARB/Local.cpp:591 Win/Localization.cpp:550
+#: TestARB/Local.cpp:574 Win/Localization.cpp:533
 msgid "IDS_UPDATE_TABLE_RUNS"
 msgstr "Parametre table changé pour {} parcours."
 
-#: TestARB/Local.cpp:599 Win/Localization.cpp:556
+#: TestARB/Local.cpp:582 Win/Localization.cpp:539
 #, fuzzy
 msgid "IDS_UPDATE_TABLE_RUNS2"
 msgstr ""
 "Table setting updated in {} runs.\n"
 "(Date, Venue, Event, Division/Level)"
 
-#: TestARB/Local.cpp:608 Win/Localization.cpp:562
+#: TestARB/Local.cpp:591 Win/Localization.cpp:545
 #, fuzzy
 msgid "IDS_UPDATE_SUBNAME_RUNS"
 msgstr ""
@@ -1088,7 +1080,7 @@ msgstr "Ouverture"
 msgid "IDS_COL_CLOSES"
 msgstr "Fermeture"
 
-#: Win/AgilityBookCalendarView.cpp:647 Win/AgilityBookDoc.cpp:2238
+#: Win/AgilityBookCalendarView.cpp:647 Win/AgilityBookDoc.cpp:2237
 #: Win/DlgAssignColumns.cpp:331 Win/DlgAssignColumns.cpp:341
 #: Win/DlgAssignColumns.cpp:376 Win/DlgAssignColumns.cpp:521
 #: Win/DlgListCtrl.cpp:451
@@ -1295,7 +1287,7 @@ msgstr ""
 "Warning: This file has been modified after it was opened. Are you sure you "
 "want to overwrite any changes?"
 
-#: Win/AgilityBookDoc.cpp:1835 Win/UpdateInfo.cpp:560
+#: Win/AgilityBookDoc.cpp:1835 Win/UpdateInfo.cpp:478
 msgid "IDS_CANNOT_OPEN"
 msgstr "Impossible d'ouvrir fichier '{}' pour ecriture."
 
@@ -1311,57 +1303,57 @@ msgstr "Notes Recherche"
 msgid "IDS_NO_LINKED_FILES"
 msgstr "Aucun fichier associé trouvé."
 
-#: Win/AgilityBookDoc.cpp:2310
+#: Win/AgilityBookDoc.cpp:2309
 #, fuzzy
 msgid "IDS_FILEPROP_NAME"
 msgstr "File name: {}"
 
-#: Win/AgilityBookDoc.cpp:2313
+#: Win/AgilityBookDoc.cpp:2312
 #, fuzzy
 msgid "IDS_FILEPROP_NAME_READONLY"
 msgstr " [readonly]"
 
-#: Win/AgilityBookDoc.cpp:2316 Win/AgilityBookDoc.cpp:2339
+#: Win/AgilityBookDoc.cpp:2315 Win/AgilityBookDoc.cpp:2338
 #, fuzzy
 msgid "IDS_FILEPROP_NAME_MODIFIED"
 msgstr " [changes pending]"
 
-#: Win/AgilityBookDoc.cpp:2320
+#: Win/AgilityBookDoc.cpp:2319
 #, fuzzy
 msgid "IDS_FILEPROP_SIZE"
 msgstr "File size: {} bytes"
 
-#: Win/AgilityBookDoc.cpp:2328
+#: Win/AgilityBookDoc.cpp:2327
 #, fuzzy
 msgid "IDS_FILEPROP_CREATED"
 msgstr "Created: {}"
 
-#: Win/AgilityBookDoc.cpp:2332
+#: Win/AgilityBookDoc.cpp:2331
 #, fuzzy
 msgid "IDS_FILEPROP_MODIFIED"
 msgstr "Modified: {}"
 
-#: Win/AgilityBookDoc.cpp:2350
+#: Win/AgilityBookDoc.cpp:2349
 #, fuzzy
 msgid "IDS_FILEPROP_CONFIGURATION"
 msgstr "Configuration: {}"
 
-#: Win/AgilityBookDoc.cpp:2356
+#: Win/AgilityBookDoc.cpp:2355
 #, fuzzy
 msgid "IDS_FILEPROP_CONFIGURATION_CURRENT"
 msgstr "Configuration: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2364
+#: Win/AgilityBookDoc.cpp:2363
 #, fuzzy
 msgid "IDS_FILEPROP_VERSION"
 msgstr "Document version: {}"
 
-#: Win/AgilityBookDoc.cpp:2370
+#: Win/AgilityBookDoc.cpp:2369
 #, fuzzy
 msgid "IDS_FILEPROP_VERSION_CURRENT"
 msgstr "Document version: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2382
+#: Win/AgilityBookDoc.cpp:2381
 #, fuzzy
 msgid "IDS_FILEPROP_FILEWRITTEN"
 msgstr ""
@@ -1371,7 +1363,7 @@ msgstr ""
 "Local time: {2}\n"
 "ARB: {3}"
 
-#: Win/AgilityBookDoc.cpp:2390
+#: Win/AgilityBookDoc.cpp:2389
 msgid "IDS_FILE_PROPERTIES"
 msgstr "Propriétés du fichier"
 
@@ -2281,7 +2273,7 @@ msgid "LinkArbDownloadText"
 msgstr "Telecharger Agility Record Book"
 
 #: Win/DlgAbout.cpp:119 Win/DlgAbout.cpp:123 Win/DlgAbout.cpp:124
-#: Win/UpdateInfo.cpp:266
+#: Win/UpdateInfo.cpp:211
 msgid "LinkArbDownloadUrl"
 msgstr "http://www.agilityrecordbook.com/download.php"
 
@@ -6622,54 +6614,54 @@ msgstr "Nom/Race/Notes"
 msgid "IDS_TRAINING"
 msgstr "Log Entraînement"
 
-#: Win/UpdateInfo.cpp:187
+#: Win/UpdateInfo.cpp:134
 msgid "IDS_UPDATED_CONFIG"
 msgstr "La configuration a etais mise a jour. Voulez-vous introduire vos data?"
 
-#: Win/UpdateInfo.cpp:299 Win/UpdateInfo.cpp:448
+#: Win/UpdateInfo.cpp:244 Win/UpdateInfo.cpp:381
 msgid "IDS_UPDATE_UNKNOWN"
 msgstr "Version current pas determinable."
 
-#: Win/UpdateInfo.cpp:371 Win/UpdateInfo.cpp:842
+#: Win/UpdateInfo.cpp:304 Win/UpdateInfo.cpp:760
 msgid "IDS_LOAD_FAILED"
 msgstr "Impossible de charger '{}'."
 
-#: Win/UpdateInfo.cpp:523
+#: Win/UpdateInfo.cpp:441
 msgid "IDS_VERSION_AVAILABLE"
 msgstr "Version {} accesible. Voulez-vous le telecharger? "
 
-#: Win/UpdateInfo.cpp:565
+#: Win/UpdateInfo.cpp:483
 msgid "IDS_DOWNLOADING"
 msgstr "Téléchargement en cours..."
 
-#: Win/UpdateInfo.cpp:587
+#: Win/UpdateInfo.cpp:505
 msgid "IDS_VALIDATING"
 msgstr "Validation en cours..."
 
-#: Win/UpdateInfo.cpp:595 Win/UpdateInfo.cpp:619 Win/UpdateInfo.cpp:627
-#: Win/UpdateInfo.cpp:635
+#: Win/UpdateInfo.cpp:513 Win/UpdateInfo.cpp:537 Win/UpdateInfo.cpp:545
+#: Win/UpdateInfo.cpp:553
 msgid "IDS_ERROR_DOWNLOAD"
 msgstr "ERREUR: Le fichier téléchargé est corrompu."
 
-#: Win/UpdateInfo.cpp:611
+#: Win/UpdateInfo.cpp:529
 msgid "IDS_DOWNLOAD_AND_RESTART"
 msgstr ""
 "{} a fini de télécharger. Agility Record Book va fermer pour vous laisser "
 "l'installer."
 
-#: Win/UpdateInfo.cpp:643
+#: Win/UpdateInfo.cpp:561
 msgid "IDS_ERROR_UNEXPECTED"
 msgstr "ERREUR: Format de fichier non reconnu, fichier MSI attendu."
 
-#: Win/UpdateInfo.cpp:679 Win/UpdateInfo.cpp:698
+#: Win/UpdateInfo.cpp:597 Win/UpdateInfo.cpp:616
 msgid "IDS_ERROR_AUTOUPDATE"
 msgstr "ERREUR: Erreur interne pendant la mise à jour. Procédure annulée."
 
-#: Win/UpdateInfo.cpp:878
+#: Win/UpdateInfo.cpp:796
 msgid "IDS_UPDATE_CURRENT"
 msgstr "Pas des mises a jour."
 
-#: Win/UpdateInfo.cpp:919
+#: Win/UpdateInfo.cpp:837
 #, fuzzy
 msgid "IDS_INSTALL_BUSY"
 msgstr ""
@@ -7367,6 +7359,12 @@ msgid "IDS_FILEEXT_FILTER_SETTINGS"
 msgstr ""
 "Paramètres Agility Record Book (*.arbsettings)|*.arbsettings|Tous fichiers (*."
 "*)|*.*||"
+
+#~ msgid "IDS_UPDATE_CALSITES"
+#~ msgstr "Sites calendrier"
+
+#~ msgid "IDS_ACTION_DELETE_CALPLUGIN"
+#~ msgstr "Action: Suppression Plugin [{}]"
 
 #~ msgid "MenuCalendarUpdate"
 #~ msgstr "&Mise à jour..."

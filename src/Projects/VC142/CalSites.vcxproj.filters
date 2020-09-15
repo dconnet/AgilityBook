@@ -66,6 +66,9 @@
     <ClCompile Include="..\..\Win\Localization.cpp">
       <Filter>ARB</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\CalSites\ARBConfigCalSite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Win\res\AgilityBook.ico">
@@ -152,6 +155,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Win\Localization.h">
       <Filter>ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CalSites\ARBConfigCalSite.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

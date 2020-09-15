@@ -44,10 +44,10 @@ CDlgQueryDetail::CDlgQueryDetail(
 	const wchar_t* inCode,
 	const wchar_t* inName,
 	wxWindow* pParent,
-	ARBConfig const* inConfig)
+	ARBConfigCalSiteList const* sites)
 	: wxDialog()
 	, m_ReadOnly(bReadOnly)
-	, m_Config(inConfig)
+	, m_sites(sites)
 	, m_strCode(inCode)
 	, m_ctrlCode(nullptr)
 	, m_strName(inName)
@@ -82,20 +82,26 @@ CDlgQueryDetail::CDlgQueryDetail(
 	wxStaticText* textLocation = new wxStaticText(
 		this,
 		wxID_ANY,
-		m_Config ? _("IDS_COL_VENUE") : _("IDS_COL_LOCATION"),
+		m_sites ? _("IDS_COL_VENUE") : _("IDS_COL_LOCATION"),
 		wxDefaultPosition,
 		wxDefaultSize,
 		0);
 	textLocation->Wrap(-1);
 
 	wxWindow* ctrlLocationOrVenue = nullptr;
-	if (!bReadOnly && m_Config)
+	if (!bReadOnly && m_sites)
 	{
 		if (m_Name.empty())
 			m_strName = m_strCode;
+
+#pragma PRAGMA_TODO(Supported venues)
+		ARBConfigVenueList venues;
+		venues.AddVenue(L"AKC");
+		venues.AddVenue(L"USDAA");
+
 		m_ctrlVenues = new CVenueComboBox(
 			this,
-			m_Config->GetVenues(),
+			venues,
 			wxEmptyString,
 			true,
 			CTrimValidator(&m_strName, TRIMVALIDATOR_TRIM_BOTH),
@@ -193,7 +199,7 @@ void CDlgQueryDetail::OnOk(wxCommandEvent& evt)
 		if (!Validate() || !TransferDataFromWindow())
 			return;
 
-		if (m_Config && m_strCode.empty())
+		if (m_sites && m_strCode.empty())
 			m_strCode = m_strName;
 		if (m_strCode.empty())
 		{
@@ -205,7 +211,7 @@ void CDlgQueryDetail::OnOk(wxCommandEvent& evt)
 
 		m_Code = m_strCode;
 		m_Name = m_strName;
-		if (m_Config)
+		if (m_sites)
 		{
 			// If there's no name, use the code.
 			if (m_Name.empty())

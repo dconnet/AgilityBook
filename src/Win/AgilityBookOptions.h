@@ -245,16 +245,6 @@ public:
 	static std::wstring GetProxyServer();
 	static void SetProxyServer(std::wstring const& inProxy);
 	static std::wstring GetProxy();
-	// -CalSite suppression options
-	static bool IsCalSiteVisible(
-		std::wstring const& filename,
-		CVersionNum const& inVer); // Version number of current calsite
-	static void SuppressCalSite(std::wstring const& filename, bool bSuppress);
-	static CVersionNum GetCalSitePermanentStatus(std::wstring const& filename);
-	static void SuppressCalSitePermanently(
-		std::wstring const& filename,
-		CVersionNum const& inVer,
-		bool bSuppress = true);
 
 protected:
 	friend class CDlgAssignColumns;

@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-09-15 Remove CalSite from ARB.
  * 2018-12-16 Convert to fmt.
  * 2014-06-09 Add access to write-only data for file-properties purpose.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.

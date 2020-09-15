@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2020-09-15 File version 15.3
+           Removed CalSite
 2020-01-16 File version 15.2
            Added FEO to Q.
 2019-09-21 File version 15.1
@@ -184,7 +186,7 @@ This section defines the rules of each venue (the Configuration).
  to upgrade. The user can merge the configuration any number of times.
  If 'update' is set to 'n', this file will no longer prompt to update the config
 -->
-<!ELEMENT Configuration (Action*, CalSite*, Venue*, FaultType*, OtherPts*) >
+<!ELEMENT Configuration (Action*, Venue*, FaultType*, OtherPts*) >
 	<!ATTLIST Configuration
 		version CDATA #IMPLIED
 		update (y|n) 'y'
@@ -198,11 +200,6 @@ we import the new one (where this resides).
  Imporant: If a venue/division/level name changes all at the same time, make
            sure they are ordered that way.
  Verb: Supported actions (determines usage of other attributes):
-  'DeleteCalPlugin':
-    Venue: Unused
-    Div: Unused
-    OldName: Plugin to be renamed.
-    NewName: Unused
   'RenameTitle':
     Venue: Venue that contains title
     Div: Unused
@@ -249,55 +246,6 @@ we import the new one (where this resides).
 		Div CDATA #IMPLIED
 		OldName CDATA #IMPLIED
 		NewName CDATA #IMPLIED
-		>
-
-<!--
-Define a calendar source site.
- name: Name displayed in plugin dialog
- search: Url to request data from with special formatting
-      "!L!": Add selected LocCodes (code1+code2...)
-      "!V!": Add selected venues (v1+v2...)
- help: Url to page describing what you get (for instance if data is limited)
-       (Note, not currently used. The idea is this would eventually be used
-       at a site where they provide limited data, but if you pay, you get more.
-       This would be a link to a page describing the differences and trying to
-       convince the user to subscribe. I haven't figured out where to put this
-       in the UI yet)
-Note: The requested data will be returned using with the venue code. We'll
-run a 'fixup' routine before actually importing the Calendar data.
-This means that the URL query can be specified with no locations or venues.
-Depending on the server, this could mean 'return all'. When processing returned
-data, no assumptions are made based on the query we started with.
--->
-<!ELEMENT CalSite (Desc?, LocCode*, VenueCode*) >
-	<!ATTLIST CalSite
-		name CDATA #REQUIRED
-		search CDATA #REQUIRED
-		help CDATA #IMPLIED
-		>
-<!--
-Description of source, displayed in plugin dialog.
--->
-<!ELEMENT Desc (#PCDATA) >
-<!--
-List of locations we can select from.
- code: Transmitted to url
- name: Displayed name
--->
-<!ELEMENT LocCode EMPTY >
-	<!ATTLIST LocCode
-		code CDATA #REQUIRED
-		name CDATA #REQUIRED
-		>
-<!--
-List of venues we can select from.
- code: Transmitted to url
- venue: mapping to our names, if not set, code is same as ours
--->
-<!ELEMENT VenueCode EMPTY >
-	<!ATTLIST VenueCode
-		code CDATA #REQUIRED
-		venue CDATA #IMPLIED
 		>
 
 <!--

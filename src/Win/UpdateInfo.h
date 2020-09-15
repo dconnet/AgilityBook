@@ -92,5 +92,4 @@ private:
 	std::map<std::wstring, std::wstring> m_InfoMsg;
 	std::wstring m_UpdateDownload;
 	std::wstring m_usernameHint;
-	std::vector<CVersionNum> m_CalSiteSuppression;
 };

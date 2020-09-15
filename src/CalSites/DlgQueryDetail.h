@@ -18,7 +18,7 @@
  */
 
 #include "ARB/ARBTypes2.h"
-class ARBConfig;
+class ARBConfigCalSiteList;
 class CTextCtrl;
 class CVenueComboBox;
 
@@ -31,14 +31,14 @@ public:
 		wchar_t const* inCode,
 		wchar_t const* inName,
 		wxWindow* pParent = nullptr,
-		ARBConfig const* inConfig = nullptr); // Only set when using venues
+		ARBConfigCalSiteList const* sites = nullptr); // Only set when using venues
 
 	std::wstring GetDetailCode() const;
 	std::wstring GetDetailName() const;
 
 private:
 	bool m_ReadOnly;
-	ARBConfig const* m_Config;
+	ARBConfigCalSiteList const* m_sites;
 	wxString m_strCode;
 	CTextCtrl* m_ctrlCode;
 	wxString m_strName;

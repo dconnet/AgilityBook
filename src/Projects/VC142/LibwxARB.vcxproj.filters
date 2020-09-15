@@ -39,9 +39,6 @@
     <ClCompile Include="..\..\Libraries\ARB\ARBConfigAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Libraries\ARB\ARBConfigCalSite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Libraries\ARB\ARBConfigDivision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -192,9 +189,6 @@
       <Filter>Include\ARB</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\ARB\ARBConfigAction.h">
-      <Filter>Include\ARB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\ARB\ARBConfigCalSite.h">
       <Filter>Include\ARB</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\ARB\ARBConfigDivision.h">

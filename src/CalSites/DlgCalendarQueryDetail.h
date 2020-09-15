@@ -21,7 +21,7 @@
 #include <wx/listctrl.h>
 #include <map>
 #include <vector>
-class ARBConfig;
+class ARBConfigCalSiteList;
 class CCheckListCtrl;
 
 
@@ -30,13 +30,13 @@ class CDlgCalendarQueryDetail : public wxDialog
 public:
 	// For configuring what codes are available
 	CDlgCalendarQueryDetail(
-		ARBConfig const& inConfig,
+		ARBConfigCalSiteList const& sites,
 		std::map<std::wstring, std::wstring> const& inLocCodes,
 		std::map<std::wstring, std::wstring> const& inVenueCodes,
 		wxWindow* pParent = nullptr);
 	// For selecting from available list
 	CDlgCalendarQueryDetail(
-		ARBConfig const& inConfig,
+		ARBConfigCalSiteList const& sites,
 		std::map<std::wstring, std::wstring> const& inLocCodes,
 		std::vector<std::wstring> const& inSelectedLocCodes,
 		std::map<std::wstring, std::wstring> const& inVenueCodes,
@@ -67,7 +67,7 @@ private:
 	void EditVenueCode();
 
 	bool m_EditCodes;
-	ARBConfig const& m_Config;
+	ARBConfigCalSiteList const& m_sites;
 	std::map<std::wstring, std::wstring> m_LocCodes;
 	std::map<std::wstring, std::wstring> m_VenueCodes;
 	std::vector<std::wstring> m_Locations;

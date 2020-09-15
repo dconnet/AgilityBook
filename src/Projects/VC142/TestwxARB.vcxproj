@@ -517,7 +517,6 @@
     <ClCompile Include="..\..\TestARB\TestCalendar.cpp" />
     <ClCompile Include="..\..\TestARB\TestConfig.cpp" />
     <ClCompile Include="..\..\TestARB\TestConfigAction.cpp" />
-    <ClCompile Include="..\..\TestARB\TestConfigCalSite.cpp" />
     <ClCompile Include="..\..\TestARB\TestConfigDivision.cpp" />
     <ClCompile Include="..\..\TestARB\TestConfigEvent.cpp" />
     <ClCompile Include="..\..\TestARB\TestConfigFault.cpp" />

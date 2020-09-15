@@ -214,14 +214,12 @@ TEST_CASE("Config")
 		if (!g_bMicroTest)
 		{
 			ARBConfig config;
-			REQUIRE(0u == config.GetCalSites().size());
 			REQUIRE(0u == config.GetActions().size());
 			REQUIRE(0u == config.GetFaults().size());
 			REQUIRE(0u == config.GetOtherPoints().size());
 			REQUIRE(0u == config.GetVenues().size());
 			CConfigHandler handler;
 			config.Default(&handler);
-			REQUIRE(0u == config.GetCalSites().size());
 			REQUIRE(228u == config.GetActions().size());
 			REQUIRE(0u == config.GetFaults().size());
 			REQUIRE(5u == config.GetOtherPoints().size());

@@ -269,7 +269,6 @@
     <ClCompile Include="..\..\Libraries\ARB\ARBCalendar.cpp" />
     <ClCompile Include="..\..\Libraries\ARB\ARBConfig.cpp" />
     <ClCompile Include="..\..\Libraries\ARB\ARBConfigAction.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBConfigCalSite.cpp" />
     <ClCompile Include="..\..\Libraries\ARB\ARBConfigDivision.cpp" />
     <ClCompile Include="..\..\Libraries\ARB\ARBConfigEvent.cpp" />
     <ClCompile Include="..\..\Libraries\ARB\ARBConfigFault.cpp" />
@@ -335,7 +334,6 @@
     <ClInclude Include="..\..\Include\ARB\ARBCalendar.h" />
     <ClInclude Include="..\..\Include\ARB\ARBConfig.h" />
     <ClInclude Include="..\..\Include\ARB\ARBConfigAction.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBConfigCalSite.h" />
     <ClInclude Include="..\..\Include\ARB\ARBConfigDivision.h" />
     <ClInclude Include="..\..\Include\ARB\ARBConfigEvent.h" />
     <ClInclude Include="..\..\Include\ARB\ARBConfigFault.h" />

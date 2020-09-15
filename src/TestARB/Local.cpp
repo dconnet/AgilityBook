@@ -114,17 +114,6 @@ bool CLocalization::Load()
 }
 
 
-std::wstring CLocalization::UpdateCalSites(int nNew, int nUpdated, int nSkipped) const
-{
-	return fmt::format(
-		L"{}: {}, {}, {}",
-		StringUtil::GetTranslation(arbT("IDS_UPDATE_CALSITES")),
-		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_ADDED")), nNew),
-		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_UPDATED")), nUpdated),
-		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_IDENTICAL")), nSkipped));
-}
-
-
 std::wstring CLocalization::UpdateFaults(int nNew, int nSkipped) const
 {
 	return fmt::format(
@@ -296,12 +285,6 @@ std::wstring CLocalization::UpdateRules(int nAdded, int nDeleted, int nUpdated, 
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_DELETED")), nDeleted),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_UPDATED")), nUpdated),
 		fmt::format(StringUtil::GetTranslation(arbT("IDS_UPDATE_IDENTICAL")), nSkipped));
-}
-
-
-std::wstring CLocalization::ActionDeleteCalPlugin(std::wstring const& name) const
-{
-	return fmt::format(StringUtil::GetTranslation(arbT("IDS_ACTION_DELETE_CALPLUGIN")), name);
 }
 
 

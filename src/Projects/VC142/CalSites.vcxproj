@@ -414,6 +414,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\CalSites\ARBConfigCalSite.cpp" />
     <ClCompile Include="..\..\CalSites\CalendarSites.cpp" />
     <ClCompile Include="..\..\CalSites\CalendarSiteUSDAA.cpp" />
     <ClCompile Include="..\..\CalSites\CalSites.cpp" />
@@ -461,6 +462,7 @@
     <ResourceCompile Include="..\..\CalSites\CalSites.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\CalSites\ARBConfigCalSite.h" />
     <ClInclude Include="..\..\CalSites\CalendarSites.h" />
     <ClInclude Include="..\..\CalSites\CalendarSiteUSDAA.h" />
     <ClInclude Include="..\..\CalSites\CalSites.h" />

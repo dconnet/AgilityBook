@@ -48,9 +48,6 @@
     <ClCompile Include="..\..\TestARB\TestConfigAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\TestARB\TestConfigCalSite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\TestARB\TestConfigDivision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

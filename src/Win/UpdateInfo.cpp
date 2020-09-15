@@ -42,59 +42,6 @@
 /*
  * (post v2.1.4): Changed to version2.xml.
  *  See comments in code (where it's parsed).
- *
- * [v2.1.4 and earlier: version.txt]
- * line 1:
- *  "ARB Version n1.n2.n3.n4"
- * --- as of v2, the real version isn't here - it's in 'Config'
- * line 2-n: xml
- *  <!ELEMENT Data (Config+, Download*, DisableCalPlugin*) >
- *  <!--
- *  Before v1.10:
- *  pcdata is a message that can be displayed to the user explaining
- *  the changes. This is only used when doing a config update, not a
- *  version update. [version update is 1st line in file]
- *  v1.10: Moved PCDATA to 'lang' (We can change the format of the file
- *  since this data is never accessed when there's a pgm version change.)
- *  v2.0: Allow multiple copies of 'Config' for different platforms.
- *  If 'platform' is not set, it's the default. This allows creating
- *  one entry with 'mac', one with none - then all non-macs default to
- *  second. Current recognized values: 'win'/'mac'
- *  v2.0: Added 'version' to 'Config': This replaces the version in the
- *  first line (if not present, line 1 is used).
- *  -->
- *  <!ELEMENT Config (Lang+) >
- *    <!ATTLIST Config
- *      platform CDATA #IMPLIED
- *      version CDATA #IMPLIED
- *      ver CDATA #REQUIRED
- *      file CDATA #REQUIRED
- *      >
- *  <!--
- *  'id' specified the LANGID of the plugin language DLL, '0' is used
- *  for the program default.
- *  v2.0: 'id2' is gettext lang code, id no longer used.
- *  -->
- *  <!ELEMENT Lang (#PCDATA) >
- *    <!-- <!ATTLIST Lang id CDATA #REQUIRED > -->
- *    <!ATTLIST Lang id2 CDATA #REQUIRED >
- *  <!--
- *  if Download is not set, defaults to 'LinkArbDownloadUrl',
- *  which is http://www.agilityrecordbook.com/download.php
- *  -->
- *  <!ELEMENT Download (#PCDATA) >
- *  <!--
- *  When we know a calendar plugin is obsolete due to website changes,
- *  use this to force the plugin to disable. Only disables the specified
- *  version. If we prematurely disabled the plugin, the 'enable' flag
- *  will reenable. [disabling info is stored in the registry]
- *  -->
- *  <!ELEMENT DisableCalPlugin EMPTY >
- *    <!ATTLIST DisableCalPlugin
- *      file CDATA #REQUIRED
- *      ver CDATA #REQUIRED
- *      enable (0|1) '1'
- *      >
  */
 
 #include "stdafx.h"
@@ -237,7 +184,6 @@ CUpdateInfo::CUpdateInfo()
 	, m_InfoMsg()
 	, m_UpdateDownload()
 	, m_usernameHint(L"default")
-	, m_CalSiteSuppression()
 {
 }
 
@@ -260,7 +206,6 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	m_InfoMsg.clear();
 	m_UpdateDownload.clear();
 	m_usernameHint = L"default";
-	m_CalSiteSuppression.clear();
 
 	// Set the default values.
 	m_UpdateDownload = _("LinkArbDownloadUrl");
@@ -310,7 +255,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	if (!data.empty())
 	{
 		/*
-		 * <!ELEMENT Data (Platform, Config, Download*, DisableCalPlugin*) >
+		 * <!ELEMENT Data (Platform, Config, Download*) >
 		 * <!ELEMENT Platform (EMPTY) >
 		 *   <!--
 		 *   Important: 'arch' elements for must be ordered in decending
@@ -343,18 +288,6 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		 *  which is http://www.agilityrecordbook.com/download.php
 		 *  -->
 		 *  <!ELEMENT Download (#PCDATA) >
-		 *  <!--
-		 *  When we know a calendar plugin is obsolete due to website changes,
-		 *  use this to force the plugin to disable. Only disables the specified
-		 *  version. If we prematurely disabled the plugin, the 'enable' flag
-		 *  will reenable. [disabling info is stored in the registry]
-		 *  -->
-		 *  <!ELEMENT DisableCalPlugin EMPTY >
-		 *    <!ATTLIST DisableCalPlugin
-		 *      file CDATA #REQUIRED
-		 *      ver CDATA #REQUIRED
-		 *      enable (0|1) '1'
-		 *      >
 		 */
 		fmt::wmemory_buffer errMsg2;
 		ElementNodePtr tree(ElementNode::New());
@@ -478,21 +411,6 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 				else if (node->GetName() == L"Download")
 				{
 					m_UpdateDownload = node->GetValue();
-				}
-				else if (node->GetName() == L"DisableCalPlugin")
-				{
-					std::wstring filename, ver;
-					node->GetAttrib(L"file", filename);
-					node->GetAttrib(L"ver", ver);
-					// The 'enable' attribute is in case we prematurely disable
-					bool bEnable = false;
-					node->GetAttrib(L"enable", bEnable);
-					CVersionNum vernum;
-					vernum.Parse(ver);
-					if (vernum.Valid())
-					{
-						CAgilityBookOptions::SuppressCalSitePermanently(filename, vernum, !bEnable);
-					}
 				}
 			}
 		}

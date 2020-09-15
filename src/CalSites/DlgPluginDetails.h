@@ -16,7 +16,7 @@
  * 2007-12-24 Created
  */
 
-#include "ARB/ARBConfigCalSite.h"
+#include "ARBConfigCalSite.h"
 class ARBConfig;
 class CTextCtrl;
 
@@ -24,12 +24,12 @@ class CTextCtrl;
 class CDlgPluginDetails : public wxDialog
 {
 public:
-	CDlgPluginDetails(ARBConfig& inConfig, ARBConfigCalSitePtr const& inCalSite, wxWindow* pParent = nullptr);
+	CDlgPluginDetails(ARBConfigCalSiteList& sites, ARBConfigCalSitePtr const& inCalSite, wxWindow* pParent = nullptr);
 
 private:
 	void SetCodeText();
 
-	ARBConfig& m_Config;
+	ARBConfigCalSiteList& m_sites;
 	ARBConfigCalSitePtr m_OrigCalSite;
 	ARBConfigCalSitePtr m_CalSite;
 	CTextCtrl* m_ctrlName;

@@ -110,17 +110,6 @@ bool CLocalization::Load()
 }
 
 
-std::wstring CLocalization::UpdateCalSites(int nNew, int nUpdated, int nSkipped) const
-{
-	return fmt::format(
-		L"{}: {}, {}, {}",
-		_("IDS_UPDATE_CALSITES").wx_str(),
-		fmt::format(_("IDS_UPDATE_ADDED").wx_str(), nNew),
-		fmt::format(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
-		fmt::format(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
-}
-
-
 std::wstring CLocalization::UpdateFaults(int nNew, int nSkipped) const
 {
 	return fmt::format(
@@ -274,12 +263,6 @@ std::wstring CLocalization::UpdateRules(int nAdded, int nDeleted, int nUpdated, 
 		fmt::format(_("IDS_UPDATE_DELETED").wx_str(), nDeleted),
 		fmt::format(_("IDS_UPDATE_UPDATED").wx_str(), nUpdated),
 		fmt::format(_("IDS_UPDATE_IDENTICAL").wx_str(), nSkipped));
-}
-
-
-std::wstring CLocalization::ActionDeleteCalPlugin(std::wstring const& name) const
-{
-	return fmt::format(_("IDS_ACTION_DELETE_CALPLUGIN").wx_str(), name);
 }
 
 

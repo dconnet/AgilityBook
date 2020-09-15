@@ -86,7 +86,6 @@ public:
 	virtual std::wstring CalendarCloses() const = 0;
 
 	// Strings for formatting the information returned when updating configurations.
-	virtual std::wstring UpdateCalSites(int nNew, int nUpdated, int nSkipped) const = 0;
 	virtual std::wstring UpdateFaults(int nNew, int nSkipped) const = 0;
 	virtual std::wstring UpdateOtherPts(int nNew, int nUpdated, int nSkipped) const = 0;
 	virtual std::wstring UpdateVenues(int nNew, int nUpdated, int nSkipped) const = 0;
@@ -111,7 +110,6 @@ public:
 	virtual std::wstring UpdateSubnameRuns(int nRuns, std::wstring const& inRunsMsg) const = 0;
 
 	// Used in ARBConfigAction.cpp
-	virtual std::wstring ActionDeleteCalPlugin(std::wstring const& name) const = 0;
 	virtual std::wstring ActionRenameOtherPoints(std::wstring const& oldName, std::wstring const& newName, int nChanges)
 		const = 0;
 	virtual std::wstring ActionPreDeleteOtherPoints(std::wstring const& name, int nChanges) const = 0;

@@ -15,13 +15,19 @@
  */
 
 #include "stdafx.h"
-#include "ARB/ARBConfigCalSite.h"
+#include "ARBConfigCalSite.h"
 
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBLocalization.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include <algorithm>
+
+#define TREE_CALSITE          L"CalSite"
+#define TREE_CALSITE_DESC     L"Desc"
+#define ATTRIB_CALSITE_NAME   L"name"
+#define ATTRIB_CALSITE_SEARCH L"search"
+#define ATTRIB_CALSITE_HELP   L"help"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

@@ -78,10 +78,6 @@ Last Updated: 7/31/2020
 
 - Make the trial properties dialog easier to add a club.
 
-- Add persistence to CalSite location/venue selection data.
-
-- Add persistence to selected CalSites.
-
 - Be able to select yards or meters (this is really just a visual thing, since
   the program won't do anything differently)
 

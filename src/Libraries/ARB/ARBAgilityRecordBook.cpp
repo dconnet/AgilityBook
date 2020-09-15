@@ -16,6 +16,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * 2020-09-15 File version 15.3
  * 2020-01-17 File version 15.2
  * 2020-01-16 Fix runs when table/subnames are changed in config.
  * 2019-09-17 File version 15.1
@@ -125,7 +126,7 @@
 
 ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 {
-	static ARBVersion const curVersion(15, 2);
+	static ARBVersion const curVersion(15, 3);
 	return curVersion;
 }
 

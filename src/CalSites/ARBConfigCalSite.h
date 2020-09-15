@@ -16,13 +16,14 @@
  * 2007-08-02 Created
  */
 
-#include "ARBBase.h"
-#include "ARBTypes2.h"
-#include "LibwxARB.h"
+#include "ARB/ARBBase.h"
+#include "ARB/ARBTypes2.h"
+#include "ARB/LibwxARB.h"
 
 #include <map>
 #include <vector>
 
+ARB_TYPEDEF_LIST(ARBConfigCalSite)
 
 /**
  * Configuration information for auto-loading calendar entries from the web.

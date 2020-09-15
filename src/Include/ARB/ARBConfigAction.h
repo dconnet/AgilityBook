@@ -163,30 +163,6 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ARB_API ARBConfigActionDeleteCalPlugin : public ARBConfigAction
-{
-protected:
-	ARBConfigActionDeleteCalPlugin(std::wstring const& inName);
-	ARBConfigActionDeleteCalPlugin(ARBConfigActionDeleteCalPlugin const& rhs);
-	DECLARE_NO_COPY_ACTION(ARBConfigActionDeleteCalPlugin)
-
-public:
-	static ARBConfigActionPtr New(std::wstring const& inName);
-	~ARBConfigActionDeleteCalPlugin()
-	{
-	}
-
-	ARBConfigActionPtr Clone() const override;
-
-	bool Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
-		const override;
-
-protected:
-	std::wstring m_Name;
-};
-
-/////////////////////////////////////////////////////////////////////////////
-
 class ARB_API ARBConfigActionRenameOtherPoints : public ARBConfigAction
 {
 protected:

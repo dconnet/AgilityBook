@@ -41,7 +41,6 @@
 ARBConfig::ARBConfig()
 	: m_bUpdate(true)
 	, m_Version(0)
-	, m_CalSites()
 	, m_Actions()
 	, m_Venues()
 	, m_FaultTypes()
@@ -53,7 +52,6 @@ ARBConfig::ARBConfig()
 ARBConfig::ARBConfig(ARBConfig const& rhs)
 	: m_bUpdate(rhs.m_bUpdate)
 	, m_Version(rhs.m_Version)
-	, m_CalSites(rhs.m_CalSites)
 	, m_Actions()
 	, m_Venues()
 	, m_FaultTypes()
@@ -69,7 +67,6 @@ ARBConfig::ARBConfig(ARBConfig const& rhs)
 ARBConfig::ARBConfig(ARBConfig&& rhs)
 	: m_bUpdate(std::move(rhs.m_bUpdate))
 	, m_Version(std::move(rhs.m_Version))
-	, m_CalSites(std::move(rhs.m_CalSites))
 	, m_Actions(std::move(rhs.m_Actions))
 	, m_Venues(std::move(rhs.m_Venues))
 	, m_FaultTypes(std::move(rhs.m_FaultTypes))
@@ -89,7 +86,6 @@ bool ARBConfig::operator==(ARBConfig const& rhs) const
 	// Equality does not include actions or the update flag
 	// clang-format off
 	return m_Version == rhs.m_Version
-		&& m_CalSites == rhs.m_CalSites
 		&& m_Venues == rhs.m_Venues
 		&& m_FaultTypes == rhs.m_FaultTypes
 		&& m_OtherPoints == rhs.m_OtherPoints;
@@ -101,7 +97,6 @@ void ARBConfig::clear()
 {
 	m_bUpdate = true;
 	m_Version = 0;
-	m_CalSites.clear();
 	m_Actions.clear();
 	m_Venues.clear();
 	m_FaultTypes.clear();
@@ -164,10 +159,9 @@ bool ARBConfig::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, 
 			// Ignore any errors...
 			m_Actions.Load(element, inVersion, ioCallback);
 		}
-		else if (name == TREE_CALSITE)
+		else if (name == L"CalSite")
 		{
-			// Ignore any errors...
-			m_CalSites.Load(element, inVersion, ioCallback);
+			// Obsolete
 		}
 		else if (name == TREE_VENUE)
 		{
@@ -208,8 +202,6 @@ bool ARBConfig::Save(ElementNodePtr const& ioTree) const
 	config->AddAttrib(ATTRIB_CONFIG_VERSION, m_Version);
 	// Do not save actions - Actions are done only when loading/merging a
 	// configuration. Keeping them around could cause possible future problems.
-	if (!m_CalSites.Save(config))
-		return false;
 	if (!m_Venues.Save(config))
 		return false;
 	if (!m_FaultTypes.Save(config))
@@ -284,45 +276,13 @@ std::wstring ARBConfig::GetTitleCompleteName(ARBDogTitlePtr const& inTitle, bool
 bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, fmt::wmemory_buffer& ioInfo)
 {
 	int nChanges = 0; // A simple count of changes that have occurred.
-	// Update CalSites. (existing ones are never removed except by an action)
-	// Maintained in sorted order.
-	int nNew = 0;
-	int nUpdated = 0;
-	int nSkipped = 0;
-	{
-		for (ARBConfigCalSiteList::const_iterator iterCalSite = inConfigNew.GetCalSites().begin();
-			 iterCalSite != inConfigNew.GetCalSites().end();
-			 ++iterCalSite)
-		{
-			ARBConfigCalSitePtr site;
-			if (m_CalSites.FindSite((*iterCalSite)->GetName(), &site))
-			{
-				if (*site != *(*iterCalSite))
-				{
-					++nUpdated;
-					*site = *(*iterCalSite);
-				}
-				else
-					++nSkipped;
-			}
-			else
-			{
-				++nNew;
-				m_CalSites.push_back((*iterCalSite)->Clone());
-			}
-		}
-		if (0 < nNew || 0 < nUpdated)
-		{
-			fmt::format_to(ioInfo, L"{}\n", Localization()->UpdateCalSites(nNew, nUpdated, nSkipped));
-		}
-	}
 
 	// Update Faults.
 	// UI maintains a sorted order, so we don't need to worry about list order.
 	// Simply merge new ones.
-	nNew = 0;
-	nUpdated = 0;
-	nSkipped = 0;
+	int nNew = 0;
+	int nUpdated = 0;
+	int nSkipped = 0;
 	for (ARBConfigFaultList::const_iterator iterFaults = inConfigNew.GetFaults().begin();
 		 iterFaults != inConfigNew.GetFaults().end();
 		 ++iterFaults)

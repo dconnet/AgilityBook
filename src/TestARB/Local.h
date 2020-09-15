@@ -174,7 +174,6 @@ public:
 		return m_CalendarCloses;
 	}
 
-	std::wstring UpdateCalSites(int nNew, int nUpdated, int nSkipped) const override;
 	std::wstring UpdateFaults(int nNew, int nSkipped) const override;
 	std::wstring UpdateOtherPts(int nNew, int nUpdated, int nSkipped) const override;
 	std::wstring UpdateVenues(int nNew, int nUpdated, int nSkipped) const override;
@@ -198,7 +197,6 @@ public:
 	std::wstring UpdateTableRuns(int nRuns, std::wstring const& inRunsMsg) const override;
 	std::wstring UpdateSubnameRuns(int nRuns, std::wstring const& inRunsMsg) const override;
 
-	std::wstring ActionDeleteCalPlugin(std::wstring const& name) const override;
 	std::wstring ActionRenameOtherPoints(std::wstring const& oldName, std::wstring const& newName, int nChanges)
 		const override;
 	std::wstring ActionPreDeleteOtherPoints(std::wstring const& name, int nChanges) const override;

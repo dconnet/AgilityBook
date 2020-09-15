@@ -70,42 +70,6 @@ public:
 
 TEST_CASE("ConfigAction")
 {
-	SECTION("DeleteCalPlugin_New")
-	{
-		if (!g_bMicroTest)
-		{
-			ARBConfigActionPtr obj = ARBConfigActionDeleteCalPlugin::New(L"name");
-			REQUIRE(!!obj.get());
-		}
-	}
-
-
-	SECTION("DeleteCalPlugin_Clone")
-	{
-		if (!g_bMicroTest)
-		{
-			ARBConfigActionPtr obj = ARBConfigActionDeleteCalPlugin::New(L"name");
-			ARBConfigActionPtr obj2 = obj->Clone();
-			REQUIRE(!!obj2.get());
-			REQUIRE(obj.get() != obj2.get());
-		}
-	}
-
-
-	SECTION("DeleteCalPlugin_Apply")
-	{
-		if (!g_bMicroTest)
-		{
-			TODO_TEST
-			//virtual bool Apply(
-			//		ARBConfig& ioConfig,
-			//		ARBDogList* ioDogs,
-			//		std::wstring& ioInfo,
-			//		IConfigActionCallback& ioCallBack) const;
-		}
-	}
-
-
 	SECTION("RenameOtherPoints_New")
 	{
 		if (!g_bMicroTest)

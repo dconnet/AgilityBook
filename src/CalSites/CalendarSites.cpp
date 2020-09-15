@@ -25,6 +25,7 @@
 #include "stdafx.h"
 #include "CalendarSites.h"
 
+#include "ARBConfigCalSite.h"
 #include "CalSites.h"
 #include "CalendarSiteUSDAA.h"
 #include "DlgCalendarQueryDetail.h"
@@ -35,7 +36,7 @@
 #include "../Win/AgilityBookOptions.h"
 #include "../Win/DlgAssignColumns.h"
 #include "../Win/ImageHelper.h"
-#include "ARB/ARBAgilityRecordBook.h"
+#include "ARB/ARBCalendar.h"
 #include "ARB/ARBConfig.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/VersionNum.h"
@@ -52,9 +53,86 @@
 #include <map>
 #include <vector>
 
+//CalSites
+#define CFG_KEY_CALSITES L"CalSites"
+//	DW (DLL names in EXE directory)
+
+//CalSites2 - used for permanently disabling a version
+#define CFG_KEY_CALSITES2 L"CalSites2"
+//	ST (DLL names in EXE directory)
+
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
+
+/////////////////////////////////////////////////////////////////////////////
+
+static CVersionNum GetCalSitePermanentStatus(std::wstring const& filename)
+{
+	CVersionNum ver;
+	if (!filename.empty())
+	{
+		std::wstring section = fmt::format(L"{}/{}", CFG_KEY_CALSITES2, filename);
+		std::wstring str = StringUtil::stringW(wxConfig::Get()->Read(section, wxString()));
+		if (!str.empty())
+			ver.Parse(str);
+	}
+	return ver;
+}
+
+static bool IsCalSiteVisible(std::wstring const& filename, CVersionNum const& inVer)
+{
+	assert(inVer.Valid());
+	if (filename.empty())
+		return true;
+	bool bVisible = true;
+	std::wstring section = fmt::format(L"{}/{}", CFG_KEY_CALSITES, filename);
+	bool bCheckStatus = true;
+	wxConfig::Get()->Read(section, &bCheckStatus);
+	if (bCheckStatus)
+	{
+		CVersionNum ver = GetCalSitePermanentStatus(filename);
+		if (ver.Valid() && inVer <= ver)
+			bVisible = false;
+	}
+	else
+		bVisible = false;
+	return bVisible;
+}
+
+
+static void SuppressCalSite(std::wstring const& filename, bool bSuppress)
+{
+	if (filename.empty())
+		return;
+	std::wstring section = fmt::format(L"{}/{}", CFG_KEY_CALSITES, filename);
+	wxConfig::Get()->Write(section, !bSuppress);
+}
+
+
+/*
+static void SuppressCalSitePermanently(
+	std::wstring const& filename,
+	CVersionNum const& inVer,
+	bool bSuppress)
+{
+	if (filename.empty())
+		return;
+	std::wstring section = fmt::format(L"{}/{}", CFG_KEY_CALSITES2, filename);
+	if (bSuppress)
+		wxConfig::Get()->Write(section, inVer.GetVersionString().c_str());
+	else
+	{
+		// If we're clearing one, make sure we haven't written a different version
+		CVersionNum ver;
+		std::wstring str = StringUtil::stringW(wxConfig::Get()->Read(section, wxString()));
+		if (!str.empty())
+			ver.Parse(str);
+		if (ver == inVer)
+			wxConfig::Get()->DeleteEntry(section);
+	}
+}
+*/
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -96,67 +174,13 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CalSiteData
-{
-	// Copy semantics don't work well with our cleanup code!
-	DECLARE_NO_COPY_IMPLEMENTED(CalSiteData);
-
-public:
-	CalSiteData(ICalendarSitePtr pSite);
-	~CalSiteData();
-
-	void Connect();
-
-	bool isValid() const
-	{
-		return !!m_pSite;
-	}
-	void Unload(bool bPermanently = false);
-
-	std::wstring GetID() const
-	{
-		return m_pSite->GetID();
-	}
-	std::wstring GetName() const
-	{
-		return m_pSite->GetName();
-	}
-	std::wstring GetDescription() const
-	{
-		return m_pSite->GetDescription();
-	}
-	std::map<std::wstring, std::wstring> const& QueryLocationCodes() const
-	{
-		return m_LocCodes;
-	}
-	std::map<std::wstring, std::wstring> const& QueryVenueCodes() const
-	{
-		return m_VenueCodes;
-	}
-	std::string Process(
-		IProgressMeter* progress,
-		std::vector<std::wstring> const& inLocationCodes,
-		std::vector<std::wstring> const& inVenueCodes);
-
-private:
-	ICalendarSitePtr m_pSite;
-	std::wstring m_id;
-	CVersionNum m_Version;
-	std::map<std::wstring, std::wstring> m_LocCodes;
-	std::map<std::wstring, std::wstring> m_VenueCodes;
-};
-
-typedef std::shared_ptr<CalSiteData> CalSiteDataPtr;
-
-/////////////////////////////////////////////////////////////////////////////
-
 class CSortCheckTreeCtrl;
 
 class CDlgCalendarPlugins : public wxDialog
 {
 public:
 	CDlgCalendarPlugins(
-		ARBAgilityRecordBook& book,
+		ARBConfigCalSiteList& sites,
 		std::vector<CalSiteDataPtr>& directAccess,
 		wxWindow* pParent = nullptr);
 
@@ -164,7 +188,7 @@ private:
 	void UpdateControls();
 	void EditPlugin();
 
-	ARBAgilityRecordBook& m_book;
+	ARBConfigCalSiteList& m_sites;
 	CSortCheckTreeCtrl* m_ctrlPlugins;
 	CTextCtrl* m_ctrlDetails;
 	wxButton* m_ctrlRead;
@@ -330,7 +354,7 @@ void CalSiteData::Connect()
 	m_id = m_pSite->GetID();
 	m_LocCodes.clear();
 	m_VenueCodes.clear();
-	if (!m_pSite->GetVersion(m_Version) || !CAgilityBookOptions::IsCalSiteVisible(m_id, m_Version))
+	if (!m_pSite->GetVersion(m_Version) || !IsCalSiteVisible(m_id, m_Version))
 	{
 		Unload(true);
 	}
@@ -346,7 +370,7 @@ void CalSiteData::Unload(bool bPermanently)
 {
 	if (bPermanently)
 	{
-		CAgilityBookOptions::SuppressCalSite(m_id, true);
+		SuppressCalSite(m_id, true);
 	}
 }
 
@@ -357,43 +381,6 @@ std::string CalSiteData::Process(
 	std::vector<std::wstring> const& inVenueCodes)
 {
 	return m_pSite->Process(inLocationCodes, inVenueCodes, progress);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-
-class CCalendarSitesImpl
-{
-	DECLARE_NO_COPY_IMPLEMENTED(CCalendarSitesImpl)
-public:
-	CCalendarSitesImpl();
-	~CCalendarSitesImpl();
-
-	bool FindEntries(ARBAgilityRecordBook& book, wxWindow* pParent);
-
-private:
-	std::vector<CalSiteDataPtr> m_DirectAccess;
-};
-
-
-CCalendarSitesImpl::CCalendarSitesImpl()
-	: m_DirectAccess()
-{
-	m_DirectAccess.push_back(std::make_shared<CalSiteData>(CCalendarSiteUSDAA::Create()));
-}
-
-
-CCalendarSitesImpl::~CCalendarSitesImpl()
-{
-	m_DirectAccess.clear();
-}
-
-
-bool CCalendarSitesImpl::FindEntries(ARBAgilityRecordBook& book, wxWindow* pParent)
-{
-	CDlgCalendarPlugins dlg(book, m_DirectAccess, pParent);
-	if (wxID_OK != dlg.ShowModal())
-		return false;
-	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -472,8 +459,8 @@ protected:
 class CPluginConfigData : public CPluginData
 {
 public:
-	CPluginConfigData(ARBAgilityRecordBook& book, ARBConfigCalSitePtr const& inSite)
-		: m_book(book)
+	CPluginConfigData(ARBConfigCalSiteList& sites, ARBConfigCalSitePtr const& inSite)
+		: m_sites(sites)
 		, m_OrigSite(inSite)
 		, m_Site(inSite->Clone())
 		, m_Enabled(true)
@@ -539,7 +526,7 @@ public:
 	}
 
 private:
-	ARBAgilityRecordBook& m_book;
+	ARBConfigCalSiteList& m_sites;
 	ARBConfigCalSitePtr m_OrigSite;
 	ARBConfigCalSitePtr m_Site;
 	bool m_Enabled;
@@ -561,9 +548,7 @@ std::string CPluginConfigData::Process(IProgressMeter* progress)
 
 bool CPluginConfigData::Edit(wxWindow* pParent)
 {
-#pragma PRAGMA_TODO(agilitybookdoc)
-	ARBAgilityRecordBook book;
-	CDlgPluginDetails dlg(book.GetConfig(), m_Site, pParent);
+	CDlgPluginDetails dlg(m_sites, m_Site, pParent);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		m_Name = m_Site->GetName();
@@ -581,7 +566,7 @@ bool CPluginConfigData::Edit(wxWindow* pParent)
 
 bool CPluginConfigData::Delete()
 {
-	if (m_book.GetConfig().GetCalSites().DeleteSite(m_OrigSite->GetName()))
+	if (m_sites.DeleteSite(m_OrigSite->GetName()))
 	{
 		//m_pDoc->Modify(true);
 		m_OrigSite.reset();
@@ -638,7 +623,7 @@ public:
 		bool bStatusChange = false;
 		if (!m_CalData->isValid())
 		{
-			CAgilityBookOptions::SuppressCalSite(m_CalData->GetID(), false);
+			SuppressCalSite(m_CalData->GetID(), false);
 			m_CalData->Connect();
 			if (m_CalData->isValid())
 			{
@@ -761,11 +746,11 @@ int CSortCheckTreeCtrl::OnCompareItems(const wxTreeItemId& item1, const wxTreeIt
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgCalendarPlugins::CDlgCalendarPlugins(
-	ARBAgilityRecordBook& book,
+	ARBConfigCalSiteList& sites,
 	std::vector<CalSiteDataPtr>& directAccess,
 	wxWindow* pParent)
 	: wxDialog()
-	, m_book(book)
+	, m_sites(sites)
 	, m_ctrlPlugins(nullptr)
 	, m_ctrlDetails(nullptr)
 	, m_ctrlRead(nullptr)
@@ -849,11 +834,9 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	wxButton* btnClose = new wxButton(this, wxID_CANCEL, _("IDC_PLUGIN_CLOSE"), wxDefaultPosition, wxDefaultSize, 0);
 
 	wxTreeItemId root = m_ctrlPlugins->AddRoot(L"root");
-	for (ARBConfigCalSiteList::const_iterator iConfig = m_book.GetConfig().GetCalSites().begin();
-		 iConfig != m_book.GetConfig().GetCalSites().end();
-		 ++iConfig)
+	for (ARBConfigCalSiteList::const_iterator iConfig = m_sites.begin(); iConfig != m_sites.end(); ++iConfig)
 	{
-		CPluginConfigData* pData = new CPluginConfigData(m_book, *iConfig);
+		CPluginConfigData* pData = new CPluginConfigData(m_sites, *iConfig);
 		wxTreeItemId hItem = m_ctrlPlugins->AppendItem(root, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
 		m_ctrlPlugins->ShowCheckbox(hItem, true);
 		m_ctrlPlugins->SetChecked(hItem, true, false);
@@ -998,6 +981,7 @@ void CDlgCalendarPlugins::OnCheckChange(wxEvent& evt)
 
 void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 {
+#if 0
 	int nEntries = 0;
 	wxTreeItemId hItem;
 	wxTreeItemIdValue cookie;
@@ -1093,11 +1077,13 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 	}
 	progress.Dismiss();
 	UpdateControls();
+#endif
 }
 
 
 void CDlgCalendarPlugins::OnPluginAddCalEntry(wxCommandEvent& evt)
 {
+#if 0
 	int nAdded = 0;
 	int nUpdated = 0;
 	wxTreeItemId hItem;
@@ -1148,6 +1134,7 @@ void CDlgCalendarPlugins::OnPluginAddCalEntry(wxCommandEvent& evt)
 	std::wstring str = fmt::format(_("IDS_UPDATED_CAL_ITEMS").wx_str(), nAdded, nUpdated);
 	wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 	UpdateControls();
+#endif
 }
 
 
@@ -1180,7 +1167,7 @@ void CDlgCalendarPlugins::OnPluginQueryDetails(wxCommandEvent& evt)
 		if (pData && pData->HasQueryDetails())
 		{
 			CDlgCalendarQueryDetail dlg(
-				m_book.GetConfig(),
+				m_sites,
 				pData->QueryLocationCodes(),
 				pData->LocationCodes(),
 				pData->QueryVenueCodes(),
@@ -1199,12 +1186,12 @@ void CDlgCalendarPlugins::OnPluginQueryDetails(wxCommandEvent& evt)
 void CDlgCalendarPlugins::OnPluginNew(wxCommandEvent& evt)
 {
 	ARBConfigCalSitePtr site = ARBConfigCalSite::New();
-	CDlgPluginDetails dlg(m_book.GetConfig(), site, this);
+	CDlgPluginDetails dlg(m_sites, site, this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		m_book.GetConfig().GetCalSites().AddSite(site);
+		m_sites.AddSite(site);
 		//m_pDoc->Modify(true);
-		CPluginConfigData* pData = new CPluginConfigData(m_book, site);
+		CPluginConfigData* pData = new CPluginConfigData(m_sites, site);
 		wxTreeItemId hItem
 			= m_ctrlPlugins
 				  ->AppendItem(m_ctrlPlugins->GetRootItem(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
@@ -1239,17 +1226,22 @@ void CDlgCalendarPlugins::OnPluginDelete(wxCommandEvent& evt)
 /////////////////////////////////////////////////////////////////////////////
 
 CCalendarSites::CCalendarSites()
-	: m_Impl(std::make_unique<CCalendarSitesImpl>())
+	: m_DirectAccess()
 {
+	m_DirectAccess.push_back(std::make_shared<CalSiteData>(CCalendarSiteUSDAA::Create()));
 }
 
 
 CCalendarSites::~CCalendarSites()
 {
+	m_DirectAccess.clear();
 }
 
 
-bool CCalendarSites::FindEntries(ARBAgilityRecordBook& book, wxWindow* pParent)
+bool CCalendarSites::FindEntries(ARBConfigCalSiteList& sites, wxWindow* pParent)
 {
-	return m_Impl->FindEntries(book, pParent);
+	CDlgCalendarPlugins dlg(sites, m_DirectAccess, pParent);
+	if (wxID_OK != dlg.ShowModal())
+		return false;
+	return true;
 }

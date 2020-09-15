@@ -24,7 +24,6 @@
  */
 
 #include "ARBConfigAction.h"
-#include "ARBConfigCalSite.h"
 #include "ARBConfigFault.h"
 #include "ARBConfigOtherPoints.h"
 #include "ARBConfigVenue.h"
@@ -170,14 +169,6 @@ public:
 	{
 		return m_Version;
 	}
-	ARBConfigCalSiteList const& GetCalSites() const
-	{
-		return m_CalSites;
-	}
-	ARBConfigCalSiteList& GetCalSites()
-	{
-		return m_CalSites;
-	}
 	ARBConfigActionList const& GetActions() const
 	{
 		return m_Actions;
@@ -215,7 +206,6 @@ private:
 	bool m_bUpdate;
 	short m_Version;
 	ARBConfigActionList m_Actions;
-	ARBConfigCalSiteList m_CalSites;
 	ARBConfigVenueList m_Venues;
 	ARBConfigFaultList m_FaultTypes;
 	ARBConfigOtherPointsList m_OtherPoints;

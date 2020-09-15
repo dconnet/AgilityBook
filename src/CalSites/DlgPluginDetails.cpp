@@ -22,11 +22,11 @@
 #include "stdafx.h"
 #include "DlgPluginDetails.h"
 
+#include "ARBConfigCalSite.h"
 #include "CalSites.h"
 #include "DlgCalendarQueryDetail.h"
 
 #include "ARB/ARBConfig.h"
-#include "ARB/ARBConfigCalSite.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/Validators.h"
 #include "LibARBWin/Widgets.h"
@@ -41,9 +41,12 @@ wxBEGIN_EVENT_TABLE(CDlgPluginDetails, wxDialog)
 wxEND_EVENT_TABLE()
 
 
-CDlgPluginDetails::CDlgPluginDetails(ARBConfig& inConfig, ARBConfigCalSitePtr const& inCalSite, wxWindow* pParent)
+CDlgPluginDetails::CDlgPluginDetails(
+	ARBConfigCalSiteList& sites,
+	ARBConfigCalSitePtr const& inCalSite,
+	wxWindow* pParent)
 	: wxDialog()
-	, m_Config(inConfig)
+	, m_sites(sites)
 	, m_OrigCalSite(inCalSite)
 	, m_CalSite()
 	, m_strName()
@@ -195,7 +198,7 @@ void CDlgPluginDetails::SetCodeText()
 
 void CDlgPluginDetails::OnPluginDetailCodes(wxCommandEvent& evt)
 {
-	CDlgCalendarQueryDetail dlg(m_Config, m_CalSite->LocationCodes(), m_CalSite->VenueCodes(), this);
+	CDlgCalendarQueryDetail dlg(m_sites, m_CalSite->LocationCodes(), m_CalSite->VenueCodes(), this);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		m_CalSite->RemoveAllLocationCodes();
@@ -224,8 +227,7 @@ void CDlgPluginDetails::OnOk(wxCommandEvent& evt)
 	m_CalSite->SetSearchURL(StringUtil::stringW(m_strSearch));
 	m_CalSite->SetHelpURL(StringUtil::stringW(m_strHelp));
 
-	if ((!m_OrigCalSite || m_OrigCalSite->GetName() != m_CalSite->GetName())
-		&& m_Config.GetCalSites().FindSite(m_CalSite->GetName()))
+	if ((!m_OrigCalSite || m_OrigCalSite->GetName() != m_CalSite->GetName()) && m_sites.FindSite(m_CalSite->GetName()))
 	{
 		wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 		m_ctrlName->SetFocus();
@@ -235,6 +237,6 @@ void CDlgPluginDetails::OnOk(wxCommandEvent& evt)
 	if (m_OrigCalSite)
 		*m_OrigCalSite = *m_CalSite;
 	else
-		m_Config.GetCalSites().AddSite(m_CalSite);
+		m_sites.AddSite(m_CalSite);
 	EndDialog(wxID_OK);
 }

@@ -2115,7 +2115,6 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 	{
 		CDlgConfigure config(this, m_Records, wxGetApp().GetTopWindow());
 		config.ShowModal();
-		// Don't need to update calsite info - done during OnOK.
 	}
 	break;
 

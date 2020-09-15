@@ -1,4 +1,6 @@
 7/22/2020: v3.5.1.<develop>
+- Bumped file version to 15.3:
+  - Removed CalSite data
 - New features / Enhancements:
   - Support wx3.1.4
 - Bug fixes:
