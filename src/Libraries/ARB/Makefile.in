@@ -34,7 +34,6 @@ libarb_SRCS = ARBAgilityRecordBook.cpp \
 	ARBCalendar.cpp \
 	ARBConfig.cpp \
 	ARBConfigAction.cpp \
-	ARBConfigCalSite.cpp \
 	ARBConfigDivision.cpp \
 	ARBConfigEvent.cpp \
 	ARBConfigFault.cpp \

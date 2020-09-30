@@ -38,7 +38,6 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 	TestCalendar.cpp \
 	TestConfig.cpp \
 	TestConfigAction.cpp \
-	TestConfigCalSite.cpp \
 	TestConfigDivision.cpp \
 	TestConfigEvent.cpp \
 	TestConfigFault.cpp \
