@@ -44,8 +44,6 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	AgilityBookTrainingView.cpp \
 	AgilityBookTreeData.cpp \
 	AgilityBookTreeView.cpp \
-	CalendarSites.cpp \
-	CalendarSiteUSDAA.cpp \
 	ClipBoard.cpp \
 	ComboBoxQ.cpp \
 	ComboBoxVenue.cpp \
@@ -54,7 +52,6 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	DlgAbout.cpp \
 	DlgAssignColumns.cpp \
 	DlgCalendar.cpp \
-	DlgCalendarQueryDetail.cpp \
 	DlgClub.cpp \
 	DlgConfigEvent.cpp \
 	DlgConfigEventMethod.cpp \
@@ -88,9 +85,7 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	DlgOptionsProgram.cpp \
 	DlgOtherPoint.cpp \
 	DlgPartner.cpp \
-	DlgPluginDetails.cpp \
 	DlgPointsViewSort.cpp \
-	DlgQueryDetail.cpp \
 	DlgReferenceRun.cpp \
 	DlgRegNum.cpp \
 	DlgReorder.cpp \

@@ -22,15 +22,12 @@
 		E19B64F8166C09B9004DEDA4 /* AgilityBookTrainingView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63F0166C09B9004DEDA4 /* AgilityBookTrainingView.cpp */; };
 		E19B64F9166C09B9004DEDA4 /* AgilityBookTreeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63F2166C09B9004DEDA4 /* AgilityBookTreeData.cpp */; };
 		E19B64FB166C09B9004DEDA4 /* AgilityBookTreeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63F6166C09B9004DEDA4 /* AgilityBookTreeView.cpp */; };
-		E19B64FC166C09B9004DEDA4 /* CalendarSites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63F8166C09B9004DEDA4 /* CalendarSites.cpp */; };
-		E19B64FD166C09B9004DEDA4 /* CalendarSiteUSDAA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63FA166C09B9004DEDA4 /* CalendarSiteUSDAA.cpp */; };
 		E19B6500166C09B9004DEDA4 /* ClipBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6400166C09B9004DEDA4 /* ClipBoard.cpp */; };
 		E19B6503166C09B9004DEDA4 /* CommonView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6406166C09B9004DEDA4 /* CommonView.cpp */; };
 		E19B6504166C09B9004DEDA4 /* ConfigHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6408166C09B9004DEDA4 /* ConfigHandler.cpp */; };
 		E19B6505166C09B9004DEDA4 /* DlgAbout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B640A166C09B9004DEDA4 /* DlgAbout.cpp */; };
 		E19B6506166C09B9004DEDA4 /* DlgAssignColumns.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B640C166C09B9004DEDA4 /* DlgAssignColumns.cpp */; };
 		E19B6508166C09B9004DEDA4 /* DlgCalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6410166C09B9004DEDA4 /* DlgCalendar.cpp */; };
-		E19B6509166C09B9004DEDA4 /* DlgCalendarQueryDetail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6412166C09B9004DEDA4 /* DlgCalendarQueryDetail.cpp */; };
 		E19B650A166C09B9004DEDA4 /* DlgClub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6414166C09B9004DEDA4 /* DlgClub.cpp */; };
 		E19B650B166C09B9004DEDA4 /* DlgConfigEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6416166C09B9004DEDA4 /* DlgConfigEvent.cpp */; };
 		E19B650C166C09B9004DEDA4 /* DlgConfigEventMethod.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6418166C09B9004DEDA4 /* DlgConfigEventMethod.cpp */; };
@@ -63,9 +60,7 @@
 		E19B6527166C09B9004DEDA4 /* DlgOptionsProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B644E166C09B9004DEDA4 /* DlgOptionsProgram.cpp */; };
 		E19B6528166C09B9004DEDA4 /* DlgOtherPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6450166C09B9004DEDA4 /* DlgOtherPoint.cpp */; };
 		E19B6529166C09B9004DEDA4 /* DlgPartner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6452166C09B9004DEDA4 /* DlgPartner.cpp */; };
-		E19B652A166C09B9004DEDA4 /* DlgPluginDetails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6454166C09B9004DEDA4 /* DlgPluginDetails.cpp */; };
 		E19B652B166C09B9004DEDA4 /* DlgPointsViewSort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6456166C09B9004DEDA4 /* DlgPointsViewSort.cpp */; };
-		E19B652D166C09B9004DEDA4 /* DlgQueryDetail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B645A166C09B9004DEDA4 /* DlgQueryDetail.cpp */; };
 		E19B652E166C09B9004DEDA4 /* DlgReferenceRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B645C166C09B9004DEDA4 /* DlgReferenceRun.cpp */; };
 		E19B652F166C09B9004DEDA4 /* DlgRegNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B645E166C09B9004DEDA4 /* DlgRegNum.cpp */; };
 		E19B6530166C09B9004DEDA4 /* DlgReorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6460166C09B9004DEDA4 /* DlgReorder.cpp */; };
@@ -274,10 +269,6 @@
 		E19B63F3166C09B9004DEDA4 /* AgilityBookTreeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookTreeData.h; sourceTree = "<group>"; };
 		E19B63F6166C09B9004DEDA4 /* AgilityBookTreeView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookTreeView.cpp; sourceTree = "<group>"; };
 		E19B63F7166C09B9004DEDA4 /* AgilityBookTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookTreeView.h; sourceTree = "<group>"; };
-		E19B63F8166C09B9004DEDA4 /* CalendarSites.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CalendarSites.cpp; sourceTree = "<group>"; };
-		E19B63F9166C09B9004DEDA4 /* CalendarSites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarSites.h; sourceTree = "<group>"; };
-		E19B63FA166C09B9004DEDA4 /* CalendarSiteUSDAA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CalendarSiteUSDAA.cpp; sourceTree = "<group>"; };
-		E19B63FB166C09B9004DEDA4 /* CalendarSiteUSDAA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarSiteUSDAA.h; sourceTree = "<group>"; };
 		E19B6400166C09B9004DEDA4 /* ClipBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClipBoard.cpp; sourceTree = "<group>"; };
 		E19B6401166C09B9004DEDA4 /* ClipBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClipBoard.h; sourceTree = "<group>"; };
 		E19B6406166C09B9004DEDA4 /* CommonView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonView.cpp; sourceTree = "<group>"; };
@@ -290,8 +281,6 @@
 		E19B640D166C09B9004DEDA4 /* DlgAssignColumns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgAssignColumns.h; sourceTree = "<group>"; };
 		E19B6410166C09B9004DEDA4 /* DlgCalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgCalendar.cpp; sourceTree = "<group>"; };
 		E19B6411166C09B9004DEDA4 /* DlgCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgCalendar.h; sourceTree = "<group>"; };
-		E19B6412166C09B9004DEDA4 /* DlgCalendarQueryDetail.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgCalendarQueryDetail.cpp; sourceTree = "<group>"; };
-		E19B6413166C09B9004DEDA4 /* DlgCalendarQueryDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgCalendarQueryDetail.h; sourceTree = "<group>"; };
 		E19B6414166C09B9004DEDA4 /* DlgClub.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgClub.cpp; sourceTree = "<group>"; };
 		E19B6415166C09B9004DEDA4 /* DlgClub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgClub.h; sourceTree = "<group>"; };
 		E19B6416166C09B9004DEDA4 /* DlgConfigEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgConfigEvent.cpp; sourceTree = "<group>"; };
@@ -356,12 +345,8 @@
 		E19B6451166C09B9004DEDA4 /* DlgOtherPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgOtherPoint.h; sourceTree = "<group>"; };
 		E19B6452166C09B9004DEDA4 /* DlgPartner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgPartner.cpp; sourceTree = "<group>"; };
 		E19B6453166C09B9004DEDA4 /* DlgPartner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPartner.h; sourceTree = "<group>"; };
-		E19B6454166C09B9004DEDA4 /* DlgPluginDetails.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgPluginDetails.cpp; sourceTree = "<group>"; };
-		E19B6455166C09B9004DEDA4 /* DlgPluginDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPluginDetails.h; sourceTree = "<group>"; };
 		E19B6456166C09B9004DEDA4 /* DlgPointsViewSort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgPointsViewSort.cpp; sourceTree = "<group>"; };
 		E19B6457166C09B9004DEDA4 /* DlgPointsViewSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPointsViewSort.h; sourceTree = "<group>"; };
-		E19B645A166C09B9004DEDA4 /* DlgQueryDetail.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgQueryDetail.cpp; sourceTree = "<group>"; };
-		E19B645B166C09B9004DEDA4 /* DlgQueryDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgQueryDetail.h; sourceTree = "<group>"; };
 		E19B645C166C09B9004DEDA4 /* DlgReferenceRun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgReferenceRun.cpp; sourceTree = "<group>"; };
 		E19B645D166C09B9004DEDA4 /* DlgReferenceRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgReferenceRun.h; sourceTree = "<group>"; };
 		E19B645E166C09B9004DEDA4 /* DlgRegNum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgRegNum.cpp; sourceTree = "<group>"; };
@@ -411,7 +396,6 @@
 		E19B64EB166C09B9004DEDA4 /* WizardImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WizardImport.h; sourceTree = "<group>"; };
 		E19B64EC166C09B9004DEDA4 /* WizardStart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WizardStart.cpp; sourceTree = "<group>"; };
 		E19B64ED166C09B9004DEDA4 /* WizardStart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WizardStart.h; sourceTree = "<group>"; };
-		E19B659D166C09C4004DEDA4 /* ICalendarSite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICalendarSite.h; sourceTree = "<group>"; };
 		E19B659E166C09C4004DEDA4 /* IProgressMeter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IProgressMeter.h; sourceTree = "<group>"; };
 		E19B65A0166C09C4004DEDA4 /* VersionNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionNumber.h; sourceTree = "<group>"; };
 		E1A327101A29222F00DD356D /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = AgilityBook.icns; path = ../../../../Win/res/AgilityBook.icns; sourceTree = "<group>"; };
@@ -818,10 +802,6 @@
 				E19B63F3166C09B9004DEDA4 /* AgilityBookTreeData.h */,
 				E19B63F6166C09B9004DEDA4 /* AgilityBookTreeView.cpp */,
 				E19B63F7166C09B9004DEDA4 /* AgilityBookTreeView.h */,
-				E19B63F8166C09B9004DEDA4 /* CalendarSites.cpp */,
-				E19B63F9166C09B9004DEDA4 /* CalendarSites.h */,
-				E19B63FA166C09B9004DEDA4 /* CalendarSiteUSDAA.cpp */,
-				E19B63FB166C09B9004DEDA4 /* CalendarSiteUSDAA.h */,
 				E19B6400166C09B9004DEDA4 /* ClipBoard.cpp */,
 				E19B6401166C09B9004DEDA4 /* ClipBoard.h */,
 				E1E1D05117234DEF00D7D1E4 /* ComboBoxQ.cpp */,
@@ -838,8 +818,6 @@
 				E19B640D166C09B9004DEDA4 /* DlgAssignColumns.h */,
 				E19B6410166C09B9004DEDA4 /* DlgCalendar.cpp */,
 				E19B6411166C09B9004DEDA4 /* DlgCalendar.h */,
-				E19B6412166C09B9004DEDA4 /* DlgCalendarQueryDetail.cpp */,
-				E19B6413166C09B9004DEDA4 /* DlgCalendarQueryDetail.h */,
 				E19B6414166C09B9004DEDA4 /* DlgClub.cpp */,
 				E19B6415166C09B9004DEDA4 /* DlgClub.h */,
 				E19B6416166C09B9004DEDA4 /* DlgConfigEvent.cpp */,
@@ -906,12 +884,8 @@
 				E19B6451166C09B9004DEDA4 /* DlgOtherPoint.h */,
 				E19B6452166C09B9004DEDA4 /* DlgPartner.cpp */,
 				E19B6453166C09B9004DEDA4 /* DlgPartner.h */,
-				E19B6454166C09B9004DEDA4 /* DlgPluginDetails.cpp */,
-				E19B6455166C09B9004DEDA4 /* DlgPluginDetails.h */,
 				E19B6456166C09B9004DEDA4 /* DlgPointsViewSort.cpp */,
 				E19B6457166C09B9004DEDA4 /* DlgPointsViewSort.h */,
-				E19B645A166C09B9004DEDA4 /* DlgQueryDetail.cpp */,
-				E19B645B166C09B9004DEDA4 /* DlgQueryDetail.h */,
 				E19B645C166C09B9004DEDA4 /* DlgReferenceRun.cpp */,
 				E19B645D166C09B9004DEDA4 /* DlgReferenceRun.h */,
 				E19B645E166C09B9004DEDA4 /* DlgRegNum.cpp */,
@@ -973,7 +947,6 @@
 			isa = PBXGroup;
 			children = (
 				E1CAE56F16B5BF6E00B33FE5 /* Platform */,
-				E19B659D166C09C4004DEDA4 /* ICalendarSite.h */,
 				E19B659E166C09C4004DEDA4 /* IProgressMeter.h */,
 				E19B65A0166C09C4004DEDA4 /* VersionNumber.h */,
 			);
@@ -1229,15 +1202,12 @@
 				E19B64F8166C09B9004DEDA4 /* AgilityBookTrainingView.cpp in Sources */,
 				E19B64F9166C09B9004DEDA4 /* AgilityBookTreeData.cpp in Sources */,
 				E19B64FB166C09B9004DEDA4 /* AgilityBookTreeView.cpp in Sources */,
-				E19B64FC166C09B9004DEDA4 /* CalendarSites.cpp in Sources */,
-				E19B64FD166C09B9004DEDA4 /* CalendarSiteUSDAA.cpp in Sources */,
 				E19B6500166C09B9004DEDA4 /* ClipBoard.cpp in Sources */,
 				E19B6503166C09B9004DEDA4 /* CommonView.cpp in Sources */,
 				E19B6504166C09B9004DEDA4 /* ConfigHandler.cpp in Sources */,
 				E19B6505166C09B9004DEDA4 /* DlgAbout.cpp in Sources */,
 				E19B6506166C09B9004DEDA4 /* DlgAssignColumns.cpp in Sources */,
 				E19B6508166C09B9004DEDA4 /* DlgCalendar.cpp in Sources */,
-				E19B6509166C09B9004DEDA4 /* DlgCalendarQueryDetail.cpp in Sources */,
 				E19B650A166C09B9004DEDA4 /* DlgClub.cpp in Sources */,
 				E19B650B166C09B9004DEDA4 /* DlgConfigEvent.cpp in Sources */,
 				E19B650C166C09B9004DEDA4 /* DlgConfigEventMethod.cpp in Sources */,
@@ -1271,9 +1241,7 @@
 				E19B6527166C09B9004DEDA4 /* DlgOptionsProgram.cpp in Sources */,
 				E19B6528166C09B9004DEDA4 /* DlgOtherPoint.cpp in Sources */,
 				E19B6529166C09B9004DEDA4 /* DlgPartner.cpp in Sources */,
-				E19B652A166C09B9004DEDA4 /* DlgPluginDetails.cpp in Sources */,
 				E19B652B166C09B9004DEDA4 /* DlgPointsViewSort.cpp in Sources */,
-				E19B652D166C09B9004DEDA4 /* DlgQueryDetail.cpp in Sources */,
 				E19B652E166C09B9004DEDA4 /* DlgReferenceRun.cpp in Sources */,
 				E19B652F166C09B9004DEDA4 /* DlgRegNum.cpp in Sources */,
 				E19B6530166C09B9004DEDA4 /* DlgReorder.cpp in Sources */,
