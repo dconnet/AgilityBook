@@ -14,7 +14,6 @@
 		E110B4D3177FCFCC004071B5 /* ARBCalendar.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B4AC177FCFCC004071B5 /* ARBCalendar.h */; };
 		E110B4D4177FCFCC004071B5 /* ARBConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B4AD177FCFCC004071B5 /* ARBConfig.h */; };
 		E110B4D5177FCFCC004071B5 /* ARBConfigAction.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B4AE177FCFCC004071B5 /* ARBConfigAction.h */; };
-		E110B4D6177FCFCC004071B5 /* ARBConfigCalSite.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B4AF177FCFCC004071B5 /* ARBConfigCalSite.h */; };
 		E110B4D7177FCFCC004071B5 /* ARBConfigDivision.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B4B0177FCFCC004071B5 /* ARBConfigDivision.h */; };
 		E110B4D8177FCFCC004071B5 /* ARBConfigEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B4B1177FCFCC004071B5 /* ARBConfigEvent.h */; };
 		E110B4D9177FCFCC004071B5 /* ARBConfigFault.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B4B2177FCFCC004071B5 /* ARBConfigFault.h */; };
@@ -77,7 +76,6 @@
 		E1BED41B237F8FEB0091278E /* ARBConfigLifetimeName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3F3237F8FE80091278E /* ARBConfigLifetimeName.cpp */; };
 		E1BED41C237F8FEB0091278E /* ARBDogClub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3F4237F8FE80091278E /* ARBDogClub.cpp */; };
 		E1BED41D237F8FEB0091278E /* ARBConfigPlaceInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3F5237F8FE80091278E /* ARBConfigPlaceInfo.cpp */; };
-		E1BED41E237F8FEB0091278E /* ARBConfigCalSite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3F6237F8FE90091278E /* ARBConfigCalSite.cpp */; };
 		E1BED41F237F8FEB0091278E /* ARBConfigLifetimePoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3F7237F8FE90091278E /* ARBConfigLifetimePoints.cpp */; };
 		E1BED420237F8FEB0091278E /* ARBDogRunOtherPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3F8237F8FE90091278E /* ARBDogRunOtherPoints.cpp */; };
 		E1BED421237F8FEB0091278E /* ARBConfigEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3F9237F8FE90091278E /* ARBConfigEvent.cpp */; };
@@ -106,7 +104,6 @@
 		E110B4AC177FCFCC004071B5 /* ARBCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBCalendar.h; sourceTree = "<group>"; };
 		E110B4AD177FCFCC004071B5 /* ARBConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBConfig.h; sourceTree = "<group>"; };
 		E110B4AE177FCFCC004071B5 /* ARBConfigAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBConfigAction.h; sourceTree = "<group>"; };
-		E110B4AF177FCFCC004071B5 /* ARBConfigCalSite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBConfigCalSite.h; sourceTree = "<group>"; };
 		E110B4B0177FCFCC004071B5 /* ARBConfigDivision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBConfigDivision.h; sourceTree = "<group>"; };
 		E110B4B1177FCFCC004071B5 /* ARBConfigEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBConfigEvent.h; sourceTree = "<group>"; };
 		E110B4B2177FCFCC004071B5 /* ARBConfigFault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBConfigFault.h; sourceTree = "<group>"; };
@@ -170,7 +167,6 @@
 		E1BED3F3237F8FE80091278E /* ARBConfigLifetimeName.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigLifetimeName.cpp; path = ../Libraries/ARB/ARBConfigLifetimeName.cpp; sourceTree = "<group>"; };
 		E1BED3F4237F8FE80091278E /* ARBDogClub.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBDogClub.cpp; path = ../Libraries/ARB/ARBDogClub.cpp; sourceTree = "<group>"; };
 		E1BED3F5237F8FE80091278E /* ARBConfigPlaceInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigPlaceInfo.cpp; path = ../Libraries/ARB/ARBConfigPlaceInfo.cpp; sourceTree = "<group>"; };
-		E1BED3F6237F8FE90091278E /* ARBConfigCalSite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigCalSite.cpp; path = ../Libraries/ARB/ARBConfigCalSite.cpp; sourceTree = "<group>"; };
 		E1BED3F7237F8FE90091278E /* ARBConfigLifetimePoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigLifetimePoints.cpp; path = ../Libraries/ARB/ARBConfigLifetimePoints.cpp; sourceTree = "<group>"; };
 		E1BED3F8237F8FE90091278E /* ARBDogRunOtherPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBDogRunOtherPoints.cpp; path = ../Libraries/ARB/ARBDogRunOtherPoints.cpp; sourceTree = "<group>"; };
 		E1BED3F9237F8FE90091278E /* ARBConfigEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBConfigEvent.cpp; path = ../Libraries/ARB/ARBConfigEvent.cpp; sourceTree = "<group>"; };
@@ -212,7 +208,6 @@
 				E110B4AC177FCFCC004071B5 /* ARBCalendar.h */,
 				E110B4AD177FCFCC004071B5 /* ARBConfig.h */,
 				E110B4AE177FCFCC004071B5 /* ARBConfigAction.h */,
-				E110B4AF177FCFCC004071B5 /* ARBConfigCalSite.h */,
 				E110B4B0177FCFCC004071B5 /* ARBConfigDivision.h */,
 				E110B4B1177FCFCC004071B5 /* ARBConfigEvent.h */,
 				E110B4B2177FCFCC004071B5 /* ARBConfigFault.h */,
@@ -285,7 +280,6 @@
 				E1BED3E1237F8FE60091278E /* ARBCalendar.cpp */,
 				E1BED3EE237F8FE70091278E /* ARBConfig.cpp */,
 				E1BED3EF237F8FE70091278E /* ARBConfigAction.cpp */,
-				E1BED3F6237F8FE90091278E /* ARBConfigCalSite.cpp */,
 				E1BED3E5237F8FE60091278E /* ARBConfigDivision.cpp */,
 				E1BED3F9237F8FE90091278E /* ARBConfigEvent.cpp */,
 				E1BED3EC237F8FE70091278E /* ARBConfigFault.cpp */,
@@ -370,7 +364,6 @@
 				E110B4D3177FCFCC004071B5 /* ARBCalendar.h in Headers */,
 				E110B4D4177FCFCC004071B5 /* ARBConfig.h in Headers */,
 				E110B4D5177FCFCC004071B5 /* ARBConfigAction.h in Headers */,
-				E110B4D6177FCFCC004071B5 /* ARBConfigCalSite.h in Headers */,
 				E110B4D7177FCFCC004071B5 /* ARBConfigDivision.h in Headers */,
 				E110B4D8177FCFCC004071B5 /* ARBConfigEvent.h in Headers */,
 				E110B4D9177FCFCC004071B5 /* ARBConfigFault.h in Headers */,
@@ -493,7 +486,6 @@
 				E1BED41C237F8FEB0091278E /* ARBDogClub.cpp in Sources */,
 				E1BED425237F8FEB0091278E /* ARBDogExistingPoints.cpp in Sources */,
 				E1BED417237F8FEB0091278E /* ARBConfigAction.cpp in Sources */,
-				E1BED41E237F8FEB0091278E /* ARBConfigCalSite.cpp in Sources */,
 				E1BED41B237F8FEB0091278E /* ARBConfigLifetimeName.cpp in Sources */,
 				E1BED424237F8FEB0091278E /* ARBInfo.cpp in Sources */,
 				E1BED410237F8FEB0091278E /* ARBCalcPoints.cpp in Sources */,

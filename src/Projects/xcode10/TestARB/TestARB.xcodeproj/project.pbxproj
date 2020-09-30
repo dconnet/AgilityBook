@@ -19,7 +19,6 @@
 		E15106BB18089179002AC401 /* TestCalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068A18089179002AC401 /* TestCalendar.cpp */; };
 		E15106BC18089179002AC401 /* TestConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068B18089179002AC401 /* TestConfig.cpp */; };
 		E15106BD18089179002AC401 /* TestConfigAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068C18089179002AC401 /* TestConfigAction.cpp */; };
-		E15106BE18089179002AC401 /* TestConfigCalSite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068D18089179002AC401 /* TestConfigCalSite.cpp */; };
 		E15106BF18089179002AC401 /* TestConfigDivision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068E18089179002AC401 /* TestConfigDivision.cpp */; };
 		E15106C018089179002AC401 /* TestConfigEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068F18089179002AC401 /* TestConfigEvent.cpp */; };
 		E15106C118089179002AC401 /* TestConfigFault.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069018089179002AC401 /* TestConfigFault.cpp */; };
@@ -95,7 +94,6 @@
 		E151068A18089179002AC401 /* TestCalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCalendar.cpp; sourceTree = "<group>"; };
 		E151068B18089179002AC401 /* TestConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfig.cpp; sourceTree = "<group>"; };
 		E151068C18089179002AC401 /* TestConfigAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigAction.cpp; sourceTree = "<group>"; };
-		E151068D18089179002AC401 /* TestConfigCalSite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigCalSite.cpp; sourceTree = "<group>"; };
 		E151068E18089179002AC401 /* TestConfigDivision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigDivision.cpp; sourceTree = "<group>"; };
 		E151068F18089179002AC401 /* TestConfigEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigEvent.cpp; sourceTree = "<group>"; };
 		E151069018089179002AC401 /* TestConfigFault.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigFault.cpp; sourceTree = "<group>"; };
@@ -208,7 +206,6 @@
 				E151068A18089179002AC401 /* TestCalendar.cpp */,
 				E151068B18089179002AC401 /* TestConfig.cpp */,
 				E151068C18089179002AC401 /* TestConfigAction.cpp */,
-				E151068D18089179002AC401 /* TestConfigCalSite.cpp */,
 				E151068E18089179002AC401 /* TestConfigDivision.cpp */,
 				E151068F18089179002AC401 /* TestConfigEvent.cpp */,
 				E151069018089179002AC401 /* TestConfigFault.cpp */,
@@ -348,7 +345,6 @@
 				E15106BB18089179002AC401 /* TestCalendar.cpp in Sources */,
 				E15106BC18089179002AC401 /* TestConfig.cpp in Sources */,
 				E15106BD18089179002AC401 /* TestConfigAction.cpp in Sources */,
-				E15106BE18089179002AC401 /* TestConfigCalSite.cpp in Sources */,
 				E15106BF18089179002AC401 /* TestConfigDivision.cpp in Sources */,
 				E15106C018089179002AC401 /* TestConfigEvent.cpp in Sources */,
 				E15106C118089179002AC401 /* TestConfigFault.cpp in Sources */,
