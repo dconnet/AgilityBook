@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-09-30 Fix clicking on FCAT title link.
  * 2020-05-12 Fix formatting of doubles.
  * 2019-05-04 Reworked PointsData usage.
  * 2018-12-16 Convert to fmt.
@@ -60,8 +61,19 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-static wchar_t const* const s_TableHeader = L"<table border=\"2\" cellspacing=\"0\" cellpadding=\"2\">";
-static wchar_t const* const s_refDog = L"refdog";
+namespace
+{
+constexpr wchar_t s_TableHeader[] = L"<table border=\"2\" cellspacing=\"0\" cellpadding=\"2\">";
+constexpr wchar_t s_refDog[] = L"refdog";
+// Ref Formats
+constexpr wchar_t s_refEvent[] = L"refevent{}";
+constexpr wchar_t s_refLifetime[] = L"reflifetime{}";
+constexpr wchar_t s_refMultiQ[] = L"refmultiq{}";
+constexpr wchar_t s_refOther[] = L"refother{}";
+constexpr wchar_t s_refSpeedPts[] = L"refspeedpts{}";
+constexpr wchar_t s_refTitle[] = L"reftitle{}";
+constexpr wchar_t s_refVenue[] = L"refvenue{}";
+} // namespace
 
 
 static std::wstring Sanitize(std::wstring const& inRawData, bool nbsp = false)
@@ -115,7 +127,7 @@ OtherPtInfo::OtherPtInfo(ARBDogExistingPointsPtr const& inExisting)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataTitle::CPointsDataTitle(CAgilityBookDoc* pDoc, ARBDogTitlePtr pTitle)
-	: m_refTag(fmt::format(L"ref{}", pTitle->GetGenericName()))
+	: m_refTag(fmt::format(s_refTitle, pTitle->GetGenericName()))
 	, m_pDoc(pDoc)
 	, m_pTitle(pTitle)
 {
@@ -178,7 +190,7 @@ CPointsDataEvent::CPointsDataEvent(
 	std::wstring const& inSuperQ,
 	std::wstring const& inSpeed,
 	CRefTag& id)
-	: m_refTag(fmt::format(L"ref{}", id.GetId()))
+	: m_refTag(fmt::format(s_refEvent, id.GetId()))
 	, m_pDoc(pDoc)
 	, m_Dog(inDog)
 	, m_Matching(inMatching)
@@ -254,7 +266,7 @@ CPointsDataSpeedPts::CPointsDataSpeedPts(
 	ARBConfigDivisionPtr const& inDiv,
 	int inPts,
 	CRefTag& id)
-	: m_refTag(fmt::format(L"ref{}", id.GetId()))
+	: m_refTag(fmt::format(s_refSpeedPts, id.GetId()))
 	, m_pDoc(pDoc)
 	, m_Venue(inVenue)
 	, m_Div(inDiv)
@@ -287,7 +299,7 @@ CPointsDataMultiQs::CPointsDataMultiQs(
 	ARBConfigMultiQPtr const& inMultiQ,
 	std::set<MultiQdata> const& inMQs,
 	CRefTag& id)
-	: m_refTag(fmt::format(L"ref{}", id.GetId()))
+	: m_refTag(fmt::format(s_refMultiQ, id.GetId()))
 	, m_pDoc(pDoc)
 	, m_Dog(inDog)
 	, m_Venue(inVenue)
@@ -350,7 +362,7 @@ bool CPointsDataMultiQs::Details(std::wstring const& link)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataLifetime::CPointsDataLifetime(CAgilityBookDoc* pDoc, ARBConfigVenuePtr const& inVenue, CRefTag& id)
-	: m_refTag(fmt::format(L"ref{}", id.GetId()))
+	: m_refTag(fmt::format(s_refLifetime, id.GetId()))
 	, m_pDoc(pDoc)
 	, m_LifetimeName()
 	, m_Venue(inVenue)
@@ -365,7 +377,7 @@ CPointsDataLifetime::CPointsDataLifetime(
 	ARBConfigLifetimeNamePtr const& inLifetimeName,
 	ARBConfigVenuePtr const& inVenue,
 	CRefTag& id)
-	: m_refTag(fmt::format(L"ref{}", id.GetId()))
+	: m_refTag(fmt::format(s_refLifetime, id.GetId()))
 	, m_pDoc(pDoc)
 	, m_LifetimeName(inLifetimeName)
 	, m_Venue(inVenue)
@@ -537,7 +549,7 @@ CPointsDataVenue::CPointsDataVenue(
 	ARBDogPtr const& inDog,
 	ARBConfigVenuePtr const inVenue,
 	CRefTag& id)
-	: m_refTag(fmt::format(L"ref{}", inVenue->GetName()))
+	: m_refTag(fmt::format(s_refVenue, inVenue->GetName()))
 	, m_pDoc(pDoc)
 	, m_pDog(inDog)
 	, m_pVenue(inVenue)
@@ -1261,7 +1273,7 @@ CPointsDataOtherPoints::CPointsDataOtherPoints(
 	ARBConfigOtherPointsPtr pOther,
 	std::list<OtherPtInfo> const& inRunList,
 	CRefTag& id)
-	: m_refTag(fmt::format(L"ref{}", id.GetId()))
+	: m_refTag(fmt::format(s_refOther, id.GetId()))
 	, m_pDoc(pDoc)
 	, m_pOther(pOther)
 	, m_RunList(inRunList)
