@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E154D5EB1A29513100C022E2 /* ImageHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E154D5E91A29513100C022E2 /* ImageHelper.cpp */; };
+		E17B997A25265CCD00C6E3B6 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E17B997925265CCD00C6E3B6 /* AgilityBook.icns */; };
 		E19851CF2170E6E8003E7B92 /* libLibARBWin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E19851CE2170E6E8003E7B92 /* libLibARBWin.a */; };
 		E19B6603166C1640004DEDA4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19B6602166C1640004DEDA4 /* Cocoa.framework */; };
 		E19B6633166C166F004DEDA4 /* ARBHelp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6621166C166F004DEDA4 /* ARBHelp.cpp */; };
@@ -26,14 +26,12 @@
 		E1CAE57C16B5BFA200B33FE5 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CAE57A16B5BFA200B33FE5 /* stdafx.cpp */; };
 		E1CE612817ECB2CA0026B41B /* libARB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE612617ECB2CA0026B41B /* libARB.a */; };
 		E1CE612917ECB2CA0026B41B /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE612717ECB2CA0026B41B /* libARBCommon.a */; };
-		E1D2AFDF1A2923D4006EA87D /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E1D2AFDE1A2923D4006EA87D /* AgilityBook.icns */; };
 		E1E2517D21CC5F05004A1D6A /* libLibFmt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E2517C21CC5F05004A1D6A /* libLibFmt.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E154D5E91A29513100C022E2 /* ImageHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImageHelper.cpp; path = ../../../../Win/ImageHelper.cpp; sourceTree = "<group>"; };
-		E154D5EA1A29513100C022E2 /* ImageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageHelper.h; path = ../../../../Win/ImageHelper.h; sourceTree = "<group>"; };
-		E164622D17BFF295004F12AF /* SetupAppARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetupAppARB.h; path = ../../../../Win/SetupAppARB.h; sourceTree = "<group>"; };
+		E17B9819252650E400C6E3B6 /* SetupAppARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupAppARB.h; sourceTree = "<group>"; };
+		E17B997925265CCD00C6E3B6 /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AgilityBook.icns; sourceTree = "<group>"; };
 		E19851CE2170E6E8003E7B92 /* libLibARBWin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libLibARBWin.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19B65FE166C1640004DEDA4 /* ARBHelp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARBHelp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19B6602166C1640004DEDA4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -54,18 +52,17 @@
 		E19B662B166C166F004DEDA4 /* DlgPageEncodeFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPageEncodeFiles.h; sourceTree = "<group>"; };
 		E19B662C166C166F004DEDA4 /* DlgPageEncodeFinish.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgPageEncodeFinish.cpp; sourceTree = "<group>"; };
 		E19B662D166C166F004DEDA4 /* DlgPageEncodeFinish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPageEncodeFinish.h; sourceTree = "<group>"; };
-		E1BED42C237F903E0091278E /* AgilityBook16@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AgilityBook16@2.png"; path = "../../../../Include/images/AgilityBook16@2.png"; sourceTree = "<group>"; };
-		E1BED42D237F903E0091278E /* AgilityBook48@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AgilityBook48@2.png"; path = "../../../../Include/images/AgilityBook48@2.png"; sourceTree = "<group>"; };
-		E1BED42E237F903E0091278E /* AgilityBook32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook32.png; path = ../../../../Include/images/AgilityBook32.png; sourceTree = "<group>"; };
-		E1BED42F237F903E0091278E /* AgilityBook16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook16.png; path = ../../../../Include/images/AgilityBook16.png; sourceTree = "<group>"; };
-		E1BED430237F903E0091278E /* AgilityBook256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook256.png; path = ../../../../Include/images/AgilityBook256.png; sourceTree = "<group>"; };
-		E1BED431237F903E0091278E /* AgilityBook32@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AgilityBook32@2.png"; path = "../../../../Include/images/AgilityBook32@2.png"; sourceTree = "<group>"; };
-		E1BED432237F903E0091278E /* AgilityBook48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AgilityBook48.png; path = ../../../../Include/images/AgilityBook48.png; sourceTree = "<group>"; };
+		E1BED42C237F903E0091278E /* AgilityBook16@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AgilityBook16@2.png"; sourceTree = "<group>"; };
+		E1BED42D237F903E0091278E /* AgilityBook48@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AgilityBook48@2.png"; sourceTree = "<group>"; };
+		E1BED42E237F903E0091278E /* AgilityBook32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AgilityBook32.png; sourceTree = "<group>"; };
+		E1BED42F237F903E0091278E /* AgilityBook16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AgilityBook16.png; sourceTree = "<group>"; };
+		E1BED430237F903E0091278E /* AgilityBook256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AgilityBook256.png; sourceTree = "<group>"; };
+		E1BED431237F903E0091278E /* AgilityBook32@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AgilityBook32@2.png"; sourceTree = "<group>"; };
+		E1BED432237F903E0091278E /* AgilityBook48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AgilityBook48.png; sourceTree = "<group>"; };
 		E1CAE57A16B5BFA200B33FE5 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = "<group>"; };
 		E1CAE57B16B5BFA200B33FE5 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
 		E1CE612617ECB2CA0026B41B /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../build/AgilityBook/Build/Products/Debug/libARB.a; sourceTree = "<group>"; };
 		E1CE612717ECB2CA0026B41B /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../build/AgilityBook/Build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
-		E1D2AFDE1A2923D4006EA87D /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = AgilityBook.icns; path = ../../../../Win/res/AgilityBook.icns; sourceTree = "<group>"; };
 		E1E2517C21CC5F05004A1D6A /* libLibFmt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libLibFmt.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -85,13 +82,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E17B99682526561D00C6E3B6 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				E1BED42F237F903E0091278E /* AgilityBook16.png */,
+				E1BED42C237F903E0091278E /* AgilityBook16@2.png */,
+				E1BED42E237F903E0091278E /* AgilityBook32.png */,
+				E1BED431237F903E0091278E /* AgilityBook32@2.png */,
+				E1BED432237F903E0091278E /* AgilityBook48.png */,
+				E1BED42D237F903E0091278E /* AgilityBook48@2.png */,
+				E1BED430237F903E0091278E /* AgilityBook256.png */,
+			);
+			name = images;
+			path = ../../../Include/images;
+			sourceTree = "<group>";
+		};
+		E17B99692526566000C6E3B6 /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				E19B660A166C1640004DEDA4 /* ARBHelp-Info.plist */,
+				E19B6610166C1640004DEDA4 /* ARBHelp-Prefix.pch */,
+			);
+			name = Projects;
+			path = ../ARBHelp;
+			sourceTree = "<group>";
+		};
+		E17B997825265C9C00C6E3B6 /* res */ = {
+			isa = PBXGroup;
+			children = (
+				E17B997925265CCD00C6E3B6 /* AgilityBook.icns */,
+			);
+			name = res;
+			path = ../../../Win/res;
+			sourceTree = "<group>";
+		};
 		E19B65F3166C1640004DEDA4 = {
 			isa = PBXGroup;
 			children = (
 				E1CE612617ECB2CA0026B41B /* libARB.a */,
 				E1CE612717ECB2CA0026B41B /* libARBCommon.a */,
 				E19851CE2170E6E8003E7B92 /* libLibARBWin.a */,
-				E19B6608166C1640004DEDA4 /* ARBHelp */,
+				E19B6608166C1640004DEDA4 /* Source */,
 				E19B6601166C1640004DEDA4 /* Frameworks */,
 				E19B65FF166C1640004DEDA4 /* Products */,
 			);
@@ -125,39 +156,24 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
-		E19B6608166C1640004DEDA4 /* ARBHelp */ = {
+		E19B6608166C1640004DEDA4 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				E19B661F166C165F004DEDA4 /* Source */,
+				E19B6620166C166F004DEDA4 /* ARBHelp */,
 				E19B6609166C1640004DEDA4 /* Supporting Files */,
+				E19B664D166C17F3004DEDA4 /* Win */,
 			);
-			path = ARBHelp;
+			name = Source;
 			sourceTree = "<group>";
 		};
 		E19B6609166C1640004DEDA4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E1BED42F237F903E0091278E /* AgilityBook16.png */,
-				E1BED42C237F903E0091278E /* AgilityBook16@2.png */,
-				E1BED42E237F903E0091278E /* AgilityBook32.png */,
-				E1BED431237F903E0091278E /* AgilityBook32@2.png */,
-				E1BED432237F903E0091278E /* AgilityBook48.png */,
-				E1BED42D237F903E0091278E /* AgilityBook48@2.png */,
-				E1BED430237F903E0091278E /* AgilityBook256.png */,
-				E1D2AFDE1A2923D4006EA87D /* AgilityBook.icns */,
-				E19B660A166C1640004DEDA4 /* ARBHelp-Info.plist */,
-				E19B6610166C1640004DEDA4 /* ARBHelp-Prefix.pch */,
+				E17B997825265C9C00C6E3B6 /* res */,
+				E17B99682526561D00C6E3B6 /* images */,
+				E17B99692526566000C6E3B6 /* Projects */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		E19B661F166C165F004DEDA4 /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				E19B6620166C166F004DEDA4 /* ARBHelp */,
-				E19B664D166C17F3004DEDA4 /* Win */,
-			);
-			name = Source;
 			sourceTree = "<group>";
 		};
 		E19B6620166C166F004DEDA4 /* ARBHelp */ = {
@@ -179,17 +195,16 @@
 				E19B662D166C166F004DEDA4 /* DlgPageEncodeFinish.h */,
 			);
 			name = ARBHelp;
-			path = ../../../../ARBHelp;
+			path = ../../../ARBHelp;
 			sourceTree = "<group>";
 		};
 		E19B664D166C17F3004DEDA4 /* Win */ = {
 			isa = PBXGroup;
 			children = (
-				E154D5E91A29513100C022E2 /* ImageHelper.cpp */,
-				E154D5EA1A29513100C022E2 /* ImageHelper.h */,
-				E164622D17BFF295004F12AF /* SetupAppARB.h */,
+				E17B9819252650E400C6E3B6 /* SetupAppARB.h */,
 			);
 			name = Win;
+			path = ../../../Win;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,7 +234,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = ARB;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "David Connet";
 				TargetAttributes = {
 					E19B65FD166C1640004DEDA4 = {
@@ -252,7 +267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1BED434237F903E0091278E /* AgilityBook48@2.png in Resources */,
-				E1D2AFDF1A2923D4006EA87D /* AgilityBook.icns in Resources */,
+				E17B997A25265CCD00C6E3B6 /* AgilityBook.icns in Resources */,
 				E1BED437237F903E0091278E /* AgilityBook256.png in Resources */,
 				E1BED433237F903E0091278E /* AgilityBook16@2.png in Resources */,
 				E1BED435237F903E0091278E /* AgilityBook32.png in Resources */,
@@ -272,7 +287,6 @@
 				E19B6633166C166F004DEDA4 /* ARBHelp.cpp in Sources */,
 				E19B6635166C166F004DEDA4 /* DlgARBHelp.cpp in Sources */,
 				E19B6636166C166F004DEDA4 /* DlgPageDecode.cpp in Sources */,
-				E154D5EB1A29513100C022E2 /* ImageHelper.cpp in Sources */,
 				E19B6637166C166F004DEDA4 /* DlgPageEncode.cpp in Sources */,
 				E19B6638166C166F004DEDA4 /* DlgPageEncodeFiles.cpp in Sources */,
 				E19B6639166C166F004DEDA4 /* DlgPageEncodeFinish.cpp in Sources */,
@@ -301,6 +315,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -400,6 +415,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

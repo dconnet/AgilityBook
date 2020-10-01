@@ -7,6 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E10F39F6252644E000E83AB0 /* LibwxARBCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = E10F39F5252644E000E83AB0 /* LibwxARBCommon.h */; };
+		E10F3A302526495D00E83AB0 /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A1F2526495C00E83AB0 /* Element.cpp */; };
+		E10F3A312526495D00E83AB0 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A202526495C00E83AB0 /* stdafx.cpp */; };
+		E10F3A322526495D00E83AB0 /* ARBUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A212526495C00E83AB0 /* ARBUtils.cpp */; };
+		E10F3A332526495D00E83AB0 /* ARBMsgDigestMD5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A222526495C00E83AB0 /* ARBMsgDigestMD5.cpp */; };
+		E10F3A342526495D00E83AB0 /* ARBDate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A232526495C00E83AB0 /* ARBDate.cpp */; };
+		E10F3A352526495D00E83AB0 /* StringUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A242526495C00E83AB0 /* StringUtil.cpp */; };
+		E10F3A362526495D00E83AB0 /* ARBMisc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A252526495C00E83AB0 /* ARBMisc.cpp */; };
+		E10F3A372526495D00E83AB0 /* BreakLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A262526495C00E83AB0 /* BreakLine.cpp */; };
+		E10F3A382526495D00E83AB0 /* ARBMsgDigest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A272526495C00E83AB0 /* ARBMsgDigest.cpp */; };
+		E10F3A392526495D00E83AB0 /* ARBMsgDigestImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = E10F3A282526495D00E83AB0 /* ARBMsgDigestImpl.h */; };
+		E10F3A3A2526495D00E83AB0 /* ARBBase64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A292526495D00E83AB0 /* ARBBase64.cpp */; };
+		E10F3A3B2526495D00E83AB0 /* ARBTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A2A2526495D00E83AB0 /* ARBTypes.cpp */; };
+		E10F3A3C2526495D00E83AB0 /* stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = E10F3A2B2526495D00E83AB0 /* stdafx.h */; };
+		E10F3A3D2526495D00E83AB0 /* ARBMsgDigestSHA1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A2C2526495D00E83AB0 /* ARBMsgDigestSHA1.cpp */; };
+		E10F3A3E2526495D00E83AB0 /* VersionNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A2D2526495D00E83AB0 /* VersionNum.cpp */; };
+		E10F3A3F2526495D00E83AB0 /* BinaryData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A2E2526495D00E83AB0 /* BinaryData.cpp */; };
+		E10F3A402526495D00E83AB0 /* ARBMsgDigestSHA256.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A2F2526495D00E83AB0 /* ARBMsgDigestSHA256.cpp */; };
 		E110B51C177FD146004071B5 /* ARBBase64.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B513177FD146004071B5 /* ARBBase64.h */; };
 		E110B51D177FD146004071B5 /* ARBDate.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B514177FD146004071B5 /* ARBDate.h */; };
 		E110B51E177FD146004071B5 /* ARBMsgDigest.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B515177FD146004071B5 /* ARBMsgDigest.h */; };
@@ -18,26 +36,27 @@
 		E110B524177FD146004071B5 /* VersionNum.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B51B177FD146004071B5 /* VersionNum.h */; };
 		E1B443C41A3B6DCC005CBE64 /* ARBUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B443C31A3B6DCC005CBE64 /* ARBUtils.h */; };
 		E1B8965A17971A96009FB430 /* ARBMisc.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B8965917971A96009FB430 /* ARBMisc.h */; };
-		E1BED3CB237F8FAF0091278E /* ARBMsgDigestSHA256.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3BA237F8FAD0091278E /* ARBMsgDigestSHA256.cpp */; };
-		E1BED3CC237F8FAF0091278E /* BreakLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3BB237F8FAD0091278E /* BreakLine.cpp */; };
-		E1BED3CD237F8FAF0091278E /* ARBDate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3BC237F8FAE0091278E /* ARBDate.cpp */; };
-		E1BED3CE237F8FAF0091278E /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3BD237F8FAE0091278E /* Element.cpp */; };
-		E1BED3CF237F8FAF0091278E /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3BE237F8FAE0091278E /* stdafx.cpp */; };
-		E1BED3D0237F8FAF0091278E /* BinaryData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3BF237F8FAE0091278E /* BinaryData.cpp */; };
-		E1BED3D1237F8FAF0091278E /* ARBMisc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3C0237F8FAE0091278E /* ARBMisc.cpp */; };
-		E1BED3D2237F8FAF0091278E /* ARBTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3C1237F8FAE0091278E /* ARBTypes.cpp */; };
-		E1BED3D3237F8FAF0091278E /* ARBBase64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3C2237F8FAE0091278E /* ARBBase64.cpp */; };
-		E1BED3D4237F8FAF0091278E /* ARBMsgDigestMD5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3C3237F8FAE0091278E /* ARBMsgDigestMD5.cpp */; };
-		E1BED3D5237F8FAF0091278E /* stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = E1BED3C4237F8FAE0091278E /* stdafx.h */; };
-		E1BED3D6237F8FAF0091278E /* ARBMsgDigestSHA1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3C5237F8FAE0091278E /* ARBMsgDigestSHA1.cpp */; };
-		E1BED3D7237F8FAF0091278E /* ARBUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3C6237F8FAE0091278E /* ARBUtils.cpp */; };
-		E1BED3D8237F8FAF0091278E /* ARBMsgDigestImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = E1BED3C7237F8FAE0091278E /* ARBMsgDigestImpl.h */; };
-		E1BED3D9237F8FAF0091278E /* VersionNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3C8237F8FAE0091278E /* VersionNum.cpp */; };
-		E1BED3DA237F8FAF0091278E /* ARBMsgDigest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3C9237F8FAE0091278E /* ARBMsgDigest.cpp */; };
-		E1BED3DB237F8FAF0091278E /* StringUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BED3CA237F8FAF0091278E /* StringUtil.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E10F39F5252644E000E83AB0 /* LibwxARBCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibwxARBCommon.h; sourceTree = "<group>"; };
+		E10F3A1F2526495C00E83AB0 /* Element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Element.cpp; sourceTree = "<group>"; };
+		E10F3A202526495C00E83AB0 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = "<group>"; };
+		E10F3A212526495C00E83AB0 /* ARBUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBUtils.cpp; sourceTree = "<group>"; };
+		E10F3A222526495C00E83AB0 /* ARBMsgDigestMD5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBMsgDigestMD5.cpp; sourceTree = "<group>"; };
+		E10F3A232526495C00E83AB0 /* ARBDate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBDate.cpp; sourceTree = "<group>"; };
+		E10F3A242526495C00E83AB0 /* StringUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtil.cpp; sourceTree = "<group>"; };
+		E10F3A252526495C00E83AB0 /* ARBMisc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBMisc.cpp; sourceTree = "<group>"; };
+		E10F3A262526495C00E83AB0 /* BreakLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BreakLine.cpp; sourceTree = "<group>"; };
+		E10F3A272526495C00E83AB0 /* ARBMsgDigest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBMsgDigest.cpp; sourceTree = "<group>"; };
+		E10F3A282526495D00E83AB0 /* ARBMsgDigestImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBMsgDigestImpl.h; sourceTree = "<group>"; };
+		E10F3A292526495D00E83AB0 /* ARBBase64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBBase64.cpp; sourceTree = "<group>"; };
+		E10F3A2A2526495D00E83AB0 /* ARBTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBTypes.cpp; sourceTree = "<group>"; };
+		E10F3A2B2526495D00E83AB0 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
+		E10F3A2C2526495D00E83AB0 /* ARBMsgDigestSHA1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBMsgDigestSHA1.cpp; sourceTree = "<group>"; };
+		E10F3A2D2526495D00E83AB0 /* VersionNum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VersionNum.cpp; sourceTree = "<group>"; };
+		E10F3A2E2526495D00E83AB0 /* BinaryData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BinaryData.cpp; sourceTree = "<group>"; };
+		E10F3A2F2526495D00E83AB0 /* ARBMsgDigestSHA256.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBMsgDigestSHA256.cpp; sourceTree = "<group>"; };
 		E110B509177FD120004071B5 /* libARBCommon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libARBCommon.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E110B513177FD146004071B5 /* ARBBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBBase64.h; sourceTree = "<group>"; };
 		E110B514177FD146004071B5 /* ARBDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBDate.h; sourceTree = "<group>"; };
@@ -50,23 +69,6 @@
 		E110B51B177FD146004071B5 /* VersionNum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionNum.h; sourceTree = "<group>"; };
 		E1B443C31A3B6DCC005CBE64 /* ARBUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBUtils.h; sourceTree = "<group>"; };
 		E1B8965917971A96009FB430 /* ARBMisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBMisc.h; sourceTree = "<group>"; };
-		E1BED3BA237F8FAD0091278E /* ARBMsgDigestSHA256.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBMsgDigestSHA256.cpp; path = ../../../Libraries/ARBCommon/ARBMsgDigestSHA256.cpp; sourceTree = "<group>"; };
-		E1BED3BB237F8FAD0091278E /* BreakLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BreakLine.cpp; path = ../../../Libraries/ARBCommon/BreakLine.cpp; sourceTree = "<group>"; };
-		E1BED3BC237F8FAE0091278E /* ARBDate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBDate.cpp; path = ../../../Libraries/ARBCommon/ARBDate.cpp; sourceTree = "<group>"; };
-		E1BED3BD237F8FAE0091278E /* Element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Element.cpp; path = ../../../Libraries/ARBCommon/Element.cpp; sourceTree = "<group>"; };
-		E1BED3BE237F8FAE0091278E /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../../../Libraries/ARBCommon/stdafx.cpp; sourceTree = "<group>"; };
-		E1BED3BF237F8FAE0091278E /* BinaryData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryData.cpp; path = ../../../Libraries/ARBCommon/BinaryData.cpp; sourceTree = "<group>"; };
-		E1BED3C0237F8FAE0091278E /* ARBMisc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBMisc.cpp; path = ../../../Libraries/ARBCommon/ARBMisc.cpp; sourceTree = "<group>"; };
-		E1BED3C1237F8FAE0091278E /* ARBTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBTypes.cpp; path = ../../../Libraries/ARBCommon/ARBTypes.cpp; sourceTree = "<group>"; };
-		E1BED3C2237F8FAE0091278E /* ARBBase64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBBase64.cpp; path = ../../../Libraries/ARBCommon/ARBBase64.cpp; sourceTree = "<group>"; };
-		E1BED3C3237F8FAE0091278E /* ARBMsgDigestMD5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBMsgDigestMD5.cpp; path = ../../../Libraries/ARBCommon/ARBMsgDigestMD5.cpp; sourceTree = "<group>"; };
-		E1BED3C4237F8FAE0091278E /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../../Libraries/ARBCommon/stdafx.h; sourceTree = "<group>"; };
-		E1BED3C5237F8FAE0091278E /* ARBMsgDigestSHA1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBMsgDigestSHA1.cpp; path = ../../../Libraries/ARBCommon/ARBMsgDigestSHA1.cpp; sourceTree = "<group>"; };
-		E1BED3C6237F8FAE0091278E /* ARBUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBUtils.cpp; path = ../../../Libraries/ARBCommon/ARBUtils.cpp; sourceTree = "<group>"; };
-		E1BED3C7237F8FAE0091278E /* ARBMsgDigestImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ARBMsgDigestImpl.h; path = ../../../Libraries/ARBCommon/ARBMsgDigestImpl.h; sourceTree = "<group>"; };
-		E1BED3C8237F8FAE0091278E /* VersionNum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VersionNum.cpp; path = ../../../Libraries/ARBCommon/VersionNum.cpp; sourceTree = "<group>"; };
-		E1BED3C9237F8FAE0091278E /* ARBMsgDigest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ARBMsgDigest.cpp; path = ../../../Libraries/ARBCommon/ARBMsgDigest.cpp; sourceTree = "<group>"; };
-		E1BED3CA237F8FAF0091278E /* StringUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StringUtil.cpp; path = ../../../Libraries/ARBCommon/StringUtil.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				E110B512177FD146004071B5 /* ARBCommon */,
 			);
 			name = Include;
+			path = ../../../Include;
 			sourceTree = "<group>";
 		};
 		E110B512177FD146004071B5 /* ARBCommon */ = {
@@ -125,35 +128,36 @@
 				E110B517177FD146004071B5 /* BinaryData.h */,
 				E110B518177FD146004071B5 /* BreakLine.h */,
 				E110B519177FD146004071B5 /* Element.h */,
+				E10F39F5252644E000E83AB0 /* LibwxARBCommon.h */,
 				E110B51A177FD146004071B5 /* StringUtil.h */,
 				E110B51B177FD146004071B5 /* VersionNum.h */,
 			);
-			name = ARBCommon;
-			path = ../../../Include/ARBCommon;
+			path = ARBCommon;
 			sourceTree = "<group>";
 		};
 		E110B525177FD14C004071B5 /* ARBCommon */ = {
 			isa = PBXGroup;
 			children = (
-				E1BED3C2237F8FAE0091278E /* ARBBase64.cpp */,
-				E1BED3BC237F8FAE0091278E /* ARBDate.cpp */,
-				E1BED3C0237F8FAE0091278E /* ARBMisc.cpp */,
-				E1BED3C9237F8FAE0091278E /* ARBMsgDigest.cpp */,
-				E1BED3C7237F8FAE0091278E /* ARBMsgDigestImpl.h */,
-				E1BED3C3237F8FAE0091278E /* ARBMsgDigestMD5.cpp */,
-				E1BED3C5237F8FAE0091278E /* ARBMsgDigestSHA1.cpp */,
-				E1BED3BA237F8FAD0091278E /* ARBMsgDigestSHA256.cpp */,
-				E1BED3C1237F8FAE0091278E /* ARBTypes.cpp */,
-				E1BED3C6237F8FAE0091278E /* ARBUtils.cpp */,
-				E1BED3BF237F8FAE0091278E /* BinaryData.cpp */,
-				E1BED3BB237F8FAD0091278E /* BreakLine.cpp */,
-				E1BED3BD237F8FAE0091278E /* Element.cpp */,
-				E1BED3BE237F8FAE0091278E /* stdafx.cpp */,
-				E1BED3C4237F8FAE0091278E /* stdafx.h */,
-				E1BED3CA237F8FAF0091278E /* StringUtil.cpp */,
-				E1BED3C8237F8FAE0091278E /* VersionNum.cpp */,
+				E10F3A292526495D00E83AB0 /* ARBBase64.cpp */,
+				E10F3A232526495C00E83AB0 /* ARBDate.cpp */,
+				E10F3A252526495C00E83AB0 /* ARBMisc.cpp */,
+				E10F3A272526495C00E83AB0 /* ARBMsgDigest.cpp */,
+				E10F3A282526495D00E83AB0 /* ARBMsgDigestImpl.h */,
+				E10F3A222526495C00E83AB0 /* ARBMsgDigestMD5.cpp */,
+				E10F3A2C2526495D00E83AB0 /* ARBMsgDigestSHA1.cpp */,
+				E10F3A2F2526495D00E83AB0 /* ARBMsgDigestSHA256.cpp */,
+				E10F3A2A2526495D00E83AB0 /* ARBTypes.cpp */,
+				E10F3A212526495C00E83AB0 /* ARBUtils.cpp */,
+				E10F3A2E2526495D00E83AB0 /* BinaryData.cpp */,
+				E10F3A262526495C00E83AB0 /* BreakLine.cpp */,
+				E10F3A1F2526495C00E83AB0 /* Element.cpp */,
+				E10F3A202526495C00E83AB0 /* stdafx.cpp */,
+				E10F3A2B2526495D00E83AB0 /* stdafx.h */,
+				E10F3A242526495C00E83AB0 /* StringUtil.cpp */,
+				E10F3A2D2526495D00E83AB0 /* VersionNum.cpp */,
 			);
 			name = ARBCommon;
+			path = ../../../Libraries/ARBCommon;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,16 +167,17 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1BED3D5237F8FAF0091278E /* stdafx.h in Headers */,
 				E110B51C177FD146004071B5 /* ARBBase64.h in Headers */,
 				E110B51D177FD146004071B5 /* ARBDate.h in Headers */,
-				E1BED3D8237F8FAF0091278E /* ARBMsgDigestImpl.h in Headers */,
+				E10F39F6252644E000E83AB0 /* LibwxARBCommon.h in Headers */,
+				E10F3A392526495D00E83AB0 /* ARBMsgDigestImpl.h in Headers */,
 				E110B51E177FD146004071B5 /* ARBMsgDigest.h in Headers */,
 				E110B51F177FD146004071B5 /* ARBTypes.h in Headers */,
 				E1B443C41A3B6DCC005CBE64 /* ARBUtils.h in Headers */,
 				E110B520177FD146004071B5 /* BinaryData.h in Headers */,
 				E110B521177FD146004071B5 /* BreakLine.h in Headers */,
 				E110B522177FD146004071B5 /* Element.h in Headers */,
+				E10F3A3C2526495D00E83AB0 /* stdafx.h in Headers */,
 				E110B523177FD146004071B5 /* StringUtil.h in Headers */,
 				E110B524177FD146004071B5 /* VersionNum.h in Headers */,
 				E1B8965A17971A96009FB430 /* ARBMisc.h in Headers */,
@@ -205,7 +210,7 @@
 		E110B501177FD120004071B5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "David Connet";
 			};
 			buildConfigurationList = E110B504177FD120004071B5 /* Build configuration list for PBXProject "ARBCommon" */;
@@ -231,21 +236,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1BED3D4237F8FAF0091278E /* ARBMsgDigestMD5.cpp in Sources */,
-				E1BED3D6237F8FAF0091278E /* ARBMsgDigestSHA1.cpp in Sources */,
-				E1BED3CB237F8FAF0091278E /* ARBMsgDigestSHA256.cpp in Sources */,
-				E1BED3CC237F8FAF0091278E /* BreakLine.cpp in Sources */,
-				E1BED3CE237F8FAF0091278E /* Element.cpp in Sources */,
-				E1BED3D3237F8FAF0091278E /* ARBBase64.cpp in Sources */,
-				E1BED3D9237F8FAF0091278E /* VersionNum.cpp in Sources */,
-				E1BED3CD237F8FAF0091278E /* ARBDate.cpp in Sources */,
-				E1BED3D7237F8FAF0091278E /* ARBUtils.cpp in Sources */,
-				E1BED3DA237F8FAF0091278E /* ARBMsgDigest.cpp in Sources */,
-				E1BED3D0237F8FAF0091278E /* BinaryData.cpp in Sources */,
-				E1BED3D1237F8FAF0091278E /* ARBMisc.cpp in Sources */,
-				E1BED3DB237F8FAF0091278E /* StringUtil.cpp in Sources */,
-				E1BED3CF237F8FAF0091278E /* stdafx.cpp in Sources */,
-				E1BED3D2237F8FAF0091278E /* ARBTypes.cpp in Sources */,
+				E10F3A3A2526495D00E83AB0 /* ARBBase64.cpp in Sources */,
+				E10F3A402526495D00E83AB0 /* ARBMsgDigestSHA256.cpp in Sources */,
+				E10F3A352526495D00E83AB0 /* StringUtil.cpp in Sources */,
+				E10F3A3D2526495D00E83AB0 /* ARBMsgDigestSHA1.cpp in Sources */,
+				E10F3A302526495D00E83AB0 /* Element.cpp in Sources */,
+				E10F3A3B2526495D00E83AB0 /* ARBTypes.cpp in Sources */,
+				E10F3A382526495D00E83AB0 /* ARBMsgDigest.cpp in Sources */,
+				E10F3A3E2526495D00E83AB0 /* VersionNum.cpp in Sources */,
+				E10F3A322526495D00E83AB0 /* ARBUtils.cpp in Sources */,
+				E10F3A372526495D00E83AB0 /* BreakLine.cpp in Sources */,
+				E10F3A332526495D00E83AB0 /* ARBMsgDigestMD5.cpp in Sources */,
+				E10F3A312526495D00E83AB0 /* stdafx.cpp in Sources */,
+				E10F3A362526495D00E83AB0 /* ARBMisc.cpp in Sources */,
+				E10F3A3F2526495D00E83AB0 /* BinaryData.cpp in Sources */,
+				E10F3A342526495D00E83AB0 /* ARBDate.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +275,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -297,7 +303,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
@@ -332,6 +338,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -352,7 +359,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../../3rdParty/LibFmt/include",

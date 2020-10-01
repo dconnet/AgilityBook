@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E10F3A9B25264A3600E83AB0 /* TestUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A9925264A3600E83AB0 /* TestUtils.cpp */; };
+		E10F3A9C25264A3600E83AB0 /* TestTidy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A9A25264A3600E83AB0 /* TestTidy.cpp */; };
 		E15106B218089179002AC401 /* ConfigHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151065A18089179002AC401 /* ConfigHandler.cpp */; };
 		E15106B318089179002AC401 /* Local.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151065C18089179002AC401 /* Local.cpp */; };
 		E15106B418089179002AC401 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068018089179002AC401 /* stdafx.cpp */; };
@@ -77,6 +79,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E10F3A9925264A3600E83AB0 /* TestUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestUtils.cpp; sourceTree = "<group>"; };
+		E10F3A9A25264A3600E83AB0 /* TestTidy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestTidy.cpp; sourceTree = "<group>"; };
 		E151064C1808913A002AC401 /* TestARB */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestARB; sourceTree = BUILT_PRODUCTS_DIR; };
 		E151065A18089179002AC401 /* ConfigHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigHandler.cpp; sourceTree = "<group>"; };
 		E151065B18089179002AC401 /* ConfigHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigHandler.h; sourceTree = "<group>"; };
@@ -242,7 +246,9 @@
 				E15106AD18089179002AC401 /* TestMisc.cpp */,
 				E15106AE18089179002AC401 /* TestQ.cpp */,
 				E15106AF18089179002AC401 /* TestString.cpp */,
+				E10F3A9A25264A3600E83AB0 /* TestTidy.cpp */,
 				E15106B018089179002AC401 /* TestTraining.cpp */,
+				E10F3A9925264A3600E83AB0 /* TestUtils.cpp */,
 				E15106B118089179002AC401 /* TestVersion.cpp */,
 			);
 			name = TestARB;
@@ -284,7 +290,7 @@
 		E15106441808913A002AC401 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "David Connet";
 				TargetAttributes = {
 					E151064B1808913A002AC401 = {
@@ -371,10 +377,12 @@
 				E15106D618089179002AC401 /* TestDogRunScoring.cpp in Sources */,
 				E15106D718089179002AC401 /* TestDogTitle.cpp in Sources */,
 				E15106D818089179002AC401 /* TestDogTrial.cpp in Sources */,
+				E10F3A9B25264A3600E83AB0 /* TestUtils.cpp in Sources */,
 				E15106D918089179002AC401 /* TestDouble.cpp in Sources */,
 				E15106DA18089179002AC401 /* TestElement.cpp in Sources */,
 				E15106DB18089179002AC401 /* TestErrorCallback.cpp in Sources */,
 				E15106DC18089179002AC401 /* TestInfoItem.cpp in Sources */,
+				E10F3A9C25264A3600E83AB0 /* TestTidy.cpp in Sources */,
 				E15106DD18089179002AC401 /* TestMD5.cpp in Sources */,
 				E15106DE18089179002AC401 /* TestMisc.cpp in Sources */,
 				E15106DF18089179002AC401 /* TestQ.cpp in Sources */,
@@ -405,6 +413,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -432,11 +441,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
+					"-I$SRCROOT/../../../3rdParty/LibTidyHtml/include",
 					"-I$SRCROOT/../../../3rdParty/LibArchive/include",
 					"-I$WXWIN/build-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
 					"-I$WXWIN/include",
@@ -504,6 +514,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -524,10 +535,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
+					"-I$SRCROOT/../../../3rdParty/LibTidyHtml/include",
 					"-I$SRCROOT/../../../3rdParty/LibArchive/include",
 					"-I$WXWIN/build-release/lib/wx/include/osx_cocoa-unicode-static-3.1",
 					"-I$WXWIN/include",
