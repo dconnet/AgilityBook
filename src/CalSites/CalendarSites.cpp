@@ -65,6 +65,14 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+// Copy test from gdicmn.h for wxBITMAP_PNG
+#if !((defined(__WINDOWS__) && wxUSE_WXDIB) || defined(__WXOSX__))
+#include "images/AgilityBook16_png.c"
+#include "images/AgilityBook256_png.c"
+#include "images/AgilityBook32_png.c"
+#include "images/AgilityBook48_png.c"
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 
 static CVersionNum GetCalSitePermanentStatus(std::wstring const& filename)
