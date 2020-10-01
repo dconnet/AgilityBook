@@ -55,7 +55,6 @@ all: @PACKAGE_HLP_SHORTNAME@
 
 dist:: all $(PHONY)
 	mkdir -p $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/MacOS
-	mkdir -p $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/English.lproj
 	cp Info.plist $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/
 	cp version.plist $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/
 	# Note: "echo -n 'APPL????'" puts the '-n' in the file too (on Mac).
