@@ -1,0 +1,84 @@
+################################################################################
+# Variables required by the global make rules.                                 #
+################################################################################
+# TOPSRCDIR   - Points to the top level directory of the project.              #
+# SRCDIR      - Points to the actual directory where the source code files for #
+#               this Makefile exists.                                          #
+# VPATH       - Directory to look for source files if not in the current       #
+#               directory.  Must be equal to SRCDIR.                           #
+# TOPBUILDDIR - The top level directory we initially ran make from, used for   #
+#               generating nice output of the working directories.             #
+################################################################################
+TOPSRCDIR   = @top_srcdir@
+SRCDIR      = @srcdir@
+VPATH       = @srcdir@
+TOPBUILDDIR = ./@top_builddir@
+
+##########
+# Compile flags, list include directories
+##########
+INCLUDES += -I$(TOPSRCDIR)/Include -I$(TOPSRCDIR)/Win -I$(TOPSRCDIR)/3rdParty/LibArchive/include -I$(TOPSRCDIR)/3rdParty/LibTidyHtml/include -I$(TOPSRCDIR)/3rdParty/LibFmt/include
+
+##########
+# List of programs and archives to link
+##########
+PROGRAMS = @PACKAGE_CAL_SHORTNAME@
+
+##########
+# Source files for each target
+##########
+@PACKAGE_CAL_SHORTNAME@_SRCS = ARBConfigCalSite.cpp \
+	CalSites.cpp \
+	CalendarSiteUSDAA.cpp \
+	CalendarSites.cpp \
+	DlgCalendarQueryDetail.cpp \
+	DlgPluginDetails.cpp \
+	DlgQueryDetail.cpp \
+	stdafx.cpp \
+	../Win/AgilityBookOptions.cpp \
+	../Win/ComboBoxVenue.cpp \
+	../Win/ConfigHandler.cpp \
+	../Win/DlgAssignColumns.cpp \
+	../Win/ImageHelper.cpp \
+	../Win/Localization.cpp \
+	../Win/NamedColumns.cpp
+
+##########
+# Extra libraries for link stage (only if needed)
+##########
+@PACKAGE_CAL_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/Libraries/LibARBWin -larbwin -L$(TOPBUILDDIR)/Libraries/ARB -larb -L$(TOPBUILDDIR)/Libraries/ARBCommon -larbcommon -L$(TOPBUILDDIR)/3rdParty/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/3rdParty/LibArchive -larchive -L$(TOPBUILDDIR)/3rdParty/LibFmt -lfmt
+
+##########
+# Precompiled headers
+##########
+PRECOMP_HEADER = $(TOPSRCDIR)/CalSites/stdafx.h
+
+##########
+# Stuff to install
+##########
+#INSTALL_BIN = @PACKAGE_CAL_SHORTNAME@
+
+@NAM_RULES@
+
+all: @PACKAGE_CAL_SHORTNAME@
+	echo "LANGDIR $(CURDIR)"
+	python3 $(TOPSRCDIR)/lang/CompileLang.py -w $(WXWIN) -s $(TOPSRCDIR)/lang arb.po $(CURDIR) @PACKAGE_CAL_SHORTNAME@
+	python3 $(TOPSRCDIR)/lang/CompileDatafile.py -x $(TOPSRCDIR)/lang/CompileDatList.txt $(CURDIR) @PACKAGE_CAL_SHORTNAME@
+
+dist:: all $(PHONY)
+	mkdir -p $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/MacOS
+	mkdir -p $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/Resources/English.lproj
+	cp Info.plist $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/
+	cp version.plist $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/
+	# Note: "echo -n 'APPL????'" puts the '-n' in the file too (on Mac).
+	echo 'APPL????\c' > $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/PkgInfo
+	cp @PACKAGE_CAL_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/MacOS/@PACKAGE_CAL_SHORTNAME@
+	cp $(TOPSRCDIR)/Win/res/AgilityBook.icns $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/Resources/
+	cp $(TOPSRCDIR)/Include/images/*.png $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/Resources/
+	cp -pR lang $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/Resources/
+	cp @PACKAGE_CAL_SHORTNAME@.dat $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/Resources/
+	cp $(TOPSRCDIR)/Include/images/AgilityBook*.png $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/Resources/
+
+################################################################################
+# End of File: Makefile                                                        #
+################################################################################

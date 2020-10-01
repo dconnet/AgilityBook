@@ -12,6 +12,7 @@ AC_CONFIG_SRCDIR(Win/stdafx.cpp)
 
 AC_SUBST(PACKAGE_ARB_SHORTNAME, "AgilityBook")
 AC_SUBST(PACKAGE_HLP_SHORTNAME, "ARBHelp")
+AC_SUBST(PACKAGE_CAL_SHORTNAME, "CalSites")
 AC_SUBST(PACKAGE_TEST_SHORTNAME, "testarb")
 AC_SUBST(PACKAGE_COPYRIGHT, "Copyright (c) 2002-2020 David Connet. All Rights Reserved.")
 ################################################################################
@@ -174,10 +175,13 @@ AC_CONFIG_FILES([NAM_rules.mk Makefile \
 	Libraries/ARBCommon/Makefile \
 	Libraries/LibARBWin/Makefile \
 	ARBHelp/Makefile \
+	CalSites/Makefile \
 	TestARB/Makefile \
 	Win/Makefile \
 	ARBHelp/Info.plist \
 	ARBHelp/version.plist \
+	CalSites/Info.plist \
+	CalSites/version.plist \
 	Win/Info.plist \
 	Win/version.plist])
 

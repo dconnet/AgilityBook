@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>@PACKAGE_CAL_SHORTNAME@</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CSResourcesFileMapped</key>
+	<true/>
+	<key>CFBundleVersion</key>
+	<string>@PACKAGE_VERSION@</string>
+	<key>CFBundleShortVersionString</key>
+	<string>@PACKAGE_VERSION@</string>
+	<key>CFBundleName</key>
+	<string>@PACKAGE_CAL_SHORTNAME@</string>
+	<key>CFBundleIconFile</key>
+	<string>AgilityBook.icns</string>
+	<key>CFBundleGetInfoString</key>
+	<string>@PACKAGE_CAL_SHORTNAME@ Version @PACKAGE_VERSION@, @PACKAGE_COPYRIGHT@</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.agilityrecordbook.@PACKAGE_CAL_SHORTNAME@</string>
+	<key>CFBundleLongVersionString</key>
+	<string>@PACKAGE_VERSION@, @PACKAGE_COPYRIGHT@</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>LSRequiresCarbon</key>
+	<true/>
+	<key>NSHumanReadableCopyright</key>
+	<string>@PACKAGE_COPYRIGHT@</string>
+</dict>
+</plist>
