@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-10-07 Fix issue were we could save bad data (set a blank Q with a place)
  * 2020-07-31 On Faults[12]00ThenTime, don't allow score to go negative.
  * 2017-12-31 Add support for using raw faults when determining title points.
  * 2017-09-04 Change default DogsInClass to -1 (allows for DNR runs with 0 dogs)
@@ -468,19 +469,12 @@ bool ARBDogRun::Load(
 		}
 		else if (name == TREE_PLACEMENT)
 		{
+			// If we have a placement element, ignore any missing errors.
+			// When we save, we save if place>0 OR attribQ.
 			std::wstring attrib;
-			if (ARBAttribLookup::Found != element->GetAttrib(ATTRIB_PLACEMENT_Q, attrib) || 0 == attrib.length())
+			if (ARBAttribLookup::Found == element->GetAttrib(ATTRIB_PLACEMENT_Q, attrib) || 0 == attrib.length())
 			{
-				ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q));
-				return false;
-			}
-			if (!m_Q.Load(attrib, inVersion, ioCallback))
-			{
-				std::wstring msg(Localization()->ValidValues());
-				msg += ARB_Q::GetValidTypes();
-				ioCallback.LogMessage(
-					Localization()->ErrorInvalidAttributeValue(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q, msg.c_str()));
-				// Warn, but keep going so data is not lost.
+				m_Q.Load(attrib, inVersion, ioCallback);
 			}
 			element->GetAttrib(ATTRIB_PLACEMENT_PLACE, m_Place);
 			element->GetAttrib(ATTRIB_PLACEMENT_INCLASS, m_InClass);

@@ -1,4 +1,4 @@
-9/30/2020: v3.5.1.<develop>
+10/07/2020: v3.5.1.<develop>
 - Bumped file version to 15.3:
   - Removed CalSite data
 - New features / Enhancements:
@@ -7,6 +7,9 @@
   - Remembering window position failed with negative coordinates.
     (2K primary, 4K 2nd, monitors aligned at bottom - causes negative Y values)
   - Fix clicking on FCAT title link in Points View.
+  - Fix issue were we could save bad data (if you set a blank Q with a place,
+    you'd get a warning when reopening the file and the run would not show -
+	note, the data was not lost, just hidden)
 
 1/26/2020: v3.5.0.113
 - Bumped file version to 15.2:
