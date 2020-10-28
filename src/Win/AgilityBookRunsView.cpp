@@ -1878,10 +1878,17 @@ bool CAgilityBookRunsView::OnCmd(int id, bool bSilent)
 			{
 				CAgilityBookRunsViewDataPtr pData = GetItemRunData(*iter);
 				if (pData)
+				{
+					// We need the trial or runs in multi-club trials don't copy correctly.
+					ARBDogTrial const* pTrial = nullptr;
+					ARBDogTrialPtr trial = pData->GetTrial();
+					if (trial && trial->GetClubs().size() > 1)
+						pTrial = trial.get();
 					pData->GetRun()->Save(
 						tree,
-						nullptr,
+						pTrial,
 						GetDocument()->Book().GetConfig()); // copy/paste: title points don't matter
+				}
 				std::vector<std::wstring> line;
 				m_Ctrl->GetPrintLine((*iter), line);
 				table.StartLine();

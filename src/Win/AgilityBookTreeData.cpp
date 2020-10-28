@@ -610,11 +610,16 @@ bool CAgilityBookTreeDataRun::DoCopy()
 		CClipboardDataWriter clpData;
 		if (clpData.isOkay())
 		{
+			// We need the trial or runs in multi-club trials don't copy correctly.
+			ARBDogTrial const* pTrial = nullptr;
+			ARBDogTrialPtr trial = GetTrial();
+			if (trial && trial->GetClubs().size() > 1)
+				pTrial = trial.get();
 			wxBusyCursor wait;
 			ElementNodePtr tree(ElementNode::New(CLIPDATA));
 			GetRun()->Save(
 				tree,
-				nullptr,
+				pTrial,
 				m_pTree->GetDocument()->Book().GetConfig()); // copy/paste: title points don't matter
 			clpData.AddData(ARBClipFormat::Run, tree);
 			clpData.AddData(m_pTree->GetPrintLine(GetId()));

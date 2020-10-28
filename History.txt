@@ -1,4 +1,4 @@
-10/07/2020: v3.5.1.<develop>
+10/28/2020: v3.5.1.<develop>
 - Bumped file version to 15.3:
   - Removed CalSite data
 - New features / Enhancements:
@@ -10,6 +10,8 @@
   - Fix issue were we could save bad data (if you set a blank Q with a place,
     you'd get a warning when reopening the file and the run would not show -
 	note, the data was not lost, just hidden)
+  - Copying runs in a multi-club trial would assign the new run to the first
+    club listed. This could cause the run to be associated with the wrong club.
 
 1/26/2020: v3.5.0.113
 - Bumped file version to 15.2:
