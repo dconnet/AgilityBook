@@ -6,6 +6,7 @@
 # (I put this script in my home dir)
 #
 # History
+# 2020-11-05 Min OSX SDK for 3.1.4 in 10.11.
 # 2020-07-23 Upgraded 3.1.3 to 3.1.4
 # 2019-10-28 Upgraded 3.1.2 to 3.1.3
 # 2019-08-24 Make gtk3 the default.
@@ -135,19 +136,8 @@ Darwin*)
 		MIN_OS=$MAC_MIN_OS
 		TARGETARCH="--enable-macosx_arch=x86_64"
 
-	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk; then
-		echo "Using 10.9 SDK"
-		export CXXFLAGS="-std=c++14 -stdlib=libc++"
-		export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
-		export LDFLAGS="-stdlib=libc++"
-		export LIBS="-lc++"
-		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk
-		MIN_OS=$MAC_MIN_OS
-		TARGETARCH="--enable-macosx_arch=x86_64"
-	fi
-
 	if test "x$TARGETSDK" = "x"; then
-		echo "ERROR: Can't find an SDK"
+		echo "ERROR: Can't find an SDK - 10.11 or newer is required"
 		exit
 	fi
 
