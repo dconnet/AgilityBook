@@ -26,6 +26,7 @@
 #include "LibwxARBWin.h"
 
 #include "ARBCommon/ARBTypes.h"
+#include <wx/treebase.h>
 class CListCtrl;
 class wxDateTime;
 class wxFileName;
