@@ -22,7 +22,6 @@
 #include "LibwxARBWin.h"
 
 #include "ARBCommon/StringUtil.h"
-class CReadHttpThread;
 class IDlgProgress;
 class wxOutputStream;
 class wxURL;
@@ -36,23 +35,9 @@ inline bool GotoURL(std::wstring const& inLink)
 
 class ARBWIN_API CReadHttp
 {
-	friend class CReadHttpThread;
-
+	DECLARE_NO_COPY_IMPLEMENTED(CReadHttp)
 public:
 	CReadHttp();
-
-	// Force exit of thread. Returns false is thread already stopped.
-	bool Exit();
-
-	// Value in wxThreadEvent's GetInt
-	enum class Status
-	{
-		// Progress
-		Read, // GetExtraLong contains bytes read
-		// Final result (unless thread is Killed)
-		Error,  // GetString contains more details
-		Success // File has been read (or exists)
-	};
 
 	bool CheckHttpFile(std::wstring const& inURL)
 	{
@@ -105,7 +90,4 @@ private:
 		wxString* outString = nullptr, // Only one of these 2 may be specified (except on check)
 		wxOutputStream* outStream = nullptr,
 		IDlgProgress* pProgress = nullptr);
-
-	wxCriticalSection m_critsect;
-	CReadHttpThread* m_thread;
 };
