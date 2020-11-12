@@ -3,6 +3,7 @@
 #
 # This assumes the current directory is 'Include'
 #
+# 2020-11-12 Changed padding in ARB_VER_BUILD output.
 # 2020-08-21 Moved configure.in into src (moved top build directory down)
 # 2019-08-24 Fix writing configure.in
 # 2016-06-10 Convert to Python3
@@ -22,6 +23,9 @@ import os
 import string
 import sys
 import time
+
+# Was '\t\t\t\t\t' - changed after updating header with clang-format
+verBuildPadding = ' '
 
 
 class LockFile:
@@ -70,7 +74,7 @@ class LockFile:
 
 
 def doWork():
-	update = 0
+	update = False
 	copyRight = ''
 	vMajARB = '0'
 	vMinARB = '0'
@@ -113,12 +117,13 @@ def doWork():
 		if 0 == pos:
 			vBldOld = str.strip(line[pos+len(defineBld):])
 			vBldARB = str(int(vBldOld) + 1)
-			update = 1
-			print(defineBld + '\t\t\t\t\t' + vBldARB, file=verOut)
+			update = True
+			print(defineBld + verBuildPadding + vBldARB, file=verOut)
+			# Old code where Bld was number of days since first release
 			#vBldARB = str((datetime.date.today() - datetime.date(2002,12,28)).days)
 			#if not vBldOld == vBldARB:
-			#	update = 1
-			#	print >>verOut, defineBld + '\t\t\t\t\t' + vBldARB
+			#	update = True
+			#	print >>verOut, defineBld + verBuildPadding + vBldARB
 			#else:
 			#	print >>verOut, line,
 		else:
@@ -134,7 +139,7 @@ def doWork():
 		print("VersionNumber.h is up-to-date")
 		os.remove('VersionNumber.h.new')
 
-	update = 0
+	update = False
 	conf = open('../configure.in', 'r')
 	confOut = open('../configure.in.new', 'w', newline='\n')
 	while 1:
@@ -145,14 +150,14 @@ def doWork():
 		if 0 == line.find('AC_INIT('):
 			newLine = 'AC_INIT(Agility Record Book, ' + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB + ', [help@agilityrecordbook.com])'
 			if not line == newLine:
-				update = 1
+				update = True
 				print(newLine, file=confOut)
 			else:
 				print(line, file=confOut)
 		elif 0 == line.find('AC_SUBST(PACKAGE_COPYRIGHT,'):
 			newLine = 'AC_SUBST(PACKAGE_COPYRIGHT, ' + copyRight + ')'
 			if not line == newLine:
-				update = 1
+				update = True
 				print(newLine, file=confOut)
 			else:
 				print(line, file=confOut)

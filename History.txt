@@ -1,8 +1,10 @@
-10/28/2020: v3.5.1.<develop>
+11/12/2020: v3.5.1.114
+- Notes:
+  - pre Mac-10.10 support dropped.
 - Bumped file version to 15.3:
   - Removed CalSite data
 - New features / Enhancements:
-  - Support wx3.1.4
+  - Updated to wxWidgets 3.1.4
 - Bug fixes:
   - Remembering window position failed with negative coordinates.
     (2K primary, 4K 2nd, monitors aligned at bottom - causes negative Y values)

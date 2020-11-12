@@ -91,7 +91,9 @@ FilesToCopy = [
 	'ARBHelp.pdb',
 	'ARBHelp.exe',
 	'ARBUpdater.pdb',
-	'ARBUpdater.exe']
+	'ARBUpdater.exe',
+	'CalSites.pdb',
+	'CalSites.exe']
 
 # Where is WiX? Can be overriden on command line.
 # This is initially set to %WIX%/bin, if WiX is actually installed.
