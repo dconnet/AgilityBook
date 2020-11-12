@@ -60,6 +60,7 @@ dist:: all $(PHONY)
 	# Note: "echo -n 'APPL????'" puts the '-n' in the file too (on Mac).
 	echo 'APPL????\c' > $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/PkgInfo
 	cp @PACKAGE_HLP_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/MacOS/@PACKAGE_HLP_SHORTNAME@
+	mkdir -p $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources
 	cp $(TOPSRCDIR)/Win/res/AgilityBook.icns $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/
 	cp $(TOPSRCDIR)/Include/images/AgilityBook*.png $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/
 

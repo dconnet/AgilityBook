@@ -72,11 +72,11 @@ dist:: all $(PHONY)
 	# Note: "echo -n 'APPL????'" puts the '-n' in the file too (on Mac).
 	echo 'APPL????\c' > $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/PkgInfo
 	cp @PACKAGE_CAL_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/MacOS/@PACKAGE_CAL_SHORTNAME@
+	mkdir -p $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/Resources/
 	cp $(TOPSRCDIR)/Win/res/AgilityBook.icns $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/Resources/
 	cp $(TOPSRCDIR)/Include/images/*.png $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/Resources/
 	cp -pR lang $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/Resources/
 	cp @PACKAGE_CAL_SHORTNAME@.dat $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/Resources/
-	cp $(TOPSRCDIR)/Include/images/AgilityBook*.png $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/Resources/
 
 ################################################################################
 # End of File: Makefile                                                        #

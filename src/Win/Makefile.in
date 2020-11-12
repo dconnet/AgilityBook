@@ -149,6 +149,7 @@ dist:: all $(PHONY)
 	# Note: "echo -n 'APPL????'" puts the '-n' in the file too (on Mac).
 	echo 'APPL????\c' > $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/PkgInfo
 	cp @PACKAGE_ARB_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/MacOS/@PACKAGE_ARB_SHORTNAME@
+	mkdir -p $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 	cp $(TOPSRCDIR)/Win/res/@PACKAGE_ARB_SHORTNAME@.icns $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 	cp $(TOPSRCDIR)/Include/images/*.png $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 	cp -pR lang $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
