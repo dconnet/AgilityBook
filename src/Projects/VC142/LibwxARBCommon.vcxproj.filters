@@ -95,9 +95,6 @@
     <ClInclude Include="..\..\Include\Platform\SetupWX.h">
       <Filter>Include\Platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\VersionNumber.h">
-      <Filter>Include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\ARBCommon\ARBBase64.h">
       <Filter>Include\ARBCommon</Filter>
     </ClInclude>
@@ -135,6 +132,9 @@
       <Filter>Include\ARBCommon</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\VersionInfoARB.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\VersionNumber.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>
