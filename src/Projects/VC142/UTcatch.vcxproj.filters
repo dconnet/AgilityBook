@@ -1,0 +1,591 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{7af4a0ad-86d7-45e4-b667-f86635af8a7b}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{64f0c54c-ca07-4394-b091-0be072c0232c}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{8506b1f3-57d8-4bbb-bbbe-032650ed6e51}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Source Files\generators">
+      <UniqueIdentifier>{4f6d7d81-2b1e-41cc-ac28-0dca4b9bb28f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\generators\internal">
+      <UniqueIdentifier>{9dcda864-65c9-4f70-a94c-3a7fd529d8e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\interfaces">
+      <UniqueIdentifier>{9a650828-3c40-4126-8531-32dfb53365d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\internal">
+      <UniqueIdentifier>{7c9a5fe1-fe8e-4ab9-8cb3-af4c3a4e586e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\matchers">
+      <UniqueIdentifier>{afa2272d-e8b7-4af1-a950-0809ecb46e75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\reporters">
+      <UniqueIdentifier>{c8432d79-e353-49c5-b48b-b12bd40ac95c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\matchers\internal">
+      <UniqueIdentifier>{4ed56b0d-3f0a-4b69-b097-73fd2f44d3c7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_all.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_approx.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_assertion_info.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_assertion_result.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_config.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_message.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_reporter_registrars.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_section_info.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_session.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_tag_alias.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_tag_alias_autoregistrar.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_template_test_macros.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_test_case_info.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_test_macros.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_test_spec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_timer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_tostring.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_totals.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_translate_exception.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_version.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_version_macros.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\generators\catch_generator_exception.hpp">
+      <Filter>Source Files\generators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\generators\catch_generators.hpp">
+      <Filter>Source Files\generators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\generators\catch_generators_adapters.hpp">
+      <Filter>Source Files\generators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\generators\catch_generators_all.hpp">
+      <Filter>Source Files\generators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\generators\catch_generators_random.hpp">
+      <Filter>Source Files\generators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\generators\catch_generators_range.hpp">
+      <Filter>Source Files\generators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_all.hpp">
+      <Filter>Source Files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_capture.hpp">
+      <Filter>Source Files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_config.hpp">
+      <Filter>Source Files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_enum_values_registry.hpp">
+      <Filter>Source Files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_exception.hpp">
+      <Filter>Source Files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_generatortracker.hpp">
+      <Filter>Source Files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_registry_hub.hpp">
+      <Filter>Source Files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_reporter.hpp">
+      <Filter>Source Files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_reporter_factory.hpp">
+      <Filter>Source Files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_reporter_registry.hpp">
+      <Filter>Source Files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_runner.hpp">
+      <Filter>Source Files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_tag_alias_registry.hpp">
+      <Filter>Source Files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_testcase.hpp">
+      <Filter>Source Files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_assertion_handler.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_case_sensitive.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_clara.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_commandline.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_common.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_compiler_capabilities.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_config_uncaught_exceptions.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_console_colour.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_console_width.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_container_nonmembers.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_context.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_debug_console.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_debugger.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_decomposer.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_enforce.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_enum_values_registry.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_errno_guard.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_exception_translator_registry.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_fatal_condition_handler.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_lazy_expr.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_leak_detector.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_list.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_message_info.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_meta.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_noncopyable.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_option.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_output_redirect.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_platform.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_polyfills.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_preprocessor.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_random_number_generator.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_reporter_registry.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_result_type.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_run_context.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_section.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_singletons.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_startup_exception_registry.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_stream.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_string_manip.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_stringref.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_tag_alias_registry.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_template_test_registry.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_test_case_registry_impl.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_test_case_tracker.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_test_macro_impl.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_test_registry.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_test_spec_parser.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_textflow.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_to_string.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_uncaught_exceptions.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_unique_ptr.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_wildcard_pattern.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_windows_h_proxy.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_xmlwriter.hpp">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers.hpp">
+      <Filter>Source Files\matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_all.hpp">
+      <Filter>Source Files\matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_container_properties.hpp">
+      <Filter>Source Files\matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_contains.hpp">
+      <Filter>Source Files\matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_exception.hpp">
+      <Filter>Source Files\matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_floating.hpp">
+      <Filter>Source Files\matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_predicate.hpp">
+      <Filter>Source Files\matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_string.hpp">
+      <Filter>Source Files\matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_templated.hpp">
+      <Filter>Source Files\matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_vector.hpp">
+      <Filter>Source Files\matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\internal\catch_matchers_impl.hpp">
+      <Filter>Source Files\matchers\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_automake.hpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_compact.hpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_console.hpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_cumulative_base.hpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_event_listener.hpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_helpers.hpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_junit.hpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_listening.hpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_sonarqube.hpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_streaming_base.hpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_tap.hpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_teamcity.hpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_xml.hpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporters_all.hpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_approx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_assertion_result.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_message.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_registry_hub.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_session.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_test_case_info.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_test_spec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_tostring.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_totals.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_version.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\generators\internal\catch_generators_combined_tu.cpp">
+      <Filter>Source Files\generators\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_combined_tu.cpp">
+      <Filter>Source Files\interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_reporter.cpp">
+      <Filter>Source Files\interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_assertion_handler.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_clara.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_combined_tu.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_commandline.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_common.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_console_colour.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_context.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_debug_console.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_debugger.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_enforce.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_enum_values_registry.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_exception_translator_registry.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_fatal_condition_handler.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_list.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_main.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_output_redirect.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_random_number_generator.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_reporter_registry.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_result_type.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_run_context.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_section.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_singletons.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_stream.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_string_manip.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_stringref.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_tag_alias_registry.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_test_case_registry_impl.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_test_case_tracker.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_test_registry.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_test_spec_parser.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_textflow.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_wildcard_pattern.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_xmlwriter.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_floating.cpp">
+      <Filter>Source Files\matchers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_string.cpp">
+      <Filter>Source Files\matchers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_templated.cpp">
+      <Filter>Source Files\matchers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\matchers\internal\catch_matchers_combined_tu.cpp">
+      <Filter>Source Files\matchers\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_automake.cpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_combined_tu.cpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_compact.cpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_console.cpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_cumulative_base.cpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_junit.cpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_listening.cpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_sonarqube.cpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_streaming_base.cpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_tap.cpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_teamcity.cpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_xml.cpp">
+      <Filter>Source Files\reporters</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

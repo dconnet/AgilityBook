@@ -21,7 +21,13 @@
  */
 
 #include "ARBCommon/ARBTypes.h"
+#if defined(USING_CATCH3)
+#include "catch2/catch_all.hpp"
+#elif defined(USING_CATCH2)
 #include "catch2/catch.hpp"
+#else
+#error Unknown test framework
+#endif
 
 // Set this to 1 to cause TODO_TESTs to fail
 #define FAIL_TODO_TEST 0

@@ -23,7 +23,9 @@
  */
 
 #include "stdafx.h"
+#if defined(USING_CATCH2)
 #define CATCH_CONFIG_RUNNER
+#endif
 #include "TestLib.h"
 
 #include "Local.h"

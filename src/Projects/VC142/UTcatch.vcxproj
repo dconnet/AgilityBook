@@ -1,0 +1,374 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugDLL|Win32">
+      <Configuration>DebugDLL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugDLL|x64">
+      <Configuration>DebugDLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseDLL|Win32">
+      <Configuration>ReleaseDLL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseDLL|x64">
+      <Configuration>ReleaseDLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{98390979-9E94-4A4F-80E6-D686270CBB98}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>UTcatch</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>UTcatch3</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonDebugLib32.props" />
+    <Import Project="$(SolutionDir)\..\props\UTcatch3.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonDebugLib64.props" />
+    <Import Project="$(SolutionDir)\..\props\UTcatch3.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonDebugDll32.props" />
+    <Import Project="$(SolutionDir)\..\props\UTcatch3.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonDebugDll64.props" />
+    <Import Project="$(SolutionDir)\..\props\UTcatch3.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonReleaseLib32.props" />
+    <Import Project="$(SolutionDir)\..\props\UTcatch3.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonReleaseLib64.props" />
+    <Import Project="$(SolutionDir)\..\props\UTcatch3.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonReleaseDll32.props" />
+    <Import Project="$(SolutionDir)\..\props\UTcatch3.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)\..\props\CommonReleaseDll64.props" />
+    <Import Project="$(SolutionDir)\..\props\UTcatch3.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>FMT_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>FMT_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>FMT_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>FMT_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_all.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_approx.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_assertion_info.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_assertion_result.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_config.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_message.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_reporter_registrars.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_section_info.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_session.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_tag_alias.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_tag_alias_autoregistrar.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_template_test_macros.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_test_case_info.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_test_macros.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_test_spec.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_timer.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_tostring.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_totals.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_translate_exception.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_version.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\catch_version_macros.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\generators\catch_generators.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\generators\catch_generators_adapters.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\generators\catch_generators_all.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\generators\catch_generators_random.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\generators\catch_generators_range.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\generators\catch_generator_exception.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_all.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_capture.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_config.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_enum_values_registry.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_exception.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_generatortracker.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_registry_hub.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_reporter.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_reporter_factory.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_reporter_registry.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_runner.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_tag_alias_registry.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_testcase.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_assertion_handler.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_case_sensitive.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_clara.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_commandline.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_common.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_compiler_capabilities.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_config_uncaught_exceptions.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_console_colour.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_console_width.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_container_nonmembers.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_context.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_debugger.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_debug_console.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_decomposer.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_enforce.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_enum_values_registry.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_errno_guard.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_exception_translator_registry.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_fatal_condition_handler.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_lazy_expr.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_leak_detector.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_list.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_message_info.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_meta.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_noncopyable.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_option.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_output_redirect.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_platform.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_polyfills.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_preprocessor.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_random_number_generator.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_reporter_registry.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_result_type.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_run_context.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_section.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_singletons.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_startup_exception_registry.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_stream.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_stringref.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_string_manip.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_tag_alias_registry.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_template_test_registry.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_test_case_registry_impl.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_test_case_tracker.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_test_macro_impl.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_test_registry.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_test_spec_parser.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_textflow.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_to_string.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_uncaught_exceptions.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_unique_ptr.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_wildcard_pattern.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_windows_h_proxy.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\internal\catch_xmlwriter.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_all.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_container_properties.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_contains.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_exception.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_floating.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_predicate.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_string.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_templated.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_vector.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\matchers\internal\catch_matchers_impl.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporters_all.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_automake.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_compact.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_console.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_cumulative_base.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_event_listener.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_helpers.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_junit.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_listening.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_sonarqube.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_streaming_base.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_tap.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_teamcity.hpp" />
+    <ClInclude Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_xml.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_approx.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_assertion_result.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_config.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_message.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_registry_hub.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_session.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_test_case_info.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_test_spec.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_timer.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_tostring.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_totals.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\catch_version.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\generators\internal\catch_generators_combined_tu.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_combined_tu.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\interfaces\catch_interfaces_reporter.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_assertion_handler.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_clara.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_combined_tu.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_commandline.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_common.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_console_colour.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_context.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_debugger.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_debug_console.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_enforce.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_enum_values_registry.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_exception_translator_registry.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_fatal_condition_handler.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_list.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_main.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_output_redirect.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_random_number_generator.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_reporter_registry.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_result_type.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_run_context.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_section.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_singletons.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_stream.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_stringref.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_string_manip.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_tag_alias_registry.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_test_case_registry_impl.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_test_case_tracker.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_test_registry.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_test_spec_parser.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_textflow.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_wildcard_pattern.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\internal\catch_xmlwriter.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_floating.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_string.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\matchers\catch_matchers_templated.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\matchers\internal\catch_matchers_combined_tu.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_automake.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_combined_tu.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_compact.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_console.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_cumulative_base.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_junit.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_listening.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_sonarqube.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_streaming_base.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_tap.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_teamcity.cpp" />
+    <ClCompile Include="..\..\3rdParty\catch3\src\catch2\reporters\catch_reporter_xml.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
