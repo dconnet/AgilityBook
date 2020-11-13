@@ -20,8 +20,8 @@
  * 2008-01-11 Created
  */
 
-#include "../3rdParty/catch2/catch.hpp"
 #include "ARBCommon/ARBTypes.h"
+#include "catch2/catch.hpp"
 
 // Set this to 1 to cause TODO_TESTs to fail
 #define FAIL_TODO_TEST 0

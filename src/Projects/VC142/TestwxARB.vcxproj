@@ -133,6 +133,7 @@
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLibARM64.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -141,6 +142,7 @@
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib32.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -149,6 +151,7 @@
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib64.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -157,6 +160,7 @@
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDllARM64.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -165,6 +169,7 @@
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDll32.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -173,6 +178,7 @@
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDll64.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -181,6 +187,7 @@
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLibARM64.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -189,6 +196,7 @@
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib32.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -197,6 +205,7 @@
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib64.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -205,6 +214,7 @@
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDllARM64.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -213,6 +223,7 @@
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDll32.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -221,6 +232,7 @@
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDll64.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
