@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-11-12 Added option to force quotes on writing CSV.
  * 2010-10-30 Moved BreakLine from Globals.h, added CSV routines.
  */
 
@@ -64,15 +65,20 @@ ARBCOMMON_API ReadStatus ReadCSV(
  * Write a line for a CSV file [Based on RFC 4180 (October 2005)]
  * @param inSep Separator character
  * @param inFields Fields to write
+ * @param includeQuote Always quote the output field (default only when needed)
  * @return A string that can be written to a file. (not newline terminated)
  */
-ARBCOMMON_API std::wstring WriteCSV(wchar_t inSep, std::vector<std::wstring> const& inFields);
+ARBCOMMON_API std::wstring WriteCSV(
+	wchar_t inSep,
+	std::vector<std::wstring> const& inFields,
+	bool includeQuote = false);
 
 
 /**
  * Write a field for a CSV file [Based on RFC 4180 (October 2005)]
  * @param inSep Separator character
  * @param inField Fields to write
+ * @param includeQuote Always quote the output field (default only when needed)
  * @return A string that can be written to a file. (not newline terminated)
  */
-ARBCOMMON_API std::wstring WriteCSVField(wchar_t inSep, std::wstring const& inField);
+ARBCOMMON_API std::wstring WriteCSVField(wchar_t inSep, std::wstring const& inField, bool includeQuote = false);

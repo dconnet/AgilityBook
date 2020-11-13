@@ -189,7 +189,7 @@ ReadStatus ReadCSV(
 }
 
 
-std::wstring WriteCSV(wchar_t inSep, std::vector<std::wstring> const& inFields)
+std::wstring WriteCSV(wchar_t inSep, std::vector<std::wstring> const& inFields, bool includeQuote)
 {
 	size_t fld = 0;
 	fmt::wmemory_buffer val;
@@ -197,13 +197,13 @@ std::wstring WriteCSV(wchar_t inSep, std::vector<std::wstring> const& inFields)
 	{
 		if (0 < fld)
 			fmt::format_to(val, L"{}", inSep);
-		fmt::format_to(val, L"{}", WriteCSVField(inSep, *i));
+		fmt::format_to(val, L"{}", WriteCSVField(inSep, *i, includeQuote));
 	}
 	return fmt::to_string(val);
 }
 
 
-std::wstring WriteCSVField(wchar_t inSep, std::wstring const& inField)
+std::wstring WriteCSVField(wchar_t inSep, std::wstring const& inField, bool includeQuote)
 {
 	fmt::wmemory_buffer val;
 	if (std::wstring::npos != inField.find(L'"') || std::wstring::npos != inField.find(L'\n')
@@ -226,6 +226,10 @@ std::wstring WriteCSVField(wchar_t inSep, std::wstring const& inField)
 			}
 		}
 		fmt::format_to(val, L"\"");
+	}
+	else if (includeQuote)
+	{
+		fmt::format_to(val, L"\"{}\"", inField);
 	}
 	else
 	{
