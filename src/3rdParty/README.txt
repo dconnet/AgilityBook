@@ -1,7 +1,7 @@
 3rd Party code.
 
 Catch: v2.13.3
-.../catch2/
+.../catch/catch2/
 - https://github.com/philsquared/Catch/releases
 -- #include "catch2/catch.hpp"
 
