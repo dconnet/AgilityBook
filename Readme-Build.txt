@@ -111,8 +111,8 @@ To build for Mac/Unix, see ./build/setupwx.sh
 
 curl: https://curl.se/download.html
 Library for downloading files from the internet. Currently using 7.73.0.
+Make sure CURLPATH is set to curl root directory.
 - Download, extract
-- Windows:
   <compiler> == vc142 for VS2019, use same naming as wxWidgets libs
   - TODO: Use a env variable to point to <yourcurldir> in props/libcurl.props
   - cd <curldir>/winbuild
@@ -141,10 +141,10 @@ Library for downloading files from the internet. Currently using 7.73.0.
     - nmake -f Makefile.vc mode=static MACHINE=ARM64 RTLIBCFG=static
     - nmake -f Makefile.vc mode=static MACHINE=ARM64 RTLIBCFG=static DEBUG=yes
 	- Copy ../builds/<build>/lib/* to <yourcurldir>/lib/<compiler>ARM64-mt/
-- Mac: TODO
-  - autoconf, mkdir build-rel, cd, ../configure --disable-shared [--enable-debug]
-  figure out how to modify makefiles
-- Linux: TODO
+- Mac:
+  - It just compiled, evidently it's on the system.
+- Linux:
+  - sudo apt install libcurl4-openssl-dev
 
 --------------------
 

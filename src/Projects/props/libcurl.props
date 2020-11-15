@@ -4,8 +4,7 @@
     <Import Project="CommonMacros.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
-    <curlPath>C:\devtools\curl</curlPath>
-    <!--<curlPath>$(CURL)</curlPath>-->
+    <curlPath>$(CURLPATH)</curlPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
