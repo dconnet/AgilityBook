@@ -17,7 +17,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/Include -I$(TOPSRCDIR)/3rdParty/LibFmt/include -I$(TOPSRCDIR)/3rdParty/LibArchive/include -I$(TOPSRCDIR)/3rdParty/LibTidyHtml/include
+INCLUDES += -I$(TOPSRCDIR)/Include -I$(TOPSRCDIR)/3rdParty/LibFmt/include -I$(TOPSRCDIR)/3rdParty/LibArchive/include -I$(TOPSRCDIR)/3rdParty/LibTidyHtml/include -I$(TOPSRCDIR)/3rdParty -DUSING_CATCH2
 
 ##########
 # List of programs and archives to link
