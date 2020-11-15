@@ -448,6 +448,7 @@
 					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
 					"-I$SRCROOT/../../../3rdParty/LibTidyHtml/include",
 					"-I$SRCROOT/../../../3rdParty/LibArchive/include",
+					"-I$SRCROOT/../../../3rdParty/catch",
 					"-I$WXWIN/build-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
 					"-I$WXWIN/include",
 					"-D_FILE_OFFSET_BITS=64",
@@ -455,6 +456,7 @@
 					"-D__WXOSX__",
 					"-D__WXOSX_COCOA__",
 					"-DUSE_WXWIDGETS",
+					"-DUSING_CATCH2",
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
@@ -541,6 +543,7 @@
 					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
 					"-I$SRCROOT/../../../3rdParty/LibTidyHtml/include",
 					"-I$SRCROOT/../../../3rdParty/LibArchive/include",
+					"-I$SRCROOT/../../../3rdParty/catch",
 					"-I$WXWIN/build-release/lib/wx/include/osx_cocoa-unicode-static-3.1",
 					"-I$WXWIN/include",
 					"-D_FILE_OFFSET_BITS=64",
@@ -549,6 +552,7 @@
 					"-D__WXOSX__",
 					"-D__WXOSX_COCOA__",
 					"-DUSE_WXWIDGETS",
+					"-DUSING_CATCH2",
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
