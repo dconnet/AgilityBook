@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-11-14 Convert to libcurl.
  * 2018-10-11 Moved to Win LibARBWin
  * 2014-02-19 Added some error logging.
  * 2010-04-19 Calling Yield (for cancel dlg) results in corrupted downloads.
@@ -27,9 +28,22 @@
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/DlgAuthenticate.h"
 #include "LibARBWin/DlgProgress.h"
+#include "fmt/format.h"
 #include <wx/sstream.h>
-#include <wx/url.h>
 #include <wx/wfstream.h>
+#include <curl/curl.h>
+
+#if LIBCURL_VERSION_NUM < 0x072000
+#error Need a newer curl
+#endif
+
+#if defined(__WXMSW__)
+#if defined(_DEBUG)
+#pragma comment(lib, "libcurl_a_debug.lib")
+#else
+#pragma comment(lib, "libcurl_a.lib")
+#endif
+#endif
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -38,8 +52,26 @@
 
 namespace
 {
-constexpr size_t k_defaultBuffer = 4096;
+int xferinfo(void* ptr, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow)
+{
+	IDlgProgress* pProgress = static_cast<IDlgProgress*>(ptr);
+	if (pProgress)
+	{
+		if (pProgress->HasCanceled())
+			return 1;
+		pProgress->SetPos(1, dlnow);
+	}
+	return 0;
 }
+
+
+size_t write_data_stream(void* pData, size_t size, size_t nmemb, void* stream)
+{
+	wxOutputStream* pStream = static_cast<wxOutputStream*>(stream);
+	pStream->Write(pData, size * nmemb);
+	return size * nmemb;
+}
+} // namespace
 
 
 CReadHttp::CReadHttp()
@@ -56,80 +88,59 @@ bool CReadHttp::ReadHttpFile(
 	wxOutputStream* outStream,
 	IDlgProgress* pProgress)
 {
-	wxURL url(StringUtil::stringWX(inURL));
-	if (!url.IsOk())
+	// In theory, this could be a check with a parent - but the wrapper functions prevent that.
+	if (!outString && !outStream && !pParent)
+		return true;
+
+	wxString res;
+	wxStringOutputStream out(&res);
+
+	bool bCancelEnable = true;
+	// Since this isn't threaded, cancel doesn't work so disable it.
+	if (pProgress)
+		bCancelEnable = pProgress->EnableCancel(false);
+
+	CURL* curl = curl_easy_init();
+
+	curl_easy_setopt(curl, CURLOPT_URL, StringUtil::stringA(inURL).c_str());
+
+	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data_stream);
+	if (outString)
+	{
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &out);
+	}
+	else
+	{
+		curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, xferinfo);
+		curl_easy_setopt(curl, CURLOPT_XFERINFODATA, pProgress);
+		curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L);
+
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, outStream);
+	}
+
+	CURLcode rcCurl = curl_easy_perform(curl);
+	curl_easy_cleanup(curl);
+
+	if (pProgress)
+		pProgress->EnableCancel(bCancelEnable);
+
+	if (CURLE_URL_MALFORMAT == rcCurl)
 	{
 		outErrMsg = _("Invalid URL");
 		outErrMsg += L": ";
 		outErrMsg += inURL;
-		return false;
+	}
+	else if (CURLE_OK != rcCurl)
+	{
+		outErrMsg += fmt::format(_("Error ({}) reading {}").wx_str(), rcCurl, inURL);
 	}
 
-	wxInputStream* urlStream = url.GetInputStream();
-	if (!urlStream || !urlStream->IsOk())
+	if (CURLE_OK == rcCurl)
 	{
-		/* this doesn't work. suggestion is to use wxCURL
-		 * for now, we just don't support authentication
-		CDlgAuthenticate dlg(userName, pParent);
-		if (wxID_OK == dlg.ShowModal())
+		if (outString)
 		{
-			url.GetProtocol().SetUser(dlg.GetUserName());
-			url.GetProtocol().SetPassword(dlg.GetPassword());
-			urlStream = url.GetInputStream();
-		}
-		if (!urlStream || !urlStream->IsOk())
-		*/
-		{
-			outErrMsg += L"Error reading ";
-			outErrMsg += inURL;
-			delete urlStream;
-			return false;
+			*outString = res.mb_str(wxMBConvUTF8());
 		}
 	}
-	// In theory, this could be a check with a parent - but the wrapper functions prevent that.
-	if (!outString && !outStream && !pParent)
-	{
-		delete urlStream;
-		return true;
-	}
-
-	bool bOk = true;
-	if (outString)
-	{
-		wxString res;
-		wxStringOutputStream out(&res);
-		urlStream->Read(out);
-		*outString = res.mb_str(wxMBConvUTF8());
-	}
-	else if (outStream)
-	{
-		if (pProgress)
-		{
-			bool bCancelEnable = pProgress->EnableCancel(false);
-			unsigned char buffer[k_defaultBuffer] = {0};
-			while (!urlStream->Eof())
-			{
-				urlStream->Read(buffer, sizeof(buffer));
-				size_t read = urlStream->LastRead();
-				if (0 < read)
-				{
-					pProgress->OffsetPos(1, static_cast<int>(read));
-					outStream->Write(buffer, read);
-				}
-			}
-			pProgress->EnableCancel(bCancelEnable);
-		}
-		else
-		{
-			urlStream->Read(*outStream);
-		}
-	}
-	if (urlStream->GetLastError() == wxSTREAM_READ_ERROR)
-	{
-		outErrMsg += L"Error reading ";
-		outErrMsg += inURL;
-	}
-	delete urlStream;
-
-	return bOk;
+	return CURLE_OK == rcCurl;
 }

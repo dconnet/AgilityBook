@@ -5,6 +5,7 @@ Most of the Mac equivalents are installed via MacPorts, unix notes below)
 Additional software packages required (all free):
 - python
 - wxWidgets
+- curl
 - poedit (includes msgcat)
 - wxFormBuilder (optional)
 - Windows Installer XML toolset
@@ -105,6 +106,45 @@ diff textctrl.old textctrl.cpp
 
 To build for VC, see ./src/Projects/CompileWX.py
 To build for Mac/Unix, see ./build/setupwx.sh
+
+--------------------
+
+curl: https://curl.se/download.html
+Library for downloading files from the internet. Currently using 7.73.0.
+- Download, extract
+- Windows:
+  <compiler> == vc142 for VS2019, use same naming as wxWidgets libs
+  - TODO: Use a env variable to point to <yourcurldir> in props/libcurl.props
+  - cd <curldir>/winbuild
+  - TODO: Make a script to compile like I have for wxWidgets
+  - Open an x86 VS cmd prompt
+    - nmake -f Makefile.vc mode=static RTLIBCFG=static
+    - nmake -f Makefile.vc mode=static RTLIBCFG=static DEBUG=yes
+	- Copy ../builds/<build>/include to <yourcurldir>/include/
+	- Copy ../builds/<build>/lib/* to <yourcurldir>/lib/<compiler>x86-mt/
+	- delete all ../builds/* output
+	<these are only needed if you're going to build the DLL version>
+    - nmake -f Makefile.vc mode=static
+    - nmake -f Makefile.vc mode=static DEBUG=yes
+	- Copy ../builds/<build>/lib/* to <yourcurldir>/lib/<compiler>x86-md/
+  - Open an x64 VS cmd prompt
+    - nmake -f Makefile.vc mode=static RTLIBCFG=static
+    - nmake -f Makefile.vc mode=static RTLIBCFG=static DEBUG=yes
+	- Copy ../builds/<build>/include to <yourcurldir>/include/
+	- Copy ../builds/<build>/lib/* to <yourcurldir>/lib/<compiler>x64-mt/
+	- delete all ../builds/* output
+	<these are only needed if you're going to build the DLL version>
+    - nmake -f Makefile.vc mode=static
+    - nmake -f Makefile.vc mode=static DEBUG=yes
+	- Copy ../builds/<build>/lib/* to <yourcurldir>/lib/<compiler>x64-md/
+  - Open an ARM64 VS cmd prompt
+    - nmake -f Makefile.vc mode=static MACHINE=ARM64 RTLIBCFG=static
+    - nmake -f Makefile.vc mode=static MACHINE=ARM64 RTLIBCFG=static DEBUG=yes
+	- Copy ../builds/<build>/lib/* to <yourcurldir>/lib/<compiler>ARM64-mt/
+- Mac: TODO
+  - autoconf, mkdir build-rel, cd, ../configure --disable-shared [--enable-debug]
+  figure out how to modify makefiles
+- Linux: TODO
 
 --------------------
 
