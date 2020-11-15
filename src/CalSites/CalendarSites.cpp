@@ -39,6 +39,7 @@
 #include "ARB/ARBCalendar.h"
 #include "ARB/ARBConfig.h"
 #include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/CheckTreeCtrl.h"
@@ -546,9 +547,8 @@ std::string CPluginConfigData::Process(IProgressMeter* progress)
 	std::wstring url = m_Site->GetFormattedURL(m_LocationCodes, m_VenueCodes);
 	progress->SetMessage(url.c_str());
 	std::string data;
-	CReadHttp http;
 	std::wstring errMsg;
-	if (!http.ReadHttpFileSync(errMsg, url, data))
+	if (!ReadHttp::ReadHttpFileSync(errMsg, url, data))
 		data.clear();
 	return data;
 }

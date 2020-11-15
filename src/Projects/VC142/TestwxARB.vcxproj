@@ -133,6 +133,7 @@
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLibARM64.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\libcurlLib.props" />
     <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
@@ -142,6 +143,7 @@
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib32.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\libcurlLib.props" />
     <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
@@ -151,6 +153,7 @@
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib64.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\libcurlLib.props" />
     <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'" Label="PropertySheets">
@@ -187,6 +190,7 @@
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLibARM64.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\libcurlLib.props" />
     <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
@@ -196,6 +200,7 @@
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib32.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\libcurlLib.props" />
     <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
@@ -205,6 +210,7 @@
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib64.props" />
     <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\libcurlLib.props" />
     <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'" Label="PropertySheets">

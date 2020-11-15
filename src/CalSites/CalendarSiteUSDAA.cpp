@@ -175,9 +175,8 @@ static ElementNodePtr ReadData(
 	}
 #else
 	{
-		CReadHttp http;
 		std::wstring errMsg;
-		if (!http.ReadHttpFileSync(errMsg, inAddress, data))
+		if (!ReadHttp::ReadHttpFileSync(errMsg, inAddress, data))
 			data.clear();
 	}
 #endif

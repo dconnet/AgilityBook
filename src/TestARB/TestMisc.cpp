@@ -33,6 +33,7 @@
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ReadHttp.h"
 #include "fmt/printf.h"
 
 #include <stdarg.h>
@@ -93,6 +94,19 @@ TEST_CASE("Misc")
 			REQUIRE(L"1\r\n2\n3" == s2);
 		}
 	}
+
+
+#if TESTING
+	// Leave this disabled by default. Don't want the tests always hitting the web.
+	SECTION("CheckHttpFile")
+	{
+		if (!g_bMicroTest)
+		{
+			REQUIRE(ReadHttp::CheckHttpFile(L"http://www.agilityrecordbook.com/version2.xml"));
+			REQUIRE(!ReadHttp::CheckHttpFile(L"http://www.agilityrecordbook.com/versionXX.xml"));
+		}
+	}
+#endif
 
 
 	SECTION("Version")

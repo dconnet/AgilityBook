@@ -59,6 +59,7 @@
 #include "ARBCommon/ARBMsgDigest.h"
 #include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
 #include "LibARBWin/DlgProgress.h"
 #include "LibARBWin/ReadHttp.h"
@@ -231,9 +232,8 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	}
 	else
 	{
-		CReadHttp file;
 		//std::wstring userName = CAgilityBookOptions::GetUserName(m_usernameHint);
-		if (file.ReadHttpFileSync(errMsg, url, data))
+		if (ReadHttp::ReadHttpFileSync(errMsg, url, data))
 		{
 			//CAgilityBookOptions::SetUserName(m_usernameHint, userName);
 		}
@@ -486,9 +486,8 @@ bool CUpdateInfo::CheckProgram(CAgilityBookDoc* pDoc, std::wstring const& lang, 
 						progress->ShowProgress();
 						progress->SetForegroundWindow();
 
-						CReadHttp http;
 						std::wstring err;
-						if (!http.ReadHttpFileSync(err, m_NewFile, &output, progress))
+						if (!ReadHttp::ReadHttpFileSync(err, m_NewFile, &output, progress))
 						{
 							bGotoWeb = true;
 							// If user canceled, no message is generated.
@@ -733,9 +732,8 @@ void CUpdateInfo::CheckConfig(CAgilityBookDoc* pDoc, bool bVerbose)
 			}
 			else
 			{
-				CReadHttp file;
 				//std::wstring userName = CAgilityBookOptions::GetUserName(m_usernameHint);
-				if (file.ReadHttpFileSync(errMsg, url, strConfig))
+				if (ReadHttp::ReadHttpFileSync(errMsg, url, strConfig))
 				{
 					//CAgilityBookOptions::SetUserName(m_usernameHint, userName);
 				}

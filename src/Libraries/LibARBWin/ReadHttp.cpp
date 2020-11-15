@@ -52,6 +52,21 @@
 
 namespace
 {
+int checkinfo(void* ptr, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow)
+{
+	auto s = fmt::format(L"checkinfo: {}\n", dlnow);
+	OutputDebugString(s.c_str());
+	bool* gotData = static_cast<bool*>(ptr);
+	assert(gotData);
+	if (dlnow > 0)
+	{
+		*gotData = true;
+		return 1;
+	}
+	return 0;
+}
+
+
 int xferinfo(void* ptr, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow)
 {
 	IDlgProgress* pProgress = static_cast<IDlgProgress*>(ptr);
@@ -67,29 +82,29 @@ int xferinfo(void* ptr, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal
 
 size_t write_data_stream(void* pData, size_t size, size_t nmemb, void* stream)
 {
-	wxOutputStream* pStream = static_cast<wxOutputStream*>(stream);
-	pStream->Write(pData, size * nmemb);
+	// If no stream, pretend it worked. We're just checking for existence.
+	if (stream)
+	{
+		OutputDebugString(L"writing stream\n");
+		wxOutputStream* pStream = static_cast<wxOutputStream*>(stream);
+		pStream->Write(pData, size * nmemb);
+	}
+	else
+	{
+		OutputDebugString(L"no stream\n");
+	}
 	return size * nmemb;
 }
-} // namespace
 
 
-CReadHttp::CReadHttp()
-{
-}
-
-
-bool CReadHttp::ReadHttpFile(
+bool ReadHttpFile(
 	std::wstring& outErrMsg,
-	wxEvtHandler* pParent,
-	int idEvent,
 	std::wstring const& inURL,
-	wxString* outString, // Only one of these 2 may be specified (except on check)
+	wxString* outString, // Only one of these 2 may be specified
 	wxOutputStream* outStream,
 	IDlgProgress* pProgress)
 {
-	// In theory, this could be a check with a parent - but the wrapper functions prevent that.
-	if (!outString && !outStream && !pParent)
+	if (!outString && !outStream)
 		return true;
 
 	wxString res;
@@ -144,3 +159,61 @@ bool CReadHttp::ReadHttpFile(
 	}
 	return CURLE_OK == rcCurl;
 }
+} // namespace
+
+
+namespace ReadHttp
+{
+bool GotoURL(std::wstring const& inLink)
+{
+	return wxLaunchDefaultBrowser(inLink.c_str());
+}
+
+
+bool CheckHttpFile(std::wstring const& inURL)
+{
+	CURL* curl = curl_easy_init();
+
+	curl_easy_setopt(curl, CURLOPT_URL, StringUtil::stringA(inURL).c_str());
+	curl_easy_setopt(curl, CURLOPT_NOBODY, 1L);
+
+	long code = 0;
+	if (CURLE_OK == curl_easy_perform(curl))
+	{
+		curl_easy_getinfo(curl, CURLINFO_HTTP_CODE, &code);
+	}
+
+	curl_easy_cleanup(curl);
+
+	return 200 == code;
+}
+
+
+bool ReadHttpFileSync(std::wstring& outErrMsg, std::wstring const& inURL, std::string& outString)
+{
+	wxString data;
+	bool rc = ReadHttpFile(outErrMsg, inURL, &data, nullptr, nullptr);
+	if (rc)
+		outString = data.mb_str(wxMBConvUTF8());
+	return rc;
+}
+
+
+bool ReadHttpFileSync(std::wstring& outErrMsg, std::wstring const& inURL, wxString& outString)
+{
+	return ReadHttpFile(outErrMsg, inURL, &outString, nullptr, nullptr);
+}
+
+
+bool ReadHttpFileSync(
+	std::wstring& outErrMsg,
+	std::wstring const& inURL,
+	wxOutputStream* outStream,
+	IDlgProgress* pProgress)
+{
+	if (!outStream)
+		return false;
+	return ReadHttpFile(outErrMsg, inURL, nullptr, outStream, pProgress);
+}
+
+} // namespace ReadHttp

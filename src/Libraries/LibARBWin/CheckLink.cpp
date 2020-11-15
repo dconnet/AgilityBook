@@ -38,8 +38,7 @@ bool CheckLink(std::wstring const& inLink, wxWindow* parent)
 		if (!bOk)
 		{
 			// Ok, check URL
-			CReadHttp http;
-			bOk = http.CheckHttpFile(inLink);
+			bOk = ReadHttp::CheckHttpFile(inLink);
 		}
 	}
 	return bOk;
