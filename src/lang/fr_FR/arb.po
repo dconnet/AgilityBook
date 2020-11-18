@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 09:58-0700\n"
-"PO-Revision-Date: 2020-09-15 09:58-0700\n"
+"POT-Creation-Date: 2020-11-18 14:00-0800\n"
+"PO-Revision-Date: 2020-11-18 14:02-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: _;arbT\n"
 "X-Poedit-Basepath: ../..\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-Poedit-SearchPath-0: Libraries/ARB\n"
 "X-Poedit-SearchPath-1: Libraries/ARBCommon\n"
 "X-Poedit-SearchPath-2: Libraries/LibARBWin\n"
@@ -32,48 +32,48 @@ msgstr ""
 msgid "Get all the events from USDAA. This will parse the HTML returned from {}"
 msgstr ""
 
-#: CalSites/CalendarSiteUSDAA.cpp:203 CalSites/CalendarSites.cpp:1054
+#: CalSites/CalendarSiteUSDAA.cpp:202 CalSites/CalendarSites.cpp:1062
 msgid "IDS_ERR_PARSING_DATA"
 msgstr "Erreur parsing {} data"
 
-#: CalSites/CalendarSites.cpp:645 CalSites/CalendarSites.cpp:658
+#: CalSites/CalendarSites.cpp:653 CalSites/CalendarSites.cpp:666
 msgid "IDS_DISABLED"
 msgstr "Eteindre"
 
 # DlgCalendarPlugins (CalendarSites.cpp)
-#: CalSites/CalendarSites.cpp:767
+#: CalSites/CalendarSites.cpp:775
 msgid "IDD_CALENDAR_PLUGINS"
 msgstr "Plugins calendrier"
 
-#: CalSites/CalendarSites.cpp:785 CalSites/CalendarSites.cpp:786
+#: CalSites/CalendarSites.cpp:793 CalSites/CalendarSites.cpp:794
 msgid "HIDC_PLUGIN_TREE"
 msgstr "Liste de plugins calendrier disponible et leurs entrées de calendrier."
 
-#: CalSites/CalendarSites.cpp:796 CalSites/CalendarSites.cpp:797
+#: CalSites/CalendarSites.cpp:804 CalSites/CalendarSites.cpp:805
 msgid "HIDC_PLUGIN_DETAILS"
 msgstr "Les détails pour l'article choisi dans larborescence."
 
-#: CalSites/CalendarSites.cpp:799
+#: CalSites/CalendarSites.cpp:807
 msgid "IDC_PLUGIN_READ"
 msgstr "&Lire Entrées"
 
-#: CalSites/CalendarSites.cpp:801 CalSites/CalendarSites.cpp:802
+#: CalSites/CalendarSites.cpp:809 CalSites/CalendarSites.cpp:810
 msgid "HIDC_PLUGIN_READ"
 msgstr "Lire les entrées calendrier à partir des plugins choisis."
 
-#: CalSites/CalendarSites.cpp:804
+#: CalSites/CalendarSites.cpp:812
 msgid "IDC_PLUGIN_ADD"
 msgstr "&Rajouter Entrées"
 
-#: CalSites/CalendarSites.cpp:806 CalSites/CalendarSites.cpp:807
+#: CalSites/CalendarSites.cpp:814 CalSites/CalendarSites.cpp:815
 msgid "HIDC_PLUGIN_ADD"
 msgstr "Ajouter les entrées calendrier choisies dans le programme."
 
-#: CalSites/CalendarSites.cpp:809
+#: CalSites/CalendarSites.cpp:817
 msgid "IDC_PLUGIN_ENABLE"
 msgstr "&Activer"
 
-#: CalSites/CalendarSites.cpp:811 CalSites/CalendarSites.cpp:812
+#: CalSites/CalendarSites.cpp:819 CalSites/CalendarSites.cpp:820
 msgid "HIDC_PLUGIN_ENABLE"
 msgstr ""
 "Activer le plugin choisi. Les Plugins peuvent être désactivés si le format du "
@@ -81,51 +81,51 @@ msgstr ""
 "Normalement, un plugin ne devrait être activé que si la dernière version de ce "
 "plugin a été téléchargée."
 
-#: CalSites/CalendarSites.cpp:814
+#: CalSites/CalendarSites.cpp:822
 msgid "IDC_PLUGIN_QUERYDETAILS"
 msgstr "&Détails..."
 
-#: CalSites/CalendarSites.cpp:816 CalSites/CalendarSites.cpp:817
+#: CalSites/CalendarSites.cpp:824 CalSites/CalendarSites.cpp:825
 msgid "HIDC_PLUGIN_QUERYDETAILS"
 msgstr "Éditer l'information détaillée pour le plugin choisi, si disponible."
 
-#: CalSites/CalendarSites.cpp:819
+#: CalSites/CalendarSites.cpp:827
 msgid "IDC_PLUGIN_NEW"
 msgstr "Nouveau..."
 
-#: CalSites/CalendarSites.cpp:821 CalSites/CalendarSites.cpp:822
+#: CalSites/CalendarSites.cpp:829 CalSites/CalendarSites.cpp:830
 msgid "HIDC_PLUGIN_NEW"
 msgstr "Rajouter un nouveau plugin Calendrier à la configuration actuelle."
 
-#: CalSites/CalendarSites.cpp:824
+#: CalSites/CalendarSites.cpp:832
 msgid "IDC_PLUGIN_EDIT"
 msgstr "Édition..."
 
-#: CalSites/CalendarSites.cpp:826 CalSites/CalendarSites.cpp:827
+#: CalSites/CalendarSites.cpp:834 CalSites/CalendarSites.cpp:835
 msgid "HIDC_PLUGIN_EDIT"
 msgstr ""
 "Éditer le plugin Calendrier sélectionné. (Sapplique seulement aux plugins dans "
 "la configuration.)"
 
-#: CalSites/CalendarSites.cpp:829
+#: CalSites/CalendarSites.cpp:837
 msgid "IDC_PLUGIN_DELETE"
 msgstr "Supprimer"
 
-#: CalSites/CalendarSites.cpp:831 CalSites/CalendarSites.cpp:832
+#: CalSites/CalendarSites.cpp:839 CalSites/CalendarSites.cpp:840
 msgid "HIDC_PLUGIN_DELETE"
 msgstr ""
 "Supprimer le plugin Calendrier sélectionné. (Sapplique seulement aux plugins "
 "dans la configuration.)"
 
-#: CalSites/CalendarSites.cpp:834
+#: CalSites/CalendarSites.cpp:842
 msgid "IDC_PLUGIN_CLOSE"
 msgstr "Quitter"
 
-#: CalSites/CalendarSites.cpp:1063
+#: CalSites/CalendarSites.cpp:1071
 msgid "IDS_USE_PLUGIN"
 msgstr "Voulez-vous continuer d'utiliser ce plugin?"
 
-#: CalSites/CalendarSites.cpp:1134 Win/AgilityBookDoc.cpp:1270
+#: CalSites/CalendarSites.cpp:1142 Win/AgilityBookDoc.cpp:1270
 msgid "IDS_UPDATED_CAL_ITEMS"
 msgstr "{0} nouveaux entrés calendrier rajouté, {1} entrés mis a jour."
 
@@ -478,14 +478,12 @@ msgid "Location"
 msgstr "Endroit"
 
 #: Libraries/LibARBWin/DlgConfigAccel.cpp:497
-#, fuzzy
 msgid "New..."
-msgstr "New..."
+msgstr "Nouveau..."
 
 #: Libraries/LibARBWin/DlgConfigAccel.cpp:500
-#, fuzzy
 msgid "Edit..."
-msgstr "Edit..."
+msgstr "Édition..."
 
 #: Libraries/LibARBWin/DlgConfigAccel.cpp:506
 #, fuzzy
@@ -520,9 +518,14 @@ msgstr "Choisir la Langue"
 msgid "Select a language to use."
 msgstr "Choisir une langue."
 
-#: Libraries/LibARBWin/ReadHttp.cpp:274
+#: Libraries/LibARBWin/ReadHttp.cpp:144 Libraries/LibARBWin/readhttpold.cpp:274
 msgid "Invalid URL"
 msgstr "URL invalide"
+
+#: Libraries/LibARBWin/ReadHttp.cpp:150
+#, fuzzy
+msgid "Error ({0}) reading {1}"
+msgstr "Error ({0}) reading {1}"
 
 #: Libraries/LibARBWin/SetupApp.cpp:118
 #, fuzzy, c-format
@@ -542,7 +545,7 @@ msgstr "Lire {} lignes"
 msgid "Please enter a valid number"
 msgstr "Merci d'enter un nombre valide."
 
-#: TestARB/Local.cpp:52 TestARB/TestMisc.cpp:148 Win/Localization.cpp:50
+#: TestARB/Local.cpp:52 TestARB/TestMisc.cpp:162 Win/Localization.cpp:50
 msgid "IDS_ARB_UNKNOWN_VERSION"
 msgstr "Version document inconnu"
 
@@ -765,9 +768,9 @@ msgid "IDS_UPDATE_IDENTICAL"
 msgstr "{} identique"
 
 #: TestARB/Local.cpp:131 Win/DlgConfigure.cpp:238 Win/DlgDog.cpp:140
-#: Win/DlgListCtrl.cpp:551 Win/Localization.cpp:127 Win/PointsData.cpp:1307
-#: Win/PointsData.cpp:1348 Win/PointsData.cpp:1389 Win/PointsData.cpp:1433
-#: Win/PointsData.cpp:1690
+#: Win/DlgListCtrl.cpp:551 Win/Localization.cpp:127 Win/PointsData.cpp:1319
+#: Win/PointsData.cpp:1360 Win/PointsData.cpp:1401 Win/PointsData.cpp:1445
+#: Win/PointsData.cpp:1702
 msgid "IDS_OTHERPOINTS"
 msgstr "Autres Points"
 
@@ -822,7 +825,7 @@ msgid "IDS_COL_LEVELS"
 msgstr "Degrés"
 
 #: TestARB/Local.cpp:243 TestARB/Local.cpp:254 Win/Localization.cpp:227
-#: Win/Localization.cpp:236 Win/PointsData.cpp:1177
+#: Win/Localization.cpp:236 Win/PointsData.cpp:1189
 msgid "IDS_TITLES"
 msgstr "Distinctions"
 
@@ -2273,7 +2276,7 @@ msgid "LinkArbDownloadText"
 msgstr "Telecharger Agility Record Book"
 
 #: Win/DlgAbout.cpp:119 Win/DlgAbout.cpp:123 Win/DlgAbout.cpp:124
-#: Win/UpdateInfo.cpp:211
+#: Win/UpdateInfo.cpp:212
 msgid "LinkArbDownloadUrl"
 msgstr "http://www.agilityrecordbook.com/download.php"
 
@@ -4089,7 +4092,7 @@ msgstr ""
 "Cumulatifs' est utilisé."
 
 #: Win/DlgConfigTitlePoints.cpp:200 Win/DlgConfigTitlePoints.cpp:211
-#: Win/DlgConfigureData.cpp:801 Win/PointsData.cpp:397 Win/PointsData.cpp:429
+#: Win/DlgConfigureData.cpp:801 Win/PointsData.cpp:409 Win/PointsData.cpp:441
 msgid "IDS_TITLEPOINT_LIFETIME_NAME"
 msgstr "Lifetime"
 
@@ -6541,56 +6544,56 @@ msgstr "statut"
 msgid "ID_INDICATOR_FILTERED"
 msgstr "Filtré"
 
-#: Win/PointsData.cpp:239 Win/PointsData.cpp:1188 Win/Print.cpp:115
+#: Win/PointsData.cpp:251 Win/PointsData.cpp:1200 Win/Print.cpp:115
 #: Win/Print.cpp:1049 Win/TabView.cpp:237 Win/TabView.cpp:363
 msgid "IDS_RUNS"
 msgstr "Parcours"
 
-#: Win/PointsData.cpp:272
+#: Win/PointsData.cpp:284
 msgid "IDS_POINTS_SPEED"
 msgstr "{} vitesse"
 
-#: Win/PointsData.cpp:398 Win/PointsData.cpp:430
+#: Win/PointsData.cpp:410 Win/PointsData.cpp:442
 msgid "IDS_LIFETIME_POINTS"
 msgstr "{} Points"
 
-#: Win/PointsData.cpp:401 Win/PointsData.cpp:433
+#: Win/PointsData.cpp:413 Win/PointsData.cpp:445
 msgid "IDS_PLACEMENT_POINTS"
 msgstr "Classement Points"
 
-#: Win/PointsData.cpp:407
+#: Win/PointsData.cpp:419
 msgid "IDS_TOTAL"
 msgstr "Total"
 
-#: Win/PointsData.cpp:809
+#: Win/PointsData.cpp:821
 msgid "IDS_POINTS_RUNS_JUDGES"
 msgstr "{0} parcours, {1} juges"
 
-#: Win/PointsData.cpp:814 Win/PointsData.cpp:837
+#: Win/PointsData.cpp:826 Win/PointsData.cpp:849
 msgid "IDS_POINTS_PARTNERS"
 msgstr ", {} partners"
 
-#: Win/PointsData.cpp:824
+#: Win/PointsData.cpp:836
 msgid "IDS_POINTS_QS"
 msgstr "{0} Qs ({1}%)"
 
-#: Win/PointsData.cpp:829
+#: Win/PointsData.cpp:841
 msgid "IDS_POINTS_CLEAN"
 msgstr ", ({} sans fautes)"
 
-#: Win/PointsData.cpp:833
+#: Win/PointsData.cpp:845
 msgid "IDS_POINTS_JUDGES"
 msgstr ", {} juges"
 
-#: Win/PointsData.cpp:844
+#: Win/PointsData.cpp:856
 msgid "IDS_POINTS_SQS"
 msgstr "[{} SQ]"
 
-#: Win/PointsData.cpp:849
+#: Win/PointsData.cpp:861
 msgid "IDS_POINTS_SPEED_SUBTOTAL"
 msgstr "[{} vitesse]"
 
-#: Win/PointsData.cpp:1658 Win/PointsData.cpp:1666
+#: Win/PointsData.cpp:1670 Win/PointsData.cpp:1678
 msgid "IDS_TITLING_POINTS"
 msgstr "Points Distinction"
 
@@ -6614,7 +6617,7 @@ msgstr "Nom/Race/Notes"
 msgid "IDS_TRAINING"
 msgstr "Log Entraînement"
 
-#: Win/UpdateInfo.cpp:134
+#: Win/UpdateInfo.cpp:135
 msgid "IDS_UPDATED_CONFIG"
 msgstr "La configuration a etais mise a jour. Voulez-vous introduire vos data?"
 
@@ -6622,7 +6625,7 @@ msgstr "La configuration a etais mise a jour. Voulez-vous introduire vos data?"
 msgid "IDS_UPDATE_UNKNOWN"
 msgstr "Version current pas determinable."
 
-#: Win/UpdateInfo.cpp:304 Win/UpdateInfo.cpp:760
+#: Win/UpdateInfo.cpp:304 Win/UpdateInfo.cpp:758
 msgid "IDS_LOAD_FAILED"
 msgstr "Impossible de charger '{}'."
 
@@ -6634,34 +6637,34 @@ msgstr "Version {} accesible. Voulez-vous le telecharger? "
 msgid "IDS_DOWNLOADING"
 msgstr "Téléchargement en cours..."
 
-#: Win/UpdateInfo.cpp:505
+#: Win/UpdateInfo.cpp:504
 msgid "IDS_VALIDATING"
 msgstr "Validation en cours..."
 
-#: Win/UpdateInfo.cpp:513 Win/UpdateInfo.cpp:537 Win/UpdateInfo.cpp:545
-#: Win/UpdateInfo.cpp:553
+#: Win/UpdateInfo.cpp:512 Win/UpdateInfo.cpp:536 Win/UpdateInfo.cpp:544
+#: Win/UpdateInfo.cpp:552
 msgid "IDS_ERROR_DOWNLOAD"
 msgstr "ERREUR: Le fichier téléchargé est corrompu."
 
-#: Win/UpdateInfo.cpp:529
+#: Win/UpdateInfo.cpp:528
 msgid "IDS_DOWNLOAD_AND_RESTART"
 msgstr ""
 "{} a fini de télécharger. Agility Record Book va fermer pour vous laisser "
 "l'installer."
 
-#: Win/UpdateInfo.cpp:561
+#: Win/UpdateInfo.cpp:560
 msgid "IDS_ERROR_UNEXPECTED"
 msgstr "ERREUR: Format de fichier non reconnu, fichier MSI attendu."
 
-#: Win/UpdateInfo.cpp:597 Win/UpdateInfo.cpp:616
+#: Win/UpdateInfo.cpp:596 Win/UpdateInfo.cpp:615
 msgid "IDS_ERROR_AUTOUPDATE"
 msgstr "ERREUR: Erreur interne pendant la mise à jour. Procédure annulée."
 
-#: Win/UpdateInfo.cpp:796
+#: Win/UpdateInfo.cpp:794
 msgid "IDS_UPDATE_CURRENT"
 msgstr "Pas des mises a jour."
 
-#: Win/UpdateInfo.cpp:837
+#: Win/UpdateInfo.cpp:835
 #, fuzzy
 msgid "IDS_INSTALL_BUSY"
 msgstr ""

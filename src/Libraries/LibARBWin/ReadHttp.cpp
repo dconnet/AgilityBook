@@ -147,7 +147,7 @@ bool ReadHttpFile(
 	}
 	else if (CURLE_OK != rcCurl)
 	{
-		outErrMsg += fmt::format(_("Error ({}) reading {}").wx_str(), rcCurl, inURL);
+		outErrMsg += fmt::format(_("Error ({0}) reading {1}").wx_str(), rcCurl, inURL);
 	}
 
 	if (CURLE_OK == rcCurl)
