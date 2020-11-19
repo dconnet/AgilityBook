@@ -48,7 +48,7 @@ private:
  * On Windows/Unix, they're located with the exe.
  * On Mac, they're in the resource bundle
  */
-wxString GetARBResourceDir();
+ARBCOMMON_API wxString GetARBResourceDir();
 
 
 /**

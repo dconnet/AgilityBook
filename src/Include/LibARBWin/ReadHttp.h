@@ -28,11 +28,11 @@ class wxOutputStream;
 
 namespace ReadHttp
 {
-bool GotoURL(std::wstring const& inLink);
-bool CheckHttpFile(std::wstring const& inURL);
-bool ReadHttpFileSync(std::wstring& outErrMsg, std::wstring const& inURL, std::string& outString);
-bool ReadHttpFileSync(std::wstring& outErrMsg, std::wstring const& inURL, wxString& outString);
-bool ReadHttpFileSync(
+ARBWIN_API bool GotoURL(std::wstring const& inLink);
+ARBWIN_API bool CheckHttpFile(std::wstring const& inURL);
+ARBWIN_API bool ReadHttpFileSync(std::wstring& outErrMsg, std::wstring const& inURL, std::string& outString);
+ARBWIN_API bool ReadHttpFileSync(std::wstring& outErrMsg, std::wstring const& inURL, wxString& outString);
+ARBWIN_API bool ReadHttpFileSync(
 	std::wstring& outErrMsg,
 	std::wstring const& inURL,
 	wxOutputStream* outStream,

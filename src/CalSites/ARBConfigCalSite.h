@@ -28,7 +28,7 @@ ARB_TYPEDEF_LIST(ARBConfigCalSite)
 /**
  * Configuration information for auto-loading calendar entries from the web.
  */
-class ARB_API ARBConfigCalSite : public ARBBase
+class ARBConfigCalSite : public ARBBase
 {
 protected:
 	ARBConfigCalSite();
@@ -158,7 +158,7 @@ private:
 /**
  * List of ARBConfigCalSite objects.
  */
-class ARB_API ARBConfigCalSiteList : public ARBVector<ARBConfigCalSitePtr>
+class ARBConfigCalSiteList : public ARBVector<ARBConfigCalSitePtr>
 {
 public:
 	/**
