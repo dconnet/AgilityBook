@@ -57,8 +57,6 @@ namespace
 {
 int checkinfo(void* ptr, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow)
 {
-	auto s = fmt::format(L"checkinfo: {}\n", dlnow);
-	OutputDebugString(s.c_str());
 	bool* gotData = static_cast<bool*>(ptr);
 	assert(gotData);
 	if (dlnow > 0)
@@ -88,13 +86,8 @@ size_t write_data_stream(void* pData, size_t size, size_t nmemb, void* stream)
 	// If no stream, pretend it worked. We're just checking for existence.
 	if (stream)
 	{
-		OutputDebugString(L"writing stream\n");
 		wxOutputStream* pStream = static_cast<wxOutputStream*>(stream);
 		pStream->Write(pData, size * nmemb);
-	}
-	else
-	{
-		OutputDebugString(L"no stream\n");
 	}
 	return size * nmemb;
 }
