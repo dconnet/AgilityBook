@@ -37,4 +37,4 @@ ARBWIN_API bool ReadHttpFileSync(
 	std::wstring const& inURL,
 	wxOutputStream* outStream,
 	IDlgProgress* pProgress = nullptr);
-};
+} // namespace ReadHttp

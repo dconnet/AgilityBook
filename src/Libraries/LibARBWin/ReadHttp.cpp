@@ -9,6 +9,9 @@
  * @brief Read HTTP from the net.
  * @author David Connet
  *
+ * This is a simple class to download data. Do not attempt multiple concurrent
+ * transfers (curl usage must be changed for that).
+ *
  * Revision History
  * 2020-11-14 Convert to libcurl.
  * 2018-10-11 Moved to Win LibARBWin
@@ -111,9 +114,6 @@ bool ReadHttpFile(
 	wxStringOutputStream out(&res);
 
 	bool bCancelEnable = true;
-	// Since this isn't threaded, cancel doesn't work so disable it.
-	if (pProgress)
-		bCancelEnable = pProgress->EnableCancel(false);
 
 	CURL* curl = curl_easy_init();
 

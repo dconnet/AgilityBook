@@ -25,6 +25,7 @@
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/TaskbarProgress.h"
+#include <wx/thread.h>
 #include <wx/utils.h>
 #include <vector>
 
@@ -32,7 +33,10 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-static int _defWidth = 250;
+namespace
+{
+constexpr int _defWidth = 250;
+} // namespace
 
 /////////////////////////////////////////////////////////////////////////////
 // I used the wxProgressDialog as a guide
@@ -89,6 +93,7 @@ private:
 	}
 	void ReenableOtherWindows();
 
+	mutable wxCriticalSection m_crit;
 	wxWindow* m_parentTop;
 	CTaskbarProgressPtr m_pTaskbar;
 	wxStaticText* m_ctrlMessage;
@@ -210,23 +215,32 @@ void CDlgProgress::ReenableOtherWindows()
 
 void CDlgProgress::OnCancel(wxCommandEvent& evt)
 {
-	m_HasCanceled = true;
+	{
+		wxCriticalSectionLocker lock(m_crit);
+		m_HasCanceled = true;
+	}
 	m_ctrlCancel->Enable(false);
 }
 
+// IDlgProgress interface
 
 void CDlgProgress::SetCaption(std::wstring const& inCaption)
 {
+	assert(wxIsMainThread());
 	SetLabel(StringUtil::stringWX(inCaption));
 }
 
 
 void CDlgProgress::SetMessage(std::wstring const& inMessage)
 {
+	assert(wxIsMainThread());
 	wxString msg(StringUtil::stringWX(inMessage));
 	if (!inMessage.empty() && msg != m_ctrlMessage->GetLabel())
 	{
 		m_ctrlMessage->SetLabel(msg);
+		// TODO: This needs to be reworked with threads. The download should happen
+		// on a worker thread that messages back here. Stnce the GUI would no longer
+		// be locked by a busy process, we would no longer need this kludge.
 		wxYieldIfNeeded();
 	}
 }
@@ -234,17 +248,20 @@ void CDlgProgress::SetMessage(std::wstring const& inMessage)
 
 void CDlgProgress::SetRange(short inBar, int inRange)
 {
+	assert(wxIsMainThread());
 	wxGauge* pBar = GetBar(inBar);
 	if (pBar)
 	{
 		pBar->SetRange(inRange);
 		Update();
+		wxYieldIfNeeded(); // See nasty comment above
 	}
 }
 
 
 void CDlgProgress::SetStep(short inBar, int inStep)
 {
+	assert(wxIsMainThread());
 	wxGauge* pBar = GetBar(inBar);
 	if (pBar)
 	{
@@ -255,6 +272,7 @@ void CDlgProgress::SetStep(short inBar, int inStep)
 
 void CDlgProgress::StepIt(short inBar)
 {
+	assert(wxIsMainThread());
 	wxGauge* pBar = GetBar(inBar);
 	if (pBar)
 	{
@@ -263,12 +281,14 @@ void CDlgProgress::StepIt(short inBar)
 			m_pTaskbar->SetProgressValue(m_ctrlBars[inBar - 1].pos, m_ctrlBars[inBar - 1].gauge->GetRange());
 		pBar->SetValue(m_ctrlBars[inBar - 1].pos);
 		Update();
+		wxYieldIfNeeded(); // See nasty comment above
 	}
 }
 
 
 void CDlgProgress::OffsetPos(short inBar, int inDelta)
 {
+	assert(wxIsMainThread());
 	wxGauge* pBar = GetBar(inBar);
 	if (pBar)
 	{
@@ -277,12 +297,14 @@ void CDlgProgress::OffsetPos(short inBar, int inDelta)
 			m_pTaskbar->SetProgressValue(m_ctrlBars[inBar - 1].pos, m_ctrlBars[inBar - 1].gauge->GetRange());
 		pBar->SetValue(m_ctrlBars[inBar - 1].pos);
 		Update();
+		wxYieldIfNeeded(); // See nasty comment above
 	}
 }
 
 
 void CDlgProgress::SetPos(short inBar, int inPos)
 {
+	assert(wxIsMainThread());
 	wxGauge* pBar = GetBar(inBar);
 	if (pBar)
 	{
@@ -291,12 +313,14 @@ void CDlgProgress::SetPos(short inBar, int inPos)
 			m_pTaskbar->SetProgressValue(m_ctrlBars[inBar - 1].pos, m_ctrlBars[inBar - 1].gauge->GetRange());
 		pBar->SetValue(m_ctrlBars[inBar - 1].pos);
 		Update();
+		wxYieldIfNeeded(); // See nasty comment above
 	}
 }
 
 
 int CDlgProgress::GetPos(short inBar)
 {
+	assert(wxIsMainThread());
 	int pos = 0;
 	wxGauge* pBar = GetBar(inBar);
 	if (pBar)
@@ -310,8 +334,14 @@ int CDlgProgress::GetPos(short inBar)
 
 bool CDlgProgress::EnableCancel(bool bEnable)
 {
+	assert(wxIsMainThread());
+	bool hasCanceled = false;
+	{
+		wxCriticalSectionLocker lock(m_crit);
+		hasCanceled = m_HasCanceled;
+	}
 	bool bCancelEnabled = m_ctrlCancel ? m_ctrlCancel->IsEnabled() : false;
-	if (!m_HasCanceled)
+	if (!hasCanceled)
 	{
 		if (m_ctrlCancel)
 			m_ctrlCancel->Enable(bEnable);
@@ -323,18 +353,21 @@ bool CDlgProgress::EnableCancel(bool bEnable)
 
 bool CDlgProgress::HasCanceled() const
 {
+	wxCriticalSectionLocker lock(m_crit);
 	return m_HasCanceled;
 }
 
 
 void CDlgProgress::ShowProgress(bool bShow)
 {
+	assert(wxIsMainThread());
 	Show(bShow);
 }
 
 
 void CDlgProgress::SetForegroundWindow()
 {
+	assert(wxIsMainThread());
 	SetFocus();
 	Update();
 }
@@ -342,6 +375,7 @@ void CDlgProgress::SetForegroundWindow()
 
 void CDlgProgress::Dismiss()
 {
+	assert(wxIsMainThread());
 	Destroy();
 }
 

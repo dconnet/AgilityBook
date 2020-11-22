@@ -486,6 +486,7 @@ bool CUpdateInfo::CheckProgram(CAgilityBookDoc* pDoc, std::wstring const& lang, 
 						progress->ShowProgress();
 						progress->SetForegroundWindow();
 
+						// TODO: Need to rework this logic to allow threads
 						std::wstring err;
 						if (!ReadHttp::ReadHttpFileSync(err, m_NewFile, &output, progress))
 						{
