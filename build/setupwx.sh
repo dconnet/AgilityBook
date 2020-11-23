@@ -148,6 +148,7 @@ Darwin*)
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk
 		MIN_OS=$MAC_MIN_OS
 		TARGETARCH="--enable-macosx_arch=x86_64"
+	fi
 
 	if test "x$TARGETSDK" = "x"; then
 		echo "ERROR: Can't find an SDK - 10.11 or newer is required"
