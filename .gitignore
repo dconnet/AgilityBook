@@ -1,6 +1,8 @@
 # Ignore MSW build directory
 /bin/*
 
+/build/**/*.pyc
+
 /src/Projects/**/.vs/
 /src/Projects/**/*.opendb
 /src/Projects/**/*.sdf

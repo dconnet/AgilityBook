@@ -104,43 +104,27 @@ diff textctrl.old textctrl.cpp
 > #endif
 >
 
-To build for VC, see ./src/Projects/CompileWX.py
+To build for VC, see ./build/CompileWX.py
 To build for Mac/Unix, see ./build/setupwx.sh
 
 --------------------
 
 curl: https://curl.se/download.html
 Library for downloading files from the internet. Currently using 7.73.0.
-Make sure CURLPATH is set to curl root directory.
+-Windows
+- Make sure CURLPATH is set to curl root directory where include and lib
+  directories are located.
 - Download, extract
-  <compiler> == vc142 for VS2019, use same naming as wxWidgets libs
-  - TODO: Use a env variable to point to <yourcurldir> in props/libcurl.props
-  - cd <curldir>/winbuild
-  - TODO: Make a script to compile like I have for wxWidgets
-  - Open an x86 VS cmd prompt
-    - nmake -f Makefile.vc mode=static RTLIBCFG=static
-    - nmake -f Makefile.vc mode=static RTLIBCFG=static DEBUG=yes
-	- Copy ../builds/<build>/include to <yourcurldir>/include/
-	- Copy ../builds/<build>/lib/* to <yourcurldir>/lib/<compiler>x86-mt/
-	- delete all ../builds/* output
-	<these are only needed if you're going to build the DLL version>
-    - nmake -f Makefile.vc mode=static
-    - nmake -f Makefile.vc mode=static DEBUG=yes
-	- Copy ../builds/<build>/lib/* to <yourcurldir>/lib/<compiler>x86-md/
-  - Open an x64 VS cmd prompt
-    - nmake -f Makefile.vc mode=static RTLIBCFG=static
-    - nmake -f Makefile.vc mode=static RTLIBCFG=static DEBUG=yes
-	- Copy ../builds/<build>/include to <yourcurldir>/include/
-	- Copy ../builds/<build>/lib/* to <yourcurldir>/lib/<compiler>x64-mt/
-	- delete all ../builds/* output
-	<these are only needed if you're going to build the DLL version>
-    - nmake -f Makefile.vc mode=static
-    - nmake -f Makefile.vc mode=static DEBUG=yes
-	- Copy ../builds/<build>/lib/* to <yourcurldir>/lib/<compiler>x64-md/
-  - Open an ARM64 VS cmd prompt
-    - nmake -f Makefile.vc mode=static MACHINE=ARM64 RTLIBCFG=static
-    - nmake -f Makefile.vc mode=static MACHINE=ARM64 RTLIBCFG=static DEBUG=yes
-	- Copy ../builds/<build>/lib/* to <yourcurldir>/lib/<compiler>ARM64-mt/
+  - To build for VC, see ./build/CompileCurl.py
+  - Run "CompileCurl.py -p <path-to-curl-source> -a
+  - Build output is in <path-to-curl-source>/builds/
+  - Copy one of the include directories from 'libcurl-<release/debug>-<platform>-m[dt]/
+    to %CURLPATH%
+  - For each output directory in builds, copy 'libcurl-<release/debug>-<platform>-m[dt]/lib
+    to %CURLPATH%/lib/<platform>-m[dt]/. For example, this changes the name
+    builds\libcurl-debug-vc142x64-md\lib\libcurl_a_debug.lib to
+    %CURLPATH%\lib\vc142x64-md\lib\libcurl_a_debug.lib. (And libcurl_a.lib
+	ends up here too.)
 - Mac:
   - It just compiled, evidently it's on the system.
 - Linux:

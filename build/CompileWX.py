@@ -10,6 +10,7 @@
 # an EXE that will run on XP.
 #
 # Revision History
+# 2020-11-28 Merge pyDcon into ARB.
 # 2020-09-13 Make default vc142.
 # 2019-02-28 Add vc142 support
 # 2018-11-16 Added ARM64 support.
@@ -18,7 +19,7 @@
 # 2017-09-19 Rename vc15 to vc141, fix GetCompilerPaths tuple name
 # 2017-01-24 Changed GetCompilerPaths api.
 # 2016-11-22 Added vc141, removed vc9. Changed GetCompilerPaths api.
-# 2016-06-10 Convert to Python3
+# 2016-06-10 Convert to Python3, create pyDcon [not in ARB yet]
 # 2015-10-11 Added -r option.
 # 2015-04-24 Added vc14.
 # 2013-10-14 Allow x64-on-x64 compilation to fall back to x86_amd (VCExpress)
@@ -56,8 +57,8 @@ import os
 import string
 import subprocess
 import sys
-import win32api
-import win32con
+
+import pyDcon
 
 tmpfile = 'tmpcomp' + os.environ['USERDOMAIN'] + '.bat'
 
@@ -66,167 +67,8 @@ useStatic = True
 useUnicode = True
 
 
-def GetRegString(hkey, path, value):
-	key = None
-	try:
-		key = win32api.RegOpenKeyEx(hkey, path, 0, win32con.KEY_READ)
-	except Exception as msg:
-		return ""
-	try:
-		return win32api.RegQueryValueEx(key, value)[0]
-	except Exception as msg:
-		return ""
-
-
-# Return SDK path (with ending slash)
-def GetWindowsSdkDir():
-	WindowsSdkDir = GetRegString(win32con.HKEY_LOCALMACHINE, r'SOFTWARE\Microsoft\Microsoft SDKs\Windows', 'CurrentInstallFolder')
-	if 0 == len(WindowsSdkDir):
-		WindowsSdkDir = GetRegString(win32con.HKEY_CURRENT_USER, r'SOFTWARE\Microsoft\Microsoft SDKs\Windows', 'CurrentInstallFolder')
-	return WindowsSdkDir
-
-
-# 7.1, 8.0, 9.0, 10.0, 11.0, 12.0, 14.0, 15.0 (as observed on my machine)
-# Yes, VisualStudio2017 == reg("15.0") == _msc_ver191x
-# 16.0 (VS2019RC) does not install a key - hard code it
-def GetVSDir(version):
-	vsdir = GetRegString(win32con.HKEY_LOCAL_MACHINE, r'SOFTWARE\Microsoft\VisualStudio\SxS\VS7', version)
-	if 0 == len(vsdir):
-		vsdir = GetRegString(win32con.HKEY_CURRENT_USER, r'SOFTWARE\Microsoft\VisualStudio\SxS\VS7', version)
-	if 0 == len(vsdir):
-		vsdir = GetRegString(win32con.HKEY_LOCAL_MACHINE, r'SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7', version)
-	if 0 == len(vsdir):
-		vsdir = GetRegString(win32con.HKEY_CURRENT_USER, r'SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7', version)
-	if 0 == len(vsdir) and version == '16.0':
-		vsdir = r'C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional' + '\\'
-		if not os.access(vsdir, os.F_OK):
-			vsdir = r'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community' + '\\'
-			if not os.access(vsdir, os.F_OK):
-				vsdir = ''
-	return vsdir
-
-
-# Return vcvarsall target
-def GetTarget(vcBase, bIs64Bit, bIsARM):
-	# 64bit on 64bit
-	b64On64 = False
-	if 'PROCESSOR_ARCHITECTURE' in os.environ and os.environ['PROCESSOR_ARCHITECTURE'] == 'AMD64':
-		# Note: We used to check for the existence of <vcBase>\VC\bin\amd64.
-		# VS2017 moved that directory. Just assume that if we're compiling
-		# for 64bit on 64bit that the user installed that. With current VS,
-		# that's just done - not like older versions where it was a choice.
-		b64On64 = True
-
-	target = ''
-
-	if bIs64Bit and bIsARM:
-		if b64On64:
-			target = 'amd64_arm64'
-		else:
-			target = 'x86_arm64'
-
-	elif bIs64Bit and not bIsARM:
-		if b64On64:
-			target = 'amd64'
-		else:
-			target = 'x86_amd64'
-
-	elif not bIs64Bit and bIsARM:
-		if b64On64:
-			target = 'amd64_arm'
-		else:
-			target = 'x86_arm'
-
-	elif not bIs64Bit and not bIsARM:
-		if b64On64:
-			target = 'amd64_x86'
-		else:
-			target = 'x86'
-
-	return target
-
-
-def GetCompilerPaths(c, verbose = True):
-	baseDir = ''
-	vcvarsall = ''
-	target = ''
-	extraargs = ''
-	platformDir = ''
-	platform = ''
-
-	if c == 'vc141':
-		#vcvarsall [arch]
-		#vcvarsall [arch] [version]
-		#vcvarsall [arch] [platform_type] [version]
-		# [arch]: x86 | amd64 | x86_amd64 | x86_arm | x86_arm64 | amd64_x86 | amd64_arm | amd64_arm64
-		# [platform_type]: {empty} | store | uwp
-		# [version] : full Windows 10 SDK number (e.g. 10.0.10240.0) or "8.1" to use the Windows 8.1 SDK.
-		baseDir = GetVSDir("15.0")
-		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
-		target = GetTarget(baseDir, False, False)
-		# Can target specific SDKs
-		#extraargs = ' 10.0.14393.0'
-		platformDir = 'vc141'
-		platform = 'x86'
-
-	elif c == 'vc141x64':
-		baseDir = GetVSDir("15.0")
-		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
-		target = GetTarget(baseDir, True, False)
-		platformDir = 'vc141'
-		platform = 'x64'
-
-	elif c == 'vc141arm64':
-		baseDir = GetVSDir("15.0")
-		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
-		target = GetTarget(baseDir, True, True)
-		platformDir = 'vc141'
-		platform = 'ARM64'
-
-	elif c == 'vc142':
-		baseDir = GetVSDir("16.0")
-		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
-		target = GetTarget(baseDir, False, False)
-		platformDir = 'vc142'
-		platform = 'x86'
-
-	elif c == 'vc142x64':
-		baseDir = GetVSDir("16.0")
-		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
-		target = GetTarget(baseDir, True, False)
-		platformDir = 'vc142'
-		platform = 'x64'
-
-	elif c == 'vc142arm64':
-		baseDir = GetVSDir("16.0")
-		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
-		target = GetTarget(baseDir, True, True)
-		platformDir = 'vc142'
-		platform = 'ARM64'
-
-	else:
-		if verbose:
-			print('ERROR: Unknown target: ' + c)
-		return ('', '', '', '')
-
-	if len(baseDir) == 0:
-		if verbose:
-			print('ERROR: Unknown target: ' + c)
-		return ('', '', '', '')
-	if not os.access(baseDir, os.F_OK):
-		if verbose:
-			print('ERROR: "' + baseDir + '" does not exist')
-		return ('', '', '', '')
-	if not os.access(vcvarsall, os.F_OK):
-		if verbose:
-			print('ERROR: "' + vcvarsall + '" does not exist')
-		return ('', '', '', '')
-
-	return (baseDir, '"' + vcvarsall + '" ' + target + extraargs, platformDir, platform)
-
-
 def AddCompiler(compilers, c):
-	vcBaseDir, vcvarsall, platformDir, platform = GetCompilerPaths(c)
+	vcBaseDir, vcvarsall, platformDir, platform = pyDcon.VSPaths.GetCompilerPaths(c)
 
 	if len(vcBaseDir) == 0:
 		return False
@@ -321,7 +163,7 @@ def main():
 		os.chdir(os.environ['WXWIN'] + r'\build\msw')
 
 	for compiler in compilers:
-		vcBaseDir, vcvarsall, platformDir, platform = GetCompilerPaths(compiler)
+		vcBaseDir, vcvarsall, platformDir, platform = pyDcon.VSPaths.GetCompilerPaths(compiler)
 
 		newenv = os.environ.copy()
 
