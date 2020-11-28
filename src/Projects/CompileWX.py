@@ -39,7 +39,7 @@
 #            (2.8 is rarely rebuilt, default to the active build)
 # 2009-09-26 Tweak compile options
 # 2009-09-12 Fix dll creation
-"""CompileWX.py -w wxwin [-e] [-a] [-p] [-d] [-m] [-s name]* [-r config] compiler*
+"""CompileWX.py -w wxwin [-e] [-a] [-d] [-m] [-s name]* [-r config] compiler*
 	-w wxwin: Root of wx tree, normally %WXWIN%
 	-e:       Just show the environment, don't do it
 	-a:       Compile all (vc142, vc142x64)
