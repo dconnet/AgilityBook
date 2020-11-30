@@ -1389,7 +1389,7 @@
 					"-lwxjpeg-3.1",
 					"-lwxpng-3.1",
 					"-lwxzlib-3.1",
-					"-lcurl",
+					"-l:libcurl.a",
 					"-lpthread",
 				);
 				SDKROOT = macosx;
@@ -1484,7 +1484,7 @@
 					"-lwxjpeg-3.1",
 					"-lwxpng-3.1",
 					"-lwxzlib-3.1",
-					"-lcurl",
+					"-l:libcurl.a",
 					"-lpthread",
 				);
 				SDKROOT = macosx;
