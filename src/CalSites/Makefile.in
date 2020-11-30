@@ -46,7 +46,7 @@ PROGRAMS = @PACKAGE_CAL_SHORTNAME@
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-@PACKAGE_CAL_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/Libraries/LibARBWin -larbwin -L$(TOPBUILDDIR)/Libraries/ARB -larb -L$(TOPBUILDDIR)/Libraries/ARBCommon -larbcommon -L$(TOPBUILDDIR)/3rdParty/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/3rdParty/LibArchive -larchive -L$(TOPBUILDDIR)/3rdParty/LibFmt -lfmt -l:libcurl.a
+@PACKAGE_CAL_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/Libraries/LibARBWin -larbwin -L$(TOPBUILDDIR)/Libraries/ARB -larb -L$(TOPBUILDDIR)/Libraries/ARBCommon -larbcommon -L$(TOPBUILDDIR)/3rdParty/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/3rdParty/LibArchive -larchive -L$(TOPBUILDDIR)/3rdParty/LibFmt -lfmt -lcurl
 
 ##########
 # Precompiled headers
