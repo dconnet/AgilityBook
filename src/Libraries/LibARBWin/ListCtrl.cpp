@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-12-05 In SetColumnSort, always set the icon.
  * 2020-01-27 Add option for row coloring.
  * 2019-05-17 Enable alternate row coloring.
  * 2018-12-16 Convert to fmt.
@@ -196,17 +197,17 @@ void CReportListCtrl::SetColumnSort(long column, int iconDirection)
 	wxListItem item;
 	item.SetMask(wxLIST_MASK_TEXT | wxLIST_MASK_FORMAT | wxLIST_MASK_IMAGE);
 	GetColumn(column, item);
-	if (iconDirection > 0 && item.GetImage() != m_imgSortUp)
+	if (iconDirection > 0)
 	{
 		item.SetImage(m_imgSortUp);
 		bSet = true;
 	}
-	else if (iconDirection < 0 && item.GetImage() != m_imgSortDn)
+	else if (iconDirection < 0)
 	{
 		item.SetImage(m_imgSortDn);
 		bSet = true;
 	}
-	else if (iconDirection == 0 && item.GetImage() >= 0)
+	else if (iconDirection == 0)
 	{
 		item.SetImage(-1);
 		bSet = true;
