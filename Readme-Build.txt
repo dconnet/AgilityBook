@@ -44,17 +44,7 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
   - Set wxUSE_MEDIACTRL to 0 (currently 1)
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
-  - Set wxUSE_INKEDIT to 1 (currently 0)
   - Mac fix: https://github.com/wxWidgets/wxWidgets/commit/bb406996
-
-> src/msw/textctrl.cpp
->diff textctrl.old textctrl.cpp
-362a363,367
-> #if wxUSE_INKEDIT && wxUSE_RICHEDIT
->     if (m_isInkEdit)
->         DissociateHandle();
-> #endif
->
 
 > src\msw\toolbar.cpp (note: this fix also applies to 3.1.2)
 > diff toolbar.old toolbar.cpp
@@ -82,7 +72,6 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
   - Set wxUSE_MEDIACTRL to 0 (currently 1)
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
-  - Set wxUSE_INKEDIT to 1 (currently 0)
 
 -- For VS2019 support
 > include\msvc\wx
@@ -94,15 +83,6 @@ diff setup_orig.h setup.h
 69a70,71
 >     #elif _MSC_VER >= 1920 && _MSC_VER < 2000
 >         #define wxCOMPILER_PREFIX vc142
-
-> src/msw/textctrl.cpp
-diff textctrl.old textctrl.cpp
-339a340,344
-> #if wxUSE_INKEDIT && wxUSE_RICHEDIT
->     if (m_isInkEdit)
->         DissociateHandle();
-> #endif
->
 
 To build for VC, see ./build/CompileWX.py
 To build for Mac/Unix, see ./build/setupwx.sh
