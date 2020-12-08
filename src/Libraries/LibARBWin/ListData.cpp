@@ -43,6 +43,12 @@ void CListData::OnNeedListItem(long iCol, wxListItem& info) const
 }
 
 
+int CListData::OnCompare(CListDataPtr item, long iCol) const
+{
+	return 0;
+}
+
+
 CTreeData::CTreeData()
 {
 }

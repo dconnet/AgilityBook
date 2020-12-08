@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-12-07 Add a generic way to handle sorting/moving columns.
  * 2020-01-27 Add option for row coloring.
  * 2019-09-15 Quiet a wx debug message (see comment below)
  * 2018-10-11 Moved to Win LibARBWin
@@ -51,6 +52,7 @@ struct SortInfo
 };
 typedef int(
 	wxCALLBACK* CListCtrlCompare)(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo);
+
 
 // wxListView adds some convenient functions to wxListCtrl
 class ARBWIN_API CReportListCtrl : public CListCtrl
@@ -221,6 +223,73 @@ private:
 	}
 };
 
+
+// Helper to do sorting
+class ARBWIN_API CReportListHeader
+{
+	DECLARE_NO_COPY_IMPLEMENTED(CReportListHeader)
+public:
+	struct ColumnInfo
+	{
+		long index; // For debugging to ensure integrity
+		int fmt;
+		wchar_t const* name;
+	};
+
+	CReportListHeader(int idFirst, std::vector<ColumnInfo> const& columns);
+	virtual ~CReportListHeader();
+
+	void Initialize(wxWindow* parent, CReportListCtrl* ctrlList);
+	void CreateMenu(wxMenu& menu);
+	void Update(); // Update stored settings
+	void CreateColumns();
+	void SizeColumns();
+	void Sort();        // Only sorts if we're sorting
+	void Sort(int col); // Actual column index from listctrl, turns on sorting
+
+	bool IsSorted() const
+	{
+		return m_bIsSorted;
+	}
+	bool SetSorted(bool bSorted);
+
+	int GetSortColumn() const
+	{
+		return m_iSortCol;
+	}
+
+protected:
+	// Override this to change default columns visibility (default: all visisble)
+	virtual void GetDefaultColumns(std::vector<bool>& columns);
+	// Load/Save column order (m_order)
+	virtual void OnLoadColumnOrder();
+	virtual void OnSaveColumnOrder();
+	// Load/Save status for sorting (m_bIsSorted)
+	virtual void OnLoadSorted();
+	virtual void OnSaveSorted();
+	// Load/Save sort column (m_iSortCol)
+	virtual void OnLoadSortedColumn();
+	virtual void OnSaveSortedColumn();
+
+	void SetSortColumn(int iCol);
+
+	void OnCloseParent(wxCloseEvent& evt);
+	void OnBeginColDrag(wxListEvent& evt);
+	void OnUpdateColumn(wxUpdateUIEvent& evt);
+	void OnColumn(wxCommandEvent& evt);
+	void OnUpdateRestore(wxUpdateUIEvent& evt);
+	void OnRestore(wxCommandEvent& evt);
+
+	int m_idFirst;
+	std::vector<ColumnInfo> m_columnInfo;
+	CReportListCtrl* m_ctrlList;
+	wxArrayInt m_order;
+	std::vector<bool> m_columns;
+	long m_iSortCol;
+	bool m_bIsSorted;
+};
+
+/////////////////////////////////////////////////////////////////////////////
 
 // Right now, this is specifically used in DlgCalendarQueryDetail. We could
 // make it more generic (sort headers, etc), but that can wait until needed.

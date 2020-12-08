@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2020-12-07 Add OnCompare for use with CReportListHeader.
  * 2018-10-11 Moved to Win LibARBWin
  * 2009-01-01 Ported to wxWidgets.
  * 2008-11-22 Moved GetDispInfo accessors into base class.
@@ -26,6 +27,8 @@
 #include <wx/treectrl.h>
 
 
+class CListData;
+typedef std::shared_ptr<CListData> CListDataPtr;
 class ARBWIN_API CListData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CListData)
@@ -36,8 +39,10 @@ public:
 	virtual std::wstring OnNeedText(long iCol) const = 0;
 	/// By default, just uses OnNeedText to fill in text.
 	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
+	/// Calling when clicking on sort header.
+	/// Ascending/descending will be handled by the sort routine.
+	virtual int OnCompare(CListDataPtr item, long iCol) const;
 };
-typedef std::shared_ptr<CListData> CListDataPtr;
 
 
 /// Provide a way to refresh items easily by using a common tree data class
