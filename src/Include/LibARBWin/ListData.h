@@ -41,7 +41,7 @@ public:
 	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
 	/// Calling when clicking on sort header.
 	/// Ascending/descending will be handled by the sort routine.
-	virtual int OnCompare(CListDataPtr item, long iCol) const;
+	virtual int OnCompare(CListDataPtr const& item, long iCol) const;
 };
 
 

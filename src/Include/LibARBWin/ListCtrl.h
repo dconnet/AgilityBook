@@ -236,12 +236,12 @@ public:
 		wchar_t const* name;
 	};
 
-	CReportListHeader(int idFirst, std::vector<ColumnInfo> const& columns);
+	CReportListHeader();
 	virtual ~CReportListHeader();
 
-	void Initialize(wxWindow* parent, CReportListCtrl* ctrlList);
-	void CreateMenu(wxMenu& menu);
-	void Update(); // Update stored settings
+	// If idFirst is 0, do not show the context menu
+	void Initialize(wxWindow* parent, CReportListCtrl* ctrlList, std::vector<ColumnInfo> const& columns, unsigned int idFirst);
+	bool CreateMenu(wxMenu& menu);
 	void CreateColumns();
 	void SizeColumns();
 	void Sort();        // Only sorts if we're sorting
@@ -271,8 +271,6 @@ protected:
 	virtual void OnLoadSortedColumn();
 	virtual void OnSaveSortedColumn();
 
-	void SetSortColumn(int iCol);
-
 	void OnCloseParent(wxCloseEvent& evt);
 	void OnBeginColDrag(wxListEvent& evt);
 	void OnUpdateColumn(wxUpdateUIEvent& evt);
@@ -280,7 +278,7 @@ protected:
 	void OnUpdateRestore(wxUpdateUIEvent& evt);
 	void OnRestore(wxCommandEvent& evt);
 
-	int m_idFirst;
+	unsigned int m_idFirst;
 	std::vector<ColumnInfo> m_columnInfo;
 	CReportListCtrl* m_ctrlList;
 	wxArrayInt m_order;

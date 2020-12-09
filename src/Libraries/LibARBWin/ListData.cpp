@@ -43,7 +43,7 @@ void CListData::OnNeedListItem(long iCol, wxListItem& info) const
 }
 
 
-int CListData::OnCompare(CListDataPtr item, long iCol) const
+int CListData::OnCompare(CListDataPtr const& item, long iCol) const
 {
 	return 0;
 }

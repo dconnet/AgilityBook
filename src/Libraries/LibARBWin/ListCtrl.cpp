@@ -457,48 +457,30 @@ void CReportListCtrl::OnDeleteItem(wxListEvent& evt)
 
 /////////////////////////////////////////////////////////////////////////////
 
-struct ColSortInfo : public SortInfo
+int wxCALLBACK ReportListCompareItems(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo)
 {
-	CReportListHeader* pColInfo;
-
-	ColSortInfo(CReportListHeader* inColInfo)
-		: SortInfo(inColInfo->GetSortColumn())
-		, pColInfo(inColInfo)
-	{
-	}
-};
-
-int wxCALLBACK CompareItems(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo)
-{
-	ColSortInfo const* pInfo = dynamic_cast<ColSortInfo const*>(pSortInfo);
-	assert(pInfo);
-
 	if (!item1)
 		return -1;
 	else if (!item2)
 		return 1;
 
-	long iCol = std::abs(pInfo->nCol) - 1;
+	long iCol = std::abs(pSortInfo->nCol) - 1;
 	int rc = item1->OnCompare(item2, iCol);
 
-	if (0 > pInfo->nCol)
+	if (0 > pSortInfo->nCol)
 		rc *= -1;
 	return rc;
 }
 
 
-CReportListHeader::CReportListHeader(int idFirst, std::vector<ColumnInfo> const& columns)
-	: m_idFirst(idFirst)
+CReportListHeader::CReportListHeader()
+	: m_idFirst(0)
 	, m_columns()
 	, m_ctrlList(nullptr)
-	, m_columnInfo(columns)
+	, m_columnInfo()
 	, m_iSortCol(0)
 	, m_bIsSorted(false)
 {
-#ifdef _DEBUG
-	for (auto i = 0; i < m_columnInfo.size(); ++i)
-		assert(i == m_columnInfo[i].index);
-#endif
 }
 
 
@@ -507,26 +489,45 @@ CReportListHeader::~CReportListHeader()
 }
 
 
-void CReportListHeader::Initialize(wxWindow* parent, CReportListCtrl* ctrlList)
+void CReportListHeader::Initialize(
+	wxWindow* parent,
+	CReportListCtrl* ctrlList,
+	std::vector<ColumnInfo> const& columns,
+	unsigned int idFirst)
 {
 	assert(parent);
 	assert(ctrlList);
 	m_ctrlList = ctrlList;
 
+	m_columnInfo = columns;
+#ifdef _DEBUG
+	for (long i = 0; i < static_cast<long>(m_columnInfo.size()); ++i)
+		assert(i == m_columnInfo[i].index);
+#endif
+	m_idFirst = idFirst;
+
 	GetDefaultColumns(m_columns);
 
-	parent->Bind(
-		wxEVT_UPDATE_UI,
-		&CReportListHeader::OnUpdateColumn,
-		this,
-		m_idFirst,
-		m_idFirst + m_columnInfo.size() - 1);
-	parent->Bind(wxEVT_MENU, &CReportListHeader::OnColumn, this, m_idFirst, m_idFirst + m_columnInfo.size() - 1);
-	parent->Bind(wxEVT_UPDATE_UI, &CReportListHeader::OnUpdateRestore, this, m_idFirst + m_columnInfo.size(), wxID_ANY);
-	parent->Bind(wxEVT_MENU, &CReportListHeader::OnRestore, this, m_idFirst + m_columnInfo.size(), wxID_ANY);
+	if (0 < m_idFirst)
+	{
+		parent->Bind(
+			wxEVT_UPDATE_UI,
+			&CReportListHeader::OnUpdateColumn,
+			this,
+			m_idFirst,
+			m_idFirst + m_columnInfo.size() - 1);
+		parent->Bind(wxEVT_MENU, &CReportListHeader::OnColumn, this, m_idFirst, m_idFirst + m_columnInfo.size() - 1);
+		parent->Bind(
+			wxEVT_UPDATE_UI,
+			&CReportListHeader::OnUpdateRestore,
+			this,
+			m_idFirst + m_columnInfo.size(),
+			wxID_ANY);
+		parent->Bind(wxEVT_MENU, &CReportListHeader::OnRestore, this, m_idFirst + m_columnInfo.size(), wxID_ANY);
+	}
 
 	m_order.clear();
-	for (long i = 0; i < m_columnInfo.size(); ++i)
+	for (long i = 0; i < static_cast<long>(m_columnInfo.size()); ++i)
 		m_order.push_back(i);
 	m_bIsSorted = false;
 	m_iSortCol = 0;
@@ -540,28 +541,21 @@ void CReportListHeader::Initialize(wxWindow* parent, CReportListCtrl* ctrlList)
 }
 
 
-void CReportListHeader::CreateMenu(wxMenu& menu)
+bool CReportListHeader::CreateMenu(wxMenu& menu)
 {
+	if (0 == m_idFirst)
+		return false;
+
 	assert(m_ctrlList);
 	m_order = m_ctrlList->GetColumnsOrder();
 	for (auto col : m_order)
 	{
-		assert(col >= 0 && col < m_columnInfo.size());
+		assert(col >= 0 && col < static_cast<int>(m_columnInfo.size()));
 		menu.AppendCheckItem(m_idFirst + col, StringUtil::GetTranslation(m_columnInfo[col].name));
 	}
 	menu.AppendSeparator();
 	menu.Append(m_idFirst + m_columnInfo.size(), _("Restore"));
-}
-
-
-void CReportListHeader::Update()
-{
-	assert(m_ctrlList);
-	m_order = m_ctrlList->GetColumnsOrder();
-
-	OnSaveColumnOrder();
-	OnSaveSorted();
-	OnSaveSortedColumn();
+	return true;
 }
 
 
@@ -576,7 +570,7 @@ void CReportListHeader::CreateColumns()
 	for (int col = m_ctrlList->GetColumnCount() - 1; 0 <= col; --col)
 		m_ctrlList->DeleteColumn(col);
 
-	for (long iCol = 0; iCol < m_columnInfo.size(); ++iCol)
+	for (long iCol = 0; iCol < static_cast<long>(m_columnInfo.size()); ++iCol)
 	{
 		m_ctrlList->InsertColumn(iCol, wxGetTranslation(m_columnInfo[iCol].name), m_columnInfo[iCol].fmt);
 		if (!m_columns[iCol])
@@ -605,8 +599,8 @@ void CReportListHeader::Sort()
 	assert(m_ctrlList);
 	if (m_bIsSorted)
 	{
-		ColSortInfo sortInfo(this);
-		m_ctrlList->SortItems(CompareItems, &sortInfo);
+		SortInfo sortInfo(GetSortColumn());
+		m_ctrlList->SortItems(ReportListCompareItems, &sortInfo);
 		m_ctrlList->SetColumnSort(std::abs(GetSortColumn()) - 1, GetSortColumn());
 	}
 }
@@ -621,7 +615,14 @@ void CReportListHeader::Sort(int col)
 	int nBackwards = 1;
 	if (GetSortColumn() == col + 1)
 		nBackwards = -1;
-	SetSortColumn((col + 1) * nBackwards);
+
+	m_iSortCol = (col + 1) * nBackwards;
+
+	if (0 != m_iSortCol)
+	{
+		SetSorted(true);
+		Sort();
+	}
 
 	long sel = m_ctrlList->GetSelection(true);
 	if (wxNOT_FOUND != sel)
@@ -683,30 +684,15 @@ void CReportListHeader::OnSaveSortedColumn()
 }
 
 
-void CReportListHeader::SetSortColumn(int iCol)
-{
-	assert(m_ctrlList);
-	m_iSortCol = iCol;
-
-	if (0 == iCol)
-		return;
-
-	SetSorted(true);
-	long neg = 1;
-	long col = iCol;
-	if (0 > iCol)
-	{
-		neg = -1;
-		col = iCol * -1;
-	}
-
-	Sort();
-}
-
-
 void CReportListHeader::OnCloseParent(wxCloseEvent& evt)
 {
-	Update();
+	assert(m_ctrlList);
+	m_order = m_ctrlList->GetColumnsOrder();
+
+	OnSaveColumnOrder();
+	OnSaveSorted();
+	OnSaveSortedColumn();
+
 	evt.Skip();
 }
 
@@ -749,7 +735,7 @@ void CReportListHeader::OnUpdateRestore(wxUpdateUIEvent& evt)
 	{
 		m_order = m_ctrlList->GetColumnsOrder();
 		wxArrayInt order;
-		for (long i = 0; i < m_columnInfo.size(); ++i)
+		for (long i = 0; i < static_cast<long>(m_columnInfo.size()); ++i)
 			order.push_back(i);
 		isSame = order == m_order;
 	}
@@ -761,7 +747,7 @@ void CReportListHeader::OnRestore(wxCommandEvent& evt)
 {
 	GetDefaultColumns(m_columns);
 	wxArrayInt order;
-	for (long i = 0; i < m_columnInfo.size(); ++i)
+	for (long i = 0; i < static_cast<long>(m_columnInfo.size()); ++i)
 		order.push_back(i);
 	m_ctrlList->SetColumnsOrder(order);
 	SizeColumns();
