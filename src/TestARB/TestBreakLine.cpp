@@ -71,14 +71,14 @@ TEST_CASE("BreakLine")
 	SECTION("BreakLine")
 	{
 		std::vector<std::wstring> fields;
-		REQUIRE(4 == BreakLine(';', record4, fields));
-		REQUIRE(4 == fields.size());
-		REQUIRE(4 == BreakLine(';', record4, fields, true));
-		REQUIRE(3 == fields.size());
-		REQUIRE(7 == BreakLine(';', record7, fields));
-		REQUIRE(7 == fields.size());
-		REQUIRE(7 == BreakLine(';', record7, fields, true));
-		REQUIRE(6 == fields.size());
+		REQUIRE(4u == BreakLine(';', record4, fields));
+		REQUIRE(4u == fields.size());
+		REQUIRE(4u == BreakLine(';', record4, fields, true));
+		REQUIRE(3u == fields.size());
+		REQUIRE(7u == BreakLine(';', record7, fields));
+		REQUIRE(7u == fields.size());
+		REQUIRE(7u == BreakLine(';', record7, fields, true));
+		REQUIRE(6u == fields.size());
 	}
 
 
@@ -88,8 +88,8 @@ TEST_CASE("BreakLine")
 		REQUIRE(ReadStatus::Error == ReadCSV(';', L"f\";", fields));
 		REQUIRE(ReadStatus::Error == ReadCSV(';', record7, fields));
 		REQUIRE(ReadStatus::Ok == ReadCSV(';', record5, fields));
-		REQUIRE(5 == fields.size());
-		if (5 == fields.size())
+		REQUIRE(5u == fields.size());
+		if (5u == fields.size())
 		{
 			std::vector<std::wstring> fields2;
 			GetFields(fields2);
@@ -103,8 +103,8 @@ TEST_CASE("BreakLine")
 		std::vector<std::wstring> fields;
 		REQUIRE(ReadStatus::NeedMore == ReadCSV(';', recordMore1a, fields));
 		REQUIRE(ReadStatus::Ok == ReadCSV(';', recordMore2a, fields, true));
-		REQUIRE(5 == fields.size());
-		if (5 == fields.size())
+		REQUIRE(5u == fields.size());
+		if (5u == fields.size())
 		{
 			std::vector<std::wstring> fields2;
 			GetFields(fields2);
@@ -118,8 +118,8 @@ TEST_CASE("BreakLine")
 		std::vector<std::wstring> fields;
 		REQUIRE(ReadStatus::NeedMore == ReadCSV(';', recordMore1b, fields));
 		REQUIRE(ReadStatus::Ok == ReadCSV(';', recordMore2b, fields, true));
-		REQUIRE(4 == fields.size());
-		if (4 == fields.size())
+		REQUIRE(4u == fields.size());
+		if (4u == fields.size())
 		{
 			REQUIRE(fields[0] == L"2010-10-30");
 			REQUIRE(fields[1] == L"Name");
@@ -135,8 +135,8 @@ TEST_CASE("BreakLine")
 		REQUIRE(ReadStatus::NeedMore == ReadCSV(';', recordMore1c, fields));
 		REQUIRE(ReadStatus::NeedMore == ReadCSV(';', recordMore2c, fields, true));
 		REQUIRE(ReadStatus::Ok == ReadCSV(';', recordMore3c, fields, true));
-		REQUIRE(3 == fields.size());
-		if (3 == fields.size())
+		REQUIRE(3u == fields.size());
+		if (3u == fields.size())
 		{
 			REQUIRE(fields[0] == L"field1");
 			REQUIRE(fields[1] == L"Line1\nLine2\nLine3");
@@ -152,8 +152,8 @@ TEST_CASE("BreakLine")
 		REQUIRE(ReadStatus::NeedMore == ReadCSV(';', recordMore2c, fields, true));
 		REQUIRE(ReadStatus::NeedMore == ReadCSV(';', recordMore2cb, fields, true));
 		REQUIRE(ReadStatus::Ok == ReadCSV(';', recordMore3c, fields, true));
-		REQUIRE(3 == fields.size());
-		if (3 == fields.size())
+		REQUIRE(3u == fields.size());
+		if (3u == fields.size())
 		{
 			REQUIRE(fields[0] == L"field1");
 			REQUIRE(fields[1] == L"Line1\nLine2\n\nLine3");

@@ -67,6 +67,8 @@ enum class ARBSpreadSheetType
 class ISpreadSheetExporter
 {
 public:
+	virtual ~ISpreadSheetExporter() = default;
+
 	virtual wchar_t GetSumIfSeparator() const = 0;
 
 	virtual bool AllowAccess(bool bAllow) = 0;
@@ -93,6 +95,7 @@ public:
 class ISpreadSheetImporter
 {
 public:
+	virtual ~ISpreadSheetImporter() = default;
 	virtual bool OpenFile(std::wstring const& inFilename) = 0;
 	virtual bool GetData(std::vector<std::vector<std::wstring>>& outData, IDlgProgress* ioProgress = nullptr) = 0;
 };
@@ -106,6 +109,8 @@ public:
 	 * Create a new spreadsheet manager, must 'delete' the returned pointer.
 	 */
 	static ISpreadSheetPtr Create(ARBSpreadSheetType inType);
+
+	virtual ~ISpreadSheet() = default;
 
 	/// Get the maximum number of rows Excel can handle.
 	static long GetMaxRows();

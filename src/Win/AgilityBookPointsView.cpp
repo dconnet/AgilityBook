@@ -125,7 +125,7 @@ wxBEGIN_EVENT_TABLE(CAgilityBookPointsView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_VIEW_HIDDEN, CAgilityBookPointsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_VIEW_LIFETIME_EVENTS, CAgilityBookPointsView::OnViewUpdateCmd)
 	EVT_MENU(ID_VIEW_LIFETIME_EVENTS, CAgilityBookPointsView::OnViewCmd)
-	EVT_MENU(wxID_PRINT, CAgilityBookPointsView::OnPrint)
+	EVT_MENU(wxID_PRINT, CAgilityBookPointsView::OnPrintView)
 	EVT_MENU(wxID_PREVIEW, CAgilityBookPointsView::OnPreview)
 wxEND_EVENT_TABLE()
 
@@ -339,7 +339,7 @@ void CAgilityBookPointsView::OnViewCmd(wxCommandEvent& evt)
 }
 
 
-void CAgilityBookPointsView::OnPrint(wxCommandEvent& evt)
+void CAgilityBookPointsView::OnPrintView(wxCommandEvent& evt)
 {
 	wxString text(m_Items->GetHtml(false, true));
 	wxGetApp().GetHtmlPrinter()->PrintText(text);

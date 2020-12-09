@@ -183,7 +183,7 @@ TEST_CASE("DogRun")
 			ARBConfigVenuePtr pVenue;
 			REQUIRE(config.GetVenues().FindVenue(venue, &pVenue));
 			REQUIRE(pVenue);
-			REQUIRE(1 == pVenue->GetLifetimeNames().size());
+			REQUIRE(1u == pVenue->GetLifetimeNames().size());
 			ARBConfigLifetimeNamePtr pLifetimeName = pVenue->GetLifetimeNames()[0];
 
 			ARBDogClubList clubs;

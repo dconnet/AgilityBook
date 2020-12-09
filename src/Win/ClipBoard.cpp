@@ -160,9 +160,9 @@ bool CClipboardDataReader::GetData(std::wstring& outData)
 ////////////////////////////////////////////////////////////////////////////
 
 CClipboardDataTable::CClipboardDataTable(std::wstring& ioText, std::wstring& ioHtml)
-	: m_ioText(ioText)
+	: m_Closed(false)
+	, m_ioText(ioText)
 	, m_ioHtml(ioHtml)
-	, m_Closed(false)
 {
 	Reset();
 }

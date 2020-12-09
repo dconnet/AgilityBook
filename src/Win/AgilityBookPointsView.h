@@ -94,6 +94,6 @@ private:
 	DECLARE_EVENT_TABLE()
 	void OnViewUpdateCmd(wxUpdateUIEvent& evt);
 	void OnViewCmd(wxCommandEvent& evt);
-	void OnPrint(wxCommandEvent& evt);
+	void OnPrintView(wxCommandEvent& evt);
 	void OnPreview(wxCommandEvent& evt);
 };

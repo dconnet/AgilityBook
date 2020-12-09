@@ -41,6 +41,7 @@
 class IARBConfigHandler
 {
 public:
+	virtual ~IARBConfigHandler() = default;
 	/// Load the default configuration
 	virtual ElementNodePtr LoadDefaultConfig() const = 0;
 	/// Load the DTD

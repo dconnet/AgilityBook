@@ -35,6 +35,8 @@ class IProgressMeter; // Include/IProgressMeter.h
 class ICalendarSite
 {
 public:
+	virtual ~ICalendarSite() = default;
+
 	/**
 	 * Get the identifier of the plugin.
 	 * Previously, this was the DLL file name. Now, just ensure a unique name

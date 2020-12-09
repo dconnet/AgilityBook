@@ -263,6 +263,7 @@ size_t ARBDebug::DumpRegistryGroup(
 		{
 			switch (wxConfig::Get()->GetEntryType(str))
 			{
+			case wxConfigBase::Type_Unknown:
 			default:
 				if (outData)
 				{

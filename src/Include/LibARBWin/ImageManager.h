@@ -33,6 +33,8 @@
 class IImageManagerCallback
 {
 public:
+	virtual ~IImageManagerCallback() = default;
+
 	// Return code indicates image has handled.
 	virtual bool OnCreateBitmap(const wxArtID& id, const wxArtClient& client, const wxSize& size, wxBitmap& outBmp) = 0;
 

@@ -27,6 +27,7 @@ class wxLocale;
 class ILanguageCallback
 {
 public:
+	virtual ~ILanguageCallback() = default;
 	virtual wxLanguage OnGetLanguage() const = 0;
 	virtual wxString OnGetCatalogName() const = 0;
 	virtual wxString OnGetLangConfigName() const = 0;
@@ -73,11 +74,11 @@ public:
 	bool SetLang(wxLanguage langId);
 
 private:
-	bool m_bEmbedded; // On Win32, mo files are embedded in rc file
 	ILanguageCallback* m_pCallback;
 	wxLanguage m_CurLang;
 	wxString m_dirLangDefault;
 	wxString m_dirLang;           /// Where the en/fr/etc directories are located
 	std::wstring m_dirLoadedLang; /// 'en'/'fr' etc
 	std::unique_ptr<wxLocale> m_locale;
+	bool m_bEmbedded; // On Win32, mo files are embedded in rc file
 };

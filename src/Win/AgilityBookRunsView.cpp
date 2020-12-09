@@ -1244,7 +1244,7 @@ wxBEGIN_EVENT_TABLE(CAgilityBookRunsView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_EXPAND_ALL, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_COLLAPSE_ALL, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(ID_COLLAPSE_ALL, CAgilityBookRunsView::OnViewCmd)
-	EVT_MENU(wxID_PRINT, CAgilityBookRunsView::OnPrint)
+	EVT_MENU(wxID_PRINT, CAgilityBookRunsView::OnPrintView)
 	EVT_MENU(wxID_PREVIEW, CAgilityBookRunsView::OnPreview)
 wxEND_EVENT_TABLE()
 
@@ -2135,7 +2135,7 @@ void CAgilityBookRunsView::OnViewCmd(wxCommandEvent& evt)
 }
 
 
-void CAgilityBookRunsView::OnPrint(wxCommandEvent& evt)
+void CAgilityBookRunsView::OnPrintView(wxCommandEvent& evt)
 {
 	wxGetApp().GetHtmlPrinter()->PrintText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
 }

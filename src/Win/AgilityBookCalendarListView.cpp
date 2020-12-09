@@ -504,7 +504,7 @@ wxBEGIN_EVENT_TABLE(CAgilityBookCalendarListView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_AGILITY_CREATEENTRY_CALENDAR, CAgilityBookCalendarListView::OnViewCmd)
 	EVT_UPDATE_UI(ID_VIEW_CUSTOMIZE, CAgilityBookCalendarListView::OnViewUpdateCmd)
 	EVT_MENU(ID_VIEW_CUSTOMIZE, CAgilityBookCalendarListView::OnViewCmd)
-	EVT_MENU(wxID_PRINT, CAgilityBookCalendarListView::OnPrint)
+	EVT_MENU(wxID_PRINT, CAgilityBookCalendarListView::OnPrintView)
 	EVT_MENU(wxID_PREVIEW, CAgilityBookCalendarListView::OnPreview)
 wxEND_EVENT_TABLE()
 
@@ -1263,7 +1263,7 @@ void CAgilityBookCalendarListView::OnViewCmd(wxCommandEvent& evt)
 }
 
 
-void CAgilityBookCalendarListView::OnPrint(wxCommandEvent& evt)
+void CAgilityBookCalendarListView::OnPrintView(wxCommandEvent& evt)
 {
 	wxGetApp().GetHtmlPrinter()->PrintText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
 }

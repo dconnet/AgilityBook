@@ -475,9 +475,10 @@ int wxCALLBACK ReportListCompareItems(CListDataPtr const& item1, CListDataPtr co
 
 CReportListHeader::CReportListHeader()
 	: m_idFirst(0)
-	, m_columns()
-	, m_ctrlList(nullptr)
 	, m_columnInfo()
+	, m_ctrlList(nullptr)
+	, m_order()
+	, m_columns()
 	, m_iSortCol(0)
 	, m_bIsSorted(false)
 {

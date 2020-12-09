@@ -29,6 +29,8 @@ class IDlgProgress
 public:
 	ARBWIN_API static IDlgProgress* CreateProgress(short nBars = 1, wxWindow* parent = nullptr);
 
+	virtual ~IDlgProgress() = default;
+
 	// Setup dialog.
 	/// Set the caption of the dialog.
 	virtual void SetCaption(std::wstring const& inCaption) = 0;

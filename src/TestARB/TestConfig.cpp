@@ -251,7 +251,7 @@ TEST_CASE("Config")
 		{
 			CConfigHandler handler;
 			std::string dtd = ARBConfig::GetDTD(&handler);
-			REQUIRE(0 != dtd.length());
+			REQUIRE(0u != dtd.length());
 			std::string::size_type pos = dtd.find("\r\n");
 			// Expectations: dtd should be in OS-specific line ending (if SVN is set right)
 			REQUIRE(pos == std::string::npos);
@@ -267,7 +267,7 @@ TEST_CASE("Config")
 			CConfigHandler handler;
 			config.Default(&handler);
 			std::wstring nice = config.GetTitleNiceName(L"AKC", L"MX");
-			REQUIRE(0 != nice.length());
+			REQUIRE(0u != nice.length());
 		}
 	}
 
@@ -322,10 +322,10 @@ TEST_CASE("Config")
 			title->SetName(L"MX", 1, configTitle);
 			// [MX] desc
 			std::wstring name1 = config.GetTitleCompleteName(title);
-			REQUIRE(0 != name1.length());
+			REQUIRE(0u != name1.length());
 			// desc [MX]
 			std::wstring name2 = config.GetTitleCompleteName(title, false);
-			REQUIRE(0 != name2.length());
+			REQUIRE(0u != name2.length());
 			REQUIRE(name1 != name2);
 			std::wstring nice = config.GetTitleNiceName(L"AKC", L"MX");
 			nice += L" [MX]";

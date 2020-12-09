@@ -77,16 +77,16 @@ public:
 
 
 CLibArchiveImpl::CLibArchiveImpl(std::wstring const& zipFile, ArchiveLocation location)
-#if defined(__WXWINDOWS__) && !defined(USE_POCO)
-	: m_zipFile(StringUtil::stringWX(zipFile))
-#elif defined(USE_POCO) && defined(ARB_HAS_ISTREAM_WCHAR)
-	: m_zipFile(zipFile)
-#else
-	: m_zipFile(StringUtil::stringA(zipFile))
-#endif
-	, m_bResource(false)
+	: m_bResource(false)
 	, m_resSize(0)
 	, m_resData(nullptr)
+#if defined(__WXWINDOWS__) && !defined(USE_POCO)
+	, m_zipFile(StringUtil::stringWX(zipFile))
+#elif defined(USE_POCO) && defined(ARB_HAS_ISTREAM_WCHAR)
+	, m_zipFile(zipFile)
+#else
+	, m_zipFile(StringUtil::stringA(zipFile))
+#endif
 {
 	assert(!m_zipFile.empty());
 #if defined(WIN32)

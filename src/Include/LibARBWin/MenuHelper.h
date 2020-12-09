@@ -126,10 +126,10 @@ public:
 		ItemAccel(int _key, int _id, bool _bCtrl, bool _bAlt, bool _bShift, int _keyCode)
 			: key(_key)
 			, id(_id)
+			, keyCode(_keyCode)
 			, bCtrl(_bCtrl)
 			, bAlt(_bAlt)
 			, bShift(_bShift)
-			, keyCode(_keyCode)
 		{
 		}
 		ItemAccel& operator=(ItemAccel const& rhs) = default;

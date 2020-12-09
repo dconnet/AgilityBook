@@ -340,7 +340,7 @@ void CPointsDataMultiQs::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLink
 	fmt::format_to(
 		data,
 		L"{} {}",
-		ARBDouble::ToString(m_ExistingDblQs + m_MQs.size()),
+		ARBDouble::ToString(m_ExistingDblQs + static_cast<double>(m_MQs.size())),
 		Sanitize(m_MultiQ->GetShortName()));
 	if (!bNoInternalLinks)
 		fmt::format_to(data, L"</a>");

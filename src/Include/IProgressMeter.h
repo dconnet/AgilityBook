@@ -18,6 +18,8 @@
 class IProgressMeter
 {
 public:
+	virtual ~IProgressMeter() = default;
+
 	/**
 	 * Update a message.
 	 * (default is none)

@@ -72,9 +72,9 @@ TEST_CASE("String")
 				= 0xFEFB; // In courier new, Arabic Ligature Lam With Alef Isolated Form (see 'Character Map' program)
 			std::wstring s(1, w);
 			std::string s2 = StringUtil::stringA(s);
-			REQUIRE(s.length() == 1);
+			REQUIRE(s.length() == 1u);
 			// MBCS: 0, UTF8: 3
-			REQUIRE(s2.length() == 3);
+			REQUIRE(s2.length() == 3u);
 		}
 	}
 
@@ -87,9 +87,9 @@ TEST_CASE("String")
 			wchar_t w = 0x00f7; // Division sign
 			std::wstring s(1, w);
 			std::string s2 = StringUtil::stringA(s);
-			REQUIRE(s.length() == 1);
+			REQUIRE(s.length() == 1u);
 			// MBCS: 1, UTF8: 2
-			REQUIRE(s2.length() > 0);
+			REQUIRE(s2.length() > 0u);
 		}
 	}
 

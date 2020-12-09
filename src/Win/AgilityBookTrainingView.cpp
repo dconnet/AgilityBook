@@ -333,7 +333,7 @@ wxBEGIN_EVENT_TABLE(CAgilityBookTrainingView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_AGILITY_DELETE_TRAINING, CAgilityBookTrainingView::OnViewCmd)
 	EVT_UPDATE_UI(ID_VIEW_CUSTOMIZE, CAgilityBookTrainingView::OnViewUpdateCmd)
 	EVT_MENU(ID_VIEW_CUSTOMIZE, CAgilityBookTrainingView::OnViewCmd)
-	EVT_MENU(wxID_PRINT, CAgilityBookTrainingView::OnPrint)
+	EVT_MENU(wxID_PRINT, CAgilityBookTrainingView::OnPrintView)
 	EVT_MENU(wxID_PREVIEW, CAgilityBookTrainingView::OnPreview)
 wxEND_EVENT_TABLE()
 
@@ -899,7 +899,7 @@ void CAgilityBookTrainingView::OnViewCmd(wxCommandEvent& evt)
 }
 
 
-void CAgilityBookTrainingView::OnPrint(wxCommandEvent& evt)
+void CAgilityBookTrainingView::OnPrintView(wxCommandEvent& evt)
 {
 	wxGetApp().GetHtmlPrinter()->PrintText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
 }

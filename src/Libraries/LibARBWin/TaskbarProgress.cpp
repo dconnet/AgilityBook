@@ -59,8 +59,8 @@ public:
 		return (m_pTaskbarList && SUCCEEDED(m_pTaskbarList->SetProgressValue(m_hWnd, ullCompleted, ullTotal)));
 	}
 
-	ITaskbarList3* m_pTaskbarList;
 	HWND m_hWnd;
+	ITaskbarList3* m_pTaskbarList;
 };
 
 #endif // WIN32

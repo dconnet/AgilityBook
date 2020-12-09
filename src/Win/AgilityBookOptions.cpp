@@ -173,6 +173,7 @@ static void ExportConfigItem(wxString const& entry, ElementNodePtr const& inTree
 {
 	switch (wxConfig::Get()->GetEntryType(entry))
 	{
+	case wxConfigBase::Type_Unknown:
 	default:
 		break;
 	case wxConfigBase::Type_String:

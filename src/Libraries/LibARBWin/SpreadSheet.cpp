@@ -36,6 +36,8 @@
 #include <wx/list.h>
 #include <wx/msw/ole/automtn.h>
 #include <wx/variant.h>
+
+#pragma warning(disable : 4928) // illegal copy-initialization; more than one user-defined conversion has been implicitly applied
 #endif //HAS_AUTOMATION
 
 #if defined(__WXMSW__)

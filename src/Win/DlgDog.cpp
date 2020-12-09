@@ -607,10 +607,10 @@ CDlgDog::CDlgDog(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog, wxWindow* pParen
 	, m_Titles()
 	, m_sortTitles(L"Titles")
 	, m_ViewHiddenTitles(CAgilityBookOptions::GetViewHiddenTitles())
-	, m_sortPoints(L"ExistingPoints")
 	, m_RegNums()
 	, m_sortRegNums(L"RegNums")
 	, m_ExistingPoints()
+	, m_sortPoints(L"ExistingPoints")
 {
 	SetExtraStyle(wxWS_EX_VALIDATE_RECURSIVELY | GetExtraStyle());
 	if (!pParent)

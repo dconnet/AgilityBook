@@ -20,6 +20,9 @@
  * 2008-01-11 Created
  */
 
+#pragma warning(disable : 4868) // compiler may not enforce left-to-right evaluation order in braced initializer list
+#pragma warning(disable : 5204) // class has virtual functions, but its trivial destructor is not virtual
+
 #include "ARBCommon/ARBTypes.h"
 #if defined(USING_CATCH3)
 #include "catch2/catch_all.hpp"

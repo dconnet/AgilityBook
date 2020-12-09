@@ -49,6 +49,7 @@ typedef enum MONITOR_DPI_TYPE
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
+#pragma warning(disable : 4191) // unsafe conversion from 'FARPROC' to 'DPI::CDPI::GETPROCESSDPIAWARENESS'
 #endif
 
 namespace DPI
