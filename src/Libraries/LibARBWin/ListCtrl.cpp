@@ -48,6 +48,16 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+// TODO: wx-generic is missing the G/SetColumnsOrder api
+// (this define section is the same as wx/listctrl.h)
+#if defined(__WXMSW__) && !defined(__WXUNIVERSAL__)
+#define HAS_COLUMNSORDER 1
+#elif defined(__WXQT__) && !defined(__WXUNIVERSAL__)
+#define HAS_COLUMNSORDER 1
+#else
+#define HAS_COLUMNSORDER 0
+#endif
+
 
 bool CReportListCtrl::m_enableRowColors = true;
 
@@ -567,7 +577,9 @@ bool CReportListHeader::CreateMenu(wxMenu& menu)
 		return false;
 
 	assert(m_ctrlList);
+#if HAS_COLUMNSORDER
 	m_order = m_ctrlList->GetColumnsOrder();
+#endif
 	for (auto col : m_order)
 	{
 		assert(col >= 0 && col < static_cast<int>(m_columnInfo.size()));
@@ -585,7 +597,9 @@ void CReportListHeader::CreateColumns()
 
 	if (m_ctrlList->GetColumnCount() != 0)
 	{
+#if HAS_COLUMNSORDER
 		m_order = m_ctrlList->GetColumnsOrder();
+#endif
 		if (!m_colWidths.empty())
 		{
 			for (int i = 0; i < m_ctrlList->GetColumnCount(); ++i)
@@ -611,14 +625,18 @@ void CReportListHeader::CreateColumns()
 		if (!m_columns[iCol])
 			m_ctrlList->SetColumnWidth(iCol, 0);
 	}
+#if HAS_COLUMNSORDER
 	m_ctrlList->SetColumnsOrder(m_order);
+#endif
 }
 
 
 void CReportListHeader::SizeColumns()
 {
 	assert(m_ctrlList);
+#if HAS_COLUMNSORDER
 	m_order = m_ctrlList->GetColumnsOrder();
+#endif
 	if (m_colWidths.empty())
 	{
 		for (int i = 0; i < m_ctrlList->GetColumnCount(); ++i)
@@ -780,7 +798,9 @@ void CReportListHeader::OnSave()
 void CReportListHeader::OnCloseParent(wxCloseEvent& evt)
 {
 	assert(m_ctrlList);
+#if HAS_COLUMNSORDER
 	m_order = m_ctrlList->GetColumnsOrder();
+#endif
 
 	OnSave();
 
@@ -838,7 +858,9 @@ void CReportListHeader::OnUpdateRestore(wxUpdateUIEvent& evt)
 	bool isSame = columns == m_columns;
 	if (isSame)
 	{
+#if HAS_COLUMNSORDER
 		m_order = m_ctrlList->GetColumnsOrder();
+#endif
 		wxArrayInt order;
 		for (long i = 0; i < static_cast<long>(m_columnInfo.size()); ++i)
 			order.push_back(i);
@@ -854,7 +876,9 @@ void CReportListHeader::OnRestore(wxCommandEvent& evt)
 	wxArrayInt order;
 	for (long i = 0; i < static_cast<long>(m_columnInfo.size()); ++i)
 		order.push_back(i);
+#if HAS_COLUMNSORDER
 	m_ctrlList->SetColumnsOrder(order);
+#endif
 	SizeColumns();
 	m_ctrlList->Refresh();
 }
