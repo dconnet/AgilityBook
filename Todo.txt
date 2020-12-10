@@ -1,4 +1,5 @@
-Last Updated: 7/31/2020
+Last Updated: 12/9/2020
+- Migrate CColumnOrder to CReportListHeader
 
 - Allow assigning a club as the "primary" - this is what will used for the icon in the list.
   (right now it's implied by being first in the list)

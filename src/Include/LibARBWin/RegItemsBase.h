@@ -22,15 +22,23 @@
 
 //Sorting:
 #define CFG_KEY_SORTING L"Sorting"
-//	ST [key]Order (ColumnOrder.cpp)
+//	ST [key]Order (ColumnOrder.cpp, ListCtrl.cpp)
 inline std::wstring CFG_SORTING_ORDER(std::wstring const& item)
 {
 	return fmt::format(L"{}/{}Order", CFG_KEY_SORTING, item);
 }
-//	ST [key]Sort (ColumnOrder.cpp)
+//	ST [key]Sort (ColumnOrder.cpp, ListCtrl.cpp)
 inline std::wstring CFG_SORTING_SORT(std::wstring const& item)
 {
 	return fmt::format(L"{}/{}Sort", CFG_KEY_SORTING, item);
+}
+inline std::wstring CFG_COLUMN_WIDTHS(std::wstring const& item)
+{
+	return fmt::format(L"{}/{}Width", CFG_KEY_SORTING, item);
+}
+inline std::wstring CFG_SORT_COLUMN(std::wstring const& item)
+{
+	return fmt::format(L"{}/{}Column", CFG_KEY_SORTING, item);
 }
 
 #define CFG_KEY_ACCELERATORS L"Accelerators"
