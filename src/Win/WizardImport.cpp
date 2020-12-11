@@ -49,9 +49,10 @@
 #include "Wizard.h"
 
 #include "ARBCommon/BreakLine.h"
+#include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/DlgProgress.h"
-#include "LibARBWin/ListCtrl.h"
+#include "LibARBWin/ReportListCtrl.h"
 #include <wx/spinctrl.h>
 #include <wx/textfile.h>
 

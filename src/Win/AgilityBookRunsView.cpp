@@ -73,6 +73,7 @@
 
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ListData.h"
 #include <wx/config.h>
 #include <algorithm>

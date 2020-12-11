@@ -51,7 +51,7 @@
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBDebug.h"
 #include "LibARBWin/DPI.h"
-#include "LibARBWin/ListCtrl.h"
+#include "LibARBWin/ReportListCtrl.h"
 #include "LibARBWin/SetupApp.h"
 #include <wx/choicdlg.h>
 #include <wx/cmdline.h>

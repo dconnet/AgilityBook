@@ -22,15 +22,14 @@
  * 2008-12-14 Created
  */
 
-#include "LibwxARBWin.h"
-#include "Widgets.h"
+#include "LibARBWin/Widgets.h"
 
 #include "ARBCommon/ARBTypes.h"
 
 
 // Right now, this is specifically used in DlgCalendarQueryDetail. We could
 // make it more generic (sort headers, etc), but that can wait until needed.
-class ARBWIN_API CCheckListCtrl : public CListCtrl
+class CCheckListCtrl : public CListCtrl
 {
 	DECLARE_CLASS(CCheckListCtrl)
 public:

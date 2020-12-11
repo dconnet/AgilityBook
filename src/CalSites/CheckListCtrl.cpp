@@ -36,7 +36,7 @@
  */
 
 #include "stdafx.h"
-#include "LibARBWin/ListCtrl.h"
+#include "CheckListCtrl.h"
 
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/DPI.h"

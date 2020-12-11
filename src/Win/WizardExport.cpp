@@ -49,9 +49,10 @@
 #include "ARB/ARBDogTrial.h"
 #include "ARB/ARBLocalization.h"
 #include "ARBCommon/BreakLine.h"
+#include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/DlgProgress.h"
-#include "LibARBWin/ListCtrl.h"
+#include "LibARBWin/ReportListCtrl.h"
 #include <wx/valgen.h>
 #include <wx/wfstream.h>
 

@@ -68,8 +68,8 @@
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBDog.h"
 #include "ARBCommon/StringUtil.h"
-#include "LibARBWin/ListCtrl.h"
 #include "LibARBWin/ListData.h"
+#include "LibARBWin/ReportListCtrl.h"
 #include "LibARBWin/Validators.h"
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>

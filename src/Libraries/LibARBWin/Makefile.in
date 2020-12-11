@@ -39,10 +39,11 @@ libarbwin_SRCS = ARBDebug.cpp \
 	ImageHelperBase.cpp \
 	ImageManager.cpp \
 	LanguageManager.cpp \
-	ListCtrl.cpp \
 	ListData.cpp \
 	MenuHelper.cpp \
 	ReadHttp.cpp \
+	ReportListCtrl.cpp \
+	ReportListHeader.cpp \
 	RichEditCtrl2.cpp \
 	SetupApp.cpp \
 	SpreadSheet.cpp \

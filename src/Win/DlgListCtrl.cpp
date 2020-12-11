@@ -45,8 +45,8 @@
 #include "ARB/ARBDogRunOtherPoints.h"
 #include "ARB/ARBDogRunPartner.h"
 #include "ARBCommon/StringUtil.h"
-#include "LibARBWin/ListCtrl.h"
 #include "LibARBWin/ListData.h"
+#include "LibARBWin/ReportListCtrl.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

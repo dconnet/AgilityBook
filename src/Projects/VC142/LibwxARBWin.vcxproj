@@ -287,10 +287,11 @@
     <ClCompile Include="..\..\Libraries\LibARBWin\ImageHelperBase.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\ImageManager.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\LanguageManager.cpp" />
-    <ClCompile Include="..\..\Libraries\LibARBWin\ListCtrl.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\ListData.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\MenuHelper.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\ReadHttp.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\ReportListCtrl.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\ReportListHeader.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\RichEditCtrl2.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\SetupApp.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\SpreadSheet.cpp" />
@@ -338,11 +339,12 @@
     <ClInclude Include="..\..\Include\LibARBWin\ImageManager.h" />
     <ClInclude Include="..\..\Include\LibARBWin\LanguageManager.h" />
     <ClInclude Include="..\..\Include\LibARBWin\LibwxARBWin.h" />
-    <ClInclude Include="..\..\Include\LibARBWin\ListCtrl.h" />
     <ClInclude Include="..\..\Include\LibARBWin\ListData.h" />
     <ClInclude Include="..\..\Include\LibARBWin\MenuHelper.h" />
     <ClInclude Include="..\..\Include\LibARBWin\ReadHttp.h" />
     <ClInclude Include="..\..\Include\LibARBWin\RegItemsBase.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\ReportListCtrl.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\ReportListHeader.h" />
     <ClInclude Include="..\..\Include\LibARBWin\RichEditCtrl2.h" />
     <ClInclude Include="..\..\Include\LibARBWin\SetupApp.h" />
     <ClInclude Include="..\..\Include\LibARBWin\SpreadSheet.h" />

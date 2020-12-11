@@ -42,7 +42,8 @@
 #include "ARB/ARBDogRun.h"
 #include "ARB/ARBDogTrial.h"
 #include "ARBCommon/ARBDate.h"
-#include "LibARBWin/ListCtrl.h"
+#include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ReportListCtrl.h"
 #include <algorithm>
 
 #ifdef __WXMSW__

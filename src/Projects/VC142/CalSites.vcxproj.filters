@@ -69,6 +69,9 @@
     <ClCompile Include="..\..\CalSites\ARBConfigCalSite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\CalSites\CheckListCtrl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Win\res\AgilityBook.ico">
@@ -157,6 +160,9 @@
       <Filter>ARB</Filter>
     </ClInclude>
     <ClInclude Include="..\..\CalSites\ARBConfigCalSite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CalSites\CheckListCtrl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

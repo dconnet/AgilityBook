@@ -103,6 +103,7 @@
 
 #include "ARBCommon/ARBMsgDigest.h"
 #include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
 #include <wx/config.h>
 #include <wx/file.h>

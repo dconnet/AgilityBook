@@ -28,7 +28,8 @@
 #include "CommonView.h"
 #include "DlgFind.h"
 
-#include "LibARBWin/ListCtrl.h"
+#include "LibARBWin/ListData.h"
+#include "LibARBWin/ReportListCtrl.h"
 #include <wx/docview.h>
 class CAgilityBookCalendarListView;
 class CAgilityBookCalendarListViewData;

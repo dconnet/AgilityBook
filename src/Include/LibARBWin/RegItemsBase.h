@@ -22,12 +22,12 @@
 
 //Sorting:
 #define CFG_KEY_SORTING L"Sorting"
-//	ST [key]Order (ColumnOrder.cpp, ListCtrl.cpp)
+//	ST [key]Order (ColumnOrder.cpp, ReportListHeader.cpp)
 inline std::wstring CFG_SORTING_ORDER(std::wstring const& item)
 {
 	return fmt::format(L"{}/{}Order", CFG_KEY_SORTING, item);
 }
-//	ST [key]Sort (ColumnOrder.cpp, ListCtrl.cpp)
+//	ST [key]Sort (ColumnOrder.cpp, ReportListHeader.cpp)
 inline std::wstring CFG_SORTING_SORT(std::wstring const& item)
 {
 	return fmt::format(L"{}/{}Sort", CFG_KEY_SORTING, item);

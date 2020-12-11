@@ -131,8 +131,8 @@
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/CheckLink.h"
 #include "LibARBWin/DPI.h"
-#include "LibARBWin/ListCtrl.h"
 #include "LibARBWin/ListData.h"
+#include "LibARBWin/ReportListCtrl.h"
 #include "LibARBWin/RichEditCtrl2.h"
 #include "LibARBWin/Validators.h"
 #include <wx/datectrl.h>

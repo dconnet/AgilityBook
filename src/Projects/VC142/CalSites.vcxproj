@@ -424,6 +424,7 @@
     <ClCompile Include="..\..\CalSites\CalendarSites.cpp" />
     <ClCompile Include="..\..\CalSites\CalendarSiteUSDAA.cpp" />
     <ClCompile Include="..\..\CalSites\CalSites.cpp" />
+    <ClCompile Include="..\..\CalSites\CheckListCtrl.cpp" />
     <ClCompile Include="..\..\CalSites\DlgCalendarQueryDetail.cpp" />
     <ClCompile Include="..\..\CalSites\DlgPluginDetails.cpp" />
     <ClCompile Include="..\..\CalSites\DlgQueryDetail.cpp" />
@@ -472,6 +473,7 @@
     <ClInclude Include="..\..\CalSites\CalendarSites.h" />
     <ClInclude Include="..\..\CalSites\CalendarSiteUSDAA.h" />
     <ClInclude Include="..\..\CalSites\CalSites.h" />
+    <ClInclude Include="..\..\CalSites\CheckListCtrl.h" />
     <ClInclude Include="..\..\CalSites\DlgCalendarQueryDetail.h" />
     <ClInclude Include="..\..\CalSites\DlgPluginDetails.h" />
     <ClInclude Include="..\..\CalSites\DlgQueryDetail.h" />

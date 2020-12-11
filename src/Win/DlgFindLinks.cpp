@@ -34,9 +34,10 @@
 #include "ARB/ARBDog.h"
 #include "ARB/ARBDogRun.h"
 #include "ARB/ARBDogTrial.h"
+#include "ARBCommon/StringUtil.h"
 #include "LibARBWin/CheckLink.h"
-#include "LibARBWin/ListCtrl.h"
 #include "LibARBWin/ListData.h"
+#include "LibARBWin/ReportListCtrl.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

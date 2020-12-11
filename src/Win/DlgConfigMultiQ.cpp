@@ -32,7 +32,7 @@
 #include "ARB/ARBConfigVenue.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
-#include "LibARBWin/ListCtrl.h"
+#include "LibARBWin/ReportListCtrl.h"
 #include "LibARBWin/Validators.h"
 #include <wx/datectrl.h>
 #include <wx/listctrl.h>

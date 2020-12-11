@@ -54,9 +54,6 @@
     <ClCompile Include="..\..\Libraries\LibARBWin\LanguageManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Libraries\LibARBWin\ListCtrl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Libraries\LibARBWin\MenuHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -94,6 +91,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Libraries\LibARBWin\DlgConfigAccel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\ReportListCtrl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\ReportListHeader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -152,9 +155,6 @@
     <ClInclude Include="..\..\Include\LibARBWin\LanguageManager.h">
       <Filter>Include\LibARBWin</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\LibARBWin\ListCtrl.h">
-      <Filter>Include\LibARBWin</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\LibARBWin\MenuHelper.h">
       <Filter>Include\LibARBWin</Filter>
     </ClInclude>
@@ -198,6 +198,12 @@
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\VersionNumber.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\ReportListCtrl.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\ReportListHeader.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>

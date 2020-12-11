@@ -22,11 +22,12 @@
 #include "DlgCalendarQueryDetail.h"
 
 #include "CalSites.h"
+#include "CheckListCtrl.h"
 #include "DlgQueryDetail.h"
 
 #include "ARB/ARBConfig.h"
+#include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
-#include "LibARBWin/ListCtrl.h"
 #include <wx/listctrl.h>
 #include <algorithm>
 
