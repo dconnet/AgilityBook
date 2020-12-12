@@ -201,10 +201,10 @@
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\LibARBWin\ReportListCtrl.h">
-      <Filter>Include</Filter>
+      <Filter>Include\LibARBWin</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\LibARBWin\ReportListHeader.h">
-      <Filter>Include</Filter>
+      <Filter>Include\LibARBWin</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

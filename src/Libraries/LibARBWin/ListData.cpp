@@ -36,16 +36,16 @@ CListData::~CListData()
 }
 
 
+int CListData::OnCompare(CListDataPtr const& item, long iCol) const
+{
+	return 0;
+}
+
+
 void CListData::OnNeedListItem(long iCol, wxListItem& info) const
 {
 	info.SetMask(info.GetMask() | wxLIST_MASK_TEXT);
 	info.SetText(StringUtil::stringWX(OnNeedText(iCol)));
-}
-
-
-int CListData::OnCompare(CListDataPtr const& item, long iCol) const
-{
-	return 0;
 }
 
 

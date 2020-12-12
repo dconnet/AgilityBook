@@ -53,15 +53,16 @@ int wxCALLBACK ReportListCompareItems(CListDataPtr const& item1, CListDataPtr co
 }
 
 
-CReportListHeader::CReportListHeader(unsigned int idFirst, std::wstring const& baseConfig)
-	: m_baseConfig(baseConfig)
-	, m_idFirst(idFirst)
-	, m_columnInfo()
-	, m_parent(nullptr)
+CReportListHeader::CReportListHeader()
+	: m_parent(nullptr)
 	, m_ctrlList(nullptr)
-	, m_order()
-	, m_columns()
+	, m_columnInfo()
+	, m_idFirst(0)
+	, m_baseConfig()
+	, m_defaultWidths()
 	, m_colWidths()
+	, m_columnOrder()
+	, m_columnVisible()
 	, m_iSortCol(0)
 	, m_bIsSorted(false)
 {
@@ -73,116 +74,125 @@ CReportListHeader::~CReportListHeader()
 }
 
 
-void CReportListHeader::Initialize(
-	wxWindow* parent,
-	CReportListCtrl* ctrlList,
-	std::vector<ColumnInfo> const& columns,
-	long defaultSort,
-	std::vector<int> const* pColWidths)
+void CReportListHeader::Initialize(wxWindow* parent, CReportListCtrl* ctrlList)
 {
 	assert(parent);
 	assert(ctrlList);
+	assert(!m_parent);
+	assert(!m_ctrlList);
 
 	m_parent = parent;
 	m_ctrlList = ctrlList;
-	m_columnInfo = columns;
 
-#ifdef _DEBUG
-	for (long i = 0; i < static_cast<long>(m_columnInfo.size()); ++i)
-		assert(i == m_columnInfo[i].index);
-#endif
-	if (pColWidths)
-	{
-		assert(pColWidths->size() == m_columnInfo.size());
-		m_colWidths = *pColWidths;
-		if (DPI::GetScale(parent) != 100)
-		{
-			for (size_t i = 0; i < m_colWidths.size(); ++i)
-			{
-				m_colWidths[i] = DPI::Scale(m_colWidths[i]);
-			}
-		}
-	}
-	else
-		m_colWidths.clear();
+	m_parent->Bind(wxEVT_CLOSE_WINDOW, &CReportListHeader::OnCloseParent, this);
+}
 
-	m_order.clear();
-	for (long i = 0; i < static_cast<long>(m_columnInfo.size()); ++i)
-		m_order.push_back(i);
-	m_bIsSorted = false;
-	m_iSortCol = defaultSort + 1;
 
-	GetDefaultColumns(m_columns);
-	OnLoad();
+void CReportListHeader::CreateColumns(
+	std::vector<ColumnInfo> const& inColumns,
+	long defaultSort,
+	std::wstring const& baseConfig,
+	std::vector<int> const* pColWidths,
+	unsigned int idFirst)
+{
+	assert(m_parent);
+	assert(m_ctrlList);
+	assert(inColumns.size() > 0); // Gotta have some columns!
 
+	// Clear existing
+
+	bool wasBound = (m_columnInfo.size() > 0);
 	if (0 < m_idFirst)
 	{
-		parent->Bind(
+		m_parent->Unbind(
 			wxEVT_UPDATE_UI,
 			&CReportListHeader::OnUpdateColumn,
 			this,
 			m_idFirst,
 			m_idFirst + m_columnInfo.size() - 1);
-		parent->Bind(wxEVT_MENU, &CReportListHeader::OnColumn, this, m_idFirst, m_idFirst + m_columnInfo.size() - 1);
-		parent->Bind(
+		m_parent
+			->Unbind(wxEVT_MENU, &CReportListHeader::OnColumn, this, m_idFirst, m_idFirst + m_columnInfo.size() - 1);
+		m_parent->Unbind(
 			wxEVT_UPDATE_UI,
 			&CReportListHeader::OnUpdateRestore,
 			this,
 			m_idFirst + m_columnInfo.size(),
 			wxID_ANY);
-		parent->Bind(wxEVT_MENU, &CReportListHeader::OnRestore, this, m_idFirst + m_columnInfo.size(), wxID_ANY);
+		m_parent->Unbind(wxEVT_MENU, &CReportListHeader::OnRestore, this, m_idFirst + m_columnInfo.size(), wxID_ANY);
+		m_ctrlList->Unbind(wxEVT_LIST_COL_BEGIN_DRAG, &CReportListHeader::OnBeginColDrag, this);
+		m_ctrlList->Unbind(wxEVT_COMMAND_LIST_COL_RIGHT_CLICK, &CReportListHeader::OnColumnRClick, this);
 	}
-
-	parent->Bind(wxEVT_CLOSE_WINDOW, &CReportListHeader::OnCloseParent, this);
-	m_ctrlList->Bind(wxEVT_LIST_COL_BEGIN_DRAG, &CReportListHeader::OnBeginColDrag, this);
-	m_ctrlList->Bind(wxEVT_COMMAND_LIST_COL_RIGHT_CLICK, &CReportListHeader::OnColumnRClick, this);
-	m_ctrlList->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CReportListHeader::OnColumnClick, this);
-}
-
-
-bool CReportListHeader::CreateMenu(wxMenu& menu)
-{
-	if (0 == m_idFirst)
-		return false;
-
-	assert(m_ctrlList);
-#if HAS_COLUMNSORDER
-	m_order = m_ctrlList->GetColumnsOrder();
-#endif
-	for (auto col : m_order)
-	{
-		assert(col >= 0 && col < static_cast<int>(m_columnInfo.size()));
-		menu.AppendCheckItem(m_idFirst + col, StringUtil::GetTranslation(m_columnInfo[col].name));
-	}
-	menu.AppendSeparator();
-	menu.Append(m_idFirst + m_columnInfo.size(), _("Restore"));
-	return true;
-}
-
-
-void CReportListHeader::CreateColumns()
-{
-	assert(m_ctrlList);
-
 	if (m_ctrlList->GetColumnCount() != 0)
 	{
-#if HAS_COLUMNSORDER
-		m_order = m_ctrlList->GetColumnsOrder();
-#endif
-		if (!m_colWidths.empty())
-		{
-			for (int i = 0; i < m_ctrlList->GetColumnCount(); ++i)
-			{
-				int width = m_ctrlList->GetColumnWidth(i);
-				if (m_columns[i])
-					m_colWidths[i] = width;
-			}
-		}
+		OnSave();
+		m_ctrlList->DeleteAllItems();
+		for (int col = m_ctrlList->GetColumnCount() - 1; 0 <= col; --col)
+			m_ctrlList->DeleteColumn(col);
 	}
 
-	m_ctrlList->DeleteAllItems();
-	for (int col = m_ctrlList->GetColumnCount() - 1; 0 <= col; --col)
-		m_ctrlList->DeleteColumn(col);
+	// Initialize
+
+#ifdef _DEBUG
+	for (long i = 0; i < static_cast<long>(inColumns.size()); ++i)
+		assert(i == inColumns[i].index);
+#endif
+	m_columnInfo = inColumns;
+	m_idFirst = idFirst;
+	m_baseConfig = baseConfig;
+	m_defaultWidths.clear();
+	m_colWidths.clear();
+	if (pColWidths)
+	{
+		assert(pColWidths->size() == m_columnInfo.size());
+		m_defaultWidths = *pColWidths;
+		if (DPI::GetScale(m_parent) != 100)
+		{
+			for (size_t i = 0; i < m_defaultWidths.size(); ++i)
+			{
+				m_defaultWidths[i] = DPI::Scale(m_defaultWidths[i]);
+			}
+		}
+		m_colWidths = m_defaultWidths;
+	}
+
+	m_columnOrder.clear();
+	for (long i = 0; i < static_cast<long>(m_columnInfo.size()); ++i)
+		m_columnOrder.push_back(i);
+	m_iSortCol = (defaultSort < 0) ? 0 : defaultSort + 1;
+	m_bIsSorted = (m_iSortCol != 0);
+
+	// Allow derived class to override column visibility and registry loading
+	GetDefaultColumns(m_columnVisible);
+	OnLoad();
+
+	// Bind
+
+	if (0 < m_idFirst)
+	{
+		m_parent->Bind(
+			wxEVT_UPDATE_UI,
+			&CReportListHeader::OnUpdateColumn,
+			this,
+			m_idFirst,
+			m_idFirst + m_columnInfo.size() - 1);
+		m_parent->Bind(wxEVT_MENU, &CReportListHeader::OnColumn, this, m_idFirst, m_idFirst + m_columnInfo.size() - 1);
+		m_parent->Bind(
+			wxEVT_UPDATE_UI,
+			&CReportListHeader::OnUpdateRestore,
+			this,
+			m_idFirst + m_columnInfo.size(),
+			wxID_ANY);
+		m_parent->Bind(wxEVT_MENU, &CReportListHeader::OnRestore, this, m_idFirst + m_columnInfo.size(), wxID_ANY);
+		m_ctrlList->Bind(wxEVT_LIST_COL_BEGIN_DRAG, &CReportListHeader::OnBeginColDrag, this);
+		m_ctrlList->Bind(wxEVT_COMMAND_LIST_COL_RIGHT_CLICK, &CReportListHeader::OnColumnRClick, this);
+	}
+
+	if (!wasBound)
+	{
+		m_ctrlList->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CReportListHeader::OnColumnClick, this);
+	}
+
+	// Create
 
 	for (long iCol = 0; iCol < static_cast<long>(m_columnInfo.size()); ++iCol)
 	{
@@ -191,11 +201,11 @@ void CReportListHeader::CreateColumns()
 			width = m_colWidths[iCol];
 
 		m_ctrlList->InsertColumn(iCol, wxGetTranslation(m_columnInfo[iCol].name), m_columnInfo[iCol].fmt, width);
-		if (!m_columns[iCol])
+		if (!m_columnVisible[iCol])
 			m_ctrlList->SetColumnWidth(iCol, 0);
 	}
 #if HAS_COLUMNSORDER
-	m_ctrlList->SetColumnsOrder(m_order);
+	m_ctrlList->SetColumnsOrder(m_columnOrder);
 #endif
 }
 
@@ -204,13 +214,13 @@ void CReportListHeader::SizeColumns()
 {
 	assert(m_ctrlList);
 #if HAS_COLUMNSORDER
-	m_order = m_ctrlList->GetColumnsOrder();
+	m_columnOrder = m_ctrlList->GetColumnsOrder();
 #endif
 	if (m_colWidths.empty())
 	{
 		for (int i = 0; i < m_ctrlList->GetColumnCount(); ++i)
 		{
-			if (m_columns[m_order[i]])
+			if (m_columnVisible[m_columnOrder[i]])
 				m_ctrlList->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
 			else
 				m_ctrlList->SetColumnWidth(i, 0);
@@ -286,7 +296,7 @@ void CReportListHeader::OnLoad()
 		wxString str = wxConfig::Get()->Read(CFG_SORTING_ORDER(m_baseConfig), L"");
 		for (size_t i = 0; i < m_columnInfo.size() && !str.IsEmpty(); ++i)
 		{
-			m_order[i] = StringUtil::ToCLong(StringUtil::stringW(str));
+			m_columnOrder[i] = StringUtil::ToCLong(StringUtil::stringW(str));
 			int n = str.Find(',');
 			if (n > 0)
 				str = str.Mid(n + 1);
@@ -297,7 +307,7 @@ void CReportListHeader::OnLoad()
 		str = wxConfig::Get()->Read(CFG_SORTING_SORT(m_baseConfig), L"");
 		for (size_t i = 0; i < m_columnInfo.size() && !str.IsEmpty(); ++i)
 		{
-			m_columns[i] = (StringUtil::ToCLong(StringUtil::stringW(str)) != 0);
+			m_columnVisible[i] = (StringUtil::ToCLong(StringUtil::stringW(str)) != 0);
 			int n = str.Find(',');
 			if (n > 0)
 				str = str.Mid(n + 1);
@@ -305,18 +315,16 @@ void CReportListHeader::OnLoad()
 				str.Empty();
 		}
 
-		if (!m_colWidths.empty())
+		str = wxConfig::Get()->Read(CFG_COLUMN_WIDTHS(m_baseConfig), L"");
+		m_colWidths.clear();
+		for (size_t i = 0; i < m_columnInfo.size() && !str.IsEmpty(); ++i)
 		{
-			str = wxConfig::Get()->Read(CFG_COLUMN_WIDTHS(m_baseConfig), L"");
-			for (size_t i = 0; i < m_columnInfo.size() && !str.IsEmpty(); ++i)
-			{
-				m_colWidths[i] = StringUtil::ToCLong(StringUtil::stringW(str));
-				int n = str.Find(',');
-				if (n > 0)
-					str = str.Mid(n + 1);
-				else
-					str.Empty();
-			}
+			m_colWidths.push_back(StringUtil::ToCLong(StringUtil::stringW(str)));
+			int n = str.Find(',');
+			if (n > 0)
+				str = str.Mid(n + 1);
+			else
+				str.Empty();
 		}
 
 		m_iSortCol = wxConfig::Get()->Read(CFG_SORT_COLUMN(m_baseConfig), m_iSortCol);
@@ -330,20 +338,20 @@ void CReportListHeader::OnSave()
 	if (!m_baseConfig.empty())
 	{
 		wxString str;
-		for (size_t i = 0; i < m_order.size(); ++i)
+		for (size_t i = 0; i < m_columnOrder.size(); ++i)
 		{
 			if (0 < i)
 				str << L",";
-			str << m_order[i];
+			str << m_columnOrder[i];
 		}
 		wxConfig::Get()->Write(CFG_SORTING_ORDER(m_baseConfig), str);
 
 		str.clear();
-		for (size_t i = 0; i < m_columns.size(); ++i)
+		for (size_t i = 0; i < m_columnVisible.size(); ++i)
 		{
 			if (0 < i)
 				str << L",";
-			str << (m_columns[i] ? L"1" : L"0");
+			str << (m_columnVisible[i] ? L"1" : L"0");
 		}
 		wxConfig::Get()->Write(CFG_SORTING_SORT(m_baseConfig), str);
 
@@ -352,10 +360,12 @@ void CReportListHeader::OnSave()
 		{
 			if (0 < i)
 				str << L",";
-			if (m_columns[i])
+			if (m_columnVisible[i])
 				str << m_ctrlList->GetColumnWidth(i);
-			else
+			else if (i < static_cast<int>(m_colWidths.size()))
 				str << m_colWidths[i];
+			else
+				str << "0";
 		}
 		wxConfig::Get()->Write(CFG_COLUMN_WIDTHS(m_baseConfig), str);
 
@@ -368,7 +378,7 @@ void CReportListHeader::OnCloseParent(wxCloseEvent& evt)
 {
 	assert(m_ctrlList);
 #if HAS_COLUMNSORDER
-	m_order = m_ctrlList->GetColumnsOrder();
+	m_columnOrder = m_ctrlList->GetColumnsOrder();
 #endif
 
 	OnSave();
@@ -379,16 +389,30 @@ void CReportListHeader::OnCloseParent(wxCloseEvent& evt)
 
 void CReportListHeader::OnBeginColDrag(wxListEvent& evt)
 {
-	if (!m_columns[evt.GetColumn()])
+	if (!m_columnVisible[evt.GetColumn()])
 		evt.Veto();
 }
 
 
 void CReportListHeader::OnColumnRClick(wxListEvent& evt)
 {
+	if (0 == m_idFirst)
+		return;
+
+	assert(m_ctrlList);
 	wxMenu menu;
-	if (CreateMenu(menu))
-		m_parent->PopupMenu(&menu, evt.GetPoint());
+#if HAS_COLUMNSORDER
+	m_columnOrder = m_ctrlList->GetColumnsOrder();
+#endif
+	for (auto col : m_columnOrder)
+	{
+		assert(col >= 0 && col < static_cast<int>(m_columnInfo.size()));
+		menu.AppendCheckItem(m_idFirst + col, StringUtil::GetTranslation(m_columnInfo[col].name));
+	}
+	menu.AppendSeparator();
+	menu.Append(m_idFirst + m_columnInfo.size(), _("Restore"));
+
+	m_parent->PopupMenu(&menu, evt.GetPoint());
 }
 
 
@@ -400,7 +424,7 @@ void CReportListHeader::OnColumnClick(wxListEvent& evt)
 
 void CReportListHeader::OnUpdateColumn(wxUpdateUIEvent& evt)
 {
-	evt.Check(m_columns[evt.GetId() - m_idFirst]);
+	evt.Check(m_columnVisible[evt.GetId() - m_idFirst]);
 }
 
 
@@ -409,12 +433,12 @@ void CReportListHeader::OnColumn(wxCommandEvent& evt)
 	long col = evt.GetId() - m_idFirst;
 	if (evt.IsChecked())
 	{
-		m_columns[col] = true;
+		m_columnVisible[col] = true;
 		m_ctrlList->SetColumnWidth(col, wxLIST_AUTOSIZE_USEHEADER);
 	}
 	else
 	{
-		m_columns[col] = false;
+		m_columnVisible[col] = false;
 		m_ctrlList->SetColumnWidth(col, 0);
 	}
 }
@@ -424,16 +448,16 @@ void CReportListHeader::OnUpdateRestore(wxUpdateUIEvent& evt)
 {
 	std::vector<bool> columns;
 	GetDefaultColumns(columns);
-	bool isSame = columns == m_columns;
+	bool isSame = columns == m_columnVisible;
 	if (isSame)
 	{
 #if HAS_COLUMNSORDER
-		m_order = m_ctrlList->GetColumnsOrder();
+		m_columnOrder = m_ctrlList->GetColumnsOrder();
 #endif
 		wxArrayInt order;
 		for (long i = 0; i < static_cast<long>(m_columnInfo.size()); ++i)
 			order.push_back(i);
-		isSame = order == m_order;
+		isSame = order == m_columnOrder;
 	}
 	evt.Enable(!isSame);
 }
@@ -441,13 +465,24 @@ void CReportListHeader::OnUpdateRestore(wxUpdateUIEvent& evt)
 
 void CReportListHeader::OnRestore(wxCommandEvent& evt)
 {
-	GetDefaultColumns(m_columns);
-	wxArrayInt order;
+	GetDefaultColumns(m_columnVisible);
+	m_columnOrder.clear();
 	for (long i = 0; i < static_cast<long>(m_columnInfo.size()); ++i)
-		order.push_back(i);
+		m_columnOrder.push_back(i);
 #if HAS_COLUMNSORDER
-	m_ctrlList->SetColumnsOrder(order);
+	m_ctrlList->SetColumnsOrder(m_columnOrder);
 #endif
-	SizeColumns();
+	for (int i = 0; i < m_ctrlList->GetColumnCount(); ++i)
+	{
+		int width = 0;
+		if (m_columnVisible[m_columnOrder[i]])
+		{
+			if (m_defaultWidths.empty())
+				width = wxLIST_AUTOSIZE_USEHEADER;
+			else
+				width = m_defaultWidths[i];
+		}
+		m_ctrlList->SetColumnWidth(i, width);
+	}
 	m_ctrlList->Refresh();
 }

@@ -266,6 +266,22 @@ public:
 	{
 	}
 
+	int OnCompare(CListDataPtr const& item, long iCol) const override
+	{
+		CMenuDataPtr pRow2 = std::dynamic_pointer_cast<CMenuData, CListData>(item);
+		if (!pRow2)
+			return 0;
+
+		int o1 = GetSortOrder(iCol);
+		int o2 = pRow2->GetSortOrder(iCol);
+		int nRet = 0;
+		if (o1 < o2)
+			nRet = -1;
+		else if (o1 > o2)
+			nRet = 1;
+		return nRet;
+	}
+
 	std::wstring OnNeedText(long iCol) const override
 	{
 		switch (iCol)
@@ -392,32 +408,6 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////
 
-static int wxCALLBACK CompareItems(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo)
-{
-	assert(pSortInfo);
-
-	CMenuDataPtr pRow1 = std::dynamic_pointer_cast<CMenuData, CListData>(item1);
-	CMenuDataPtr pRow2 = std::dynamic_pointer_cast<CMenuData, CListData>(item2);
-
-	if (!pRow1 || !pRow2)
-		return 0;
-	int iCol = std::abs(pSortInfo->nCol);
-
-	int o1 = pRow1->GetSortOrder(iCol - 1);
-	int o2 = pRow2->GetSortOrder(iCol - 1);
-	int nRet = 0;
-	if (o1 < o2)
-		nRet = -1;
-	else if (o1 > o2)
-		nRet = 1;
-
-	if (0 > pSortInfo->nCol)
-		nRet *= -1;
-	return nRet;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-
 CDlgConfigAccel::CDlgConfigAccel(
 	std::unordered_map<int, std::wstring> const& menuIds,
 	std::vector<CMenuHelper::ItemAccel> const& accelData,
@@ -433,7 +423,7 @@ CDlgConfigAccel::CDlgConfigAccel(
 	, m_menuItems()
 	, m_accelData(accelData)
 	, m_keyMap(keyMap)
-	, m_SortColumn(2)
+	, m_reportColumn()
 	, m_ctrlItems(nullptr)
 	, m_ctrlNew(nullptr)
 	, m_ctrlEdit(nullptr)
@@ -482,17 +472,18 @@ CDlgConfigAccel::CDlgConfigAccel(
 		CReportListCtrl::SortHeader::Sort,
 		true,
 		false);
-	m_ctrlItems->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgConfigAccel::OnColumnClick, this);
 	m_ctrlItems->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgConfigAccel::OnItemSelected, this);
 	m_ctrlItems->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgConfigAccel::OnItemActivated, this);
 	m_ctrlItems->Bind(wxEVT_KEY_DOWN, &CDlgConfigAccel::OnKeyDown, this);
-	m_ctrlItems->InsertColumn(0, _("Keyboard Shortcut"), wxLIST_FORMAT_LEFT);
-	m_ctrlItems->InsertColumn(1, _("Description"), wxLIST_FORMAT_LEFT);
+
+	std::vector<CReportListHeader::ColumnInfo> columns;
+	columns.push_back(CReportListHeader::ColumnInfo{0, wxLIST_FORMAT_LEFT, arbT("Keyboard Shortcut")});
+	columns.push_back(CReportListHeader::ColumnInfo{1, wxLIST_FORMAT_LEFT, arbT("Description")});
 	if (!menuIds.empty())
-		m_ctrlItems->InsertColumn(2, _("Location"), wxLIST_FORMAT_LEFT);
+		columns.push_back(CReportListHeader::ColumnInfo{2, wxLIST_FORMAT_LEFT, arbT("Location")});
+	m_reportColumn.Initialize(this, m_ctrlItems);
+	m_reportColumn.CreateColumns(columns);
 	LoadData();
-	for (int i = 0; i < m_ctrlItems->GetColumnCount(); ++i)
-		m_ctrlItems->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
 
 	m_ctrlNew = new wxButton(this, wxID_ANY, _("New..."), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigAccel::OnAddItem, this);
@@ -566,6 +557,8 @@ bool CDlgConfigAccel::GetAccelData(std::vector<CMenuHelper::ItemAccel>& accelDat
 
 void CDlgConfigAccel::LoadData()
 {
+	m_ctrlItems->Freeze();
+
 	m_ctrlItems->DeleteAllItems();
 	int lastMenuId = -1;
 #ifdef _DEBUG
@@ -644,6 +637,11 @@ void CDlgConfigAccel::LoadData()
 		}
 	}
 #endif
+
+	m_reportColumn.SizeColumns();
+	m_reportColumn.Sort();
+
+	m_ctrlItems->Thaw();
 }
 
 
@@ -698,19 +696,6 @@ void CDlgConfigAccel::DoEdit(bool bAdd)
 			m_ctrlItems->RefreshItem(item);
 		UpdateControls();
 	}
-}
-
-
-void CDlgConfigAccel::OnColumnClick(wxListEvent& evt)
-{
-	m_ctrlItems->SetColumnSort(std::abs(m_SortColumn) - 1, 0);
-	int nBackwards = 1;
-	if (m_SortColumn == evt.GetColumn() + 1)
-		nBackwards = -1;
-	m_SortColumn = (evt.GetColumn() + 1) * nBackwards;
-	SortInfo sortInfo(m_SortColumn);
-	m_ctrlItems->SortItems(CompareItems, &sortInfo);
-	m_ctrlItems->SetColumnSort(std::abs(m_SortColumn) - 1, m_SortColumn);
 }
 
 

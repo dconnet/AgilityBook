@@ -16,6 +16,7 @@
  */
 
 #include "LibARBWin/MenuHelper.h"
+#include "LibARBWin/ReportListHeader.h"
 #include <unordered_map>
 #include <vector>
 class CReportListCtrl;
@@ -49,7 +50,6 @@ private:
 	void UpdateControls();
 	void DoEdit(bool bAdd);
 
-	void OnColumnClick(wxListEvent& evt);
 	void OnItemSelected(wxListEvent& evt);
 	void OnItemActivated(wxListEvent& evt);
 	void OnKeyDown(wxKeyEvent& evt);
@@ -77,7 +77,7 @@ private:
 	std::vector<MenuData> m_menuItems;
 	std::vector<CMenuHelper::ItemAccel> m_accelData;
 	std::unordered_map<int, KeyCodeMapping> const& m_keyMap;
-	int m_SortColumn;
+	CReportListHeader m_reportColumn;
 	CReportListCtrl* m_ctrlItems;
 	wxButton* m_ctrlNew;
 	wxButton* m_ctrlEdit;

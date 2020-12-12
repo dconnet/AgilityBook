@@ -32,23 +32,35 @@ public:
 		wchar_t const* name;
 	};
 
-	// If idFirst is 0, do not show the context menu
-	CReportListHeader(unsigned int idFirst, std::wstring const& baseConfig = std::wstring());
+	CReportListHeader();
 	virtual ~CReportListHeader();
 
-	// defaultSort: Initial column (normal 0-based)
-	// pColWidths: initial column widths
-	void Initialize(
-		wxWindow* parent,
-		CReportListCtrl* ctrlList,
-		std::vector<ColumnInfo> const& columns,
-		long defaultSort = 0,
-		std::vector<int> const* pColWidths = nullptr);
-	bool CreateMenu(wxMenu& menu);
-	void CreateColumns();
+	/**
+	 * Initialize usage (can only call once)
+	 * @param parent Owner of the popup menu for binding menu events and listening to close event.
+	 * @param ctrlList The report list we're handling
+	 */
+	void Initialize(wxWindow* parent, CReportListCtrl* ctrlList);
+
+	/**
+	 * Create columns. This may be called multiple times with different columns to allow switching views.
+	 * @param inColumns Format and name for each column.
+	 * @param defaultSort Initial sort column (normal 0-based, <0: no sort)
+	 * @param baseConfig Where to read saved values (will not load/save is empty)
+	 * @param pColWidths Initial column widths (auto sized if null, must be same size as inColumns)
+	 * @param idFirst First id for context menu. If 0, do not show the menu.
+	 * Note: the widths in pColWidths are not DPI scaled (will use m_parent)
+	 */
+	void CreateColumns(
+		std::vector<ColumnInfo> const& inColumns,
+		long defaultSort = -1,
+		std::wstring const& baseConfig = std::wstring(),
+		std::vector<int> const* pColWidths = nullptr,
+		unsigned int idFirst = 0);
+
 	void SizeColumns();
-	void Sort();        // Only sorts if we're sorting
-	void Sort(int col); // Actual column index from listctrl, turns on sorting
+	virtual void Sort(); // Only sorts if we're sorting (virtual to allow a different sort)
+	void Sort(int col);  // Actual column index from listctrl, turns on sorting
 
 	bool IsSorted() const
 	{
@@ -77,14 +89,15 @@ protected:
 	void OnUpdateRestore(wxUpdateUIEvent& evt);
 	void OnRestore(wxCommandEvent& evt);
 
-	const std::wstring m_baseConfig;
-	const unsigned int m_idFirst;
-	std::vector<ColumnInfo> m_columnInfo; // Do not modify after Initialize is called
 	wxWindow* m_parent;
 	CReportListCtrl* m_ctrlList;
-	wxArrayInt m_order;
-	std::vector<bool> m_columns;
-	std::vector<int> m_colWidths; // May be empty, if so, we don't remember widths
+	std::vector<ColumnInfo> m_columnInfo; // Do not modify after Initialize is called
+	unsigned int m_idFirst;
+	std::wstring m_baseConfig;
+	std::vector<int> m_defaultWidths; // May be empty, if so, we don't remember widths
+	std::vector<int> m_colWidths;     // May be empty, if so, we don't remember widths
+	wxArrayInt m_columnOrder;
+	std::vector<bool> m_columnVisible;
 	long m_iSortCol;
 	bool m_bIsSorted;
 };

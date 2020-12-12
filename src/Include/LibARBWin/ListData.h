@@ -35,13 +35,13 @@ class ARBWIN_API CListData
 public:
 	CListData();
 	virtual ~CListData();
+	/// Calling when clicking on sort header.
+	/// Ascending/descending will be handled by the sort routine.
+	virtual int OnCompare(CListDataPtr const& item, long iCol) const;
 	/// If iCol == -1, return all columns
 	virtual std::wstring OnNeedText(long iCol) const = 0;
 	/// By default, just uses OnNeedText to fill in text.
 	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
-	/// Calling when clicking on sort header.
-	/// Ascending/descending will be handled by the sort routine.
-	virtual int OnCompare(CListDataPtr const& item, long iCol) const;
 };
 
 
