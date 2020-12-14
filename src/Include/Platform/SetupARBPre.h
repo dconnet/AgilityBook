@@ -112,14 +112,17 @@
 #pragma warning(disable: 4365 4623 4625 4626 5026 5027 5045) // Needed to use fmt
 
 #pragma warning(disable : 4266) // no override available for virtual member function; function is hidden
+#pragma warning(disable : 4371) // layout of class may have changed from a previous version of the compiler due to better packing of member '<name>'
 #pragma warning(disable : 4464) // relative include path contains '..'
 #pragma warning(disable : 4514) // unreferenced inline function has been removed
 #pragma warning(disable : 4668) // '<name>' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
 #pragma warning(disable : 4710) // function not inlined
+#pragma warning(disable : 4774) // 'string' : format string expected in argument number is not a string literal
 #pragma warning(disable : 4820) // '<n>' bytes padding added after data member '<name>'
 #pragma warning(disable : 5031) // likely mismatch, popping warning state pushed in different file
 #pragma warning(disable : 5032) // detected #pragma warning(push) with no corresponding #pragma warning(pop)
 #pragma warning(disable : 5039) // pointer or reference to potentially throwing function passed to 'extern "C"' function under -EHc.
+#pragma warning(disable : 5204) // class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
 
 // clang-format on
 
