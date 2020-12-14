@@ -108,8 +108,7 @@
 // 4626: assignment operator was implicitly defined as deleted
 // 5026: move constructor was implicitly defined as deleted
 // 5027: move assignment operator was implicitly defined as deleted
-// 5045: Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
-#pragma warning(disable: 4365 4623 4625 4626 5026 5027 5045) // Needed to use fmt
+#pragma warning(disable : 4365 4623 4625 4626 5026 5027) // Needed to use fmt
 
 #pragma warning(disable : 4266) // no override available for virtual member function; function is hidden
 #pragma warning(disable : 4371) // layout of class may have changed from a previous version of the compiler due to better packing of member '<name>'
@@ -122,6 +121,7 @@
 #pragma warning(disable : 5031) // likely mismatch, popping warning state pushed in different file
 #pragma warning(disable : 5032) // detected #pragma warning(push) with no corresponding #pragma warning(pop)
 #pragma warning(disable : 5039) // pointer or reference to potentially throwing function passed to 'extern "C"' function under -EHc.
+#pragma warning(disable : 5045) // Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
 #pragma warning(disable : 5204) // class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
 
 // clang-format on
