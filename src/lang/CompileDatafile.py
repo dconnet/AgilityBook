@@ -55,7 +55,7 @@ class LockFile:
 				st = os.stat(self.m_filename)
 				# If the lock file is older than 300 seconds, just nuke it.
 				# Probably left from a killed build.
-				print(now - st.st_ctime)
+				#print(now - st.st_ctime)
 				if now - st.st_ctime > 300:
 					os.remove(self.m_filename)
 					self.m_fd = os.open(self.m_filename, os.O_CREAT|os.O_EXCL|os.O_RDWR)
