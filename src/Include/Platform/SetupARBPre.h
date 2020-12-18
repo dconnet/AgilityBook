@@ -116,6 +116,7 @@
 #pragma warning(disable : 4514) // unreferenced inline function has been removed
 #pragma warning(disable : 4668) // '<name>' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
 #pragma warning(disable : 4710) // function not inlined
+#pragma warning(disable : 4711) // function '<name>' selected for automatic inline expansion
 #pragma warning(disable : 4774) // 'string' : format string expected in argument number is not a string literal
 #pragma warning(disable : 4820) // '<n>' bytes padding added after data member '<name>'
 #pragma warning(disable : 5031) // likely mismatch, popping warning state pushed in different file
