@@ -58,6 +58,11 @@ public:
 		std::vector<int> const* pColWidths = nullptr,
 		unsigned int idFirst = 0);
 
+	/**
+	 * Update columns when language has changed.
+	 */
+	void UpdateColumns();
+
 	void SizeColumns();
 	virtual void Sort(); // Only sorts if we're sorting (virtual to allow a different sort)
 	void Sort(int col);  // Actual column index from listctrl, turns on sorting

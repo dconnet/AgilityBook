@@ -101,6 +101,13 @@ void CReportListHeader::CreateColumns(
 
 	// Clear existing
 
+	if (m_ctrlList->GetColumnCount() != 0)
+	{
+		OnSave();
+		m_ctrlList->DeleteAllItems();
+		for (int col = m_ctrlList->GetColumnCount() - 1; 0 <= col; --col)
+			m_ctrlList->DeleteColumn(col);
+	}
 	bool wasBound = (m_columnInfo.size() > 0);
 	if (0 < m_idFirst)
 	{
@@ -121,13 +128,6 @@ void CReportListHeader::CreateColumns(
 		m_parent->Unbind(wxEVT_MENU, &CReportListHeader::OnRestore, this, m_idFirst + m_columnInfo.size(), wxID_ANY);
 		m_ctrlList->Unbind(wxEVT_LIST_COL_BEGIN_DRAG, &CReportListHeader::OnBeginColDrag, this);
 		m_ctrlList->Unbind(wxEVT_COMMAND_LIST_COL_RIGHT_CLICK, &CReportListHeader::OnColumnRClick, this);
-	}
-	if (m_ctrlList->GetColumnCount() != 0)
-	{
-		OnSave();
-		m_ctrlList->DeleteAllItems();
-		for (int col = m_ctrlList->GetColumnCount() - 1; 0 <= col; --col)
-			m_ctrlList->DeleteColumn(col);
 	}
 
 	// Initialize
@@ -207,6 +207,22 @@ void CReportListHeader::CreateColumns(
 #if HAS_COLUMNSORDER
 	m_ctrlList->SetColumnsOrder(m_columnOrder);
 #endif
+}
+
+
+void CReportListHeader::UpdateColumns()
+{
+	if (!m_ctrlList)
+		return;
+	for (long iCol = 0; iCol < static_cast<long>(m_columnInfo.size()); ++iCol)
+	{
+		wxListItem item;
+		if (m_ctrlList->GetColumn(iCol, item))
+		{
+			item.SetText(wxGetTranslation(m_columnInfo[iCol].name));
+			m_ctrlList->SetColumn(iCol, item);
+		}
+	}
 }
 
 

@@ -4,6 +4,7 @@
 # Requires msgcat/msgfmt (gettext) in PATH
 #
 # Revision History
+# 2020-12-27 Add missing '-u' option in msgcat to remove duplicates.
 # 2019-05-20 Changed sourceDir argument to '-s' so multiple can be supported.
 # 2016-06-10 Convert to Python3
 # 2016-03-28 Cleanup lockfile on exception
@@ -176,7 +177,7 @@ def CompilePoFiles(wxBaseName, sourceDirs, firstFile, outputDir, targetname, bDe
 			continue
 
 		# -t: output encoding
-		cmd = ['msgcat', '-t', 'utf-8', '-o', autogen, poFile1]
+		cmd = ['msgcat', '-u', '-t', 'utf-8', '-o', autogen, poFile1]
 		for po in poFiles:
 			cmd += [po];
 		RunCommand(cmd, 0)
