@@ -618,6 +618,14 @@ wxLanguage CAgilityBookApp::OnGetLanguage() const
 			lang = static_cast<wxLanguage>(langInfo->Language);
 	}
 
+	// If we haven't saved a lang, and we're running on EN, don't prompt (by returning default)
+	if (wxLANGUAGE_DEFAULT == lang)
+	{
+		wxLocale tmp(wxLANGUAGE_DEFAULT);
+		if (wxLANGUAGE_ENGLISH_US == static_cast<wxLanguage>(tmp.GetLanguage()))
+			lang = wxLANGUAGE_ENGLISH_US;
+	}
+
 	return lang;
 }
 
