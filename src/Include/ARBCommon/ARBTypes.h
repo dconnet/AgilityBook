@@ -143,19 +143,21 @@ enum class ZeroStrip
 	Strip,      ///< Strip
 	AsIs        ///< Don't touch
 };
+
 /**
-	 * Trailing zeros are trimmed unless inPrec=2.
-	 * Then they are only trimmed if all zero (and inPrec=2).
-	 */
+ * Trailing zeros are trimmed unless inPrec=2.
+ * Then they are only trimmed if all zero (and inPrec=2).
+ */
 ARBCOMMON_API std::wstring ToString(
 	double inValue,
 	int inPrec = 2,
 	bool bUseCurrentLocale = true,
 	ZeroStrip eStripZeros = ZeroStrip::Compatible);
 ARBCOMMON_API std::wstring ToString(double inValue, int inPrec, ZeroStrip eStripZeros);
+
 /**
-	 * Compare two doubles, allowing for 'prec' error.
-	 */
+ * Compare two doubles, allowing for 'prec' error.
+ */
 ARBCOMMON_API bool equal(double const& inVal1, double const& inVal2, double inPrec = 1e-9);
 }; // namespace ARBDouble
 

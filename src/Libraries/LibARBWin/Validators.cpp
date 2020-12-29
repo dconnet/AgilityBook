@@ -49,6 +49,7 @@ CGenericValidator::CGenericValidator(
 	, m_pShort(nullptr)
 	, m_pLong(nullptr)
 	, m_pDouble(nullptr)
+	, m_strip(ARBDouble::ZeroStrip::Compatible)
 	, m_Prec(0)
 	, m_Default()
 	, m_bUseDefOnEmpty(bUseDefOnEmpty)
@@ -67,6 +68,7 @@ CGenericValidator::CGenericValidator(short* val, short defVal, bool bUseDefOnEmp
 	, m_pShort(val)
 	, m_pLong(nullptr)
 	, m_pDouble(nullptr)
+	, m_strip(ARBDouble::ZeroStrip::Compatible)
 	, m_Prec(0)
 	, m_Default()
 	, m_bUseDefOnEmpty(bUseDefOnEmpty)
@@ -85,6 +87,7 @@ CGenericValidator::CGenericValidator(long* val, long defVal, bool bUseDefOnEmpty
 	, m_pShort(nullptr)
 	, m_pLong(val)
 	, m_pDouble(nullptr)
+	, m_strip(ARBDouble::ZeroStrip::Compatible)
 	, m_Prec(0)
 	, m_Default()
 	, m_bUseDefOnEmpty(bUseDefOnEmpty)
@@ -99,10 +102,23 @@ CGenericValidator::CGenericValidator(long* val, long defVal, bool bUseDefOnEmpty
 
 
 CGenericValidator::CGenericValidator(double* val, int inPrec, double defVal, bool bUseDefOnEmpty, wxChar const* errMsg)
+	: CGenericValidator(val, ARBDouble::ZeroStrip::Compatible, inPrec, defVal, bUseDefOnEmpty, errMsg)
+{
+}
+
+
+CGenericValidator::CGenericValidator(
+	double* val,
+	ARBDouble::ZeroStrip strip,
+	int inPrec,
+	double defVal,
+	bool bUseDefOnEmpty,
+	wxChar const* errMsg)
 	: m_pUShort(nullptr)
 	, m_pShort(nullptr)
 	, m_pLong(nullptr)
 	, m_pDouble(val)
+	, m_strip(strip)
 	, m_Prec(inPrec)
 	, m_Default()
 	, m_bUseDefOnEmpty(bUseDefOnEmpty)
@@ -121,6 +137,7 @@ CGenericValidator::CGenericValidator(ARBDate* val, wxChar const* errMsg)
 	, m_pShort(nullptr)
 	, m_pLong(nullptr)
 	, m_pDouble(nullptr)
+	, m_strip(ARBDouble::ZeroStrip::Compatible)
 	, m_Prec(0)
 	, m_Default()
 	, m_bUseDefOnEmpty(false)
@@ -138,6 +155,7 @@ CGenericValidator::CGenericValidator(wxDateTime* val, wxChar const* errMsg)
 	, m_pShort(nullptr)
 	, m_pLong(nullptr)
 	, m_pDouble(nullptr)
+	, m_strip(ARBDouble::ZeroStrip::Compatible)
 	, m_Prec(0)
 	, m_Default()
 	, m_bUseDefOnEmpty(false)
@@ -155,6 +173,7 @@ CGenericValidator::CGenericValidator(CGenericValidator const& rhs)
 	, m_pShort(rhs.m_pShort)
 	, m_pLong(rhs.m_pLong)
 	, m_pDouble(rhs.m_pDouble)
+	, m_strip(rhs.m_strip)
 	, m_Prec(rhs.m_Prec)
 	, m_Default(rhs.m_Default)
 	, m_bUseDefOnEmpty(rhs.m_bUseDefOnEmpty)
@@ -173,6 +192,7 @@ bool CGenericValidator::Copy(CGenericValidator const& val)
 	m_pShort = val.m_pShort;
 	m_pLong = val.m_pLong;
 	m_pDouble = val.m_pDouble;
+	m_strip = val.m_strip;
 	m_Prec = val.m_Prec;
 	m_Default = val.m_Default;
 	m_bUseDefOnEmpty = val.m_bUseDefOnEmpty;
@@ -295,7 +315,7 @@ bool CGenericValidator::TransferToWindow()
 		}
 		else if (m_pDouble)
 		{
-			pTextControl->ChangeValue(StringUtil::stringWX(ARBDouble::ToString(*m_pDouble, m_Prec)));
+			pTextControl->ChangeValue(StringUtil::stringWX(ARBDouble::ToString(*m_pDouble, m_Prec, true, m_strip)));
 			return true;
 		}
 		else if (m_pTime)
@@ -396,7 +416,8 @@ bool CGenericValidator::Validate(wxWindow* parent)
 				double dbl = 0.0;
 				if (textVal.empty() && m_bUseDefOnEmpty)
 				{
-					pTextControl->ChangeValue(StringUtil::stringWX(ARBDouble::ToString(m_Default.dbl, m_Prec)));
+					pTextControl->ChangeValue(
+						StringUtil::stringWX(ARBDouble::ToString(m_Default.dbl, m_Prec, true, m_strip)));
 				}
 				else if (!StringUtil::ToDouble(StringUtil::stringW(textVal), dbl))
 				{

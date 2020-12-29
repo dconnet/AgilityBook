@@ -50,6 +50,13 @@ public:
 		double defVal = 0.0,
 		bool bUseDefOnEmpty = true,
 		wxChar const* errMsg = nullptr);
+	CGenericValidator(
+		double* val,
+		ARBDouble::ZeroStrip strip,
+		int inPrec = 2,
+		double defVal = 0.0,
+		bool bUseDefOnEmpty = true,
+		wxChar const* errMsg = nullptr);
 	CGenericValidator(ARBDate* val, wxChar const* errMsg = nullptr);
 	CGenericValidator(wxDateTime* val, wxChar const* errMsg = nullptr);
 	CGenericValidator(CGenericValidator const& rhs);
@@ -72,6 +79,7 @@ private:
 	short* m_pShort;
 	long* m_pLong;
 	double* m_pDouble;
+	ARBDouble::ZeroStrip m_strip;
 	int m_Prec;
 	union
 	{
