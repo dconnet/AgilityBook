@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-01-02 Added VerifyMenuShortcuts
  * 2018-10-11 Moved to Win LibARBWin
  * 2016-02-17 Create a disabled image for toolbar. wx3.1 images are too dark.
  * 2015-12-23 Fix a bug when a separator followed submenu.
@@ -30,6 +31,7 @@
 #include <wx/artprov.h>
 #include <wx/config.h>
 #include <wx/frame.h>
+#include <map>
 #include <set>
 
 #if defined(__WXMSW__)
@@ -468,6 +470,7 @@ void CMenuHelper::CreateMenu(wxFrame* pFrame, wxMenu* mruMenu)
 #endif
 			m_MenuBar->Append(handle.pMenu, name);
 			m_MenuData.push_back(handle);
+			VerifyMenuShortcuts(handle.pMenu);
 		}
 
 		if (mruMenu)
@@ -542,6 +545,7 @@ wxMenu* CMenuHelper::CreatePopupMenu(wxWindow* pWindow, int menuId)
 		bAdded = true;
 	}
 	assert(bAdded);
+	VerifyMenuShortcuts(handle.pMenu);
 	return handle.pMenu;
 }
 
@@ -556,6 +560,8 @@ void CMenuHelper::UpdateMenu(bool bLoadAccelerators)
 		{
 			m_MenuBar->SetMenuLabel(i->idx, wxGetTranslation(i->item.c_str()) + GetAccelString(m_accelData, i->idx));
 			DoSubMenu(nullptr, *i);
+			// TODO: m_MenuData should be verified too
+			VerifyMenuShortcuts((*i).pMenu);
 		}
 
 		wxToolBar* toolbar = m_Frame->GetToolBar();
@@ -574,6 +580,57 @@ void CMenuHelper::UpdateMenu(bool bLoadAccelerators)
 			}
 		}
 	}
+}
+
+
+bool CMenuHelper::VerifyMenuShortcuts(wxMenu* menu, int level)
+{
+	bool hasDups = false;
+#ifdef _DEBUG
+	if (!menu)
+		return hasDups;
+	std::map<wchar_t, wxString> shortcuts;
+	for (auto const& item : menu->GetMenuItems())
+	{
+		if (item->IsSeparator())
+			continue;
+		wxString name = item->GetItemLabel();
+		//wxLogDebug(L"%*s %s", level + 1, L" ", name);
+		// Strip accelerator
+		auto idx = name.Find('\t');
+		if (wxNOT_FOUND != idx)
+			name = name.substr(0, idx);
+		wxString fullname = name;
+		// Strip '&&', we should only have a single '&' now.
+		name.Replace(L"&&", L"", true);
+		// Sanity: Ending with '&' isn't right.
+		if (name.length() > 0 && name[name.length() - 1] == '&')
+		{
+			wxLogDebug(L"WARNING: '%s' ends with '&'", fullname);
+			assert(!"Menu ends with '&'");
+			name = name.substr(0, name.length() - 1);
+		}
+		idx = name.Find('&');
+		if (wxNOT_FOUND != idx)
+		{
+			if (shortcuts.find(name[idx + 1]) != shortcuts.end())
+			{
+				wxLogDebug(
+					L"WARNING: Shortcut '%c' used by '%s' is already in use by '%s'",
+					name[idx + 1],
+					fullname,
+					shortcuts[name[idx + 1]]);
+				assert(!"Duplicate menu shortcut");
+				hasDups = true;
+			}
+			else
+				shortcuts[name[idx + 1]] = fullname;
+		}
+		if (item->GetSubMenu())
+			VerifyMenuShortcuts(item->GetSubMenu(), level + 1);
+	}
+#endif
+	return hasDups;
 }
 
 

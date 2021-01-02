@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-01-02 Added VerifyMenuShortcuts
  * 2018-10-11 Moved to Win LibARBWin
  * 2013-10-13 Changed to using an art provider.
  * 2012-07-13 Created
@@ -181,6 +182,11 @@ public:
 	void UpdateMenu(bool bLoadAccelerators = true);
 
 protected:
+	// Verify menu shortcuts (&-prefixed letters) are unique within a menu.
+	// Returns true if dups are found.
+	// This will only work in DEBUG builds and will print via wxLogDebug.
+	bool VerifyMenuShortcuts(wxMenu* menu, int level = 0);
+
 	void DoMenuItem(
 		wxWindow* pWindow,
 		wxMenu* menu,
