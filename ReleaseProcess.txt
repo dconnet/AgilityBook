@@ -6,7 +6,7 @@ root. (Mine is "d:\dcon\www\agilityrecordbook\") This only works in debug builds
 On new year, update copyright year in:
 - License.txt
 - src/configure.in
-- src/Include/VersionNumber.h
+- src/Include/VersionInfoARB.h
 - src/Projects/xcode*/AgilityBook/AgilityBook/AgilityBook-Info.plist
 - src/Projects/xcode*/ARBHelp/ARBHelp/ARBHelp-Info.plist
 
