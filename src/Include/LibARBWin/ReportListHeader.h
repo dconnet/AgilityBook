@@ -78,6 +78,9 @@ public:
 		return m_iSortCol;
 	}
 
+	// Get the visible columns index and name
+	size_t GetColumns(std::vector<std::pair<long, wxString>>& columns) const;
+
 protected:
 	// Override this to change default columns visibility (default: all visisble)
 	virtual void GetDefaultColumns(std::vector<bool>& columns);

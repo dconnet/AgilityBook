@@ -298,6 +298,28 @@ bool CReportListHeader::SetSorted(bool bSorted)
 }
 
 
+size_t CReportListHeader::GetColumns(std::vector<std::pair<long, wxString>>& columns) const
+{
+	columns.clear();
+#if HAS_COLUMNSORDER
+	wxArrayInt columnOrder = m_ctrlList->GetColumnsOrder();
+#else
+	wxArrayInt columnOrder = m_columnOrder;
+#endif
+	for (size_t i = 0; i < columnOrder.size(); ++i)
+	{
+		if (m_columnVisible[columnOrder[i]])
+		{
+			wxListItem item;
+			item.SetMask(wxLIST_MASK_TEXT);
+			m_ctrlList->GetColumn(columnOrder[i], item);
+			columns.push_back(std::make_pair(columnOrder[i], item.GetText()));
+		}
+	}
+	return columns.size();
+}
+
+
 void CReportListHeader::GetDefaultColumns(std::vector<bool>& columns)
 {
 	columns.clear();
