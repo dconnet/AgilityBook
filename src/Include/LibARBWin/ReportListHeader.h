@@ -88,7 +88,7 @@ protected:
 	virtual void OnLoad();
 	virtual void OnSave();
 
-	void OnCloseParent(wxCloseEvent& evt);
+	void OnDestroyParent(wxWindowDestroyEvent& evt);
 	void OnBeginColDrag(wxListEvent& evt);
 	void OnColumnRClick(wxListEvent& evt);
 	void OnColumnClick(wxListEvent& evt);

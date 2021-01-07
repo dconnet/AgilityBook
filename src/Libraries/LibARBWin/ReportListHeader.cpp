@@ -84,7 +84,9 @@ void CReportListHeader::Initialize(wxWindow* parent, CReportListCtrl* ctrlList)
 	m_parent = parent;
 	m_ctrlList = ctrlList;
 
-	m_parent->Bind(wxEVT_CLOSE_WINDOW, &CReportListHeader::OnCloseParent, this);
+	// Since the destroy message happens when the control is deleted, watch the parent, not the list.
+	// Otherwise, this object may be destroyed before the event triggers.
+	m_ctrlList->GetParent()->Bind(wxEVT_DESTROY, &CReportListHeader::OnDestroyParent, this);
 }
 
 
@@ -331,7 +333,7 @@ void CReportListHeader::OnLoad()
 {
 	if (!m_baseConfig.empty())
 	{
-		wxString str = wxConfig::Get()->Read(CFG_SORTING_ORDER(m_baseConfig), L"");
+		wxString str = wxConfig::Get()->Read(CFG_SORTING_ORDER2(m_baseConfig), L"");
 		for (size_t i = 0; i < m_columnInfo.size() && !str.IsEmpty(); ++i)
 		{
 			m_columnOrder[i] = StringUtil::ToCLong(StringUtil::stringW(str));
@@ -342,7 +344,7 @@ void CReportListHeader::OnLoad()
 				str.Empty();
 		}
 
-		str = wxConfig::Get()->Read(CFG_SORTING_SORT(m_baseConfig), L"");
+		str = wxConfig::Get()->Read(CFG_SORTING_VISIBLE(m_baseConfig), L"");
 		for (size_t i = 0; i < m_columnInfo.size() && !str.IsEmpty(); ++i)
 		{
 			m_columnVisible[i] = (StringUtil::ToCLong(StringUtil::stringW(str)) != 0);
@@ -382,7 +384,7 @@ void CReportListHeader::OnSave()
 				str << L",";
 			str << m_columnOrder[i];
 		}
-		wxConfig::Get()->Write(CFG_SORTING_ORDER(m_baseConfig), str);
+		wxConfig::Get()->Write(CFG_SORTING_ORDER2(m_baseConfig), str);
 
 		str.clear();
 		for (size_t i = 0; i < m_columnVisible.size(); ++i)
@@ -391,7 +393,7 @@ void CReportListHeader::OnSave()
 				str << L",";
 			str << (m_columnVisible[i] ? L"1" : L"0");
 		}
-		wxConfig::Get()->Write(CFG_SORTING_SORT(m_baseConfig), str);
+		wxConfig::Get()->Write(CFG_SORTING_VISIBLE(m_baseConfig), str);
 
 		str.clear();
 		for (int i = 0; i < m_ctrlList->GetColumnCount(); ++i)
@@ -412,7 +414,7 @@ void CReportListHeader::OnSave()
 }
 
 
-void CReportListHeader::OnCloseParent(wxCloseEvent& evt)
+void CReportListHeader::OnDestroyParent(wxWindowDestroyEvent& evt)
 {
 	assert(m_ctrlList);
 #if HAS_COLUMNSORDER
