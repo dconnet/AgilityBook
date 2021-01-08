@@ -30,10 +30,7 @@
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/ReportListCtrl.h"
-#include "LibARBWin/Validators.h"
-#include "LibARBWin/Widgets.h"
-#include <wx/datectrl.h>
-#include <wx/dateevt.h>
+#include "LibARBWin/ReportListHeader.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -41,18 +38,29 @@
 
 namespace
 {
+constexpr int k_colDate = 0;
+constexpr int k_colType = 1;
+constexpr int k_colPoints = 2;
+constexpr int k_colOther = 3;
+constexpr int k_colVenue = 4;
+constexpr int k_colMultiQ = 5;
+constexpr int k_colDiv = 6;
+constexpr int k_colLevel = 7;
+constexpr int k_colEvent = 8;
+constexpr int k_colSubname = 9;
+constexpr int k_colComments = 10;
 static const std::vector<CReportListHeader::ColumnInfo> k_columnsPointsInfo{
-	{0, wxLIST_FORMAT_LEFT, arbT("IDS_COL_DATE")},
-	{1, wxLIST_FORMAT_LEFT, arbT("IDS_COL_TYPE")},
-	{2, wxLIST_FORMAT_LEFT, arbT("IDS_COL_POINTS")},
-	{3, wxLIST_FORMAT_LEFT, arbT("IDS_OTHERPOINTS")},
-	{4, wxLIST_FORMAT_LEFT, arbT("IDS_COL_VENUE")},
-	{5, wxLIST_FORMAT_LEFT, arbT("IDS_COL_MULTIQ")},
-	{6, wxLIST_FORMAT_LEFT, arbT("IDS_COL_DIVISION")},
-	{7, wxLIST_FORMAT_LEFT, arbT("IDS_COL_LEVEL")},
-	{8, wxLIST_FORMAT_LEFT, arbT("IDS_COL_EVENT")},
-	{9, wxLIST_FORMAT_LEFT, arbT("IDS_COL_SUBNAME")},
-	{10, wxLIST_FORMAT_LEFT, arbT("IDS_COL_COMMENTS")},
+	{k_colDate, wxLIST_FORMAT_LEFT, arbT("IDS_COL_DATE")},
+	{k_colType, wxLIST_FORMAT_LEFT, arbT("IDS_COL_TYPE")},
+	{k_colPoints, wxLIST_FORMAT_LEFT, arbT("IDS_COL_POINTS")},
+	{k_colOther, wxLIST_FORMAT_LEFT, arbT("IDS_OTHERPOINTS")},
+	{k_colVenue, wxLIST_FORMAT_LEFT, arbT("IDS_COL_VENUE")},
+	{k_colMultiQ, wxLIST_FORMAT_LEFT, arbT("IDS_COL_MULTIQ")},
+	{k_colDiv, wxLIST_FORMAT_LEFT, arbT("IDS_COL_DIVISION")},
+	{k_colLevel, wxLIST_FORMAT_LEFT, arbT("IDS_COL_LEVEL")},
+	{k_colEvent, wxLIST_FORMAT_LEFT, arbT("IDS_COL_EVENT")},
+	{k_colSubname, wxLIST_FORMAT_LEFT, arbT("IDS_COL_SUBNAME")},
+	{k_colComments, wxLIST_FORMAT_LEFT, arbT("IDS_COL_COMMENTS")},
 };
 } // namespace
 
@@ -89,67 +97,67 @@ int CDlgDogDataPoint::OnCompare(CListDataPtr const& item, long iCol) const
 	int rc = 0;
 	switch (iCol)
 	{
-	case 0: // date
+	case k_colDate:
 		if (pExistingPoints1->GetDate() < pExistingPoints2->GetDate())
 			rc = -1;
 		else if (pExistingPoints1->GetDate() > pExistingPoints2->GetDate())
 			rc = 1;
 		break;
-	case 1: // Type
+	case k_colType:
 		if (pExistingPoints1->GetType() < pExistingPoints2->GetType())
 			rc = -1;
 		else if (pExistingPoints1->GetType() > pExistingPoints2->GetType())
 			rc = 1;
 		break;
-	case 2: // Points
+	case k_colPoints:
 		if (pExistingPoints1->GetPoints() < pExistingPoints2->GetPoints())
 			rc = -1;
 		else if (pExistingPoints1->GetPoints() > pExistingPoints2->GetPoints())
 			rc = 1;
 		break;
-	case 3: // Other Points
+	case k_colOther:
 		if (pExistingPoints1->GetTypeName() < pExistingPoints2->GetTypeName())
 			rc = -1;
 		else if (pExistingPoints1->GetTypeName() > pExistingPoints2->GetTypeName())
 			rc = 1;
 		break;
-	case 4: // Venue
+	case k_colVenue:
 		if (pExistingPoints1->GetVenue() < pExistingPoints2->GetVenue())
 			rc = -1;
 		else if (pExistingPoints1->GetVenue() > pExistingPoints2->GetVenue())
 			rc = 1;
 		break;
-	case 5: // MultiQ
+	case k_colMultiQ:
 		if (pExistingPoints1->GetMultiQ() < pExistingPoints2->GetMultiQ())
 			rc = -1;
 		else if (pExistingPoints1->GetMultiQ() > pExistingPoints2->GetMultiQ())
 			rc = 1;
 		break;
-	case 6: // Division
+	case k_colDiv:
 		if (pExistingPoints1->GetDivision() < pExistingPoints2->GetDivision())
 			rc = -1;
 		else if (pExistingPoints1->GetDivision() > pExistingPoints2->GetDivision())
 			rc = 1;
 		break;
-	case 7: // Level
+	case k_colLevel:
 		if (pExistingPoints1->GetLevel() < pExistingPoints2->GetLevel())
 			rc = -1;
 		else if (pExistingPoints1->GetLevel() > pExistingPoints2->GetLevel())
 			rc = 1;
 		break;
-	case 8: // Event
+	case k_colEvent:
 		if (pExistingPoints1->GetEvent() < pExistingPoints2->GetEvent())
 			rc = -1;
 		else if (pExistingPoints1->GetEvent() > pExistingPoints2->GetEvent())
 			rc = 1;
 		break;
-	case 9: // Subname
+	case k_colSubname:
 		if (pExistingPoints1->GetSubName() < pExistingPoints2->GetSubName())
 			rc = -1;
 		else if (pExistingPoints1->GetSubName() > pExistingPoints2->GetSubName())
 			rc = 1;
 		break;
-	case 10: // Comment
+	case k_colComments:
 		if (pExistingPoints1->GetComment() < pExistingPoints2->GetComment())
 			rc = -1;
 		else if (pExistingPoints1->GetComment() > pExistingPoints2->GetComment())
@@ -165,37 +173,37 @@ std::wstring CDlgDogDataPoint::OnNeedText(long iCol) const
 	std::wstring text;
 	switch (iCol)
 	{
-	case 0:
+	case k_colDate:
 		text = m_Pts->GetDate().GetString();
 		break;
-	case 1: // Type
+	case k_colType:
 		text = ARBDogExistingPoints::GetPointTypeName(m_Pts->GetType());
 		break;
-	case 2: // Points
+	case k_colPoints:
 		text = fmt::format(L"{}", m_Pts->GetPoints());
 		break;
-	case 3: // Other Points
+	case k_colOther:
 		text = m_Pts->GetTypeName();
 		break;
-	case 4: // Venue
+	case k_colVenue:
 		text = m_Pts->GetVenue();
 		break;
-	case 5: // MultiQ
+	case k_colMultiQ:
 		text = m_Pts->GetMultiQ();
 		break;
-	case 6: // Division
+	case k_colDiv:
 		text = m_Pts->GetDivision();
 		break;
-	case 7: // Level
+	case k_colLevel:
 		text = m_Pts->GetLevel();
 		break;
-	case 8: // Event
+	case k_colEvent:
 		text = m_Pts->GetEvent();
 		break;
-	case 9: // SubName
+	case k_colSubname:
 		text = m_Pts->GetSubName();
 		break;
-	case 10: // Comment
+	case k_colComments:
 		text = StringUtil::Replace(m_Pts->GetComment(), L"\n", L" ");
 		break;
 	}

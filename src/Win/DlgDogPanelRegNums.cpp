@@ -28,10 +28,7 @@
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/ReportListCtrl.h"
-#include "LibARBWin/Validators.h"
-#include "LibARBWin/Widgets.h"
-#include <wx/datectrl.h>
-#include <wx/dateevt.h>
+#include "LibARBWin/ReportListHeader.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -39,12 +36,17 @@
 
 namespace
 {
+constexpr int k_colVenue = 0;
+constexpr int k_colNumber = 1;
+constexpr int k_colHeight = 2;
+constexpr int k_colReceived = 3;
+constexpr int k_colNote = 4;
 static const std::vector<CReportListHeader::ColumnInfo> k_columnsRegNumInfo{
-	{0, wxLIST_FORMAT_LEFT, arbT("IDS_COL_VENUE")},
-	{1, wxLIST_FORMAT_LEFT, arbT("IDS_COL_NUMBER")},
-	{2, wxLIST_FORMAT_LEFT, arbT("IDS_COL_HEIGHT")},
-	{3, wxLIST_FORMAT_LEFT, arbT("IDS_COL_RECEIVED")},
-	{4, wxLIST_FORMAT_LEFT, arbT("IDS_COL_NOTE")},
+	{k_colVenue, wxLIST_FORMAT_LEFT, arbT("IDS_COL_VENUE")},
+	{k_colNumber, wxLIST_FORMAT_LEFT, arbT("IDS_COL_NUMBER")},
+	{k_colHeight, wxLIST_FORMAT_LEFT, arbT("IDS_COL_HEIGHT")},
+	{k_colReceived, wxLIST_FORMAT_LEFT, arbT("IDS_COL_RECEIVED")},
+	{k_colNote, wxLIST_FORMAT_LEFT, arbT("IDS_COL_NOTE")},
 };
 } // namespace
 
@@ -82,31 +84,31 @@ int CDlgDogDataRegNum::OnCompare(CListDataPtr const& item, long iCol) const
 	int rc = 0;
 	switch (iCol)
 	{
-	case 0: // venue
+	case k_colVenue:
 		if (pRegNum1->GetVenue() < pRegNum2->GetVenue())
 			rc = -1;
 		else if (pRegNum1->GetVenue() > pRegNum2->GetVenue())
 			rc = 1;
 		break;
-	case 1: // number
+	case k_colNumber:
 		if (pRegNum1->GetNumber() < pRegNum2->GetNumber())
 			rc = -1;
 		else if (pRegNum1->GetNumber() > pRegNum2->GetNumber())
 			rc = 1;
 		break;
-	case 2: // height
+	case k_colHeight:
 		if (pRegNum1->GetNumber() < pRegNum2->GetNumber())
 			rc = -1;
 		else if (pRegNum1->GetNumber() > pRegNum2->GetNumber())
 			rc = 1;
 		break;
-	case 3: // received
+	case k_colReceived:
 		if (!pRegNum1->GetReceived() && pRegNum2->GetReceived())
 			rc = -1;
 		else if (pRegNum1->GetReceived() && !pRegNum2->GetReceived())
 			rc = 1;
 		break;
-	case 4: // note
+	case k_colNote:
 		if (pRegNum1->GetNote() < pRegNum2->GetNote())
 			rc = -1;
 		else if (pRegNum1->GetNote() > pRegNum2->GetNote())
@@ -122,19 +124,19 @@ std::wstring CDlgDogDataRegNum::OnNeedText(long iCol) const
 	std::wstring text;
 	switch (iCol)
 	{
-	case 0:
+	case k_colVenue:
 		text = m_RegNum->GetVenue();
 		break;
-	case 1:
+	case k_colNumber:
 		text = m_RegNum->GetNumber();
 		break;
-	case 2:
+	case k_colHeight:
 		text = m_RegNum->GetHeight();
 		break;
-	case 3:
+	case k_colReceived:
 		text = m_RegNum->GetReceived() ? L"x" : L"";
 		break;
-	case 4:
+	case k_colNote:
 		text = StringUtil::Replace(m_RegNum->GetNote(), L"\n", L" ");
 		break;
 	}

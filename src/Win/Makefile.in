@@ -95,6 +95,12 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	DlgRegNum.cpp \
 	DlgReorder.cpp \
 	DlgRun.cpp \
+	DlgRunPanelBase.cpp \
+	DlgRunPanelComments.cpp \
+	DlgRunPanelCRCD.cpp \
+	DlgRunPanelLinks.cpp \
+	DlgRunPanelRefRuns.cpp \
+	DlgRunPanelScore.cpp \
 	DlgSelectDog.cpp \
 	DlgSelectURL.cpp \
 	DlgTitle.cpp \

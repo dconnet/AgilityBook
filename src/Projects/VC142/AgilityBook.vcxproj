@@ -483,6 +483,12 @@
     <ClCompile Include="..\..\Win\DlgRegNum.cpp" />
     <ClCompile Include="..\..\Win\DlgReorder.cpp" />
     <ClCompile Include="..\..\Win\DlgRun.cpp" />
+    <ClCompile Include="..\..\Win\DlgRunPanelBase.cpp" />
+    <ClCompile Include="..\..\Win\DlgRunPanelComments.cpp" />
+    <ClCompile Include="..\..\Win\DlgRunPanelCRCD.cpp" />
+    <ClCompile Include="..\..\Win\DlgRunPanelLinks.cpp" />
+    <ClCompile Include="..\..\Win\DlgRunPanelRefRuns.cpp" />
+    <ClCompile Include="..\..\Win\DlgRunPanelScore.cpp" />
     <ClCompile Include="..\..\Win\DlgSelectDog.cpp" />
     <ClCompile Include="..\..\Win\DlgSelectURL.cpp" />
     <ClCompile Include="..\..\Win\DlgTitle.cpp" />
@@ -604,6 +610,12 @@
     <ClInclude Include="..\..\Win\DlgRegNum.h" />
     <ClInclude Include="..\..\Win\DlgReorder.h" />
     <ClInclude Include="..\..\Win\DlgRun.h" />
+    <ClInclude Include="..\..\Win\DlgRunPanelBase.h" />
+    <ClInclude Include="..\..\Win\DlgRunPanelComments.h" />
+    <ClInclude Include="..\..\Win\DlgRunPanelCRCD.h" />
+    <ClInclude Include="..\..\Win\DlgRunPanelLinks.h" />
+    <ClInclude Include="..\..\Win\DlgRunPanelRefRuns.h" />
+    <ClInclude Include="..\..\Win\DlgRunPanelScore.h" />
     <ClInclude Include="..\..\Win\DlgSelectDog.h" />
     <ClInclude Include="..\..\Win\DlgSelectURL.h" />
     <ClInclude Include="..\..\Win\DlgTitle.h" />

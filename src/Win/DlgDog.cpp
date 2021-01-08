@@ -35,19 +35,8 @@
 #include "DlgDogPanelProp.h"
 #include "DlgDogPanelRegNums.h"
 #include "DlgDogPanelTitles.h"
-#include "DlgExistingPoints.h"
-#include "DlgRegNum.h"
 #include "FilterOptions.h"
-#include "ImageHelper.h"
 
-#include "ARB/ARBConfig.h"
-#include "ARB/ARBDog.h"
-#include "ARBCommon/StringUtil.h"
-#include "LibARBWin/ListData.h"
-#include "LibARBWin/ReportListCtrl.h"
-#include "LibARBWin/Validators.h"
-#include <wx/datectrl.h>
-#include <wx/dateevt.h>
 #include <wx/notebook.h>
 
 #ifdef __WXMSW__

@@ -34,10 +34,7 @@
 #include "LibARBWin/ImageManager.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/ReportListCtrl.h"
-#include "LibARBWin/Validators.h"
-#include "LibARBWin/Widgets.h"
-#include <wx/datectrl.h>
-#include <wx/dateevt.h>
+#include "LibARBWin/ReportListHeader.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -45,12 +42,17 @@
 
 namespace
 {
+constexpr int k_colReceived = 0;
+constexpr int k_colDate = 1;
+constexpr int k_colVenue = 2;
+constexpr int k_colTitle = 3;
+constexpr int k_colName = 4;
 static const std::vector<CReportListHeader::ColumnInfo> k_columnsTitleInfo{
-	{0, wxLIST_FORMAT_LEFT, L""},
-	{1, wxLIST_FORMAT_LEFT, arbT("IDS_COL_DATE")},
-	{2, wxLIST_FORMAT_LEFT, arbT("IDS_COL_VENUE")},
-	{3, wxLIST_FORMAT_LEFT, arbT("IDS_COL_TITLE")},
-	{4, wxLIST_FORMAT_LEFT, arbT("IDS_COL_NAME")},
+	{k_colReceived, wxLIST_FORMAT_LEFT, L""},
+	{k_colDate, wxLIST_FORMAT_LEFT, arbT("IDS_COL_DATE")},
+	{k_colVenue, wxLIST_FORMAT_LEFT, arbT("IDS_COL_VENUE")},
+	{k_colTitle, wxLIST_FORMAT_LEFT, arbT("IDS_COL_TITLE")},
+	{k_colName, wxLIST_FORMAT_LEFT, arbT("IDS_COL_NAME")},
 };
 static const std::vector<int> k_columnsWidth{5, 25, 25, 25, 25};
 } // namespace
@@ -90,7 +92,7 @@ int CDlgDogDataTitle::OnCompare(CListDataPtr const& item, long iCol) const
 	int rc = 0;
 	switch (iCol)
 	{
-	case 0: // Received and hidden
+	case k_colReceived: // Received and hidden
 		if (!pTitle1->GetReceived() && pTitle2->GetReceived())
 			rc = -1;
 		else if (pTitle1->GetReceived() && !pTitle2->GetReceived())
@@ -100,19 +102,19 @@ int CDlgDogDataTitle::OnCompare(CListDataPtr const& item, long iCol) const
 		else if (pTitle1->IsHidden() && !pTitle2->IsHidden())
 			rc = 1;
 		break;
-	case 2: // venue
-		if (pTitle1->GetVenue() < pTitle2->GetVenue())
-			rc = -1;
-		else if (pTitle1->GetVenue() > pTitle2->GetVenue())
-			rc = 1;
-		break;
-	case 1: // date
+	case k_colDate:
 		if (pTitle1->GetDate() < pTitle2->GetDate())
 			rc = -1;
 		else if (pTitle1->GetDate() > pTitle2->GetDate())
 			rc = 1;
 		break;
-	case 3: // name
+	case k_colVenue:
+		if (pTitle1->GetVenue() < pTitle2->GetVenue())
+			rc = -1;
+		else if (pTitle1->GetVenue() > pTitle2->GetVenue())
+			rc = 1;
+		break;
+	case k_colTitle:
 	{
 		std::wstring n1 = pTitle1->GetGenericName();
 		std::wstring n2 = pTitle2->GetGenericName();
@@ -122,7 +124,7 @@ int CDlgDogDataTitle::OnCompare(CListDataPtr const& item, long iCol) const
 			rc = 1;
 	}
 	break;
-	case 4: // nice name
+	case k_colName:
 	{
 		std::wstring name1
 			= m_pDlg->m_pDoc->Book().GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetRawName());
@@ -144,19 +146,19 @@ std::wstring CDlgDogDataTitle::OnNeedText(long iCol) const
 	std::wstring text;
 	switch (iCol)
 	{
-	case 1:
+	case k_colDate:
 		if (m_Title->GetDate().IsValid())
 			text = m_Title->GetDate().GetString();
 		else
 			text = _("IDS_UNEARNED");
 		break;
-	case 2:
+	case k_colVenue:
 		text = m_Title->GetVenue();
 		break;
-	case 3:
+	case k_colTitle:
 		text = m_Title->GetGenericName();
 		break;
-	case 4:
+	case k_colName:
 		text = m_pDlg->m_pDoc->Book().GetConfig().GetTitleNiceName(m_Title->GetVenue(), m_Title->GetRawName());
 		break;
 	}
@@ -168,7 +170,7 @@ void CDlgDogDataTitle::OnNeedListItem(long iCol, wxListItem& info) const
 {
 	switch (iCol)
 	{
-	case 0:
+	case k_colReceived:
 		info.SetMask(info.GetMask() | wxLIST_MASK_IMAGE);
 		if (m_Title->IsHidden())
 		{
