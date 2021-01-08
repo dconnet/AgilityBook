@@ -354,6 +354,12 @@ void CReportListHeader::OnLoad()
 			else
 				str.Empty();
 		}
+		// Sanity check: If all are hidden, turn all on. (Otherwise control is just blank)
+		if (static_cast<int>(m_columnVisible.size())
+			== std::count(m_columnVisible.begin(), m_columnVisible.end(), false))
+		{
+			std::fill(m_columnVisible.begin(), m_columnVisible.end(), true);
+		}
 
 		str = wxConfig::Get()->Read(CFG_COLUMN_WIDTHS(m_baseConfig), L"");
 		m_colWidths.clear();

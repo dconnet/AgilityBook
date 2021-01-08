@@ -455,6 +455,11 @@
     <ClCompile Include="..\..\Win\DlgConfigVenue.cpp" />
     <ClCompile Include="..\..\Win\DlgCRCDViewer.cpp" />
     <ClCompile Include="..\..\Win\DlgDog.cpp" />
+    <ClCompile Include="..\..\Win\DlgDogPanelBase.cpp" />
+    <ClCompile Include="..\..\Win\DlgDogPanelPoints.cpp" />
+    <ClCompile Include="..\..\Win\DlgDogPanelProp.cpp" />
+    <ClCompile Include="..\..\Win\DlgDogPanelRegNums.cpp" />
+    <ClCompile Include="..\..\Win\DlgDogPanelTitles.cpp" />
     <ClCompile Include="..\..\Win\DlgEventSelect.cpp" />
     <ClCompile Include="..\..\Win\DlgExistingPoints.cpp" />
     <ClCompile Include="..\..\Win\DlgFault.cpp" />
@@ -571,6 +576,11 @@
     <ClInclude Include="..\..\Win\DlgConfigVenue.h" />
     <ClInclude Include="..\..\Win\DlgCRCDViewer.h" />
     <ClInclude Include="..\..\Win\DlgDog.h" />
+    <ClInclude Include="..\..\Win\DlgDogPanelBase.h" />
+    <ClInclude Include="..\..\Win\DlgDogPanelPoints.h" />
+    <ClInclude Include="..\..\Win\DlgDogPanelProp.h" />
+    <ClInclude Include="..\..\Win\DlgDogPanelRegNums.h" />
+    <ClInclude Include="..\..\Win\DlgDogPanelTitles.h" />
     <ClInclude Include="..\..\Win\DlgEventSelect.h" />
     <ClInclude Include="..\..\Win\DlgExistingPoints.h" />
     <ClInclude Include="..\..\Win\DlgFault.h" />

@@ -150,7 +150,7 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	sizerLinksBox1->Add(sizerLinks1, 1, wxEXPAND, 0);
 
 	sizerBox->Add(sizerLinksBox1, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 1));
-	sizerBox->Add(usefulLinks, 0, wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerBox->Add(usefulLinks, 0, wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerLinksBox2 = new wxBoxSizer(wxHORIZONTAL);
 	sizerLinksBox2->Add(wxDLG_UNIT_X(this, 10), 0, 0, wxEXPAND, 0);
@@ -166,7 +166,7 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	sizerBox->Add(credits, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerButtons = new wxBoxSizer(wxHORIZONTAL);
-	sizerButtons->Add(updates, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerButtons->Add(updates, 0, 0, 0);
 	sizerButtons->Add(0, 0, 1, wxEXPAND, 0);
 	sizerButtons->Add(ok, 0, 0, 0);
 

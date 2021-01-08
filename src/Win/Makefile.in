@@ -67,6 +67,11 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	DlgConfigVenue.cpp \
 	DlgCRCDViewer.cpp \
 	DlgDog.cpp \
+	DlgDogPanelBase.cpp \
+	DlgDogPanelPoints.cpp \
+	DlgDogPanelProp.cpp \
+	DlgDogPanelRegNums.cpp \
+	DlgDogPanelTitles.cpp \
 	DlgEventSelect.cpp \
 	DlgExistingPoints.cpp \
 	DlgFault.cpp \
