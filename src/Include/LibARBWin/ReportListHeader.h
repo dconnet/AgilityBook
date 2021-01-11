@@ -43,6 +43,16 @@ public:
 	void Initialize(wxWindow* parent, CReportListCtrl* ctrlList);
 
 	/**
+	 * Updates internal settings and calls OnSave to save them. There should be
+	 * no need to override this. Just override OnSave.
+	 * Note: This cannot watch the destroy message for either the list or the
+	 * parent - this object is likely to have been destroyed already. The object
+	 * that has this will have already invoked its dtor - the list is then
+	 * destoryed in that objects wx base class.
+	 */
+	void Save();
+
+	/**
 	 * Create columns. This may be called multiple times with different columns to allow switching views.
 	 * @param inColumns Format and name for each column.
 	 * @param defaultSort Initial sort column (normal 0-based, <0: no sort)
@@ -88,7 +98,6 @@ protected:
 	virtual void OnLoad();
 	virtual void OnSave();
 
-	void OnDestroyParent(wxWindowDestroyEvent& evt);
 	void OnBeginColDrag(wxListEvent& evt);
 	void OnColumnRClick(wxListEvent& evt);
 	void OnColumnClick(wxListEvent& evt);

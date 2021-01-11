@@ -267,15 +267,15 @@ CDlgDogPanelTitles::CDlgDogPanelTitles(CAgilityBookDoc* pDoc, ARBDogPtr const& i
 
 bool CDlgDogPanelTitles::Save(unsigned int& hint)
 {
-	bool bModified = false;
+	CDlgDogPanelReportBase::Save(hint);
 
+	bool bModified = false;
 	if (m_pDog->GetTitles() != m_Titles)
 	{
 		bModified = true;
 		hint |= UPDATE_POINTS_VIEW;
 		m_pDog->GetTitles() = m_Titles;
 	}
-
 	return bModified;
 }
 

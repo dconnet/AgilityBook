@@ -173,15 +173,15 @@ CDlgDogPanelRegNums::CDlgDogPanelRegNums(CAgilityBookDoc* pDoc, ARBDogPtr const&
 
 bool CDlgDogPanelRegNums::Save(unsigned int& hint)
 {
-	bool bModified = false;
+	CDlgDogPanelReportBase::Save(hint);
 
+	bool bModified = false;
 	if (m_pDog->GetRegNums() != m_RegNums)
 	{
 		bModified = true;
 		hint |= UPDATE_POINTS_VIEW;
 		m_pDog->GetRegNums() = m_RegNums;
 	}
-
 	return bModified;
 }
 

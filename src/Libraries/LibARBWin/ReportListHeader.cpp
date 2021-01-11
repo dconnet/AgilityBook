@@ -83,10 +83,16 @@ void CReportListHeader::Initialize(wxWindow* parent, CReportListCtrl* ctrlList)
 
 	m_parent = parent;
 	m_ctrlList = ctrlList;
+}
 
-	// Since the destroy message happens when the control is deleted, watch the parent, not the list.
-	// Otherwise, this object may be destroyed before the event triggers.
-	m_ctrlList->GetParent()->Bind(wxEVT_DESTROY, &CReportListHeader::OnDestroyParent, this);
+
+void CReportListHeader::Save()
+{
+	assert(m_ctrlList);
+#if HAS_COLUMNSORDER
+	m_columnOrder = m_ctrlList->GetColumnsOrder();
+#endif
+	OnSave();
 }
 
 
@@ -417,19 +423,6 @@ void CReportListHeader::OnSave()
 
 		wxConfig::Get()->Write(CFG_SORT_COLUMN(m_baseConfig), m_iSortCol);
 	}
-}
-
-
-void CReportListHeader::OnDestroyParent(wxWindowDestroyEvent& evt)
-{
-	assert(m_ctrlList);
-#if HAS_COLUMNSORDER
-	m_columnOrder = m_ctrlList->GetColumnsOrder();
-#endif
-
-	OnSave();
-
-	evt.Skip();
 }
 
 

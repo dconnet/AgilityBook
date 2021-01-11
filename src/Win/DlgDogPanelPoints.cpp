@@ -263,15 +263,15 @@ CDlgDogPanelPoints::CDlgDogPanelPoints(CAgilityBookDoc* pDoc, ARBDogPtr const& i
 
 bool CDlgDogPanelPoints::Save(unsigned int& hint)
 {
-	bool bModified = false;
+	CDlgDogPanelReportBase::Save(hint);
 
+	bool bModified = false;
 	if (m_pDog->GetExistingPoints() != m_ExistingPoints)
 	{
 		bModified = true;
 		hint |= UPDATE_POINTS_VIEW;
 		m_pDog->GetExistingPoints() = m_ExistingPoints;
 	}
-
 	return bModified;
 }
 

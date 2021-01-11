@@ -38,6 +38,7 @@ class CDlgDogPanelReportBase : public CDlgDogPanelBase
 public:
 	CDlgDogPanelReportBase(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog, wxWindow* parent);
 	wxWindow* GetInitialControl() override;
+	bool Save(unsigned int& hint) override;
 
 protected:
 	void DeleteListItem(long index);

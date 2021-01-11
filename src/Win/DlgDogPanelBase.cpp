@@ -43,6 +43,13 @@ CDlgDogPanelReportBase::CDlgDogPanelReportBase(CAgilityBookDoc* pDoc, ARBDogPtr 
 }
 
 
+bool CDlgDogPanelReportBase::Save(unsigned int& hint)
+{
+	m_reportColumn.Save();
+	return false;
+}
+
+
 wxWindow* CDlgDogPanelReportBase::GetInitialControl()
 {
 	return m_ctrlList;

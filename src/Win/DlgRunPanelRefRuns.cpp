@@ -307,6 +307,7 @@ bool CDlgRunPanelRefRuns::Validate()
 
 bool CDlgRunPanelRefRuns::Save()
 {
+	m_reportColumn.Save();
 	return true;
 }
 
