@@ -349,7 +349,7 @@ void CDlgDogPanelPoints::DoDelete()
 			if (pData)
 				pExistingPoints = pData->GetData();
 			m_ExistingPoints.DeleteExistingPoints(pExistingPoints);
-			m_ctrlList->DeleteItem(*i);
+			DeleteListItem(*i);
 		}
 		UpdateControls();
 	}

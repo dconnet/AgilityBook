@@ -49,23 +49,14 @@ wxWindow* CDlgDogPanelReportBase::GetInitialControl()
 }
 
 
-// CViewNameNumberDataPtr CDlgDogPanelReportBase::GetData(long index) const
-//{
-//	if (!m_ctrlList)
-//		return CViewNameNumberDataPtr();
-//	return std::dynamic_pointer_cast<CViewNameNumberData, CListData>(m_ctrlList->GetData(index));
-//}
-//
-//
-// void CDlgDogPanelReportBase::GetNameNumberData(std::vector<NameNumber>& items) const
-//{
-//	items.clear();
-//	for (int idx = 0; idx < m_ctrlList->GetItemCount(); ++idx)
-//	{
-//		auto data = GetData(idx);
-//		items.push_back(data->Data());
-//	}
-//}
+void CDlgDogPanelReportBase::DeleteListItem(long index)
+{
+	m_ctrlList->DeleteItem(index);
+	if (index == m_ctrlList->GetItemCount())
+		--index;
+	if (0 <= index)
+		m_ctrlList->Select(index);
+}
 
 
 void CDlgDogPanelReportBase::DoCreate(bool hasMultiSel, bool hasImageList)
@@ -118,19 +109,6 @@ void CDlgDogPanelReportBase::UpdateControls()
 		m_btnDelete->Enable(items.size() == 1);
 	else
 		m_btnDelete->Enable(items.size() > 0);
-}
-
-
-void CDlgDogPanelReportBase::DoDelete()
-{
-	std::vector<long> items;
-	if (0 < m_ctrlList->GetSelection(items))
-	{
-		for (size_t idx = items.size(); idx > 0; --idx)
-		{
-			m_ctrlList->DeleteItem(items[idx - 1]);
-		}
-	}
 }
 
 

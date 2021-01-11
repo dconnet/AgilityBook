@@ -619,7 +619,13 @@ void CDlgRunPanelRefRuns::OnRefRunDelete(wxCommandEvent& evt)
 		if (pRef)
 		{
 			if (m_Run->GetReferenceRuns().DeleteReferenceRun(pRef))
+			{
 				m_ctrlRefRuns->DeleteItem(nItem);
+				if (nItem == m_ctrlRefRuns->GetItemCount())
+					--nItem;
+				if (0 <= nItem)
+					m_ctrlRefRuns->Select(nItem);
+			}
 			if (m_pRefRunMe && m_pRefRunMe == pRef)
 				CreateRefRunMe();
 		}

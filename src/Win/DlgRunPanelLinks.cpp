@@ -284,7 +284,11 @@ void CDlgRunPanelLinks::OnLinksDelete(wxCommandEvent& evt)
 	{
 		std::wstring name = GetListColumnText(m_ctrlLinks, nItem, 0);
 		m_Run->RemoveLink(name);
-		ListLinkFiles(nullptr);
+		m_ctrlLinks->DeleteItem(nItem);
+		if (nItem == m_ctrlLinks->GetItemCount())
+			--nItem;
+		if (0 <= nItem)
+			m_ctrlLinks->Select(nItem);
 	}
 }
 

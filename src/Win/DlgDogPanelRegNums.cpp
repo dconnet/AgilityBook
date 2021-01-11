@@ -233,7 +233,7 @@ void CDlgDogPanelRegNums::DoDelete()
 		if (pData)
 			pRegNum = pData->GetData();
 		m_RegNums.DeleteRegNum(pRegNum->GetVenue(), pRegNum->GetNumber());
-		m_ctrlList->DeleteItem(i);
+		DeleteListItem(i);
 		UpdateControls();
 	}
 }

@@ -317,7 +317,7 @@ void CDlgDogPanelTitles::DoDelete()
 		ARBConfigVenuePtr venue;
 		m_pDoc->Book().GetConfig().GetVenues().FindVenue(pTitle->GetData()->GetVenue(), &venue);
 		m_Titles.DeleteTitle(venue, pTitle->GetData());
-		m_ctrlList->DeleteItem(i);
+		DeleteListItem(i);
 		UpdateControls();
 	}
 }

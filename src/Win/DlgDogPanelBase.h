@@ -40,15 +40,15 @@ public:
 	wxWindow* GetInitialControl() override;
 
 protected:
-	// CViewNameNumberDataPtr GetData(long index) const;
-	// void GetNameNumberData(std::vector<NameNumber>& items) const;
+	void DeleteListItem(long index);
+
 	virtual void DoCreate(bool hasMultiSel, bool hasImageList);
 	virtual void DoInitList() = 0;
 	virtual void UpdateControls();
 
 	virtual void DoNew() = 0;
 	virtual void DoEdit() = 0;
-	virtual void DoDelete();
+	virtual void DoDelete() = 0;
 
 	CReportListCtrl* m_ctrlList;
 	CReportListHeader m_reportColumn;
