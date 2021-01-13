@@ -160,8 +160,8 @@ CDlgDogPanelRegNums::CDlgDogPanelRegNums(CAgilityBookDoc* pDoc, ARBDogPtr const&
 	m_btnNew->SetToolTip(_("HIDC_DOGNUM_NEW"));
 
 	m_btnEdit->SetLabel(_("IDC_DOGNUM_EDIT"));
-	m_btnEdit->SetHelpText(_("H"));
-	m_btnEdit->SetToolTip(_("H"));
+	m_btnEdit->SetHelpText(_("HIDC_DOGNUM_EDIT"));
+	m_btnEdit->SetToolTip(_("HIDC_DOGNUM_EDIT"));
 
 	m_btnDelete->SetLabel(_("IDC_DOGNUM_DELETE"));
 	m_btnDelete->SetHelpText(_("HIDC_DOGNUM_DELETE"));

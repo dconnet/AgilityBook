@@ -1190,6 +1190,7 @@ bool CDlgRunPanelScore::Save()
 	int index = m_ctrlVenues->GetSelection();
 	ARBConfigVenuePtr pVenue = GetVenueData(index)->m_Venue;
 
+#ifdef _DEBUG
 	index = m_ctrlDivisions->GetSelection();
 	std::wstring curDiv = StringUtil::stringW(m_ctrlDivisions->GetString(index));
 
@@ -1202,6 +1203,7 @@ bool CDlgRunPanelScore::Save()
 
 	ARBConfigEventPtr pEvent;
 	pVenue->GetEvents().FindEvent(curEvent, &pEvent);
+#endif
 
 	//@todo: Add integrity checks - things like snooker score >=37? is Q set?
 
