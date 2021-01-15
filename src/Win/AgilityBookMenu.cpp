@@ -43,7 +43,7 @@ static const std::vector<CMenuHelper::ItemData> sc_items = {
 	{IdMenuNone, MENU_ITEM, 0,                        wxITEM_NORMAL, 0, nullptr, arbT("MenuFile"), nullptr, nullptr},
 	{IdMenuNone, MENU_ITEM, wxID_NEW,                 wxITEM_NORMAL, 1, arbT("MenuFileNew"), arbT("MenuFileNew"), arbT("DescFileNew"), ImageMgrNew},
 	{IdMenuNone, MENU_ITEM, wxID_OPEN,                wxITEM_NORMAL, 1, arbT("MenuFileOpen"), arbT("MenuFileOpen"), arbT("DescFileOpen"), ImageMgrOpen},
-	{IdMenuNone, MENU_ITEM, wxID_SAVE,                wxITEM_NORMAL, 1, arbT("MenuFileOpen"), arbT("MenuFileSave"), arbT("DescFileSave"), ImageMgrSave},
+	{IdMenuNone, MENU_ITEM, wxID_SAVE,                wxITEM_NORMAL, 1, arbT("MenuFileSave"), arbT("MenuFileSave"), arbT("DescFileSave"), ImageMgrSave},
 	{IdMenuNone, MENU_ITEM, wxID_SAVEAS,              wxITEM_NORMAL, 1, nullptr, arbT("MenuFileSaveAs"), arbT("DescFileSaveAs"), wxART_FILE_SAVE_AS},
 	{IdMenuNone, MENU_SEP,  0,                        wxITEM_NORMAL, 1, nullptr, nullptr, nullptr, nullptr},
 	{IdMenuNone, MENU_ITEM, ID_FILE_LANGUAGE_CHOOSE,  wxITEM_NORMAL, 1, nullptr, arbT("MenuFileLanguage"), arbT("DescFileLanguage"), nullptr},
