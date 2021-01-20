@@ -202,6 +202,9 @@ sudo port -v selfupdate
 sudo port upgrade outdated
 initial: sudo port install autoconf gettext git python38 py38-readline
          sudo port select --set python3 python38
+Download SDK 10.11 from github.com/phracker/MacOSX-SDKs/releases/
+ (this is the min SDK wx supports - use that)
+ Unpack into /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/
 
 The xcode projects were used as follows:
 .../xcode7: Xcode 7.x on OSX10.11 (still applies to xcode9)

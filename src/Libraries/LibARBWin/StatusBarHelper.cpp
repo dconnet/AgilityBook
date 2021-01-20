@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-01-20 Removed sizing kludge on linux/mac
  * 2019-01-27 Created
  */
 
@@ -128,26 +129,18 @@ void CStatusBarHelper::SetStatusBarWidths(wxStatusBar* statusbar, int nColumn)
 #endif
 	}
 
-	statusbar->SetStatusWidths(static_cast<int>(m_Widths.size()), m_Widths.data());
-#if !defined(__WXMSW__)
-	// On the Mac (and linux), setting the width is always a bit small.
-	// For instance, we want 36, but it gets set to 32.
-	// So kludge it and force it larger.
-	bool bFix = false;
-	for (int i = 0; i < m_Widths.size(); ++i)
+	wxSize borders = statusbar->GetBorders();
+	std::vector<int> widths = m_Widths;
+	for (int i = 0; i < static_cast<int>(widths.size()); ++i)
 	{
-		if ((0 > nColumn || i == nColumn) && 0 < m_Widths[i])
+		if ((0 > nColumn || i == nColumn) && 0 < widths[i])
 		{
-			wxRect r;
-			statusbar->GetFieldRect(i, r);
-			if (r.width < m_Widths[i])
-			{
-				bFix = true;
-				m_Widths[i] += 2 * (m_Widths[i] - r.width);
-			}
+			// On Mac/Linux, I need (4 * borders.x) - not 2 as expected.
+			// Sizing it exactly causes "..." in the text (or cut off on mac)
+			// Note: On windows, the border is actually 0. Mac/Linux is 2.
+			widths[i] += borders.x * 4;
 		}
 	}
-	if (bFix)
-		statusbar->SetStatusWidths(static_cast<int>(m_Widths.size()), m_Widths.data());
-#endif
+
+	statusbar->SetStatusWidths(static_cast<int>(widths.size()), widths.data());
 }

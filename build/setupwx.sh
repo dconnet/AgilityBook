@@ -8,6 +8,7 @@
 # Note: Found old OSX SDKs at https://github.com/phracker/MacOSX-SDKs/releases
 #
 # History
+# 2021-01-20 Added SDK11.1
 # 2020-11-22 Added SDK11.0 (reordered to make older SDKs prefered)
 # 2020-11-05 Min OSX SDK for 3.1.4 is 10.11.
 # 2020-07-23 Upgraded 3.1.3 to 3.1.4
@@ -88,66 +89,47 @@ cd $BUILDDIR
 
 case `uname` in
 Darwin*)
+	export CXXFLAGS="-std=c++14 -stdlib=libc++"
+	export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
+	export LDFLAGS="-stdlib=libc++"
+	export LIBS="-lc++"
+	TARGETARCH="--enable-macosx_arch=x86_64"
 
 	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk; then
 		echo "Using 10.11 SDK"
-		export CXXFLAGS="-std=c++14 -stdlib=libc++"
-		export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
-		export LDFLAGS="-stdlib=libc++"
-		export LIBS="-lc++"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
 		MIN_OS=$MAC_MIN_OS
-		TARGETARCH="--enable-macosx_arch=x86_64"
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk; then
 		echo "Using 10.12 SDK"
-		export CXXFLAGS="-std=c++14 -stdlib=libc++"
-		export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
-		export LDFLAGS="-stdlib=libc++"
-		export LIBS="-lc++"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk
 		MIN_OS=$MAC_MIN_OS
-		TARGETARCH="--enable-macosx_arch=x86_64"
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk; then
 		echo "Using 10.13 SDK"
-		export CXXFLAGS="-std=c++14 -stdlib=libc++"
-		export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
-		export LDFLAGS="-stdlib=libc++"
-		export LIBS="-lc++"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk
 		MIN_OS=$MAC_MIN_OS
-		TARGETARCH="--enable-macosx_arch=x86_64"
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk; then
 		echo "Using 10.14 SDK"
-		export CXXFLAGS="-std=c++14 -stdlib=libc++"
-		export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
-		export LDFLAGS="-stdlib=libc++"
-		export LIBS="-lc++"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk
 		MIN_OS=$MAC_MIN_OS
-		TARGETARCH="--enable-macosx_arch=x86_64"
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk; then
 		echo "Using 10.15 SDK"
-		export CXXFLAGS="-std=c++14 -stdlib=libc++"
-		export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
-		export LDFLAGS="-stdlib=libc++"
-		export LIBS="-lc++"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk
 		MIN_OS=$MAC_MIN_OS
-		TARGETARCH="--enable-macosx_arch=x86_64"
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk; then
 		echo "Using 11.0 SDK"
-		export CXXFLAGS="-std=c++14 -stdlib=libc++"
-		export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
-		export LDFLAGS="-stdlib=libc++"
-		export LIBS="-lc++"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk
 		MIN_OS=$MAC_MIN_OS
-		TARGETARCH="--enable-macosx_arch=x86_64"
+
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk; then
+		echo "Using 11.1 SDK"
+		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk
+		MIN_OS=$MAC_MIN_OS
+
 	fi
 
 	if test "x$TARGETSDK" = "x"; then
