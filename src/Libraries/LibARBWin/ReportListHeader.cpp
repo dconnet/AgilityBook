@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-01-23 Add ability to change what is saved.
  * 2020-12-11 Moved out of ListCtrl.cpp
  */
 
@@ -65,6 +66,7 @@ CReportListHeader::CReportListHeader()
 	, m_columnVisible()
 	, m_iSortCol(0)
 	, m_bIsSorted(false)
+	, m_saveFlags(SaveFlags::Default)
 {
 }
 
@@ -390,38 +392,48 @@ void CReportListHeader::OnSave()
 	if (!m_baseConfig.empty())
 	{
 		wxString str;
-		for (size_t i = 0; i < m_columnOrder.size(); ++i)
+		if (m_saveFlags & SaveFlags::ColumnOrder)
 		{
-			if (0 < i)
-				str << L",";
-			str << m_columnOrder[i];
+			for (size_t i = 0; i < m_columnOrder.size(); ++i)
+			{
+				if (0 < i)
+					str << L",";
+				str << m_columnOrder[i];
+			}
+			wxConfig::Get()->Write(CFG_SORTING_ORDER2(m_baseConfig), str);
 		}
-		wxConfig::Get()->Write(CFG_SORTING_ORDER2(m_baseConfig), str);
 
-		str.clear();
-		for (size_t i = 0; i < m_columnVisible.size(); ++i)
+		if (m_saveFlags & SaveFlags::ColumnVisible)
 		{
-			if (0 < i)
-				str << L",";
-			str << (m_columnVisible[i] ? L"1" : L"0");
+			str.clear();
+			for (size_t i = 0; i < m_columnVisible.size(); ++i)
+			{
+				if (0 < i)
+					str << L",";
+				str << (m_columnVisible[i] ? L"1" : L"0");
+			}
+			wxConfig::Get()->Write(CFG_SORTING_VISIBLE(m_baseConfig), str);
 		}
-		wxConfig::Get()->Write(CFG_SORTING_VISIBLE(m_baseConfig), str);
 
-		str.clear();
-		for (int i = 0; i < m_ctrlList->GetColumnCount(); ++i)
+		if (m_saveFlags & SaveFlags::ColumnWidth)
 		{
-			if (0 < i)
-				str << L",";
-			if (m_columnVisible[i])
-				str << m_ctrlList->GetColumnWidth(i);
-			else if (i < static_cast<int>(m_colWidths.size()))
-				str << m_colWidths[i];
-			else
-				str << "0";
+			str.clear();
+			for (int i = 0; i < m_ctrlList->GetColumnCount(); ++i)
+			{
+				if (0 < i)
+					str << L",";
+				if (m_columnVisible[i])
+					str << m_ctrlList->GetColumnWidth(i);
+				else if (i < static_cast<int>(m_colWidths.size()))
+					str << m_colWidths[i];
+				else
+					str << "0";
+			}
+			wxConfig::Get()->Write(CFG_COLUMN_WIDTHS(m_baseConfig), str);
 		}
-		wxConfig::Get()->Write(CFG_COLUMN_WIDTHS(m_baseConfig), str);
 
-		wxConfig::Get()->Write(CFG_SORT_COLUMN(m_baseConfig), m_iSortCol);
+		if (m_saveFlags & SaveFlags::CurrentSort)
+			wxConfig::Get()->Write(CFG_SORT_COLUMN(m_baseConfig), m_iSortCol);
 	}
 }
 

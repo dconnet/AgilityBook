@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-01-23 Add ability to change what is saved.
  * 2020-12-11 Moved out of ListCtrl.h
  */
 
@@ -34,6 +35,23 @@ public:
 
 	CReportListHeader();
 	virtual ~CReportListHeader();
+
+	enum SaveFlags
+	{
+		ColumnOrder = 0x1,
+		ColumnVisible = 0x2,
+		ColumnWidth = 0x4,
+		CurrentSort = 0x8,
+		Default = (ColumnOrder | ColumnVisible | ColumnWidth | CurrentSort),
+	};
+	unsigned int SaveFlags() const
+	{
+		return m_saveFlags;
+	}
+	void SetSaveFlags(unsigned int saveFlags)
+	{
+		m_saveFlags = saveFlags;
+	}
 
 	/**
 	 * Initialize usage (can only call once)
@@ -117,4 +135,5 @@ protected:
 	std::vector<bool> m_columnVisible;
 	long m_iSortCol;
 	bool m_bIsSorted;
+	unsigned int m_saveFlags;
 };
