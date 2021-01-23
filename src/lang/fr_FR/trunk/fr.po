@@ -8601,7 +8601,7 @@ msgstr "léger"
 #: ../src/msw/webview_ie.cpp:1036
 #, fuzzy
 msgid "failed to evaluate"
-msgstr "Échec de l'exécution de « %s »\n"
+msgstr "Échec de l'exécution de « %s »"
 
 #: ../src/common/ffile.cpp:187
 #, c-format
