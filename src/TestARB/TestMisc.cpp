@@ -63,10 +63,11 @@ static const struct
 	{1536.0,          {1, 2}, {L"1.5 kB", L"1.54 kB"},     {L"1.5 KiB", L"1.5 KiB"},    {L"1.5 KB", L"1.5 KB"}},
 	{1600.0,          {1, 2}, {L"1.6 kB", L"1.6 kB"},      {L"1.6 KiB", L"1.56 KiB"},   {L"1.6 KB", L"1.56 KB"}},
 	{1728.0,          {1, 2}, {L"1.7 kB", L"1.73 kB"},     {L"1.7 KiB", L"1.69 KiB"},   {L"1.7 KB", L"1.69 KB"}},
-#ifdef WIN32
+	// Note: On Mac/Unix, 15.625 is rounding differently than Windows.
+	// Oh. And ReleaseDLL rounds the same way unix does.
+#if defined(WIN32) && !(defined(_DLL) && !defined(_DEBUG))
 	{16000.0,         {1, 2}, {L"16 kB", L"16 kB"},        {L"15.6 KiB", L"15.63 KiB"}, {L"15.6 KB", L"15.63 KB"}},
 #else
-	// Note: On Mac/Unix, 15.625 is rounding differently than Windows.
 	{16000.0,         {1, 2}, {L"16 kB", L"16 kB"},        {L"15.6 KiB", L"15.62 KiB"}, {L"15.6 KB", L"15.62 KB"}},
 #endif
 	{110592.0,        {1, 2}, {L"110.6 kB", L"110.59 kB"}, {L"108 KiB", L"108 KiB"},    {L"108 KB", L"108 KB"}},
@@ -263,13 +264,13 @@ TEST_CASE("Misc")
 			REQUIRE(wxSYS_COLOUR_3DLIGHT == COLOR_3DLIGHT);
 			REQUIRE(wxSYS_COLOUR_INFOTEXT == COLOR_INFOTEXT);
 			REQUIRE(wxSYS_COLOUR_INFOBK == COLOR_INFOBK);
-			//REQUIRE(wxSYS_COLOUR_LISTBOX == );
+			// REQUIRE(wxSYS_COLOUR_LISTBOX == );
 			REQUIRE(wxSYS_COLOUR_HOTLIGHT == COLOR_HOTLIGHT);
 			REQUIRE(wxSYS_COLOUR_GRADIENTACTIVECAPTION == COLOR_GRADIENTACTIVECAPTION);
 			REQUIRE(wxSYS_COLOUR_GRADIENTINACTIVECAPTION == COLOR_GRADIENTINACTIVECAPTION);
-			//REQUIRE(wxSYS_COLOUR_MENUHILIGHT == );
-			//REQUIRE(wxSYS_COLOUR_MENUBAR == );
-			//REQUIRE(wxSYS_COLOUR_LISTBOXTEXT == );
+			// REQUIRE(wxSYS_COLOUR_MENUHILIGHT == );
+			// REQUIRE(wxSYS_COLOUR_MENUBAR == );
+			// REQUIRE(wxSYS_COLOUR_LISTBOXTEXT == );
 #endif
 		}
 	}
