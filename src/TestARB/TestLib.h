@@ -21,12 +21,14 @@
  */
 
 #pragma warning(disable : 4868) // compiler may not enforce left-to-right evaluation order in braced initializer list
-#pragma warning(disable : 5204) // class has virtual functions, but its trivial destructor is not virtual
 
 #include "ARBCommon/ARBTypes.h"
 #if defined(USING_CATCH3)
 #include "catch2/catch_all.hpp"
 #elif defined(USING_CATCH2)
+#if defined(WIN32) && defined(NDEBUG)
+#pragma warning(disable : 4738) // storing 32-bit float result in memory, possible loss of performance
+#endif
 #include "catch2/catch.hpp"
 #else
 #error Unknown test framework
