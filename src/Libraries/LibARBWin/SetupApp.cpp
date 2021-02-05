@@ -8,6 +8,7 @@
  * @file
  *
  * Revision History
+ * 2021-02-05 Add '.local' file detection for standalone use.
  * 2019-08-16 Suppress PNG warning message.
  * 2019-01-01 Fix standalone detection.
  * 2018-10-11 Moved to Win LibARBWin
@@ -119,7 +120,7 @@ void CBaseApp::GenerateReport(wxDebugReport::Context ctx)
 			report.Reset();
 		}
 	}
-	//else: user cancelled the report
+	// else: user cancelled the report
 }
 #endif
 
@@ -155,11 +156,21 @@ bool CBaseApp::OnInit()
 		SetAppName(m_BaseAppName);
 		if (!m_BaseRegName.empty())
 		{
+			// Existance of a ".local" file will force use of the .info file if it does not exist.
+			// This allows inclusion of a ".local" file in a standalone zip file and won't clubber user data.
+			wxString useIniFile;
 			if (m_BaseInfoName.empty())
 			{
 				wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 				m_BaseInfoName = fileName.GetName() + L".info";
+				useIniFile = GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".local";
 			}
+			else
+			{
+				wxFileName fileName(m_BaseInfoName);
+				useIniFile = GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".local";
+			}
+
 			wxString inifile = GetARBResourceDir() + wxFileName::GetPathSeparator() + m_BaseInfoName;
 
 			// Important: If this is a dialog-based app, you must delete
@@ -167,7 +178,7 @@ bool CBaseApp::OnInit()
 			wxConfigBase* pBaseConfig = nullptr;
 
 			// Determine if this is a stand-alone execution.
-			if (wxFile::Exists(inifile))
+			if (wxFile::Exists(inifile) || (!useIniFile.empty() && wxFile::Exists(useIniFile)))
 			{
 				wxLogNull suppress;
 				wxFileConfig* pConfig
