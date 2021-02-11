@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E10D89E625D5AB3200D1D8F8 /* DlgDogPanelBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10D89D125D5A5D500D1D8F8 /* DlgDogPanelBase.cpp */; };
+		E10D89E825D5AB3800D1D8F8 /* DlgDogPanelPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10D89D625D5A5D600D1D8F8 /* DlgDogPanelPoints.cpp */; };
+		E10D89EA25D5AB3D00D1D8F8 /* DlgDogPanelProp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10D89CF25D5A5D400D1D8F8 /* DlgDogPanelProp.cpp */; };
+		E10D89EC25D5AB4000D1D8F8 /* DlgDogPanelRegNums.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10D89D325D5A5D600D1D8F8 /* DlgDogPanelRegNums.cpp */; };
+		E10D89EE25D5AB4400D1D8F8 /* DlgDogPanelTitles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10D89D825D5A5D700D1D8F8 /* DlgDogPanelTitles.cpp */; };
+		E10D89F025D5AB4F00D1D8F8 /* DlgRunPanelBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10D89E225D5A60000D1D8F8 /* DlgRunPanelBase.cpp */; };
+		E10D89F125D5AB5300D1D8F8 /* DlgRunPanelComments.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10D89DE25D5A5FF00D1D8F8 /* DlgRunPanelComments.cpp */; };
+		E10D89F225D5AB5600D1D8F8 /* DlgRunPanelCRCD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10D89E425D5A60000D1D8F8 /* DlgRunPanelCRCD.cpp */; };
+		E10D89F325D5AB5A00D1D8F8 /* DlgRunPanelLinks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10D89D925D5A5FE00D1D8F8 /* DlgRunPanelLinks.cpp */; };
+		E10D89F425D5AB5D00D1D8F8 /* DlgRunPanelRefRuns.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10D89DB25D5A5FF00D1D8F8 /* DlgRunPanelRefRuns.cpp */; };
+		E10D89F625D5AB6100D1D8F8 /* DlgRunPanelScore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10D89DD25D5A5FF00D1D8F8 /* DlgRunPanelScore.cpp */; };
 		E13371821D173D4800E7344D /* DlgConfigLifetimeName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E13371801D173D4800E7344D /* DlgConfigLifetimeName.cpp */; };
 		E165930917ED2E1D00B86062 /* AgilityBookRunsView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E165930717ED2E1D00B86062 /* AgilityBookRunsView.cpp */; };
 		E1748DF725266D28003A196C /* venue_valor.png in Resources */ = {isa = PBXBuildFile; fileRef = E1748DF525266D27003A196C /* venue_valor.png */; };
@@ -232,6 +243,28 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E10D89CF25D5A5D400D1D8F8 /* DlgDogPanelProp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DlgDogPanelProp.cpp; sourceTree = "<group>"; };
+		E10D89D025D5A5D500D1D8F8 /* DlgDogPanelTitles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DlgDogPanelTitles.h; sourceTree = "<group>"; };
+		E10D89D125D5A5D500D1D8F8 /* DlgDogPanelBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DlgDogPanelBase.cpp; sourceTree = "<group>"; };
+		E10D89D225D5A5D500D1D8F8 /* DlgDogPanelBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DlgDogPanelBase.h; sourceTree = "<group>"; };
+		E10D89D325D5A5D600D1D8F8 /* DlgDogPanelRegNums.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DlgDogPanelRegNums.cpp; sourceTree = "<group>"; };
+		E10D89D425D5A5D600D1D8F8 /* DlgDogPanelPoints.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DlgDogPanelPoints.h; sourceTree = "<group>"; };
+		E10D89D525D5A5D600D1D8F8 /* DlgDogPanelProp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DlgDogPanelProp.h; sourceTree = "<group>"; };
+		E10D89D625D5A5D600D1D8F8 /* DlgDogPanelPoints.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DlgDogPanelPoints.cpp; sourceTree = "<group>"; };
+		E10D89D725D5A5D600D1D8F8 /* DlgDogPanelRegNums.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DlgDogPanelRegNums.h; sourceTree = "<group>"; };
+		E10D89D825D5A5D700D1D8F8 /* DlgDogPanelTitles.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DlgDogPanelTitles.cpp; sourceTree = "<group>"; };
+		E10D89D925D5A5FE00D1D8F8 /* DlgRunPanelLinks.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DlgRunPanelLinks.cpp; sourceTree = "<group>"; };
+		E10D89DA25D5A5FF00D1D8F8 /* DlgRunPanelLinks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DlgRunPanelLinks.h; sourceTree = "<group>"; };
+		E10D89DB25D5A5FF00D1D8F8 /* DlgRunPanelRefRuns.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DlgRunPanelRefRuns.cpp; sourceTree = "<group>"; };
+		E10D89DC25D5A5FF00D1D8F8 /* DlgRunPanelRefRuns.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DlgRunPanelRefRuns.h; sourceTree = "<group>"; };
+		E10D89DD25D5A5FF00D1D8F8 /* DlgRunPanelScore.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DlgRunPanelScore.cpp; sourceTree = "<group>"; };
+		E10D89DE25D5A5FF00D1D8F8 /* DlgRunPanelComments.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DlgRunPanelComments.cpp; sourceTree = "<group>"; };
+		E10D89DF25D5A5FF00D1D8F8 /* DlgRunPanelCRCD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DlgRunPanelCRCD.h; sourceTree = "<group>"; };
+		E10D89E025D5A60000D1D8F8 /* DlgRunPanelScore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DlgRunPanelScore.h; sourceTree = "<group>"; };
+		E10D89E125D5A60000D1D8F8 /* DlgRunPanelBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DlgRunPanelBase.h; sourceTree = "<group>"; };
+		E10D89E225D5A60000D1D8F8 /* DlgRunPanelBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DlgRunPanelBase.cpp; sourceTree = "<group>"; };
+		E10D89E325D5A60000D1D8F8 /* DlgRunPanelComments.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DlgRunPanelComments.h; sourceTree = "<group>"; };
+		E10D89E425D5A60000D1D8F8 /* DlgRunPanelCRCD.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DlgRunPanelCRCD.cpp; sourceTree = "<group>"; };
 		E13371801D173D4800E7344D /* DlgConfigLifetimeName.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgConfigLifetimeName.cpp; sourceTree = "<group>"; };
 		E13371811D173D4800E7344D /* DlgConfigLifetimeName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgConfigLifetimeName.h; sourceTree = "<group>"; };
 		E164622917BFF255004F12AF /* SetupAppARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupAppARB.h; sourceTree = "<group>"; };
@@ -866,6 +899,16 @@
 				E19B642D166C09B9004DEDA4 /* DlgCRCDViewer.h */,
 				E19B642E166C09B9004DEDA4 /* DlgDog.cpp */,
 				E19B642F166C09B9004DEDA4 /* DlgDog.h */,
+				E10D89D125D5A5D500D1D8F8 /* DlgDogPanelBase.cpp */,
+				E10D89D225D5A5D500D1D8F8 /* DlgDogPanelBase.h */,
+				E10D89D625D5A5D600D1D8F8 /* DlgDogPanelPoints.cpp */,
+				E10D89D425D5A5D600D1D8F8 /* DlgDogPanelPoints.h */,
+				E10D89CF25D5A5D400D1D8F8 /* DlgDogPanelProp.cpp */,
+				E10D89D525D5A5D600D1D8F8 /* DlgDogPanelProp.h */,
+				E10D89D325D5A5D600D1D8F8 /* DlgDogPanelRegNums.cpp */,
+				E10D89D725D5A5D600D1D8F8 /* DlgDogPanelRegNums.h */,
+				E10D89D825D5A5D700D1D8F8 /* DlgDogPanelTitles.cpp */,
+				E10D89D025D5A5D500D1D8F8 /* DlgDogPanelTitles.h */,
 				E19B6430166C09B9004DEDA4 /* DlgEventSelect.cpp */,
 				E19B6431166C09B9004DEDA4 /* DlgEventSelect.h */,
 				E19B6432166C09B9004DEDA4 /* DlgExistingPoints.cpp */,
@@ -912,6 +955,18 @@
 				E19B6461166C09B9004DEDA4 /* DlgReorder.h */,
 				E19B6462166C09B9004DEDA4 /* DlgRun.cpp */,
 				E19B6463166C09B9004DEDA4 /* DlgRun.h */,
+				E10D89E225D5A60000D1D8F8 /* DlgRunPanelBase.cpp */,
+				E10D89E125D5A60000D1D8F8 /* DlgRunPanelBase.h */,
+				E10D89DE25D5A5FF00D1D8F8 /* DlgRunPanelComments.cpp */,
+				E10D89E325D5A60000D1D8F8 /* DlgRunPanelComments.h */,
+				E10D89E425D5A60000D1D8F8 /* DlgRunPanelCRCD.cpp */,
+				E10D89DF25D5A5FF00D1D8F8 /* DlgRunPanelCRCD.h */,
+				E10D89D925D5A5FE00D1D8F8 /* DlgRunPanelLinks.cpp */,
+				E10D89DA25D5A5FF00D1D8F8 /* DlgRunPanelLinks.h */,
+				E10D89DB25D5A5FF00D1D8F8 /* DlgRunPanelRefRuns.cpp */,
+				E10D89DC25D5A5FF00D1D8F8 /* DlgRunPanelRefRuns.h */,
+				E10D89DD25D5A5FF00D1D8F8 /* DlgRunPanelScore.cpp */,
+				E10D89E025D5A60000D1D8F8 /* DlgRunPanelScore.h */,
 				E19B6464166C09B9004DEDA4 /* DlgSelectDog.cpp */,
 				E19B6465166C09B9004DEDA4 /* DlgSelectDog.h */,
 				E19B6466166C09B9004DEDA4 /* DlgSelectURL.cpp */,
@@ -1223,6 +1278,8 @@
 				E19B6500166C09B9004DEDA4 /* ClipBoard.cpp in Sources */,
 				E19B6503166C09B9004DEDA4 /* CommonView.cpp in Sources */,
 				E19B6504166C09B9004DEDA4 /* ConfigHandler.cpp in Sources */,
+				E10D89F625D5AB6100D1D8F8 /* DlgRunPanelScore.cpp in Sources */,
+				E10D89F025D5AB4F00D1D8F8 /* DlgRunPanelBase.cpp in Sources */,
 				E19B6505166C09B9004DEDA4 /* DlgAbout.cpp in Sources */,
 				E19B6506166C09B9004DEDA4 /* DlgAssignColumns.cpp in Sources */,
 				E19B6508166C09B9004DEDA4 /* DlgCalendar.cpp in Sources */,
@@ -1231,27 +1288,33 @@
 				E19B650C166C09B9004DEDA4 /* DlgConfigEventMethod.cpp in Sources */,
 				E19B650D166C09B9004DEDA4 /* DlgConfigMultiQ.cpp in Sources */,
 				E19B650E166C09B9004DEDA4 /* DlgConfigOtherPoints.cpp in Sources */,
+				E10D89EE25D5AB4400D1D8F8 /* DlgDogPanelTitles.cpp in Sources */,
 				E19B650F166C09B9004DEDA4 /* DlgConfigPlaceInfo.cpp in Sources */,
 				E19B6510166C09B9004DEDA4 /* DlgConfigTitle.cpp in Sources */,
 				E19B6511166C09B9004DEDA4 /* DlgConfigTitlePoints.cpp in Sources */,
+				E10D89F225D5AB5600D1D8F8 /* DlgRunPanelCRCD.cpp in Sources */,
 				E19B6512166C09B9004DEDA4 /* DlgConfigUpdate.cpp in Sources */,
 				E19B6513166C09B9004DEDA4 /* DlgConfigure.cpp in Sources */,
 				E19B6514166C09B9004DEDA4 /* DlgConfigureData.cpp in Sources */,
 				E19B6515166C09B9004DEDA4 /* DlgConfigVenue.cpp in Sources */,
 				E19B6516166C09B9004DEDA4 /* DlgCRCDViewer.cpp in Sources */,
 				E19B6517166C09B9004DEDA4 /* DlgDog.cpp in Sources */,
+				E10D89F125D5AB5300D1D8F8 /* DlgRunPanelComments.cpp in Sources */,
 				E19B6518166C09B9004DEDA4 /* DlgEventSelect.cpp in Sources */,
 				E1D2AFEA1A292424006EA87D /* ImageHelper.cpp in Sources */,
 				E19B6519166C09B9004DEDA4 /* DlgExistingPoints.cpp in Sources */,
 				E19B651A166C09B9004DEDA4 /* DlgFault.cpp in Sources */,
 				E19B651B166C09B9004DEDA4 /* DlgFind.cpp in Sources */,
+				E10D89F325D5AB5A00D1D8F8 /* DlgRunPanelLinks.cpp in Sources */,
 				E19B651C166C09B9004DEDA4 /* DlgFindLinks.cpp in Sources */,
 				E19B651D166C09B9004DEDA4 /* DlgInfoNote.cpp in Sources */,
 				E19B651E166C09B9004DEDA4 /* DlgListCtrl.cpp in Sources */,
+				E10D89E825D5AB3800D1D8F8 /* DlgDogPanelPoints.cpp in Sources */,
 				E19B651F166C09B9004DEDA4 /* DlgListViewer.cpp in Sources */,
 				E19B6520166C09B9004DEDA4 /* DlgMessage.cpp in Sources */,
 				E19B6521166C09B9004DEDA4 /* DlgMessageBox.cpp in Sources */,
 				E19B6522166C09B9004DEDA4 /* DlgName.cpp in Sources */,
+				E10D89F425D5AB5D00D1D8F8 /* DlgRunPanelRefRuns.cpp in Sources */,
 				E19B6523166C09B9004DEDA4 /* DlgOptions.cpp in Sources */,
 				E19B6524166C09B9004DEDA4 /* DlgOptionsCalendar.cpp in Sources */,
 				E19B6525166C09B9004DEDA4 /* DlgOptionsFilter.cpp in Sources */,
@@ -1281,13 +1344,16 @@
 				E19B6593166C09B9004DEDA4 /* UpdateInfo.cpp in Sources */,
 				E19B6595166C09B9004DEDA4 /* ValidatorsQ.cpp in Sources */,
 				E19B6598166C09B9004DEDA4 /* Wizard.cpp in Sources */,
+				E10D89EA25D5AB3D00D1D8F8 /* DlgDogPanelProp.cpp in Sources */,
 				E19B6599166C09B9004DEDA4 /* WizardExport.cpp in Sources */,
 				E19B659A166C09B9004DEDA4 /* WizardImport.cpp in Sources */,
 				E19B659B166C09B9004DEDA4 /* WizardStart.cpp in Sources */,
 				E1CAE57816B5BF8700B33FE5 /* stdafx.cpp in Sources */,
 				E1E1D05517234DEF00D7D1E4 /* ComboBoxQ.cpp in Sources */,
 				E1E1D05617234DEF00D7D1E4 /* ComboBoxVenue.cpp in Sources */,
+				E10D89EC25D5AB4000D1D8F8 /* DlgDogPanelRegNums.cpp in Sources */,
 				E165930917ED2E1D00B86062 /* AgilityBookRunsView.cpp in Sources */,
+				E10D89E625D5AB3200D1D8F8 /* DlgDogPanelBase.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

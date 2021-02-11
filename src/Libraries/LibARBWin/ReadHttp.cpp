@@ -55,19 +55,6 @@
 
 namespace
 {
-int checkinfo(void* ptr, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow)
-{
-	bool* gotData = static_cast<bool*>(ptr);
-	assert(gotData);
-	if (dlnow > 0)
-	{
-		*gotData = true;
-		return 1;
-	}
-	return 0;
-}
-
-
 int xferinfo(void* ptr, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow)
 {
 	IDlgProgress* pProgress = static_cast<IDlgProgress*>(ptr);
