@@ -10,6 +10,7 @@
 # an EXE that will run on XP.
 #
 # Revision History
+# 2021-02-13 Add USE_OPENGL=0 for ARM64 (can't find opengl libs).
 # 2020-11-28 Merge pyDcon into ARB.
 # 2020-09-13 Make default vc142.
 # 2019-02-28 Add vc142 support
@@ -211,6 +212,8 @@ def main():
 			build_flags += '0 RUNTIME_LIBS=static'
 		else:
 			build_flags += '1 RUNTIME_LIBS=dynamic'
+		if platform == 'ARM64':
+			build_flags += ' USE_OPENGL=0'
 		build_flags += target_cpu + cfg + ' CPPFLAGS="' + cppflags + '"' + vendor
 
 		if 0 < len(samples):
