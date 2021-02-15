@@ -27,7 +27,8 @@ PROGRAMS = @PACKAGE_CAL_SHORTNAME@
 ##########
 # Source files for each target
 ##########
-@PACKAGE_CAL_SHORTNAME@_SRCS = ARBConfigCalSite.cpp \
+@PACKAGE_CAL_SHORTNAME@_SRCS = \
+	ARBConfigCalSite.cpp \
 	CalSites.cpp \
 	CalendarSiteUSDAA.cpp \
 	CalendarSites.cpp \

@@ -27,7 +27,8 @@ PROGRAMS = @PACKAGE_HLP_SHORTNAME@
 ##########
 # Source files for each target
 ##########
-@PACKAGE_HLP_SHORTNAME@_SRCS = ARBHelp.cpp \
+@PACKAGE_HLP_SHORTNAME@_SRCS = \
+	ARBHelp.cpp \
 	DlgARBHelp.cpp \
 	DlgPageDecode.cpp \
 	DlgPageEncode.cpp \

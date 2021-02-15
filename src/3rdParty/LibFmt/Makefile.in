@@ -29,7 +29,8 @@ ARCHIVES = libfmt
 ##########
 # Obviously, I don't understand makefiles. These don't need to exist.
 # The .cc files are properly built.
-libfmt_SRCS = src/format.cpp \
+libfmt_SRCS = \
+	src/format.cpp \
 	src/os.cpp
 
 ##########

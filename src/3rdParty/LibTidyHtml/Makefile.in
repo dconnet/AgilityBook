@@ -27,7 +27,8 @@ ARCHIVES = libtidyhtml
 ##########
 # Source files for each target
 ##########
-libtidyhtml_SRCS = src/LibTidyHtml.cpp \
+libtidyhtml_SRCS = \
+	src/LibTidyHtml.cpp \
 	tidy/src/access.c \
 	tidy/src/alloc.c \
 	tidy/src/attrdict.c \

@@ -27,7 +27,8 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 ##########
 # Source files for each target
 ##########
-@PACKAGE_TEST_SHORTNAME@_SRCS = ConfigHandler.cpp \
+@PACKAGE_TEST_SHORTNAME@_SRCS = \
+	ConfigHandler.cpp \
 	Local.cpp \
 	TestAgilityRecordBook.cpp \
 	TestARB.cpp \

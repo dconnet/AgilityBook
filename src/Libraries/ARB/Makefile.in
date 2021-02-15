@@ -27,7 +27,8 @@ ARCHIVES = libarb
 ##########
 # Source files for each target
 ##########
-libarb_SRCS = ARBAgilityRecordBook.cpp \
+libarb_SRCS = \
+	ARBAgilityRecordBook.cpp \
 	ARB_Q.cpp \
 	ARBBase.cpp \
 	ARBCalcPoints.cpp \

@@ -27,7 +27,8 @@ ARCHIVES = libarchive
 ##########
 # Source files for each target
 ##########
-libarchive_SRCS = src/LibArchive.cpp
+libarchive_SRCS = \
+	src/LibArchive.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)

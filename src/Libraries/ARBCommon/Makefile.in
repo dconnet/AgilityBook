@@ -27,7 +27,8 @@ ARCHIVES = libarbcommon
 ##########
 # Source files for each target
 ##########
-libarbcommon_SRCS = ARBBase64.cpp \
+libarbcommon_SRCS = \
+	ARBBase64.cpp \
 	ARBDate.cpp \
 	ARBMisc.cpp \
 	ARBMsgDigest.cpp \
