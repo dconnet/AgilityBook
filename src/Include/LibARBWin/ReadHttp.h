@@ -30,9 +30,11 @@ namespace ReadHttp
 {
 ARBWIN_API bool GotoURL(std::wstring const& inLink);
 ARBWIN_API bool CheckHttpFile(std::wstring const& inURL);
-ARBWIN_API bool ReadHttpFileSync(std::wstring& outErrMsg, std::wstring const& inURL, std::string& outString);
-ARBWIN_API bool ReadHttpFileSync(std::wstring& outErrMsg, std::wstring const& inURL, wxString& outString);
-ARBWIN_API bool ReadHttpFileSync(
+// Return HTTP status code
+// Note: code 404 is specifically added into outErrMsg
+ARBWIN_API long ReadHttpFileSync(std::wstring& outErrMsg, std::wstring const& inURL, std::string& outString);
+ARBWIN_API long ReadHttpFileSync(std::wstring& outErrMsg, std::wstring const& inURL, wxString& outString);
+ARBWIN_API long ReadHttpFileSync(
 	std::wstring& outErrMsg,
 	std::wstring const& inURL,
 	wxOutputStream* outStream,

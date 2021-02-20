@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-13 10:45-0800\n"
-"PO-Revision-Date: 2021-01-13 10:46-0800\n"
+"POT-Creation-Date: 2021-02-19 11:21-0800\n"
+"PO-Revision-Date: 2021-02-19 11:21-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -508,19 +508,23 @@ msgstr "Language Selection"
 msgid "Select a language to use."
 msgstr "Select a language to use."
 
-#: Libraries/LibARBWin/ReadHttp.cpp:137
+#: Libraries/LibARBWin/ReadHttp.cpp:135
 msgid "Invalid URL"
 msgstr "Invalid URL"
 
-#: Libraries/LibARBWin/ReadHttp.cpp:143
+#: Libraries/LibARBWin/ReadHttp.cpp:144
 msgid "Error ({0}) reading {1}"
 msgstr "Error ({0}) reading {1}"
 
-#: Libraries/LibARBWin/ReportListHeader.cpp:452
+#: Libraries/LibARBWin/ReadHttp.cpp:150
+msgid "File not found: {}"
+msgstr "File not found: {}"
+
+#: Libraries/LibARBWin/ReportListHeader.cpp:464
 msgid "Restore"
 msgstr "Restore"
 
-#: Libraries/LibARBWin/SetupApp.cpp:118
+#: Libraries/LibARBWin/SetupApp.cpp:119
 #, c-format
 msgid "Report generated in \"%s\"."
 msgstr "Report generated in \"%s\"."
@@ -540,7 +544,7 @@ msgstr "Reading {} rows"
 msgid "Please enter a valid number"
 msgstr "Please enter a valid number"
 
-#: TestARB/Local.cpp:52 TestARB/TestMisc.cpp:162 Win/Localization.cpp:50
+#: TestARB/Local.cpp:52 TestARB/TestMisc.cpp:163 Win/Localization.cpp:50
 msgid "IDS_ARB_UNKNOWN_VERSION"
 msgstr "Unknown document version"
 
@@ -1273,7 +1277,7 @@ msgstr ""
 "Warning: This file has changed since it was opened. Are you sure you want to "
 "overwrite any changes?"
 
-#: Win/AgilityBookDoc.cpp:1836 Win/UpdateInfo.cpp:478
+#: Win/AgilityBookDoc.cpp:1836 Win/UpdateInfo.cpp:476
 msgid "IDS_CANNOT_OPEN"
 msgstr "Unable to open file '{}' for writing."
 
@@ -1354,7 +1358,7 @@ msgstr "&New"
 msgid "DescFileNew"
 msgstr "Create a new document"
 
-#: Win/AgilityBookMenu.cpp:45 Win/AgilityBookMenu.cpp:46
+#: Win/AgilityBookMenu.cpp:45
 msgid "MenuFileOpen"
 msgstr "&Open..."
 
@@ -6524,50 +6528,50 @@ msgstr ""
 "The configuration has been updated. Would you like to merge the new one with "
 "your data?"
 
-#: Win/UpdateInfo.cpp:244 Win/UpdateInfo.cpp:381
+#: Win/UpdateInfo.cpp:240 Win/UpdateInfo.cpp:379
 msgid "IDS_UPDATE_UNKNOWN"
 msgstr "Unable to determine current released version."
 
-#: Win/UpdateInfo.cpp:304 Win/UpdateInfo.cpp:759
+#: Win/UpdateInfo.cpp:302 Win/UpdateInfo.cpp:752
 msgid "IDS_LOAD_FAILED"
 msgstr "Failed to load '{}'."
 
-#: Win/UpdateInfo.cpp:441
+#: Win/UpdateInfo.cpp:439
 msgid "IDS_VERSION_AVAILABLE"
 msgstr "Version {} is available. Would you like to download it?"
 
-#: Win/UpdateInfo.cpp:483
+#: Win/UpdateInfo.cpp:481
 msgid "IDS_DOWNLOADING"
 msgstr "Downloading..."
 
-#: Win/UpdateInfo.cpp:505
+#: Win/UpdateInfo.cpp:503
 msgid "IDS_VALIDATING"
 msgstr "Validating..."
 
-#: Win/UpdateInfo.cpp:513 Win/UpdateInfo.cpp:537 Win/UpdateInfo.cpp:545
-#: Win/UpdateInfo.cpp:553
+#: Win/UpdateInfo.cpp:511 Win/UpdateInfo.cpp:535 Win/UpdateInfo.cpp:543
+#: Win/UpdateInfo.cpp:551
 msgid "IDS_ERROR_DOWNLOAD"
 msgstr "ERROR: The downloaded file is corrupt."
 
-#: Win/UpdateInfo.cpp:529
+#: Win/UpdateInfo.cpp:527
 msgid "IDS_DOWNLOAD_AND_RESTART"
 msgstr ""
 "{} is now downloaded. Agility Record Book will now close so you can install "
 "it."
 
-#: Win/UpdateInfo.cpp:561
+#: Win/UpdateInfo.cpp:559
 msgid "IDS_ERROR_UNEXPECTED"
 msgstr "ERROR: Unexpected file format, expected MSI file."
 
-#: Win/UpdateInfo.cpp:597 Win/UpdateInfo.cpp:616
+#: Win/UpdateInfo.cpp:595 Win/UpdateInfo.cpp:614
 msgid "IDS_ERROR_AUTOUPDATE"
 msgstr "ERROR: Internal error during update process. Procedure was cancelled."
 
-#: Win/UpdateInfo.cpp:795
+#: Win/UpdateInfo.cpp:788
 msgid "IDS_UPDATE_CURRENT"
 msgstr "No updates are available at this time."
 
-#: Win/UpdateInfo.cpp:836
+#: Win/UpdateInfo.cpp:829
 msgid "IDS_INSTALL_BUSY"
 msgstr ""
 "An update is available but cannot be installed at this time. Make sure the "

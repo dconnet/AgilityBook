@@ -232,19 +232,17 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	}
 	else
 	{
-		//std::wstring userName = CAgilityBookOptions::GetUserName(m_usernameHint);
-		if (ReadHttp::ReadHttpFileSync(errMsg, url, data))
-		{
-			//CAgilityBookOptions::SetUserName(m_usernameHint, userName);
-		}
-		else
+		long rc = ReadHttp::ReadHttpFileSync(errMsg, url, data);
+		if (200 != rc)
 		{
 			if (bVerbose)
 			{
 				data = wxString(_("IDS_UPDATE_UNKNOWN")).mb_str(wxMBConvUTF8());
 				wxString tmp = StringUtil::stringWX(data);
 				if (!errMsg.empty())
-					tmp << errMsg.c_str();
+					tmp << L"\n\n" << errMsg.c_str();
+				else
+					tmp << L" (" << rc << L")";
 				wxMessageBox(tmp, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			}
 			return false;
@@ -488,7 +486,7 @@ bool CUpdateInfo::CheckProgram(CAgilityBookDoc* pDoc, std::wstring const& lang, 
 
 						// TODO: Need to rework this logic to allow threads
 						std::wstring err;
-						if (!ReadHttp::ReadHttpFileSync(err, m_NewFile, &output, progress))
+						if (200 != ReadHttp::ReadHttpFileSync(err, m_NewFile, &output, progress))
 						{
 							bGotoWeb = true;
 							// If user canceled, no message is generated.
@@ -733,12 +731,7 @@ void CUpdateInfo::CheckConfig(CAgilityBookDoc* pDoc, bool bVerbose)
 			}
 			else
 			{
-				//std::wstring userName = CAgilityBookOptions::GetUserName(m_usernameHint);
-				if (ReadHttp::ReadHttpFileSync(errMsg, url, strConfig))
-				{
-					//CAgilityBookOptions::SetUserName(m_usernameHint, userName);
-				}
-				else
+				if (200 != ReadHttp::ReadHttpFileSync(errMsg, url, strConfig))
 				{
 					strConfig.clear();
 					// TODO: if (bVerbose), error msg (like above)

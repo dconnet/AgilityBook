@@ -80,7 +80,7 @@ size_t write_data_stream(void* pData, size_t size, size_t nmemb, void* stream)
 }
 
 
-bool ReadHttpFile(
+long ReadHttpFile(
 	std::wstring& outErrMsg,
 	std::wstring const& inURL,
 	wxString* outString, // Only one of these 2 may be specified
@@ -88,18 +88,20 @@ bool ReadHttpFile(
 	IDlgProgress* pProgress)
 {
 	if (!outString && !outStream)
-		return true;
+		return 200;
 
 	wxString res;
 	wxStringOutputStream out(&res);
 
 	bool bCancelEnable = true;
 
+	char errorBuffer[CURL_ERROR_SIZE] = {0};
 	CURL* curl = curl_easy_init();
 
 	curl_easy_setopt(curl, CURLOPT_URL, StringUtil::stringA(inURL).c_str());
 
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data_stream);
+	curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, errorBuffer);
 	if (outString)
 	{
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &out);
@@ -113,7 +115,15 @@ bool ReadHttpFile(
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, outStream);
 	}
 
+	long code = 400; // Just default to "Bad Request"
+	std::string errMsg;
+
 	CURLcode rcCurl = curl_easy_perform(curl);
+	if (CURLE_OK == rcCurl)
+		curl_easy_getinfo(curl, CURLINFO_HTTP_CODE, &code);
+	else
+		errMsg = errorBuffer;
+
 	curl_easy_cleanup(curl);
 
 	if (pProgress)
@@ -121,23 +131,34 @@ bool ReadHttpFile(
 
 	if (CURLE_URL_MALFORMAT == rcCurl)
 	{
-		outErrMsg = _("Invalid URL");
-		outErrMsg += L": ";
-		outErrMsg += inURL;
+		fmt::wmemory_buffer buffer;
+		fmt::format_to(buffer, L"{}: {}\n{}", _("Invalid URL").wx_str(), inURL, StringUtil::stringW(errMsg));
+		outErrMsg += fmt::to_string(buffer);
 	}
 	else if (CURLE_OK != rcCurl)
 	{
-		outErrMsg += fmt::format(_("Error ({0}) reading {1}").wx_str(), rcCurl, inURL);
+		fmt::wmemory_buffer buffer;
+		fmt::format_to(
+			buffer,
+			L"{}\n{}",
+			fmt::format(_("Error ({0}) reading {1}").wx_str(), rcCurl, inURL),
+			StringUtil::stringW(errMsg));
+		outErrMsg += fmt::to_string(buffer);
+	}
+	else if (404 == code)
+	{
+		outErrMsg += fmt::format(_("File not found: {}").wx_str(), inURL);
 	}
 
 	if (CURLE_OK == rcCurl)
 	{
-		if (outString)
+		if (200 == code && outString)
 		{
 			*outString = res.mb_str(wxMBConvUTF8());
 		}
 	}
-	return CURLE_OK == rcCurl;
+
+	return code;
 }
 } // namespace
 
@@ -169,30 +190,30 @@ bool CheckHttpFile(std::wstring const& inURL)
 }
 
 
-bool ReadHttpFileSync(std::wstring& outErrMsg, std::wstring const& inURL, std::string& outString)
+long ReadHttpFileSync(std::wstring& outErrMsg, std::wstring const& inURL, std::string& outString)
 {
 	wxString data;
-	bool rc = ReadHttpFile(outErrMsg, inURL, &data, nullptr, nullptr);
-	if (rc)
+	long rc = ReadHttpFile(outErrMsg, inURL, &data, nullptr, nullptr);
+	if (200 == rc)
 		outString = data.mb_str(wxMBConvUTF8());
 	return rc;
 }
 
 
-bool ReadHttpFileSync(std::wstring& outErrMsg, std::wstring const& inURL, wxString& outString)
+long ReadHttpFileSync(std::wstring& outErrMsg, std::wstring const& inURL, wxString& outString)
 {
 	return ReadHttpFile(outErrMsg, inURL, &outString, nullptr, nullptr);
 }
 
 
-bool ReadHttpFileSync(
+long ReadHttpFileSync(
 	std::wstring& outErrMsg,
 	std::wstring const& inURL,
 	wxOutputStream* outStream,
 	IDlgProgress* pProgress)
 {
 	if (!outStream)
-		return false;
+		return 400;
 	return ReadHttpFile(outErrMsg, inURL, nullptr, outStream, pProgress);
 }
 
