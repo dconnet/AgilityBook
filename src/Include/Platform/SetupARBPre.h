@@ -125,6 +125,12 @@
 #pragma warning(disable : 5045) // Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
 #pragma warning(disable : 5204) // class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
 
+// x86 release builds trip on Catch
+// Just defining this before the Catch headers isn't good enough
+#if defined(_M_IX86) && defined(NDEBUG)
+#pragma warning(disable : 4738) // storing 32-bit float result in memory, possible loss of performance
+#endif
+
 // clang-format on
 
 #else // _WIN32

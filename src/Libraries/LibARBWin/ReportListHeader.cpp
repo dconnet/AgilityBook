@@ -126,16 +126,25 @@ void CReportListHeader::CreateColumns(
 			&CReportListHeader::OnUpdateColumn,
 			this,
 			m_idFirst,
-			m_idFirst + m_columnInfo.size() - 1);
-		m_parent
-			->Unbind(wxEVT_MENU, &CReportListHeader::OnColumn, this, m_idFirst, m_idFirst + m_columnInfo.size() - 1);
+			static_cast<int>(m_idFirst + m_columnInfo.size() - 1));
+		m_parent->Unbind(
+			wxEVT_MENU,
+			&CReportListHeader::OnColumn,
+			this,
+			m_idFirst,
+			static_cast<int>(m_idFirst + m_columnInfo.size() - 1));
 		m_parent->Unbind(
 			wxEVT_UPDATE_UI,
 			&CReportListHeader::OnUpdateRestore,
 			this,
-			m_idFirst + m_columnInfo.size(),
+			static_cast<int>(m_idFirst + m_columnInfo.size()),
 			wxID_ANY);
-		m_parent->Unbind(wxEVT_MENU, &CReportListHeader::OnRestore, this, m_idFirst + m_columnInfo.size(), wxID_ANY);
+		m_parent->Unbind(
+			wxEVT_MENU,
+			&CReportListHeader::OnRestore,
+			this,
+			static_cast<int>(m_idFirst + m_columnInfo.size()),
+			wxID_ANY);
 		m_ctrlList->Unbind(wxEVT_LIST_COL_BEGIN_DRAG, &CReportListHeader::OnBeginColDrag, this);
 		m_ctrlList->Unbind(wxEVT_COMMAND_LIST_COL_RIGHT_CLICK, &CReportListHeader::OnColumnRClick, this);
 	}
@@ -184,15 +193,25 @@ void CReportListHeader::CreateColumns(
 			&CReportListHeader::OnUpdateColumn,
 			this,
 			m_idFirst,
-			m_idFirst + m_columnInfo.size() - 1);
-		m_parent->Bind(wxEVT_MENU, &CReportListHeader::OnColumn, this, m_idFirst, m_idFirst + m_columnInfo.size() - 1);
+			static_cast<int>(m_idFirst + m_columnInfo.size() - 1));
+		m_parent->Bind(
+			wxEVT_MENU,
+			&CReportListHeader::OnColumn,
+			this,
+			m_idFirst,
+			static_cast<int>(m_idFirst + m_columnInfo.size() - 1));
 		m_parent->Bind(
 			wxEVT_UPDATE_UI,
 			&CReportListHeader::OnUpdateRestore,
 			this,
-			m_idFirst + m_columnInfo.size(),
+			static_cast<int>(m_idFirst + m_columnInfo.size()),
 			wxID_ANY);
-		m_parent->Bind(wxEVT_MENU, &CReportListHeader::OnRestore, this, m_idFirst + m_columnInfo.size(), wxID_ANY);
+		m_parent->Bind(
+			wxEVT_MENU,
+			&CReportListHeader::OnRestore,
+			this,
+			static_cast<int>(m_idFirst + m_columnInfo.size()),
+			wxID_ANY);
 		m_ctrlList->Bind(wxEVT_LIST_COL_BEGIN_DRAG, &CReportListHeader::OnBeginColDrag, this);
 		m_ctrlList->Bind(wxEVT_COMMAND_LIST_COL_RIGHT_CLICK, &CReportListHeader::OnColumnRClick, this);
 	}
@@ -461,7 +480,7 @@ void CReportListHeader::OnColumnRClick(wxListEvent& evt)
 		menu.AppendCheckItem(m_idFirst + col, StringUtil::GetTranslation(m_columnInfo[col].name));
 	}
 	menu.AppendSeparator();
-	menu.Append(m_idFirst + m_columnInfo.size(), _("Restore"));
+	menu.Append(static_cast<int>(m_idFirst + m_columnInfo.size()), _("Restore"));
 
 	m_parent->PopupMenu(&menu, evt.GetPoint());
 }

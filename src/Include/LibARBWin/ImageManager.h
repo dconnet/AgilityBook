@@ -11,7 +11,7 @@
  * @brief Image Manager
  * @author David Connet
  *
- * Usage: 
+ * Usage:
  * Users of this can extend by associating a callback class.
  *
  * Revision History
@@ -30,7 +30,7 @@
 
 // Allow projects to extend without deriving which makes using the same
 // class unchanged in multiple projects possible.
-class IImageManagerCallback
+class ARBWIN_API IImageManagerCallback
 {
 public:
 	virtual ~IImageManagerCallback() = default;

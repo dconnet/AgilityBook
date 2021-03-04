@@ -26,9 +26,6 @@
 #if defined(USING_CATCH3)
 #include "catch2/catch_all.hpp"
 #elif defined(USING_CATCH2)
-#if defined(WIN32) && defined(NDEBUG)
-#pragma warning(disable : 4738) // storing 32-bit float result in memory, possible loss of performance
-#endif
 #include "catch2/catch.hpp"
 #else
 #error Unknown test framework

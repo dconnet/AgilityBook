@@ -24,7 +24,7 @@
 class wxLocale;
 
 
-class ILanguageCallback
+class ARBWIN_API ILanguageCallback
 {
 public:
 	virtual ~ILanguageCallback() = default;

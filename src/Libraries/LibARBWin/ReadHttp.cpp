@@ -62,7 +62,7 @@ int xferinfo(void* ptr, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal
 	{
 		if (pProgress->HasCanceled())
 			return 1;
-		pProgress->SetPos(1, dlnow);
+		pProgress->SetPos(1, static_cast<int>(dlnow));
 	}
 	return 0;
 }

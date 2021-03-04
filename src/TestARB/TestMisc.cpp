@@ -65,7 +65,8 @@ static const struct
 	{1728.0,          {1, 2}, {L"1.7 kB", L"1.73 kB"},     {L"1.7 KiB", L"1.69 KiB"},   {L"1.7 KB", L"1.69 KB"}},
 	// Note: On Mac/Unix, 15.625 is rounding differently than Windows.
 	// Oh. And ReleaseDLL rounds the same way unix does.
-#if defined(WIN32) && !(defined(_DLL) && !defined(_DEBUG))
+	// And VC16.9 (v1928) rounds the same way unix does.
+#if defined(WIN32) && defined(_MSC_VER) && _MSC_VER < 1928 && !(defined(_DLL) && !defined(_DEBUG))
 	{16000.0,         {1, 2}, {L"16 kB", L"16 kB"},        {L"15.6 KiB", L"15.63 KiB"}, {L"15.6 KB", L"15.63 KB"}},
 #else
 	{16000.0,         {1, 2}, {L"16 kB", L"16 kB"},        {L"15.6 KiB", L"15.62 KiB"}, {L"15.6 KB", L"15.62 KB"}},

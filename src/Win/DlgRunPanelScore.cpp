@@ -268,7 +268,7 @@ CDlgRunPanelScore::CDlgRunPanelScore(
 		= new wxStaticText(this, wxID_ANY, _("IDC_RUNSCORE_DATE"), wxDefaultPosition, wxDefaultSize, 0);
 	textDate->Wrap(-1);
 
-	wxDatePickerCtrl* m_ctrlDate = new wxDatePickerCtrl(
+	m_ctrlDate = new wxDatePickerCtrl(
 		this,
 		wxID_ANY,
 		wxDefaultDateTime,

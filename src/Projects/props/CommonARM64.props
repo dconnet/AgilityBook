@@ -10,5 +10,8 @@
     <Midl>
       <TargetEnvironment>ARM64</TargetEnvironment>
     </Midl>
+    <ClCompile>
+      <PreprocessorDefinitions>USE_OPENGL=0;wxNO_GL_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
   </ItemDefinitionGroup>
 </Project>
