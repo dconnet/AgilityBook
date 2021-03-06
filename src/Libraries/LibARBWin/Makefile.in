@@ -33,6 +33,7 @@ libarbwin_SRCS = \
 	CheckLink.cpp \
 	CheckTreeCtrl.cpp \
 	ColumnOrder.cpp \
+	ConfigPosition.cpp \
 	DlgAuthenticate.cpp \
 	DlgConfigAccel.cpp \
 	DlgProgress.cpp \

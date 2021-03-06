@@ -99,6 +99,9 @@
     <ClCompile Include="..\..\Libraries\LibARBWin\ReportListHeader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\ConfigPosition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Libraries\LibARBWin\DlgConfigAccel.h">
@@ -204,6 +207,9 @@
       <Filter>Include\LibARBWin</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\LibARBWin\ReportListHeader.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\ConfigPosition.h">
       <Filter>Include\LibARBWin</Filter>
     </ClInclude>
   </ItemGroup>

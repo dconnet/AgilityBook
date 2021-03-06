@@ -111,6 +111,7 @@
 #pragma warning(disable : 4365 4623 4625 4626 5026 5027) // Needed to use fmt
 
 #pragma warning(disable : 4266) // no override available for virtual member function; function is hidden
+#pragma warning(disable : 4355) // 'this': used in base member initializer list
 #pragma warning(disable : 4371) // layout of class may have changed from a previous version of the compiler due to better packing of member '<name>'
 #pragma warning(disable : 4464) // relative include path contains '..'
 #pragma warning(disable : 4514) // unreferenced inline function has been removed

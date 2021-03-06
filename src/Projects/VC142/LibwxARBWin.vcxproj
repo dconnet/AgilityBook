@@ -280,6 +280,7 @@
     <ClCompile Include="..\..\Libraries\LibARBWin\CheckLink.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\CheckTreeCtrl.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\ColumnOrder.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\ConfigPosition.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\DlgAuthenticate.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\DlgConfigAccel.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\DlgProgress.cpp" />
@@ -332,6 +333,7 @@
     <ClInclude Include="..\..\Include\LibARBWin\CheckLink.h" />
     <ClInclude Include="..\..\Include\LibARBWin\CheckTreeCtrl.h" />
     <ClInclude Include="..\..\Include\LibARBWin\ColumnOrder.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\ConfigPosition.h" />
     <ClInclude Include="..\..\Include\LibARBWin\DlgAuthenticate.h" />
     <ClInclude Include="..\..\Include\LibARBWin\DlgProgress.h" />
     <ClInclude Include="..\..\Include\LibARBWin\DPI.h" />

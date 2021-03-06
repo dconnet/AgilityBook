@@ -14,8 +14,6 @@
 
 #ifdef _MSC_VER
 #pragma warning(push)
-// "warning C4355: 'this' : used in base member initializer list"
-#pragma warning(disable : 4355)
 
 #else
 #endif
