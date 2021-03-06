@@ -115,6 +115,16 @@ std::wstring stringW(wxString const& inStr)
 }
 
 
+std::string stringA(wxString const& inStr)
+{
+#if defined(wxUSE_STD_STRING) && wxUSE_STD_STRING
+	return std::string(inStr.ToStdString());
+#else
+	return std::string(inStr.ToUTF8());
+#endif
+}
+
+
 std::string stringA(wxMemoryOutputStream const& inStr)
 {
 	std::string str;
@@ -155,7 +165,7 @@ std::string stringA(wchar_t const* const inStr, size_t inLen)
 		else
 		{
 			// handle the error
-			//DWORD dwErr = GetLastError();
+			// DWORD dwErr = GetLastError();
 		}
 #else
 		// Create a copy because wcstombs doesn't use length.
@@ -225,7 +235,7 @@ std::wstring stringW(char const* const inStr, size_t inLen)
 		else
 		{
 			// handle the error
-			//DWORD dwErr = GetLastError();
+			// DWORD dwErr = GetLastError();
 		}
 #else
 		// Create a copy because mbstowcs doesn't use length.

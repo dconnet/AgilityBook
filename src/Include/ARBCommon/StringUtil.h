@@ -47,6 +47,7 @@ ARBCOMMON_API wxString stringWX(std::wstring const& inStr);
 ARBCOMMON_API wxString stringWX(char const* const inStr, size_t inLen);
 ARBCOMMON_API wxString stringWX(std::string const& inStr);
 ARBCOMMON_API std::wstring stringW(wxString const& inStr);
+ARBCOMMON_API std::string stringA(wxString const& inStr);
 ARBCOMMON_API std::string stringA(wxMemoryOutputStream const& inStr);
 #endif
 
@@ -130,11 +131,11 @@ enum class ByteSizeStyle
 };
 
 /**
-	 * Return a formatted string using IEC binary prefixes.
-	 * @param inSize Number of bytes
-	 * @param inPrec Precision (passed to ARBDouble::ToString)
-	 * @param inSizeStyle Use SI, binary, or programmer (true!) units
-	 */
+ * Return a formatted string using IEC binary prefixes.
+ * @param inSize Number of bytes
+ * @param inPrec Precision (passed to ARBDouble::ToString)
+ * @param inSizeStyle Use SI, binary, or programmer (true!) units
+ */
 ARBCOMMON_API std::wstring FormatBytes(
 	double inSize,
 	int inPrec = 2,
