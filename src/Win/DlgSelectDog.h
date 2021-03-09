@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-03-09 Only show living dogs,
  * 2009-02-10 Ported to wxWidgets.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  */
@@ -24,7 +25,11 @@ class CAgilityBookDoc;
 class CDlgSelectDog : public wxDialog
 {
 public:
-	CDlgSelectDog(CAgilityBookDoc* pDoc, std::vector<ARBDogPtr>& outDogs, wxWindow* pParent = nullptr);
+	CDlgSelectDog(
+		CAgilityBookDoc* pDoc,
+		std::vector<ARBDogPtr>& outDogs,
+		wxWindow* pParent = nullptr,
+		bool onlyLiving = true);
 
 	int ShowModal() override;
 

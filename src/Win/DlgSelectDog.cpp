@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-03-09 Only show living dogs,
  * 2014-12-31 Changed pixels to dialog units.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-10 Ported to wxWidgets.
@@ -40,7 +41,7 @@ wxBEGIN_EVENT_TABLE(CDlgSelectDog, wxDialog)
 wxEND_EVENT_TABLE()
 
 
-CDlgSelectDog::CDlgSelectDog(CAgilityBookDoc* pDoc, std::vector<ARBDogPtr>& outDogs, wxWindow* pParent)
+CDlgSelectDog::CDlgSelectDog(CAgilityBookDoc* pDoc, std::vector<ARBDogPtr>& outDogs, wxWindow* pParent, bool onlyLiving)
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_outDogs(outDogs)
@@ -57,7 +58,18 @@ CDlgSelectDog::CDlgSelectDog(CAgilityBookDoc* pDoc, std::vector<ARBDogPtr>& outD
 		wxDefaultSize,
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
-	m_Dogs.insert(m_Dogs.end(), pDoc->Book().GetDogs().begin(), pDoc->Book().GetDogs().end());
+	if (onlyLiving)
+	{
+		std::copy_if(
+			pDoc->Book().GetDogs().begin(),
+			pDoc->Book().GetDogs().end(),
+			std::back_inserter(m_Dogs),
+			[](ARBDogPtr const& val) { return !val->GetDeceased().IsValid(); });
+	}
+	else
+	{
+		m_Dogs.insert(m_Dogs.end(), pDoc->Book().GetDogs().begin(), pDoc->Book().GetDogs().end());
+	}
 
 	std::set<std::wstring> selection;
 	long nDogs = wxConfig::Get()->Read(CFG_SELECTION_NDOGS, 0L);
@@ -111,9 +123,9 @@ CDlgSelectDog::CDlgSelectDog(CAgilityBookDoc* pDoc, std::vector<ARBDogPtr>& outD
 int CDlgSelectDog::ShowModal()
 {
 	m_outDogs.clear();
-	if (1 == m_pDoc->Book().GetDogs().size())
+	if (1 == m_Dogs.size())
 	{
-		m_outDogs.push_back(*(m_pDoc->Book().GetDogs().begin()));
+		m_outDogs.push_back(*(m_Dogs.begin()));
 		return wxID_OK;
 	}
 	else
