@@ -1422,7 +1422,7 @@ bool ElementNode::LoadXML(wchar_t const* inFileName, fmt::wmemory_buffer& ioErrM
 	if (!inFileName)
 		return false;
 #if __USE_LIBXML2
-	std::string filename = StringUtil::stringA(inFileName);
+	std::string filename(StringUtil::stringA(std::wstring(inFileName)));
 	xmlDocPtr source = xmlReadFile(filename.c_str(), nullptr, 0);
 	bool rc = LoadXMLNode(*this, source, ioErrMsg);
 	if (source)
@@ -1432,7 +1432,7 @@ bool ElementNode::LoadXML(wchar_t const* inFileName, fmt::wmemory_buffer& ioErrM
 #ifdef ARB_HAS_ISTREAM_WCHAR
 	std::ifstream input(inFileName);
 #else
-	std::string filename(StringUtil::stringA(inFileName));
+	std::string filename(StringUtil::stringA(std::wstring(inFileName)));
 	std::ifstream input(filename.c_str());
 #endif
 	if (!input.good())

@@ -580,10 +580,8 @@ bool CUpdateInfo::CheckProgram(CAgilityBookDoc* pDoc, std::wstring const& lang, 
 #if defined(ARB_HAS_OSTREAM_WCHAR)
 							std::ofstream output(outFile.c_str(), std::ios::out | std::ios::binary);
 #else
-							char const* pFile = nullptr;
-							std::string filename = StringUtil::stringA(outFile);
-							pFile = filename.c_str();
-							std::ofstream output(pFile, std::ios::out | std::ios::binary);
+							std::string filenameA = StringUtil::stringA(outFile);
+							std::ofstream output(filenameA.c_str(), std::ios::out | std::ios::binary);
 #endif
 							wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 							wxString zipfile
