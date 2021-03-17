@@ -69,6 +69,9 @@
     <ClCompile Include="..\..\Libraries\ARBCommon\ARBMisc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Libraries\ARBCommon\MailTo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Libraries\ARBCommon\stdafx.h">
@@ -136,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\VersionNumber.h">
       <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\ARBCommon\MailTo.h">
+      <Filter>Include\ARBCommon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

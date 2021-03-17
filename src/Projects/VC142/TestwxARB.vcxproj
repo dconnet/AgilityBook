@@ -566,6 +566,7 @@
     <ClCompile Include="..\..\TestARB\TestErrorCallback.cpp" />
     <ClCompile Include="..\..\TestARB\TestInfoItem.cpp" />
     <ClCompile Include="..\..\TestARB\TestLib.cpp" />
+    <ClCompile Include="..\..\TestARB\TestMailto.cpp" />
     <ClCompile Include="..\..\TestARB\TestMD5.cpp" />
     <ClCompile Include="..\..\TestARB\TestMisc.cpp" />
     <ClCompile Include="..\..\TestARB\TestQ.cpp" />

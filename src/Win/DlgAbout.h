@@ -19,6 +19,7 @@
  * 2003-09-17 Added a 'check for updates' control.
  */
 
+#include "ARBCommon/MailTo.h"
 #include <wx/hyperlink.h>
 class CAgilityBookDoc;
 
@@ -33,4 +34,5 @@ private:
 	void OnCheckForUpdates(wxCommandEvent& evt);
 
 	CAgilityBookDoc* m_pDoc;
+	CMailTo m_mailto;
 };

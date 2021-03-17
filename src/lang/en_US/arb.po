@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-19 11:21-0800\n"
-"PO-Revision-Date: 2021-02-19 11:21-0800\n"
+"POT-Creation-Date: 2021-03-16 18:59-0700\n"
+"PO-Revision-Date: 2021-03-16 19:05-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -520,7 +520,7 @@ msgstr "Error ({0}) reading {1}"
 msgid "File not found: {}"
 msgstr "File not found: {}"
 
-#: Libraries/LibARBWin/ReportListHeader.cpp:464
+#: Libraries/LibARBWin/ReportListHeader.cpp:483
 msgid "Restore"
 msgstr "Restore"
 
@@ -544,7 +544,7 @@ msgstr "Reading {} rows"
 msgid "Please enter a valid number"
 msgstr "Please enter a valid number"
 
-#: TestARB/Local.cpp:52 TestARB/TestMisc.cpp:163 Win/Localization.cpp:50
+#: TestARB/Local.cpp:52 TestARB/TestMisc.cpp:164 Win/Localization.cpp:50
 msgid "IDS_ARB_UNKNOWN_VERSION"
 msgstr "Unknown document version"
 
@@ -2182,11 +2182,27 @@ msgid "IDS_CREATEDOG_FAILED"
 msgstr "Error: Failed to create dog."
 
 # DlgAbout
-#: Win/DlgAbout.cpp:51
+#: Win/DlgAbout.cpp:52
 msgid "IDD_ABOUTBOX"
 msgstr "About"
 
-#: Win/DlgAbout.cpp:67
+#: Win/DlgAbout.cpp:55
+msgid "LinkHelpUrlSubject"
+msgstr "AgilityBook v%VERSION% Help:"
+
+#: Win/DlgAbout.cpp:58 Win/DlgAbout.cpp:102
+msgid "LinkHelpAddress"
+msgstr "help@agilityrecordbook.com"
+
+#: Win/DlgAbout.cpp:60
+msgid "LinkHelpUrlBody"
+msgstr ""
+"Please describe the problem, and if possible, how to recreate it:\n"
+"\n"
+"If a particular file is causing the problem, please attach a copy of that "
+"file to this message."
+
+#: Win/DlgAbout.cpp:76
 msgid "AboutVersion"
 msgstr ""
 "Version {0}.{1}.{2}.{3}\n"
@@ -2196,60 +2212,48 @@ msgstr ""
 "\n"
 "Please send any bug reports or suggestions to:"
 
-#: Win/DlgAbout.cpp:72 Win/DlgMessageBox.cpp:54 Win/MainFrm.cpp:120
+#: Win/DlgAbout.cpp:81 Win/DlgMessageBox.cpp:54 Win/MainFrm.cpp:120
 msgid "Agility Record Book"
 msgstr "Agility Record Book"
 
-#: Win/DlgAbout.cpp:81
+#: Win/DlgAbout.cpp:90
 msgid "LinkGroupText"
 msgstr "Discussion Group"
 
-#: Win/DlgAbout.cpp:82 Win/DlgAbout.cpp:86 Win/DlgAbout.cpp:87
+#: Win/DlgAbout.cpp:91 Win/DlgAbout.cpp:95 Win/DlgAbout.cpp:96
 msgid "LinkGroupUrl"
 msgstr "https://groups.io/g/AgilityRecordBook"
 
-#: Win/DlgAbout.cpp:92
-msgid "LinkHelpText"
-msgstr "help@agilityrecordbook.com"
-
-#: Win/DlgAbout.cpp:93 Win/DlgAbout.cpp:97 Win/DlgAbout.cpp:98
-msgid "LinkHelpUrl"
-msgstr ""
-"mailto:help@agilityrecordbook.com?subject=AgilityBook v%VERSION% Help:"
-"&body=Please describe the problem, and if possible, how to recreate it:%0d%0a"
-"%0d%0aIf a particular file is causing the problem, please attach a copy of "
-"that file to this message."
-
-#: Win/DlgAbout.cpp:101
+#: Win/DlgAbout.cpp:111
 msgid "UsefulLinks"
 msgstr "Useful links:"
 
-#: Win/DlgAbout.cpp:107
+#: Win/DlgAbout.cpp:117
 msgid "LinkArbText"
 msgstr "Agility Record Book Home Page"
 
-#: Win/DlgAbout.cpp:108 Win/DlgAbout.cpp:112 Win/DlgAbout.cpp:113
+#: Win/DlgAbout.cpp:118 Win/DlgAbout.cpp:122 Win/DlgAbout.cpp:123
 msgid "LinkArbUrl"
 msgstr "http://www.agilityrecordbook.com"
 
-#: Win/DlgAbout.cpp:118
+#: Win/DlgAbout.cpp:128
 msgid "LinkArbDownloadText"
 msgstr "Agility Record Book Downloads"
 
-#: Win/DlgAbout.cpp:119 Win/DlgAbout.cpp:123 Win/DlgAbout.cpp:124
+#: Win/DlgAbout.cpp:129 Win/DlgAbout.cpp:133 Win/DlgAbout.cpp:134
 #: Win/UpdateInfo.cpp:212
 msgid "LinkArbDownloadUrl"
 msgstr "http://www.agilityrecordbook.com/download.php"
 
-#: Win/DlgAbout.cpp:126
+#: Win/DlgAbout.cpp:136
 msgid "AboutCredits"
 msgstr "Credits: Some artwork sourced from Vector Graphics by FreeVector.com."
 
-#: Win/DlgAbout.cpp:128
+#: Win/DlgAbout.cpp:138
 msgid "CheckForUpdates"
 msgstr "Check for Updates..."
 
-#: Win/DlgAbout.cpp:130
+#: Win/DlgAbout.cpp:140
 msgid "HIDC_ABOUT_UPDATE"
 msgstr ""
 "Check to see if there are any updates available. If there are, you will be "
@@ -6188,11 +6192,11 @@ msgstr ""
 "from official results."
 
 # DlgSelectDog
-#: Win/DlgSelectDog.cpp:55
+#: Win/DlgSelectDog.cpp:56
 msgid "IDD_DOG_PICKER"
 msgstr "Select dog(s)"
 
-#: Win/DlgSelectDog.cpp:90 Win/DlgSelectDog.cpp:91
+#: Win/DlgSelectDog.cpp:102 Win/DlgSelectDog.cpp:103
 msgid "HIDC_PICK_NAME"
 msgstr "List of existing dogs."
 
@@ -6532,7 +6536,7 @@ msgstr ""
 msgid "IDS_UPDATE_UNKNOWN"
 msgstr "Unable to determine current released version."
 
-#: Win/UpdateInfo.cpp:302 Win/UpdateInfo.cpp:752
+#: Win/UpdateInfo.cpp:302 Win/UpdateInfo.cpp:750
 msgid "IDS_LOAD_FAILED"
 msgstr "Failed to load '{}'."
 
@@ -6563,15 +6567,15 @@ msgstr ""
 msgid "IDS_ERROR_UNEXPECTED"
 msgstr "ERROR: Unexpected file format, expected MSI file."
 
-#: Win/UpdateInfo.cpp:595 Win/UpdateInfo.cpp:614
+#: Win/UpdateInfo.cpp:593 Win/UpdateInfo.cpp:612
 msgid "IDS_ERROR_AUTOUPDATE"
 msgstr "ERROR: Internal error during update process. Procedure was cancelled."
 
-#: Win/UpdateInfo.cpp:788
+#: Win/UpdateInfo.cpp:786
 msgid "IDS_UPDATE_CURRENT"
 msgstr "No updates are available at this time."
 
-#: Win/UpdateInfo.cpp:829
+#: Win/UpdateInfo.cpp:827
 msgid "IDS_INSTALL_BUSY"
 msgstr ""
 "An update is available but cannot be installed at this time. Make sure the "

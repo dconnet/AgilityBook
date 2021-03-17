@@ -40,6 +40,7 @@ libarbcommon_SRCS = \
 	BinaryData.cpp \
 	BreakLine.cpp \
 	Element.cpp \
+	MailTo.cpp \
 	StringUtil.cpp \
 	VersionNum.cpp
 

@@ -45,10 +45,19 @@
 CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
+	, m_mailto()
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_ABOUTBOX"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
+
+	std::wstring str = fmt::format(L"{}.{}.{}", ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT);
+	auto subject = _("LinkHelpUrlSubject");
+	subject.Replace(L"%VERSION%", str);
+
+	m_mailto.AddTo(_("LinkHelpAddress").wx_str());
+	m_mailto.SetSubject(subject.wx_str());
+	m_mailto.SetBody(_("LinkHelpUrlBody").wx_str());
 
 	// Controls (these are done first to control tab order)
 
@@ -89,13 +98,14 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	wxHyperlinkCtrl* link2 = new wxHyperlinkCtrl(
 		this,
 		wxID_ANY,
-		_("LinkHelpText"),
-		_("LinkHelpUrl"),
+		_("LinkHelpAddress"),
+		m_mailto.Uri(),
 		wxDefaultPosition,
 		wxDefaultSize,
 		wxHL_DEFAULT_STYLE);
-	link2->SetToolTip(_("LinkHelpUrl"));
-	link2->SetHelpText(_("LinkHelpUrl"));
+	wxString uri = m_mailto.Uri(true);
+	link2->SetToolTip(uri);
+	link2->SetHelpText(uri);
 	link2->Bind(wxEVT_COMMAND_HYPERLINK, &CDlgAbout::OnHelpEmail, this);
 
 	wxStaticText* usefulLinks = new wxStaticText(this, wxID_ANY, _("UsefulLinks"), wxDefaultPosition, wxDefaultSize, 0);
@@ -187,8 +197,6 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 void CDlgAbout::OnHelpEmail(wxHyperlinkEvent& evt)
 {
 	wxString url = evt.GetURL();
-	std::wstring str = fmt::format(L"{}.{}.{}", ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT);
-	url.Replace(L"%VERSION%", str);
 	wxLaunchDefaultBrowser(url);
 }
 
