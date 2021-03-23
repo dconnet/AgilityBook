@@ -6,9 +6,10 @@
 # Revision History
 # 2020-12-08 Added install option
 # 2020-11-28 Created
-"""CompileCurl.py -p curlsrc [-e] [-a] [-d] [-s] [-r config] [-i path] [-I] compiler*
+"""CompileCurl.py -p curlsrc [-e] [-x] [-a] [-d] [-s] [-r config] [-i path] [-I] compiler*
 	-p curlsrc: Root of curl tree
 	-e:         Just show the environment, don't do it
+	-x:         Do not cleanup build output
 	-a:         Compile all (vc142, vc142x64, vc142arm64)
 	-d:         Compile for DLLs (default: both)
 	-s:         Compile for static (default: both)
@@ -126,6 +127,7 @@ def main():
 	debug = True
 	release = True
 	installdir = ''
+	cleanup = True
 	try:
 		opts, args = getopt.getopt(sys.argv[1:], 'p:eadsr:i:I')
 	except getopt.error as msg:
@@ -137,6 +139,8 @@ def main():
 			curlsrc = a
 		elif '-e' == o:
 			compileIt = False
+		elif '-x' == o:
+			cleanup = False
 		elif '-a' == o:
 			AddCompiler(compilers, 'vc142')
 			AddCompiler(compilers, 'vc142x64')
@@ -205,6 +209,11 @@ def main():
 		Build(compilers, curlsrc, False, release, debug, installdir)
 	if buildStatic:
 		Build(compilers, curlsrc, True, release, debug, installdir)
+
+	os.chdir('..')
+
+	if cleanup:
+		pyDcon.RmMinusRF.RmMinusRF('builds', True)
 	return 0
 
 
