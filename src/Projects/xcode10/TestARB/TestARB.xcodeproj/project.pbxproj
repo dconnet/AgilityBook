@@ -60,6 +60,7 @@
 		E193AC671809B399008C6257 /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E193AC661809B399008C6257 /* libARBCommon.a */; };
 		E193AC691809B39E008C6257 /* libARB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E193AC681809B39E008C6257 /* libARB.a */; };
 		E19851D22170E6FD003E7B92 /* libLibARBWin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E19851D12170E6FD003E7B92 /* libLibARBWin.a */; };
+		E1A4DBDB2616491200FCD08D /* TestMailto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1A4DBDA2616491200FCD08D /* TestMailto.cpp */; };
 		E1D7D1822354B53D00C2CDAD /* TestLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D7D1802354B53C00C2CDAD /* TestLib.cpp */; };
 		E1E2517F21CC5F13004A1D6A /* libLibFmt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E2517E21CC5F13004A1D6A /* libLibFmt.a */; };
 		E1EE26B61809B3EA002E7A5F /* libLibArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1EE26B41809B3EA002E7A5F /* libLibArchive.a */; };
@@ -137,6 +138,7 @@
 		E193AC661809B399008C6257 /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../build/AgilityBook/Build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
 		E193AC681809B39E008C6257 /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../build/AgilityBook/Build/Products/Debug/libARB.a; sourceTree = "<group>"; };
 		E19851D12170E6FD003E7B92 /* libLibARBWin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libLibARBWin.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1A4DBDA2616491200FCD08D /* TestMailto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestMailto.cpp; sourceTree = "<group>"; };
 		E1D7D1802354B53C00C2CDAD /* TestLib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestLib.cpp; sourceTree = "<group>"; };
 		E1D7D1812354B53C00C2CDAD /* TestLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLib.h; sourceTree = "<group>"; };
 		E1E2517E21CC5F13004A1D6A /* libLibFmt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libLibFmt.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -243,6 +245,7 @@
 				E1D7D1802354B53C00C2CDAD /* TestLib.cpp */,
 				E1D7D1812354B53C00C2CDAD /* TestLib.h */,
 				E15106AC18089179002AC401 /* TestMD5.cpp */,
+				E1A4DBDA2616491200FCD08D /* TestMailto.cpp */,
 				E15106AD18089179002AC401 /* TestMisc.cpp */,
 				E15106AE18089179002AC401 /* TestQ.cpp */,
 				E15106AF18089179002AC401 /* TestString.cpp */,
@@ -347,6 +350,7 @@
 				E15106B718089179002AC401 /* TestArchive.cpp in Sources */,
 				E15106B818089179002AC401 /* TestBinaryData.cpp in Sources */,
 				E15106B918089179002AC401 /* TestBreakLine.cpp in Sources */,
+				E1A4DBDB2616491200FCD08D /* TestMailto.cpp in Sources */,
 				E15106BA18089179002AC401 /* TestCalcPoints.cpp in Sources */,
 				E15106BB18089179002AC401 /* TestCalendar.cpp in Sources */,
 				E15106BC18089179002AC401 /* TestConfig.cpp in Sources */,

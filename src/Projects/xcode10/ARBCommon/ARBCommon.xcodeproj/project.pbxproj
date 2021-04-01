@@ -34,6 +34,8 @@
 		E110B522177FD146004071B5 /* Element.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B519177FD146004071B5 /* Element.h */; };
 		E110B523177FD146004071B5 /* StringUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B51A177FD146004071B5 /* StringUtil.h */; };
 		E110B524177FD146004071B5 /* VersionNum.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B51B177FD146004071B5 /* VersionNum.h */; };
+		E1A4DBD4261648C100FCD08D /* MailTo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1A4DBD3261648C000FCD08D /* MailTo.cpp */; };
+		E1A4DBD7261648E500FCD08D /* MailTo.h in Headers */ = {isa = PBXBuildFile; fileRef = E1A4DBD6261648E500FCD08D /* MailTo.h */; };
 		E1B443C41A3B6DCC005CBE64 /* ARBUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B443C31A3B6DCC005CBE64 /* ARBUtils.h */; };
 		E1B8965A17971A96009FB430 /* ARBMisc.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B8965917971A96009FB430 /* ARBMisc.h */; };
 /* End PBXBuildFile section */
@@ -67,6 +69,8 @@
 		E110B519177FD146004071B5 /* Element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Element.h; sourceTree = "<group>"; };
 		E110B51A177FD146004071B5 /* StringUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtil.h; sourceTree = "<group>"; };
 		E110B51B177FD146004071B5 /* VersionNum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionNum.h; sourceTree = "<group>"; };
+		E1A4DBD3261648C000FCD08D /* MailTo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MailTo.cpp; sourceTree = "<group>"; };
+		E1A4DBD6261648E500FCD08D /* MailTo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailTo.h; sourceTree = "<group>"; };
 		E1B443C31A3B6DCC005CBE64 /* ARBUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBUtils.h; sourceTree = "<group>"; };
 		E1B8965917971A96009FB430 /* ARBMisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBMisc.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -129,6 +133,7 @@
 				E110B518177FD146004071B5 /* BreakLine.h */,
 				E110B519177FD146004071B5 /* Element.h */,
 				E10F39F5252644E000E83AB0 /* LibwxARBCommon.h */,
+				E1A4DBD6261648E500FCD08D /* MailTo.h */,
 				E110B51A177FD146004071B5 /* StringUtil.h */,
 				E110B51B177FD146004071B5 /* VersionNum.h */,
 			);
@@ -151,6 +156,7 @@
 				E10F3A2E2526495D00E83AB0 /* BinaryData.cpp */,
 				E10F3A262526495C00E83AB0 /* BreakLine.cpp */,
 				E10F3A1F2526495C00E83AB0 /* Element.cpp */,
+				E1A4DBD3261648C000FCD08D /* MailTo.cpp */,
 				E10F3A202526495C00E83AB0 /* stdafx.cpp */,
 				E10F3A2B2526495D00E83AB0 /* stdafx.h */,
 				E10F3A242526495C00E83AB0 /* StringUtil.cpp */,
@@ -180,6 +186,7 @@
 				E10F3A3C2526495D00E83AB0 /* stdafx.h in Headers */,
 				E110B523177FD146004071B5 /* StringUtil.h in Headers */,
 				E110B524177FD146004071B5 /* VersionNum.h in Headers */,
+				E1A4DBD7261648E500FCD08D /* MailTo.h in Headers */,
 				E1B8965A17971A96009FB430 /* ARBMisc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -237,6 +244,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E10F3A3A2526495D00E83AB0 /* ARBBase64.cpp in Sources */,
+				E1A4DBD4261648C100FCD08D /* MailTo.cpp in Sources */,
 				E10F3A402526495D00E83AB0 /* ARBMsgDigestSHA256.cpp in Sources */,
 				E10F3A352526495D00E83AB0 /* StringUtil.cpp in Sources */,
 				E10F3A3D2526495D00E83AB0 /* ARBMsgDigestSHA1.cpp in Sources */,
