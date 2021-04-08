@@ -73,6 +73,7 @@
 #include "images/toolbarPrint_png.c"
 #include "images/toolbarRun_png.c"
 #include "images/toolbarSave_png.c"
+#include "images/toolbarSearch_png.c"
 #include "images/toolbarTitle_png.c"
 #include "images/toolbarTraining_png.c"
 #include "images/toolbarTrial_png.c"
@@ -275,6 +276,8 @@ bool CImageHelper::DoCreateBitmap(
 		LOAD_BITMAP_PNG(pWindow, toolbarPrint, outBmp);
 	else if (id == ImageMgrSave)
 		LOAD_BITMAP_PNG(pWindow, toolbarSave, outBmp);
+	else if (id == ImageMgrSearch)
+		LOAD_BITMAP_PNG(pWindow, toolbarSearch, outBmp);
 
 	else
 	{

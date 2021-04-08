@@ -111,3 +111,4 @@ public:
 #define ImageMgrPreview MAKE_IMAGE_ID(ImageMgrPreview)
 #define ImageMgrPrint   MAKE_IMAGE_ID(ImageMgrPrint)
 #define ImageMgrSave    MAKE_IMAGE_ID(ImageMgrSave)
+#define ImageMgrSearch  MAKE_IMAGE_ID(ImageMgrSearch)
