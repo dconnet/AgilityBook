@@ -46,6 +46,12 @@
 #endif
 
 
+CBaseApp::CBaseApp(wxString const& appName, ARBLanguageCatalog useLangCatalog)
+	: CBaseApp(appName, appName, useLangCatalog)
+{
+}
+
+
 CBaseApp::CBaseApp(wxString const& appName, wxString const& appRegKey, ARBLanguageCatalog useLangCatalog)
 	: m_VendorName(L"dcon Software")
 	, m_BaseAppName(appName)
@@ -59,8 +65,6 @@ CBaseApp::CBaseApp(wxString const& appName, wxString const& appRegKey, ARBLangua
 {
 	wxStandardPaths::Get().SetFileLayout(wxStandardPaths::FileLayout_XDG);
 
-	if (m_BaseRegName.empty())
-		m_BaseRegName = m_BaseAppName;
 #if USE_DBGREPORT
 	wxHandleFatalExceptions();
 #endif
@@ -123,6 +127,14 @@ void CBaseApp::GenerateReport(wxDebugReport::Context ctx)
 	// else: user cancelled the report
 }
 #endif
+
+
+std::wstring CBaseApp::GetUpdateInfoKey() const
+{
+	if (m_BaseRegName.empty())
+		return StringUtil::stringW(m_BaseAppName);
+	return StringUtil::stringW(m_BaseRegName);
+}
 
 
 bool CBaseApp::OnInit()

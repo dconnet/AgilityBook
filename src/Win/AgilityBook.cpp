@@ -197,7 +197,7 @@ wxEND_EVENT_TABLE()
 // on systems that don't support it.
 
 CAgilityBookApp::CAgilityBookApp()
-	: CBaseApp(ARB_CONFIG_ENTRY, wxEmptyString, ARBLanguageCatalog::Embedded)
+	: CBaseApp(ARB_CONFIG_ENTRY, ARBLanguageCatalog::Embedded)
 	, m_bShutdownSocket(false)
 	, m_Localization()
 	, m_imageHelper()

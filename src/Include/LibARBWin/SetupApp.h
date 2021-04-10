@@ -52,10 +52,11 @@ class ARBWIN_API CBaseApp
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CBaseApp)
 protected:
-	// If appRegKey is empty, no config will be created.
+	CBaseApp(wxString const& appName, ARBLanguageCatalog useLangCatalog = ARBLanguageCatalog::None);
+	// If appRegKey is empty, no local config will be created.
 	CBaseApp(
 		wxString const& appName,
-		wxString const& appRegKey = wxEmptyString,
+		wxString const& appRegKey,
 		ARBLanguageCatalog useLangCatalog = ARBLanguageCatalog::None);
 
 #if USE_DBGREPORT
@@ -93,6 +94,11 @@ protected:
 	virtual void InitFSHandlers();
 
 public:
+	/**
+	 * Key to use in UpdateInfo (default registry value)
+	 */
+	virtual std::wstring GetUpdateInfoKey() const;
+
 	// Language control
 
 	/**
