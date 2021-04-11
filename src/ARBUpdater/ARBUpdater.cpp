@@ -42,7 +42,7 @@ public:
 };
 
 
-IMPLEMENT_APP(CARBUpdaterApp)
+wxIMPLEMENT_APP(CARBUpdaterApp);
 
 
 CARBUpdaterApp::CARBUpdaterApp()

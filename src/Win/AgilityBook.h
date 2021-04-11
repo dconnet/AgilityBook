@@ -91,4 +91,4 @@ protected:
 	std::unique_ptr<CMenuHelper> m_menus;
 };
 
-DECLARE_APP(CAgilityBookApp)
+wxDECLARE_APP(CAgilityBookApp);

@@ -39,7 +39,7 @@ private:
 	CImageHelper m_imageHelper;
 };
 
-DECLARE_APP(CCalSitesApp)
+wxDECLARE_APP(CCalSitesApp);
 
 
 class CErrorCallback : public ARBErrorCallback

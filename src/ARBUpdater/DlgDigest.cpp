@@ -26,12 +26,11 @@
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
+#include "LibARBWin/Validators.h"
 #include "VersionNumber.h"
 
 #include "../Win/ImageHelper.h"
 #include <wx/filedlg.h>
-#include <wx/valgen.h>
-#include <wx/valtext.h>
 #include <wx/wfstream.h>
 
 #ifdef __WXMSW__
@@ -45,94 +44,6 @@
 #include "images/AgilityBook32_png.c"
 #include "images/AgilityBook48_png.c"
 #endif
-
-/////////////////////////////////////////////////////////////////////////////
-
-class CLongValidator : public wxValidator
-{
-	DECLARE_CLASS(CLongValidator)
-	DECLARE_NO_ASSIGN_IMPLEMENTED(CLongValidator)
-	CLongValidator(CLongValidator&&) = delete;
-
-public:
-	CLongValidator(long* val)
-		: m_pLong(val)
-	{
-	}
-	CLongValidator(CLongValidator const& rhs)
-		: m_pLong(rhs.m_pLong)
-	{
-		Copy(rhs);
-	}
-	~CLongValidator()
-	{
-	}
-	wxObject* Clone() const override
-	{
-		return new CLongValidator(*this);
-	}
-	bool TransferFromWindow() override;
-	bool TransferToWindow() override;
-	bool Validate(wxWindow* parent) override;
-
-private:
-	long* m_pLong;
-};
-
-
-wxIMPLEMENT_CLASS(CLongValidator, wxValidator)
-
-
-bool CLongValidator::TransferFromWindow()
-{
-	// Following the example of wxGenericValidator
-	if (m_validatorWindow->IsKindOf(CLASSINFO(wxTextCtrl)))
-	{
-		wxTextCtrl* pControl = dynamic_cast<wxTextCtrl*>(m_validatorWindow);
-		if (m_pLong)
-		{
-			if (!StringUtil::ToLong(StringUtil::stringW(pControl->GetValue()), *m_pLong))
-				return false;
-			return true;
-		}
-	}
-	return false;
-}
-
-
-bool CLongValidator::TransferToWindow()
-{
-	if (m_validatorWindow->IsKindOf(CLASSINFO(wxTextCtrl)))
-	{
-		wxTextCtrl* pControl = dynamic_cast<wxTextCtrl*>(m_validatorWindow);
-		if (m_pLong)
-		{
-			wxString str;
-			str.Printf(L"%ld", *m_pLong);
-			pControl->SetValue(str);
-			return true;
-		}
-	}
-	return false;
-}
-
-
-bool CLongValidator::Validate(wxWindow* parent)
-{
-	if (!m_validatorWindow->IsEnabled())
-		return true;
-	if (m_validatorWindow->IsKindOf(CLASSINFO(wxTextCtrl)))
-	{
-		wxTextCtrl* pControl = dynamic_cast<wxTextCtrl*>(m_validatorWindow);
-		if (m_pLong)
-		{
-			long val;
-			if (!StringUtil::ToLong(StringUtil::stringW(pControl->GetValue()), val))
-				return false;
-		}
-	}
-	return true;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -269,7 +180,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 		wxDefaultPosition,
 		wxSize(wxDLG_UNIT_X(this, 115), -1),
 		wxTE_READONLY,
-		CLongValidator(&m_Size));
+		CGenericValidator(&m_Size));
 	ctrlSize->SetBackgroundColour(GetBackgroundColour());
 
 	// Sizers
@@ -294,21 +205,18 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	sizeFile->Add(ctrlFind, 0, wxALIGN_CENTER_VERTICAL, 0);
 	bSizer->Add(sizeFile, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
-	wxFlexGridSizer* sizerGrid = new wxFlexGridSizer(4, 2, 0, 0);
+	wxFlexGridSizer* sizerGrid = new wxFlexGridSizer(4, 2, wxDLG_UNIT_X(this, 5), wxDLG_UNIT_X(this, 5));
 	sizerGrid->AddGrowableCol(1);
 	sizerGrid->SetFlexibleDirection(wxBOTH);
 	sizerGrid->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerGrid->Add(txtMD5, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerGrid->Add(ctrlMD5, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND, wxDLG_UNIT_X(this, 5));
-	sizerGrid
-		->Add(txtSHA1, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerGrid->Add(ctrlSHA1, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerGrid
-		->Add(txtSHA256, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerGrid->Add(ctrlSHA256, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerGrid
-		->Add(txtSize, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerGrid->Add(ctrlSize, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerGrid->Add(txtMD5, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
+	sizerGrid->Add(ctrlMD5, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND);
+	sizerGrid->Add(txtSHA1, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
+	sizerGrid->Add(ctrlSHA1, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND);
+	sizerGrid->Add(txtSHA256, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
+	sizerGrid->Add(ctrlSHA256, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND);
+	sizerGrid->Add(txtSize, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
+	sizerGrid->Add(ctrlSize, 0, wxALIGN_CENTER_VERTICAL);
 	bSizer->Add(sizerGrid, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
@@ -336,6 +244,9 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 
 bool CDlgDigest::InitConfig()
 {
+	if (m_ConfigVersion != 0)
+		return true;
+
 	wxFileDialog file(
 		this,
 		L"", // caption

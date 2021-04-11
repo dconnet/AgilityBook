@@ -33,7 +33,7 @@
 #endif
 
 
-IMPLEMENT_APP(CCalSitesApp)
+wxIMPLEMENT_APP(CCalSitesApp);
 
 
 CCalSitesApp::CCalSitesApp()

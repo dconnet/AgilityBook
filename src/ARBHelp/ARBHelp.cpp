@@ -44,7 +44,7 @@ public:
 };
 
 
-IMPLEMENT_APP(CARBHelpApp)
+wxIMPLEMENT_APP(CARBHelpApp);
 
 
 CARBHelpApp::CARBHelpApp()
