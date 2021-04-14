@@ -28,7 +28,6 @@ class wxOutputStream;
 
 namespace ReadHttp
 {
-ARBWIN_API bool GotoURL(std::wstring const& inLink);
 ARBWIN_API bool CheckHttpFile(std::wstring const& inURL);
 // Return HTTP status code
 // Note: code 404 is specifically added into outErrMsg

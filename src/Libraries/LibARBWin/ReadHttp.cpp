@@ -165,12 +165,6 @@ long ReadHttpFile(
 
 namespace ReadHttp
 {
-bool GotoURL(std::wstring const& inLink)
-{
-	return wxLaunchDefaultBrowser(inLink.c_str());
-}
-
-
 bool CheckHttpFile(std::wstring const& inURL)
 {
 	CURL* curl = curl_easy_init();
