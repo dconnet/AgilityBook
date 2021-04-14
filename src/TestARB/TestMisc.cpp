@@ -33,7 +33,7 @@
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
-#include "LibARBWin/ReadHttp.h"
+#include "LibARBWin/CheckLink.h"
 #include "fmt/printf.h"
 
 #include <stdarg.h>
@@ -98,17 +98,15 @@ TEST_CASE("Misc")
 	}
 
 
-#if TESTING
-	// Leave this disabled by default. Don't want the tests always hitting the web.
 	SECTION("CheckHttpFile")
 	{
 		if (!g_bMicroTest)
 		{
-			REQUIRE(ReadHttp::CheckHttpFile(L"http://www.agilityrecordbook.com/version2.xml"));
-			REQUIRE(!ReadHttp::CheckHttpFile(L"http://www.agilityrecordbook.com/versionXX.xml"));
+			// Note: This test no longer hits the internet. It validates a local file existence, or a valid URL.
+			REQUIRE(CheckLink(L"http://www.agilityrecordbook.com/version2.xml"));
+			REQUIRE(!CheckLink(L"httpx://www.agilityrecordbook.com/versionXX.xml"));
 		}
 	}
-#endif
 
 
 	SECTION("Version")

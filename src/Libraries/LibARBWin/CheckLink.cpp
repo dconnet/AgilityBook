@@ -6,7 +6,7 @@
 
 /**
  * @file
- * @brief Use CInternetSession to access files.
+ * @brief Check if a file exists, or the link is valid.
  * @author David Connet
  *
  * Revision History
@@ -20,8 +20,8 @@
 #include "stdafx.h"
 #include "LibARBWin/CheckLink.h"
 
-#include "LibARBWin/ReadHttp.h"
 #include <wx/file.h>
+#include <wx/url.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -38,7 +38,8 @@ bool CheckLink(std::wstring const& inLink, wxWindow* parent)
 		if (!bOk)
 		{
 			// Ok, check URL
-			bOk = ReadHttp::CheckHttpFile(inLink);
+			wxURL url(inLink);
+			bOk = url.IsOk();
 		}
 	}
 	return bOk;

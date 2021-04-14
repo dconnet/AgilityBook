@@ -8,7 +8,7 @@
 
 /**
  * @file
- * @brief Use CInternetSession to access files.
+ * @brief Check if a file exists, or the link is valid.
  * @author David Connet
  *
  * Revision History
