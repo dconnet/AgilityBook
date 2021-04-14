@@ -8,6 +8,7 @@
 # Note: Found old OSX SDKs at https://github.com/phracker/MacOSX-SDKs/releases
 #
 # History
+# 2021-04-14 Upgraded 3.1.4 to 3.1.5
 # 2021-01-20 Added SDK11.1
 # 2020-11-22 Added SDK11.0 (reordered to make older SDKs prefered)
 # 2020-11-05 Min OSX SDK for 3.1.4 is 10.11.
@@ -33,10 +34,15 @@ export TARGETSDK=
 export VERSION=
 export WXWIN=
 
-USAGE="Usage $0 trunk|3.1.4|3.1.3|3.1.2 [debug|release]"
+USAGE="Usage $0 trunk|3.1.5|3.1.4|3.1.3|3.1.2 [debug|release]"
 
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/devtools/wx/trunk
+	VERSION="--disable-compat28 --disable-compat30"
+	MAC_CONFIG_PARAMS=" --disable-nativedvc"
+	MAC_MIN_OS=10.10
+elif test "x$1" = "x3.1.5"; then
+	WXWIN=~/devtools/wx/wxWidgets-3.1.5
 	VERSION="--disable-compat28 --disable-compat30"
 	MAC_CONFIG_PARAMS=" --disable-nativedvc"
 	MAC_MIN_OS=10.10
