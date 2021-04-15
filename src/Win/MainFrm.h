@@ -19,6 +19,7 @@
 
 #include "AgilityBookMenu.h"
 #include "LibARBWin/StatusBarHelper.h"
+#include "UpdateInfo.h"
 #include <wx/dnd.h>
 #include <wx/docview.h>
 
@@ -54,19 +55,21 @@ public:
 	CMainFrame(wxDocManager* manager);
 	~CMainFrame();
 
+	bool DownloadInProgress();
+	bool CanClose();
+
 	void SetMessageText(std::wstring const& msg, bool bFiltered);
 	void SetMessageText2(std::wstring const& msg);
+
+	void AutoCheckConfiguration(CAgilityBookDoc* pDoc);
+	void UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outDownloadStarted);
 
 private:
 	void SetMessage(std::wstring const& msg, int index, bool bResize);
 
-	class CStartupEvent : public wxTimer
-	{
-	public:
-		void Notify() override;
-	} m_timerStartup;
 	wxDocManager* m_manager;
 	CStatusBarHelper m_Widths;
+	CUpdateInfo m_UpdateInfo;
 
 private:
 	DECLARE_EVENT_TABLE()
@@ -85,5 +88,7 @@ private:
 	void OnNextPane(wxCommandEvent& evt);
 	void OnPrevPane(wxCommandEvent& evt);
 	void OnViewCustomizeAccel(wxCommandEvent& evt);
+	void OnHelpCheckUpdates(wxCommandEvent& evt);
 	void OnHelpSysinfo(wxCommandEvent& evt);
+	void OnHelpAbout(wxCommandEvent& evt);
 };

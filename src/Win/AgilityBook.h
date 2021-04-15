@@ -23,7 +23,6 @@
 #include "AgilityBookMenu.h"
 #include "ImageHelper.h"
 #include "Localization.h"
-#include "UpdateInfo.h"
 
 #include "ARBCommon/ARBUtils.h"
 #include "LibARBWin/SetupApp.h"
@@ -38,10 +37,6 @@ class CAgilityBookApp : public CBaseApp
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookApp)
 public:
 	CAgilityBookApp();
-
-	bool AutoCheckProgram();
-	void AutoCheckConfiguration(CAgilityBookDoc* pDoc);
-	void UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outClose);
 
 	void SetMessageText(std::wstring const& msg, bool bFiltered);
 	void SetMessageText2(std::wstring const& msg);
@@ -84,7 +79,6 @@ protected:
 	bool m_bShutdownSocket;
 	CLocalization m_Localization;
 	CImageHelper m_imageHelper;
-	CUpdateInfo m_UpdateInfo;
 	std::unique_ptr<CAgilityBookDocManager> m_manager;
 	wxPrintDialogData* m_printDialogData;
 	CHtmlEasyPrinting* m_Prn;

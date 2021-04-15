@@ -29,6 +29,11 @@
  */
 ARBCOMMON_API std::wstring SanitizeStringForHTML(std::wstring const& inRawData, bool bConvertCR = true);
 
+/**
+ * These are the strings we recognize as platforms.
+ */
+std::wstring GetARBArch();
+
 
 /**
  * Get OS version.

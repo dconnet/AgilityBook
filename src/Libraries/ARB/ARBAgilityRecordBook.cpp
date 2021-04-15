@@ -111,6 +111,7 @@
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBDog.h"
 #include "ARB/ARBLocalization.h"
+#include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
@@ -128,32 +129,6 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 {
 	static ARBVersion const curVersion(15, 3);
 	return curVersion;
-}
-
-
-// These are the strings we recognize as platforms.
-// Every platform we support for download must be listed here.
-// It must also be present in the version2.xml file (that creates an
-// arch/lang to filename mapping). (see Win/UpdateInfo.cpp)
-std::wstring ARBAgilityRecordBook::GetArch()
-{
-#if defined(__WXMSW__)
-#if defined(ARB_64BIT)
-	// Was "x64" (changed in v2.4)
-	return L"win64";
-#else
-	// Was "x86" (changed in v2.4)
-	return L"win32";
-#endif
-#elif defined(__WXMAC__)
-	// Was "mac" (changed in v2.4)
-	// Note: 32bit osx was dropped in v3 when min os changed to 10.7.
-	return L"osx";
-#elif defined(__WXGTK__) || defined(__WXX11__)
-	return L"linux";
-#else
-#error Unknown platform
-#endif
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -376,7 +351,7 @@ bool ARBAgilityRecordBook::Save(
 	outTree->SetName(TREE_BOOK);
 	outTree->AddAttrib(ATTRIB_BOOK_VERSION, GetCurrentDocVersion());
 	outTree->AddAttrib(ATTRIB_BOOK_PGM_VERSION, inPgmVer);
-	outTree->AddAttrib(ATTRIB_BOOK_PGM_PLATFORM, GetArch());
+	outTree->AddAttrib(ATTRIB_BOOK_PGM_PLATFORM, GetARBArch());
 #if defined(__WXWINDOWS__)
 	outTree->AddAttrib(ATTRIB_BOOK_PGM_OS, StringUtil::stringW(::wxGetOsDescription()));
 #else

@@ -82,11 +82,6 @@ public:
 	 */
 	static ARBVersion const& GetCurrentDocVersion();
 
-	/**
-	 * These are the strings we recognize as platforms.
-	 */
-	static std::wstring GetArch();
-
 	ARBAgilityRecordBook();
 	~ARBAgilityRecordBook();
 

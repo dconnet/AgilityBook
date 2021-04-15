@@ -131,84 +131,72 @@
     <Import Project="$(SolutionDir)\..\props\CommonDebugLibARM64.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLibARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\libcurlLib.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonDebugLib32.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib32.props" />
-    <Import Project="$(SolutionDir)\..\props\libcurlLib.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonDebugLib64.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib64.props" />
-    <Import Project="$(SolutionDir)\..\props\libcurlLib.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonDebugDllARM64.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDllARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\libcurlDll.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonDebugDll32.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDll32.props" />
-    <Import Project="$(SolutionDir)\..\props\libcurlDll.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonDebugDll64.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDll64.props" />
-    <Import Project="$(SolutionDir)\..\props\libcurlDll.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonReleaseLibARM64.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLibARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\libcurlLib.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonReleaseLib32.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib32.props" />
-    <Import Project="$(SolutionDir)\..\props\libcurlLib.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonReleaseLib64.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib64.props" />
-    <Import Project="$(SolutionDir)\..\props\libcurlLib.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonReleaseDllARM64.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDllARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\libcurlDll.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonReleaseDll32.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDll32.props" />
-    <Import Project="$(SolutionDir)\..\props\libcurlDll.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonReleaseDll64.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDll64.props" />
-    <Import Project="$(SolutionDir)\..\props\libcurlDll.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>

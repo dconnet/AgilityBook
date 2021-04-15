@@ -33,13 +33,16 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookMenu.h"
+#include "AgilityBookOptions.h"
 #include "CommonView.h"
+#include "DlgAbout.h"
 #include "DlgMessage.h"
 #include "ImageHelper.h"
 #include "PointsData.h"
 #include "Print.h"
 #include "RegItems.h"
 #include "TabView.h"
+#include "UpdateInfo.h"
 #include "VersionNumber.h"
 
 #include "ARBCommon/ARBMisc.h"
@@ -73,20 +76,6 @@ bool CFileDropTarget::OnDropFiles(wxCoord x, wxCoord y, wxArrayString const& fil
 
 /////////////////////////////////////////////////////////////////////////////
 
-// At startup, set a timer and then perform check.
-// Doing the check in app OnInit caused a crash when we downloaded the program.
-// A wxHTTP object was put in the pending delete queue - when that was cleaned
-// up during app tear down, it crashed. Letting the app actually start and then
-// handling upgrade here solved that issue.
-
-void CMainFrame::CStartupEvent::Notify()
-{
-	if (wxGetApp().AutoCheckProgram())
-		wxGetApp().GetTopWindow()->Close();
-}
-
-/////////////////////////////////////////////////////////////////////////////
-
 wxBEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
 #ifdef EVT_DPI_CHANGED
 	EVT_DPI_CHANGED(CMainFrame::OnDPIChanged)
@@ -108,7 +97,9 @@ wxBEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
 	EVT_MENU(ID_NEXT_PANE, CMainFrame::OnNextPane)
 	EVT_MENU(ID_PREV_PANE, CMainFrame::OnPrevPane)
 	EVT_MENU(ID_VIEW_CUSTOMIZE_ACCEL, CMainFrame::OnViewCustomizeAccel)
+	EVT_MENU(ID_HELP_UPDATE, CMainFrame::OnHelpCheckUpdates)
 	EVT_MENU(ID_HELP_SYSINFO, CMainFrame::OnHelpSysinfo)
+	EVT_MENU(wxID_ABOUT, CMainFrame::OnHelpAbout)
 wxEND_EVENT_TABLE()
 
 
@@ -123,6 +114,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 		wxDEFAULT_FRAME_STYLE)
 	, m_manager(manager)
 	, m_Widths(NUM_STATUS_FIELDS)
+	, m_UpdateInfo(this)
 {
 	SetIcons(CImageManager::Get()->GetIconBundle(ImageMgrAppBundle));
 	//#if wxUSE_HELP
@@ -165,13 +157,24 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 #if wxUSE_DRAG_AND_DROP
 	SetDropTarget(new CFileDropTarget(manager));
 #endif
-
-	m_timerStartup.Start(1000, wxTIMER_ONE_SHOT);
+	m_UpdateInfo.Initialize();
 }
 
 
 CMainFrame::~CMainFrame()
 {
+}
+
+
+bool CMainFrame::DownloadInProgress()
+{
+	return m_UpdateInfo.DownloadInProgress();
+}
+
+
+bool CMainFrame::CanClose()
+{
+	return m_UpdateInfo.CanClose(this, true);
 }
 
 
@@ -188,6 +191,20 @@ void CMainFrame::SetMessageText(std::wstring const& msg, bool bFiltered)
 void CMainFrame::SetMessageText2(std::wstring const& msg)
 {
 	SetMessage(msg, STATUS_DOG, true);
+}
+
+
+// Note: This is only called from CAgilityBookDoc::OnOpenDocument
+void CMainFrame::AutoCheckConfiguration(CAgilityBookDoc* pDoc)
+{
+	m_UpdateInfo.AutoCheckConfiguration(pDoc);
+}
+
+
+// Note: Called from OnHelpCheckUpdates and CDlgAbout::OnCheckForUpdates
+void CMainFrame::UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outDownloadStarted)
+{
+	m_UpdateInfo.UpdateConfiguration(pDoc, outDownloadStarted);
 }
 
 
@@ -329,6 +346,14 @@ void CMainFrame::OnDPIChanged(wxDPIChangedEvent& evt)
 
 void CMainFrame::OnClose(wxCloseEvent& evt)
 {
+	// Note: CancelDownload will return false is no request is active.
+	if (evt.CanVeto() && m_UpdateInfo.CancelDownload())
+	{
+		// When m_UpdateInfo is notified, it will call wxApp().GetTopWindow()->Close()
+		SetStatusText(_("Canceling file download..."), 0);
+		evt.Veto();
+		return;
+	}
 	long state = 0;
 	if (IsMaximized() || IsFullScreen())
 	{
@@ -397,6 +422,9 @@ void CMainFrame::OnUpdateCmd(wxUpdateUIEvent& evt)
 	case ID_VIEW_CUSTOMIZE_ACCEL:
 	case ID_HELP_SYSINFO:
 		bEnable = true;
+		break;
+	case ID_HELP_UPDATE:
+		bEnable = !m_UpdateInfo.DownloadInProgress();
 		break;
 	}
 	evt.Enable(bEnable);
@@ -490,11 +518,27 @@ void CMainFrame::OnViewCustomizeAccel(wxCommandEvent& evt)
 }
 
 
+void CMainFrame::OnHelpCheckUpdates(wxCommandEvent& evt)
+{
+	bool close = false;
+	CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
+	UpdateConfiguration(pDoc, close);
+	// App will auto-close when download is done.
+}
+
+
 void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 {
 	CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 	std::wstring str = ARBDebug::GetSystemInfo(this, ver);
-
 	CDlgMessage dlg(str, this);
+	dlg.ShowModal();
+}
+
+
+void CMainFrame::OnHelpAbout(wxCommandEvent& evt)
+{
+	CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
+	CDlgAbout dlg(pDoc, this);
 	dlg.ShowModal();
 }

@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-04-27 Convert libcurl to wxWebRequest.
  * 2020-11-14 Convert to libcurl.
  * 2018-10-11 Moved to Win LibARBWin
  * 2010-02-08 Added new interfaces to support streaming to a file.
@@ -21,21 +22,58 @@
  */
 
 #include "LibwxARBWin.h"
+#include <wx/webrequest.h>
 
 class IDlgProgress;
 class wxOutputStream;
 
 
-namespace ReadHttp
+class CReadHttp
 {
-ARBWIN_API bool CheckHttpFile(std::wstring const& inURL);
-// Return HTTP status code
-// Note: code 404 is specifically added into outErrMsg
-ARBWIN_API long ReadHttpFileSync(std::wstring& outErrMsg, std::wstring const& inURL, std::string& outString);
-ARBWIN_API long ReadHttpFileSync(std::wstring& outErrMsg, std::wstring const& inURL, wxString& outString);
-ARBWIN_API long ReadHttpFileSync(
-	std::wstring& outErrMsg,
-	std::wstring const& inURL,
-	wxOutputStream* outStream,
-	IDlgProgress* pProgress = nullptr);
-} // namespace ReadHttp
+public:
+	enum class ReturnCode
+	{
+		Busy,    // Cannot determine, try later
+		Failed,  // Call failed
+		Success, // Call succeeded
+	};
+
+	/**
+	 * @param state Download was successful
+	 * @param filename If 'state' is Success, name of downloaded file.
+	 */
+	using OnFileComplete = std::function<void(wxWebRequest::State state)>;
+
+	CReadHttp();
+	~CReadHttp();
+
+	bool IsOk() const;
+	bool CancelDownload();
+
+	/**
+	 * @param parent Window to bind messages to.
+	 * @param url File to download
+	 * @param progress Progress dialog (may be null)
+	 * @param output Where to write data
+	 * @param callback Callback for completion
+	 * Returns Busy or Failed
+	 */
+	ReturnCode DownloadFile(
+		wxWindow* parent,
+		wxString const& url,
+		IDlgProgress* progress,
+		wxOutputStream* output,
+		OnFileComplete callback);
+
+private:
+	bool m_pendingCancel;
+	wxWebRequest m_currentRequest;
+	IDlgProgress* m_progress;
+	size_t m_downloadCount;
+	wxOutputStream* m_output;
+
+	// It would be better to use wxSecretStore, but this is a generic interface
+	// to download a file. Picking a service name for the store is a little more
+	// difficult. So we'll just hold them in memory here.
+	wxWebCredentials m_credentials;
+};

@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-04-27 Convert libcurl to wxWebRequest.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-01-06 Ported to wxWidgets.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -22,36 +23,27 @@
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/ARBMsgDigest.h"
 #include "ARBCommon/VersionNum.h"
-#include <map>
-#include <vector>
+#include "LibARBWin/ReadHttp.h"
 class CAgilityBookDoc;
 
 
 /**
- * This class manages checking to see if there are newer versions of the
- * program or configuration.
+ * Check if there is a newer version of the program.
+ *
+ * Downloads and caches information on first usage.
+ * Uses cached information for subsequent checks.
  */
 class CUpdateInfo
 {
-protected:
-	friend class CAgilityBookApp;
-
-	CUpdateInfo();
-	bool ReadVersionFile(bool bVerbose);
-	bool IsOutOfDate();
-	bool CanInstall() const;
-	bool CheckProgram(CAgilityBookDoc* pDoc, std::wstring const& lang, bool& outClose, bool& canInstall);
-	void CheckConfig(CAgilityBookDoc* pDoc, bool bVerbose);
+	DECLARE_NO_COPY_IMPLEMENTED(CUpdateInfo)
 
 public:
 	/**
 	 * Ask the user if they wish to update the configuration. This is a
 	 * yes/no/don't-ask-me-again question.
 	 * @param ioDoc Configuration/document to update.
-	 * @param inMsg Addition text to append to the question. If specified,
-	 *              2 newlines will be inserted first.
 	 */
-	static bool UpdateConfig(CAgilityBookDoc* ioDoc, wchar_t const* inMsg = nullptr);
+	static bool AllowUpdateConfig(CAgilityBookDoc* ioDoc);
 
 	/**
 	 * Cleanup after auto-update.
@@ -59,12 +51,34 @@ public:
 	static void CleanupUpdate();
 
 	/**
-	 * Called when the program does its monthly auto-check.
-	 * This only checks the program version.
-	 * @param pDoc Document to check configuration against.
-	 * @param outClose The program must close.
+	 * @param handler Event handler to bind to for notifications.
 	 */
-	void AutoUpdateProgram(CAgilityBookDoc* pDoc, bool& outClose);
+	CUpdateInfo(wxWindow* parent);
+
+	/**
+	 * Initialize by getting version data.
+	 */
+	void Initialize();
+
+	/**
+	 * A download is currently in progress.
+	 */
+	bool DownloadInProgress() const;
+
+	/**
+	 * Return indicates we're waiting for the cancel to complete.
+	 */
+	bool CancelDownload();
+
+	/*
+	 * Check if we can close.
+	 */
+	bool CanClose(wxWindow* parent, bool prompt);
+
+	/**
+	 * Are we out-of-date? (Does not check internet)
+	 */
+	bool IsOutOfDate();
 
 	/**
 	 * Called when opening a document. This will not load anything
@@ -77,19 +91,30 @@ public:
 	/**
 	 * Check the configuration. This will also check the program version.
 	 * @param pDoc Document to check configuration against.
-	 * @param outClose The program must close.
+	 * @param outDownloadStarted A download has begun.
 	 */
-	void UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outClose);
+	void UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outDownloadStarted);
 
 private:
+	using OnReadComplete = std::function<void()>;
+
+	void clear();
+	CReadHttp::ReturnCode ReadVersionFile(bool bVerbose, OnReadComplete callback = nullptr);
+	bool ReadVersionFile(std::string const& data, bool bVerbose);
+	bool CheckProgram(CAgilityBookDoc* pDoc, std::wstring const& lang, bool& outDownloadStarted, bool& canInstall);
+	void CheckConfig(CAgilityBookDoc* pDoc, bool bVerbose);
+	bool CheckConfig(CAgilityBookDoc* pDoc, wxString url, std::string const& strConfig, bool bVerbose);
+	bool DownloadFile(wxString const& filename);
+
+	wxWindow* m_parent;
+	CReadHttp m_reader;
+
 	CVersionNum m_VersionNum;
-	short m_VerConfig;
 	long m_size;
 	std::wstring m_hash;
 	ARBMsgDigest::ARBDigest m_hashType;
-	std::wstring m_NewFile;
+	std::wstring m_SourceFile;
+	short m_VerConfig;
 	std::wstring m_ConfigFileName;
-	std::map<std::wstring, std::wstring> m_InfoMsg;
 	std::wstring m_UpdateDownload;
-	std::wstring m_usernameHint;
 };

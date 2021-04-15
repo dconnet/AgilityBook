@@ -5,7 +5,6 @@ Most of the Mac equivalents are installed via MacPorts, unix notes below)
 Additional software packages required (all free):
 - python
 - wxWidgets
-- curl
 - poedit (includes msgcat)
 - wxFormBuilder (optional)
 - Windows Installer XML toolset
@@ -28,7 +27,7 @@ Currently using version 3.8.2
 - Note, also install pyWin32 from https://sourceforge.net/projects/pywin32/files/pywin32/
 
 wxWidgets: http://www.wxwidgets.org/
-I'm currently using version 3.1.5. Min supported is 3.1.2.
+I'm currently using version 3.1.5. Min supported is 3.1.5.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR) IMPORTANT: This means the directory name in fr_FR
@@ -45,79 +44,8 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
 
-=== Changes to 3.1.4:
-  - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
-  - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
-  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
-    the library is compiled one way and the users do something different.
-  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
-  - Set wxUSE_MEDIACTRL to 0 (currently 1)
-  - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
-  - Mac fix: https://github.com/wxWidgets/wxWidgets/commit/bb406996
-
-> src\msw\toolbar.cpp (note: this fix also applies to 3.1.2)
-> diff toolbar.old toolbar.cpp
-454a455,468
-> #if wxUSE_TOOLTIPS
->     // MSW "helpfully" handles ampersands as mnemonics in the tooltips
->     // (officially in order to allow using the same string as the menu item and
->     // a toolbar item tip), but we don't want this, so force TTS_NOPREFIX to be
->     // on to preserve all ampersands.
->     HWND hwndTTip = (HWND)::SendMessage(GetHwnd(), TB_GETTOOLTIPS, 0, 0);
->     if ( hwndTTip )
->     {
->         long styleTTip = ::GetWindowLong(hwndTTip, GWL_STYLE);
->         styleTTip |= TTS_NOPREFIX;
->         ::SetWindowLong(hwndTTip, GWL_STYLE, styleTTip);
->     }
-> #endif // wxUSE_TOOLTIPS
->
-
-=== Changes to 3.1.2:
-  - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
-  - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
-  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
-    the library is compiled one way and the users do something different.
-  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
-  - Set wxUSE_MEDIACTRL to 0 (currently 1)
-  - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
-
--- For VS2019 support
-> include\msvc\wx
-diff setup_orig.h setup.h
-68c68
-<     #elif _MSC_VER >= 1910 && _MSC_VER < 2000
----
->     #elif _MSC_VER >= 1910 && _MSC_VER < 1920
-69a70,71
->     #elif _MSC_VER >= 1920 && _MSC_VER < 2000
->         #define wxCOMPILER_PREFIX vc142
-
 To build for VC, see ./build/CompileWX.py
 To build for Mac/Unix, see ./build/setupwx.sh
-
---------------------
-
-curl: https://curl.se/download.html
-Library for downloading files from the internet. Currently using 7.73.0.
--Windows
-- Make sure CURLPATH is set to curl root directory where include and lib
-  directories are located.
-- Download, extract
-  - To build for VC, see ./build/CompileCurl.py
-  - Run "CompileCurl.py -p <path-to-curl-source> -a
-  - Build output is in <path-to-curl-source>/builds/
-  - Copy one of the include directories from 'libcurl-<release/debug>-<platform>-m[dt]/
-    to %CURLPATH%
-  - For each output directory in builds, copy 'libcurl-<release/debug>-<platform>-m[dt]/lib
-    to %CURLPATH%/lib/<platform>-m[dt]/. For example, this changes the name
-    builds\libcurl-debug-vc142x64-md\lib\libcurl_a_debug.lib to
-    %CURLPATH%\lib\vc142x64-md\lib\libcurl_a_debug.lib. (And libcurl_a.lib
-	ends up here too.)
-- Mac:
-  - It just compiled, evidently it's on the system.
-- Linux:
-  - sudo apt install libcurl4-openssl-dev
 
 --------------------
 
@@ -196,7 +124,7 @@ Unix
 ====
 (targeting GTK3, GTK2 with wx3.1 crashes when the new-doc button is pressed)
 Needs (note, some aren't strictly needed):
-sudo apt install git python3 python3-pip curl
+sudo apt install git python3 python3-pip
 sudo apt install libgtk-3-dev
 sudo apt install libcanberra-gtk-module
 - Not strictly needed, but unit tests will fail otherwise
@@ -239,7 +167,7 @@ OSX 10.9:
   Must reboot after modifying.
 ===
 setenv WXBASE /Users/dconnet/devtools/wx
-setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.4
+setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.5
 ====
 OSX 10.10+:
 - launchd.conf has been deprecated.
@@ -260,7 +188,7 @@ OSX 10.10+:
     <string>-c</string>
     <string>
     launchctl setenv WXBASE /Users/dconnet/devtools/wx
-    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.4
+    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.5
     </string>
   </array>
   <key>RunAtLoad</key>

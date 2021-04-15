@@ -90,9 +90,8 @@
 
 #include "Platform/arbWarningPop.h"
 
-// wx3.1.2 is min since I'm relying on wxStandardPaths GetResourcesDir behavior
-// on Mac.
-#if !wxCHECK_VERSION(3, 1, 2)
+// wx3.1.5 is min since I'm using wxWebRequest.
+#if !wxCHECK_VERSION(3, 1, 5)
 #error Unsupported wxWidget version
 #endif
 
@@ -114,6 +113,9 @@
 #endif
 #ifndef wxUSE_DOC_VIEW_ARCHITECTURE
 #error ARB: wxUSE_DOC_VIEW_ARCHITECTURE must be defined in wxWidgets
+#endif
+#ifndef wxUSE_WEBREQUEST
+#error ARB: wxUSE_WEBREQUEST must be defined in wxWidgets
 #endif
 // We need unix98-style positional parameters
 #if !defined(wxUSE_PRINTF_POS_PARAMS) || !wxUSE_PRINTF_POS_PARAMS

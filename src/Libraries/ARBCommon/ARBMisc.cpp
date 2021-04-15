@@ -89,6 +89,32 @@ std::wstring SanitizeStringForHTML(std::wstring const& inRawData, bool bConvertC
 
 /////////////////////////////////////////////////////////////////////////////
 
+// Every platform we support for download must be listed here.
+// It must also be present in the version2.xml file (that creates an
+// arch/lang to filename mapping). (see Win/UpdateInfo.cpp)
+std::wstring GetARBArch()
+{
+#if defined(__WXMSW__)
+#if defined(ARB_64BIT)
+	// Was "x64" (changed in v2.4)
+	return L"win64";
+#else
+	// Was "x86" (changed in v2.4)
+	return L"win32";
+#endif
+#elif defined(__WXMAC__)
+	// Was "mac" (changed in v2.4)
+	// Note: 32bit osx was dropped in v3 when min os changed to 10.7.
+	return L"osx";
+#elif defined(__WXGTK__) || defined(__WXX11__)
+	return L"linux";
+#else
+#error Unknown platform
+#endif
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 bool GetOSInfo(int& verMajor, int& verMinor)
 {
 	verMajor = verMinor = 0;

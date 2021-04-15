@@ -176,8 +176,9 @@ static ElementNodePtr ReadData(
 #else
 	{
 		std::wstring errMsg;
-		if (!ReadHttp::ReadHttpFileSync(errMsg, inAddress, data))
-			data.clear();
+#pragma PRAGMA_TODO(use wxWebRequest to read url asynchronously)
+		// if (!ReadHttp::ReadHttpFileSync(errMsg, inAddress, data))
+		data.clear();
 	}
 #endif
 
@@ -312,8 +313,10 @@ std::string CCalendarSiteUSDAA::Process(
 							}
 							break;
 						case 3:
+							// clang-format off
 							// <td><a>type</a></td>
 							//Text[0]=["Event Type","1 - Titling Only Event&lt;BR&gt;2 - Titling Event with Tournament Classes&lt;BR&gt;3 - Titling Event with Junior Handler Classes&lt;BR&gt;4 - Titling Event with Tournament &amp; Junior Handler Classes&lt;BR&gt;5 - Tournament Only Event&lt;BR&gt;6 - Tournament Event with Junior Handler Classes&lt;BR&gt;7 - Junior Handler Only Event&lt;BR&gt;8 - Seminar&lt;BR&gt;9 - Seminar with Non-titling Match&lt;BR&gt;0 - Non-titling Match"];
+							// clang-format on
 							break;
 						}
 						++idx;
@@ -394,12 +397,14 @@ std::string CCalendarSiteUSDAA::Process(
 					ElementNodePtr fieldset = parentFieldset->GetElementNode(idxFieldset);
 					// Newlines have been compressed, along with some attributes
 					// Not all entries have all fields - I've seen 4 and 6
+					// clang-format off
 					// <div><p>Event Dates:</p><span>11/20/2010 - 11/21/2010</span></div>
 					// <div><p>Club Name:</p><span>Y Agility</span></div>
 					// <div><p>Location:</p><div>The Pines Farm<br/>272 Dug Road<br/>South Glastonbury, CT United States</div></div>
 					// <div><p>Closing date:</p><span>11/01/2010</span></div>
 					// <div><p>2nd Closing Date:</p><span>11/15/2010</span></div>
 					// <div><p>Event Secretary:</p><div><a href="mailto:yagility@nycap.rr.com">Donna Young</a><br/>4 Haber Way<br/>Castleton, NY 12033 United States</div></div>
+					// clang-format on
 					if (4 <= fieldset->GetNodeCount(ARBElementType::Node))
 					{
 						int idx = 0;
@@ -528,11 +533,11 @@ std::string CCalendarSiteUSDAA::Process(
 	if (bOk)
 	{
 #ifdef _DEBUG
-//Test code to look at generated calendar data
-//{
-//wxFFileOutputStream raw(L"c:\\events-caltree.xml", L"wb");
-//calTree->SaveXML(raw);
-//}
+		// Test code to look at generated calendar data
+		//{
+		//	wxFFileOutputStream raw(L"c:\\events-caltree.xml", L"wb");
+		//	calTree->SaveXML(raw);
+		//}
 #endif
 		std::stringstream s;
 		calTree->SaveXML(s);

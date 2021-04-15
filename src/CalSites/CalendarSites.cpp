@@ -54,11 +54,11 @@
 #include <map>
 #include <vector>
 
-//CalSites
+// CalSites
 #define CFG_KEY_CALSITES L"CalSites"
 //	DW (DLL names in EXE directory)
 
-//CalSites2 - used for permanently disabling a version
+// CalSites2 - used for permanently disabling a version
 #define CFG_KEY_CALSITES2 L"CalSites2"
 //	ST (DLL names in EXE directory)
 
@@ -548,8 +548,9 @@ std::string CPluginConfigData::Process(IProgressMeter* progress)
 	progress->SetMessage(url.c_str());
 	std::string data;
 	std::wstring errMsg;
-	if (!ReadHttp::ReadHttpFileSync(errMsg, url, data))
-		data.clear();
+#pragma PRAGMA_TODO(use wxWebRequest to read url asynchronously)
+	// if (!ReadHttp::ReadHttpFileSync(errMsg, url, data))
+	data.clear();
 	return data;
 }
 
@@ -564,7 +565,7 @@ bool CPluginConfigData::Edit(wxWindow* pParent)
 		TranslateCodeMap(QueryLocationCodes(), m_LocationCodes);
 		TranslateCodeMap(QueryVenueCodes(), m_VenueCodes);
 		*m_OrigSite = *m_Site;
-		//m_pDoc->Modify(true);
+		// m_pDoc->Modify(true);
 		return true;
 	}
 	else
@@ -576,7 +577,7 @@ bool CPluginConfigData::Delete()
 {
 	if (m_sites.DeleteSite(m_OrigSite->GetName()))
 	{
-		//m_pDoc->Modify(true);
+		// m_pDoc->Modify(true);
 		m_OrigSite.reset();
 		return true;
 	}
@@ -1198,7 +1199,7 @@ void CDlgCalendarPlugins::OnPluginNew(wxCommandEvent& evt)
 	if (wxID_OK == dlg.ShowModal())
 	{
 		m_sites.AddSite(site);
-		//m_pDoc->Modify(true);
+		// m_pDoc->Modify(true);
 		CPluginConfigData* pData = new CPluginConfigData(m_sites, site);
 		wxTreeItemId hItem
 			= m_ctrlPlugins

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-16 18:59-0700\n"
-"PO-Revision-Date: 2021-03-16 19:05-0700\n"
+"POT-Creation-Date: 2021-04-21 14:08-0700\n"
+"PO-Revision-Date: 2021-04-21 14:08-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -34,48 +34,48 @@ msgid ""
 msgstr ""
 "Get all the events from USDAA. This will parse the HTML returned from {}"
 
-#: CalSites/CalendarSiteUSDAA.cpp:202 CalSites/CalendarSites.cpp:1062
+#: CalSites/CalendarSiteUSDAA.cpp:203 CalSites/CalendarSites.cpp:1063
 msgid "IDS_ERR_PARSING_DATA"
 msgstr "Error parsing {} data"
 
-#: CalSites/CalendarSites.cpp:653 CalSites/CalendarSites.cpp:666
+#: CalSites/CalendarSites.cpp:654 CalSites/CalendarSites.cpp:667
 msgid "IDS_DISABLED"
 msgstr "Disabled"
 
 # DlgCalendarPlugins (CalendarSites.cpp)
-#: CalSites/CalendarSites.cpp:775
+#: CalSites/CalendarSites.cpp:776
 msgid "IDD_CALENDAR_PLUGINS"
 msgstr "Calendar Plugins"
 
-#: CalSites/CalendarSites.cpp:793 CalSites/CalendarSites.cpp:794
+#: CalSites/CalendarSites.cpp:794 CalSites/CalendarSites.cpp:795
 msgid "HIDC_PLUGIN_TREE"
 msgstr "List of available calendar plugins and their calendar entries."
 
-#: CalSites/CalendarSites.cpp:804 CalSites/CalendarSites.cpp:805
+#: CalSites/CalendarSites.cpp:805 CalSites/CalendarSites.cpp:806
 msgid "HIDC_PLUGIN_DETAILS"
 msgstr "Details for the selected item in the tree."
 
-#: CalSites/CalendarSites.cpp:807
+#: CalSites/CalendarSites.cpp:808
 msgid "IDC_PLUGIN_READ"
 msgstr "&Read Entries"
 
-#: CalSites/CalendarSites.cpp:809 CalSites/CalendarSites.cpp:810
+#: CalSites/CalendarSites.cpp:810 CalSites/CalendarSites.cpp:811
 msgid "HIDC_PLUGIN_READ"
 msgstr "Read the calendar entries from the selected plugins."
 
-#: CalSites/CalendarSites.cpp:812
+#: CalSites/CalendarSites.cpp:813
 msgid "IDC_PLUGIN_ADD"
 msgstr "&Add Entries"
 
-#: CalSites/CalendarSites.cpp:814 CalSites/CalendarSites.cpp:815
+#: CalSites/CalendarSites.cpp:815 CalSites/CalendarSites.cpp:816
 msgid "HIDC_PLUGIN_ADD"
 msgstr "Add the selected calendar entries into the program."
 
-#: CalSites/CalendarSites.cpp:817
+#: CalSites/CalendarSites.cpp:818
 msgid "IDC_PLUGIN_ENABLE"
 msgstr "&Enable"
 
-#: CalSites/CalendarSites.cpp:819 CalSites/CalendarSites.cpp:820
+#: CalSites/CalendarSites.cpp:820 CalSites/CalendarSites.cpp:821
 msgid "HIDC_PLUGIN_ENABLE"
 msgstr ""
 "Enable the selected plugin. Plugins may be disabled because the format of "
@@ -83,51 +83,51 @@ msgstr ""
 "fail. Normally, a plugin should only be enabled if a new version of the "
 "plugin has been obtained."
 
-#: CalSites/CalendarSites.cpp:822
+#: CalSites/CalendarSites.cpp:823
 msgid "IDC_PLUGIN_QUERYDETAILS"
 msgstr "&Details..."
 
-#: CalSites/CalendarSites.cpp:824 CalSites/CalendarSites.cpp:825
+#: CalSites/CalendarSites.cpp:825 CalSites/CalendarSites.cpp:826
 msgid "HIDC_PLUGIN_QUERYDETAILS"
 msgstr "Edit detailed query information for the selected plugin, if available."
 
-#: CalSites/CalendarSites.cpp:827
+#: CalSites/CalendarSites.cpp:828
 msgid "IDC_PLUGIN_NEW"
 msgstr "New..."
 
-#: CalSites/CalendarSites.cpp:829 CalSites/CalendarSites.cpp:830
+#: CalSites/CalendarSites.cpp:830 CalSites/CalendarSites.cpp:831
 msgid "HIDC_PLUGIN_NEW"
 msgstr "Add a new Calendar plugin to the current configuration."
 
-#: CalSites/CalendarSites.cpp:832
+#: CalSites/CalendarSites.cpp:833
 msgid "IDC_PLUGIN_EDIT"
 msgstr "Edit..."
 
-#: CalSites/CalendarSites.cpp:834 CalSites/CalendarSites.cpp:835
+#: CalSites/CalendarSites.cpp:835 CalSites/CalendarSites.cpp:836
 msgid "HIDC_PLUGIN_EDIT"
 msgstr ""
 "Edit the selected Calendar plugin (only applicable to plugs in the "
 "configuration)"
 
-#: CalSites/CalendarSites.cpp:837
+#: CalSites/CalendarSites.cpp:838
 msgid "IDC_PLUGIN_DELETE"
 msgstr "Delete"
 
-#: CalSites/CalendarSites.cpp:839 CalSites/CalendarSites.cpp:840
+#: CalSites/CalendarSites.cpp:840 CalSites/CalendarSites.cpp:841
 msgid "HIDC_PLUGIN_DELETE"
 msgstr ""
 "Delete the selected Calendar plugin (only applicable to plugs in the "
 "configuration)"
 
-#: CalSites/CalendarSites.cpp:842
+#: CalSites/CalendarSites.cpp:843
 msgid "IDC_PLUGIN_CLOSE"
 msgstr "Close"
 
-#: CalSites/CalendarSites.cpp:1071
+#: CalSites/CalendarSites.cpp:1072
 msgid "IDS_USE_PLUGIN"
 msgstr "Do you want to continue using this plugin?"
 
-#: CalSites/CalendarSites.cpp:1142 Win/AgilityBookDoc.cpp:1271
+#: CalSites/CalendarSites.cpp:1143 Win/AgilityBookDoc.cpp:1265
 msgid "IDS_UPDATED_CAL_ITEMS"
 msgstr "Added {0} new calendar items, {1} updated items."
 
@@ -508,15 +508,15 @@ msgstr "Language Selection"
 msgid "Select a language to use."
 msgstr "Select a language to use."
 
-#: Libraries/LibARBWin/ReadHttp.cpp:135
+#: Libraries/LibARBWin/ReadHttp.cpp:136
 msgid "Invalid URL"
 msgstr "Invalid URL"
 
-#: Libraries/LibARBWin/ReadHttp.cpp:144
+#: Libraries/LibARBWin/ReadHttp.cpp:145
 msgid "Error ({0}) reading {1}"
 msgstr "Error ({0}) reading {1}"
 
-#: Libraries/LibARBWin/ReadHttp.cpp:150
+#: Libraries/LibARBWin/ReadHttp.cpp:151
 msgid "File not found: {}"
 msgstr "File not found: {}"
 
@@ -524,7 +524,7 @@ msgstr "File not found: {}"
 msgid "Restore"
 msgstr "Restore"
 
-#: Libraries/LibARBWin/SetupApp.cpp:119
+#: Libraries/LibARBWin/SetupApp.cpp:123
 #, c-format
 msgid "Report generated in \"%s\"."
 msgstr "Report generated in \"%s\"."
@@ -544,7 +544,7 @@ msgstr "Reading {} rows"
 msgid "Please enter a valid number"
 msgstr "Please enter a valid number"
 
-#: TestARB/Local.cpp:52 TestARB/TestMisc.cpp:164 Win/Localization.cpp:50
+#: TestARB/Local.cpp:52 TestARB/TestMisc.cpp:162 Win/Localization.cpp:50
 msgid "IDS_ARB_UNKNOWN_VERSION"
 msgstr "Unknown document version"
 
@@ -1017,11 +1017,11 @@ msgstr "Sorry, print preview needs a printer to be installed."
 msgid "Print Preview"
 msgstr "Print Preview"
 
-#: Win/AgilityBook.cpp:322
+#: Win/AgilityBook.cpp:287
 msgid "Agility Record Book file"
 msgstr "Agility Record Book file"
 
-#: Win/AgilityBookCalendarListView.cpp:467 Win/AgilityBookDoc.cpp:1906
+#: Win/AgilityBookCalendarListView.cpp:467 Win/AgilityBookDoc.cpp:1907
 #: Win/AgilityBookRunsView.cpp:1177 Win/AgilityBookTrainingView.cpp:300
 #: Win/AgilityBookTreeView.cpp:182
 msgid "IDS_CANNOT_FIND"
@@ -1033,7 +1033,7 @@ msgstr "{} events"
 
 # This is 11 spaces
 #: Win/AgilityBookCalendarListView.cpp:629 Win/AgilityBookCalendarView.cpp:1321
-#: Win/AgilityBookDoc.cpp:1556 Win/AgilityBookPointsView.cpp:186
+#: Win/AgilityBookDoc.cpp:1550 Win/AgilityBookPointsView.cpp:186
 #: Win/AgilityBookTrainingView.cpp:429
 msgid "IDS_INDICATOR_BLANK"
 msgstr "          "
@@ -1072,7 +1072,7 @@ msgstr "Opens"
 msgid "IDS_COL_CLOSES"
 msgstr "Closes"
 
-#: Win/AgilityBookCalendarView.cpp:647 Win/AgilityBookDoc.cpp:2238
+#: Win/AgilityBookCalendarView.cpp:647 Win/AgilityBookDoc.cpp:2239
 #: Win/DlgAssignColumns.cpp:332 Win/DlgAssignColumns.cpp:342
 #: Win/DlgAssignColumns.cpp:377 Win/DlgAssignColumns.cpp:522
 #: Win/DlgListCtrl.cpp:451
@@ -1155,17 +1155,17 @@ msgstr "Friday"
 msgid "Saturday"
 msgstr "Saturday"
 
-#: Win/AgilityBookDoc.cpp:522 Win/AgilityBookTreeView.cpp:1347
+#: Win/AgilityBookDoc.cpp:516 Win/AgilityBookTreeView.cpp:1347
 msgid "IDS_CREATETRIAL_FAILED"
 msgstr "Error: Failed to create trial."
 
-#: Win/AgilityBookDoc.cpp:535 Win/AgilityBookTreeView.cpp:1363
+#: Win/AgilityBookDoc.cpp:529 Win/AgilityBookTreeView.cpp:1363
 msgid "IDS_CREATETRIAL_FILTERED"
 msgstr ""
 "Warning: The trial you have just created cannot be shown due to filter "
 "options."
 
-#: Win/AgilityBookDoc.cpp:579
+#: Win/AgilityBookDoc.cpp:573
 msgid "IDS_DELETE_TRIAL_DATA"
 msgstr ""
 "WARNING\n"
@@ -1175,24 +1175,24 @@ msgstr ""
 "\n"
 "Are you sure you want to continue?"
 
-#: Win/AgilityBookDoc.cpp:608
+#: Win/AgilityBookDoc.cpp:602
 msgid "IDS_NEED_CLUB"
 msgstr "You must create a hosting club before creating any events."
 
-#: Win/AgilityBookDoc.cpp:616
+#: Win/AgilityBookDoc.cpp:610
 msgid "IDS_VENUE_CONFIG_MISSING"
 msgstr "Unable to locate configuration information for the venue '{}'."
 
-#: Win/AgilityBookDoc.cpp:641 Win/AgilityBookTreeView.cpp:757
+#: Win/AgilityBookDoc.cpp:635 Win/AgilityBookTreeView.cpp:757
 msgid "IDS_CREATERUN_FAILED"
 msgstr "Error: Failed to create run."
 
-#: Win/AgilityBookDoc.cpp:661 Win/AgilityBookTreeView.cpp:790
+#: Win/AgilityBookDoc.cpp:655 Win/AgilityBookTreeView.cpp:790
 msgid "IDS_CREATERUN_FILTERED"
 msgstr ""
 "Warning: The run you have just created cannot be shown due to filter options."
 
-#: Win/AgilityBookDoc.cpp:711
+#: Win/AgilityBookDoc.cpp:705
 msgid "IDS_DELETE_EVENT_DATA"
 msgstr ""
 "WARNING\n"
@@ -1201,139 +1201,155 @@ msgstr ""
 "\n"
 "Are you sure you want to continue?"
 
-#: Win/AgilityBookDoc.cpp:820
+#: Win/AgilityBookDoc.cpp:814
 msgid "IDS_ARE_YOU_SURE_CONTINUE"
 msgstr "Are you sure you want to continue?"
 
-#: Win/AgilityBookDoc.cpp:864 Win/DlgConfigure.cpp:829
+#: Win/AgilityBookDoc.cpp:858 Win/DlgConfigure.cpp:829
 msgid "IDS_CONFIG_NO_UPDATE"
 msgstr "No updates were performed. The configurations are the same."
 
-#: Win/AgilityBookDoc.cpp:1156
+#: Win/AgilityBookDoc.cpp:1150
 msgid "IDS_ADDED"
 msgstr "Added "
 
-#: Win/AgilityBookDoc.cpp:1163
+#: Win/AgilityBookDoc.cpp:1157
 msgid "IDS_ADDED_DOGS"
 msgstr "{} dogs"
 
-#: Win/AgilityBookDoc.cpp:1170 Win/AgilityBookDoc.cpp:1222
+#: Win/AgilityBookDoc.cpp:1164 Win/AgilityBookDoc.cpp:1216
 msgid "IDS_ADDED_REGNUMS"
 msgstr "{} registration numbers"
 
-#: Win/AgilityBookDoc.cpp:1177
+#: Win/AgilityBookDoc.cpp:1171
 msgid "IDS_ADDED_EXISTINGPTS"
 msgstr "{} existing points"
 
-#: Win/AgilityBookDoc.cpp:1184 Win/AgilityBookDoc.cpp:1231
+#: Win/AgilityBookDoc.cpp:1178 Win/AgilityBookDoc.cpp:1225
 msgid "IDS_ADDED_TITLES"
 msgstr "{} titles"
 
-#: Win/AgilityBookDoc.cpp:1191
+#: Win/AgilityBookDoc.cpp:1185
 msgid "IDS_ADDED_TRIALS"
 msgstr "{} trials"
 
-#: Win/AgilityBookDoc.cpp:1198
+#: Win/AgilityBookDoc.cpp:1192
 msgid "IDS_ADDED_CLUBS"
 msgstr "{} clubs"
 
-#: Win/AgilityBookDoc.cpp:1205
+#: Win/AgilityBookDoc.cpp:1199
 msgid "IDS_ADDED_JUDGES"
 msgstr "{} judges"
 
-#: Win/AgilityBookDoc.cpp:1212
+#: Win/AgilityBookDoc.cpp:1206
 msgid "IDS_ADDED_LOCATIONS"
 msgstr "{} locations"
 
-#: Win/AgilityBookDoc.cpp:1220 Win/AgilityBookDoc.cpp:1229
+#: Win/AgilityBookDoc.cpp:1214 Win/AgilityBookDoc.cpp:1223
 msgid "IDS_UPDATED"
 msgstr "Updated "
 
-#: Win/AgilityBookDoc.cpp:1310
+#: Win/AgilityBookDoc.cpp:1304
 msgid "IDS_UPDATED_TRAINING_ITEMS"
 msgstr "Added {0} new Training Log items, {1} updated items."
 
-#: Win/AgilityBookDoc.cpp:1580 Win/DlgDog.cpp:68 Win/DlgFindLinks.cpp:120
+#: Win/AgilityBookDoc.cpp:1574 Win/DlgDog.cpp:68 Win/DlgFindLinks.cpp:120
 #: Win/DlgListCtrl.cpp:506 Win/DlgListViewer.cpp:1230 Win/Print.cpp:257
 msgid "IDS_COL_DOG"
 msgstr "Dog"
 
-#: Win/AgilityBookDoc.cpp:1647
+#: Win/AgilityBookDoc.cpp:1641
 msgid "Sorry, could not open this file."
 msgstr "Sorry, could not open this file."
 
-#: Win/AgilityBookDoc.cpp:1664 Win/AgilityBookDoc.cpp:1680
+#: Win/AgilityBookDoc.cpp:1658 Win/AgilityBookDoc.cpp:1674
 msgid "Cannot open file '{}'."
 msgstr "Cannot open file '{}'."
 
-#: Win/AgilityBookDoc.cpp:1691
+#: Win/AgilityBookDoc.cpp:1685
 msgid "IDS_NONFATAL_MSGS"
 msgstr ""
 "Warning: Some non-fatal messages were generated while loading the file:"
 
-#: Win/AgilityBookDoc.cpp:1802
+#: Win/AgilityBookDoc.cpp:1789
 msgid "IDS_WARN_FILE_UPDATED"
 msgstr ""
 "Warning: This file has changed since it was opened. Are you sure you want to "
 "overwrite any changes?"
 
-#: Win/AgilityBookDoc.cpp:1836 Win/UpdateInfo.cpp:476
+#: Win/AgilityBookDoc.cpp:1823 Win/UpdateInfo.cpp:530
 msgid "IDS_CANNOT_OPEN"
 msgstr "Unable to open file '{}' for writing."
 
-#: Win/AgilityBookDoc.cpp:1842
+#: Win/AgilityBookDoc.cpp:1829
 msgid "IDS_INTERNAL_ERROR"
 msgstr "Internal error: File not saved."
 
-#: Win/AgilityBookDoc.cpp:1867
+#: Win/AgilityBookDoc.cpp:1844
+msgid "A file download is in progress. Closing the window will cancel it."
+msgstr "A file download is in progress. Closing the window will cancel it."
+
+#: Win/AgilityBookDoc.cpp:1845
+msgid "Confirm"
+msgstr "Confirm"
+
+#: Win/AgilityBookDoc.cpp:1847
+msgid "Cancel and close"
+msgstr "Cancel and close"
+
+#: Win/AgilityBookDoc.cpp:1847
+msgid "Don't close"
+msgstr "Don't close"
+
+#: Win/AgilityBookDoc.cpp:1868
 msgid "IDS_SEARCH_NOTES"
 msgstr "Search Notes"
 
-#: Win/AgilityBookDoc.cpp:2036
+#: Win/AgilityBookDoc.cpp:2037
 msgid "IDS_NO_LINKED_FILES"
 msgstr "No linked files found."
 
-#: Win/AgilityBookDoc.cpp:2310
+#: Win/AgilityBookDoc.cpp:2293
 msgid "IDS_FILEPROP_NAME"
 msgstr "File name: {}"
 
-#: Win/AgilityBookDoc.cpp:2313
+#: Win/AgilityBookDoc.cpp:2296
 msgid "IDS_FILEPROP_NAME_READONLY"
 msgstr " [readonly]"
 
-#: Win/AgilityBookDoc.cpp:2316 Win/AgilityBookDoc.cpp:2339
+#: Win/AgilityBookDoc.cpp:2299 Win/AgilityBookDoc.cpp:2322
 msgid "IDS_FILEPROP_NAME_MODIFIED"
 msgstr " [changes pending]"
 
-#: Win/AgilityBookDoc.cpp:2320
+#: Win/AgilityBookDoc.cpp:2303
 msgid "IDS_FILEPROP_SIZE"
 msgstr "File size: {} bytes"
 
-#: Win/AgilityBookDoc.cpp:2328
+#: Win/AgilityBookDoc.cpp:2311
 msgid "IDS_FILEPROP_CREATED"
 msgstr "Created: {}"
 
-#: Win/AgilityBookDoc.cpp:2332
+#: Win/AgilityBookDoc.cpp:2315
 msgid "IDS_FILEPROP_MODIFIED"
 msgstr "Modified: {}"
 
-#: Win/AgilityBookDoc.cpp:2350
+#: Win/AgilityBookDoc.cpp:2333
 msgid "IDS_FILEPROP_CONFIGURATION"
 msgstr "Configuration: {}"
 
-#: Win/AgilityBookDoc.cpp:2356
+#: Win/AgilityBookDoc.cpp:2339
 msgid "IDS_FILEPROP_CONFIGURATION_CURRENT"
 msgstr "Configuration: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2364
+#: Win/AgilityBookDoc.cpp:2347
 msgid "IDS_FILEPROP_VERSION"
 msgstr "Document version: {}"
 
-#: Win/AgilityBookDoc.cpp:2370
+#: Win/AgilityBookDoc.cpp:2353
 msgid "IDS_FILEPROP_VERSION_CURRENT"
 msgstr "Document version: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2382
+#: Win/AgilityBookDoc.cpp:2365
 msgid "IDS_FILEPROP_FILEWRITTEN"
 msgstr ""
 "File written on:\n"
@@ -1342,7 +1358,7 @@ msgstr ""
 "Local time: {2}\n"
 "ARB: {3}"
 
-#: Win/AgilityBookDoc.cpp:2390
+#: Win/AgilityBookDoc.cpp:2373
 msgid "IDS_FILE_PROPERTIES"
 msgstr "File Properties"
 
@@ -2182,19 +2198,19 @@ msgid "IDS_CREATEDOG_FAILED"
 msgstr "Error: Failed to create dog."
 
 # DlgAbout
-#: Win/DlgAbout.cpp:52
+#: Win/DlgAbout.cpp:55
 msgid "IDD_ABOUTBOX"
 msgstr "About"
 
-#: Win/DlgAbout.cpp:55
+#: Win/DlgAbout.cpp:58
 msgid "LinkHelpUrlSubject"
 msgstr "AgilityBook v%VERSION% Help:"
 
-#: Win/DlgAbout.cpp:58 Win/DlgAbout.cpp:102
+#: Win/DlgAbout.cpp:61 Win/DlgAbout.cpp:104
 msgid "LinkHelpAddress"
 msgstr "help@agilityrecordbook.com"
 
-#: Win/DlgAbout.cpp:60
+#: Win/DlgAbout.cpp:63
 msgid "LinkHelpUrlBody"
 msgstr ""
 "Please describe the problem, and if possible, how to recreate it:\n"
@@ -2202,7 +2218,7 @@ msgstr ""
 "If a particular file is causing the problem, please attach a copy of that "
 "file to this message."
 
-#: Win/DlgAbout.cpp:76
+#: Win/DlgAbout.cpp:79
 msgid "AboutVersion"
 msgstr ""
 "Version {0}.{1}.{2}.{3}\n"
@@ -2212,48 +2228,48 @@ msgstr ""
 "\n"
 "Please send any bug reports or suggestions to:"
 
-#: Win/DlgAbout.cpp:81 Win/DlgMessageBox.cpp:54 Win/MainFrm.cpp:120
+#: Win/DlgAbout.cpp:84 Win/DlgMessageBox.cpp:54 Win/MainFrm.cpp:141
 msgid "Agility Record Book"
 msgstr "Agility Record Book"
 
-#: Win/DlgAbout.cpp:90
+#: Win/DlgAbout.cpp:93
 msgid "LinkGroupText"
 msgstr "Discussion Group"
 
-#: Win/DlgAbout.cpp:91 Win/DlgAbout.cpp:95 Win/DlgAbout.cpp:96
+#: Win/DlgAbout.cpp:94 Win/DlgAbout.cpp:98 Win/DlgAbout.cpp:99
 msgid "LinkGroupUrl"
 msgstr "https://groups.io/g/AgilityRecordBook"
 
-#: Win/DlgAbout.cpp:111
+#: Win/DlgAbout.cpp:114
 msgid "UsefulLinks"
 msgstr "Useful links:"
 
-#: Win/DlgAbout.cpp:117
+#: Win/DlgAbout.cpp:120
 msgid "LinkArbText"
 msgstr "Agility Record Book Home Page"
 
-#: Win/DlgAbout.cpp:118 Win/DlgAbout.cpp:122 Win/DlgAbout.cpp:123
+#: Win/DlgAbout.cpp:121 Win/DlgAbout.cpp:125 Win/DlgAbout.cpp:126
 msgid "LinkArbUrl"
 msgstr "http://www.agilityrecordbook.com"
 
-#: Win/DlgAbout.cpp:128
+#: Win/DlgAbout.cpp:131
 msgid "LinkArbDownloadText"
 msgstr "Agility Record Book Downloads"
 
-#: Win/DlgAbout.cpp:129 Win/DlgAbout.cpp:133 Win/DlgAbout.cpp:134
-#: Win/UpdateInfo.cpp:212
+#: Win/DlgAbout.cpp:132 Win/DlgAbout.cpp:136 Win/DlgAbout.cpp:137
+#: Win/UpdateInfo.cpp:224
 msgid "LinkArbDownloadUrl"
 msgstr "http://www.agilityrecordbook.com/download.php"
 
-#: Win/DlgAbout.cpp:136
+#: Win/DlgAbout.cpp:139
 msgid "AboutCredits"
 msgstr "Credits: Some artwork sourced from Vector Graphics by FreeVector.com."
 
-#: Win/DlgAbout.cpp:138
+#: Win/DlgAbout.cpp:141
 msgid "CheckForUpdates"
 msgstr "Check for Updates..."
 
-#: Win/DlgAbout.cpp:140
+#: Win/DlgAbout.cpp:143
 msgid "HIDC_ABOUT_UPDATE"
 msgstr ""
 "Check to see if there are any updates available. If there are, you will be "
@@ -3355,7 +3371,7 @@ msgstr "Compute time faults under SCT"
 msgid "IDS_CONFIGEVENT_TF_OVER"
 msgstr "Compute time faults over SCT"
 
-#: Win/DlgConfigEvent.cpp:742 Win/DlgRunPanelScore.cpp:1992 Win/TabView.cpp:242
+#: Win/DlgConfigEvent.cpp:742 Win/DlgRunPanelScore.cpp:1994 Win/TabView.cpp:242
 #: Win/TabView.cpp:289 Win/TabView.cpp:364
 msgid "IDS_POINTS"
 msgstr "Points"
@@ -3595,7 +3611,7 @@ msgstr "Required &Closing"
 msgid "HIDC_CONFIG_EVENT_CLOSING_PTS"
 msgstr "Number of closing points required in order to qualify."
 
-#: Win/DlgConfigEventMethod.cpp:801 Win/DlgRunPanelScore.cpp:1981
+#: Win/DlgConfigEventMethod.cpp:801 Win/DlgRunPanelScore.cpp:1983
 msgid "IDS_SCORING_REQUIRED_POINTS"
 msgstr "Required Points"
 
@@ -5995,22 +6011,22 @@ msgstr "Opening Time (SCT)"
 msgid "HIDC_RUNSCORE_SCT"
 msgstr "Standard Course Time (or opening time for point-based events)"
 
-#: Win/DlgRunPanelScore.cpp:537 Win/DlgRunPanelScore.cpp:1930
+#: Win/DlgRunPanelScore.cpp:537 Win/DlgRunPanelScore.cpp:1932
 msgid "IDC_RUNSCORE_OPENING_PTS"
 msgstr "Required Opening Points"
 
 #: Win/DlgRunPanelScore.cpp:543 Win/DlgRunPanelScore.cpp:544
-#: Win/DlgRunPanelScore.cpp:1932 Win/DlgRunPanelScore.cpp:1933
-#: Win/DlgRunPanelScore.cpp:1983 Win/DlgRunPanelScore.cpp:1984
+#: Win/DlgRunPanelScore.cpp:1934 Win/DlgRunPanelScore.cpp:1935
+#: Win/DlgRunPanelScore.cpp:1985 Win/DlgRunPanelScore.cpp:1986
 msgid "HIDC_RUNSCORE_OPENING_PTS"
 msgstr "Number of points required in the opening sequence."
 
-#: Win/DlgRunPanelScore.cpp:547 Win/DlgRunPanelScore.cpp:1892
+#: Win/DlgRunPanelScore.cpp:547 Win/DlgRunPanelScore.cpp:1894
 msgid "IDC_RUNSCORE_MIN_YPS"
 msgstr "Min YPS"
 
 #: Win/DlgRunPanelScore.cpp:553 Win/DlgRunPanelScore.cpp:554
-#: Win/DlgRunPanelScore.cpp:1940 Win/DlgRunPanelScore.cpp:1941
+#: Win/DlgRunPanelScore.cpp:1942 Win/DlgRunPanelScore.cpp:1943
 msgid "HIDC_RUNSCORE_SCT2"
 msgstr "Standard Course Time (or closing time for point-based events)"
 
@@ -6048,31 +6064,31 @@ msgstr "Course Faults"
 msgid "HIDC_RUNSCORE_FAULTS"
 msgstr "Number of faulted points in this run."
 
-#: Win/DlgRunPanelScore.cpp:619 Win/DlgRunPanelScore.cpp:1952
+#: Win/DlgRunPanelScore.cpp:619 Win/DlgRunPanelScore.cpp:1954
 msgid "IDC_RUNSCORE_OPEN_PTS"
 msgstr "Opening Points"
 
 #: Win/DlgRunPanelScore.cpp:625 Win/DlgRunPanelScore.cpp:626
-#: Win/DlgRunPanelScore.cpp:1954 Win/DlgRunPanelScore.cpp:1955
-#: Win/DlgRunPanelScore.cpp:1994 Win/DlgRunPanelScore.cpp:1995
+#: Win/DlgRunPanelScore.cpp:1956 Win/DlgRunPanelScore.cpp:1957
+#: Win/DlgRunPanelScore.cpp:1996 Win/DlgRunPanelScore.cpp:1997
 msgid "HIDC_RUNSCORE_OPEN_PTS"
 msgstr "Number of points earned in the opening sequence."
 
-#: Win/DlgRunPanelScore.cpp:629 Win/DlgRunPanelScore.cpp:1960
+#: Win/DlgRunPanelScore.cpp:629 Win/DlgRunPanelScore.cpp:1962
 msgid "IDC_RUNSCORE_CLOSE_PTS"
 msgstr "Closing Points"
 
 #: Win/DlgRunPanelScore.cpp:635 Win/DlgRunPanelScore.cpp:636
-#: Win/DlgRunPanelScore.cpp:1962 Win/DlgRunPanelScore.cpp:1963
+#: Win/DlgRunPanelScore.cpp:1964 Win/DlgRunPanelScore.cpp:1965
 msgid "HIDC_RUNSCORE_CLOSE_PTS"
 msgstr "Number of points earned in the closing sequence."
 
-#: Win/DlgRunPanelScore.cpp:639 Win/DlgRunPanelScore.cpp:2044
+#: Win/DlgRunPanelScore.cpp:639 Win/DlgRunPanelScore.cpp:2046
 msgid "IDC_RUNSCORE_OBSTACLES_PER_SEC"
 msgstr "Obstacles per second"
 
 #: Win/DlgRunPanelScore.cpp:650 Win/DlgRunPanelScore.cpp:651
-#: Win/DlgRunPanelScore.cpp:2047 Win/DlgRunPanelScore.cpp:2048
+#: Win/DlgRunPanelScore.cpp:2049 Win/DlgRunPanelScore.cpp:2050
 msgid "HIDC_RUNSCORE_OBSTACLES_PER_SEC"
 msgstr ""
 "Number of obstacles per second. For runs with an opening/closing time, only "
@@ -6159,32 +6175,32 @@ msgstr ""
 msgid "IDS_SELECT_Q"
 msgstr "Please select a 'Q'."
 
-#: Win/DlgRunPanelScore.cpp:1886 Win/DlgRunPanelScore.cpp:2005
+#: Win/DlgRunPanelScore.cpp:1888 Win/DlgRunPanelScore.cpp:2007
 msgid "IDC_RUNSCORE_YARDS"
 msgstr "Yards"
 
-#: Win/DlgRunPanelScore.cpp:1888 Win/DlgRunPanelScore.cpp:1889
-#: Win/DlgRunPanelScore.cpp:2007 Win/DlgRunPanelScore.cpp:2008
+#: Win/DlgRunPanelScore.cpp:1890 Win/DlgRunPanelScore.cpp:1891
+#: Win/DlgRunPanelScore.cpp:2009 Win/DlgRunPanelScore.cpp:2010
 msgid "HIDC_RUNSCORE_YARDS"
 msgstr "Yardage of run. Enter 0 if not known or doesn't apply."
 
-#: Win/DlgRunPanelScore.cpp:1902 Win/DlgRunPanelScore.cpp:2017
+#: Win/DlgRunPanelScore.cpp:1904 Win/DlgRunPanelScore.cpp:2019
 msgid "IDC_RUNSCORE_YPS"
 msgstr "Yards per Second"
 
-#: Win/DlgRunPanelScore.cpp:1908
+#: Win/DlgRunPanelScore.cpp:1910
 msgid "IDC_RUNSCORE_TOTAL_FAULTS"
 msgstr "Total Faults"
 
-#: Win/DlgRunPanelScore.cpp:1937
+#: Win/DlgRunPanelScore.cpp:1939
 msgid "IDC_RUNSCORE_SCT2"
 msgstr "Closing Time"
 
-#: Win/DlgRunPanelScore.cpp:2052
+#: Win/DlgRunPanelScore.cpp:2054
 msgid "IDC_RUNSCORE_MILESPERHOUR"
 msgstr "MPH"
 
-#: Win/DlgRunPanelScore.cpp:2055 Win/DlgRunPanelScore.cpp:2056
+#: Win/DlgRunPanelScore.cpp:2057 Win/DlgRunPanelScore.cpp:2058
 msgid "HIDC_RUNSCORE_MILESPERHOUR"
 msgstr ""
 "Miles per hour, based on the Time.\n"
@@ -6441,17 +6457,21 @@ msgstr ""
 "Are you sure you want to continue?"
 
 # This is 11 spaces
-#: Win/MainFrm.cpp:153
+#: Win/MainFrm.cpp:176
 msgid "ID_INDICATOR_DOG"
 msgstr "          "
 
-#: Win/MainFrm.cpp:156
+#: Win/MainFrm.cpp:179
 msgid "ID_INDICATOR_STATUS"
 msgstr "status"
 
-#: Win/MainFrm.cpp:159 Win/MainFrm.cpp:183
+#: Win/MainFrm.cpp:182 Win/MainFrm.cpp:212
 msgid "ID_INDICATOR_FILTERED"
 msgstr "Filtered"
+
+#: Win/MainFrm.cpp:379
+msgid "Canceling file download..."
+msgstr "Canceling file download..."
 
 #: Win/PointsData.cpp:251 Win/PointsData.cpp:1200 Win/Print.cpp:116
 #: Win/Print.cpp:1050 Win/TabView.cpp:237 Win/TabView.cpp:363
@@ -6526,56 +6546,56 @@ msgstr "Name/Breed/Notes"
 msgid "IDS_TRAINING"
 msgstr "Training Log"
 
-#: Win/UpdateInfo.cpp:135
+#: Win/UpdateInfo.cpp:138
 msgid "IDS_UPDATED_CONFIG"
 msgstr ""
 "The configuration has been updated. Would you like to merge the new one with "
 "your data?"
 
-#: Win/UpdateInfo.cpp:240 Win/UpdateInfo.cpp:379
+#: Win/UpdateInfo.cpp:265 Win/UpdateInfo.cpp:404
 msgid "IDS_UPDATE_UNKNOWN"
 msgstr "Unable to determine current released version."
 
-#: Win/UpdateInfo.cpp:302 Win/UpdateInfo.cpp:750
+#: Win/UpdateInfo.cpp:327 Win/UpdateInfo.cpp:774
 msgid "IDS_LOAD_FAILED"
 msgstr "Failed to load '{}'."
 
-#: Win/UpdateInfo.cpp:439
+#: Win/UpdateInfo.cpp:493
 msgid "IDS_VERSION_AVAILABLE"
 msgstr "Version {} is available. Would you like to download it?"
 
-#: Win/UpdateInfo.cpp:481
+#: Win/UpdateInfo.cpp:535
 msgid "IDS_DOWNLOADING"
 msgstr "Downloading..."
 
-#: Win/UpdateInfo.cpp:503
+#: Win/UpdateInfo.cpp:558
 msgid "IDS_VALIDATING"
 msgstr "Validating..."
 
-#: Win/UpdateInfo.cpp:511 Win/UpdateInfo.cpp:535 Win/UpdateInfo.cpp:543
-#: Win/UpdateInfo.cpp:551
+#: Win/UpdateInfo.cpp:566 Win/UpdateInfo.cpp:590 Win/UpdateInfo.cpp:598
+#: Win/UpdateInfo.cpp:606
 msgid "IDS_ERROR_DOWNLOAD"
 msgstr "ERROR: The downloaded file is corrupt."
 
-#: Win/UpdateInfo.cpp:527
+#: Win/UpdateInfo.cpp:582
 msgid "IDS_DOWNLOAD_AND_RESTART"
 msgstr ""
 "{} is now downloaded. Agility Record Book will now close so you can install "
 "it."
 
-#: Win/UpdateInfo.cpp:559
+#: Win/UpdateInfo.cpp:614
 msgid "IDS_ERROR_UNEXPECTED"
 msgstr "ERROR: Unexpected file format, expected MSI file."
 
-#: Win/UpdateInfo.cpp:593 Win/UpdateInfo.cpp:612
+#: Win/UpdateInfo.cpp:648 Win/UpdateInfo.cpp:667
 msgid "IDS_ERROR_AUTOUPDATE"
 msgstr "ERROR: Internal error during update process. Procedure was cancelled."
 
-#: Win/UpdateInfo.cpp:786
+#: Win/UpdateInfo.cpp:810
 msgid "IDS_UPDATE_CURRENT"
 msgstr "No updates are available at this time."
 
-#: Win/UpdateInfo.cpp:827
+#: Win/UpdateInfo.cpp:851
 msgid "IDS_INSTALL_BUSY"
 msgstr ""
 "An update is available but cannot be installed at this time. Make sure the "

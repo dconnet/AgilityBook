@@ -13,6 +13,7 @@
  * transfers (curl usage must be changed for that).
  *
  * Revision History
+ * 2021-04-27 Convert libcurl to wxWebRequest.
  * 2020-11-14 Convert to libcurl.
  * 2018-10-11 Moved to Win LibARBWin
  * 2014-02-19 Added some error logging.
@@ -28,187 +29,143 @@
 #include "stdafx.h"
 #include "LibARBWin/ReadHttp.h"
 
-#include "ARBCommon/StringUtil.h"
-#include "LibARBWin/DlgAuthenticate.h"
 #include "LibARBWin/DlgProgress.h"
-#include "fmt/format.h"
-#include <wx/sstream.h>
-#include <wx/wfstream.h>
-#include <curl/curl.h>
-
-#if LIBCURL_VERSION_NUM < 0x072000
-#error Need a newer curl
-#endif
-
-#if defined(__WXMSW__)
-#if defined(_DEBUG)
-#pragma comment(lib, "libcurl_a_debug.lib")
-#else
-#pragma comment(lib, "libcurl_a.lib")
-#endif
-#endif
+#include <wx/creddlg.h>
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
 
 
-namespace
+CReadHttp::CReadHttp()
+	: m_pendingCancel(false)
+	, m_currentRequest()
+	, m_progress(nullptr)
+	, m_downloadCount(0)
+	, m_output(nullptr)
+	, m_credentials()
 {
-int xferinfo(void* ptr, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow)
-{
-	IDlgProgress* pProgress = static_cast<IDlgProgress*>(ptr);
-	if (pProgress)
-	{
-		if (pProgress->HasCanceled())
-			return 1;
-		pProgress->SetPos(1, static_cast<int>(dlnow));
-	}
-	return 0;
 }
 
 
-size_t write_data_stream(void* pData, size_t size, size_t nmemb, void* stream)
+CReadHttp::~CReadHttp()
 {
-	// If no stream, pretend it worked. We're just checking for existence.
-	if (stream)
+	// Make sure we've canceled!
+	CancelDownload();
+	// We have to block until the web request completes, but we need to
+	// process events while doing it.
+	while (m_currentRequest.IsOk())
 	{
-		wxOutputStream* pStream = static_cast<wxOutputStream*>(stream);
-		pStream->Write(pData, size * nmemb);
+		wxYield();
 	}
-	return size * nmemb;
 }
 
 
-long ReadHttpFile(
-	std::wstring& outErrMsg,
-	std::wstring const& inURL,
-	wxString* outString, // Only one of these 2 may be specified
-	wxOutputStream* outStream,
-	IDlgProgress* pProgress)
+bool CReadHttp::IsOk() const
 {
-	if (!outString && !outStream)
-		return 200;
+	return m_currentRequest.IsOk();
+}
 
-	wxString res;
-	wxStringOutputStream out(&res);
 
-	bool bCancelEnable = true;
-
-	char errorBuffer[CURL_ERROR_SIZE] = {0};
-	CURL* curl = curl_easy_init();
-
-	curl_easy_setopt(curl, CURLOPT_URL, StringUtil::stringA(inURL).c_str());
-
-	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data_stream);
-	curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, errorBuffer);
-	if (outString)
+bool CReadHttp::CancelDownload()
+{
+	if (!m_pendingCancel && m_currentRequest.IsOk())
 	{
-		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &out);
+		m_pendingCancel = true;
+		m_currentRequest.Cancel();
 	}
-	else
-	{
-		curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, xferinfo);
-		curl_easy_setopt(curl, CURLOPT_XFERINFODATA, pProgress);
-		curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L);
+	return m_pendingCancel;
+}
 
-		curl_easy_setopt(curl, CURLOPT_WRITEDATA, outStream);
-	}
 
-	long code = 400; // Just default to "Bad Request"
-	std::string errMsg;
+CReadHttp::ReturnCode CReadHttp::DownloadFile(
+	wxWindow* parent,
+	wxString const& url,
+	IDlgProgress* progress,
+	wxOutputStream* output,
+	OnFileComplete callback)
+{
+	// If closing, don't start another. And only allow 1 download at a time.
+	if (m_pendingCancel || m_currentRequest.IsOk())
+		return ReturnCode::Failed;
+	if (!parent)
+		return ReturnCode::Failed;
 
-	CURLcode rcCurl = curl_easy_perform(curl);
-	if (CURLE_OK == rcCurl)
-		curl_easy_getinfo(curl, CURLINFO_HTTP_CODE, &code);
-	else
-		errMsg = errorBuffer;
+	m_progress = progress;
+	m_output = output;
+	m_currentRequest = wxWebSession::GetDefault().CreateRequest(parent, url);
+	m_currentRequest.SetStorage(wxWebRequest::Storage_None);
+	m_downloadCount = 0;
 
-	curl_easy_cleanup(curl);
-
-	if (pProgress)
-		pProgress->EnableCancel(bCancelEnable);
-
-	if (CURLE_URL_MALFORMAT == rcCurl)
-	{
-		fmt::wmemory_buffer buffer;
-		fmt::format_to(buffer, L"{}: {}\n{}", _("Invalid URL").wx_str(), inURL, StringUtil::stringW(errMsg));
-		outErrMsg += fmt::to_string(buffer);
-	}
-	else if (CURLE_OK != rcCurl)
-	{
-		fmt::wmemory_buffer buffer;
-		fmt::format_to(
-			buffer,
-			L"{}\n{}",
-			fmt::format(_("Error ({0}) reading {1}").wx_str(), rcCurl, inURL),
-			StringUtil::stringW(errMsg));
-		outErrMsg += fmt::to_string(buffer);
-	}
-	else if (404 == code)
-	{
-		outErrMsg += fmt::format(_("File not found: {}").wx_str(), inURL);
-	}
-
-	if (CURLE_OK == rcCurl)
-	{
-		if (200 == code && outString)
+	parent->Bind(wxEVT_WEBREQUEST_DATA, [this](wxWebRequestEvent& evt) {
+		if (m_progress && m_progress->HasCanceled())
 		{
-			*outString = res.mb_str(wxMBConvUTF8());
+			CancelDownload();
+			return;
 		}
-	}
+		auto size = evt.GetDataSize();
+		m_downloadCount += size;
+		m_output->Write(evt.GetDataBuffer(), size);
+		if (m_progress)
+		{
+			// Really not worried about overflow. We don't download really big things!
+			m_progress->SetPos(1, static_cast<int>(m_downloadCount));
+		}
+	});
 
-	return code;
+	parent->Bind(wxEVT_WEBREQUEST_STATE, [this, parent, callback](wxWebRequestEvent& evt) {
+		bool stillActive = false;
+		switch (evt.GetState())
+		{
+		case wxWebRequest::State_Completed:
+			break;
+		case wxWebRequest::State_Failed:
+			// wxLogError("Web Request failed: %s", evt.GetErrorDescription());
+			break;
+		case wxWebRequest::State_Cancelled:
+			if (m_pendingCancel)
+				m_pendingCancel = false;
+			// wxLogStatus("Cancelled");
+			break;
+		case wxWebRequest::State_Unauthorized:
+		{
+			wxWebAuthChallenge auth = m_currentRequest.GetAuthChallenge();
+			if (!auth.IsOk())
+			{
+				// wxLogStatus("Unexpectedly missing auth challenge");
+				break;
+			}
+
+			wxCredentialEntryDialog dialog(
+				parent,
+				wxString::Format(L"%s\n%s", _("Please enter credentials for accessing:"), evt.GetResponse().GetURL()),
+				_("Credentials"),
+				m_credentials);
+			if (dialog.ShowModal() == wxID_OK)
+			{
+				m_credentials = dialog.GetCredentials();
+				auth.SetCredentials(m_credentials);
+				// wxLogStatus("Trying to authenticate...");
+				stillActive = true;
+			}
+		}
+		break;
+		case wxWebRequest::State_Active:
+			stillActive = true;
+			break;
+		case wxWebRequest::State_Idle:
+			break;
+		}
+		if (!stillActive)
+		{
+			m_currentRequest = wxWebRequest();
+			m_progress = nullptr;
+			m_downloadCount = 0;
+			m_output = nullptr;
+			callback(evt.GetState());
+		}
+	});
+
+	m_currentRequest.Start();
+	return CReadHttp::ReturnCode::Busy;
 }
-} // namespace
-
-
-namespace ReadHttp
-{
-bool CheckHttpFile(std::wstring const& inURL)
-{
-	CURL* curl = curl_easy_init();
-
-	curl_easy_setopt(curl, CURLOPT_URL, StringUtil::stringA(inURL).c_str());
-	curl_easy_setopt(curl, CURLOPT_NOBODY, 1L);
-
-	long code = 0;
-	if (CURLE_OK == curl_easy_perform(curl))
-	{
-		curl_easy_getinfo(curl, CURLINFO_HTTP_CODE, &code);
-	}
-
-	curl_easy_cleanup(curl);
-
-	return 200 == code;
-}
-
-
-long ReadHttpFileSync(std::wstring& outErrMsg, std::wstring const& inURL, std::string& outString)
-{
-	wxString data;
-	long rc = ReadHttpFile(outErrMsg, inURL, &data, nullptr, nullptr);
-	if (200 == rc)
-		outString = data.mb_str(wxMBConvUTF8());
-	return rc;
-}
-
-
-long ReadHttpFileSync(std::wstring& outErrMsg, std::wstring const& inURL, wxString& outString)
-{
-	return ReadHttpFile(outErrMsg, inURL, &outString, nullptr, nullptr);
-}
-
-
-long ReadHttpFileSync(
-	std::wstring& outErrMsg,
-	std::wstring const& inURL,
-	wxOutputStream* outStream,
-	IDlgProgress* pProgress)
-{
-	if (!outStream)
-		return 400;
-	return ReadHttpFile(outErrMsg, inURL, nullptr, outStream, pProgress);
-}
-
-} // namespace ReadHttp

@@ -201,47 +201,12 @@ CAgilityBookApp::CAgilityBookApp()
 	, m_bShutdownSocket(false)
 	, m_Localization()
 	, m_imageHelper()
-	, m_UpdateInfo()
 	, m_manager(nullptr)
 	, m_printDialogData(nullptr)
 	, m_Prn(nullptr)
 	, m_menus(nullptr)
 {
 	m_BaseInfoName = ARB_CONFIG_INFO;
-}
-
-
-bool CAgilityBookApp::AutoCheckProgram()
-{
-	bool bClose = false;
-	// Check for updates every 30 days.
-	if (CAgilityBookOptions::GetAutoUpdateCheck())
-	{
-		std::wstring ver = StringUtil::stringW(wxConfig::Get()->Read(CFG_SETTINGS_LASTVERCHECK, L""));
-		ARBDate date = ARBDate::FromString(ver, ARBDateFormat::ISO);
-		if (date.IsValid())
-		{
-			ARBDate today = ARBDate::Today();
-			date += 30;
-			if (date < today)
-			{
-				m_UpdateInfo.AutoUpdateProgram(nullptr, bClose);
-			}
-		}
-	}
-	return bClose;
-}
-
-
-void CAgilityBookApp::AutoCheckConfiguration(CAgilityBookDoc* pDoc)
-{
-	m_UpdateInfo.AutoCheckConfiguration(pDoc);
-}
-
-
-void CAgilityBookApp::UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outClose)
-{
-	m_UpdateInfo.UpdateConfiguration(pDoc, outClose);
 }
 
 

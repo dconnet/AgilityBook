@@ -22,17 +22,19 @@
 #include "ARBCommon/MailTo.h"
 #include <wx/hyperlink.h>
 class CAgilityBookDoc;
+class CMainFrame;
 
 
 class CDlgAbout : public wxDialog
 {
 public:
-	CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* parent);
+	CDlgAbout(CAgilityBookDoc* pDoc, CMainFrame* parent);
 
 private:
 	void OnHelpEmail(wxHyperlinkEvent& evt);
 	void OnCheckForUpdates(wxCommandEvent& evt);
 
 	CAgilityBookDoc* m_pDoc;
+	CMainFrame* m_pFrame;
 	CMailTo m_mailto;
 };

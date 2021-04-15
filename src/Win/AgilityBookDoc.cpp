@@ -78,7 +78,6 @@
 #include "AgilityBookTreeView.h"
 #include "ClipBoard.h"
 #include "ConfigHandler.h"
-#include "DlgAbout.h"
 #include "DlgCalendar.h"
 #include "DlgConfigUpdate.h"
 #include "DlgConfigure.h"
@@ -97,7 +96,6 @@
 #include "MainFrm.h"
 #include "RegItems.h"
 #include "TabView.h"
-#include "UpdateInfo.h"
 #include "VersionNumber.h"
 #include "Wizard.h"
 
@@ -221,10 +219,6 @@ wxBEGIN_EVENT_TABLE(CAgilityBookDoc, wxDocument)
 	EVT_UPDATE_UI(ID_VIEW_TABLE_IN_YPS, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_RUNTIME_IN_OPS, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_LIFETIME_EVENTS, CAgilityBookDoc::OnUpdateCmd)
-	EVT_UPDATE_UI(wxID_ABOUT, CAgilityBookDoc::OnUpdateCmdTrue)
-	EVT_MENU(wxID_ABOUT, CAgilityBookDoc::OnCmd)
-	EVT_UPDATE_UI(ID_HELP_UPDATE, CAgilityBookDoc::OnUpdateCmdTrue)
-	EVT_MENU(ID_HELP_UPDATE, CAgilityBookDoc::OnCmd)
 #ifdef _DEBUG
 	EVT_MENU(ID_HELP_DEBUG, CAgilityBookDoc::OnHelpDebug)
 #endif
@@ -462,7 +456,7 @@ bool CAgilityBookDoc::EditDog(ARBDogPtr const& inDog, int nPage)
 		// more intelligent (reset is only needed if changing titles/etc), then
 		// we may need this. The problem is that pDogData may be deleted.
 		// Need a way to track that pDogData is gone...
-		//else
+		// else
 		//	pTree->RefreshItem(pDogData->GetId());
 	}
 	return bOk;
@@ -537,7 +531,7 @@ bool CAgilityBookDoc::EditTrial(ARBDogPtr const& inDog, ARBDogTrialPtr const& in
 				else
 				{
 					pTree->SelectItem(hItem);
-					//if (bTreeSelectionSet)
+					// if (bTreeSelectionSet)
 					//	*bTreeSelectionSet = true;
 				}
 			}
@@ -549,7 +543,7 @@ bool CAgilityBookDoc::EditTrial(ARBDogPtr const& inDog, ARBDogTrialPtr const& in
 			CAgilityBookTreeData* pTrialData = pTree->FindData(pTrial);
 			if (pTrialData)
 				pTree->RefreshItem(pTrialData->GetId());
-			//if (dlg.RunsWereDeleted())
+			// if (dlg.RunsWereDeleted())
 			//{
 			//	if (bTreeSelectionSet)
 			//		*bTreeSelectionSet = true;
@@ -665,7 +659,7 @@ bool CAgilityBookDoc::EditRun(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTr
 				else
 				{
 					pTree->SelectItem(hItem);
-					//if (bTreeSelectionSet)
+					// if (bTreeSelectionSet)
 					//	*bTreeSelectionSet = true;
 				}
 			}
@@ -1746,7 +1740,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 	{
 		if (GetCurrentConfigVersion() > m_Records.GetConfig().GetVersion() && m_Records.GetConfig().GetUpdateStatus())
 		{
-			if (CUpdateInfo::UpdateConfig(this))
+			if (CUpdateInfo::AllowUpdateConfig(this))
 			{
 				if (ImportConfiguration(true))
 					Modify(true);
@@ -1755,18 +1749,10 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		// Then check the external config.
 		else
 		{
-			wxGetApp().AutoCheckConfiguration(this);
+			CMainFrame* pFrame = wxDynamicCast(wxGetApp().GetTopWindow(), CMainFrame);
+			pFrame->AutoCheckConfiguration(this);
 		}
 	}
-
-	// The old MFC code would prompt to create a new dog if this was a new file.
-	// I'm not going to implement that in wxWidgets.
-	/*
-	if (0 == m_Records.GetDogs().size() && AfxGetMainWnd() && ::IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
-	{
-		AfxGetMainWnd()->PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
-	}
-	*/
 
 	STACK_TICKLE(stack, L"PreKick (post isupdateable)");
 	// Kick the LoadData in every view
@@ -1849,6 +1835,10 @@ bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 
 bool CAgilityBookDoc::OnCloseDocument()
 {
+	CMainFrame* pFrame = wxDynamicCast(wxGetApp().GetTopWindow(), CMainFrame);
+	if (!pFrame->CanClose())
+		return false;
+
 	ARBDogPtr pDog = GetCurrentDog();
 	if (pDog)
 		wxConfig::Get()->Write(CFG_SETTINGS_LASTDOG, pDog->GetCallName().c_str());
@@ -2267,24 +2257,6 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 		}
 		CDlgOptions options(this, wxGetApp().GetTopWindow(), nPage);
 		options.ShowModal();
-	}
-	break;
-
-	case wxID_ABOUT:
-	{
-		CDlgAbout dlg(this, wxGetApp().GetTopWindow());
-		dlg.ShowModal();
-	}
-	break;
-
-	case ID_HELP_UPDATE:
-	{
-		bool close = false;
-		wxGetApp().UpdateConfiguration(this, close);
-		if (close)
-		{
-			wxGetApp().GetTopWindow()->Close(true);
-		}
 	}
 	break;
 	}

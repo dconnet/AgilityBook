@@ -33,6 +33,7 @@
 
 #include "AgilityBook.h"
 #include "ImageHelper.h"
+#include "MainFrm.h"
 #include "VersionNumber.h"
 
 #include "ARBCommon/StringUtil.h"
@@ -42,14 +43,16 @@
 #endif
 
 
-CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
+CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, CMainFrame* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
+	, m_pFrame(pParent)
 	, m_mailto()
 {
+	wxWindow* parent = pParent;
 	if (!pParent)
-		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDD_ABOUTBOX"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
+		parent = wxGetApp().GetTopWindow();
+	Create(parent, wxID_ANY, _("IDD_ABOUTBOX"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	std::wstring str = fmt::format(L"{}.{}.{}", ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT);
 	auto subject = _("LinkHelpUrlSubject");
@@ -203,11 +206,11 @@ void CDlgAbout::OnHelpEmail(wxHyperlinkEvent& evt)
 
 void CDlgAbout::OnCheckForUpdates(wxCommandEvent& evt)
 {
-	bool close = false;
-	wxGetApp().UpdateConfiguration(m_pDoc, close);
-	if (close)
+	bool downloadStarted = false;
+	m_pFrame->UpdateConfiguration(m_pDoc, downloadStarted);
+	if (downloadStarted)
 	{
 		EndModal(wxID_OK);
-		wxGetApp().GetTopWindow()->Close(true);
+		// App will be close by downloader
 	}
 }
