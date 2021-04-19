@@ -1770,14 +1770,14 @@ void CDlgRunPanelScore::SetReadOnlyFlag(CTextCtrl* ctrl, bool bReadOnly)
 
 void CDlgRunPanelScore::FixScoreLayout()
 {
-	// If not set, we're in the constructor still and that will do the layout.
-	auto parent = GetParent();
-	if (!parent || !parent->GetSizer())
-		return;
 	Layout();
 	GetSizer()->Fit(this);
-	parent->Layout();
-	parent->GetSizer()->Fit(parent);
+	auto parent = GetParent();
+	if (parent && parent->GetSizer())
+	{
+		parent->Layout();
+		parent->GetSizer()->Fit(parent);
+	}
 }
 
 
@@ -1830,14 +1830,16 @@ void CDlgRunPanelScore::UpdateControls(bool bOnEventChange)
 	if (!GetScoring(&pScoring))
 	{
 		m_Run->GetScoring().SetType(ARBScoringType::Unknown, false);
-		FixScoreLayout();
+		if (bOnEventChange)
+			FixScoreLayout();
 		return;
 	}
 
 	ARBConfigEventPtr pEvent;
 	if (!GetEvent(&pEvent))
 	{
-		FixScoreLayout();
+		if (bOnEventChange)
+			FixScoreLayout();
 		return;
 	}
 
@@ -2081,7 +2083,8 @@ void CDlgRunPanelScore::UpdateControls(bool bOnEventChange)
 		SetYPS();
 		SetTotalFaults();
 	}
-	FixScoreLayout();
+	if (bOnEventChange)
+		FixScoreLayout();
 }
 
 
