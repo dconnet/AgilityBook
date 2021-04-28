@@ -119,7 +119,7 @@ bool GetVersionsFilename(wxString const& filename, wxString& fullpath)
 	}
 	else
 	{
-// #pragma PRAGMA_TODO(Remove this)
+		// #pragma PRAGMA_TODO(Remove this)
 		// fullpath = L"d:\\dcon\\www\\agilityrecordbook\\version2.xml";
 		// bUseLocal = true;
 	}
@@ -650,7 +650,6 @@ void CUpdateInfo::CheckConfig(CAgilityBookDoc* pDoc, bool bVerbose)
 			wxString url;
 			bool bUseLocal = GetVersionsFilename(m_ConfigFileName, url);
 			std::string strConfig;
-			std::wstring errMsg;
 
 			if (bUseLocal)
 			{
@@ -757,11 +756,11 @@ bool CUpdateInfo::DownloadFile(wxString const& filename)
 	if (m_hash.empty())
 		return false;
 
-	fmt::wmemory_buffer errMsg;
 	wxFileOutputStream* output = new wxFileOutputStream(filename);
 	if (!output->IsOk())
 	{
 		delete output;
+		fmt::wmemory_buffer errMsg;
 		fmt::format_to(errMsg, _("IDS_CANNOT_OPEN").wx_str(), filename.wx_str());
 		wxMessageBox(fmt::to_string(errMsg));
 		return false;
@@ -917,6 +916,7 @@ bool CUpdateInfo::DownloadFile(wxString const& filename)
 				}
 			}))
 	{
+		progress->Dismiss();
 		delete output;
 		return false;
 	}
