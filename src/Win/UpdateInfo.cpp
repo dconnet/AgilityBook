@@ -119,9 +119,9 @@ bool GetVersionsFilename(wxString const& filename, wxString& fullpath)
 	}
 	else
 	{
-#pragma PRAGMA_TODO(Remove this)
-		fullpath = L"d:\\dcon\\www\\agilityrecordbook\\version2.xml";
-		bUseLocal = true;
+// #pragma PRAGMA_TODO(Remove this)
+		// fullpath = L"d:\\dcon\\www\\agilityrecordbook\\version2.xml";
+		// bUseLocal = true;
 	}
 #endif
 	if (!bUseLocal)
