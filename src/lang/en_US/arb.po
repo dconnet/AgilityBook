@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-21 14:08-0700\n"
-"PO-Revision-Date: 2021-04-21 14:08-0700\n"
+"POT-Creation-Date: 2021-04-29 12:51-0700\n"
+"PO-Revision-Date: 2021-04-29 12:52-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: _;arbT\n"
 "X-Poedit-Basepath: ../..\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.4.3\n"
 "X-Poedit-SearchPath-0: Libraries/ARB\n"
 "X-Poedit-SearchPath-1: Libraries/ARBCommon\n"
 "X-Poedit-SearchPath-2: Libraries/LibARBWin\n"
@@ -508,17 +508,13 @@ msgstr "Language Selection"
 msgid "Select a language to use."
 msgstr "Select a language to use."
 
-#: Libraries/LibARBWin/ReadHttp.cpp:136
-msgid "Invalid URL"
-msgstr "Invalid URL"
+#: Libraries/LibARBWin/ReadHttp.cpp:141
+msgid "Please enter credentials for accessing:"
+msgstr "Please enter credentials for accessing:"
 
-#: Libraries/LibARBWin/ReadHttp.cpp:145
-msgid "Error ({0}) reading {1}"
-msgstr "Error ({0}) reading {1}"
-
-#: Libraries/LibARBWin/ReadHttp.cpp:151
-msgid "File not found: {}"
-msgstr "File not found: {}"
+#: Libraries/LibARBWin/ReadHttp.cpp:142
+msgid "Credentials"
+msgstr "Credentials"
 
 #: Libraries/LibARBWin/ReportListHeader.cpp:483
 msgid "Restore"
@@ -1021,7 +1017,7 @@ msgstr "Print Preview"
 msgid "Agility Record Book file"
 msgstr "Agility Record Book file"
 
-#: Win/AgilityBookCalendarListView.cpp:467 Win/AgilityBookDoc.cpp:1907
+#: Win/AgilityBookCalendarListView.cpp:467 Win/AgilityBookDoc.cpp:1896
 #: Win/AgilityBookRunsView.cpp:1177 Win/AgilityBookTrainingView.cpp:300
 #: Win/AgilityBookTreeView.cpp:182
 msgid "IDS_CANNOT_FIND"
@@ -1072,7 +1068,7 @@ msgstr "Opens"
 msgid "IDS_COL_CLOSES"
 msgstr "Closes"
 
-#: Win/AgilityBookCalendarView.cpp:647 Win/AgilityBookDoc.cpp:2239
+#: Win/AgilityBookCalendarView.cpp:647 Win/AgilityBookDoc.cpp:2228
 #: Win/DlgAssignColumns.cpp:332 Win/DlgAssignColumns.cpp:342
 #: Win/DlgAssignColumns.cpp:377 Win/DlgAssignColumns.cpp:522
 #: Win/DlgListCtrl.cpp:451
@@ -1271,85 +1267,69 @@ msgid "IDS_NONFATAL_MSGS"
 msgstr ""
 "Warning: Some non-fatal messages were generated while loading the file:"
 
-#: Win/AgilityBookDoc.cpp:1789
+#: Win/AgilityBookDoc.cpp:1788
 msgid "IDS_WARN_FILE_UPDATED"
 msgstr ""
 "Warning: This file has changed since it was opened. Are you sure you want to "
 "overwrite any changes?"
 
-#: Win/AgilityBookDoc.cpp:1823 Win/UpdateInfo.cpp:530
+#: Win/AgilityBookDoc.cpp:1822 Win/UpdateInfo.cpp:764
 msgid "IDS_CANNOT_OPEN"
 msgstr "Unable to open file '{}' for writing."
 
-#: Win/AgilityBookDoc.cpp:1829
+#: Win/AgilityBookDoc.cpp:1828
 msgid "IDS_INTERNAL_ERROR"
 msgstr "Internal error: File not saved."
 
-#: Win/AgilityBookDoc.cpp:1844
-msgid "A file download is in progress. Closing the window will cancel it."
-msgstr "A file download is in progress. Closing the window will cancel it."
-
-#: Win/AgilityBookDoc.cpp:1845
-msgid "Confirm"
-msgstr "Confirm"
-
-#: Win/AgilityBookDoc.cpp:1847
-msgid "Cancel and close"
-msgstr "Cancel and close"
-
-#: Win/AgilityBookDoc.cpp:1847
-msgid "Don't close"
-msgstr "Don't close"
-
-#: Win/AgilityBookDoc.cpp:1868
+#: Win/AgilityBookDoc.cpp:1857
 msgid "IDS_SEARCH_NOTES"
 msgstr "Search Notes"
 
-#: Win/AgilityBookDoc.cpp:2037
+#: Win/AgilityBookDoc.cpp:2026
 msgid "IDS_NO_LINKED_FILES"
 msgstr "No linked files found."
 
-#: Win/AgilityBookDoc.cpp:2293
+#: Win/AgilityBookDoc.cpp:2282
 msgid "IDS_FILEPROP_NAME"
 msgstr "File name: {}"
 
-#: Win/AgilityBookDoc.cpp:2296
+#: Win/AgilityBookDoc.cpp:2285
 msgid "IDS_FILEPROP_NAME_READONLY"
 msgstr " [readonly]"
 
-#: Win/AgilityBookDoc.cpp:2299 Win/AgilityBookDoc.cpp:2322
+#: Win/AgilityBookDoc.cpp:2288 Win/AgilityBookDoc.cpp:2311
 msgid "IDS_FILEPROP_NAME_MODIFIED"
 msgstr " [changes pending]"
 
-#: Win/AgilityBookDoc.cpp:2303
+#: Win/AgilityBookDoc.cpp:2292
 msgid "IDS_FILEPROP_SIZE"
 msgstr "File size: {} bytes"
 
-#: Win/AgilityBookDoc.cpp:2311
+#: Win/AgilityBookDoc.cpp:2300
 msgid "IDS_FILEPROP_CREATED"
 msgstr "Created: {}"
 
-#: Win/AgilityBookDoc.cpp:2315
+#: Win/AgilityBookDoc.cpp:2304
 msgid "IDS_FILEPROP_MODIFIED"
 msgstr "Modified: {}"
 
-#: Win/AgilityBookDoc.cpp:2333
+#: Win/AgilityBookDoc.cpp:2322
 msgid "IDS_FILEPROP_CONFIGURATION"
 msgstr "Configuration: {}"
 
-#: Win/AgilityBookDoc.cpp:2339
+#: Win/AgilityBookDoc.cpp:2328
 msgid "IDS_FILEPROP_CONFIGURATION_CURRENT"
 msgstr "Configuration: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2347
+#: Win/AgilityBookDoc.cpp:2336
 msgid "IDS_FILEPROP_VERSION"
 msgstr "Document version: {}"
 
-#: Win/AgilityBookDoc.cpp:2353
+#: Win/AgilityBookDoc.cpp:2342
 msgid "IDS_FILEPROP_VERSION_CURRENT"
 msgstr "Document version: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2365
+#: Win/AgilityBookDoc.cpp:2354
 msgid "IDS_FILEPROP_FILEWRITTEN"
 msgstr ""
 "File written on:\n"
@@ -1358,7 +1338,7 @@ msgstr ""
 "Local time: {2}\n"
 "ARB: {3}"
 
-#: Win/AgilityBookDoc.cpp:2373
+#: Win/AgilityBookDoc.cpp:2362
 msgid "IDS_FILE_PROPERTIES"
 msgstr "File Properties"
 
@@ -2228,7 +2208,7 @@ msgstr ""
 "\n"
 "Please send any bug reports or suggestions to:"
 
-#: Win/DlgAbout.cpp:84 Win/DlgMessageBox.cpp:54 Win/MainFrm.cpp:141
+#: Win/DlgAbout.cpp:84 Win/DlgMessageBox.cpp:54 Win/MainFrm.cpp:111
 msgid "Agility Record Book"
 msgstr "Agility Record Book"
 
@@ -2257,7 +2237,7 @@ msgid "LinkArbDownloadText"
 msgstr "Agility Record Book Downloads"
 
 #: Win/DlgAbout.cpp:132 Win/DlgAbout.cpp:136 Win/DlgAbout.cpp:137
-#: Win/UpdateInfo.cpp:224
+#: Win/UpdateInfo.cpp:209
 msgid "LinkArbDownloadUrl"
 msgstr "http://www.agilityrecordbook.com/download.php"
 
@@ -6457,19 +6437,19 @@ msgstr ""
 "Are you sure you want to continue?"
 
 # This is 11 spaces
-#: Win/MainFrm.cpp:176
+#: Win/MainFrm.cpp:145
 msgid "ID_INDICATOR_DOG"
 msgstr "          "
 
-#: Win/MainFrm.cpp:179
+#: Win/MainFrm.cpp:148
 msgid "ID_INDICATOR_STATUS"
 msgstr "status"
 
-#: Win/MainFrm.cpp:182 Win/MainFrm.cpp:212
+#: Win/MainFrm.cpp:151 Win/MainFrm.cpp:186
 msgid "ID_INDICATOR_FILTERED"
 msgstr "Filtered"
 
-#: Win/MainFrm.cpp:379
+#: Win/MainFrm.cpp:353
 msgid "Canceling file download..."
 msgstr "Canceling file download..."
 
@@ -6546,60 +6526,76 @@ msgstr "Name/Breed/Notes"
 msgid "IDS_TRAINING"
 msgstr "Training Log"
 
-#: Win/UpdateInfo.cpp:138
+#: Win/UpdateInfo.cpp:148
 msgid "IDS_UPDATED_CONFIG"
 msgstr ""
 "The configuration has been updated. Would you like to merge the new one with "
 "your data?"
 
-#: Win/UpdateInfo.cpp:265 Win/UpdateInfo.cpp:404
+#: Win/UpdateInfo.cpp:266
+msgid "A file download is in progress. Closing the window will cancel it."
+msgstr "A file download is in progress. Closing the window will cancel it."
+
+#: Win/UpdateInfo.cpp:267
+msgid "Confirm"
+msgstr "Confirm"
+
+#: Win/UpdateInfo.cpp:269
+msgid "Cancel and close"
+msgstr "Cancel and close"
+
+#: Win/UpdateInfo.cpp:269
+msgid "Don't close"
+msgstr "Don't close"
+
+#: Win/UpdateInfo.cpp:316
+msgid "IDS_INSTALL_BUSY"
+msgstr ""
+"An update is available but cannot be installed at this time. Make sure the "
+"system is not updating or waiting to be rebooted."
+
+#: Win/UpdateInfo.cpp:340 Win/UpdateInfo.cpp:515
 msgid "IDS_UPDATE_UNKNOWN"
 msgstr "Unable to determine current released version."
 
-#: Win/UpdateInfo.cpp:327 Win/UpdateInfo.cpp:774
+#: Win/UpdateInfo.cpp:439 Win/UpdateInfo.cpp:716
 msgid "IDS_LOAD_FAILED"
 msgstr "Failed to load '{}'."
 
-#: Win/UpdateInfo.cpp:493
+#: Win/UpdateInfo.cpp:589
 msgid "IDS_VERSION_AVAILABLE"
 msgstr "Version {} is available. Would you like to download it?"
 
-#: Win/UpdateInfo.cpp:535
+#: Win/UpdateInfo.cpp:702
+msgid "IDS_UPDATE_CURRENT"
+msgstr "No updates are available at this time."
+
+#: Win/UpdateInfo.cpp:772
 msgid "IDS_DOWNLOADING"
 msgstr "Downloading..."
 
-#: Win/UpdateInfo.cpp:558
-msgid "IDS_VALIDATING"
-msgstr "Validating..."
-
-#: Win/UpdateInfo.cpp:566 Win/UpdateInfo.cpp:590 Win/UpdateInfo.cpp:598
-#: Win/UpdateInfo.cpp:606
-msgid "IDS_ERROR_DOWNLOAD"
-msgstr "ERROR: The downloaded file is corrupt."
-
-#: Win/UpdateInfo.cpp:582
+#: Win/UpdateInfo.cpp:795
 msgid "IDS_DOWNLOAD_AND_RESTART"
 msgstr ""
 "{} is now downloaded. Agility Record Book will now close so you can install "
 "it."
 
-#: Win/UpdateInfo.cpp:614
+#: Win/UpdateInfo.cpp:797
+msgid "IDS_VALIDATING"
+msgstr "Validating..."
+
+#: Win/UpdateInfo.cpp:802 Win/UpdateInfo.cpp:812 Win/UpdateInfo.cpp:820
+#: Win/UpdateInfo.cpp:828 Win/UpdateInfo.cpp:900
+msgid "IDS_ERROR_DOWNLOAD"
+msgstr "ERROR: The downloaded file is corrupt."
+
+#: Win/UpdateInfo.cpp:836
 msgid "IDS_ERROR_UNEXPECTED"
 msgstr "ERROR: Unexpected file format, expected MSI file."
 
-#: Win/UpdateInfo.cpp:648 Win/UpdateInfo.cpp:667
+#: Win/UpdateInfo.cpp:870 Win/UpdateInfo.cpp:891
 msgid "IDS_ERROR_AUTOUPDATE"
 msgstr "ERROR: Internal error during update process. Procedure was cancelled."
-
-#: Win/UpdateInfo.cpp:810
-msgid "IDS_UPDATE_CURRENT"
-msgstr "No updates are available at this time."
-
-#: Win/UpdateInfo.cpp:851
-msgid "IDS_INSTALL_BUSY"
-msgstr ""
-"An update is available but cannot be installed at this time. Make sure the "
-"system is not updating or waiting to be rebooted."
 
 # WizardStart
 #: Win/Wizard.cpp:50 Win/WizardStart.cpp:510
@@ -7280,3 +7276,12 @@ msgid "IDS_FILEEXT_FILTER_SETTINGS"
 msgstr ""
 "Agility Record Book settings (*.arbsettings)|*.arbsettings|All Files (*.*)|*."
 "*||"
+
+#~ msgid "Invalid URL"
+#~ msgstr "Invalid URL"
+
+#~ msgid "Error ({0}) reading {1}"
+#~ msgstr "Error ({0}) reading {1}"
+
+#~ msgid "File not found: {}"
+#~ msgstr "File not found: {}"
