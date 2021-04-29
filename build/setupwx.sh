@@ -70,7 +70,9 @@ CONFIG_PARAMS=" --disable-mediactrl --disable-shared --enable-unicode"
 case `uname` in
 Darwin*)
 	# There are known bugs with the native wxDVC under Cocoa, use generic
-	CONFIG_PARAMS+=" --with-osx"$MAC_CONFIG_PARAMS
+	# Disable curl on Mac - use NSURLSession (since I'm targetting a lower OS,
+	# I get a warning that curl is built for a newer OS - so just avoid it).
+	CONFIG_PARAMS+=" --without-libcurl --with-osx"$MAC_CONFIG_PARAMS
 	;;
 Linux)
 	CONFIG_PARAMS+=" --with-gtk=3"
