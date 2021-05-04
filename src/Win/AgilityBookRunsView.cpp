@@ -1356,15 +1356,13 @@ bool CAgilityBookRunsView::GetMessage(std::wstring& msg) const
 bool CAgilityBookRunsView::GetMessage2(std::wstring& msg) const
 {
 	if (GetDocument()->GetCurrentDog())
-	{
 		msg = GetDocument()->GetCurrentDog()->GetCallName();
-		return true;
-	}
 	else
-	{
-		msg.clear();
-		return false;
-	}
+		msg = StringUtil::stringW(_("IDS_INDICATOR_BLANK"));
+	// If there's no dog, still return true. Or we won't blank an existing name.
+	// We only need to worry about this here and the Runs view since this is the
+	// only place we can delete a dog.
+	return true;
 }
 
 

@@ -1,9 +1,11 @@
-4/14/2021: v3.5.3.<dev>
+5/4/2021: v3.5.3.<dev>
 - New features / Enhancements:
   - Remove inkedit support from edit controls.
     inked.dll is doing something funky. I give up.
   - Only show living dogs in trial creation dialog (from calendar).
   - Updated to wxWidgets 3.1.5
+- Bug fixes:
+  - Properly update views when a dog is deleted.
 
 11/12/2020: v3.5.2.115
 - Notes:

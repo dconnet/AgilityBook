@@ -158,6 +158,14 @@ public:
 	{
 		return m_Ctrl->GetItemParent(item);
 	}
+	wxTreeItemId GetPrevSibling(wxTreeItemId item) const
+	{
+		return m_Ctrl->GetPrevSibling(item);
+	}
+	wxTreeItemId GetNextSibling(wxTreeItemId item) const
+	{
+		return m_Ctrl->GetNextSibling(item);
+	}
 
 	CIconList const& GetImageList() const
 	{

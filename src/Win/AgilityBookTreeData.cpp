@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-05-04 Deleting a dog did not properly update views.
  * 2018-12-16 Convert to fmt.
  * 2018-09-15 Refactored how tree/list handle common actions.
  * 2015-11-27 Use subname for event, if set.
@@ -208,6 +209,20 @@ bool CAgilityBookTreeDataDog::DoDelete(bool bSilent)
 		CAgilityBookDoc* pDoc = m_pTree->GetDocument();
 		if (GetId().IsOk() && pDoc->Book().GetDogs().DeleteDog(m_pDog))
 		{
+			// When we delete a dog, we need to set the next current dog because
+			// we suppress the normal tree selection change for propagating.
+			ARBDogPtr curDog;
+			auto hNext = m_pTree->GetNextSibling(GetId());
+			if (!hNext)
+				hNext = m_pTree->GetPrevSibling(GetId());
+			if (hNext)
+			{
+				auto nextItem = m_pTree->GetTreeItem(hNext);
+				if (nextItem)
+					curDog = nextItem->GetDog();
+			}
+			pDoc->SetCurrentDog(curDog);
+
 			CAgilityBookOptions::CleanLastItems(m_pDog->GetCallName());
 			// Delete() will cause this object to be deleted.
 			m_pTree->Delete(GetId());
