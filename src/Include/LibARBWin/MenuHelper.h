@@ -267,7 +267,8 @@ private:
 		size_t& index,
 		size_t level,
 		wxMenu* mruMenu,
-		bool& mruAdded);
+		bool& mruAdded,
+		bool isPopup);
 
 	void DoSubMenu(wxMenu const* parent, MenuHandle const& handle);
 

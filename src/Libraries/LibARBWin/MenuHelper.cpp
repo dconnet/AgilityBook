@@ -38,8 +38,10 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+namespace
+{
 // See wxMenuItem::SetItemLabel() for set of special keys
-static std::unordered_map<int, KeyCodeMapping> const& GetKeyCodes()
+std::unordered_map<int, KeyCodeMapping> const& GetKeyCodes()
 {
 	static std::unordered_map<int, KeyCodeMapping> s_codeMapping = {
 		{WXK_F1, {WXK_F1, L"F1", true}},
@@ -169,7 +171,7 @@ static std::unordered_map<int, KeyCodeMapping> const& GetKeyCodes()
 	return s_codeMapping;
 };
 
-static int SpecialToCode(wxString const& special)
+int SpecialToCode(wxString const& special)
 {
 	if (special.empty())
 		return 0;
@@ -185,7 +187,7 @@ static int SpecialToCode(wxString const& special)
 	return 0;
 }
 
-static wxString CodeToSpecial(int code, bool bNonMenu)
+wxString CodeToSpecial(int code, bool bNonMenu)
 {
 	auto codes = GetKeyCodes();
 	auto key = codes.find(code);
@@ -203,6 +205,32 @@ static wxString CodeToSpecial(int code, bool bNonMenu)
 		special = wxString::Format(L"%d", code);
 	return special;
 }
+
+// On Windows, we can never see the mnemonics in a popup menu (because you have
+// to invoke it with the ALT key to start). So rather than have some unknown
+// value, remove them. In debug, we assert because we combine some of the main
+// menu items, so trying to make them unique is not possible since now they
+// would be different in different menus. That's just wrong. When stripped,
+// Windows (don't know about other platforms) just uses the first letter as
+// the mnemonic shortcut.
+wxString StripMnemonics(wxString const& str, bool isPopup)
+{
+	if (!isPopup)
+		return str;
+
+	wxString s(str);
+	size_t found = 0;
+	while ((size_t)-1 != (found = s.find(L"&", found)))
+	{
+		// If there's a "&&", skip it.
+		if (found + 1 < s.length() && s[found + 1] == '&')
+			found += 2;
+		else
+			s.erase(found, 1);
+	}
+	return s;
+}
+} // namespace
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -305,7 +333,7 @@ void CMenuHelper::LoadAccelerators()
 		assert(iter->key);
 		assert(iter->id);
 		// Check that we know how to translate wxKeyCode to string
-		//assert(!GetAccelString(m_accelData, iter->id).empty());
+		// assert(!GetAccelString(m_accelData, iter->id).empty());
 		// Actually, don't. Otherwise I can't support things like BrowserBack.
 
 		// Make sure id string is unique
@@ -451,7 +479,7 @@ void CMenuHelper::CreateMenu(wxFrame* pFrame, wxMenu* mruMenu)
 			assert(m_menuItems[index].menu);
 			size_t idxMenu = index;
 			MenuHandle handle(static_cast<int>(m_MenuBar->GetMenuCount()));
-			Menu(pFrame, 0, handle, index, 1, mruMenu, mruAdded);
+			Menu(pFrame, 0, handle, index, 1, mruMenu, mruAdded, false);
 			wxString name;
 			if (m_doTranslation)
 			{
@@ -541,7 +569,7 @@ wxMenu* CMenuHelper::CreatePopupMenu(wxWindow* pWindow, int menuId)
 		}
 		assert(m_menuItems[index].menu);
 		--index; // Because Menu() assumes we're on the parent item and increments index before processing.
-		Menu(pWindow, menuId, handle, index, 0, nullptr, mruAdded);
+		Menu(pWindow, menuId, handle, index, 0, nullptr, mruAdded, true);
 		bAdded = true;
 	}
 	assert(bAdded);
@@ -595,7 +623,7 @@ bool CMenuHelper::VerifyMenuShortcuts(wxMenu* menu, int level)
 		if (item->IsSeparator())
 			continue;
 		wxString name = item->GetItemLabel();
-		//wxLogDebug(L"%*s %s", level + 1, L" ", name);
+		// wxLogDebug(L"%*s %s", level + 1, L" ", name);
 		// Strip accelerator
 		auto idx = name.Find('\t');
 		if (wxNOT_FOUND != idx)
@@ -748,7 +776,8 @@ void CMenuHelper::Menu(
 	size_t& index,
 	size_t level,
 	wxMenu* mruMenu,
-	bool& mruAdded)
+	bool& mruAdded,
+	bool isPopup)
 {
 	for (++index; index < m_menuItems.size() && level == m_menuItems[index].menuLevel; ++index)
 	{
@@ -768,7 +797,7 @@ void CMenuHelper::Menu(
 				MenuHandle subhandle(mruMenu, static_cast<int>(handle.pMenu->GetMenuItemCount()));
 				if (m_doTranslation)
 				{
-					name = wxGetTranslation(m_menuItems[index].menu);
+					name = StripMnemonics(wxGetTranslation(m_menuItems[index].menu), isPopup);
 					subhandle.item = m_menuItems[index].menu;
 				}
 				else
@@ -790,11 +819,11 @@ void CMenuHelper::Menu(
 			{
 				size_t idxMenu = index;
 				MenuHandle subhandle(static_cast<int>(handle.pMenu->GetMenuItemCount()));
-				Menu(pWindow, menuId, subhandle, index, level + 1, mruMenu, mruAdded);
+				Menu(pWindow, menuId, subhandle, index, level + 1, mruMenu, mruAdded, isPopup);
 				wxString name;
 				if (m_doTranslation)
 				{
-					name = wxGetTranslation(m_menuItems[idxMenu].menu);
+					name = StripMnemonics(wxGetTranslation(m_menuItems[idxMenu].menu), isPopup);
 					subhandle.item = m_menuItems[idxMenu].menu;
 				}
 				else
@@ -819,7 +848,7 @@ void CMenuHelper::Menu(
 				wxString help;
 				if (m_doTranslation)
 				{
-					name = wxGetTranslation(m_menuItems[index].menu);
+					name = StripMnemonics(wxGetTranslation(m_menuItems[index].menu), isPopup);
 					help = wxGetTranslation(m_menuItems[index].help);
 					handle.items.push_back(
 						TranslationData(m_menuItems[index].id, m_menuItems[index].menu, m_menuItems[index].help));
