@@ -30,18 +30,23 @@ class ARBWIN_API CStatusBarHelper
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CStatusBarHelper)
 public:
-	CStatusBarHelper(size_t nColumns);
+	CStatusBarHelper(wxFrame* frame, size_t nColumns);
 
-	wxStatusBar* Initialize(wxFrame* frame);
+	wxStatusBar* Initialize();
 	size_t size() const
 	{
 		return m_Widths.size();
 	}
 
-	bool Update(wxFrame* frame, int nCol, wxString const& text);
-	bool Update(wxFrame* frame, std::vector<wxString> const& text);
+	bool Update(int nCol, wxString const& text);
+	bool Update(std::vector<wxString> const& text);
+
+	// Helpers for context menu and double click handlers
+	int GetContextMenuFieldId(wxContextMenuEvent const& evt, wxStatusBar*& statusbar, wxPoint& point) const;
+	int GetDoubleClickFieldId(wxMouseEvent const& evt) const;
 
 private:
+	wxFrame* m_frame;
 	std::vector<int> m_Widths;
 
 	void SetStatusBarWidths(wxStatusBar* statusbar, int nColumn);

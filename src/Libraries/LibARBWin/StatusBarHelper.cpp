@@ -28,18 +28,19 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-CStatusBarHelper::CStatusBarHelper(size_t nColumns)
-	: m_Widths(nColumns, -1)
+CStatusBarHelper::CStatusBarHelper(wxFrame* frame, size_t nColumns)
+	: m_frame(frame)
+	, m_Widths(nColumns, -1)
 {
 }
 
 
-wxStatusBar* CStatusBarHelper::Initialize(wxFrame* frame)
+wxStatusBar* CStatusBarHelper::Initialize()
 {
-	if (!frame || m_Widths.size() == 0)
+	if (!m_frame || m_Widths.size() == 0)
 		return false;
 
-	wxStatusBar* statusbar = frame->CreateStatusBar(static_cast<int>(m_Widths.size()));
+	wxStatusBar* statusbar = m_frame->CreateStatusBar(static_cast<int>(m_Widths.size()));
 	if (!statusbar)
 		return nullptr;
 
@@ -62,18 +63,18 @@ wxStatusBar* CStatusBarHelper::Initialize(wxFrame* frame)
 }
 
 
-bool CStatusBarHelper::Update(wxFrame* frame, int nCol, wxString const& text)
+bool CStatusBarHelper::Update(int nCol, wxString const& text)
 {
-	if (!frame || m_Widths.size() == 0)
+	if (!m_frame || m_Widths.size() == 0)
 		return false;
 
-	wxStatusBar* statusbar = frame->GetStatusBar();
+	wxStatusBar* statusbar = m_frame->GetStatusBar();
 	if (!statusbar)
 		return false;
 
 	assert(nCol > 0 && nCol < static_cast<int>(m_Widths.size()));
 
-	frame->SetStatusText(text, nCol);
+	m_frame->SetStatusText(text, nCol);
 
 	wxClientDC dc(statusbar);
 	dc.SetFont(statusbar->GetFont());
@@ -85,19 +86,19 @@ bool CStatusBarHelper::Update(wxFrame* frame, int nCol, wxString const& text)
 }
 
 
-bool CStatusBarHelper::Update(wxFrame* frame, std::vector<wxString> const& text)
+bool CStatusBarHelper::Update(std::vector<wxString> const& text)
 {
-	if (!frame || m_Widths.size() == 0)
+	if (!m_frame || m_Widths.size() == 0)
 		return false;
 
-	wxStatusBar* statusbar = frame->GetStatusBar();
+	wxStatusBar* statusbar = m_frame->GetStatusBar();
 	if (!statusbar)
 		return false;
 
 	assert(text.size() + 1 == m_Widths.size());
 
 	for (int i = 0; i < static_cast<int>(text.size()); ++i)
-		frame->SetStatusText(text[i], i + 1);
+		m_frame->SetStatusText(text[i], i + 1);
 
 	wxClientDC dc(statusbar);
 	dc.SetFont(statusbar->GetFont());
@@ -109,6 +110,55 @@ bool CStatusBarHelper::Update(wxFrame* frame, std::vector<wxString> const& text)
 	SetStatusBarWidths(statusbar, -1);
 
 	return true;
+}
+
+
+int CStatusBarHelper::GetContextMenuFieldId(wxContextMenuEvent const& evt, wxStatusBar*& statusbar, wxPoint& point)
+	const
+{
+	statusbar = m_frame->GetStatusBar();
+	if (!statusbar)
+		return -1;
+	wxRect rect;
+	point = evt.GetPosition();
+	if (wxDefaultPosition == point)
+	{
+		rect = statusbar->GetScreenRect();
+		point = ::wxGetMousePosition();
+		if (!rect.Contains(point))
+			return -1;
+	}
+	point = statusbar->ScreenToClient(point);
+	for (int id = 1; id < static_cast<int>(m_Widths.size()); ++id)
+	{
+		if (statusbar->GetFieldRect(id, rect) && rect.Contains(point))
+			return id;
+	}
+	return -1;
+}
+
+
+int CStatusBarHelper::GetDoubleClickFieldId(wxMouseEvent const& evt) const
+{
+	wxStatusBar* statusbar = m_frame->GetStatusBar();
+	if (!statusbar)
+		return -1;
+	wxRect rect;
+	wxPoint point = evt.GetPosition();
+	if (wxDefaultPosition == point)
+	{
+		rect = statusbar->GetScreenRect();
+		point = ::wxGetMousePosition();
+		if (!rect.Contains(point))
+			return -1;
+		point = statusbar->ScreenToClient(point);
+	}
+	for (int id = 1; id < static_cast<int>(m_Widths.size()); ++id)
+	{
+		if (statusbar->GetFieldRect(id, rect) && rect.Contains(point))
+			return id;
+	}
+	return -1;
 }
 
 

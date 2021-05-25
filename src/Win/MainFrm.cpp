@@ -113,7 +113,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 		wxDefaultSize,
 		wxDEFAULT_FRAME_STYLE)
 	, m_manager(manager)
-	, m_statusBar(NUM_STATUS_FIELDS)
+	, m_statusBar(this, NUM_STATUS_FIELDS)
 	, m_UpdateInfo(this)
 {
 	SetIcons(CImageManager::Get()->GetIconBundle(ImageMgrAppBundle));
@@ -127,7 +127,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	manager->FileHistoryAddFilesToMenu();
 	wxGetApp().GetMenus().CreateMenu(this, menuRecent);
 
-	wxStatusBar* statusbar = m_statusBar.Initialize(this);
+	wxStatusBar* statusbar = m_statusBar.Initialize();
 	if (statusbar)
 	{
 		statusbar->Bind(wxEVT_CONTEXT_MENU, &CMainFrame::OnStatusBarContextMenu, this);
@@ -150,7 +150,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 				str = _("ID_INDICATOR_FILTERED");
 				break;
 			}
-			m_statusBar.Update(this, i, str);
+			m_statusBar.Update(i, str);
 		}
 	}
 #if wxUSE_DRAG_AND_DROP
@@ -214,7 +214,7 @@ void CMainFrame::SetMessage(std::wstring const& msg, int index, bool bResize)
 		return;
 	wxString str = StringUtil::stringWX(msg);
 	if (bResize)
-		m_statusBar.Update(this, index, str);
+		m_statusBar.Update(index, str);
 	else
 		SetStatusText(str, index);
 }
@@ -222,87 +222,41 @@ void CMainFrame::SetMessage(std::wstring const& msg, int index, bool bResize)
 
 void CMainFrame::OnStatusBarContextMenu(wxContextMenuEvent& evt)
 {
-	bool bSkip = true;
-	wxStatusBar* statusbar = GetStatusBar();
-	if (statusbar)
+	CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
+	assert(pDoc);
+	wxStatusBar* statusbar = nullptr;
+	wxPoint point;
+	auto id = m_statusBar.GetContextMenuFieldId(evt, statusbar, point);
+	switch (id)
 	{
-		wxRect rect;
-		wxPoint point = evt.GetPosition();
-		if (wxDefaultPosition == point)
-		{
-			rect = statusbar->GetScreenRect();
-			point = ::wxGetMousePosition();
-			if (!rect.Contains(point))
-			{
-				point.x = rect.GetLeft() + rect.GetWidth() / 3;
-				point.y = rect.GetTop() + rect.GetHeight() / 2;
-			}
-			point = statusbar->ScreenToClient(point);
-		}
-		else
-			point = statusbar->ScreenToClient(point);
-		static const int ids[] = {STATUS_DOG, STATUS_STATUS, STATUS_FILTERED};
-		CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
-		assert(pDoc);
-		if (pDoc)
-		{
-			for (int i = 0; i < _countof(ids); ++i)
-			{
-				if (statusbar->GetFieldRect(ids[i], rect) && rect.Contains(point))
-				{
-					if (pDoc->StatusBarContextMenu(statusbar, ids[i], point))
-					{
-						bSkip = false;
-						break;
-					}
-				}
-			}
-		}
-	}
-	if (bSkip)
+	default:
 		evt.Skip();
+		break;
+	case STATUS_DOG:
+	case STATUS_STATUS:
+	case STATUS_FILTERED:
+		if (!pDoc->StatusBarContextMenu(statusbar, id, point))
+			evt.Skip();
+		break;
+	}
 }
 
 
 void CMainFrame::OnStatusBarDblClick(wxMouseEvent& evt)
 {
-	bool bSkip = true;
-	wxStatusBar* statusbar = GetStatusBar();
-	if (statusbar)
+	CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
+	assert(pDoc);
+	wxCommandEvent evtCmd(wxEVT_MENU, wxID_PREFERENCES);
+	switch (m_statusBar.GetDoubleClickFieldId(evt))
 	{
-		wxRect rect;
-		wxPoint point = evt.GetPosition();
-		if (wxDefaultPosition == point)
-		{
-			rect = statusbar->GetScreenRect();
-			point = ::wxGetMousePosition();
-			if (!rect.Contains(point))
-			{
-				point.x = rect.GetLeft() + rect.GetWidth() / 3;
-				point.y = rect.GetTop() + rect.GetHeight() / 2;
-			}
-			point = statusbar->ScreenToClient(point);
-		}
-		static const int ids[] = {STATUS_FILTERED};
-		CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
-		assert(pDoc);
-		if (pDoc)
-		{
-			for (int i = 0; i < _countof(ids); ++i)
-			{
-				if (statusbar->GetFieldRect(ids[i], rect) && rect.Contains(point))
-				{
-					wxCommandEvent evtCmd(wxEVT_MENU, wxID_PREFERENCES);
-					evtCmd.SetEventObject(this);
-					pDoc->ProcessEvent(evtCmd);
-					bSkip = false;
-					break;
-				}
-			}
-		}
-	}
-	if (bSkip)
+	default:
 		evt.Skip();
+		break;
+	case STATUS_FILTERED:
+		evtCmd.SetEventObject(this);
+		pDoc->ProcessEvent(evtCmd);
+		break;
+	}
 }
 
 
