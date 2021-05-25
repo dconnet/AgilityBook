@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-05-25 Changed initialization
  * 2019-01-27 Created
  */
 
@@ -31,7 +32,7 @@ class ARBWIN_API CStatusBarHelper
 public:
 	CStatusBarHelper(size_t nColumns);
 
-	bool Initialize(wxStatusBar* statusbar);
+	wxStatusBar* Initialize(wxFrame* frame);
 	size_t size() const
 	{
 		return m_Widths.size();

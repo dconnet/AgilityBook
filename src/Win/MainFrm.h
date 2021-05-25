@@ -68,7 +68,7 @@ private:
 	void SetMessage(std::wstring const& msg, int index, bool bResize);
 
 	wxDocManager* m_manager;
-	CStatusBarHelper m_Widths;
+	CStatusBarHelper m_statusBar;
 	CUpdateInfo m_UpdateInfo;
 
 private:

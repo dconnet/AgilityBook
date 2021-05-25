@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-05-25 Changed initialization
  * 2021-01-20 Removed sizing kludge on linux/mac
  * 2019-01-27 Created
  */
@@ -33,17 +34,14 @@ CStatusBarHelper::CStatusBarHelper(size_t nColumns)
 }
 
 
-bool CStatusBarHelper::Initialize(wxStatusBar* statusbar)
+wxStatusBar* CStatusBarHelper::Initialize(wxFrame* frame)
 {
-	if (!statusbar || m_Widths.size() == 0)
+	if (!frame || m_Widths.size() == 0)
 		return false;
 
-	if (static_cast<int>(m_Widths.size()) != statusbar->GetFieldsCount())
-	{
-		assert(0);
-		m_Widths.clear();
-		return false;
-	}
+	wxStatusBar* statusbar = frame->CreateStatusBar(static_cast<int>(m_Widths.size()));
+	if (!statusbar)
+		return nullptr;
 
 	wxClientDC dc(statusbar);
 	dc.SetFont(statusbar->GetFont());
@@ -60,7 +58,7 @@ bool CStatusBarHelper::Initialize(wxStatusBar* statusbar)
 	statusbar->SetStatusStyles(static_cast<int>(m_Widths.size()), style.data());
 	SetStatusBarWidths(statusbar, -1);
 
-	return true;
+	return statusbar;
 }
 
 

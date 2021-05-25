@@ -113,7 +113,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 		wxDefaultSize,
 		wxDEFAULT_FRAME_STYLE)
 	, m_manager(manager)
-	, m_Widths(NUM_STATUS_FIELDS)
+	, m_statusBar(NUM_STATUS_FIELDS)
 	, m_UpdateInfo(this)
 {
 	SetIcons(CImageManager::Get()->GetIconBundle(ImageMgrAppBundle));
@@ -127,8 +127,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	manager->FileHistoryAddFilesToMenu();
 	wxGetApp().GetMenus().CreateMenu(this, menuRecent);
 
-	wxStatusBar* statusbar = CreateStatusBar(NUM_STATUS_FIELDS);
-	m_Widths.Initialize(statusbar);
+	wxStatusBar* statusbar = m_statusBar.Initialize(this);
 	if (statusbar)
 	{
 		statusbar->Bind(wxEVT_CONTEXT_MENU, &CMainFrame::OnStatusBarContextMenu, this);
@@ -151,7 +150,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 				str = _("ID_INDICATOR_FILTERED");
 				break;
 			}
-			m_Widths.Update(this, i, str);
+			m_statusBar.Update(this, i, str);
 		}
 	}
 #if wxUSE_DRAG_AND_DROP
@@ -215,7 +214,7 @@ void CMainFrame::SetMessage(std::wstring const& msg, int index, bool bResize)
 		return;
 	wxString str = StringUtil::stringWX(msg);
 	if (bResize)
-		m_Widths.Update(this, index, str);
+		m_statusBar.Update(this, index, str);
 	else
 		SetStatusText(str, index);
 }
