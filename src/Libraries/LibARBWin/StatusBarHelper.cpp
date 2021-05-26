@@ -38,7 +38,7 @@ CStatusBarHelper::CStatusBarHelper(wxFrame* frame, size_t nColumns)
 wxStatusBar* CStatusBarHelper::Initialize()
 {
 	if (!m_frame || m_Widths.size() == 0)
-		return false;
+		return nullptr;
 
 	wxStatusBar* statusbar = m_frame->CreateStatusBar(static_cast<int>(m_Widths.size()));
 	if (!statusbar)
