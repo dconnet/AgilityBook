@@ -12,6 +12,7 @@
 # This script, by default, will only sign when on the build machine.
 #
 # Revision History
+# 2021-05-29 Changed comodoca to sectigo (name change)
 # 2018-10-06 Dropping XP support, remove dual signing.
 # 2017-10-29 Added -2,-t,-e options.
 # 2017-04-09 Fix MSI signing.
@@ -40,8 +41,8 @@ BuildMachine = 'dcon-build'
 CertName = 'David Connet'
 
 SignTool = 'signtool.exe'
-SignSHA1cmd = '/t http://timestamp.comodoca.com /v'
-SignSHA256cmd = '/fd sha256 /tr http://timestamp.comodoca.com/?td=sha256 /td sha256 /v'
+SignSHA1cmd = '/t http://timestamp.sectigo.com /v'
+SignSHA256cmd = '/fd sha256 /tr http://timestamp.sectigo.com/?td=sha256 /td sha256 /v'
 
 validExt = ['.dll', '.exe', '.msi']
 
