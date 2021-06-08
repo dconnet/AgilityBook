@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-06-08 Fix double Q counting when 2 shows are on one day.
  * 2019-05-04 Reworked PointsData usage.
  * 2017-08-20 Add CPointsDataHeader
  * 2011-08-13 Don't copy internal url links to the clipboard.
@@ -76,6 +77,11 @@ public:
 
 	bool operator<(MultiQdata const& rhs) const
 	{
+		if (date == rhs.date)
+		{
+			// Comparing pointers is fine - just want 2 trials to sort different.
+			return trial.get() < rhs.trial.get();
+		}
 		return date < rhs.date;
 	}
 

@@ -1,4 +1,4 @@
-5/26/2021: v3.5.3.<dev>
+6/8/2021: v3.5.3.<dev>
 - New features / Enhancements:
   - Remove inkedit support from edit controls.
     inked.dll is doing something funky. I give up.
@@ -6,6 +6,7 @@
   - Updated to wxWidgets 3.1.5
 - Bug fixes:
   - Properly update views when a dog is deleted.
+  - Fix double Q counting when 2 shows are on one day.
 
 11/12/2020: v3.5.2.115
 - Notes:
