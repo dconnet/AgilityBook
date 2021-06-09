@@ -18,6 +18,6 @@
  */
 
 #define ARB_VER_MAJOR 3
-#define ARB_VER_MINOR 5
-#define ARB_VER_DOT   3
+#define ARB_VER_MINOR 6
+#define ARB_VER_DOT   0
 #define ARB_VER_BUILD 115

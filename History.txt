@@ -1,4 +1,4 @@
-6/9/2021: v3.5.3.<dev>
+6/9/2021: v3.6.0.<dev>
 - New features / Enhancements:
   - Remove inkedit support from edit controls.
     inked.dll is doing something funky. I give up.
