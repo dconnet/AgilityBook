@@ -21,9 +21,9 @@
 
 #if defined(_DLL) && defined(_WIN32)
 #if defined(LIBARCHIVE_EXPORT)
-#define LIBARCHIVE_API	__declspec(dllexport)
+#define LIBARCHIVE_API __declspec(dllexport)
 #else
-#define LIBARCHIVE_API	__declspec(dllimport)
+#define LIBARCHIVE_API __declspec(dllimport)
 #endif
 #else
 #define LIBARCHIVE_API
@@ -53,13 +53,9 @@ public:
 
 	bool IsResource() const;
 
-	bool ExtractFile(
-			std::wstring const& archiveFile,
-			std::ostream& outData);
+	bool ExtractFile(std::wstring const& archiveFile, std::ostream& outData);
 
-	bool ReplaceFile(
-			std::wstring const& archiveFile,
-			std::istream& inData);
+	bool ReplaceFile(std::wstring const& archiveFile, std::istream& inData);
 
 private:
 	class CLibArchiveImpl* m_pImpl;

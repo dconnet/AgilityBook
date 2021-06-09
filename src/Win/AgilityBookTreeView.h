@@ -220,7 +220,7 @@ private:
 	void PrintLine(fmt::wmemory_buffer& data, wxTreeItemId id, int indent) const;
 	std::wstring GetPrintDataAsHtmlTable() const;
 	bool OnCmd(int id);
-	//void PrintLine(
+	// void PrintLine(
 	//		CDC* pDC,
 	//		CTreePrintData *pData,
 	//		wxTreeItemId hItem,

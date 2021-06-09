@@ -102,7 +102,7 @@ void CHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
 	else
 	{
 		// Don't allow any other types of links.
-		//TRACE("Preventing navigation to '%s'\n", lpszURL);
+		// TRACE("Preventing navigation to '%s'\n", lpszURL);
 		wxBell();
 	}
 	if (bOpen)

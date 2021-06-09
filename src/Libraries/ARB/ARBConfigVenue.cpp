@@ -881,12 +881,12 @@ bool ARBConfigVenueList::FindEvent(
 			// Note, some users have changed NADAC to remove Novice A/B and only
 			// have Novice (no sublevels). This means during a config update,
 			// all hell will break loose. Don't bother asserting here...
-			//else
+			// else
 			//	assert(pLevel);
 		}
 		// Now that we allow multiple venues (cosanctioning is different),
 		// we may fail to find the division. That's fine.
-		//else
+		// else
 		//	assert(pDiv);
 	}
 	return bFound;

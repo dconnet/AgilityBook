@@ -23,7 +23,7 @@
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-08-26 Changed auto update check to false in debug mode.
  * 2009-08-08 Changed default setting for proxy and show dog after title
- * 2009-07-19 Implement proxy support. 
+ * 2009-07-19 Implement proxy support.
  * 2008-12-24 Ported to wxWidgets.
  * 2008-01-14 Make ViewLifetimeEvents default to true.
  * 2007-08-03 Added UserNames

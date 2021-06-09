@@ -97,7 +97,7 @@ TEST_CASE("ConfigAction")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//virtual bool Apply(
+			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
 			//		std::wstring& ioInfo,
@@ -133,7 +133,7 @@ TEST_CASE("ConfigAction")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//virtual bool Apply(
+			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
 			//		std::wstring& ioInfo,
@@ -169,7 +169,7 @@ TEST_CASE("ConfigAction")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//virtual bool Apply(
+			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
 			//		std::wstring& ioInfo,
@@ -205,7 +205,7 @@ TEST_CASE("ConfigAction")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//virtual bool Apply(
+			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
 			//		std::wstring& ioInfo,
@@ -241,7 +241,7 @@ TEST_CASE("ConfigAction")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//virtual bool Apply(
+			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
 			//		std::wstring& ioInfo,
@@ -277,7 +277,7 @@ TEST_CASE("ConfigAction")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//virtual bool Apply(
+			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
 			//		std::wstring& ioInfo,
@@ -313,7 +313,7 @@ TEST_CASE("ConfigAction")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//virtual bool Apply(
+			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
 			//		std::wstring& ioInfo,
@@ -349,7 +349,7 @@ TEST_CASE("ConfigAction")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//virtual bool Apply(
+			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
 			//		std::wstring& ioInfo,
@@ -392,7 +392,7 @@ TEST_CASE("ConfigAction")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//virtual bool Apply(
+			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
 			//		std::wstring& ioInfo,
@@ -435,7 +435,7 @@ TEST_CASE("ConfigAction")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//virtual bool Apply(
+			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
 			//		std::wstring& ioInfo,
@@ -471,7 +471,7 @@ TEST_CASE("ConfigAction")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//virtual bool Apply(
+			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
 			//		std::wstring& ioInfo,
@@ -507,7 +507,7 @@ TEST_CASE("ConfigAction")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//virtual bool Apply(
+			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
 			//		std::wstring& ioInfo,
@@ -543,7 +543,7 @@ TEST_CASE("ConfigAction")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//virtual bool Apply(
+			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
 			//		std::wstring& ioInfo,
@@ -579,7 +579,7 @@ TEST_CASE("ConfigAction")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//virtual bool Apply(
+			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
 			//		std::wstring& ioInfo,
@@ -611,7 +611,7 @@ TEST_CASE("ConfigAction")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//int Apply(
+			// int Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
 			//		std::wstring& ioInfo,

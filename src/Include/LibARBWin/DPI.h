@@ -23,10 +23,10 @@
 namespace DPI
 {
 /// Set scaling based on current point (for per-monitor)
-//ARBWIN_API void SetScale(int x, int y);
+// ARBWIN_API void SetScale(int x, int y);
 
 /// Set scaling. For use in WM_DPICHANGED handling.
-//ARBWIN_API void SetScale(unsigned int scale);
+// ARBWIN_API void SetScale(unsigned int scale);
 
 /// Scale pixels from 100% to current.
 ARBWIN_API int Scale(wxWindow const* pWindow, int x);

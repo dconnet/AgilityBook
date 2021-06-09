@@ -51,7 +51,7 @@ TEST_CASE("LibTidy")
 			std::string debug;
 			ElementNodePtr tidyTree = TidyHtmlData(data, err, &debug);
 			REQUIRE(tidyTree);
-			//if (!tidyTree)
+			// if (!tidyTree)
 			//{
 			//	std::wstring msg = fmt::to_string(err);
 			//	if (msg.empty())

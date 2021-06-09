@@ -104,7 +104,7 @@ public:
 		}
 #else
 		// I'm using this, so I must be aware!
-		//m_Awareness = PROCESS_SYSTEM_DPI_AWARE;
+		// m_Awareness = PROCESS_SYSTEM_DPI_AWARE;
 		// Not working as expected on Mac. So just declare we're not.
 		m_Awareness = PROCESS_DPI_UNAWARE;
 #endif
@@ -167,15 +167,16 @@ public:
 		if (m_Awareness == PROCESS_DPI_UNAWARE)
 			return 100;
 
-		// System DPI Aware: Return the input value scaled by the factor determined by the system DPI when the app was launched.
-		// These apps render themselves according to the DPI of the display where they are launched, and they expect that scaling
-		// to remain constant for all displays on the system.
-		// These apps are scaled up or down when moved to a display with a different DPI from the system DPI.
+		// System DPI Aware: Return the input value scaled by the factor determined by the system DPI when the app was
+		// launched. These apps render themselves according to the DPI of the display where they are launched, and they
+		// expect that scaling to remain constant for all displays on the system. These apps are scaled up or down when
+		// moved to a display with a different DPI from the system DPI.
 		if (m_Awareness == PROCESS_SYSTEM_DPI_AWARE)
 			return m_nScaleFactorSDA;
 
-		// Per-Monitor DPI Aware: Return the input value scaled by the factor for the display which contains most of the window.
-		// These apps render themselves for any DPI, and re-render when the DPI changes (as indicated by the WM_DPICHANGED window message).
+		// Per-Monitor DPI Aware: Return the input value scaled by the factor for the display which contains most of the
+		// window. These apps render themselves for any DPI, and re-render when the DPI changes (as indicated by the
+		// WM_DPICHANGED window message).
 		return m_nScaleFactor;
 	}
 };
@@ -214,14 +215,14 @@ int Scale(int x)
 
 int UnScale(wxWindow const* pWindow, int x)
 {
-	//return GetDPI().UnScale(x);
+	// return GetDPI().UnScale(x);
 	return x * 100 / GetScale(pWindow);
 }
 
 
 int GetScale(wxWindow const* pWindow)
 {
-	//this is basically wxScreenDC::GetPPI()
+	// this is basically wxScreenDC::GetPPI()
 #pragma PRAGMA_TODO(Fix on mac)
 #if defined(__WXMAC__) && !wxCHECK_VERSION(3, 1, 4)
 	return GetDPI().GetScale(); // GetContentScaleFactor on Mac keeps returning 0 on destroy (and sometimes on create)

@@ -679,7 +679,8 @@ CPointsDataVenue::CPointsDataVenue(
 								pEvent->FindEvent(pDiv->GetName(), pLevel->GetName(), pRun->GetDate(), &pScoring);
 								assert(pScoring);
 								if (!pScoring)
-									continue; // Shouldn't need it... Actually, we do - if a trial's venues are changed, this can cause FindEvent to fail.
+									continue; // Shouldn't need it... Actually, we do - if a trial's venues are changed,
+											  // this can cause FindEvent to fail.
 								if (*pScoring != *pScoringMethod)
 									continue;
 								bool bRunVisible
@@ -811,7 +812,7 @@ CPointsDataVenue::CPointsDataVenue(
 							allmatching.insert(allmatching.end(), matching.begin(), matching.end());
 						}
 					}
-					//TODO: Add ability to accumulate existing placement points
+					// TODO: Add ability to accumulate existing placement points
 					// Now we deal with the visible runs.
 					if (0 < points || 0 < allmatching.size())
 					{

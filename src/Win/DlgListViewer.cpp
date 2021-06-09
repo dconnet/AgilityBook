@@ -242,7 +242,7 @@ public:
 		// Note, some users have changed NADAC to remove Novice A/B and only
 		// have Novice (no sublevels). This means during a config update,
 		// all hell will break loose. Don't bother asserting here...
-		//assert(inScoring);
+		// assert(inScoring);
 	}
 	std::wstring OnNeedText(long iCol) const override;
 	int OnNeedIcon() const override

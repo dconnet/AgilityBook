@@ -15,7 +15,7 @@
  * 2020-01-27 Add alternate row color setting.
  * 2013-05-19 Make last div/level/height/handler context aware.
  * 2010-03-28 Added ability to import/export program settings.
- * 2009-07-19 Implement proxy support. 
+ * 2009-07-19 Implement proxy support.
  * 2008-12-24 Ported to wxWidgets.
  * 2007-08-03 Added UserNames
  * 2006-07-16 Added ARBPointsViewSort

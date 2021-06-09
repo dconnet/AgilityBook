@@ -24,9 +24,9 @@
 #include "Platform/arbWarningPush.h"
 #pragma warning(disable : 4244)
 
+#include "Poco/StreamCopier.h"
 #include "Poco/Zip/ZipArchive.h"
 #include "Poco/Zip/ZipStream.h"
-#include "Poco/StreamCopier.h"
 #include <fstream>
 
 #include "Platform/arbWarningPop.h"
@@ -45,7 +45,7 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-#define BUFFER_SIZE	1024
+#define BUFFER_SIZE 1024
 
 
 class CLibArchiveImpl
@@ -53,7 +53,10 @@ class CLibArchiveImpl
 public:
 	CLibArchiveImpl(std::wstring const& zipFile, ArchiveLocation location);
 
-	bool IsResource() const {return m_bResource;}
+	bool IsResource() const
+	{
+		return m_bResource;
+	}
 #if defined(USE_POCO)
 	std::istream* GetStream();
 #elif defined(__WXWINDOWS__)
@@ -192,14 +195,12 @@ bool CLibArchive::IsResource() const
 }
 
 
-bool CLibArchive::ExtractFile(
-		std::wstring const& inArchiveFile,
-		std::ostream& outData)
+bool CLibArchive::ExtractFile(std::wstring const& inArchiveFile, std::ostream& outData)
 {
 	bool rc = false;
 	if (m_pImpl->m_zipFile.empty())
 		return rc;
-	
+
 #if defined(USE_POCO)
 	std::istream* pStream = m_pImpl->GetStream();
 	if (pStream && pStream->good())
@@ -281,9 +282,7 @@ bool CLibArchive::ExtractFile(
 }
 
 
-bool CLibArchive::ReplaceFile(
-		std::wstring const& archiveFile,
-		std::istream& inData)
+bool CLibArchive::ReplaceFile(std::wstring const& archiveFile, std::istream& inData)
 {
 	bool rc = false;
 	if (m_pImpl->m_zipFile.empty())

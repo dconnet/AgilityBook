@@ -37,11 +37,11 @@ Runs Available fields:
   Conditions
   Course Faults
   Time
-    Yards         Required Opening  Required Points
-    YPS           Required Closing  Points
-    SCT           Opening
-    Total Faults  Closing
-    Obstacles     ObstaclesPerSecond
+	Yards         Required Opening  Required Points
+	YPS           Required Closing  Points
+	SCT           Opening
+	Total Faults  Closing
+	Obstacles     ObstaclesPerSecond
   Place/of
   DogsQd
   Q?

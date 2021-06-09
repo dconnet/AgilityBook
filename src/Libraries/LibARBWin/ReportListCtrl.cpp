@@ -114,9 +114,9 @@ bool CReportListCtrl::Create(
 	bool bEnableRowColors)
 {
 	long style = wxLC_REPORT | wxLC_VIRTUAL | (bSingleSel ? wxLC_SINGLE_SEL : 0)
-				 | ((sortHeader == SortHeader::Sort)
-						? 0
-						: (sortHeader == SortHeader::NoSort) ? wxLC_NO_SORT_HEADER : wxLC_NO_HEADER)
+				 | ((sortHeader == SortHeader::Sort)     ? 0
+					: (sortHeader == SortHeader::NoSort) ? wxLC_NO_SORT_HEADER
+														 : wxLC_NO_HEADER)
 				 | (bHasBorder ? wxBORDER : wxNO_BORDER);
 
 	if (!CListCtrl::Create(parent, wxID_ANY, pos, size, style))

@@ -117,7 +117,7 @@ bool ARBBase64::Decode(std::wstring const& inBase64, std::vector<unsigned char>&
 
 	while (count <= bufsize && inBase64[nChar] != '=')
 	{
-		//check to see if it's a legal base64 char...
+		// check to see if it's a legal base64 char...
 		while (SKIP == base64map[inBase64[nChar]])
 		{
 			if (inBase64[nChar] != '\r' && inBase64[nChar] != '\n')
@@ -132,12 +132,12 @@ bool ARBBase64::Decode(std::wstring const& inBase64, std::vector<unsigned char>&
 				break;
 		}
 
-		//add the base64 char to std...
+		// add the base64 char to std...
 		std |= base64map[inBase64[nChar++] & 0xFF];
 		std <<= 6;
-		if (count % 4 == 0) //we have 3 more real chars...
+		if (count % 4 == 0) // we have 3 more real chars...
 		{
-			//put std in the next 3 chars in finalresult
+			// put std in the next 3 chars in finalresult
 			std >>= 6;
 			int tmp = std;
 			tmp >>= 16;
@@ -150,13 +150,13 @@ bool ARBBase64::Decode(std::wstring const& inBase64, std::vector<unsigned char>&
 			tmp = std;
 			tmp &= 0xFF;
 			*(result++) = static_cast<unsigned char>(tmp);
-			std = 0; //empty std
+			std = 0; // empty std
 			outBytes += 3;
 		}
 		++count;
 	}
 
-	//find and decode the remaining chars, if any...
+	// find and decode the remaining chars, if any...
 	--count;
 	if (count % 4 != 0)
 	{
@@ -197,7 +197,7 @@ bool ARBBase64::Encode(std::vector<unsigned char> const& inBinData, std::wstring
 	size_t nData = 0;
 	unsigned char const* s = inBinData.data();
 	int tmp = 0;
-	//let's step through the buffer and encode it...
+	// let's step through the buffer and encode it...
 	if (inBinData.size() > 2) // A really small buffer causes problems with the logic below
 	{
 		while (count <= inBinData.size())
@@ -206,7 +206,7 @@ bool ARBBase64::Encode(std::vector<unsigned char> const& inBinData, std::wstring
 			{
 				tmp >>= 8;
 				tmp &= 0xFFFFFF;
-				//we have 4 new b64 chars, add them to encoded
+				// we have 4 new b64 chars, add them to encoded
 				int mid = tmp;
 				mid >>= 18;
 				mid &= 0x3F;
@@ -226,7 +226,7 @@ bool ARBBase64::Encode(std::vector<unsigned char> const& inBinData, std::wstring
 				mid &= 0x3F;
 				encoded[nData++] = base64chars[mid];
 				++LineLen;
-				//reset tmp
+				// reset tmp
 				tmp = 0;
 				// Should we break the line?
 				if (LineLen >= MaxLineLength)
@@ -244,7 +244,7 @@ bool ARBBase64::Encode(std::vector<unsigned char> const& inBinData, std::wstring
 			++s;
 		}
 	}
-	//do we have some chars left...
+	// do we have some chars left...
 	size_t rest = (inBinData.size() - count) % 3;
 	if (rest != 0)
 	{
@@ -267,7 +267,7 @@ bool ARBBase64::Encode(std::vector<unsigned char> const& inBinData, std::wstring
 		}
 		tmp >>= 8;
 		tmp &= 0xFFFFFF;
-		//we have some new b64 chars, add them to encoded
+		// we have some new b64 chars, add them to encoded
 		int mid = tmp;
 		if (rest >= 1)
 		{

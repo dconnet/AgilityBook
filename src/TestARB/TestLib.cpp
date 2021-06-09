@@ -172,8 +172,8 @@ int main(int argc, char** argv)
 				g_bMicroTest = true;
 				continue;
 			}
-			//fprintf(stderr, "Usage: %s [micro] [verbose]\n", argv[0]);
-			//return -1;
+			// fprintf(stderr, "Usage: %s [micro] [verbose]\n", argv[0]);
+			// return -1;
 		}
 	}
 

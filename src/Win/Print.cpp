@@ -984,7 +984,7 @@ bool CPrintRuns::OnPrintPage(int pageNum)
 CHtmlEasyPrinting::CHtmlEasyPrinting(wxWindow* parent)
 	: wxHtmlEasyPrinting(wxEmptyString, parent)
 {
-	//SetFooter(L"<hr/><p align=\"right\">@TITLE@ (@PAGENUM@/@PAGESCNT@)</p>", wxPAGE_ALL);
+	// SetFooter(L"<hr/><p align=\"right\">@TITLE@ (@PAGENUM@/@PAGESCNT@)</p>", wxPAGE_ALL);
 
 	long leftMargin, rightMargin, topMargin, bottomMargin;
 	CAgilityBookOptions::GetPrinterMargins(true, leftMargin, rightMargin, topMargin, bottomMargin, nullptr);

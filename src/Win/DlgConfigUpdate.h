@@ -41,9 +41,9 @@ private:
 	wxRadioButton* m_radioExisting;
 	wxButton* m_btnPick;
 	CTextCtrl* m_FileName;
-	//CEdit	m_ctrlFileNameEdit;
-	//CString	m_FileName;
-	//CButton	m_ctrlFileName;
+	// CEdit	m_ctrlFileNameEdit;
+	// CString	m_FileName;
+	// CButton	m_ctrlFileName;
 	ARBAgilityRecordBook m_Book;
 
 	DECLARE_EVENT_TABLE()

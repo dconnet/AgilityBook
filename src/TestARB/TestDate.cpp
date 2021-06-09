@@ -213,7 +213,7 @@ TEST_CASE("Date")
 			REQUIRE(d == d2);
 			d = ARBDate::FromString(L"1999-3-27", ARBDateFormat::SlashYYYYMMDD); // Reading does not enforce 0-padding
 			REQUIRE(!d.IsValid());
-			//TODO: Add more complete tests (test each format, bad formats, etc)
+			// TODO: Add more complete tests (test each format, bad formats, etc)
 		}
 	}
 

@@ -37,8 +37,9 @@
 #include <wx/msw/ole/automtn.h>
 #include <wx/variant.h>
 
-#pragma warning(disable : 4928) // illegal copy-initialization; more than one user-defined conversion has been implicitly applied
-#endif //HAS_AUTOMATION
+// illegal copy-initialization; more than one user-defined conversion has been implicitly applied
+#pragma warning(disable : 4928)
+#endif // HAS_AUTOMATION
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -313,18 +314,18 @@ CWizardExcelExport::CWizardExcelExport(wxAutomationObject& ioApp)
 	sheets.GetObject(m_Worksheet, L"Item", 1, args);
 
 	// wx doesn't support IDispatch as a variant
-	//sheets.CallMethod(L"Add", wxNullVariant, m_Worksheet, wxNullVariant, xlWorksheet);
+	// sheets.CallMethod(L"Add", wxNullVariant, m_Worksheet, wxNullVariant, xlWorksheet);
 	// This also doesn't work
-	//sheets.CallMethod(L"Add", wxNullVariant, wxNullVariant, wxNullVariant, xlWorksheet);
+	// sheets.CallMethod(L"Add", wxNullVariant, wxNullVariant, wxNullVariant, xlWorksheet);
 	// The following python works:
-	//import win32com.client
-	//app = win32com.client.Dispatch('Excel.Application')
-	//app.Visible = True
-	//book = app.Workbooks.Add(-4167)
-	//sheet = book.Sheets(1)
-	//sheet.Name = 'Test'
-	//sheet2 = book.Sheets.Add(None, sheet, None, -4167)
-	//sheetFirst = book.Sheets.Add(None, None, None, -4167)
+	// import win32com.client
+	// app = win32com.client.Dispatch('Excel.Application')
+	// app.Visible = True
+	// book = app.Workbooks.Add(-4167)
+	// sheet = book.Sheets(1)
+	// sheet.Name = 'Test'
+	// sheet2 = book.Sheets.Add(None, sheet, None, -4167)
+	// sheetFirst = book.Sheets.Add(None, None, None, -4167)
 }
 
 
@@ -464,7 +465,7 @@ bool CWizardExcelExport::SetFormat(long inRow, long inCol, ARBSpreadSheetFormat 
 	 * Good tips on what to change
 	 * http://www.tek-tips.com/faqs.cfm?fid=6715
 	 *
-	 * general: 
+	 * general:
 	 * number,2dec,1000sep,(redneg): #,##0.00_);[Red](#,##0.00)
 	 * number,2dec,1000sep,(neg): #,##0.00_);(#,##0.00)
 	 * number,2dec,-neg: 0.00
@@ -1043,7 +1044,7 @@ bool CWizardCalcImport::GetData(std::vector<std::vector<std::wstring>>& outData,
 	return true;
 }
 
-#endif //HAS_AUTOMATION
+#endif // HAS_AUTOMATION
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -1068,7 +1069,8 @@ ISpreadSheetPtr ISpreadSheet::Create(ARBSpreadSheetType inType)
 // static helper functions
 long ISpreadSheet::GetMaxRows()
 {
-	return 65536; // Excel limits (I believe later versions of excel/calc may expand this, but we support older versions too)
+	return 65536; // Excel limits (I believe later versions of excel/calc may expand this, but we support older versions
+				  // too)
 }
 
 

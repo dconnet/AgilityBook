@@ -390,7 +390,7 @@ TEST_CASE("Config")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//bool Update(
+			// bool Update(
 			//		int indent,
 			//		ARBConfig const& inConfigNew,
 			//		std::wstring& ioInfo);

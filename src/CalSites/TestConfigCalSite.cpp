@@ -34,7 +34,7 @@ TEST_CASE("ConfigCalSite")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//static ARBConfigCalSitePtr New();
+			// static ARBConfigCalSitePtr New();
 		}
 	}
 
@@ -44,7 +44,7 @@ TEST_CASE("ConfigCalSite")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//ARBConfigCalSitePtr Clone() const;
+			// ARBConfigCalSitePtr Clone() const;
 		}
 	}
 
@@ -54,7 +54,7 @@ TEST_CASE("ConfigCalSite")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//ARBConfigCalSite& operator=(ARBConfigCalSite const& rhs);
+			// ARBConfigCalSite& operator=(ARBConfigCalSite const& rhs);
 		}
 	}
 
@@ -64,8 +64,8 @@ TEST_CASE("ConfigCalSite")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//bool operator==(ARBConfigCalSite const& rhs) const;
-			//bool operator!=(ARBConfigCalSite const& rhs) const
+			// bool operator==(ARBConfigCalSite const& rhs) const;
+			// bool operator!=(ARBConfigCalSite const& rhs) const
 		}
 	}
 
@@ -75,7 +75,7 @@ TEST_CASE("ConfigCalSite")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//bool Load(
+			// bool Load(
 			//		ElementNodePtr inTree,
 			//		ARBVersion const& inVersion,
 			//		ARBErrorCallback& ioCallback);
@@ -88,7 +88,7 @@ TEST_CASE("ConfigCalSite")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//bool Save(ElementNodePtr ioTree) const;
+			// bool Save(ElementNodePtr ioTree) const;
 		}
 	}
 
@@ -98,7 +98,7 @@ TEST_CASE("ConfigCalSite")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//std::wstring GetFormattedURL(
+			// std::wstring GetFormattedURL(
 			//		std::vector<std::wstring> const& inLocCodes,
 			//		std::vector<std::wstring> const& inVenueCodes) const;
 		}
@@ -110,10 +110,10 @@ TEST_CASE("ConfigCalSite")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//bool HasLocationCode(std::wstring const& inCode) const;
-			//bool AddLocationCode(std::wstring const& inCode, std::wstring const& inName);
-			//bool RemoveLocationCode(std::wstring const& inCode);
-			//bool RemoveAllLocationCodes();
+			// bool HasLocationCode(std::wstring const& inCode) const;
+			// bool AddLocationCode(std::wstring const& inCode, std::wstring const& inName);
+			// bool RemoveLocationCode(std::wstring const& inCode);
+			// bool RemoveAllLocationCodes();
 		}
 	}
 
@@ -123,10 +123,10 @@ TEST_CASE("ConfigCalSite")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//bool HasVenueCode(std::wstring const& inCode) const;
-			//bool AddVenueCode(std::wstring const& inCode, std::wstring const& inVenue);
-			//bool RemoveVenueCode(std::wstring const& inCode);
-			//bool RemoveAllVenueCodes();
+			// bool HasVenueCode(std::wstring const& inCode) const;
+			// bool AddVenueCode(std::wstring const& inCode, std::wstring const& inVenue);
+			// bool RemoveVenueCode(std::wstring const& inCode);
+			// bool RemoveAllVenueCodes();
 		}
 	}
 }
@@ -139,7 +139,7 @@ TEST_CASE("ConfigCalSiteList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//bool Load(
+			// bool Load(
 			//		ElementNodePtr inTree,
 			//		ARBVersion const& inVersion,
 			//		ARBErrorCallback& ioCallback);
@@ -152,7 +152,7 @@ TEST_CASE("ConfigCalSiteList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//void sort();
+			// void sort();
 		}
 	}
 
@@ -162,7 +162,7 @@ TEST_CASE("ConfigCalSiteList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//bool FindSite(
+			// bool FindSite(
 			//		std::wstring const& inSite,
 			//		ARBConfigCalSitePtr* outSite = nullptr) const;
 		}
@@ -174,11 +174,11 @@ TEST_CASE("ConfigCalSiteList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//bool AddSite(
+			// bool AddSite(
 			//		std::wstring const& inSite,
 			//		ARBConfigCalSitePtr* outSite = nullptr);
-			//bool AddSite(ARBConfigCalSitePtr inSite);
-			//int DeleteSite(std::wstring const& inSite);
+			// bool AddSite(ARBConfigCalSitePtr inSite);
+			// int DeleteSite(std::wstring const& inSite);
 		}
 	}
 }

@@ -29,14 +29,14 @@
 
 TEST_CASE("AgilityRecordBook")
 {
-	//TODO: Setup
+	// TODO: Setup
 
 	SECTION("GetCurrentDocVersion")
 	{
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//static ARBVersion const& GetCurrentDocVersion();
+			// static ARBVersion const& GetCurrentDocVersion();
 		}
 	}
 

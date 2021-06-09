@@ -34,28 +34,28 @@ enum MenuIdentityPopup
 enum
 {
 	ID_ARB_FIRST = wxID_HIGHEST + 1,
-	//wxID_NEW (these are here just to show the full menu structure)
-	//wxID_OPEN
-	//wxID_SAVE
-	//wxID_SAVEAS
+	// wxID_NEW (these are here just to show the full menu structure)
+	// wxID_OPEN
+	// wxID_SAVE
+	// wxID_SAVEAS
 	ID_FILE_LANGUAGE_CHOOSE,
 	ID_FILE_EXPORT_WIZARD,
 	ID_FILE_LINKED,
-	//wxID_PRINT
+	// wxID_PRINT
 	ID_FILE_PRINT_BLANK_RUNS,
-	//wxID_PREVIEW
+	// wxID_PREVIEW
 	ID_FILE_PROPERTIES,
-	//wxID_EXIT
+	// wxID_EXIT
 
-	//wxID_CUT
-	//wxID_COPY
-	//wxID_PASTE
-	//wxID_DUPLICATE
-	//wxID_DELETE
-	//wxID_SELECTALL
+	// wxID_CUT
+	// wxID_COPY
+	// wxID_PASTE
+	// wxID_DUPLICATE
+	// wxID_DELETE
+	// wxID_SELECTALL
 	ID_COPY_TITLES_LIST,
 	ID_REORDER,
-	//wxID_FIND
+	// wxID_FIND
 	ID_EDIT_FIND_NEXT,
 	ID_EDIT_FIND_PREVIOUS,
 	ID_EDIT_CONFIGURATION,
@@ -88,7 +88,7 @@ enum
 	ID_NOTES_LOCATIONS,
 	ID_NOTES_SEARCH,
 
-	//wxID_PREFERENCES,
+	// wxID_PREFERENCES,
 	ID_VIEW_CUSTOMIZE,
 	ID_VIEW_CUSTOMIZE_ACCEL,
 	ID_UNSORT,
@@ -123,7 +123,7 @@ enum
 
 	ID_HELP_UPDATE,
 	ID_HELP_SYSINFO,
-	//wxID_ABOUT
+	// wxID_ABOUT
 
 	ID_DETAILS,
 

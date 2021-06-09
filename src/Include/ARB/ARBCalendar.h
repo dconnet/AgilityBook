@@ -30,8 +30,8 @@
 
 
 /**
-  * Various states an entry may be in.
-  */
+ * Various states an entry may be in.
+ */
 enum class ARBCalendarEntry
 {
 	Not,     ///< Not entered

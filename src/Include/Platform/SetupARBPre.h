@@ -53,7 +53,8 @@
 // 1900: VC14.0 Visual Studio 2015
 //
 // https://blogs.msdn.microsoft.com/vcblog/2016/10/05/visual-c-compiler-version/
-// > Starting with VS "15" Preview 5, the Visual C++ Team is monotonically updating the value of the built-in preprocessor macro _MSC_VER at every Visual C++ toolset update.
+// > Starting with VS "15" Preview 5, the Visual C++ Team is monotonically updating the value of the built-in
+// preprocessor macro _MSC_VER at every Visual C++ toolset update.
 //
 // 1910: VC14.1 Visual Studio 2017
 // 1911: VC14.11 Visual Studio 2017 version 15.3

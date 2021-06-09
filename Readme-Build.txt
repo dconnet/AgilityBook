@@ -23,11 +23,11 @@ Once the above software is unpacked, the directory structure should look like:
 --------------------
 
 python: https://www.python.org
-Currently using version 3.8.2
-- Note, also install pyWin32 from https://sourceforge.net/projects/pywin32/files/pywin32/
+Currently using version 3.9.5.
+- Note, also install pyWin32 from https://github.com/mhammond/pywin32
 
 wxWidgets: http://www.wxwidgets.org/
-I'm currently using version 3.1.5. Min supported is 3.1.5.
+Currently using version 3.1.5. Min supported is 3.1.5.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR) IMPORTANT: This means the directory name in fr_FR
@@ -50,7 +50,8 @@ To build for Mac/Unix, see ./build/setupwx.sh
 --------------------
 
 poedit: http://www.poedit.net
-Cross platform editor for modifying .po files. Currently using 2.3.
+Cross platform editor for modifying .po files.
+Currently using version 3.0.
 - includes gettext
   - on Mac, probably want to include MacPorts version
 Use this to keep the catalog in sync with the source code.
@@ -73,7 +74,7 @@ Useful for figuring out how a lay a dialog out.
 --------------------
 
 Windows Installer XML toolset: http://wixtoolset.org/
-Currently using Version 3.11.2
+Currently using version 3.11.2.
 - Install votive [optional]
 - (1), run WiX installer. That will set the environment variable WIX.
   (GenMSI.py looks for "WIX" and appends "\bin")
@@ -83,20 +84,22 @@ Currently using Version 3.11.2
 --------------------
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen
-Used to create source code documentation. AgilityBook.dox uses v1.8.17.
+Used to create source code documentation.
+Currently using version 1.8.20.
 [Install to default location]
 
 --------------------
 
 GraphViz: http://www.graphviz.org
-Used to create source code documentation. AgilityBook.dox uses v2.38.0
+Used to create source code documentation.
+Currently using version 2.47.2.
 Earlier versions may work. (I used 2.14.1 with no problems for a while)
 [Install to default location]
 
 --------------------
 LLVM: https://releases.llvm.org/download.html
-Currently using v9.0.1 (because Ubuntu 18.04 only has 9.0 available)
-[Install to default location]
+Currently using version 12.0.0 (ubuntu18: v10, ubuntu20: v11)
+[Install to default location, ubuntu: apt install]
 - clang-format -i *.h *.cpp
 This will run the formatter and rewrite the files.
 (VS2019 automatically detected the .clang-format file.
@@ -108,13 +111,9 @@ Compiler notes
 
 Compiler: requires C++14 support.
 
-Pre-2017
+VS-2017 and before
 ===================================
    Not supported.
-
-Microsoft Visual Studio 2017 (VC14.1)
-===================================
-   It works, no additional notes.
 
 Microsoft Visual Studio 2019 (VC14.2)
 ===================================
@@ -137,27 +136,11 @@ Install xcode command line tools
 Install MacPorts: http://www.macports.org
 sudo port -v selfupdate
 sudo port upgrade outdated
-initial: sudo port install autoconf gettext git python38 py38-readline
-         sudo port select --set python3 python38
+initial: sudo port install autoconf gettext git python39 py39-readline
+         sudo port select --set python3 python39
 Download SDK 10.11 from github.com/phracker/MacOSX-SDKs/releases/
  (this is the min SDK wx supports - use that)
  Unpack into /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/
-
-The xcode projects were used as follows:
-.../xcode7: Xcode 7.x on OSX10.11 (still applies to xcode9)
-            From release notes: "The Xcode build system no longer automatically
-            inherits the environment used to launch the app when running in the
-            IDE" This means my use of $WXBASE is now broken. To fix, run this
-            in bash:
-              defaults write com.apple.dt.Xcode UseSanitizedBuildSystemEnvironment -bool NO
-            Recommended (so projects work right):
-            - Set DerivedData to Relative, 'build'
-              - Advanced: Unique
-            AgilityBook.xcworkspace
-                wx3.0, cocoa, Current sdk, OSX10.7 deployment target
-                x64 (dropped 32bit)
-                C++ Language Dialect: c++14 (-std=c++14)
-                C++ Std Lib: libc++
 
 To determine clang precessor defines (works for gcc also):
   clang -dM -E -x c /dev/null

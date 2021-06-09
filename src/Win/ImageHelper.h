@@ -11,7 +11,7 @@
  * @brief Image Manager
  * @author David Connet
  *
- * Usage: 
+ * Usage:
  * Users of this can extend by associating a callback class.
  *
  * Revision History

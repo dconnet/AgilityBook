@@ -167,9 +167,9 @@ CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 	SetSizeHints(sz, wxSize(-1, sz.y));
 	CenterOnParent();
 
-	//if (appmodal)
+	// if (appmodal)
 	m_winDisabler = new wxWindowDisabler(this);
-	//else
+	// else
 	//{
 	//	if (m_parentTop)
 	//		m_parentTop->Disable();
@@ -200,12 +200,12 @@ void CDlgProgress::ReenableOtherWindows()
 {
 	if (m_pTaskbar)
 		m_pTaskbar->SetProgressState(TBPF_NOPROGRESS);
-	//if (appmodal)
+	// if (appmodal)
 	{
 		delete m_winDisabler;
 		m_winDisabler = nullptr;
 	}
-	//else
+	// else
 	//{
 	//	if (m_parentTop)
 	//		m_parentTop->Enable();

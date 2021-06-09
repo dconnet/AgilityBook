@@ -587,9 +587,9 @@ bool ARBConfigScoring::Load(
 				if (!m_TitlePoints.Load(element, inVersion, ioCallback, m_LifePoints))
 					return false;
 			}
-			else if (
-				element->GetName() == TREE_LIFETIME_POINTS || element->GetName() == L"LifeTime") // Changed in v14.4
+			else if (element->GetName() == TREE_LIFETIME_POINTS || element->GetName() == L"LifeTime")
 			{
+				// Changed in v14.4
 				if (bVer10orMore)
 				{
 					if (!m_LifePoints.Load(element, inVersion, ioCallback))

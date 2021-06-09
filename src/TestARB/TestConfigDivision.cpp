@@ -34,7 +34,7 @@ TEST_CASE("ConfigDivision")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//static ARBConfigDivisionPtr New();
+			// static ARBConfigDivisionPtr New();
 		}
 	}
 
@@ -44,7 +44,7 @@ TEST_CASE("ConfigDivision")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//ARBConfigDivisionPtr Clone() const;
+			// ARBConfigDivisionPtr Clone() const;
 		}
 	}
 

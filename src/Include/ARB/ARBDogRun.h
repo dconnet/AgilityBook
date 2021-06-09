@@ -148,18 +148,18 @@ public:
 	double GetTitlePoints(ARBConfigScoringPtr const& inScoring, bool* outClean = nullptr) const;
 
 	/**
-	* Get the number of lifetime points earned in this run.
-	* @param inScoring Scoring method used.
-	* @param inLifetimeName Name of Lifetime points to tally.
-	* @return Number of lifetime points earned.
-	*/
+	 * Get the number of lifetime points earned in this run.
+	 * @param inScoring Scoring method used.
+	 * @param inLifetimeName Name of Lifetime points to tally.
+	 * @return Number of lifetime points earned.
+	 */
 	double GetLifetimePoints(ARBConfigScoringPtr const& inScoring, std::wstring const& inLifetimeName) const;
 
 	/**
-	* Get the number of lifetime placement points earned in this run.
-	* @param inScoring Scoring method used.
-	* @return Number of placement points earned.
-	*/
+	 * Get the number of lifetime placement points earned in this run.
+	 * @param inScoring Scoring method used.
+	 * @return Number of placement points earned.
+	 */
 	double GetPlacementPoints(ARBConfigScoringPtr const& inScoring) const;
 
 	/**

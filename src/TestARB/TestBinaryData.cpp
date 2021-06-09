@@ -80,7 +80,7 @@ TEST_CASE("BinaryData")
 	}
 
 
-	//TODO: Test Encode(FILE*, std::wstring& outdata)
+	// TODO: Test Encode(FILE*, std::wstring& outdata)
 
 
 	SECTION("StringDecode")

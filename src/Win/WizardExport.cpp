@@ -1490,10 +1490,10 @@ bool CWizardExport::DoWizardFinish()
 			pProgress->Dismiss();
 			pExporter->AllowAccess(true);
 			// For testing
-			//pExporter->SetBackColor(2,3,RGB(255,0,0));
-			//pExporter->SetTextColor(2,3,RGB(0,255,0));
-			//pExporter->SetItalic(1,1,true);
-			//pExporter->SetBold(1,2,true);
+			// pExporter->SetBackColor(2,3,RGB(255,0,0));
+			// pExporter->SetTextColor(2,3,RGB(0,255,0));
+			// pExporter->SetItalic(1,1,true);
+			// pExporter->SetBold(1,2,true);
 			return true;
 		}
 		else

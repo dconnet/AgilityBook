@@ -356,7 +356,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 				}
 
 				// Display date (only day now, not full date)
-				//wxString str(day.GetString());
+				// wxString str(day.GetString());
 				str = fmt::format(L"{}", day.GetDay());
 				{
 					wxDCClipper clip(*pDC, rect);

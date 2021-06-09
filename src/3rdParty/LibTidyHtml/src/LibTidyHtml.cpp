@@ -32,10 +32,7 @@
 #endif
 
 
-ElementNodePtr TidyHtmlData(
-		std::string const& data,
-		fmt::wmemory_buffer& err,
-		std::string const* pRawFileBaseName)
+ElementNodePtr TidyHtmlData(std::string const& data, fmt::wmemory_buffer& err, std::string const* pRawFileBaseName)
 {
 	ElementNodePtr tree;
 
@@ -47,7 +44,7 @@ ElementNodePtr TidyHtmlData(
 		tidyOptSetBool(tdoc, TidyNumEntities, yes);
 		tidyOptSetBool(tdoc, TidyQuoteAmpersand, yes);
 
-		TidyBuffer errbuf = { 0 };
+		TidyBuffer errbuf = {0};
 		if (0 > tidySetErrorBuffer(tdoc, &errbuf))
 		{
 			tidyRelease(tdoc);
@@ -81,7 +78,7 @@ ElementNodePtr TidyHtmlData(
 		tidyRunDiagnostics(tdoc);
 		tidyOptSetBool(tdoc, TidyForceOutput, yes);
 
-		TidyBuffer output = { 0 };
+		TidyBuffer output = {0};
 		if (0 > tidySaveBuffer(tdoc, &output))
 		{
 			if (errbuf.size > 0)

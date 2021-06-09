@@ -227,23 +227,23 @@ public:
 	{
 		return m_Julian - rhs.m_Julian;
 	}
-	ARBDate& operator++() //prefix
+	ARBDate& operator++() // prefix
 	{
 		++m_Julian;
 		return *this;
 	}
-	ARBDate operator++(int) //postfix
+	ARBDate operator++(int) // postfix
 	{
 		ARBDate tmp(*this);
 		++m_Julian;
 		return tmp;
 	}
-	ARBDate& operator--() //prefix
+	ARBDate& operator--() // prefix
 	{
 		--m_Julian;
 		return *this;
 	}
-	ARBDate operator--(int) //postfix
+	ARBDate operator--(int) // postfix
 	{
 		ARBDate tmp(*this);
 		--m_Julian;
@@ -345,7 +345,7 @@ public:
 		// This was copied from another source, but I don't remember where...
 		// I suspect it won't work properly on dates before 1752 (start of
 		// Gregorian calendar).
-		//return int((((m_Julian+1)%7)+6)%7); // Mon = 0
+		// return int((((m_Julian+1)%7)+6)%7); // Mon = 0
 		return static_cast<int>((((m_Julian + 1) % 7) + (7 - static_cast<int>(inFirstDay))) % 7);
 	}
 

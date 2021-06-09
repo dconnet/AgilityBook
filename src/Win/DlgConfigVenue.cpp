@@ -197,9 +197,9 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 				if (m_pDlg->m_pVenue->GetTitles().AddTitle(name, &pTitle))
 				{
 					*pTitle = *title;
-					//pTitle->SetMultiple(dlg.GetMultiple());
-					//pTitle->SetLongName(dlg.GetLongName());
-					//pTitle->SetDescription(dlg.GetDesc());
+					// pTitle->SetMultiple(dlg.GetMultiple());
+					// pTitle->SetLongName(dlg.GetLongName());
+					// pTitle->SetDescription(dlg.GetDesc());
 					CDlgConfigureDataTitle* pData = new CDlgConfigureDataTitle(m_pDlg, pTitle);
 					wxTreeItemId titleId
 						= m_pDlg->m_ctrlItems
@@ -328,8 +328,8 @@ CDlgConfigVenue::CDlgConfigVenue(
 		wxTR_FULL_ROW_HIGHLIGHT | wxTR_HAS_BUTTONS | wxTR_HIDE_ROOT | wxTR_LINES_AT_ROOT | wxTR_NO_LINES | wxTR_SINGLE);
 	m_ctrlItems->Bind(wxEVT_COMMAND_TREE_SEL_CHANGED, &CDlgConfigVenue::OnSelectionChanged, this);
 	m_ctrlItems->Bind(wxEVT_COMMAND_TREE_ITEM_ACTIVATED, &CDlgConfigVenue::OnItemActivated, this);
-	//m_ctrlItems->SetHelpText(_(""));
-	//m_ctrlItems->SetToolTip(_(""));
+	// m_ctrlItems->SetHelpText(_(""));
+	// m_ctrlItems->SetToolTip(_(""));
 
 	m_ctrlNew = new wxButton(this, wxID_ANY, _("IDC_CONFIG_VENUE_NEW"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigVenue::OnNew, this);

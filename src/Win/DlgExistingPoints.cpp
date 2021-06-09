@@ -209,7 +209,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 		   ARBExistingPointType::Lifetime,
 		   ARBExistingPointType::Title,
 		   ARBExistingPointType::Speed,
-		   //ARBExistingPointType::MQ, Not here - will be added later as long as a venue supports it
+		   // ARBExistingPointType::MQ, Not here - will be added later as long as a venue supports it
 		   ARBExistingPointType::SQ};
 	int nTypes = sizeof(types) / sizeof(types[0]);
 	for (int i = 0; i < nTypes; ++i)

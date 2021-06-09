@@ -15,10 +15,10 @@
  * 2020-09-12 Created
  */
 
-#include "ARB/ARBTypes2.h"
-#include "LibARBWin/SetupApp.h"
 #include "../Win/ImageHelper.h"
 #include "../Win/Localization.h"
+#include "ARB/ARBTypes2.h"
+#include "LibARBWin/SetupApp.h"
 
 
 class CCalSitesApp : public CBaseApp

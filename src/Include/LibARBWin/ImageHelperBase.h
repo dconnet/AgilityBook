@@ -11,7 +11,7 @@
  * @brief Image Manager
  * @author David Connet
  *
- * Usage: 
+ * Usage:
  * Users of this can extend by associating a callback class.
  *
  * Revision History
@@ -49,13 +49,13 @@ ARBWIN_API wxIcon CreateIconFromBitmap(const wxBitmap& bitmap);
 
 // These are in each user of this.
 // That's where the mapping of names happens via IImageManagerCallback
-//ARBWIN_API bool DoCreateBitmap(
+// ARBWIN_API bool DoCreateBitmap(
 //		wxWindow* pWindow,
 //		const wxArtID& id,
 //		const wxArtClient& client,
 //		const wxSize& size,
 //		wxBitmap& outBmp);
-//ARBWIN_API bool DoCreateIconBundle(
+// ARBWIN_API bool DoCreateIconBundle(
 //		wxWindow* pWindow,
 //		const wxArtID& id,
 //		const wxArtClient& client,

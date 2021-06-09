@@ -89,7 +89,7 @@ TEST_CASE("Archive")
 
 	SECTION("ExtractFile")
 	{
-		//if (!g_bMicroTest)
+		// if (!g_bMicroTest)
 		{
 			std::wstring file = CreateZip();
 			REQUIRE(!file.empty());
