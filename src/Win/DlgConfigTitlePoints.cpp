@@ -159,11 +159,23 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 	m_ctrlType->SetSelection(static_cast<int>(m_Type));
 
 	wxArrayString typesNorm;
-	typesNorm.Add(_("IDS_TITLEPOINT_NORMAL_NORMAL"));
-	typesNorm.Add(_("IDS_TITLEPOINT_NORMAL_T2B"));
-	typesNorm.Add(_("IDS_TITLEPOINT_NORMAL_UKI"));
-	assert(typesNorm.size() == static_cast<size_t>(ARBPointsType::Max));
-	m_ctrlTypeNormal = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, typesNorm, 0);
+	struct
+	{
+		wxString text;
+		ARBPointsType type;
+	} items[] = {
+		{_("IDS_TITLEPOINT_NORMAL_NORMAL"), ARBPointsType::Normal},
+		{_("IDS_TITLEPOINT_NORMAL_T2B"), ARBPointsType::T2B},
+		{_("IDS_TITLEPOINT_NORMAL_UKI"), ARBPointsType::UKI},
+	};
+	m_ctrlTypeNormal = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	for (auto const& item : items)
+	{
+		auto type = m_ctrlTypeNormal->Append(item.text);
+		m_ctrlTypeNormal->SetClientData(type, reinterpret_cast<void*>(static_cast<size_t>(item.type)));
+		if (m_TypeNormal == item.type)
+			m_ctrlTypeNormal->SetSelection(type);
+	}
 	m_ctrlTypeNormal->Bind(wxEVT_COMMAND_CHOICE_SELECTED, &CDlgConfigTitlePoints::OnSelchangeTitlePoints, this);
 	m_ctrlTypeNormal->SetHelpText(_("HIDC_CONFIG_TITLEPTS_CALC"));
 	m_ctrlTypeNormal->SetToolTip(_("HIDC_CONFIG_TITLEPTS_CALC"));
@@ -341,7 +353,11 @@ void CDlgConfigTitlePoints::OnSelchangeTitlePoints(wxCommandEvent& evt)
 {
 	ARBTitlePointType oldType = m_Type;
 	m_Type = static_cast<ARBTitlePointType>(m_ctrlType->GetSelection());
-	m_TypeNormal = static_cast<ARBPointsType>(m_ctrlTypeNormal->GetSelection());
+	auto sel = m_ctrlTypeNormal->GetSelection();
+	if (0 <= sel)
+	{
+		m_TypeNormal = static_cast<ARBPointsType>(reinterpret_cast<size_t>(m_ctrlTypeNormal->GetClientData(sel)));
+	}
 	TransferDataFromWindow();
 
 	if (UpdateControls(oldType))

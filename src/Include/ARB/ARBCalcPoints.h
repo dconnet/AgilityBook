@@ -29,8 +29,7 @@ ARB_TYPEDEF(ARBCalcPointsUKI)
 
 enum class ARBPointsType
 {
-	// Note, these faults are used as indices in the UI
-	Normal = 0, ///< Original points computation.
+	Normal,     ///< Original points computation.
 	T2B,        ///< AKC/T2B: based on percentage of SCT.
 	UKI,        ///< UKI: points based on placement.
 	Top10USDAA, ///< USDAA: Top10 points based on placement/inclass
