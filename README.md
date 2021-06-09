@@ -14,10 +14,12 @@ Currently Supported Venues:
 - ADAA [Agility Dog Association of Australia](http://www.adaa.com.au) (pending, could use some help completing it)
 - AKC [American Kennel Club](http://www.akc.org)
 - ASCA [Australian Shepherd Club of America](http://www.asca.org)
+- BHA [Barn Hunt Assocation](http://www.barnhunt.com)
 - CKC [Canadian Kennel Club](http://www.ckc.ca)
 - CKCSC [Cavalier King Charles Spaniel Club](http://www.ckcsc.org)
 - CPE [Canine Performance Events](http://www.k9cpe.com)
 - DOCNA [Dogs On Course in North America](http://www.docna.com)
+- FCAT [AKC Fast CAT](https://www.akc.org/sports/coursing/fast-cat/)
 - FCI [Fédération Cynologique Internationale](http://www.fci.be)
 - NADAC [North American Dog Agility Council](http://www.nadac.com)
 - SCC [Société Centrale Canine](http://www.france-agility.com)
@@ -51,14 +53,14 @@ Platforms
 Agility Record Book currently supports:
 
 - Windows Windows 7 and higher (32/64 bit)
-- MaxOS 10.7 and higher (64 bit)
+- MacOS 10.10 and higher (64 bit)
 
 The binaries for the platforms above can be found in
 [Releases](https://github.com/dconnet/AgilityBook/releases).
 
 In theory, it should be able to be compiled on any platform that is supported by
 [wxWidgets](http://wxwidgets.org/).
-Caveat: ARB requires a C++11 compliant compiler due to [fmt](https://github.com/fmtlib/fmt/).
+Caveat: ARB requires a C++14 compliant compiler.
 See [Readme-Build.txt](https://github.com/dconnet/AgilityBook/blob/master/Readme-Build.txt)
 for more information on building the source code.
 
