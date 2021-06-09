@@ -372,7 +372,10 @@ CReadHttp::ReturnCode CUpdateInfo::ReadVersionFile(bool bVerbose, OnReadComplete
 				auto stream = out->GetOutputStreamBuffer();
 				std::string data(static_cast<const char*>(stream->GetBufferStart()), stream->GetBufferSize());
 				if (ReadVersionFile(data, bVerbose))
-					callback();
+				{
+					if (callback)
+						callback();
+				}
 			}
 			delete out;
 		});

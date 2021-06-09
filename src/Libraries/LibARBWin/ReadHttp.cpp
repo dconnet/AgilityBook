@@ -90,6 +90,11 @@ CReadHttp::ReturnCode CReadHttp::DownloadFile(
 		return ReturnCode::Failed;
 	if (!parent)
 		return ReturnCode::Failed;
+	if (!callback)
+	{
+		assert(0);
+		return ReturnCode::Failed;
+	}
 
 	m_progress = progress;
 	m_output = output;
