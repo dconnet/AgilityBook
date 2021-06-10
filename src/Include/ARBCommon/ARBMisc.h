@@ -32,7 +32,7 @@ ARBCOMMON_API std::wstring SanitizeStringForHTML(std::wstring const& inRawData, 
 /**
  * These are the strings we recognize as platforms.
  */
-std::wstring GetARBArch();
+ARBCOMMON_API std::wstring GetARBArch();
 
 
 /**
