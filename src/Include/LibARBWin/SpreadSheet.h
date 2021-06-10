@@ -64,7 +64,7 @@ enum class ARBSpreadSheetType
 /**
  * Interface for exporting to a spreadsheet.
  */
-class ISpreadSheetExporter
+class ARBWIN_API ISpreadSheetExporter
 {
 public:
 	virtual ~ISpreadSheetExporter() = default;
@@ -92,7 +92,7 @@ public:
 /**
  * Interface for importing from a spreadsheet.
  */
-class ISpreadSheetImporter
+class ARBWIN_API ISpreadSheetImporter
 {
 public:
 	virtual ~ISpreadSheetImporter() = default;

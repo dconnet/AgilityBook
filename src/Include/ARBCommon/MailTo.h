@@ -23,7 +23,7 @@
 #include <vector>
 
 
-class CMailTo
+class ARBCOMMON_API CMailTo
 {
 public:
 	CMailTo();

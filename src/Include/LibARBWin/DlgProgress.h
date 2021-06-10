@@ -24,10 +24,10 @@
 #include "LibwxARBWin.h"
 
 
-class IDlgProgress
+class ARBWIN_API IDlgProgress
 {
 public:
-	ARBWIN_API static IDlgProgress* CreateProgress(short nBars = 1, wxWindow* parent = nullptr);
+	static IDlgProgress* CreateProgress(short nBars = 1, wxWindow* parent = nullptr);
 
 	virtual ~IDlgProgress() = default;
 

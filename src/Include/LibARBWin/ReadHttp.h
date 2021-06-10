@@ -28,7 +28,7 @@ class IDlgProgress;
 class wxOutputStream;
 
 
-class CReadHttp
+class ARBWIN_API CReadHttp
 {
 public:
 	enum class ReturnCode

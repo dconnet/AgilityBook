@@ -38,7 +38,7 @@
  * On Windows, these files are stored in the resources.
  * Other platforms may be different.
  */
-class IARBConfigHandler
+class ARB_API IARBConfigHandler
 {
 public:
 	virtual ~IARBConfigHandler() = default;
