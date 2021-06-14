@@ -40,9 +40,6 @@
 
 // Pre-compiled header setup
 #include <wx/wxprec.h>
-#ifdef __BORLANDC__
-#pragma hdrstop
-#endif
 // Compiler doesn't support precompiled headers,
 // pull in the headers that wxprec includes.
 #ifndef WX_PRECOMP
