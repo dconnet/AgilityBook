@@ -1,4 +1,4 @@
-wxWidgets-3.1.4\fr.po is from <wx>/locale/fr.po (official 3.1.4 release),
+wxWidgets-3.1.5\fr.po is from <wx>/locale/fr.po (official 3.1.5 release),
 copied here and converted to unix-eol (if necessary).
 
 trunk\fr.po is from <wx>/locale/fr.po (active trunk), copied here

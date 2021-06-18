@@ -51,7 +51,7 @@ public:
 	static void CleanupUpdate();
 
 	/**
-	 * @param handler Event handler to bind to for notifications.
+	 * @param parent Parent window to bind to for notifications.
 	 */
 	CUpdateInfo(wxWindow* parent);
 
