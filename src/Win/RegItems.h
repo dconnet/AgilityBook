@@ -305,6 +305,8 @@ inline wxString CFG_SELECTION_DOG(int n)
 #define CFG_KEY_SETTINGS				L"Settings"
 //	DW autoCheck
 #define CFG_SETTINGS_AUTOCHECK			CFG_KEY_SETTINGS L"/autoCheck"
+//	DW autoCheck
+#define CFG_SETTINGS_AUTOCHECK_INTERVAL	CFG_KEY_SETTINGS L"/autoCheckInterval"
 //	DW autoShowTitle
 #define CFG_SETTINGS_AUTOSHOWTITLE		CFG_KEY_SETTINGS L"/autoShowTitle"
 //	DW useAltRowColor

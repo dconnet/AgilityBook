@@ -230,6 +230,8 @@ public:
 	static void SetMRUFileCount(long nFiles);
 	static bool GetAutoUpdateCheck();
 	static void SetAutoUpdateCheck(bool bSet);
+	static long GetAutoUpdateCheckInterval();
+	static void SetAutoUpdateCheckInterval(long days);
 	static long GetNumBackupFiles();
 	static void SetNumBackupFiles(long nFiles);
 	static bool AutoShowPropertiesOnNewTitle();

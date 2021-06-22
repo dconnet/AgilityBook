@@ -225,7 +225,7 @@ void CUpdateInfo::Initialize()
 			if (date.IsValid())
 			{
 				ARBDate today = ARBDate::Today();
-				date += 30;
+				date += CAgilityBookOptions::GetAutoUpdateCheck();
 				if (date < today)
 				{
 					if (CReadHttp::ReturnCode::Success == ReadVersionFile(false))

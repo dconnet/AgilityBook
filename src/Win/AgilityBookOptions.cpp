@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-06-22 Added AutoUpdateCheckInterval.
  * 2020-01-27 Add alternate row color setting.
  * 2018-12-16 Convert to fmt.
  * 2013-06-15 Make default for GetNewestDatesFirst true.
@@ -162,6 +163,7 @@ constexpr ARBDateFormat sc_ImportExportFormat = ARBDateFormat::ISO;
 // Program
 constexpr long sc_MRUCount = 4;
 constexpr bool sc_AutoUpdateCheck = true;
+constexpr long sc_AutoUpdateCheckInterval = 30;
 constexpr long sc_NumBackup = 3;
 constexpr bool sc_ShowPropOnNewTitle = false;
 constexpr bool sc_UseProxy = false;
@@ -1829,6 +1831,24 @@ bool CAgilityBookOptions::GetAutoUpdateCheck()
 void CAgilityBookOptions::SetAutoUpdateCheck(bool bSet)
 {
 	wxConfig::Get()->Write(CFG_SETTINGS_AUTOCHECK, bSet);
+}
+
+
+long CAgilityBookOptions::GetAutoUpdateCheckInterval()
+{
+	long val = wxConfig::Get()->Read(CFG_SETTINGS_AUTOCHECK_INTERVAL, sc_AutoUpdateCheckInterval);
+	if (val < 1)
+	{
+		val = sc_AutoUpdateCheckInterval;
+		SetAutoUpdateCheckInterval(val);
+	}
+	return val;
+}
+
+
+void CAgilityBookOptions::SetAutoUpdateCheckInterval(long days)
+{
+	wxConfig::Get()->Write(CFG_SETTINGS_AUTOCHECK_INTERVAL, days);
 }
 
 
