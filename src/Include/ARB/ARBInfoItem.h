@@ -146,7 +146,7 @@ public:
 	 * Construct a club/judge/location info object.
 	 * @param inItemName Name of elements to be loaded.
 	 */
-	ARBInfoItemList(std::wstring const& inItemName);
+	explicit ARBInfoItemList(std::wstring const& inItemName);
 	ARBInfoItemList(ARBInfoItemList const& rhs);
 	ARBInfoItemList(ARBInfoItemList&& rhs);
 	~ARBInfoItemList()

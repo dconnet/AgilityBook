@@ -44,7 +44,7 @@ public:
 		, m_Version({inMajor, inMinor, inDot, inBuild})
 	{
 	}
-	CVersionNum(std::wstring const& inVer)
+	explicit CVersionNum(std::wstring const& inVer)
 		: m_Valid(false)
 		, m_Version()
 	{

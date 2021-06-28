@@ -28,7 +28,10 @@ class ARBWIN_API CCheckTreeCtrl : public CTreeCtrl
 	DECLARE_CLASS(CCheckTreeCtrl)
 	DECLARE_NO_COPY_IMPLEMENTED(CCheckTreeCtrl)
 public:
-	CCheckTreeCtrl(wxWindow* pParent, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize);
+	explicit CCheckTreeCtrl(
+		wxWindow* pParent,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize);
 	~CCheckTreeCtrl();
 
 	void ShowCheckbox(wxTreeItemId hItem, bool bShow = true);

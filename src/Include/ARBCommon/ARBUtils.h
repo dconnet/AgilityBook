@@ -29,7 +29,7 @@ class ARBCOMMON_API CConfigPathHelper
 	wxString m_path;
 
 public:
-	CConfigPathHelper(wxString const& key);
+	explicit CConfigPathHelper(wxString const& key);
 	~CConfigPathHelper();
 
 private:
@@ -95,7 +95,7 @@ ARBCOMMON_API bool GetFileTimes(
 class ARBCOMMON_API CStackTracer
 {
 public:
-	CStackTracer(wxString const& msg);
+	explicit CStackTracer(wxString const& msg);
 	~CStackTracer();
 	void Tickle(wxString const& msg);
 

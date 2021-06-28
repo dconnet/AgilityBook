@@ -52,7 +52,7 @@ class ARBWIN_API CBaseApp
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CBaseApp)
 protected:
-	CBaseApp(wxString const& appName, ARBLanguageCatalog useLangCatalog = ARBLanguageCatalog::None);
+	explicit CBaseApp(wxString const& appName, ARBLanguageCatalog useLangCatalog = ARBLanguageCatalog::None);
 	// If appRegKey is empty, no local config will be created.
 	CBaseApp(
 		wxString const& appName,

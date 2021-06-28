@@ -74,6 +74,7 @@ public:
 		: m_Q(Q::UNK)
 	{
 	}
+	// Note: Not explicit
 	ARB_Q(Q inQ)
 		: m_Q(inQ)
 	{

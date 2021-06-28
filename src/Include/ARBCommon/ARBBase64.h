@@ -28,24 +28,21 @@
 #include "LibwxARBCommon.h"
 
 
-class ARBCOMMON_API ARBBase64
+namespace ARBBase64
 {
-	ARBBase64();
+/**
+ * Decode a base64 string.
+ * @param inBase64 Encoded buffer
+ * @param outBinData Decoded buffer
+ * @return Success
+ */
+ARBCOMMON_API bool Decode(std::wstring const& inBase64, std::vector<unsigned char>& outBinData);
 
-public:
-	/**
-	 * Decode a base64 string.
-	 * @param inBase64 Encoded buffer
-	 * @param outBinData Decoded buffer
-	 * @return Success
-	 */
-	static bool Decode(std::wstring const& inBase64, std::vector<unsigned char>& outBinData);
-
-	/**
-	 * Encode data
-	 * @param inBinData Buffer to encode
-	 * @param outData Encoded data
-	 * @return Success
-	 */
-	static bool Encode(std::vector<unsigned char> const& inBinData, std::wstring& outData);
-};
+/**
+ * Encode data
+ * @param inBinData Buffer to encode
+ * @param outData Encoded data
+ * @return Success
+ */
+ARBCOMMON_API bool Encode(std::vector<unsigned char> const& inBinData, std::wstring& outData);
+} // namespace ARBBase64

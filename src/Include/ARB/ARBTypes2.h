@@ -241,7 +241,7 @@ public:
 class ARB_API ARBErrorCallback
 {
 public:
-	ARBErrorCallback(fmt::wmemory_buffer& ioErrMsg)
+	explicit ARBErrorCallback(fmt::wmemory_buffer& ioErrMsg)
 		: m_ErrMsg(ioErrMsg)
 	{
 	}

@@ -37,14 +37,18 @@ class ARBWIN_API CGenericValidator : public wxValidator
 	CGenericValidator(CGenericValidator&& rhs) = delete;
 
 public:
-	CGenericValidator(
+	explicit CGenericValidator(
 		unsigned short* val,
 		unsigned short defVal = 0,
 		bool bUseDefOnEmpty = true,
 		wxChar const* errMsg = nullptr);
-	CGenericValidator(short* val, short defVal = 0, bool bUseDefOnEmpty = true, wxChar const* errMsg = nullptr);
-	CGenericValidator(long* val, long defVal = 0, bool bUseDefOnEmpty = true, wxChar const* errMsg = nullptr);
-	CGenericValidator(
+	explicit CGenericValidator(
+		short* val,
+		short defVal = 0,
+		bool bUseDefOnEmpty = true,
+		wxChar const* errMsg = nullptr);
+	explicit CGenericValidator(long* val, long defVal = 0, bool bUseDefOnEmpty = true, wxChar const* errMsg = nullptr);
+	explicit CGenericValidator(
 		double* val,
 		int inPrec = 2,
 		double defVal = 0.0,
@@ -57,8 +61,8 @@ public:
 		double defVal = 0.0,
 		bool bUseDefOnEmpty = true,
 		wxChar const* errMsg = nullptr);
-	CGenericValidator(ARBDate* val, wxChar const* errMsg = nullptr);
-	CGenericValidator(wxDateTime* val, wxChar const* errMsg = nullptr);
+	explicit CGenericValidator(ARBDate* val, wxChar const* errMsg = nullptr);
+	explicit CGenericValidator(wxDateTime* val, wxChar const* errMsg = nullptr);
 	CGenericValidator(CGenericValidator const& rhs);
 	~CGenericValidator()
 	{
@@ -110,7 +114,7 @@ class ARBWIN_API CTrimValidator : public wxGenericValidator
 	CTrimValidator(CTrimValidator&& rhs) = delete;
 
 public:
-	CTrimValidator(
+	explicit CTrimValidator(
 		wxString* valPtr = nullptr,
 		long trimStyle = TRIMVALIDATOR_DEFAULT,
 		wxChar const* errMsg = nullptr); // Message to use when validation fails

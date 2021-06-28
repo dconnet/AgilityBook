@@ -82,7 +82,7 @@ protected:
 class ARB_API ARBConfigAction : public ARBBase
 {
 protected:
-	ARBConfigAction(short configVersion);
+	explicit ARBConfigAction(short configVersion);
 	ARBConfigAction(ARBConfigAction const& rhs);
 	DECLARE_NO_COPY_ACTION(ARBConfigAction)
 

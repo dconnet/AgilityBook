@@ -142,7 +142,7 @@ class ARBCOMMON_API ElementNode : public Element
 {
 protected:
 	ElementNode();
-	ElementNode(std::wstring const& inName);
+	explicit ElementNode(std::wstring const& inName);
 	DECLARE_NO_COPY_IMPLEMENTED(ElementNode);
 
 public:
@@ -411,7 +411,7 @@ class ARBCOMMON_API ElementText : public Element
 {
 protected:
 	ElementText();
-	ElementText(std::wstring const& inText);
+	explicit ElementText(std::wstring const& inText);
 	DECLARE_NO_COPY_IMPLEMENTED(ElementText);
 
 public:

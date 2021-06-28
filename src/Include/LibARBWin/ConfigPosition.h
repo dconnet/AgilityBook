@@ -39,7 +39,7 @@ public:
 		eConfigAll = eConfigNoState | eConfigState
 	};
 
-	CConfigPosition(uint8_t flags);
+	explicit CConfigPosition(uint8_t flags);
 	virtual ~CConfigPosition();
 
 	/**

@@ -79,7 +79,7 @@ public:
 	CTreeCtrl()
 	{
 	}
-	CTreeCtrl(
+	explicit CTreeCtrl(
 		wxWindow* parent,
 		wxWindowID id = wxID_ANY,
 		const wxPoint& pos = wxDefaultPosition,

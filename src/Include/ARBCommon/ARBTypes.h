@@ -194,7 +194,7 @@ public:
 	{
 	}
 
-	ARBVersion(std::wstring inStr);
+	explicit ARBVersion(std::wstring inStr);
 
 	~ARBVersion()
 	{

@@ -36,7 +36,7 @@ class ARB_API ARBDogTrial : public ARBBase
 {
 protected:
 	ARBDogTrial();
-	ARBDogTrial(ARBCalendar const& inCal);
+	explicit ARBDogTrial(ARBCalendar const& inCal);
 	ARBDogTrial(ARBDogTrial const& rhs);
 	ARBDogTrial(ARBDogTrial&& rhs);
 

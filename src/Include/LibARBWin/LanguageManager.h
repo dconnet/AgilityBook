@@ -43,14 +43,11 @@ class ARBWIN_API CLanguageManager
 public:
 	// Must use callback to enable catalogs.
 	// Embedding language MO files is only supported on Windows.
-	CLanguageManager(
-		ILanguageCallback* pCallback,
 #if defined(WIN32)
-		bool bEmbedded
+	CLanguageManager(ILanguageCallback* pCallback, bool bEmbedded);
 #else
-		bool bEmbedded = false
+	explicit CLanguageManager(ILanguageCallback* pCallback, bool bEmbedded = false);
 #endif
-	);
 
 	bool InitLanguage();
 
