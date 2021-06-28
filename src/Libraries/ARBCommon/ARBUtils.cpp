@@ -18,6 +18,7 @@
 #include "stdafx.h"
 #include "ARBCommon/ARBUtils.h"
 
+#include "fmt/format.h"
 #include <wx/config.h>
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
@@ -29,6 +30,31 @@
 
 #if USE_STACKTRACER && defined(WIN32)
 int CStackTracer::fIndent = 0;
+
+
+CStackTracer::CStackTracer(wxString const& msg)
+	: fMsg(msg)
+{
+	fTics = fTickle = GetTickCount();
+	++fIndent;
+	OutputDebugString(fmt::format(L"{:{}s}{}: Enter\n", L" ", fIndent, fMsg.wx_str()).c_str());
+}
+
+
+CStackTracer::~CStackTracer()
+{
+	OutputDebugString(
+		fmt::format(L"{:{}s}{}: Leave [{}]\n", L" ", fIndent, fMsg.wx_str(), GetTickCount() - fTics).c_str());
+	--fIndent;
+}
+
+
+void CStackTracer::Tickle(wxString const& msg)
+{
+	DWORD dw = GetTickCount();
+	OutputDebugString(fmt::format(L"{:{}s}{}: Tickle [{}]\n", L" ", fIndent, msg.wx_str(), dw - fTickle).c_str());
+	fTickle = dw;
+}
 #endif
 
 

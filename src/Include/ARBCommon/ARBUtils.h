@@ -20,8 +20,6 @@
 
 #include "LibwxARBCommon.h"
 
-#include "fmt/format.h"
-
 
 /**
  * Helper to reset wxConfig path
@@ -97,25 +95,9 @@ ARBCOMMON_API bool GetFileTimes(
 class ARBCOMMON_API CStackTracer
 {
 public:
-	CStackTracer(wxString const& msg)
-		: fMsg(msg)
-	{
-		fTics = fTickle = GetTickCount();
-		++fIndent;
-		OutputDebugString(fmt::format(L"{:{}s}{}: Enter\n", L" ", fIndent, fMsg.wx_str()).c_str());
-	}
-	void Tickle(wxString const& msg)
-	{
-		DWORD dw = GetTickCount();
-		OutputDebugString(fmt::format(L"{:{}s}{}: Tickle [{}]\n", L" ", fIndent, msg.wx_str(), dw - fTickle).c_str());
-		fTickle = dw;
-	}
-	~CStackTracer()
-	{
-		OutputDebugString(
-			fmt::format(L"{:{}s}{}: Leave [{}]\n", L" ", fIndent, fMsg.wx_str(), GetTickCount() - fTics).c_str());
-		--fIndent;
-	}
+	CStackTracer(wxString const& msg);
+	~CStackTracer();
+	void Tickle(wxString const& msg);
 
 private:
 	wxString fMsg;
