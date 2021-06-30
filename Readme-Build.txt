@@ -43,6 +43,21 @@ Make sure WXWIN is set to wxWidgets root directory.
     the library is compiled one way and the users do something different.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
+---
+diff --git a/src/common/prntbase.cpp b/src/common/prntbase.cpp
+index af5a731807..fd0651f164 100644
+--- a/src/common/prntbase.cpp
++++ b/src/common/prntbase.cpp
+@@ -1058,7 +1058,7 @@ void wxPreviewCanvas::OnMouseWheel(wxMouseEvent& event)
+             else
+                 delta = 50;
+
+-            if ( event.GetWheelRotation() > 0 )
++            if ( event.GetWheelRotation() < 0 )
+                 delta = -delta;
+
+             int newZoom = currentZoom + delta;
+---
 
 To build for VC, see ./build/CompileWX.py
 To build for Mac/Unix, see ./build/setupwx.sh
