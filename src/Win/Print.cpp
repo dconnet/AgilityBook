@@ -561,12 +561,15 @@ std::wstring CPrintRuns::GetFieldText(
 			if (ARBScoringType::ByOpenClose == inRun->GetScoring().GetType())
 			{
 				double sct2 = inRun->GetScoring().GetSCT2();
-				if (0.0 < sct && 0.0 < sct2)
-					fmt::format_to(text, L"{} / {}", ARBDouble::ToString(sct), ARBDouble::ToString(sct2));
-				else if (0.0 < sct)
-					fmt::format_to(text, L"{} /   ", ARBDouble::ToString(sct));
+				if (0.0 < sct)
+					fmt::format_to(text, L"{}", ARBDouble::ToString(sct));
 				else
-					fmt::format_to(text, L"/");
+					fmt::format_to(text, L"  ");
+				fmt::format_to(text, L" / ");
+				if (0.0 < sct2)
+					fmt::format_to(text, L"{}", ARBDouble::ToString(sct2));
+				else
+					fmt::format_to(text, L"  ");
 			}
 			else if (0.0 < sct)
 				fmt::format_to(text, L"{}", ARBDouble::ToString(sct));
