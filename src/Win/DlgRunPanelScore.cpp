@@ -409,7 +409,7 @@ CDlgRunPanelScore::CDlgRunPanelScore(
 #ifdef __WXMAC__
 		wxSize(wxDLG_UNIT_X(this, 50), -1), // Just not wide enough on a Mac...
 #else
-		wxSize(wxDLG_UNIT_X(this, 25), -1),
+		wxSize(wxDLG_UNIT_X(this, 30), -1),
 #endif
 		0,
 		nullptr,
