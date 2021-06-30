@@ -557,9 +557,19 @@ std::wstring CPrintRuns::GetFieldText(
 	case CODE_SCT:
 		if (inRun)
 		{
-			double val = inRun->GetScoring().GetSCT();
-			if (0.0 < val)
-				fmt::format_to(text, L"{}", ARBDouble::ToString(val));
+			double sct = inRun->GetScoring().GetSCT();
+			if (ARBScoringType::ByOpenClose == inRun->GetScoring().GetType())
+			{
+				double sct2 = inRun->GetScoring().GetSCT2();
+				if (0.0 < sct && 0.0 < sct2)
+					fmt::format_to(text, L"{} / {}", ARBDouble::ToString(sct), ARBDouble::ToString(sct2));
+				else if (0.0 < sct)
+					fmt::format_to(text, L"{} /   ", ARBDouble::ToString(sct));
+				else
+					fmt::format_to(text, L"/");
+			}
+			else if (0.0 < sct)
+				fmt::format_to(text, L"{}", ARBDouble::ToString(sct));
 		}
 		break;
 	case CODE_YARDS:
