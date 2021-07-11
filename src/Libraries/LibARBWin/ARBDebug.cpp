@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-07-11 Added compiled-at info, use wxGetLibraryVersionInfo for wx version
  * 2019-01-31 Moved from ARB.
  * 2018-12-16 Convert to fmt.
  * 2018-01-28 Created
@@ -27,6 +28,7 @@
 #include <wx/platinfo.h>
 #include <wx/stdpaths.h>
 #include <wx/string.h>
+#include <wx/utils.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -190,10 +192,13 @@ std::wstring ARBDebug::GetSystemInfo(wxWindow const* pWindow, CVersionNum const&
 			fmt::format_to(str, L"{}\n", ver.GetVersionString());
 		else
 			fmt::format_to(str, L"{}\n", _("Unable to determine version information").wx_str());
+
+		fmt::format_to(str, L"Compiled at {} {}\n", StringUtil::stringW(std::string(__DATE__)), StringUtil::stringW(std::string(__TIME__)));
 	}
 
 	// wxWidgets
-	fmt::format_to(str, L"{}\n", wxVERSION_STRING);
+	auto info = wxGetLibraryVersionInfo();
+	fmt::format_to(str, L"\n{}\n", info.GetDescription().wx_str());
 
 	return fmt::to_string(str);
 }
