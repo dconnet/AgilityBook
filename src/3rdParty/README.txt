@@ -23,7 +23,7 @@ DevNote: When updating, update .../res/LibFmt.rc2 with version number and copyri
 - http://fmtlib.net/dev/index.html
 - Only README.rst, LICENSE.rst, include, src
 
-LibTidyHtml: tidy v5.7.28: My wrapper to hide tidy
+LibTidyHtml: tidy v5.8.0: My wrapper to hide tidy
 .../LibTidyHtml/
 DevNote: When updating, update .../res/LibTidyHtml.rc2 with version number and copyright
 - https://github.com/htacg/tidy-html5/releases

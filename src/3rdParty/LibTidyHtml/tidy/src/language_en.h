@@ -78,10 +78,16 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "This option specifies what level of accessibility checking, if any, "
         "that Tidy should perform. "
         "<br/>"
-        "Level <var>0 (Tidy Classic)</var> is equivalent to Tidy Classic's accessibility "
-        "checking. "
+        "Level <var>0 (Tidy Classic)</var> performs no additional accessibility checking. "
         "<br/>"
-        "For more information on Tidy's accessibility checking, visit "
+        "Level <var>1 (Priority 1 Checks)</var> performs the Priority Level 1 checks."
+        "<br/>"
+        "Level <var>2 (Priority 2 Checks)</var> performs the Priority Level 1 and 2 checks."
+        "<br/>"
+        "Level <var>3 (Priority 3 Checks)</var> performs the Priority Level 1, 2, and 3 checks."
+        "<br/>"
+        "For more information on Tidy's accessibility checking, including the specific "
+        "checks that are made for each Priority Level, please visit "
         "<a href=\"http://www.html-tidy.org/accessibility/\"> Tidy's Accessibility Page</a>. "
     },
     {/* Important notes for translators:
@@ -485,7 +491,7 @@ static languageDefinition language_en = { whichPluralForm_en, {
         "for HTML5 document types, and <var>yes</var> for all other document "
         "types. "
         "<br/>"
-        "HTML has abandonded SGML comment syntax, and allows adjacent hypens "
+        "HTML has abandoned SGML comment syntax, and allows adjacent hyphens "
         "for all versions of HTML, although XML and XHTML do not. If you plan "
         "to support older browsers that require SGML comment syntax, then "
         "consider setting this value to <var>yes</var>."
@@ -786,9 +792,9 @@ static languageDefinition language_en = { whichPluralForm_en, {
       - The strings "Tidy" and "HTML Tidy" are the program name and must not
       be translated. */
         TidyMakeBare,                 0,
-        "This option specifies if Tidy should strip Microsoft specific HTML "
-        "from Word 2000 documents, and output spaces rather than non-breaking "
-        "spaces where they exist in the input. "
+        "This option specifies if Tidy should replace smart quotes and em dashes with "
+        "ASCII, and output spaces rather than non-breaking "
+        "spaces, where they exist in the input. "
     },
     {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
@@ -1117,7 +1123,7 @@ static languageDefinition language_en = { whichPluralForm_en, {
       be translated. */
         TidyQuoteAmpersand,           0,
         "This option specifies if Tidy should output unadorned <code>&amp;</code> "
-        "characters as <code>&amp;amp;</code>. "
+        "characters as <code>&amp;amp;</code>, in legacy doctypes only. "
     },
     {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
@@ -1492,7 +1498,7 @@ static languageDefinition language_en = { whichPluralForm_en, {
       - The strings "Tidy" and "HTML Tidy" are the program name and must not
       be translated. */
         TidyWrapPhp,                  0,
-        "This option specifies if Tidy should line wrap text contained within PHP "
+        "This option specifies if Tidy should add a new line after a PHP "
         "pseudo elements, which look like: <code>&lt;?php ... ?&gt;</code>. "
     },
     {/* Important notes for translators:
@@ -1504,11 +1510,8 @@ static languageDefinition language_en = { whichPluralForm_en, {
       - The strings "Tidy" and "HTML Tidy" are the program name and must not
       be translated. */
         TidyWrapScriptlets,           0,
-        "This option specifies if Tidy should line wrap string literals that "
-        "appear in script attributes. "
-        "<br/>"
-        "Tidy wraps long script string literals by inserting a backslash character "
-        "before the line break. "
+        "This option specifies if Tidy should line wrap string literals assigned "
+        "to element event handler attributes, such as element.onmouseover()."
     },
     {/* Important notes for translators:
       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and
@@ -2055,6 +2058,7 @@ static languageDefinition language_en = { whichPluralForm_en, {
     { WHITE_IN_URI,                 0,   "%s discarding whitespace in URI reference"                               },
     { XML_DECLARATION_DETECTED,     0,   "An XML declaration was detected. Did you mean to use input-xml?"         },
     { XML_ID_SYNTAX,                0,   "%s ID \"%s\" uses XML ID syntax"                                         },
+    { BLANK_TITLE_ELEMENT,          0,   "blank 'title' element"                                                   },
 
 
     /***************************************
@@ -2337,7 +2341,7 @@ static languageDefinition language_en = { whichPluralForm_en, {
         " of \"--some-option <value>\", for example, \"--indent-with-tabs yes\".\n"
         "\n"
         " You can also specify a file containing configuration options with the \n"
-        " -options <file> directive, or in one or more files specific to your \n"
+        " -config <file> directive, or in one or more files specific to your \n"
         " environment (see next section). \n"
         "\n"
         " For a list of all configuration options, use \"-help-config\" or refer\n"

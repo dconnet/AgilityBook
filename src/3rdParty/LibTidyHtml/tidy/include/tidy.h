@@ -548,10 +548,10 @@ TIDY_EXPORT int TIDY_CALL         tidySetOutCharEncoding(TidyDoc tdoc,  /**< The
  ** @note In general, you should expect that options you set should stay set.
  **       This isn't always the case, though, because Tidy will adjust options
  **       for internal use during the lexing, parsing, cleaning, and printing
- **       phases, but will restore them after the printing process. If you
- **       require access to user configuration values at any time between the
- **       tidyParseXXX() process and the tidySaveXXX() process, make sure to
- **       keep your own copy.
+ **       phases. If you require access to user configuration values at any
+ **       time after the tidyParseXXX() process, make sure to keep your own
+ **       copy, or use tidyOptResetToSnapshot() when you no longer need to
+ **       use any other tidy functions.
  ** @{
  ******************************************************************************/
 
@@ -1568,7 +1568,9 @@ TIDY_EXPORT int TIDY_CALL         tidyParseFile(TidyDoc tdoc,    /**< The tidy d
  */
 TIDY_EXPORT int TIDY_CALL         tidyParseStdin( TidyDoc tdoc );
 
-/** Parse markup in given string.
+/** Parse markup in given string. Note that the supplied string is of type
+ ** `ctmbstr` based on `char` and therefore doesn't support the use of
+ ** UTF-16 strings. Use `tidyParseBuffer()` if parsing multibyte strings.
  ** @result Returns the highest of `2` indicating that errors were present in
  **         the document, `1` indicating warnings, and `0` in the case of
  **         everything being okay.
@@ -1914,7 +1916,8 @@ TIDY_EXPORT Bool TIDY_CALL tidyNodeHasText(TidyDoc tdoc, /**< The document to qu
                                            TidyNode tnod /**< The node to query. */
                                            );
 
-/** Gets the text of a node and places it into the given TidyBuffer.
+/** Gets the text of a node and places it into the given TidyBuffer. The text will be terminated with a `TidyNewline`.
+ ** If you want the raw utf-8 stream see `tidyNodeGetValue()`.
  ** @result Returns a bool indicating success or not.
  */
 TIDY_EXPORT Bool TIDY_CALL tidyNodeGetText(TidyDoc tdoc,   /**< The document to query. */
