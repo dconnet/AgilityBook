@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-07-20 Fix deletion of multiple selection.
  * 2021-01-07 Separated from DlgDog.cpp
  * 2013-05-18 Modifying titles caused loss of view filtering.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -310,14 +311,17 @@ void CDlgDogPanelTitles::DoEdit()
 
 void CDlgDogPanelTitles::DoDelete()
 {
-	long i = m_ctrlList->GetFirstSelected();
-	if (0 <= i)
+	std::vector<long> indices;
+	if (0 < m_ctrlList->GetSelection(indices))
 	{
-		CDlgDogDataTitlePtr pTitle = GetTitleData(i);
-		ARBConfigVenuePtr venue;
-		m_pDoc->Book().GetConfig().GetVenues().FindVenue(pTitle->GetData()->GetVenue(), &venue);
-		m_Titles.DeleteTitle(venue, pTitle->GetData());
-		DeleteListItem(i);
+		for (std::vector<long>::reverse_iterator i = indices.rbegin(); i != indices.rend(); ++i)
+		{
+			CDlgDogDataTitlePtr pTitle = GetTitleData(*i);
+			ARBConfigVenuePtr venue;
+			m_pDoc->Book().GetConfig().GetVenues().FindVenue(pTitle->GetData()->GetVenue(), &venue);
+			m_Titles.DeleteTitle(venue, pTitle->GetData());
+			DeleteListItem(*i);
+		}
 		UpdateControls();
 	}
 }

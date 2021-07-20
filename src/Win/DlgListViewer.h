@@ -167,6 +167,7 @@ public:
 private:
 	bool Create(std::wstring const& inCaption, wxWindow* pParent = nullptr);
 	void FinishCreate();
+	void UpdateControls();
 
 	CReportListCtrl* m_ctrlList;
 	wxButton* m_ctrlCopy;
@@ -175,6 +176,5 @@ private:
 	int m_SortColumn;
 
 	void OnColumnClick(wxListEvent& evt);
-	void OnItemSelected(wxListEvent& evt);
 	void OnCopy(wxCommandEvent& evt);
 };

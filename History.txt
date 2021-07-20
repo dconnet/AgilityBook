@@ -1,6 +1,8 @@
 6/30/2021: v3.6.1.<development>
 - New features / Enhancements:
   - Add gamble closing time to run printout.
+- Bug fixes:
+  - Fix deletion of multiple selected titles in dog properties.
 
 6/18/2021: v3.6.0.116
 - New features / Enhancements:

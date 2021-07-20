@@ -43,7 +43,7 @@ public:
 protected:
 	void DeleteListItem(long index);
 
-	virtual void DoCreate(bool hasMultiSel, bool hasImageList);
+	virtual void DoCreate(bool isSingleSel, bool hasImageList);
 	virtual void DoInitList() = 0;
 	virtual void UpdateControls();
 
@@ -58,8 +58,6 @@ protected:
 	wxButton* m_btnDelete;
 	wxBoxSizer* m_sizerButtons;
 
-	void OnItemSelected(wxListEvent& evt);
-	void OnItemUnselected(wxListEvent& evt);
 	void OnItemActivated(wxListEvent& evt);
 	void OnKeyDown(wxKeyEvent& evt);
 	void OnNew(wxCommandEvent& evt);

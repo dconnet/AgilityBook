@@ -1438,7 +1438,10 @@ bool CDlgListViewer::Create(std::wstring const& inCaption, wxWindow* pParent)
 		CReportListCtrl::SortHeader::Sort,
 		true);
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgListViewer::OnColumnClick, this);
-	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgListViewer::OnItemSelected, this);
+	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, [this](wxListEvent& evt) { UpdateControls(); });
+	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_DESELECTED, [this](wxListEvent& evt) { UpdateControls(); });
+	// Listen to focused because of https://trac.wxwidgets.org/ticket/4541
+	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_FOCUSED, [this](wxListEvent& evt) { UpdateControls(); });
 	m_ctrlList->SetHelpText(_("HIDC_LIST_VIEWER"));
 	m_ctrlList->SetToolTip(_("HIDC_LIST_VIEWER"));
 
@@ -1479,6 +1482,13 @@ void CDlgListViewer::FinishCreate()
 	m_ctrlList->SortItems(CompareRows, &sortInfo);
 	m_ctrlList->SetColumnSort(std::abs(m_SortColumn) - 1, m_SortColumn);
 	m_ctrlCopy->Enable(0 < m_ctrlList->GetItemCount());
+}
+
+
+void CDlgListViewer::UpdateControls()
+{
+	int items = std::max(m_ctrlList->GetSelectedItemCount(), m_ctrlList->GetItemCount());
+	m_ctrlCopy->Enable(0 < items);
 }
 
 
@@ -1546,11 +1556,4 @@ void CDlgListViewer::OnCopy(wxCommandEvent& evt)
 		clpData.AddData(table);
 		clpData.CommitData();
 	}
-}
-
-
-void CDlgListViewer::OnItemSelected(wxListEvent& evt)
-{
-	int items = std::max(m_ctrlList->GetSelectedItemCount(), m_ctrlList->GetItemCount());
-	m_ctrlCopy->Enable(0 < items);
 }

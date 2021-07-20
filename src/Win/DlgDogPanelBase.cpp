@@ -66,12 +66,14 @@ void CDlgDogPanelReportBase::DeleteListItem(long index)
 }
 
 
-void CDlgDogPanelReportBase::DoCreate(bool hasMultiSel, bool hasImageList)
+void CDlgDogPanelReportBase::DoCreate(bool isSingleSel, bool hasImageList)
 {
-	m_ctrlList = new CReportListCtrl(this, hasMultiSel, CReportListCtrl::SortHeader::Sort, true, hasImageList);
+	m_ctrlList = new CReportListCtrl(this, isSingleSel, CReportListCtrl::SortHeader::Sort, true, hasImageList);
 	// TODO: not getting selected when selecting 2nd item via shift-click (wx bug)
-	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgDogPanelReportBase::OnItemSelected, this);
-	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_DESELECTED, &CDlgDogPanelReportBase::OnItemUnselected, this);
+	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, [this](wxListEvent& evt) { UpdateControls(); });
+	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_DESELECTED, [this](wxListEvent& evt) { UpdateControls(); });
+	// Listen to focused because of https://trac.wxwidgets.org/ticket/4541
+	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_FOCUSED, [this](wxListEvent& evt) { UpdateControls(); });
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgDogPanelReportBase::OnItemActivated, this);
 	m_ctrlList->Bind(wxEVT_KEY_DOWN, &CDlgDogPanelReportBase::OnKeyDown, this);
 	m_reportColumn.Initialize(this, m_ctrlList);
@@ -116,18 +118,6 @@ void CDlgDogPanelReportBase::UpdateControls()
 		m_btnDelete->Enable(items.size() == 1);
 	else
 		m_btnDelete->Enable(items.size() > 0);
-}
-
-
-void CDlgDogPanelReportBase::OnItemSelected(wxListEvent& evt)
-{
-	UpdateControls();
-}
-
-
-void CDlgDogPanelReportBase::OnItemUnselected(wxListEvent& evt)
-{
-	UpdateControls();
 }
 
 
