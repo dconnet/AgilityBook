@@ -87,7 +87,7 @@ bool CIconList::Create(wxWindow const* pWindow)
 	m_idxARB = Add(CImageManager::Get()->GetIcon(ImageMgrApp));
 	m_idxEmpty = Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
 
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 	struct
 	{
 		int* index;

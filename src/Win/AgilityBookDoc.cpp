@@ -219,7 +219,7 @@ wxBEGIN_EVENT_TABLE(CAgilityBookDoc, wxDocument)
 	EVT_UPDATE_UI(ID_VIEW_TABLE_IN_YPS, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_RUNTIME_IN_OPS, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_LIFETIME_EVENTS, CAgilityBookDoc::OnUpdateCmd)
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 	EVT_MENU(ID_HELP_DEBUG, CAgilityBookDoc::OnHelpDebug)
 #endif
 wxEND_EVENT_TABLE()
@@ -2364,7 +2364,7 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 }
 
 
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 void CAgilityBookDoc::OnHelpDebug(wxCommandEvent& evt)
 {
 	wxWindow* parent = wxGetApp().GetTopWindow();

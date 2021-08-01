@@ -930,7 +930,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 	m_ctrlType->InsertColumn(0, _("IDS_COL_RUNTYPE"));
 	m_ctrlType->InsertColumn(1, _("IDS_COL_DESCRIPTION"));
 	int index;
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 	for (index = 0; index < IO_MAX; ++index)
 	{
 		assert(sc_FieldNames[index].index == index);

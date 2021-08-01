@@ -108,7 +108,7 @@ bool GetVersionsFilename(wxString const& filename, wxString& fullpath)
 	fullpath.clear();
 
 	bool bUseLocal = false;
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 	/// ARB_WWW_ROOT points to the directory where version2.xml lives.
 	wxString path;
 	if (wxGetEnv(L"ARB_WWW_ROOT", &path))
@@ -133,7 +133,7 @@ bool GetVersionsFilename(wxString const& filename, wxString& fullpath)
 
 void GotoUrl(wxString const& url)
 {
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 	wxMessageBox(url, L"DEBUG - Goto url");
 #else
 	wxLaunchDefaultBrowser(url);

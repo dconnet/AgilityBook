@@ -28,7 +28,7 @@
 #include <wx/mstream.h>
 #include <sstream>
 
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 #include <assert.h>
 #endif
 
@@ -284,7 +284,7 @@ bool CClipboardDataWriter::AddData(ARBClipFormat clpFmt, std::wstring const& inD
 				lenHeader + lenStartHtml + lenStartFragment + lenData + lenEndFragment + lenEndHtml);
 			fmt::format_to(out, "StartFragment:{:08d}\r\n", lenHeader + lenStartHtml + lenStartFragment);
 			fmt::format_to(out, "EndFragment:{:08d}\r\n", lenHeader + lenStartHtml + lenStartFragment + lenData);
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 			assert(out.size() == static_cast<std::string::size_type>(lenHeader));
 #endif
 			fmt::format_to(out, "{}{}{}{}{}", startHtml, startFragment, data, endFragment, endHtml);

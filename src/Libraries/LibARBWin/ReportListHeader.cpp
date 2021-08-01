@@ -151,7 +151,7 @@ void CReportListHeader::CreateColumns(
 
 	// Initialize
 
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 	for (long i = 0; i < static_cast<long>(inColumns.size()); ++i)
 		assert(i == inColumns[i].index);
 #endif

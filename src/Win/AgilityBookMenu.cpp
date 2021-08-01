@@ -175,7 +175,7 @@ static const std::vector<CMenuHelper::ItemData> sc_items = {
 	{IdMenuNone, MENU_ITEM, ID_PREV_PANE,             wxITEM_NORMAL, 1, nullptr, arbT("MenuWindowPrev"), arbT("DescWindowPrev"), nullptr},
 
 	{IdMenuNone, MENU_ITEM, 0,                        wxITEM_NORMAL, 0, nullptr, arbT("MenuHelp"), nullptr, nullptr},
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 	{IdMenuNone, MENU_ITEM, ID_HELP_DEBUG,            wxITEM_NORMAL, 1, nullptr, L"Debug: Test Feature", L"Debug Helper", nullptr},
 #endif
 	{IdMenuNone, MENU_ITEM, ID_HELP_UPDATE,           wxITEM_NORMAL, 1, nullptr, arbT("MenuHelpUpdates"), arbT("DescHelpUpdates"), nullptr},
@@ -375,7 +375,7 @@ static const std::vector<CMenuHelper::ItemAccel> sc_accels = {
 	{76, ID_WINDOW_SPLIT,            false, false, false, 0},
 	{77, ID_NEXT_PANE,               false, false, false, WXK_F6},
 	{78, ID_PREV_PANE,               false, false,  true, WXK_F6},
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 	{79, ID_HELP_DEBUG,              false, false, false, 0},
 #endif
 	{80, ID_HELP_UPDATE,             false, false, false, 0},

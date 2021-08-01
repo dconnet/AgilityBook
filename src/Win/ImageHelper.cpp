@@ -107,7 +107,7 @@ bool CImageHelper::DoCreateBitmap(
 	const wxSize& size,
 	wxBitmap& outBmp)
 {
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 	bool bCheckBmp = true;
 #endif
 
@@ -281,7 +281,7 @@ bool CImageHelper::DoCreateBitmap(
 
 	else
 	{
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 		// clang-format off
 		if (id == wxART_FILE_SAVE_AS
 		|| id == wxART_INFORMATION
@@ -302,7 +302,7 @@ bool CImageHelper::DoCreateBitmap(
 #endif
 	}
 
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 	if (bCheckBmp)
 	{
 		assert(outBmp.IsOk());

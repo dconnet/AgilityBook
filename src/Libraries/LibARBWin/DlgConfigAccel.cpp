@@ -561,7 +561,7 @@ void CDlgConfigAccel::LoadData()
 
 	m_ctrlItems->DeleteAllItems();
 	int lastMenuId = -1;
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 	std::set<int> inUseId;
 	std::set<int> inUseMenuId;
 #endif
@@ -586,7 +586,7 @@ void CDlgConfigAccel::LoadData()
 						-1));
 			}
 
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 			inUseId.insert(m_menuItems[i].m_data->id);
 			auto iterMenuId = inUseMenuId.find(m_menuItems[i].m_data->menuId);
 			// Make sure we have a description for each menu.
@@ -625,7 +625,7 @@ void CDlgConfigAccel::LoadData()
 				count++));
 		}
 	}
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 	// Sanity checking
 	// All the accelerators must be in a menu (can't get the text otherwise)
 	for (CMenuHelper::ItemAccel const& item : m_accelData)

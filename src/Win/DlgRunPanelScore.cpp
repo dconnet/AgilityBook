@@ -1190,7 +1190,7 @@ bool CDlgRunPanelScore::Save()
 	int index = m_ctrlVenues->GetSelection();
 	ARBConfigVenuePtr pVenue = GetVenueData(index)->m_Venue;
 
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 	index = m_ctrlDivisions->GetSelection();
 	std::wstring curDiv = StringUtil::stringW(m_ctrlDivisions->GetString(index));
 
@@ -1223,7 +1223,7 @@ bool CDlgRunPanelScore::Save()
 		m_Run->SetDogsQd(m_DogsQd);
 
 		// TODO: Remove debugging code
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 	{
 		assert(!!pEvent.get());
 		ARBConfigScoringPtr scoring;

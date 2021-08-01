@@ -667,7 +667,7 @@ bool ARBConfigScoring::Save(ElementNodePtr const& ioTree) const
 	{
 	case ARBScoringStyle::Unknown:
 		assert(0);
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 #if defined(__WXWINDOWS__)
 		wxLogError(L"%s", Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TYPE));
 #else
@@ -890,7 +890,7 @@ bool ARBConfigScoringList::FindEvent(
 		pEvent = *(items.begin());
 	else
 	{
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 		size_t wildcard = 0;
 #endif
 		ARBVector<ARBConfigScoringPtr>::iterator iter;
@@ -901,7 +901,7 @@ bool ARBConfigScoringList::FindEvent(
 				iter = items.erase(iter);
 			else
 			{
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 				if (pScoring->GetDivision() == WILDCARD_DIVISION || pScoring->GetLevel() == WILDCARD_LEVEL)
 					++wildcard;
 #endif
@@ -914,7 +914,7 @@ bool ARBConfigScoringList::FindEvent(
 		{
 			// Umm, this means they have items with overlapping ranges...
 			// Which may occur when creating the methods.
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 			// If date is not valid, we will have multiple items.
 			if (inDate.IsValid() && items.size() - wildcard > 1)
 			{

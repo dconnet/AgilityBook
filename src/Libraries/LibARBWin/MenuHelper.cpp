@@ -438,7 +438,7 @@ void CMenuHelper::CreateMenu(wxFrame* pFrame, wxMenu* mruMenu)
 	LoadAccelerators();
 	CreateAccelTable(pFrame);
 
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 	// Sanity checking
 	// Menu id must be >=0
 	for (size_t i = 0; i < m_menuItems.size(); ++i)
@@ -614,7 +614,7 @@ void CMenuHelper::UpdateMenu(bool bLoadAccelerators)
 bool CMenuHelper::VerifyMenuShortcuts(wxMenu* menu, int level)
 {
 	bool hasDups = false;
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 	if (!menu)
 		return hasDups;
 	std::map<wchar_t, wxString> shortcuts;

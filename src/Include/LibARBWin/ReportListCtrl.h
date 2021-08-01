@@ -166,7 +166,7 @@ public:
 			return;
 		if (!(0 <= newIndex && newIndex < static_cast<long>(m_items.size())))
 			return;
-#ifdef _DEBUG
+#ifdef __WXDEBUG__
 		wxLogNull log; // SetItemPtrData always returns false. But works. Shutup.
 #endif
 		wxUIntPtr data1 = GetItemData(oldIndex);

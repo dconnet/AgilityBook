@@ -1818,7 +1818,7 @@ void CAgilityBookOptions::SetMRUFileCount(long nFiles)
 
 bool CAgilityBookOptions::GetAutoUpdateCheck()
 {
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__WXDEBUG__)
 	return false;
 #else
 	bool val = sc_AutoUpdateCheck;
