@@ -285,7 +285,7 @@ void CMainFrame::OnDPIChanged(wxDPIChangedEvent& evt)
 	RedrawWindow(hWnd, NULL, NULL, RDW_ERASE | RDW_INVALIDATE);
 #endif
 
-#if defined(_DEBUG) || defined(__WXDEBUG__)
+#ifdef defined(WIN32) && defined(_DEBUG)
 	wxSize old = evt.GetOldDPI();
 	wxSize newsz = evt.GetNewDPI();
 	std::wstring str = fmt::format(L"DPI Old: {},{}  New: {},{}\n", old.x, old.y, newsz.x, newsz.y);
