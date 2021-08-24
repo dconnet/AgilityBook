@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-08-24 Make StackTracer work on non-Win32 platforms.
  * 2019-08-15 Added GetARBResourceDir
  * 2019-06-28 Fix issue with change nBackups to less than existing backups.
  * 2018-10-30 Moved some utils from ARBWin.
@@ -28,32 +29,34 @@
 #endif
 
 
-#if USE_STACKTRACER && defined(WIN32)
-int CStackTracer::fIndent = 0;
+#if USE_STACKTRACER
+int CStackTracer::m_indent = 0;
 
 
 CStackTracer::CStackTracer(wxString const& msg)
-	: fMsg(msg)
+	: m_msg(msg)
+	, m_stopwatch()
+	, m_tickle(0)
 {
-	fTics = fTickle = GetTickCount();
-	++fIndent;
-	OutputDebugString(fmt::format(L"{:{}s}{}: Enter\n", L" ", fIndent, fMsg.wx_str()).c_str());
+	++m_indent;
+	wxLogDebug("%*s%s: Enter", m_indent, " ", m_msg);
+	m_stopwatch.Start();
 }
 
 
 CStackTracer::~CStackTracer()
 {
-	OutputDebugString(
-		fmt::format(L"{:{}s}{}: Leave [{}]\n", L" ", fIndent, fMsg.wx_str(), GetTickCount() - fTics).c_str());
-	--fIndent;
+	m_stopwatch.Pause();
+	wxLogDebug("%*s%s: Leave [%ld]", m_indent, " ", m_msg, m_stopwatch.Time());
+	--m_indent;
 }
 
 
 void CStackTracer::Tickle(wxString const& msg)
 {
-	DWORD dw = GetTickCount();
-	OutputDebugString(fmt::format(L"{:{}s}{}: Tickle [{}]\n", L" ", fIndent, msg.wx_str(), dw - fTickle).c_str());
-	fTickle = dw;
+	long t = m_stopwatch.Time();
+	wxLogDebug("%*s%s: Tickle [%ld]", m_indent, " ", msg, t - m_tickle);
+	m_tickle = t;
 }
 #endif
 

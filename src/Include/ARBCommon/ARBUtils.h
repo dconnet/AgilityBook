@@ -14,6 +14,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-08-24 Make StackTracer work on non-Win32 platforms.
  * 2019-08-15 Added GetARBResourceDir
  * 2018-10-30 Moved some utils from ARBWin.
  */
@@ -86,12 +87,8 @@ ARBCOMMON_API bool GetFileTimes(
 #endif
 #endif
 
-#if USE_STACKTRACER && defined(WIN32)
-// clang-format off
-#pragma warning(push)
-#pragma warning (disable : 26447) // The function is declared 'noexcept' but calls function 'wx_str()' which may throw exceptions(f.6).
-#pragma warning (disable : 28159) // Consider using 'GetTickCount64' instead of 'GetTickCount'. Reason: GetTickCount overflows roughly every 49 days.  Code that does not take that into account can loop indefinitely.  GetTickCount64 operates on 64 bit values and does not have that problem
-// clang-format on
+#if USE_STACKTRACER
+
 class ARBCOMMON_API CStackTracer
 {
 public:
@@ -100,10 +97,10 @@ public:
 	void Tickle(wxString const& msg);
 
 private:
-	wxString fMsg;
-	DWORD fTics;
-	DWORD fTickle;
-	static int fIndent;
+	wxString m_msg;
+	wxStopWatch m_stopwatch;
+	long m_tickle;
+	static int m_indent;
 
 	CStackTracer() = delete;
 	CStackTracer(CStackTracer const&) = delete;
@@ -111,7 +108,6 @@ private:
 	CStackTracer& operator=(CStackTracer const&) = delete;
 	CStackTracer& operator=(CStackTracer&&) = delete;
 };
-#pragma warning(pop)
 
 #define STACK_TRACE(name, msg)  CStackTracer name(msg)
 #define STACK_TICKLE(name, msg) name.Tickle(msg)
