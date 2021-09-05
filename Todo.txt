@@ -1,4 +1,7 @@
-Last Updated: 2021-1-14
+Last Updated: 2021-9-5
+
+- Add a way to print (and export) judge list. Should include Location/Clubs too
+  (all the 'Notes' items). Include option for 'all' or 'has a note'.
 
 - New file format? https://en.wikipedia.org/wiki/Open_Packaging_Conventions
 
