@@ -37,6 +37,9 @@ public:
 	std::wstring CurrentSelection() const;
 
 private:
+	wxPanel* CreateBasic();
+	wxPanel* CreateAdvanced();
+	void CreateButtonSizer(wxSizer* sizer);
 	void UpdateImage(int index);
 	void UpdateData();
 
@@ -124,7 +127,6 @@ private:
 
 	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
-	void OnSelchangeName(wxCommandEvent& evt);
 	void OnNewItem(wxCommandEvent& evt);
 	void OnDeleteItem(wxCommandEvent& evt);
 	void OnClickedJudgeVisible(wxCommandEvent& evt);

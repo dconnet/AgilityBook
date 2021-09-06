@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-06 13:23-0700\n"
-"PO-Revision-Date: 2021-09-06 13:23-0700\n"
+"POT-Creation-Date: 2021-09-06 16:39-0700\n"
+"PO-Revision-Date: 2021-09-06 16:39-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -154,7 +154,7 @@ msgstr "Code"
 #: CalSites/DlgCalendarQueryDetail.cpp:120 CalSites/DlgQueryDetail.cpp:85
 #: Win/AgilityBookCalendarView.cpp:643 Win/DlgAssignColumns.cpp:217
 #: Win/DlgAssignColumns.cpp:317 Win/DlgAssignColumns.cpp:374
-#: Win/DlgAssignColumns.cpp:458 Win/DlgInfoNote.cpp:333 Win/DlgListCtrl.cpp:448
+#: Win/DlgAssignColumns.cpp:458 Win/DlgInfoNote.cpp:386 Win/DlgListCtrl.cpp:448
 #: Win/DlgListViewer.cpp:975 Win/DlgListViewer.cpp:1013
 #: Win/DlgListViewer.cpp:1025 Win/DlgListViewer.cpp:1174
 #: Win/DlgListViewer.cpp:1241 Win/DlgListViewer.cpp:1294 Win/Print.cpp:262
@@ -1038,7 +1038,7 @@ msgstr "Aperçu avant impression"
 msgid "Agility Record Book file"
 msgstr "fichier de Agility Record Book"
 
-#: Win/AgilityBookCalendarListView.cpp:467 Win/AgilityBookDoc.cpp:1896
+#: Win/AgilityBookCalendarListView.cpp:467 Win/AgilityBookDoc.cpp:1907
 #: Win/AgilityBookRunsView.cpp:1177 Win/AgilityBookTrainingView.cpp:300
 #: Win/AgilityBookTreeView.cpp:182
 msgid "IDS_CANNOT_FIND"
@@ -1076,7 +1076,7 @@ msgstr "Dernier date"
 
 #: Win/AgilityBookCalendarView.cpp:644 Win/DlgAssignColumns.cpp:214
 #: Win/DlgAssignColumns.cpp:320 Win/DlgAssignColumns.cpp:368
-#: Win/DlgInfoNote.cpp:327 Win/DlgListCtrl.cpp:449 Win/DlgListViewer.cpp:969
+#: Win/DlgInfoNote.cpp:380 Win/DlgListCtrl.cpp:449 Win/DlgListViewer.cpp:969
 #: Win/DlgListViewer.cpp:1007 Win/DlgListViewer.cpp:1019
 #: Win/DlgListViewer.cpp:1175 Win/DlgListViewer.cpp:1242
 #: Win/DlgListViewer.cpp:1295 Win/DlgListViewer.cpp:1371 Win/DlgTrial.cpp:377
@@ -1092,7 +1092,7 @@ msgstr "Ouverture"
 msgid "IDS_COL_CLOSES"
 msgstr "Fermeture"
 
-#: Win/AgilityBookCalendarView.cpp:647 Win/AgilityBookDoc.cpp:2228
+#: Win/AgilityBookCalendarView.cpp:647 Win/AgilityBookDoc.cpp:2239
 #: Win/DlgAssignColumns.cpp:332 Win/DlgAssignColumns.cpp:342
 #: Win/DlgAssignColumns.cpp:377 Win/DlgAssignColumns.cpp:522
 #: Win/DlgListCtrl.cpp:451
@@ -1299,73 +1299,73 @@ msgstr ""
 "Warning: This file has been modified after it was opened. Are you sure you "
 "want to overwrite any changes?"
 
-#: Win/AgilityBookDoc.cpp:1822 Win/UpdateInfo.cpp:767
+#: Win/AgilityBookDoc.cpp:1833 Win/UpdateInfo.cpp:767
 msgid "IDS_CANNOT_OPEN"
 msgstr "Impossible d'ouvrir fichier '{}' pour ecriture."
 
-#: Win/AgilityBookDoc.cpp:1828
+#: Win/AgilityBookDoc.cpp:1839
 msgid "IDS_INTERNAL_ERROR"
 msgstr "Erreur interne: Fichier pas enregistré."
 
-#: Win/AgilityBookDoc.cpp:1857
+#: Win/AgilityBookDoc.cpp:1868
 msgid "IDS_SEARCH_NOTES"
 msgstr "Notes Recherche"
 
-#: Win/AgilityBookDoc.cpp:2026
+#: Win/AgilityBookDoc.cpp:2037
 msgid "IDS_NO_LINKED_FILES"
 msgstr "Aucun fichier associé trouvé."
 
-#: Win/AgilityBookDoc.cpp:2282
+#: Win/AgilityBookDoc.cpp:2293
 #, fuzzy
 msgid "IDS_FILEPROP_NAME"
 msgstr "File name: {}"
 
-#: Win/AgilityBookDoc.cpp:2285
+#: Win/AgilityBookDoc.cpp:2296
 #, fuzzy
 msgid "IDS_FILEPROP_NAME_READONLY"
 msgstr "[readonly]"
 
-#: Win/AgilityBookDoc.cpp:2288 Win/AgilityBookDoc.cpp:2309
+#: Win/AgilityBookDoc.cpp:2299 Win/AgilityBookDoc.cpp:2320
 #, fuzzy
 msgid "IDS_FILEPROP_NAME_MODIFIED"
 msgstr "[changes pending]"
 
-#: Win/AgilityBookDoc.cpp:2290
+#: Win/AgilityBookDoc.cpp:2301
 #, fuzzy
 msgid "IDS_FILEPROP_SIZE"
 msgstr "File size: {} bytes"
 
-#: Win/AgilityBookDoc.cpp:2298
+#: Win/AgilityBookDoc.cpp:2309
 #, fuzzy
 msgid "IDS_FILEPROP_CREATED"
 msgstr "Created: {}"
 
-#: Win/AgilityBookDoc.cpp:2302
+#: Win/AgilityBookDoc.cpp:2313
 #, fuzzy
 msgid "IDS_FILEPROP_MODIFIED"
 msgstr "Modified: {}"
 
-#: Win/AgilityBookDoc.cpp:2320
+#: Win/AgilityBookDoc.cpp:2331
 #, fuzzy
 msgid "IDS_FILEPROP_CONFIGURATION"
 msgstr "Configuration: {}"
 
-#: Win/AgilityBookDoc.cpp:2326
+#: Win/AgilityBookDoc.cpp:2337
 #, fuzzy
 msgid "IDS_FILEPROP_CONFIGURATION_CURRENT"
 msgstr "Configuration: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2334
+#: Win/AgilityBookDoc.cpp:2345
 #, fuzzy
 msgid "IDS_FILEPROP_VERSION"
 msgstr "Document version: {}"
 
-#: Win/AgilityBookDoc.cpp:2340
+#: Win/AgilityBookDoc.cpp:2351
 #, fuzzy
 msgid "IDS_FILEPROP_VERSION_CURRENT"
 msgstr "Document version: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2352
+#: Win/AgilityBookDoc.cpp:2363
 #, fuzzy
 msgid "IDS_FILEPROP_FILEWRITTEN"
 msgstr ""
@@ -1375,7 +1375,7 @@ msgstr ""
 "Local time: {2}\n"
 "ARB: {3}"
 
-#: Win/AgilityBookDoc.cpp:2360
+#: Win/AgilityBookDoc.cpp:2371
 msgid "IDS_FILE_PROPERTIES"
 msgstr "Propriétés du fichier"
 
@@ -2477,7 +2477,7 @@ msgstr "Epreuve"
 msgid "IDS_COL_HEIGHT"
 msgstr "Catégorie"
 
-#: Win/DlgAssignColumns.cpp:235 Win/DlgInfoNote.cpp:330 Win/DlgListViewer.cpp:972
+#: Win/DlgAssignColumns.cpp:235 Win/DlgInfoNote.cpp:383 Win/DlgListViewer.cpp:972
 #: Win/DlgListViewer.cpp:1010 Win/DlgListViewer.cpp:1022
 #: Win/DlgListViewer.cpp:1176 Win/DlgListViewer.cpp:1243 Win/Print.cpp:264
 msgid "IDS_COL_JUDGE"
@@ -4848,39 +4848,53 @@ msgstr "Information Juge"
 msgid "IDS_INFO_LOCATION"
 msgstr "Information Endroit"
 
-#: Win/DlgInfoNote.cpp:146 Win/DlgInfoNote.cpp:147
+#: Win/DlgInfoNote.cpp:141 Win/DlgInfoNote.cpp:146
+#, fuzzy
+msgid "IDC_INFONOTE_ADVAMCED"
+msgstr "&Expand"
+
+#: Win/DlgInfoNote.cpp:142 Win/DlgInfoNote.cpp:143
+#, fuzzy
+msgid "HIDC_INFONOTE_ADVAMCED"
+msgstr "Switch between information viewing modes"
+
+#: Win/DlgInfoNote.cpp:146
+msgid "IDC_INFONOTE_BASIC"
+msgstr "Collaps&e"
+
+#: Win/DlgInfoNote.cpp:200 Win/DlgInfoNote.cpp:201
 msgid "HIDC_INFONOTE"
 msgstr ""
 "Liste des clubs, des juges ou des endroits de tous vos parcours, plus ceux "
 "créés ici."
 
-#: Win/DlgInfoNote.cpp:150
+#: Win/DlgInfoNote.cpp:204
 msgid "IDC_INFONOTE_NEW"
 msgstr "&Nouveax..."
 
-#: Win/DlgInfoNote.cpp:152 Win/DlgInfoNote.cpp:153
+#: Win/DlgInfoNote.cpp:206 Win/DlgInfoNote.cpp:207
 msgid "HIDC_INFONOTE_NEW"
 msgstr "Créer un nouveau club, un juge ou un endroit."
 
-#: Win/DlgInfoNote.cpp:156
+#: Win/DlgInfoNote.cpp:210
 msgid "IDC_INFONOTE_DELETE"
 msgstr "&Supprimer"
 
-#: Win/DlgInfoNote.cpp:158 Win/DlgInfoNote.cpp:159
+#: Win/DlgInfoNote.cpp:212 Win/DlgInfoNote.cpp:213
 msgid "HIDC_INFONOTE_DELETE"
 msgstr ""
 "Supprimer le club, le juge ou l'endroit sélectionné. Seule les notes seront "
 "supprimées."
 
-#: Win/DlgInfoNote.cpp:161
+#: Win/DlgInfoNote.cpp:215
 msgid "IDC_INFONOTE_VISIBLE"
 msgstr "&Visible dans les listes"
 
-#: Win/DlgInfoNote.cpp:163 Win/DlgInfoNote.cpp:164
+#: Win/DlgInfoNote.cpp:217 Win/DlgInfoNote.cpp:218
 msgid "HIDC_INFONOTE_VISIBLE"
 msgstr "Afficher ou cacher cet article dans des listes sélection."
 
-#: Win/DlgInfoNote.cpp:174 Win/DlgInfoNote.cpp:175
+#: Win/DlgInfoNote.cpp:228 Win/DlgInfoNote.cpp:229
 msgid "HIDC_INFONOTE_COMMENTS"
 msgstr "Notes sur le club, le juge ou lendroit."
 

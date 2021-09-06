@@ -133,8 +133,63 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 
 	// Controls (these are done first to control tab order)
 
+	auto panelBasic = CreateBasic();
+
+	auto panelAdv = CreateAdvanced();
+	panelAdv->Show(false);
+
+	wxButton* ctrlAdvanced = new wxButton(this, wxID_ANY, _("IDC_INFONOTE_ADVAMCED"), wxDefaultPosition, wxDefaultSize);
+	ctrlAdvanced->SetHelpText(_("HIDC_INFONOTE_ADVAMCED"));
+	ctrlAdvanced->SetToolTip(_("HIDC_INFONOTE_ADVAMCED"));
+	ctrlAdvanced->Bind(wxEVT_COMMAND_BUTTON_CLICKED, [this, panelBasic, panelAdv, ctrlAdvanced](wxCommandEvent&) {
+		bool basicShown = panelBasic->IsShown();
+		panelBasic->Show(!basicShown);
+		panelAdv->Show(basicShown);
+		auto btnText = basicShown ? _("IDC_INFONOTE_BASIC") : _("IDC_INFONOTE_ADVAMCED");
+		ctrlAdvanced->SetLabel(btnText);
+		ctrlAdvanced->SetFocus();
+		// Reset min size constraints or dialog won't scale down.
+		m_minWidth = -1;
+		m_maxWidth = -1;
+		m_minHeight = -1;
+		m_maxHeight = -1;
+		// Resize dialog
+		GetSizer()->Fit(this);
+		SetSizeHints(GetSize(), wxDefaultSize);
+		CenterOnParent();
+	});
+
+	// Sizers
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	bSizer->Add(panelBasic, 1, wxEXPAND);
+	bSizer->Add(panelAdv, 1, wxEXPAND);
+
+	wxSizer* sdbSizer = CreateStdDialogButtonSizer(wxOK | wxCANCEL);
+	sdbSizer->Insert(0, ctrlAdvanced);
+	sdbSizer = CreateSeparatedSizer(sdbSizer);
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
+
+	IMPLEMENT_ON_INIT(CDlgInfoNote, m_ctrlNames)
+}
+
+
+DEFINE_ON_INIT(CDlgInfoNote)
+
+
+wxPanel* CDlgInfoNote::CreateBasic()
+{
+	auto panel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0);
+
 	m_ctrlNames = new wxBitmapComboBox(
-		this,
+		panel,
 		wxID_ANY,
 		wxEmptyString,
 		wxDefaultPosition,
@@ -142,29 +197,29 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 		0,
 		nullptr,
 		wxCB_DROPDOWN | wxCB_READONLY | wxCB_SORT);
-	m_ctrlNames->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgInfoNote::OnSelchangeName, this);
+	m_ctrlNames->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, [this](wxCommandEvent& evt) { UpdateData(); });
 	m_ctrlNames->SetHelpText(_("HIDC_INFONOTE"));
 	m_ctrlNames->SetToolTip(_("HIDC_INFONOTE"));
 
 	wxButton* ctrlNew
-		= new wxButton(this, wxID_ANY, _("IDC_INFONOTE_NEW"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+		= new wxButton(panel, wxID_ANY, _("IDC_INFONOTE_NEW"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
 	ctrlNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgInfoNote::OnNewItem, this);
 	ctrlNew->SetHelpText(_("HIDC_INFONOTE_NEW"));
 	ctrlNew->SetToolTip(_("HIDC_INFONOTE_NEW"));
 
 	m_ctrlDelete
-		= new wxButton(this, wxID_ANY, _("IDC_INFONOTE_DELETE"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+		= new wxButton(panel, wxID_ANY, _("IDC_INFONOTE_DELETE"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
 	m_ctrlDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgInfoNote::OnDeleteItem, this);
 	m_ctrlDelete->SetHelpText(_("HIDC_INFONOTE_DELETE"));
 	m_ctrlDelete->SetToolTip(_("HIDC_INFONOTE_DELETE"));
 
-	m_ctrlVisible = new wxCheckBox(this, wxID_ANY, _("IDC_INFONOTE_VISIBLE"), wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlVisible = new wxCheckBox(panel, wxID_ANY, _("IDC_INFONOTE_VISIBLE"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlVisible->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgInfoNote::OnClickedJudgeVisible, this);
 	m_ctrlVisible->SetHelpText(_("HIDC_INFONOTE_VISIBLE"));
 	m_ctrlVisible->SetToolTip(_("HIDC_INFONOTE_VISIBLE"));
 
 	m_ctrlNotes = new CSpellCheckCtrl(
-		this,
+		panel,
 		wxID_ANY,
 		wxEmptyString,
 		wxDefaultPosition,
@@ -194,8 +249,6 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 		m_ctrlNames->SetSelection(0);
 	UpdateData();
 
-	// Sizers
-
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerJudges = new wxBoxSizer(wxHORIZONTAL);
@@ -207,20 +260,27 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	bSizer->Add(m_ctrlVisible, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 	bSizer->Add(m_ctrlNotes, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	panel->SetSizer(bSizer);
 
-	SetSizer(bSizer);
-	Layout();
-	GetSizer()->Fit(this);
-	SetSizeHints(GetSize(), wxDefaultSize);
-	CenterOnParent();
-
-	IMPLEMENT_ON_INIT(CDlgInfoNote, m_ctrlNames)
+	return panel;
 }
 
 
-DEFINE_ON_INIT(CDlgInfoNote)
+wxPanel* CDlgInfoNote::CreateAdvanced()
+{
+	auto panel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0);
+
+	auto test = new wxButton(panel, wxID_ANY, L"Testing", wxDefaultPosition, wxSize(500, 500));
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	bSizer = new wxBoxSizer(wxVERTICAL);
+	bSizer->Add(test, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+
+	panel->SetSizer(bSizer);
+
+	return panel;
+}
 
 
 std::wstring CDlgInfoNote::CurrentSelection() const
@@ -271,12 +331,6 @@ void CDlgInfoNote::UpdateData()
 	m_ctrlVisible->SetValue(checked);
 	m_ctrlNotes->SetValue(StringUtil::stringWX(data));
 	m_ctrlDelete->Enable(bEnable);
-}
-
-
-void CDlgInfoNote::OnSelchangeName(wxCommandEvent& evt)
-{
-	UpdateData();
 }
 
 
