@@ -1799,6 +1799,17 @@ bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 
 	STACK_TRACE(stack, L"CAgilityBookDoc::DoSave");
 
+	// Condense info
+	std::set<std::wstring> namesInUse;
+	m_Records.GetAllClubNames(namesInUse, false, false);
+	m_Records.GetInfo().GetInfo(ARBInfoType::Club).CondenseContent(namesInUse);
+	namesInUse.clear();
+	m_Records.GetAllJudges(namesInUse, false, false);
+	m_Records.GetInfo().GetInfo(ARBInfoType::Judge).CondenseContent(namesInUse);
+	namesInUse.clear();
+	m_Records.GetAllTrialLocations(namesInUse, false, false);
+	m_Records.GetInfo().GetInfo(ARBInfoType::Location).CondenseContent(namesInUse);
+
 	CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 	std::wstring verstr = ver.GetVersionString();
 	bool bAlreadyWarned = false;

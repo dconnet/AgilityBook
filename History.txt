@@ -1,6 +1,8 @@
-6/30/2021: v3.6.1.<development>
+9/6/2021: v3.6.1.<development>
 - New features / Enhancements:
   - Add gamble closing time to run printout.
+  - Condense notes (club/judge/location) when saving.
+    (Previously only done on import or 'OK' from the InfoNote dialog.)
 - Bug fixes:
   - Fix deletion of multiple selected titles in dog properties.
 
@@ -28,7 +30,7 @@
   - Fix clicking on FCAT title link in Points View.
   - Fix issue were we could save bad data (if you set a blank Q with a place,
     you'd get a warning when reopening the file and the run would not show -
-	note, the data was not lost, just hidden)
+    note, the data was not lost, just hidden)
   - Copying runs in a multi-club trial would assign the new run to the first
     club listed. This could cause the run to be associated with the wrong club.
 
