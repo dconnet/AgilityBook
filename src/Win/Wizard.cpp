@@ -29,7 +29,6 @@
 #endif
 
 
-#include "Platform/arbWarningPush.h"
 CWizard::CWizard(CAgilityBookDoc* pDoc, std::vector<ARBCalendarPtr>* pCalEntries, wxWindow* pParent)
 	: wxWizard()
 	, m_pDoc(pDoc)
@@ -70,7 +69,6 @@ CWizard::CWizard(CAgilityBookDoc* pDoc, std::vector<ARBCalendarPtr>* pCalEntries
 	RunWizard(m_pageStart);
 	Destroy();
 }
-#include "Platform/arbWarningPop.h"
 
 
 wxWizardPage* CWizard::GetImportPage() const

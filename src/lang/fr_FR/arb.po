@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 12:52-0700\n"
-"PO-Revision-Date: 2021-04-29 12:52-0700\n"
+"POT-Creation-Date: 2021-09-06 13:23-0700\n"
+"PO-Revision-Date: 2021-09-06 13:23-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: _;arbT\n"
 "X-Poedit-Basepath: ../..\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.0\n"
 "X-Poedit-SearchPath-0: Libraries/ARB\n"
 "X-Poedit-SearchPath-1: Libraries/ARBCommon\n"
 "X-Poedit-SearchPath-2: Libraries/LibARBWin\n"
@@ -204,7 +204,7 @@ msgstr ""
 #: Win/AgilityBookCalendarView.cpp:642 Win/DlgAssignColumns.cpp:211
 #: Win/DlgAssignColumns.cpp:323 Win/DlgAssignColumns.cpp:371
 #: Win/DlgDogPanelPoints.cpp:57 Win/DlgDogPanelRegNums.cpp:45
-#: Win/DlgDogPanelTitles.cpp:53 Win/DlgListCtrl.cpp:450
+#: Win/DlgDogPanelTitles.cpp:54 Win/DlgListCtrl.cpp:450
 #: Win/DlgListViewer.cpp:1168 Win/DlgListViewer.cpp:1235
 #: Win/DlgListViewer.cpp:1372 Win/DlgTrial.cpp:378 Win/Print.cpp:259
 msgid "IDS_COL_VENUE"
@@ -347,12 +347,12 @@ msgstr "Renseignez le champ, svp."
 msgid "Validation conflict"
 msgstr "Conflit de validation"
 
-#: Libraries/ARB/ARBCalcPoints.cpp:112 Win/DlgConfigTitlePoints.cpp:163
+#: Libraries/ARB/ARBCalcPoints.cpp:112 Win/DlgConfigTitlePoints.cpp:168
 #, fuzzy
 msgid "IDS_TITLEPOINT_NORMAL_T2B"
 msgstr "AKC / Time 2 Beat"
 
-#: Libraries/ARB/ARBCalcPoints.cpp:164 Win/DlgConfigTitlePoints.cpp:164
+#: Libraries/ARB/ARBCalcPoints.cpp:164 Win/DlgConfigTitlePoints.cpp:169
 #, fuzzy
 msgid "IDS_TITLEPOINT_NORMAL_UKI"
 msgstr "UKI"
@@ -391,7 +391,7 @@ msgstr "PC"
 msgid "IDS_QTYPE_NA"
 msgstr "INV"
 
-#: Libraries/LibARBWin/ARBDebug.cpp:192
+#: Libraries/LibARBWin/ARBDebug.cpp:194
 msgid "Unable to determine version information"
 msgstr "Impossible de determiner information version"
 
@@ -447,17 +447,17 @@ msgid "ERROR: This accelerator is already in use."
 msgstr "ERROR: This accelerator is already in use."
 
 #: Libraries/LibARBWin/DlgConfigAccel.cpp:302
-#: Libraries/LibARBWin/MenuHelper.cpp:678
+#: Libraries/LibARBWin/MenuHelper.cpp:706
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
 #: Libraries/LibARBWin/DlgConfigAccel.cpp:304
-#: Libraries/LibARBWin/MenuHelper.cpp:680
+#: Libraries/LibARBWin/MenuHelper.cpp:708
 msgid "Alt+"
 msgstr "Alt+"
 
 #: Libraries/LibARBWin/DlgConfigAccel.cpp:306
-#: Libraries/LibARBWin/MenuHelper.cpp:682
+#: Libraries/LibARBWin/MenuHelper.cpp:710
 msgid "Shift+"
 msgstr "Majuscule+"
 
@@ -479,11 +479,11 @@ msgstr "Description"
 msgid "Location"
 msgstr "Endroit"
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:488 Win/DlgDogPanelBase.cpp:79
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:488 Win/DlgDogPanelBase.cpp:81
 msgid "New..."
 msgstr "Nouveau..."
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:491 Win/DlgDogPanelBase.cpp:82
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:491 Win/DlgDogPanelBase.cpp:84
 msgid "Edit..."
 msgstr "Édition..."
 
@@ -520,12 +520,12 @@ msgstr "Choisir la Langue"
 msgid "Select a language to use."
 msgstr "Choisir une langue."
 
-#: Libraries/LibARBWin/ReadHttp.cpp:141
+#: Libraries/LibARBWin/ReadHttp.cpp:146
 #, fuzzy
 msgid "Please enter credentials for accessing:"
 msgstr "Please enter credentials for accessing:"
 
-#: Libraries/LibARBWin/ReadHttp.cpp:142
+#: Libraries/LibARBWin/ReadHttp.cpp:147
 #, fuzzy
 msgid "Credentials"
 msgstr "Credentials"
@@ -539,11 +539,11 @@ msgstr "restaurer"
 msgid "Report generated in \"%s\"."
 msgstr "Report generated in \"%s\"."
 
-#: Libraries/LibARBWin/SpreadSheet.cpp:640
+#: Libraries/LibARBWin/SpreadSheet.cpp:641
 msgid "Reading {0} rows and {1} columns"
 msgstr "Lire {0} lignes and {1} colonnes"
 
-#: Libraries/LibARBWin/SpreadSheet.cpp:1018
+#: Libraries/LibARBWin/SpreadSheet.cpp:1019
 msgid "Reading {} rows"
 msgstr "Lire {} lignes"
 
@@ -775,9 +775,9 @@ msgid "IDS_UPDATE_IDENTICAL"
 msgstr "{} identique"
 
 #: TestARB/Local.cpp:131 Win/DlgConfigure.cpp:238 Win/DlgDogPanelPoints.cpp:56
-#: Win/DlgListCtrl.cpp:551 Win/Localization.cpp:127 Win/PointsData.cpp:1319
-#: Win/PointsData.cpp:1360 Win/PointsData.cpp:1401 Win/PointsData.cpp:1445
-#: Win/PointsData.cpp:1702
+#: Win/DlgListCtrl.cpp:551 Win/Localization.cpp:127 Win/PointsData.cpp:1320
+#: Win/PointsData.cpp:1361 Win/PointsData.cpp:1402 Win/PointsData.cpp:1446
+#: Win/PointsData.cpp:1703
 msgid "IDS_OTHERPOINTS"
 msgstr "Autres Points"
 
@@ -832,7 +832,7 @@ msgid "IDS_COL_LEVELS"
 msgstr "Degrés"
 
 #: TestARB/Local.cpp:243 TestARB/Local.cpp:254 Win/Localization.cpp:227
-#: Win/Localization.cpp:236 Win/PointsData.cpp:1189
+#: Win/Localization.cpp:236 Win/PointsData.cpp:1190
 msgid "IDS_TITLES"
 msgstr "Distinctions"
 
@@ -1026,11 +1026,11 @@ msgstr ""
 "Subname setting updated in {} runs.\n"
 "(Date, Venue, Event, Division/Level)"
 
-#: Win/AgilityBook.cpp:160 Win/Print.cpp:1008 Win/Print.cpp:1044
+#: Win/AgilityBook.cpp:160 Win/Print.cpp:1021 Win/Print.cpp:1057
 msgid "Sorry, print preview needs a printer to be installed."
 msgstr "L'aperçu avant impression nécessite une imprimante installée."
 
-#: Win/AgilityBook.cpp:166 Win/Print.cpp:1014
+#: Win/AgilityBook.cpp:166 Win/Print.cpp:1027
 msgid "Print Preview"
 msgstr "Aperçu avant impression"
 
@@ -1051,7 +1051,8 @@ msgstr "{} epreuves"
 # This is 11 spaces
 #: Win/AgilityBookCalendarListView.cpp:629 Win/AgilityBookCalendarView.cpp:1321
 #: Win/AgilityBookDoc.cpp:1550 Win/AgilityBookPointsView.cpp:186
-#: Win/AgilityBookTrainingView.cpp:429
+#: Win/AgilityBookRunsView.cpp:1361 Win/AgilityBookTrainingView.cpp:429
+#: Win/AgilityBookTreeView.cpp:428
 msgid "IDS_INDICATOR_BLANK"
 msgstr "          "
 
@@ -1174,11 +1175,11 @@ msgstr "vendredi"
 msgid "Saturday"
 msgstr "samedi"
 
-#: Win/AgilityBookDoc.cpp:516 Win/AgilityBookTreeView.cpp:1347
+#: Win/AgilityBookDoc.cpp:516 Win/AgilityBookTreeView.cpp:1345
 msgid "IDS_CREATETRIAL_FAILED"
 msgstr "Erreur: Impossible de créer concours."
 
-#: Win/AgilityBookDoc.cpp:529 Win/AgilityBookTreeView.cpp:1363
+#: Win/AgilityBookDoc.cpp:529 Win/AgilityBookTreeView.cpp:1361
 msgid "IDS_CREATETRIAL_FILTERED"
 msgstr ""
 "Attention: Le concours juste creé ne peut pas etre montré a cause des filtres "
@@ -1203,11 +1204,11 @@ msgid "IDS_VENUE_CONFIG_MISSING"
 msgstr ""
 "Impossible de localiser information configuration pour organisation '{}'."
 
-#: Win/AgilityBookDoc.cpp:635 Win/AgilityBookTreeView.cpp:757
+#: Win/AgilityBookDoc.cpp:635 Win/AgilityBookTreeView.cpp:755
 msgid "IDS_CREATERUN_FAILED"
 msgstr "Erreur: Impossible de créer parcours."
 
-#: Win/AgilityBookDoc.cpp:655 Win/AgilityBookTreeView.cpp:790
+#: Win/AgilityBookDoc.cpp:655 Win/AgilityBookTreeView.cpp:788
 msgid "IDS_CREATERUN_FILTERED"
 msgstr ""
 "Attention: Le parcours juste creé ne peut pas etre montré a cause des filtres "
@@ -1232,7 +1233,7 @@ msgstr "Pas mis a jour; configurations pas changé."
 
 #: Win/AgilityBookDoc.cpp:1150
 msgid "IDS_ADDED"
-msgstr "Ajouté "
+msgstr "Ajouté"
 
 #: Win/AgilityBookDoc.cpp:1157
 msgid "IDS_ADDED_DOGS"
@@ -1268,7 +1269,7 @@ msgstr "{} endroits"
 
 #: Win/AgilityBookDoc.cpp:1214 Win/AgilityBookDoc.cpp:1223
 msgid "IDS_UPDATED"
-msgstr "Mis a jour "
+msgstr "Mis a jour"
 
 #: Win/AgilityBookDoc.cpp:1304
 msgid "IDS_UPDATED_TRAINING_ITEMS"
@@ -1298,7 +1299,7 @@ msgstr ""
 "Warning: This file has been modified after it was opened. Are you sure you "
 "want to overwrite any changes?"
 
-#: Win/AgilityBookDoc.cpp:1822 Win/UpdateInfo.cpp:764
+#: Win/AgilityBookDoc.cpp:1822 Win/UpdateInfo.cpp:767
 msgid "IDS_CANNOT_OPEN"
 msgstr "Impossible d'ouvrir fichier '{}' pour ecriture."
 
@@ -1322,49 +1323,49 @@ msgstr "File name: {}"
 #: Win/AgilityBookDoc.cpp:2285
 #, fuzzy
 msgid "IDS_FILEPROP_NAME_READONLY"
-msgstr " [readonly]"
+msgstr "[readonly]"
 
-#: Win/AgilityBookDoc.cpp:2288 Win/AgilityBookDoc.cpp:2311
+#: Win/AgilityBookDoc.cpp:2288 Win/AgilityBookDoc.cpp:2309
 #, fuzzy
 msgid "IDS_FILEPROP_NAME_MODIFIED"
-msgstr " [changes pending]"
+msgstr "[changes pending]"
 
-#: Win/AgilityBookDoc.cpp:2292
+#: Win/AgilityBookDoc.cpp:2290
 #, fuzzy
 msgid "IDS_FILEPROP_SIZE"
 msgstr "File size: {} bytes"
 
-#: Win/AgilityBookDoc.cpp:2300
+#: Win/AgilityBookDoc.cpp:2298
 #, fuzzy
 msgid "IDS_FILEPROP_CREATED"
 msgstr "Created: {}"
 
-#: Win/AgilityBookDoc.cpp:2304
+#: Win/AgilityBookDoc.cpp:2302
 #, fuzzy
 msgid "IDS_FILEPROP_MODIFIED"
 msgstr "Modified: {}"
 
-#: Win/AgilityBookDoc.cpp:2322
+#: Win/AgilityBookDoc.cpp:2320
 #, fuzzy
 msgid "IDS_FILEPROP_CONFIGURATION"
 msgstr "Configuration: {}"
 
-#: Win/AgilityBookDoc.cpp:2328
+#: Win/AgilityBookDoc.cpp:2326
 #, fuzzy
 msgid "IDS_FILEPROP_CONFIGURATION_CURRENT"
 msgstr "Configuration: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2336
+#: Win/AgilityBookDoc.cpp:2334
 #, fuzzy
 msgid "IDS_FILEPROP_VERSION"
 msgstr "Document version: {}"
 
-#: Win/AgilityBookDoc.cpp:2342
+#: Win/AgilityBookDoc.cpp:2340
 #, fuzzy
 msgid "IDS_FILEPROP_VERSION_CURRENT"
 msgstr "Document version: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2354
+#: Win/AgilityBookDoc.cpp:2352
 #, fuzzy
 msgid "IDS_FILEPROP_FILEWRITTEN"
 msgstr ""
@@ -1374,7 +1375,7 @@ msgstr ""
 "Local time: {2}\n"
 "ARB: {3}"
 
-#: Win/AgilityBookDoc.cpp:2362
+#: Win/AgilityBookDoc.cpp:2360
 msgid "IDS_FILE_PROPERTIES"
 msgstr "Propriétés du fichier"
 
@@ -2198,7 +2199,7 @@ msgstr ""
 "Cette fenêtre contient toutes les informations concernant vos entrainements."
 
 #: Win/AgilityBookRunsView.cpp:345 Win/AgilityBookRunsView.cpp:347
-#: Win/AgilityBookTreeData.cpp:560 Win/WizardExport.cpp:844
+#: Win/AgilityBookTreeData.cpp:575 Win/WizardExport.cpp:844
 msgid "IDS_SQ"
 msgstr "SQ"
 
@@ -2210,11 +2211,11 @@ msgstr "{0} entrés, {1} parcours, {2} Qs"
 msgid "IDS_NUM_TRAINING"
 msgstr "{} entrés"
 
-#: Win/AgilityBookTreeData.cpp:142
+#: Win/AgilityBookTreeData.cpp:143
 msgid "IDS_YEARS"
 msgstr "{} ans"
 
-#: Win/AgilityBookTreeData.cpp:204
+#: Win/AgilityBookTreeData.cpp:205
 msgid "IDS_DELETE_DOG_DATA"
 msgstr ""
 "ATTENTION\n"
@@ -2224,7 +2225,7 @@ msgstr ""
 "\n"
 "Etes-vous sur de continuer?"
 
-#: Win/AgilityBookTreeView.cpp:680
+#: Win/AgilityBookTreeView.cpp:678
 msgid "IDS_CREATEDOG_FAILED"
 msgstr "Erreur: Impossible de créer chien."
 
@@ -2436,7 +2437,7 @@ msgstr "Nom"
 
 #: Win/DlgAssignColumns.cpp:208 Win/DlgAssignColumns.cpp:336
 #: Win/DlgAssignColumns.cpp:381 Win/DlgDogPanelPoints.cpp:53
-#: Win/DlgDogPanelTitles.cpp:52 Win/DlgListViewer.cpp:1164
+#: Win/DlgDogPanelTitles.cpp:53 Win/DlgListViewer.cpp:1164
 #: Win/DlgListViewer.cpp:1231 Win/DlgListViewer.cpp:1291
 #: Win/DlgListViewer.cpp:1368 Win/Print.cpp:258
 msgid "IDS_COL_DATE"
@@ -2588,7 +2589,7 @@ msgstr "Preliminaire"
 msgid "IDS_COL_ENTERED"
 msgstr "Nombre chiens inscrit"
 
-#: Win/DlgAssignColumns.cpp:339 Win/DlgDogPanelTitles.cpp:55
+#: Win/DlgAssignColumns.cpp:339 Win/DlgDogPanelTitles.cpp:56
 #: Win/DlgFindLinks.cpp:119 Win/DlgListCtrl.cpp:554 Win/DlgListViewer.cpp:1405
 #: Win/DlgRunPanelRefRuns.cpp:62
 msgid "IDS_COL_NAME"
@@ -4038,11 +4039,11 @@ msgstr "La date jusqu'à laquelle la récompense reste valide."
 msgid "IDD_CONFIG_TITLE_POINTS"
 msgstr "Points Récompense"
 
-#: Win/DlgConfigTitlePoints.cpp:109 Win/DlgConfigTitlePoints.cpp:315
+#: Win/DlgConfigTitlePoints.cpp:109 Win/DlgConfigTitlePoints.cpp:327
 msgid "IDC_CONFIG_TITLEPTS_VALUE_TEXT2"
 msgstr "&Classement"
 
-#: Win/DlgConfigTitlePoints.cpp:110 Win/DlgConfigTitlePoints.cpp:322
+#: Win/DlgConfigTitlePoints.cpp:110 Win/DlgConfigTitlePoints.cpp:334
 msgid "IDC_CONFIG_TITLEPTS_VALUE_TEXT1"
 msgstr "&Nombre de fautes permises"
 
@@ -4089,25 +4090,25 @@ msgstr ""
 "Cumulatif (points accumulés pour la vie, normalement pareil comme Normal), "
 "Classement (points gagnés basé sur Classement, traité comme Cumulatif)"
 
-#: Win/DlgConfigTitlePoints.cpp:162
+#: Win/DlgConfigTitlePoints.cpp:167
 msgid "IDS_TITLEPOINT_NORMAL_NORMAL"
 msgstr "Normal"
 
-#: Win/DlgConfigTitlePoints.cpp:168 Win/DlgConfigTitlePoints.cpp:169
+#: Win/DlgConfigTitlePoints.cpp:180 Win/DlgConfigTitlePoints.cpp:181
 msgid "HIDC_CONFIG_TITLEPTS_CALC"
 msgstr "Sélectionnez le type de calcul pour les points de titrage."
 
-#: Win/DlgConfigTitlePoints.cpp:175
+#: Win/DlgConfigTitlePoints.cpp:187
 msgid "IDC_CONFIG_TITLEPTS_LIFETIMENAME"
 msgstr "Nom points cumulatifs"
 
-#: Win/DlgConfigTitlePoints.cpp:188 Win/DlgConfigTitlePoints.cpp:189
+#: Win/DlgConfigTitlePoints.cpp:200 Win/DlgConfigTitlePoints.cpp:201
 msgid "HIDC_CONFIG_TITLEPTS_LIFETIMENAME"
 msgstr ""
 "Dénomination pour les points Cumulatifs. Si rien n'est entré, le nom, 'Points "
 "Cumulatifs' est utilisé."
 
-#: Win/DlgConfigTitlePoints.cpp:200 Win/DlgConfigTitlePoints.cpp:211
+#: Win/DlgConfigTitlePoints.cpp:212 Win/DlgConfigTitlePoints.cpp:223
 #: Win/DlgConfigureData.cpp:801 Win/PointsData.cpp:409 Win/PointsData.cpp:441
 msgid "IDS_TITLEPOINT_LIFETIME_NAME"
 msgstr "Lifetime"
@@ -4392,7 +4393,7 @@ msgstr "Numéro inscription"
 msgid "IDD_DOG_POINTS"
 msgstr "Points existants"
 
-#: Win/DlgDogPanelBase.cpp:85
+#: Win/DlgDogPanelBase.cpp:87
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -4540,49 +4541,49 @@ msgstr "&Supprimer"
 msgid "HIDC_DOGNUM_DELETE"
 msgstr "Supprimer le numéro d'enregistrement sélectionné."
 
-#: Win/DlgDogPanelTitles.cpp:54
+#: Win/DlgDogPanelTitles.cpp:55
 msgid "IDS_COL_TITLE"
 msgstr "Distinction"
 
-#: Win/DlgDogPanelTitles.cpp:153
+#: Win/DlgDogPanelTitles.cpp:154
 msgid "IDS_UNEARNED"
 msgstr "<Pas gagné>"
 
-#: Win/DlgDogPanelTitles.cpp:222 Win/DlgDogPanelTitles.cpp:223
+#: Win/DlgDogPanelTitles.cpp:223 Win/DlgDogPanelTitles.cpp:224
 msgid "HIDC_DOG_TITLE_TITLES"
 msgstr ""
 "La liste des Récompenses. L'icône indique si la Récompense est cachée et si "
 "vous avez reçu le certificat."
 
-#: Win/DlgDogPanelTitles.cpp:232
+#: Win/DlgDogPanelTitles.cpp:233
 msgid "IDC_DOG_TITLE_NEW"
 msgstr "&Nouveau..."
 
-#: Win/DlgDogPanelTitles.cpp:233 Win/DlgDogPanelTitles.cpp:234
+#: Win/DlgDogPanelTitles.cpp:234 Win/DlgDogPanelTitles.cpp:235
 msgid "HIDC_DOG_TITLE_NEW"
 msgstr "Créer une nouvelle Récompense."
 
-#: Win/DlgDogPanelTitles.cpp:236
+#: Win/DlgDogPanelTitles.cpp:237
 msgid "IDC_DOG_TITLE_EDIT"
 msgstr "&Édition..."
 
-#: Win/DlgDogPanelTitles.cpp:237 Win/DlgDogPanelTitles.cpp:238
+#: Win/DlgDogPanelTitles.cpp:238 Win/DlgDogPanelTitles.cpp:239
 msgid "HIDC_DOG_TITLE_EDIT"
 msgstr "Éditer la Récompense sélectionnée."
 
-#: Win/DlgDogPanelTitles.cpp:240
+#: Win/DlgDogPanelTitles.cpp:241
 msgid "IDC_DOG_TITLE_DELETE"
 msgstr "&Supprimer"
 
-#: Win/DlgDogPanelTitles.cpp:241 Win/DlgDogPanelTitles.cpp:242
+#: Win/DlgDogPanelTitles.cpp:242 Win/DlgDogPanelTitles.cpp:243
 msgid "HIDC_DOG_TITLE_DELETE"
 msgstr "Supprimer la Récompense sélectionnée."
 
-#: Win/DlgDogPanelTitles.cpp:247
+#: Win/DlgDogPanelTitles.cpp:248
 msgid "IDC_DOG_TITLE_HIDDEN"
 msgstr "Voir cachés"
 
-#: Win/DlgDogPanelTitles.cpp:253 Win/DlgDogPanelTitles.cpp:254
+#: Win/DlgDogPanelTitles.cpp:254 Win/DlgDogPanelTitles.cpp:255
 msgid "HIDC_DOG_TITLE_HIDDEN"
 msgstr ""
 "Régler laffichage pour les Récompenses cachées. Cette fonction est aussi "
@@ -4974,20 +4975,20 @@ msgstr "Points vitesse"
 msgid "IDS_COL_TRIAL_EXISTPTS"
 msgstr "Concours / Points acquis"
 
-#: Win/DlgListViewer.cpp:1442 Win/DlgListViewer.cpp:1443
+#: Win/DlgListViewer.cpp:1445 Win/DlgListViewer.cpp:1446
 msgid "HIDC_LIST_VIEWER"
 msgstr "Liste des entrées."
 
 # DlgListViewer
-#: Win/DlgListViewer.cpp:1445
+#: Win/DlgListViewer.cpp:1448
 msgid "IDC_LIST_COPY"
 msgstr "Copier"
 
-#: Win/DlgListViewer.cpp:1447 Win/DlgListViewer.cpp:1448
+#: Win/DlgListViewer.cpp:1450 Win/DlgListViewer.cpp:1451
 msgid "HIDC_LIST_COPY"
 msgstr "Copier les articles de la liste dans le presse-papier au format table."
 
-#: Win/DlgListViewer.cpp:1450
+#: Win/DlgListViewer.cpp:1453
 msgid "IDC_LIST_CLOSE"
 msgstr "Quitter"
 
@@ -6554,25 +6555,25 @@ msgstr ""
 "Etes-vous sur de continuer?"
 
 # This is 11 spaces
-#: Win/MainFrm.cpp:145
+#: Win/MainFrm.cpp:144
 msgid "ID_INDICATOR_DOG"
 msgstr "          "
 
-#: Win/MainFrm.cpp:148
+#: Win/MainFrm.cpp:147
 msgid "ID_INDICATOR_STATUS"
 msgstr "statut"
 
-#: Win/MainFrm.cpp:151 Win/MainFrm.cpp:186
+#: Win/MainFrm.cpp:150 Win/MainFrm.cpp:185
 msgid "ID_INDICATOR_FILTERED"
 msgstr "Filtré"
 
-#: Win/MainFrm.cpp:353
+#: Win/MainFrm.cpp:306
 #, fuzzy
 msgid "Canceling file download..."
 msgstr "Canceling file download..."
 
-#: Win/PointsData.cpp:251 Win/PointsData.cpp:1200 Win/Print.cpp:116
-#: Win/Print.cpp:1050 Win/TabView.cpp:237 Win/TabView.cpp:363
+#: Win/PointsData.cpp:251 Win/PointsData.cpp:1201 Win/Print.cpp:116
+#: Win/Print.cpp:1063 Win/TabView.cpp:237 Win/TabView.cpp:363
 msgid "IDS_RUNS"
 msgstr "Parcours"
 
@@ -6592,35 +6593,35 @@ msgstr "Classement Points"
 msgid "IDS_TOTAL"
 msgstr "Total"
 
-#: Win/PointsData.cpp:821
+#: Win/PointsData.cpp:822
 msgid "IDS_POINTS_RUNS_JUDGES"
 msgstr "{0} parcours, {1} juges"
 
-#: Win/PointsData.cpp:826 Win/PointsData.cpp:849
+#: Win/PointsData.cpp:827 Win/PointsData.cpp:850
 msgid "IDS_POINTS_PARTNERS"
 msgstr ", {} partners"
 
-#: Win/PointsData.cpp:836
+#: Win/PointsData.cpp:837
 msgid "IDS_POINTS_QS"
 msgstr "{0} Qs ({1}%)"
 
-#: Win/PointsData.cpp:841
+#: Win/PointsData.cpp:842
 msgid "IDS_POINTS_CLEAN"
 msgstr ", ({} sans fautes)"
 
-#: Win/PointsData.cpp:845
+#: Win/PointsData.cpp:846
 msgid "IDS_POINTS_JUDGES"
 msgstr ", {} juges"
 
-#: Win/PointsData.cpp:856
+#: Win/PointsData.cpp:857
 msgid "IDS_POINTS_SQS"
 msgstr "[{} SQ]"
 
-#: Win/PointsData.cpp:861
+#: Win/PointsData.cpp:862
 msgid "IDS_POINTS_SPEED_SUBTOTAL"
 msgstr "[{} vitesse]"
 
-#: Win/PointsData.cpp:1670 Win/PointsData.cpp:1678
+#: Win/PointsData.cpp:1671 Win/PointsData.cpp:1679
 msgid "IDS_TITLING_POINTS"
 msgstr "Points Distinction"
 
@@ -6675,59 +6676,59 @@ msgstr ""
 "An update is available but cannot be installed at this time. Make sure the "
 "system is not updating or waiting to be rebooted."
 
-#: Win/UpdateInfo.cpp:340 Win/UpdateInfo.cpp:515
+#: Win/UpdateInfo.cpp:340 Win/UpdateInfo.cpp:518
 msgid "IDS_UPDATE_UNKNOWN"
 msgstr "Version current pas determinable."
 
-#: Win/UpdateInfo.cpp:439 Win/UpdateInfo.cpp:716
+#: Win/UpdateInfo.cpp:442 Win/UpdateInfo.cpp:719
 msgid "IDS_LOAD_FAILED"
 msgstr "Impossible de charger '{}'."
 
-#: Win/UpdateInfo.cpp:589
+#: Win/UpdateInfo.cpp:592
 msgid "IDS_VERSION_AVAILABLE"
 msgstr "Version {} accesible. Voulez-vous le telecharger? "
 
-#: Win/UpdateInfo.cpp:702
+#: Win/UpdateInfo.cpp:705
 msgid "IDS_UPDATE_CURRENT"
 msgstr "Pas des mises a jour."
 
-#: Win/UpdateInfo.cpp:772
+#: Win/UpdateInfo.cpp:775
 msgid "IDS_DOWNLOADING"
 msgstr "Téléchargement en cours..."
 
-#: Win/UpdateInfo.cpp:795
+#: Win/UpdateInfo.cpp:798
 msgid "IDS_DOWNLOAD_AND_RESTART"
 msgstr ""
 "{} a fini de télécharger. Agility Record Book va fermer pour vous laisser "
 "l'installer."
 
-#: Win/UpdateInfo.cpp:797
+#: Win/UpdateInfo.cpp:800
 msgid "IDS_VALIDATING"
 msgstr "Validation en cours..."
 
-#: Win/UpdateInfo.cpp:802 Win/UpdateInfo.cpp:812 Win/UpdateInfo.cpp:820
-#: Win/UpdateInfo.cpp:828 Win/UpdateInfo.cpp:900
+#: Win/UpdateInfo.cpp:805 Win/UpdateInfo.cpp:815 Win/UpdateInfo.cpp:823
+#: Win/UpdateInfo.cpp:831 Win/UpdateInfo.cpp:903
 msgid "IDS_ERROR_DOWNLOAD"
 msgstr "ERREUR: Le fichier téléchargé est corrompu."
 
-#: Win/UpdateInfo.cpp:836
+#: Win/UpdateInfo.cpp:839
 msgid "IDS_ERROR_UNEXPECTED"
 msgstr "ERREUR: Format de fichier non reconnu, fichier MSI attendu."
 
-#: Win/UpdateInfo.cpp:870 Win/UpdateInfo.cpp:891
+#: Win/UpdateInfo.cpp:873 Win/UpdateInfo.cpp:894
 msgid "IDS_ERROR_AUTOUPDATE"
 msgstr "ERREUR: Erreur interne pendant la mise à jour. Procédure annulée."
 
 # WizardStart
-#: Win/Wizard.cpp:50 Win/WizardStart.cpp:510
+#: Win/Wizard.cpp:49 Win/WizardStart.cpp:510
 msgid "IDD_WIZARD_START"
 msgstr "Utilitaire d'Importation/Exportation"
 
-#: Win/Wizard.cpp:102
+#: Win/Wizard.cpp:100
 msgid "&Next >"
 msgstr "&Suivant >"
 
-#: Win/Wizard.cpp:102
+#: Win/Wizard.cpp:100
 msgid "&Finish"
 msgstr "&Finir"
 

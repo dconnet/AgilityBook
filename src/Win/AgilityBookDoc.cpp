@@ -1147,7 +1147,7 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr const& inTree, wxWindow* p
 			m_Records.GetInfo().GetInfo(ARBInfoType::Location).CondenseContent(namesInUse);
 		}
 		fmt::wmemory_buffer str;
-		fmt::format_to(str, L"{}", _("IDS_ADDED").wx_str());
+		fmt::format_to(str, L"{} ", _("IDS_ADDED").wx_str());
 		bool bAdded = false;
 		if (0 < countDog)
 		{
@@ -1211,7 +1211,7 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr const& inTree, wxWindow* p
 			if (bAdded)
 				fmt::format_to(str, L", ");
 			else
-				fmt::format_to(str, L"\n{}", _("IDS_UPDATED").wx_str());
+				fmt::format_to(str, L"\n{} ", _("IDS_UPDATED").wx_str());
 			bAdded = true;
 			fmt::format_to(str, _("IDS_ADDED_REGNUMS").wx_str(), countRegNumsUpdated);
 		}
@@ -1220,7 +1220,7 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr const& inTree, wxWindow* p
 			if (bAdded)
 				fmt::format_to(str, L", ");
 			else
-				fmt::format_to(str, L"\n{}", _("IDS_UPDATED").wx_str());
+				fmt::format_to(str, L"\n{} ", _("IDS_UPDATED").wx_str());
 			bAdded = true;
 			fmt::format_to(str, _("IDS_ADDED_TITLES").wx_str(), countTitlesUpdated);
 		}
@@ -2282,14 +2282,12 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 			fmt::format_to(str, _("IDS_FILEPROP_NAME").wx_str(), filename.wx_str());
 
 			if (!wxFileName::IsFileWritable(filename))
-				fmt::format_to(str, _("IDS_FILEPROP_NAME_READONLY").wx_str());
+				fmt::format_to(str, L" {}", _("IDS_FILEPROP_NAME_READONLY").wx_str());
 
 			if (IsModified())
-				fmt::format_to(str, _("IDS_FILEPROP_NAME_MODIFIED").wx_str());
+				fmt::format_to(str, L" {}", _("IDS_FILEPROP_NAME_MODIFIED").wx_str());
 
-			fmt::format_to(str, L"\n");
-
-			fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_SIZE").wx_str(), file.GetSize().GetValue()));
+			fmt::format_to(str, L"\n{}\n", fmt::format(_("IDS_FILEPROP_SIZE").wx_str(), file.GetSize().GetValue()));
 
 			wxDateTime timeCreate, timeMod;
 			if (GetFileTimes(file, nullptr, &timeMod, &timeCreate))
