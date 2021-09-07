@@ -47,6 +47,7 @@
 #include "ImageHelper.h"
 
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/Widgets.h"
 #include <algorithm>
 
@@ -55,24 +56,75 @@
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgInfoNote dialog
 
-wxBEGIN_EVENT_TABLE(CDlgInfoNote, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgInfoNote::OnOk)
-wxEND_EVENT_TABLE()
+class InfoNotePanel : public wxPanel
+{
+public:
+	InfoNotePanel(std::set<std::wstring> const& namesInUse, std::wstring const& inSelect, CDlgInfoNote* parent)
+		: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0)
+		, m_parent(parent)
+		, m_NamesInUse(namesInUse)
+		, m_Select(StringUtil::stringWX(inSelect))
+	{
+	}
+
+	virtual void LoadData() = 0;
+	virtual bool OnOk() = 0;
+
+protected:
+	CDlgInfoNote* m_parent;
+	std::set<std::wstring> const& m_NamesInUse;
+	wxString m_Select;
+};
 
 
-CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstring const& inSelect, wxWindow* pParent)
-	: wxDialog()
-	, m_pDoc(pDoc)
-	, m_Type(inType)
-	, m_Select(StringUtil::stringWX(inSelect))
-	, m_NamesInUse()
-	, m_InfoOrig(m_pDoc->Book().GetInfo().GetInfo(m_Type))
-	, m_Info(m_pDoc->Book().GetInfo().GetInfo(m_Type).GetItemName())
-	, m_Names()
-	, m_nAdded(0)
-	, m_CurSel()
+class InfoNoteBasic : public InfoNotePanel
+{
+public:
+	InfoNoteBasic(std::set<std::wstring> const& namesInUse, std::wstring const& inSelect, CDlgInfoNote* parent);
+	void LoadData() override;
+	bool OnOk() override;
+
+private:
+	void UpdateImage(int index);
+	void UpdateData();
+
+	wxBitmapComboBox* m_ctrlNames;
+	wxButton* m_ctrlDelete;
+	wxCheckBox* m_ctrlVisible;
+	CSpellCheckCtrl* m_ctrlNotes;
+	wxBitmap m_None;
+	wxBitmap m_Note;
+	wxBitmap m_Added;
+	wxBitmap m_NoteAdded;
+
+	void OnNewItem(wxCommandEvent& evt);
+	void OnDeleteItem(wxCommandEvent& evt);
+	void OnClickedJudgeVisible(wxCommandEvent& evt);
+	void OnEnChangeComments(wxCommandEvent& evt);
+};
+
+
+class InfoNoteAdvanced : public InfoNotePanel
+{
+public:
+	InfoNoteAdvanced(std::set<std::wstring> const& namesInUse, std::wstring const& inSelect, CDlgInfoNote* parent);
+	void LoadData() override;
+	bool OnOk() override
+	{
+		return true;
+	}
+
+private:
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+InfoNoteBasic::InfoNoteBasic(
+	std::set<std::wstring> const& namesInUse,
+	std::wstring const& inSelect,
+	CDlgInfoNote* parent)
+	: InfoNotePanel(namesInUse, inSelect, parent)
 	, m_ctrlNames(nullptr)
 	, m_ctrlDelete(nullptr)
 	, m_ctrlVisible(nullptr)
@@ -82,9 +134,271 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	, m_Added(CImageManager::Get()->GetBitmap(ImageMgrInfoNoteAdded))
 	, m_NoteAdded(CImageManager::Get()->GetBitmap(ImageMgrInfoNoteNoteAdded))
 {
+	m_ctrlNames = new wxBitmapComboBox(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		nullptr,
+		wxCB_DROPDOWN | wxCB_READONLY | wxCB_SORT);
+	m_ctrlNames->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, [this](wxCommandEvent& evt) { UpdateData(); });
+	m_ctrlNames->SetHelpText(_("HIDC_INFONOTE"));
+	m_ctrlNames->SetToolTip(_("HIDC_INFONOTE"));
+
+	wxButton* ctrlNew
+		= new wxButton(this, wxID_ANY, _("IDC_INFONOTE_NEW"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	ctrlNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &InfoNoteBasic::OnNewItem, this);
+	ctrlNew->SetHelpText(_("HIDC_INFONOTE_NEW"));
+	ctrlNew->SetToolTip(_("HIDC_INFONOTE_NEW"));
+
+	m_ctrlDelete
+		= new wxButton(this, wxID_ANY, _("IDC_INFONOTE_DELETE"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	m_ctrlDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &InfoNoteBasic::OnDeleteItem, this);
+	m_ctrlDelete->SetHelpText(_("HIDC_INFONOTE_DELETE"));
+	m_ctrlDelete->SetToolTip(_("HIDC_INFONOTE_DELETE"));
+
+	m_ctrlVisible = new wxCheckBox(this, wxID_ANY, _("IDC_INFONOTE_VISIBLE"), wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlVisible->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &InfoNoteBasic::OnClickedJudgeVisible, this);
+	m_ctrlVisible->SetHelpText(_("HIDC_INFONOTE_VISIBLE"));
+	m_ctrlVisible->SetToolTip(_("HIDC_INFONOTE_VISIBLE"));
+
+	m_ctrlNotes = new CSpellCheckCtrl(
+		this,
+		wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition,
+		wxDLG_UNIT(this, wxSize(180, 60)),
+		wxTE_MULTILINE);
+	m_ctrlNotes->Bind(wxEVT_COMMAND_TEXT_UPDATED, &InfoNoteBasic::OnEnChangeComments, this);
+	m_ctrlNotes->SetHelpText(_("HIDC_INFONOTE_COMMENTS"));
+	m_ctrlNotes->SetToolTip(_("HIDC_INFONOTE_COMMENTS"));
+
+	LoadData();
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizerJudges = new wxBoxSizer(wxHORIZONTAL);
+	sizerJudges->Add(m_ctrlNames, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(parent, 5));
+	sizerJudges->Add(ctrlNew, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(parent, 5));
+	sizerJudges->Add(m_ctrlDelete, 0, wxALIGN_CENTER_VERTICAL, 0);
+
+	bSizer->Add(sizerJudges, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(parent, 5));
+	bSizer->Add(m_ctrlVisible, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(parent, 5));
+	bSizer->Add(m_ctrlNotes, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(parent, 5));
+
+	SetSizer(bSizer);
+}
+
+
+void InfoNoteBasic::LoadData()
+{
+	m_ctrlNames->Clear();
+	bool bSet = false;
+	for (size_t idxName = 0; idxName < m_parent->GetNames().size(); ++idxName)
+	{
+		// Combo box is ownerdraw.
+		int index = m_ctrlNames->Append(StringUtil::stringWX(m_parent->GetNames()[idxName].m_name), m_None);
+		m_ctrlNames->SetClientData(index, reinterpret_cast<void*>(idxName));
+		UpdateImage(index);
+		if (!bSet && 0 < m_Select.length())
+		{
+			if (0 == m_parent->GetNames()[idxName].m_name.find(m_Select))
+			{
+				m_ctrlNames->SetSelection(index);
+				bSet = true;
+			}
+		}
+	}
+	if (0 == m_Select.length() || !bSet)
+		m_ctrlNames->SetSelection(0);
+	UpdateData();
+}
+
+
+bool InfoNoteBasic::OnOk()
+{
+	int index = m_ctrlNames->GetSelection();
+	if (0 <= index)
+	{
+		size_t idxName = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
+		m_parent->SetCurrentSelection(idxName);
+	}
+	return true;
+}
+
+
+void InfoNoteBasic::UpdateImage(int index)
+{
+	size_t idxName = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
+
+	wxBitmap bmp = m_None;
+	if (0 < m_parent->GetAddedCount() && NameInfo::Usage::NotInUse == m_parent->GetNames()[idxName].m_usage)
+	{
+		if (m_parent->GetNames()[idxName].m_hasData)
+			bmp = m_NoteAdded;
+		else
+			bmp = m_Added;
+	}
+	else
+	{
+		if (m_parent->GetNames()[idxName].m_hasData)
+			bmp = m_Note;
+	}
+	m_ctrlNames->SetItemBitmap(index, bmp);
+}
+
+
+void InfoNoteBasic::UpdateData()
+{
+	bool bEnable = false;
+	std::wstring data;
+	bool checked = true;
+	int index = m_ctrlNames->GetSelection();
+	if (wxNOT_FOUND != index)
+	{
+		size_t idxName = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
+		std::wstring name = m_parent->GetNames()[idxName].m_name;
+		m_Select = name;
+		ARBInfoItemPtr item = m_parent->FindName(name);
+		if (item)
+		{
+			checked = item->IsVisible();
+			data = item->GetComment();
+		}
+		if (m_NamesInUse.end() == m_NamesInUse.find(name))
+			bEnable = true;
+	}
+	m_ctrlVisible->SetValue(checked);
+	m_ctrlNotes->SetValue(StringUtil::stringWX(data));
+	m_ctrlDelete->Enable(bEnable);
+}
+
+
+void InfoNoteBasic::OnClickedJudgeVisible(wxCommandEvent& evt)
+{
+	int index = m_ctrlNames->GetSelection();
+	if (wxNOT_FOUND != index)
+	{
+		size_t idxName = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
+		m_parent->SetNameVisible(idxName, m_ctrlVisible->IsChecked());
+		UpdateImage(index);
+	}
+}
+
+
+void InfoNoteBasic::OnEnChangeComments(wxCommandEvent& evt)
+{
+	int index = m_ctrlNames->GetSelection();
+	if (wxNOT_FOUND != index)
+	{
+		size_t idxName = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
+		std::wstring data = StringUtil::TrimRight(StringUtil::stringW(m_ctrlNotes->GetValue()));
+		m_parent->SetNameComment(idxName, data);
+		UpdateImage(index);
+	}
+	evt.Skip();
+}
+
+
+void InfoNoteBasic::OnNewItem(wxCommandEvent& evt)
+{
+	CDlgName dlg(StringUtil::stringW(m_Select), m_parent->GetCaption(), this);
+	if (wxID_OK == dlg.ShowModal())
+	{
+		int index = -1;
+		m_Select.clear();
+		std::wstring name = dlg.Name();
+		CDlgInfoNote::UpdateStatus status;
+		size_t idxName = m_parent->AddName(name, status);
+		switch (status)
+		{
+		case CDlgInfoNote::UpdateStatus::Exists:
+			index = static_cast<int>(idxName);
+			break;
+		case CDlgInfoNote::UpdateStatus::Added:
+			index = m_ctrlNames->Append(StringUtil::stringWX(m_parent->GetNames()[idxName].m_name));
+			m_ctrlNames->SetClientData(index, reinterpret_cast<void*>(idxName));
+			m_ctrlVisible->SetValue(true);
+			m_ctrlNotes->SetValue(L"");
+			break;
+		case CDlgInfoNote::UpdateStatus::ReAdded:
+			index = m_ctrlNames->Append(StringUtil::stringWX(m_parent->GetNames()[idxName].m_name));
+			m_ctrlNames->SetClientData(index, reinterpret_cast<void*>(idxName));
+			m_ctrlVisible->SetValue(true);
+			m_ctrlNotes->SetValue(L"");
+			break;
+		}
+		UpdateImage(index);
+		m_ctrlNames->SetSelection(index);
+		UpdateData();
+	}
+}
+
+
+void InfoNoteBasic::OnDeleteItem(wxCommandEvent& evt)
+{
+	int index = m_ctrlNames->GetSelection();
+	if (wxNOT_FOUND != index)
+	{
+		size_t idxName = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
+		if (m_parent->DeleteName(idxName))
+		{
+			m_ctrlNames->Delete(index);
+			if (index == static_cast<int>(m_ctrlNames->GetCount()))
+				--index;
+			if (0 <= index)
+				m_ctrlNames->SetSelection(index);
+			UpdateData();
+		}
+		else
+			wxBell();
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+InfoNoteAdvanced::InfoNoteAdvanced(
+	std::set<std::wstring> const& namesInUse,
+	std::wstring const& inSelect,
+	CDlgInfoNote* parent)
+	: InfoNotePanel(namesInUse, inSelect, parent)
+{
+	auto test = new wxButton(this, wxID_ANY, L"Testing", wxDefaultPosition, wxSize(500, 500));
+
+	LoadData();
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	bSizer = new wxBoxSizer(wxVERTICAL);
+	bSizer->Add(test, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(parent, 5));
+
+	SetSizer(bSizer);
+}
+
+
+void InfoNoteAdvanced::LoadData()
+{
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CDlgInfoNote dialog
+
+CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstring const& inSelect, wxWindow* parent)
+	: wxDialog()
+	, m_pDoc(pDoc)
+	, m_type(inType)
+	, m_NamesInUse()
+	, m_InfoOrig(m_pDoc->Book().GetInfo().GetInfo(inType))
+	, m_Info(m_pDoc->Book().GetInfo().GetInfo(inType).GetItemName())
+	, m_Names()
+	, m_nAdded(0)
+	, m_CurSel()
+{
 	std::wstring caption = L"?";
 	std::set<std::wstring> names;
-	switch (m_Type)
+	switch (m_type)
 	{
 	case ARBInfoType::Club:
 		m_pDoc->Book().GetAllClubNames(m_NamesInUse, false, false);
@@ -109,22 +423,22 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	{
 		NameInfo data(*iter);
 		ARBInfoItemPtr item;
-		if (m_Info.FindItem(data.m_Name, &item))
+		if (m_Info.FindItem(data.m_name, &item))
 		{
 			if (!item->GetComment().empty() || !item->IsVisible())
-				data.m_bHasData = true;
+				data.m_hasData = true;
 		}
-		if (m_NamesInUse.end() != std::find(m_NamesInUse.begin(), m_NamesInUse.end(), data.m_Name))
-			data.m_eInUse = NameInfoUsage::InUse;
+		if (m_NamesInUse.end() != std::find(m_NamesInUse.begin(), m_NamesInUse.end(), data.m_name))
+			data.m_usage = NameInfo::Usage::InUse;
 		else
 			++m_nAdded;
 		m_Names.push_back(data);
 	}
 
-	if (!pParent)
-		pParent = wxGetApp().GetTopWindow();
+	if (!parent)
+		parent = wxGetApp().GetTopWindow();
 	wxDialog::Create(
-		pParent,
+		parent,
 		wxID_ANY,
 		caption.c_str(),
 		wxDefaultPosition,
@@ -133,18 +447,21 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 
 	// Controls (these are done first to control tab order)
 
-	auto panelBasic = CreateBasic();
+	m_panelBasic = new InfoNoteBasic(m_NamesInUse, inSelect, this);
 
-	auto panelAdv = CreateAdvanced();
-	panelAdv->Show(false);
+	m_panelAdv = new InfoNoteAdvanced(m_NamesInUse, inSelect, this);
+	m_panelAdv->Show(false);
 
 	wxButton* ctrlAdvanced = new wxButton(this, wxID_ANY, _("IDC_INFONOTE_ADVAMCED"), wxDefaultPosition, wxDefaultSize);
 	ctrlAdvanced->SetHelpText(_("HIDC_INFONOTE_ADVAMCED"));
 	ctrlAdvanced->SetToolTip(_("HIDC_INFONOTE_ADVAMCED"));
-	ctrlAdvanced->Bind(wxEVT_COMMAND_BUTTON_CLICKED, [this, panelBasic, panelAdv, ctrlAdvanced](wxCommandEvent&) {
-		bool basicShown = panelBasic->IsShown();
-		panelBasic->Show(!basicShown);
-		panelAdv->Show(basicShown);
+	ctrlAdvanced->Bind(wxEVT_COMMAND_BUTTON_CLICKED, [this, ctrlAdvanced](wxCommandEvent&) {
+		bool basicShown = m_panelBasic->IsShown();
+		auto panelActive = !basicShown ? m_panelBasic : m_panelAdv;
+		auto panelHidden = basicShown ? m_panelBasic : m_panelAdv;
+		panelActive->Show(true);
+		panelHidden->Show(false);
+		panelActive->LoadData();
 		auto btnText = basicShown ? _("IDC_INFONOTE_BASIC") : _("IDC_INFONOTE_ADVAMCED");
 		ctrlAdvanced->SetLabel(btnText);
 		ctrlAdvanced->SetFocus();
@@ -163,13 +480,15 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
-	bSizer->Add(panelBasic, 1, wxEXPAND);
-	bSizer->Add(panelAdv, 1, wxEXPAND);
+	bSizer->Add(m_panelBasic, 1, wxEXPAND);
+	bSizer->Add(m_panelAdv, 1, wxEXPAND);
 
 	wxSizer* sdbSizer = CreateStdDialogButtonSizer(wxOK | wxCANCEL);
 	sdbSizer->Insert(0, ctrlAdvanced);
 	sdbSizer = CreateSeparatedSizer(sdbSizer);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgInfoNote::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);
 	Layout();
@@ -177,205 +496,18 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgInfoNote, m_ctrlNames)
+	auto focus = FindWindowInSizer(sdbSizer, wxID_CANCEL);
+	IMPLEMENT_ON_INIT(CDlgInfoNote, focus)
 }
 
 
 DEFINE_ON_INIT(CDlgInfoNote)
 
 
-wxPanel* CDlgInfoNote::CreateBasic()
-{
-	auto panel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0);
-
-	m_ctrlNames = new wxBitmapComboBox(
-		panel,
-		wxID_ANY,
-		wxEmptyString,
-		wxDefaultPosition,
-		wxDefaultSize,
-		0,
-		nullptr,
-		wxCB_DROPDOWN | wxCB_READONLY | wxCB_SORT);
-	m_ctrlNames->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, [this](wxCommandEvent& evt) { UpdateData(); });
-	m_ctrlNames->SetHelpText(_("HIDC_INFONOTE"));
-	m_ctrlNames->SetToolTip(_("HIDC_INFONOTE"));
-
-	wxButton* ctrlNew
-		= new wxButton(panel, wxID_ANY, _("IDC_INFONOTE_NEW"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	ctrlNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgInfoNote::OnNewItem, this);
-	ctrlNew->SetHelpText(_("HIDC_INFONOTE_NEW"));
-	ctrlNew->SetToolTip(_("HIDC_INFONOTE_NEW"));
-
-	m_ctrlDelete
-		= new wxButton(panel, wxID_ANY, _("IDC_INFONOTE_DELETE"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	m_ctrlDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgInfoNote::OnDeleteItem, this);
-	m_ctrlDelete->SetHelpText(_("HIDC_INFONOTE_DELETE"));
-	m_ctrlDelete->SetToolTip(_("HIDC_INFONOTE_DELETE"));
-
-	m_ctrlVisible = new wxCheckBox(panel, wxID_ANY, _("IDC_INFONOTE_VISIBLE"), wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlVisible->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &CDlgInfoNote::OnClickedJudgeVisible, this);
-	m_ctrlVisible->SetHelpText(_("HIDC_INFONOTE_VISIBLE"));
-	m_ctrlVisible->SetToolTip(_("HIDC_INFONOTE_VISIBLE"));
-
-	m_ctrlNotes = new CSpellCheckCtrl(
-		panel,
-		wxID_ANY,
-		wxEmptyString,
-		wxDefaultPosition,
-		wxDLG_UNIT(this, wxSize(180, 60)),
-		wxTE_MULTILINE);
-	m_ctrlNotes->Bind(wxEVT_COMMAND_TEXT_UPDATED, &CDlgInfoNote::OnEnChangeComments, this);
-	m_ctrlNotes->SetHelpText(_("HIDC_INFONOTE_COMMENTS"));
-	m_ctrlNotes->SetToolTip(_("HIDC_INFONOTE_COMMENTS"));
-
-	bool bSet = false;
-	for (size_t idx = 0; idx < m_Names.size(); ++idx)
-	{
-		// Combo box is ownerdraw.
-		int index = m_ctrlNames->Append(StringUtil::stringWX(m_Names[idx].m_Name), m_None);
-		m_ctrlNames->SetClientData(index, reinterpret_cast<void*>(idx));
-		UpdateImage(index);
-		if (!bSet && 0 < m_Select.length())
-		{
-			if (0 == m_Names[idx].m_Name.find(m_Select))
-			{
-				m_ctrlNames->SetSelection(index);
-				bSet = true;
-			}
-		}
-	}
-	if (0 == m_Select.length() || !bSet)
-		m_ctrlNames->SetSelection(0);
-	UpdateData();
-
-	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-
-	wxBoxSizer* sizerJudges = new wxBoxSizer(wxHORIZONTAL);
-	sizerJudges->Add(m_ctrlNames, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerJudges->Add(ctrlNew, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerJudges->Add(m_ctrlDelete, 0, wxALIGN_CENTER_VERTICAL, 0);
-
-	bSizer->Add(sizerJudges, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(m_ctrlVisible, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(m_ctrlNotes, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-
-	panel->SetSizer(bSizer);
-
-	return panel;
-}
-
-
-wxPanel* CDlgInfoNote::CreateAdvanced()
-{
-	auto panel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0);
-
-	auto test = new wxButton(panel, wxID_ANY, L"Testing", wxDefaultPosition, wxSize(500, 500));
-
-	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-
-	bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(test, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-
-	panel->SetSizer(bSizer);
-
-	return panel;
-}
-
-
-std::wstring CDlgInfoNote::CurrentSelection() const
-{
-	return m_CurSel;
-}
-
-
-void CDlgInfoNote::UpdateImage(int index)
-{
-	size_t idx = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
-
-	wxBitmap bmp = m_None;
-	if (0 < m_nAdded && NameInfoUsage::NotInUse == m_Names[idx].m_eInUse)
-	{
-		if (m_Names[idx].m_bHasData)
-			bmp = m_NoteAdded;
-		else
-			bmp = m_Added;
-	}
-	else
-	{
-		if (m_Names[idx].m_bHasData)
-			bmp = m_Note;
-	}
-	m_ctrlNames->SetItemBitmap(index, bmp);
-}
-
-
-void CDlgInfoNote::UpdateData()
-{
-	bool bEnable = false;
-	std::wstring data;
-	bool checked = true;
-	int index = m_ctrlNames->GetSelection();
-	if (wxNOT_FOUND != index)
-	{
-		size_t idx = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
-		ARBInfoItemPtr item;
-		if (m_Info.FindItem(m_Names[idx].m_Name, &item))
-		{
-			checked = item->IsVisible();
-			data = item->GetComment();
-		}
-		if (m_NamesInUse.end() == m_NamesInUse.find(m_Names[idx].m_Name))
-			bEnable = true;
-	}
-	m_ctrlVisible->SetValue(checked);
-	m_ctrlNotes->SetValue(StringUtil::stringWX(data));
-	m_ctrlDelete->Enable(bEnable);
-}
-
-
-void CDlgInfoNote::OnClickedJudgeVisible(wxCommandEvent& evt)
-{
-	int index = m_ctrlNames->GetSelection();
-	if (wxNOT_FOUND != index)
-	{
-		size_t idx = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
-		ARBInfoItemPtr item;
-		if (!m_Info.FindItem(m_Names[idx].m_Name, &item))
-			m_Info.AddItem(m_Names[idx].m_Name, &item);
-		if (!item)
-			return;
-		item->SetIsVisible(m_ctrlVisible->IsChecked());
-		m_Names[idx].m_bHasData = (!item->GetComment().empty() || !item->IsVisible());
-		UpdateImage(index);
-	}
-}
-
-
-void CDlgInfoNote::OnEnChangeComments(wxCommandEvent& evt)
-{
-	int index = m_ctrlNames->GetSelection();
-	if (wxNOT_FOUND != index)
-	{
-		size_t idx = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
-		std::wstring data = StringUtil::TrimRight(StringUtil::stringW(m_ctrlNotes->GetValue()));
-		ARBInfoItemPtr item;
-		if (!m_Info.FindItem(m_Names[idx].m_Name, &item))
-			m_Info.AddItem(m_Names[idx].m_Name, &item);
-		if (!item)
-			return;
-		item->SetComment(data);
-		m_Names[idx].m_bHasData = (!item->GetComment().empty() || !item->IsVisible());
-		UpdateImage(index);
-	}
-	evt.Skip();
-}
-
-
-void CDlgInfoNote::OnNewItem(wxCommandEvent& evt)
+wxString CDlgInfoNote::GetCaption() const
 {
 	wxString caption;
-	switch (m_Type)
+	switch (m_type)
 	{
 	case ARBInfoType::Club:
 		caption = _("IDS_COL_CLUB");
@@ -387,80 +519,106 @@ void CDlgInfoNote::OnNewItem(wxCommandEvent& evt)
 		caption = _("IDS_COL_LOCATION");
 		break;
 	}
-	CDlgName dlg(StringUtil::stringW(m_Select), caption, this);
-	if (wxID_OK == dlg.ShowModal())
-	{
-		int index = -1;
-		m_Select.clear();
-		std::wstring name = dlg.Name();
-		// First, check if the item exists.
-		std::vector<NameInfo>::iterator iter = std::find(m_Names.begin(), m_Names.end(), name);
-		if (iter != m_Names.end())
-		{
-			// Ok, it exists, but it may have been deleted.
-			size_t idx = iter - m_Names.begin();
-			// Added items cannot be in-use. So we're re-adding.
-			if (NameInfoUsage::Deleted == m_Names[idx].m_eInUse)
-			{
-				m_Names[idx].m_eInUse = NameInfoUsage::NotInUse;
-				++m_nAdded;
-				index = m_ctrlNames->Append(StringUtil::stringWX(m_Names[idx].m_Name));
-				m_ctrlNames->SetClientData(index, reinterpret_cast<void*>(idx));
-				m_ctrlVisible->SetValue(true);
-				m_ctrlNotes->SetValue(L"");
-				m_Info.AddItem(m_Names[idx].m_Name);
-			}
-			else
-				index = static_cast<int>(idx);
-		}
-		else
-		{
-			// Brand new name!
-			NameInfo data(name);
-			m_Names.push_back(data);
-			size_t idx = m_Names.size() - 1;
-			++m_nAdded;
-			index = m_ctrlNames->Append(StringUtil::stringWX(m_Names[idx].m_Name));
-			m_ctrlNames->SetClientData(index, reinterpret_cast<void*>(idx));
-			m_ctrlVisible->SetValue(true);
-			m_ctrlNotes->SetValue(L"");
-			m_Info.AddItem(m_Names[idx].m_Name);
-		}
-		UpdateImage(index);
-		m_ctrlNames->SetSelection(index);
-		UpdateData();
-	}
+	return caption;
 }
 
 
-void CDlgInfoNote::OnDeleteItem(wxCommandEvent& evt)
+std::wstring CDlgInfoNote::CurrentSelection() const
 {
-	int index = m_ctrlNames->GetSelection();
-	if (wxNOT_FOUND != index)
+	return m_CurSel;
+}
+
+
+// Note: Only called during OnOk.
+void CDlgInfoNote::SetCurrentSelection(size_t current)
+{
+	m_CurSel = m_Names[current].m_name;
+}
+
+
+size_t CDlgInfoNote::AddName(std::wstring const& name, UpdateStatus& status)
+{
+	size_t idxName;
+	auto iter = std::find(m_Names.begin(), m_Names.end(), name);
+	if (iter != m_Names.end())
 	{
-		size_t idx = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
-		if (m_NamesInUse.end() == m_NamesInUse.find(m_Names[idx].m_Name))
+		// Ok, it exists, but it may have been deleted.
+		idxName = iter - m_Names.begin();
+		// Added items cannot be in-use. So we're re-adding.
+		if (NameInfo::Usage::Deleted == m_Names[idxName].m_usage)
 		{
-			m_ctrlNames->Delete(index);
-			ARBInfoItemPtr item;
-			if (m_Info.FindItem(m_Names[idx].m_Name, &item))
-			{
-				m_Info.DeleteItem(item);
-			}
-			if (index == static_cast<int>(m_ctrlNames->GetCount()))
-				--index;
-			if (0 <= index)
-				m_ctrlNames->SetSelection(index);
-			--m_nAdded;
-			// Do NOT remove the name from m_Names. It will mess up
-			// the indices of all the other items. But mark it
-			// so we know if it's being re-added later.
-			m_Names[idx].m_eInUse = NameInfoUsage::Deleted;
-			UpdateData();
+			m_Names[idxName].m_usage = NameInfo::Usage::NotInUse;
+			++m_nAdded;
+			status = UpdateStatus::ReAdded;
+			m_Info.AddItem(m_Names[idxName].m_name);
 		}
 		else
-			wxBell();
+			status = UpdateStatus::Exists;
 	}
+	else
+	{
+		// Brand new name!
+		status = UpdateStatus::Added;
+		NameInfo data(name);
+		m_Names.push_back(data);
+		idxName = m_Names.size() - 1;
+		++m_nAdded;
+		m_Info.AddItem(m_Names[idxName].m_name);
+	}
+	return idxName;
+}
+
+
+bool CDlgInfoNote::DeleteName(size_t idxName)
+{
+	if (m_NamesInUse.end() == m_NamesInUse.find(m_Names[idxName].m_name))
+	{
+		ARBInfoItemPtr item;
+		if (m_Info.FindItem(m_Names[idxName].m_name, &item))
+		{
+			m_Info.DeleteItem(item);
+		}
+		--m_nAdded;
+		// Do NOT remove the name from m_Names. It will mess up
+		// the indices of all the other items. But mark it
+		// so we know if it's being re-added later.
+		m_Names[idxName].m_usage = NameInfo::Usage::Deleted;
+		return true;
+	}
+	else
+		return false;
+}
+
+
+void CDlgInfoNote::SetNameVisible(size_t idxName, bool visible)
+{
+	ARBInfoItemPtr item;
+	if (!m_Info.FindItem(m_Names[idxName].m_name, &item))
+		m_Info.AddItem(m_Names[idxName].m_name, &item);
+	if (!item)
+		return;
+	item->SetIsVisible(visible);
+	m_Names[idxName].m_hasData = (!item->GetComment().empty() || !item->IsVisible());
+}
+
+
+void CDlgInfoNote::SetNameComment(size_t idxName, std::wstring const& data)
+{
+	ARBInfoItemPtr item;
+	if (!m_Info.FindItem(m_Names[idxName].m_name, &item))
+		m_Info.AddItem(m_Names[idxName].m_name, &item);
+	if (!item)
+		return;
+	item->SetComment(data);
+	m_Names[idxName].m_hasData = (!item->GetComment().empty() || !item->IsVisible());
+}
+
+
+ARBInfoItemPtr CDlgInfoNote::FindName(std::wstring const& name) const
+{
+	ARBInfoItemPtr item;
+	m_Info.FindItem(name, &item);
+	return item;
 }
 
 
@@ -469,16 +627,14 @@ void CDlgInfoNote::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	int index = m_ctrlNames->GetSelection();
-	if (0 <= index)
-	{
-		size_t idx = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
-		m_CurSel = m_Names[idx].m_Name;
-	}
+	auto ok = m_panelBasic->IsShown() ? m_panelBasic->OnOk() : m_panelAdv->OnOk();
+	if (!ok)
+		return;
+
 	m_Info.CondenseContent(m_NamesInUse);
 	if (m_Info != m_InfoOrig)
 	{
-		m_pDoc->Book().GetInfo().GetInfo(m_Type) = m_Info;
+		m_pDoc->Book().GetInfo().GetInfo(m_type) = m_Info;
 		m_pDoc->Modify(true);
 	}
 	EndDialog(wxID_OK);

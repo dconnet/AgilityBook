@@ -26,7 +26,81 @@
 class CAgilityBookDoc;
 class CSpellCheckCtrl;
 class CTextCtrl;
+class InfoNotePanel;
 class wxBitmapComboBox;
+
+
+class NameInfo
+{
+public:
+	enum class Usage
+	{
+		NotInUse,
+		InUse,
+		Deleted
+	};
+
+	NameInfo()
+		: m_name()
+		, m_usage(Usage::NotInUse)
+		, m_hasData(false)
+	{
+	}
+	NameInfo(std::wstring const& inName)
+		: m_name(inName)
+		, m_usage(Usage::NotInUse)
+		, m_hasData(false)
+	{
+	}
+	NameInfo(NameInfo const& rhs)
+		: m_name(rhs.m_name)
+		, m_usage(rhs.m_usage)
+		, m_hasData(rhs.m_hasData)
+	{
+	}
+	NameInfo(NameInfo&& rhs)
+		: m_name(std::move(rhs.m_name))
+		, m_usage(std::move(rhs.m_usage))
+		, m_hasData(std::move(rhs.m_hasData))
+	{
+	}
+	~NameInfo()
+	{
+	}
+
+	NameInfo& operator=(NameInfo const& rhs)
+	{
+		if (this != &rhs)
+		{
+			m_name = rhs.m_name;
+			m_usage = rhs.m_usage;
+			m_hasData = rhs.m_hasData;
+		}
+		return *this;
+	}
+	NameInfo& operator=(NameInfo&& rhs)
+	{
+		if (this != &rhs)
+		{
+			m_name = std::move(rhs.m_name);
+			m_usage = std::move(rhs.m_usage);
+			m_hasData = std::move(rhs.m_hasData);
+		}
+		return *this;
+	}
+	bool operator==(NameInfo const& rhs) const
+	{
+		return m_name == rhs.m_name;
+	}
+	bool operator!=(NameInfo const& rhs) const
+	{
+		return !operator==(rhs);
+	}
+
+	std::wstring m_name;
+	Usage m_usage;
+	bool m_hasData;
+};
 
 
 class CDlgInfoNote : public wxDialog
@@ -34,102 +108,46 @@ class CDlgInfoNote : public wxDialog
 public:
 	CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstring const& inSelect, wxWindow* pParent = nullptr);
 
+	wxString GetCaption() const;
 	std::wstring CurrentSelection() const;
+	void SetCurrentSelection(size_t current);
+
+	enum class UpdateStatus
+	{
+		Exists,
+		Added,
+		ReAdded,
+	};
+	size_t AddName(std::wstring const& name, UpdateStatus& status);
+	bool DeleteName(size_t idxName);
+	void SetNameVisible(size_t idxName, bool visible);
+	void SetNameComment(size_t idxName, std::wstring const& data);
+
+	size_t GetAddedCount() const
+	{
+		return m_nAdded;
+	}
+	ARBInfoItemPtr FindName(std::wstring const& name) const;
+
+	std::vector<NameInfo> const& GetNames() const
+	{
+		return m_Names;
+	}
 
 private:
-	wxPanel* CreateBasic();
-	wxPanel* CreateAdvanced();
-	void CreateButtonSizer(wxSizer* sizer);
-	void UpdateImage(int index);
-	void UpdateData();
-
 	CAgilityBookDoc* m_pDoc;
-	ARBInfoType m_Type;
-	wxString m_Select;
+	ARBInfoType m_type;
 	std::set<std::wstring> m_NamesInUse;
 	ARBInfoItemList const& m_InfoOrig;
 	ARBInfoItemList m_Info;
-	enum class NameInfoUsage
-	{
-		NotInUse,
-		InUse,
-		Deleted
-	};
-	class NameInfo
-	{
-	public:
-		NameInfo()
-			: m_Name()
-			, m_eInUse(NameInfoUsage::NotInUse)
-			, m_bHasData(false)
-		{
-		}
-		NameInfo(std::wstring const& inName)
-			: m_Name(inName)
-			, m_eInUse(NameInfoUsage::NotInUse)
-			, m_bHasData(false)
-		{
-		}
-		NameInfo(NameInfo const& rhs)
-			: m_Name(rhs.m_Name)
-			, m_eInUse(rhs.m_eInUse)
-			, m_bHasData(rhs.m_bHasData)
-		{
-		}
-		NameInfo(NameInfo&& rhs)
-			: m_Name(std::move(rhs.m_Name))
-			, m_eInUse(std::move(rhs.m_eInUse))
-			, m_bHasData(std::move(rhs.m_bHasData))
-		{
-		}
-		~NameInfo()
-		{
-		}
-		NameInfo& operator=(NameInfo const& rhs)
-		{
-			if (this != &rhs)
-			{
-				m_Name = rhs.m_Name;
-				m_eInUse = rhs.m_eInUse;
-				m_bHasData = rhs.m_bHasData;
-			}
-			return *this;
-		}
-		NameInfo& operator=(NameInfo&& rhs)
-		{
-			if (this != &rhs)
-			{
-				m_Name = std::move(rhs.m_Name);
-				m_eInUse = std::move(rhs.m_eInUse);
-				m_bHasData = std::move(rhs.m_bHasData);
-			}
-			return *this;
-		}
-		bool operator==(NameInfo const& rhs)
-		{
-			return m_Name == rhs.m_Name;
-		}
-		std::wstring m_Name;
-		NameInfoUsage m_eInUse;
-		bool m_bHasData;
-	};
 	std::vector<NameInfo> m_Names;
 	size_t m_nAdded;
 	std::wstring m_CurSel;
-	wxBitmapComboBox* m_ctrlNames;
-	wxButton* m_ctrlDelete;
-	wxCheckBox* m_ctrlVisible;
-	CSpellCheckCtrl* m_ctrlNotes;
-	wxBitmap m_None;
-	wxBitmap m_Note;
-	wxBitmap m_Added;
-	wxBitmap m_NoteAdded;
+
+	InfoNotePanel* m_panelBasic;
+	InfoNotePanel* m_panelAdv;
 
 	DECLARE_ON_INIT()
-	DECLARE_EVENT_TABLE()
-	void OnNewItem(wxCommandEvent& evt);
-	void OnDeleteItem(wxCommandEvent& evt);
-	void OnClickedJudgeVisible(wxCommandEvent& evt);
-	void OnEnChangeComments(wxCommandEvent& evt);
+
 	void OnOk(wxCommandEvent& evt);
 };
