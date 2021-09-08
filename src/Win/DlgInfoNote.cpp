@@ -9,9 +9,6 @@
  * @brief Dialog for adding notes to ARBInfo items.
  * @author David Connet
  *
- * Note, this class also deals with adding notes on Clubs and Locations,
- * in addition to judges. It probably should be renamed...
- *
  * Remember, when adding an entry, it is only saved if there is a comment.
  *
  * Revision History
@@ -43,13 +40,8 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "DlgName.h"
-#include "ImageHelper.h"
 
 #include "ARBCommon/StringUtil.h"
-#include "LibARBWin/ARBWinUtilities.h"
-#include "LibARBWin/Widgets.h"
-#include <algorithm>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -57,328 +49,14 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-class InfoNotePanel : public wxPanel
-{
-public:
-	InfoNotePanel(std::set<std::wstring> const& namesInUse, std::wstring const& inSelect, CDlgInfoNote* parent)
-		: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0)
-		, m_parent(parent)
-		, m_NamesInUse(namesInUse)
-		, m_Select(StringUtil::stringWX(inSelect))
-	{
-	}
-
-	virtual void LoadData() = 0;
-	virtual bool OnOk() = 0;
-
-protected:
-	CDlgInfoNote* m_parent;
-	std::set<std::wstring> const& m_NamesInUse;
-	wxString m_Select;
-};
-
-
-class InfoNoteBasic : public InfoNotePanel
-{
-public:
-	InfoNoteBasic(std::set<std::wstring> const& namesInUse, std::wstring const& inSelect, CDlgInfoNote* parent);
-	void LoadData() override;
-	bool OnOk() override;
-
-private:
-	void UpdateImage(int index);
-	void UpdateData();
-
-	wxBitmapComboBox* m_ctrlNames;
-	wxButton* m_ctrlDelete;
-	wxCheckBox* m_ctrlVisible;
-	CSpellCheckCtrl* m_ctrlNotes;
-	wxBitmap m_None;
-	wxBitmap m_Note;
-	wxBitmap m_Added;
-	wxBitmap m_NoteAdded;
-
-	void OnNewItem(wxCommandEvent& evt);
-	void OnDeleteItem(wxCommandEvent& evt);
-	void OnClickedJudgeVisible(wxCommandEvent& evt);
-	void OnEnChangeComments(wxCommandEvent& evt);
-};
-
-
-class InfoNoteAdvanced : public InfoNotePanel
-{
-public:
-	InfoNoteAdvanced(std::set<std::wstring> const& namesInUse, std::wstring const& inSelect, CDlgInfoNote* parent);
-	void LoadData() override;
-	bool OnOk() override
-	{
-		return true;
-	}
-
-private:
-};
-
-/////////////////////////////////////////////////////////////////////////////
-
-InfoNoteBasic::InfoNoteBasic(
+InfoNotePanel::InfoNotePanel(
 	std::set<std::wstring> const& namesInUse,
 	std::wstring const& inSelect,
 	CDlgInfoNote* parent)
-	: InfoNotePanel(namesInUse, inSelect, parent)
-	, m_ctrlNames(nullptr)
-	, m_ctrlDelete(nullptr)
-	, m_ctrlVisible(nullptr)
-	, m_ctrlNotes(nullptr)
-	, m_None(CImageManager::Get()->GetBitmap(ImageMgrBlank))
-	, m_Note(CImageManager::Get()->GetBitmap(ImageMgrInfoNote))
-	, m_Added(CImageManager::Get()->GetBitmap(ImageMgrInfoNoteAdded))
-	, m_NoteAdded(CImageManager::Get()->GetBitmap(ImageMgrInfoNoteNoteAdded))
-{
-	m_ctrlNames = new wxBitmapComboBox(
-		this,
-		wxID_ANY,
-		wxEmptyString,
-		wxDefaultPosition,
-		wxDefaultSize,
-		0,
-		nullptr,
-		wxCB_DROPDOWN | wxCB_READONLY | wxCB_SORT);
-	m_ctrlNames->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, [this](wxCommandEvent& evt) { UpdateData(); });
-	m_ctrlNames->SetHelpText(_("HIDC_INFONOTE"));
-	m_ctrlNames->SetToolTip(_("HIDC_INFONOTE"));
-
-	wxButton* ctrlNew
-		= new wxButton(this, wxID_ANY, _("IDC_INFONOTE_NEW"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	ctrlNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &InfoNoteBasic::OnNewItem, this);
-	ctrlNew->SetHelpText(_("HIDC_INFONOTE_NEW"));
-	ctrlNew->SetToolTip(_("HIDC_INFONOTE_NEW"));
-
-	m_ctrlDelete
-		= new wxButton(this, wxID_ANY, _("IDC_INFONOTE_DELETE"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	m_ctrlDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &InfoNoteBasic::OnDeleteItem, this);
-	m_ctrlDelete->SetHelpText(_("HIDC_INFONOTE_DELETE"));
-	m_ctrlDelete->SetToolTip(_("HIDC_INFONOTE_DELETE"));
-
-	m_ctrlVisible = new wxCheckBox(this, wxID_ANY, _("IDC_INFONOTE_VISIBLE"), wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlVisible->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &InfoNoteBasic::OnClickedJudgeVisible, this);
-	m_ctrlVisible->SetHelpText(_("HIDC_INFONOTE_VISIBLE"));
-	m_ctrlVisible->SetToolTip(_("HIDC_INFONOTE_VISIBLE"));
-
-	m_ctrlNotes = new CSpellCheckCtrl(
-		this,
-		wxID_ANY,
-		wxEmptyString,
-		wxDefaultPosition,
-		wxDLG_UNIT(this, wxSize(180, 60)),
-		wxTE_MULTILINE);
-	m_ctrlNotes->Bind(wxEVT_COMMAND_TEXT_UPDATED, &InfoNoteBasic::OnEnChangeComments, this);
-	m_ctrlNotes->SetHelpText(_("HIDC_INFONOTE_COMMENTS"));
-	m_ctrlNotes->SetToolTip(_("HIDC_INFONOTE_COMMENTS"));
-
-	LoadData();
-
-	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-
-	wxBoxSizer* sizerJudges = new wxBoxSizer(wxHORIZONTAL);
-	sizerJudges->Add(m_ctrlNames, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(parent, 5));
-	sizerJudges->Add(ctrlNew, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(parent, 5));
-	sizerJudges->Add(m_ctrlDelete, 0, wxALIGN_CENTER_VERTICAL, 0);
-
-	bSizer->Add(sizerJudges, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(parent, 5));
-	bSizer->Add(m_ctrlVisible, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(parent, 5));
-	bSizer->Add(m_ctrlNotes, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(parent, 5));
-
-	SetSizer(bSizer);
-}
-
-
-void InfoNoteBasic::LoadData()
-{
-	m_ctrlNames->Clear();
-	bool bSet = false;
-	for (size_t idxName = 0; idxName < m_parent->GetNames().size(); ++idxName)
-	{
-		// Combo box is ownerdraw.
-		int index = m_ctrlNames->Append(StringUtil::stringWX(m_parent->GetNames()[idxName].m_name), m_None);
-		m_ctrlNames->SetClientData(index, reinterpret_cast<void*>(idxName));
-		UpdateImage(index);
-		if (!bSet && 0 < m_Select.length())
-		{
-			if (0 == m_parent->GetNames()[idxName].m_name.find(m_Select))
-			{
-				m_ctrlNames->SetSelection(index);
-				bSet = true;
-			}
-		}
-	}
-	if (0 == m_Select.length() || !bSet)
-		m_ctrlNames->SetSelection(0);
-	UpdateData();
-}
-
-
-bool InfoNoteBasic::OnOk()
-{
-	int index = m_ctrlNames->GetSelection();
-	if (0 <= index)
-	{
-		size_t idxName = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
-		m_parent->SetCurrentSelection(idxName);
-	}
-	return true;
-}
-
-
-void InfoNoteBasic::UpdateImage(int index)
-{
-	size_t idxName = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
-
-	wxBitmap bmp = m_None;
-	if (0 < m_parent->GetAddedCount() && NameInfo::Usage::NotInUse == m_parent->GetNames()[idxName].m_usage)
-	{
-		if (m_parent->GetNames()[idxName].m_hasData)
-			bmp = m_NoteAdded;
-		else
-			bmp = m_Added;
-	}
-	else
-	{
-		if (m_parent->GetNames()[idxName].m_hasData)
-			bmp = m_Note;
-	}
-	m_ctrlNames->SetItemBitmap(index, bmp);
-}
-
-
-void InfoNoteBasic::UpdateData()
-{
-	bool bEnable = false;
-	std::wstring data;
-	bool checked = true;
-	int index = m_ctrlNames->GetSelection();
-	if (wxNOT_FOUND != index)
-	{
-		size_t idxName = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
-		std::wstring name = m_parent->GetNames()[idxName].m_name;
-		m_Select = name;
-		ARBInfoItemPtr item = m_parent->FindName(name);
-		if (item)
-		{
-			checked = item->IsVisible();
-			data = item->GetComment();
-		}
-		if (m_NamesInUse.end() == m_NamesInUse.find(name))
-			bEnable = true;
-	}
-	m_ctrlVisible->SetValue(checked);
-	m_ctrlNotes->SetValue(StringUtil::stringWX(data));
-	m_ctrlDelete->Enable(bEnable);
-}
-
-
-void InfoNoteBasic::OnClickedJudgeVisible(wxCommandEvent& evt)
-{
-	int index = m_ctrlNames->GetSelection();
-	if (wxNOT_FOUND != index)
-	{
-		size_t idxName = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
-		m_parent->SetNameVisible(idxName, m_ctrlVisible->IsChecked());
-		UpdateImage(index);
-	}
-}
-
-
-void InfoNoteBasic::OnEnChangeComments(wxCommandEvent& evt)
-{
-	int index = m_ctrlNames->GetSelection();
-	if (wxNOT_FOUND != index)
-	{
-		size_t idxName = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
-		std::wstring data = StringUtil::TrimRight(StringUtil::stringW(m_ctrlNotes->GetValue()));
-		m_parent->SetNameComment(idxName, data);
-		UpdateImage(index);
-	}
-	evt.Skip();
-}
-
-
-void InfoNoteBasic::OnNewItem(wxCommandEvent& evt)
-{
-	CDlgName dlg(StringUtil::stringW(m_Select), m_parent->GetCaption(), this);
-	if (wxID_OK == dlg.ShowModal())
-	{
-		int index = -1;
-		m_Select.clear();
-		std::wstring name = dlg.Name();
-		CDlgInfoNote::UpdateStatus status;
-		size_t idxName = m_parent->AddName(name, status);
-		switch (status)
-		{
-		case CDlgInfoNote::UpdateStatus::Exists:
-			index = static_cast<int>(idxName);
-			break;
-		case CDlgInfoNote::UpdateStatus::Added:
-			index = m_ctrlNames->Append(StringUtil::stringWX(m_parent->GetNames()[idxName].m_name));
-			m_ctrlNames->SetClientData(index, reinterpret_cast<void*>(idxName));
-			m_ctrlVisible->SetValue(true);
-			m_ctrlNotes->SetValue(L"");
-			break;
-		case CDlgInfoNote::UpdateStatus::ReAdded:
-			index = m_ctrlNames->Append(StringUtil::stringWX(m_parent->GetNames()[idxName].m_name));
-			m_ctrlNames->SetClientData(index, reinterpret_cast<void*>(idxName));
-			m_ctrlVisible->SetValue(true);
-			m_ctrlNotes->SetValue(L"");
-			break;
-		}
-		UpdateImage(index);
-		m_ctrlNames->SetSelection(index);
-		UpdateData();
-	}
-}
-
-
-void InfoNoteBasic::OnDeleteItem(wxCommandEvent& evt)
-{
-	int index = m_ctrlNames->GetSelection();
-	if (wxNOT_FOUND != index)
-	{
-		size_t idxName = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
-		if (m_parent->DeleteName(idxName))
-		{
-			m_ctrlNames->Delete(index);
-			if (index == static_cast<int>(m_ctrlNames->GetCount()))
-				--index;
-			if (0 <= index)
-				m_ctrlNames->SetSelection(index);
-			UpdateData();
-		}
-		else
-			wxBell();
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////
-
-InfoNoteAdvanced::InfoNoteAdvanced(
-	std::set<std::wstring> const& namesInUse,
-	std::wstring const& inSelect,
-	CDlgInfoNote* parent)
-	: InfoNotePanel(namesInUse, inSelect, parent)
-{
-	auto test = new wxButton(this, wxID_ANY, L"Testing", wxDefaultPosition, wxSize(500, 500));
-
-	LoadData();
-
-	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-
-	bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(test, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(parent, 5));
-
-	SetSizer(bSizer);
-}
-
-
-void InfoNoteAdvanced::LoadData()
+	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0)
+	, m_parent(parent)
+	, m_NamesInUse(namesInUse)
+	, m_Select(StringUtil::stringWX(inSelect))
 {
 }
 
@@ -395,6 +73,8 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	, m_Names()
 	, m_nAdded(0)
 	, m_CurSel()
+	, m_panelBasic(nullptr)
+	, m_panelAlternate(nullptr)
 {
 	std::wstring caption = L"?";
 	std::set<std::wstring> names;
@@ -447,24 +127,38 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 
 	// Controls (these are done first to control tab order)
 
-	m_panelBasic = new InfoNoteBasic(m_NamesInUse, inSelect, this);
+	m_panelBasic = InfoNotePanel::CreateBasic(m_NamesInUse, inSelect, this);
+	m_panelAlternate = InfoNotePanel::CreateAlternate(m_NamesInUse, inSelect, this);
 
-	m_panelAdv = new InfoNoteAdvanced(m_NamesInUse, inSelect, this);
-	m_panelAdv->Show(false);
+	wxWindow* ctrlFocus = nullptr;
+	wxString textAlternate;
+	bool showBasic = true; // TODO: remember last shown
+	if (showBasic)
+	{
+		m_panelAlternate->Show(false);
+		textAlternate = _("IDC_INFONOTE_ALTERNATE_EXPAND");
+		ctrlFocus = m_panelBasic->GetInitialFocus();
+	}
+	else
+	{
+		m_panelBasic->Show(false);
+		textAlternate = _("IDC_INFONOTE_ALTERNATE_COLLAPSE");
+		ctrlFocus = m_panelAlternate->GetInitialFocus();
+	}
 
-	wxButton* ctrlAdvanced = new wxButton(this, wxID_ANY, _("IDC_INFONOTE_ADVAMCED"), wxDefaultPosition, wxDefaultSize);
-	ctrlAdvanced->SetHelpText(_("HIDC_INFONOTE_ADVAMCED"));
-	ctrlAdvanced->SetToolTip(_("HIDC_INFONOTE_ADVAMCED"));
-	ctrlAdvanced->Bind(wxEVT_COMMAND_BUTTON_CLICKED, [this, ctrlAdvanced](wxCommandEvent&) {
-		bool basicShown = m_panelBasic->IsShown();
-		auto panelActive = !basicShown ? m_panelBasic : m_panelAdv;
-		auto panelHidden = basicShown ? m_panelBasic : m_panelAdv;
+	wxButton* ctrlAlternate = new wxButton(this, wxID_ANY, textAlternate, wxDefaultPosition, wxDefaultSize);
+	ctrlAlternate->SetHelpText(_("HIDC_INFONOTE_ALTERNATE"));
+	ctrlAlternate->SetToolTip(_("HIDC_INFONOTE_ALTERNATE"));
+	ctrlAlternate->Bind(wxEVT_COMMAND_BUTTON_CLICKED, [this, ctrlAlternate](wxCommandEvent&) {
+		bool showBasic = !m_panelBasic->IsShown();
+		auto panelActive = showBasic ? m_panelBasic : m_panelAlternate;
+		auto panelHidden = !showBasic ? m_panelBasic : m_panelAlternate;
 		panelActive->Show(true);
 		panelHidden->Show(false);
+		panelActive->SetSelection(panelHidden->GetSelection());
 		panelActive->LoadData();
-		auto btnText = basicShown ? _("IDC_INFONOTE_BASIC") : _("IDC_INFONOTE_ADVAMCED");
-		ctrlAdvanced->SetLabel(btnText);
-		ctrlAdvanced->SetFocus();
+		ctrlAlternate->SetLabel(showBasic ? _("IDC_INFONOTE_ALTERNATE_EXPAND") : _("IDC_INFONOTE_ALTERNATE_COLLAPSE"));
+		panelActive->GetInitialFocus()->SetFocus();
 		// Reset min size constraints or dialog won't scale down.
 		m_minWidth = -1;
 		m_maxWidth = -1;
@@ -481,10 +175,10 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	bSizer->Add(m_panelBasic, 1, wxEXPAND);
-	bSizer->Add(m_panelAdv, 1, wxEXPAND);
+	bSizer->Add(m_panelAlternate, 1, wxEXPAND);
 
 	wxSizer* sdbSizer = CreateStdDialogButtonSizer(wxOK | wxCANCEL);
-	sdbSizer->Insert(0, ctrlAdvanced);
+	sdbSizer->Insert(0, ctrlAlternate);
 	sdbSizer = CreateSeparatedSizer(sdbSizer);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
@@ -496,8 +190,7 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	auto focus = FindWindowInSizer(sdbSizer, wxID_CANCEL);
-	IMPLEMENT_ON_INIT(CDlgInfoNote, focus)
+	IMPLEMENT_ON_INIT(CDlgInfoNote, ctrlFocus)
 }
 
 
@@ -627,7 +320,7 @@ void CDlgInfoNote::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	auto ok = m_panelBasic->IsShown() ? m_panelBasic->OnOk() : m_panelAdv->OnOk();
+	auto ok = m_panelBasic->IsShown() ? m_panelBasic->OnOk() : m_panelAlternate->OnOk();
 	if (!ok)
 		return;
 

@@ -24,9 +24,9 @@
 #include <set>
 #include <vector>
 class CAgilityBookDoc;
+class CDlgInfoNote;
 class CSpellCheckCtrl;
 class CTextCtrl;
-class InfoNotePanel;
 class wxBitmapComboBox;
 
 
@@ -102,6 +102,42 @@ public:
 	bool m_hasData;
 };
 
+/////////////////////////////////////////////////////////////////////////////
+
+class InfoNotePanel : public wxPanel
+{
+public:
+	static InfoNotePanel* CreateBasic(
+		std::set<std::wstring> const& namesInUse,
+		std::wstring const& inSelect,
+		CDlgInfoNote* parent);
+	static InfoNotePanel* CreateAlternate(
+		std::set<std::wstring> const& namesInUse,
+		std::wstring const& inSelect,
+		CDlgInfoNote* parent);
+
+	InfoNotePanel(std::set<std::wstring> const& namesInUse, std::wstring const& inSelect, CDlgInfoNote* parent);
+
+	virtual wxWindow* GetInitialFocus() = 0; // Focus on display
+	virtual void LoadData() = 0;             // Load/reload data on display
+	virtual bool OnOk() = 0;                 // Update selection before main OnOk processes
+
+	wxString GetSelection() const
+	{
+		return m_Select;
+	}
+	void SetSelection(wxString const& select)
+	{
+		m_Select = select;
+	}
+
+protected:
+	CDlgInfoNote* m_parent;
+	std::set<std::wstring> const& m_NamesInUse;
+	wxString m_Select;
+};
+
+/////////////////////////////////////////////////////////////////////////////
 
 class CDlgInfoNote : public wxDialog
 {
@@ -145,7 +181,7 @@ private:
 	std::wstring m_CurSel;
 
 	InfoNotePanel* m_panelBasic;
-	InfoNotePanel* m_panelAdv;
+	InfoNotePanel* m_panelAlternate;
 
 	DECLARE_ON_INIT()
 

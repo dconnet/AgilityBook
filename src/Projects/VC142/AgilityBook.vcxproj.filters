@@ -156,6 +156,12 @@
     <ClCompile Include="..\..\Win\DlgInfoNote.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Win\DlgInfoNoteAlt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Win\DlgInfoNoteBasic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Win\DlgListCtrl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

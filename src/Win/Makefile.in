@@ -78,6 +78,8 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	DlgFind.cpp \
 	DlgFindLinks.cpp \
 	DlgInfoNote.cpp \
+	DlgInfoNoteAlt.cpp \
+	DlgInfoNoteBasic.cpp \
 	DlgListCtrl.cpp \
 	DlgListViewer.cpp \
 	DlgMessage.cpp \
