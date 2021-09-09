@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="UserMacros">
+    <BuildScriptDir>$(SolutionDir)..\</BuildScriptDir>
+  </PropertyGroup>
   <PropertyGroup Label="UserMacros" Condition="'$(VisualStudioVersion)'=='10.0'">
     <OutputPlatform>vc100</OutputPlatform>
   </PropertyGroup>
@@ -16,6 +19,9 @@
     <OutputPlatform>vc$(PlatformToolsetVersion)</OutputPlatform>
   </PropertyGroup>
   <ItemGroup>
+    <BuildMacro Include="BuildScriptDir">
+      <Value>$(BuildScriptDir)</Value>
+    </BuildMacro>
     <BuildMacro Include="OutputPlatform">
       <Value>$(OutputPlatform)</Value>
     </BuildMacro>
