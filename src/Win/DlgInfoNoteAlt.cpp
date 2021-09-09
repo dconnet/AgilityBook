@@ -91,6 +91,15 @@ public:
 	int OnCompare(CListDataPtr const& item, long iCol) const override;
 	std::wstring OnNeedText(long iCol) const override;
 	void OnNeedListItem(long iCol, wxListItem& info) const override;
+	bool OnNeedCheck() const override
+	{
+		return IsVisible();
+	}
+
+	bool IsVisible() const
+	{
+		return !m_item || m_item->IsVisible();
+	}
 
 protected:
 	int GetIcon() const;
@@ -171,7 +180,6 @@ void InfoNoteListData::OnNeedListItem(long iCol, wxListItem& info) const
 	case k_colIcon:
 		info.SetMask(info.GetMask() | wxLIST_MASK_IMAGE);
 		info.SetImage(GetIcon());
-
 		break;
 	default:
 		info.SetText(StringUtil::stringWX(OnNeedText(iCol)));
@@ -212,6 +220,7 @@ InfoNoteAlternate::InfoNoteAlternate(
 	, m_imgNoteAdded(-1)
 {
 	m_ctrlList = new CReportListCtrl(this, true, CReportListCtrl::SortHeader::Sort, true, true);
+	m_ctrlList->EnableCheckBoxes();
 	// m_ctrlList->SetHelpText(_("HIDC_DOG_TITLE_TITLES"));
 	// m_ctrlList->SetToolTip(_("HIDC_DOG_TITLE_TITLES"));
 #if 0

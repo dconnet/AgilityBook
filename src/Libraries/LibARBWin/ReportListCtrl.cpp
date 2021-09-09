@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-09-09 Add support for EnableCheckBoxes.
  * 2020-12-11 Moved to ReportListCtrl.cpp
  * 2020-12-07 Add a generic way to handle sorting/moving columns.
  * 2020-12-05 In SetColumnSort, always set the icon.
@@ -190,6 +191,12 @@ wxString CReportListCtrl::OnGetItemText(long item, long column) const
 			text = info.GetText();
 	}
 	return text;
+}
+
+
+bool CReportListCtrl::OnGetItemIsChecked(long item) const
+{
+	return 0 <= item && item < static_cast<long>(m_items.size()) && m_items[item]->OnNeedCheck();
 }
 
 

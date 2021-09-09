@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-09-09 Add support for EnableCheckBoxes.
  * 2018-10-11 Moved to Win LibARBWin
  * 2009-01-01 Ported to wxWidgets.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -46,6 +47,12 @@ void CListData::OnNeedListItem(long iCol, wxListItem& info) const
 {
 	info.SetMask(info.GetMask() | wxLIST_MASK_TEXT);
 	info.SetText(StringUtil::stringWX(OnNeedText(iCol)));
+}
+
+
+bool CListData::OnNeedCheck() const
+{
+	return false;
 }
 
 

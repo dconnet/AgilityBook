@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-09-09 Add support for EnableCheckBoxes.
  * 2020-12-11 Moved to ReportListCtrl.h
  * 2020-12-07 Add a generic way to handle sorting/moving columns.
  * 2020-01-27 Add option for row coloring.
@@ -199,6 +200,7 @@ protected:
 	int OnGetItemColumnImage(long item, long column) const override;
 	int OnGetItemImage(long item) const override;
 	wxString OnGetItemText(long item, long column) const override;
+	bool OnGetItemIsChecked(long item) const override;
 
 	wxImageList m_ImageList;
 	int m_imgEmpty;
