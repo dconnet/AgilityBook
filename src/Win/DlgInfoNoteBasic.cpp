@@ -39,7 +39,7 @@ public:
 
 private:
 	void UpdateImage(int index);
-	void UpdateData();
+	void UpdateControls();
 
 	wxBitmapComboBox* m_ctrlNames;
 	wxButton* m_ctrlDelete;
@@ -89,7 +89,7 @@ InfoNoteBasic::InfoNoteBasic(
 		0,
 		nullptr,
 		wxCB_DROPDOWN | wxCB_READONLY | wxCB_SORT);
-	m_ctrlNames->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, [this](wxCommandEvent& evt) { UpdateData(); });
+	m_ctrlNames->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, [this](wxCommandEvent& evt) { UpdateControls(); });
 	m_ctrlNames->SetHelpText(_("HIDC_INFONOTE"));
 	m_ctrlNames->SetToolTip(_("HIDC_INFONOTE"));
 
@@ -165,7 +165,7 @@ void InfoNoteBasic::LoadData()
 	}
 	if (0 == m_Select.length() || !bSet)
 		m_ctrlNames->SetSelection(0);
-	UpdateData();
+	UpdateControls();
 }
 
 
@@ -202,7 +202,7 @@ void InfoNoteBasic::UpdateImage(int index)
 }
 
 
-void InfoNoteBasic::UpdateData()
+void InfoNoteBasic::UpdateControls()
 {
 	bool bEnable = false;
 	std::wstring data;
@@ -284,7 +284,7 @@ void InfoNoteBasic::OnNewItem(wxCommandEvent& evt)
 		}
 		UpdateImage(index);
 		m_ctrlNames->SetSelection(index);
-		UpdateData();
+		UpdateControls();
 	}
 }
 
@@ -302,7 +302,7 @@ void InfoNoteBasic::OnDeleteItem(wxCommandEvent& evt)
 				--index;
 			if (0 <= index)
 				m_ctrlNames->SetSelection(index);
-			UpdateData();
+			UpdateControls();
 		}
 		else
 			wxBell();

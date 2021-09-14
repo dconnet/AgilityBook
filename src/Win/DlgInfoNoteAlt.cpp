@@ -58,6 +58,8 @@ public:
 
 private:
 	InfoNoteListDataPtr GetData(long index) const;
+	void UpdateControls();
+	void DoEdit();
 
 	CReportListCtrl* m_ctrlList;
 	CReportListHeader m_reportColumn;
@@ -65,6 +67,9 @@ private:
 	int m_imgNote;
 	int m_imgAdded;
 	int m_imgNoteAdded;
+
+	void OnItemActivated(wxListEvent& evt);
+	void OnKeyDown(wxKeyEvent& evt);
 };
 
 InfoNotePanel* InfoNotePanel::CreateAlternate(
@@ -149,6 +154,9 @@ int InfoNoteListData::OnCompare(CListDataPtr const& item, long iCol) const
 			rc = 1;
 	}
 	break;
+	default:
+		assert(0);
+		break;
 	}
 	return rc;
 }
@@ -159,6 +167,8 @@ std::wstring InfoNoteListData::OnNeedText(long iCol) const
 	std::wstring str;
 	switch (iCol)
 	{
+	case k_colIcon:
+		break;
 	case k_colName:
 		str = m_parent->m_parent->GetNames()[m_idxName].m_name;
 		break;
@@ -168,6 +178,9 @@ std::wstring InfoNoteListData::OnNeedText(long iCol) const
 			str = m_item->GetComment();
 	}
 	break;
+	default:
+		assert(0);
+		break;
 	}
 	return str;
 }
@@ -221,17 +234,15 @@ InfoNoteAlternate::InfoNoteAlternate(
 {
 	m_ctrlList = new CReportListCtrl(this, true, CReportListCtrl::SortHeader::Sort, true, true);
 	m_ctrlList->EnableCheckBoxes();
-	// m_ctrlList->SetHelpText(_("HIDC_DOG_TITLE_TITLES"));
-	// m_ctrlList->SetToolTip(_("HIDC_DOG_TITLE_TITLES"));
-#if 0
+	m_ctrlList->SetHelpText(_("HIDC_INFONOTE"));
+	m_ctrlList->SetToolTip(_("HIDC_INFONOTE"));
 	// TODO: not getting selected when selecting 2nd item via shift-click (wx bug)
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, [this](wxListEvent& evt) { UpdateControls(); });
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_DESELECTED, [this](wxListEvent& evt) { UpdateControls(); });
 	// Listen to focused because of https://trac.wxwidgets.org/ticket/4541
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_FOCUSED, [this](wxListEvent& evt) { UpdateControls(); });
-	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgDogPanelReportBase::OnItemActivated, this);
-	m_ctrlList->Bind(wxEVT_KEY_DOWN, &CDlgDogPanelReportBase::OnKeyDown, this);
-#endif
+	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &InfoNoteAlternate::OnItemActivated, this);
+	m_ctrlList->Bind(wxEVT_KEY_DOWN, &InfoNoteAlternate::OnKeyDown, this);
 	m_reportColumn.Initialize(this, m_ctrlList);
 	m_reportColumn.CreateColumns(k_columns, k_colName);
 
@@ -302,4 +313,37 @@ bool InfoNoteAlternate::OnOk()
 InfoNoteListDataPtr InfoNoteAlternate::GetData(long index) const
 {
 	return std::dynamic_pointer_cast<InfoNoteListData, CListData>(m_ctrlList->GetData(index));
+}
+
+
+void InfoNoteAlternate::UpdateControls()
+{
+	// TODO
+}
+
+
+void InfoNoteAlternate::DoEdit()
+{
+	// TODO
+}
+
+
+void InfoNoteAlternate::OnItemActivated(wxListEvent& evt)
+{
+	DoEdit();
+}
+
+
+void InfoNoteAlternate::OnKeyDown(wxKeyEvent& evt)
+{
+	switch (evt.GetKeyCode())
+	{
+	default:
+		evt.Skip();
+		break;
+	case WXK_SPACE:
+	case WXK_NUMPAD_SPACE:
+		DoEdit();
+		break;
+	}
 }

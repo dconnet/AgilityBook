@@ -4779,7 +4779,7 @@ msgstr "Switch between information viewing modes"
 #: Win/DlgInfoNoteBasic.cpp:98 Win/DlgInfoNoteBasic.cpp:99
 msgid "HIDC_INFONOTE"
 msgstr ""
-"List of club, judges or locations from all your runs, plus any created here."
+"List of clubs, judges, or locations from all your runs, plus any created here."
 
 #: Win/DlgInfoNoteBasic.cpp:102
 msgid "IDC_INFONOTE_NEW"
