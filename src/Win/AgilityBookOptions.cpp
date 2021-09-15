@@ -162,7 +162,9 @@ constexpr ARBDateFormat sc_ImportExportFormat = ARBDateFormat::ISO;
 
 // Program
 constexpr long sc_MRUCount = 4;
+#if !defined(_DEBUG) && !defined(__WXDEBUG__)
 constexpr bool sc_AutoUpdateCheck = true;
+#endif
 constexpr long sc_AutoUpdateCheckInterval = 30;
 constexpr long sc_NumBackup = 3;
 constexpr bool sc_ShowPropOnNewTitle = false;
