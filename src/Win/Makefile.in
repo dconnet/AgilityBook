@@ -150,8 +150,8 @@ PRECOMP_HEADER = $(TOPSRCDIR)/Win/stdafx.h
 
 resources: @PACKAGE_ARB_SHORTNAME@
 	echo "LANGDIR $(CURDIR)"
-	python3 $(TOPSRCDIR)/lang/CompileLang.py -w $(WXWIN) -s $(TOPSRCDIR)/lang arb.po $(CURDIR) @PACKAGE_ARB_SHORTNAME@
-	python3 $(TOPSRCDIR)/lang/CompileDatafile.py -x $(TOPSRCDIR)/lang/CompileDatList.txt $(CURDIR) @PACKAGE_ARB_SHORTNAME@
+	python3 $(TOPSRCDIR)/Projects/CompileLang.py -w $(WXWIN) -s $(TOPSRCDIR)/lang arb.po $(CURDIR) @PACKAGE_ARB_SHORTNAME@
+	python3 $(TOPSRCDIR)/Projects/CompileDatafile.py -x $(TOPSRCDIR)/lang/CompileDatList.txt $(CURDIR) @PACKAGE_ARB_SHORTNAME@
 
 all: @PACKAGE_ARB_SHORTNAME@ resources
 

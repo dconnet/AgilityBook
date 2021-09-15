@@ -157,6 +157,8 @@
 		E17B99572526542900C6E3B6 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E17B99542526542900C6E3B6 /* AgilityBook.icns */; };
 		E17B995C2526554200C6E3B6 /* HdrUp.png in Resources */ = {isa = PBXBuildFile; fileRef = E17B9824252651FD00C6E3B6 /* HdrUp.png */; };
 		E19851CD2170E6AD003E7B92 /* libLibARBWin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E19851CC2170E6AD003E7B92 /* libLibARBWin.a */; };
+		E19B1C2426F2A4F5001E6DAF /* DlgInfoNoteAlt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B1C1F26F29BA5001E6DAF /* DlgInfoNoteAlt.cpp */; };
+		E19B1C2626F2A500001E6DAF /* DlgInfoNoteBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B1C2026F29BA6001E6DAF /* DlgInfoNoteBasic.cpp */; };
 		E19B63C0166C096E004DEDA4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19B63BF166C096E004DEDA4 /* Cocoa.framework */; };
 		E19B64EE166C09B9004DEDA4 /* AgilityBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63DD166C09B9004DEDA4 /* AgilityBook.cpp */; };
 		E19B64F0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B63E0166C09B9004DEDA4 /* AgilityBookCalendarListView.cpp */; };
@@ -409,6 +411,8 @@
 		E17B99552526542900C6E3B6 /* AgilityRecordBook.dtd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = AgilityRecordBook.dtd; sourceTree = "<group>"; };
 		E17B99562526542900C6E3B6 /* DefaultConfig.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DefaultConfig.xml; sourceTree = "<group>"; };
 		E19851CC2170E6AD003E7B92 /* libLibARBWin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libLibARBWin.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E19B1C1F26F29BA5001E6DAF /* DlgInfoNoteAlt.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DlgInfoNoteAlt.cpp; sourceTree = "<group>"; };
+		E19B1C2026F29BA6001E6DAF /* DlgInfoNoteBasic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DlgInfoNoteBasic.cpp; sourceTree = "<group>"; };
 		E19B63BB166C096E004DEDA4 /* AgilityBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgilityBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19B63BF166C096E004DEDA4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E19B63C2166C096E004DEDA4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -921,6 +925,8 @@
 				E19B6439166C09B9004DEDA4 /* DlgFindLinks.h */,
 				E19B643A166C09B9004DEDA4 /* DlgInfoNote.cpp */,
 				E19B643B166C09B9004DEDA4 /* DlgInfoNote.h */,
+				E19B1C1F26F29BA5001E6DAF /* DlgInfoNoteAlt.cpp */,
+				E19B1C2026F29BA6001E6DAF /* DlgInfoNoteBasic.cpp */,
 				E19B643C166C09B9004DEDA4 /* DlgListCtrl.cpp */,
 				E19B643D166C09B9004DEDA4 /* DlgListCtrl.h */,
 				E19B643E166C09B9004DEDA4 /* DlgListViewer.cpp */,
@@ -1254,7 +1260,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "OUTPUTDIR=${CODESIGNING_FOLDER_PATH}/Contents/Resources\nLANGDIR=${SOURCE_ROOT}/../../../lang\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\nif ! test -d \"${OUTPUTDIR}\"\nthen\n    mkdir \"${OUTPUTDIR}\"\nfi\n\npython3 \"${LANGDIR}/CompileLang.py\" -s \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" ${TARGET_NAME}\n\npython3 \"${LANGDIR}/CompileDataFile.py\" -x \"${LANGDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" ${TARGET_NAME}\n";
+			shellScript = "OUTPUTDIR=${CODESIGNING_FOLDER_PATH}/Contents/Resources\nSCRIPTDIR=${SOURCE_ROOT}/../../../Projects\nLANGDIR=${SOURCE_ROOT}/../../../lang\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\nif ! test -d \"${OUTPUTDIR}\"\nthen\n    mkdir \"${OUTPUTDIR}\"\nfi\n\npython3 \"${SCRIPTDIR}/CompileLang.py\" -s \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" ${TARGET_NAME}\n\npython3 \"${SCRIPTDIR}/CompileDataFile.py\" -x \"${LANGDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" ${TARGET_NAME}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1336,6 +1342,7 @@
 				E19B6539166C09B9004DEDA4 /* IconList.cpp in Sources */,
 				E19B653E166C09B9004DEDA4 /* Localization.cpp in Sources */,
 				E19B653F166C09B9004DEDA4 /* MainFrm.cpp in Sources */,
+				E19B1C2426F2A4F5001E6DAF /* DlgInfoNoteAlt.cpp in Sources */,
 				E19B6542166C09B9004DEDA4 /* NamedColumns.cpp in Sources */,
 				E19B6543166C09B9004DEDA4 /* NoteButton.cpp in Sources */,
 				E19B6544166C09B9004DEDA4 /* PointsData.cpp in Sources */,
@@ -1347,6 +1354,7 @@
 				E10D89EA25D5AB3D00D1D8F8 /* DlgDogPanelProp.cpp in Sources */,
 				E19B6599166C09B9004DEDA4 /* WizardExport.cpp in Sources */,
 				E19B659A166C09B9004DEDA4 /* WizardImport.cpp in Sources */,
+				E19B1C2626F2A500001E6DAF /* DlgInfoNoteBasic.cpp in Sources */,
 				E19B659B166C09B9004DEDA4 /* WizardStart.cpp in Sources */,
 				E1CAE57816B5BF8700B33FE5 /* stdafx.cpp in Sources */,
 				E1E1D05517234DEF00D7D1E4 /* ComboBoxQ.cpp in Sources */,

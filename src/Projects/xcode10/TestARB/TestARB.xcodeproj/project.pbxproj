@@ -332,7 +332,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "OUTPUTDIR=${CONFIGURATION_BUILD_DIR}\nLANGDIR=${SOURCE_ROOT}/../../../lang\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\npython3 \"${LANGDIR}/CompileLang.py\" -s \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" testarb\n\npython3 \"${LANGDIR}/CompileDataFile.py\" -x \"${LANGDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" testarb\n\npython3 ${SOURCE_ROOT}/../../../Projects/RunARBTests.py ${SOURCE_ROOT}/../../../ \"${OUTPUTDIR}\" testarb Mac";
+			shellScript = "OUTPUTDIR=${CONFIGURATION_BUILD_DIR}\nSCRIPTDIR=${SOURCE_ROOT}/../../../Projects\nLANGDIR=${SOURCE_ROOT}/../../../lang\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\npython3 \"${SCRIPTDIR}/CompileLang.py\" -s \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" testarb\n\npython3 \"${SCRIPTDIR}/CompileDataFile.py\" -x \"${LANGDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" testarb\n\npython3 ${SOURCE_ROOT}/../../../Projects/RunARBTests.py ${SOURCE_ROOT}/../../../ \"${OUTPUTDIR}\" testarb Mac";
 		};
 /* End PBXShellScriptBuildPhase section */
 
