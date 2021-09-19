@@ -156,12 +156,6 @@
     <ClCompile Include="..\..\Win\DlgInfoNote.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Win\DlgInfoNoteAlt.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Win\DlgInfoNoteBasic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Win\DlgListCtrl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -310,6 +304,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Win\DlgRunPanelRefRuns.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Win\DlgInfoNoteEdit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -591,6 +588,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\DlgRunPanelRefRuns.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Win\DlgInfoNoteEdit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

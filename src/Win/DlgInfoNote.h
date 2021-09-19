@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-09-19 Changed infonote from a combobox to a listctrl.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-10 Ported to wxWidgets.
  * 2008-02-01 Add ability to see what was last selected.
@@ -21,14 +22,14 @@
  */
 
 #include "ARB/ARBInfo.h"
+#include "LibARBWin/ReportListHeader.h"
 #include <set>
 #include <vector>
 class CAgilityBookDoc;
-class CDlgInfoNote;
-class CSpellCheckCtrl;
-class CTextCtrl;
-class wxBitmapComboBox;
+class CReportListCtrl;
 
+
+ARB_TYPEDEF(InfoNoteListData)
 
 class NameInfo
 {
@@ -104,50 +105,17 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class InfoNotePanel : public wxPanel
-{
-public:
-	static InfoNotePanel* CreateBasic(
-		std::set<std::wstring> const& namesInUse,
-		std::wstring const& inSelect,
-		CDlgInfoNote* parent);
-	static InfoNotePanel* CreateAlternate(
-		std::set<std::wstring> const& namesInUse,
-		std::wstring const& inSelect,
-		CDlgInfoNote* parent);
-
-	InfoNotePanel(std::set<std::wstring> const& namesInUse, std::wstring const& inSelect, CDlgInfoNote* parent);
-
-	virtual wxWindow* GetInitialFocus() = 0; // Focus on display
-	virtual void LoadData() = 0;             // Load/reload data on display
-	virtual bool OnOk() = 0;                 // Update selection before main OnOk processes
-
-	wxString GetSelection() const
-	{
-		return m_Select;
-	}
-	void SetSelection(wxString const& select)
-	{
-		m_Select = select;
-	}
-
-protected:
-	CDlgInfoNote* m_parent;
-	std::set<std::wstring> const& m_NamesInUse;
-	wxString m_Select;
-};
-
-/////////////////////////////////////////////////////////////////////////////
-
 class CDlgInfoNote : public wxDialog
 {
+	friend class InfoNoteListData;
+
 public:
 	CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstring const& inSelect, wxWindow* pParent = nullptr);
 
 	wxString GetCaption() const;
 	std::wstring CurrentSelection() const;
-	void SetCurrentSelection(size_t current);
 
+	bool NameExists(std::wstring const& name);
 	enum class UpdateStatus
 	{
 		Exists,
@@ -171,6 +139,11 @@ public:
 	}
 
 private:
+	InfoNoteListDataPtr GetData(long index) const;
+	void UpdateControls();
+	void DoEdit();
+	void DoEdit(long index);
+
 	CAgilityBookDoc* m_pDoc;
 	ARBInfoType m_type;
 	std::set<std::wstring> m_NamesInUse;
@@ -180,10 +153,17 @@ private:
 	size_t m_nAdded;
 	std::wstring m_CurSel;
 
-	InfoNotePanel* m_panelBasic;
-	InfoNotePanel* m_panelAlternate;
+	wxButton* m_ctrlEdit;
+	wxButton* m_ctrlDelete;
+	CReportListCtrl* m_ctrlList;
+	CReportListHeader m_reportColumn;
+	int m_imgNone;
+	int m_imgNote;
+	int m_imgAdded;
+	int m_imgNoteAdded;
 
 	DECLARE_ON_INIT()
 
+	void OnDeleteItem(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };

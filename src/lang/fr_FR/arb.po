@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-08 15:04-0700\n"
-"PO-Revision-Date: 2021-09-08 15:04-0700\n"
+"POT-Creation-Date: 2021-09-19 12:38-0700\n"
+"PO-Revision-Date: 2021-09-19 12:38-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -154,7 +154,7 @@ msgstr "Code"
 #: CalSites/DlgCalendarQueryDetail.cpp:120 CalSites/DlgQueryDetail.cpp:85
 #: Win/AgilityBookCalendarView.cpp:643 Win/DlgAssignColumns.cpp:217
 #: Win/DlgAssignColumns.cpp:317 Win/DlgAssignColumns.cpp:374
-#: Win/DlgAssignColumns.cpp:458 Win/DlgInfoNote.cpp:214 Win/DlgListCtrl.cpp:448
+#: Win/DlgAssignColumns.cpp:458 Win/DlgInfoNote.cpp:425 Win/DlgListCtrl.cpp:448
 #: Win/DlgListViewer.cpp:975 Win/DlgListViewer.cpp:1013
 #: Win/DlgListViewer.cpp:1025 Win/DlgListViewer.cpp:1174
 #: Win/DlgListViewer.cpp:1241 Win/DlgListViewer.cpp:1294 Win/Print.cpp:262
@@ -306,6 +306,7 @@ msgstr "{0} Code(s) Endroit et {1} Organisation"
 #: Win/DlgConfigureData.cpp:187 Win/DlgConfigureData.cpp:233
 #: Win/DlgConfigureData.cpp:330 Win/DlgConfigureData.cpp:398
 #: Win/DlgConfigureData.cpp:501 Win/DlgConfigureData.cpp:620
+#: Win/DlgInfoNoteEdit.cpp:115
 msgid "IDS_NAME_IN_USE"
 msgstr "Ce nom existe deja."
 
@@ -1076,7 +1077,7 @@ msgstr "Dernier date"
 
 #: Win/AgilityBookCalendarView.cpp:644 Win/DlgAssignColumns.cpp:214
 #: Win/DlgAssignColumns.cpp:320 Win/DlgAssignColumns.cpp:368
-#: Win/DlgInfoNote.cpp:208 Win/DlgListCtrl.cpp:449 Win/DlgListViewer.cpp:969
+#: Win/DlgInfoNote.cpp:419 Win/DlgListCtrl.cpp:449 Win/DlgListViewer.cpp:969
 #: Win/DlgListViewer.cpp:1007 Win/DlgListViewer.cpp:1019
 #: Win/DlgListViewer.cpp:1175 Win/DlgListViewer.cpp:1242
 #: Win/DlgListViewer.cpp:1295 Win/DlgListViewer.cpp:1371 Win/DlgTrial.cpp:377
@@ -2477,7 +2478,7 @@ msgstr "Epreuve"
 msgid "IDS_COL_HEIGHT"
 msgstr "Catégorie"
 
-#: Win/DlgAssignColumns.cpp:235 Win/DlgInfoNote.cpp:211 Win/DlgListViewer.cpp:972
+#: Win/DlgAssignColumns.cpp:235 Win/DlgInfoNote.cpp:422 Win/DlgListViewer.cpp:972
 #: Win/DlgListViewer.cpp:1010 Win/DlgListViewer.cpp:1022
 #: Win/DlgListViewer.cpp:1176 Win/DlgListViewer.cpp:1243 Win/Print.cpp:264
 msgid "IDS_COL_JUDGE"
@@ -2577,7 +2578,7 @@ msgid "IDS_COL_TITLE_PTS"
 msgstr "Points Distinction"
 
 #: Win/DlgAssignColumns.cpp:298 Win/DlgDogPanelPoints.cpp:63
-#: Win/DlgListViewer.cpp:1406 Win/Print.cpp:279
+#: Win/DlgInfoNote.cpp:64 Win/DlgListViewer.cpp:1406 Win/Print.cpp:279
 msgid "IDS_COL_COMMENTS"
 msgstr "Notes"
 
@@ -2590,8 +2591,8 @@ msgid "IDS_COL_ENTERED"
 msgstr "Nombre chiens inscrit"
 
 #: Win/DlgAssignColumns.cpp:339 Win/DlgDogPanelTitles.cpp:56
-#: Win/DlgFindLinks.cpp:119 Win/DlgListCtrl.cpp:554 Win/DlgListViewer.cpp:1405
-#: Win/DlgRunPanelRefRuns.cpp:62
+#: Win/DlgFindLinks.cpp:119 Win/DlgInfoNote.cpp:63 Win/DlgListCtrl.cpp:554
+#: Win/DlgListViewer.cpp:1405 Win/DlgRunPanelRefRuns.cpp:62
 msgid "IDS_COL_NAME"
 msgstr "Nom"
 
@@ -4836,65 +4837,60 @@ msgstr "&Ouvrir"
 msgid "HIDC_FINDLINKS_OPEN"
 msgstr "Montrer le lien sélectionné."
 
-#: Win/DlgInfoNote.cpp:89
+#: Win/DlgInfoNote.cpp:257
 msgid "IDS_INFO_CLUB"
 msgstr "Information Club"
 
-#: Win/DlgInfoNote.cpp:94
+#: Win/DlgInfoNote.cpp:262
 msgid "IDS_INFO_JUDGE"
 msgstr "Information Juge"
 
-#: Win/DlgInfoNote.cpp:99
+#: Win/DlgInfoNote.cpp:267
 msgid "IDS_INFO_LOCATION"
 msgstr "Information Endroit"
 
-#: Win/DlgInfoNote.cpp:142 Win/DlgInfoNote.cpp:162
-#, fuzzy
-msgid "IDC_INFONOTE_ALTERNATE_EXPAND"
-msgstr "&Expand"
+#: Win/DlgInfoNote.cpp:298
+msgid "IDC_INFONOTE_NEW"
+msgstr "&Nouveax..."
 
-#: Win/DlgInfoNote.cpp:148 Win/DlgInfoNote.cpp:162
-msgid "IDC_INFONOTE_ALTERNATE_COLLAPSE"
-msgstr "Collaps&e"
+#: Win/DlgInfoNote.cpp:300 Win/DlgInfoNote.cpp:301
+msgid "HIDC_INFONOTE_NEW"
+msgstr "Créer un nouveau club, un juge, ou un endroit."
 
-#: Win/DlgInfoNote.cpp:153 Win/DlgInfoNote.cpp:154
-#, fuzzy
-msgid "HIDC_INFONOTE_ALTERNATE"
-msgstr "Switch between information viewing modes"
+#: Win/DlgInfoNote.cpp:303
+msgid "IDC_INFONOTE_EDIT"
+msgstr "&Édition..."
 
-#: Win/DlgInfoNoteBasic.cpp:98 Win/DlgInfoNoteBasic.cpp:99
+#: Win/DlgInfoNote.cpp:308 Win/DlgInfoNote.cpp:309
+msgid "HIDC_INFONOTE_EDIT"
+msgstr "Éditer un club, un juge, ou un endroit."
+
+#: Win/DlgInfoNote.cpp:311
+msgid "IDC_INFONOTE_DELETE"
+msgstr "&Supprimer"
+
+#: Win/DlgInfoNote.cpp:313 Win/DlgInfoNote.cpp:314
+msgid "HIDC_INFONOTE_DELETE"
+msgstr ""
+"Supprimer le club, le juge, ou l'endroit sélectionné. Seule les notes seront "
+"supprimées."
+
+#: Win/DlgInfoNote.cpp:321 Win/DlgInfoNote.cpp:322 Win/DlgInfoNoteEdit.cpp:55
+#: Win/DlgInfoNoteEdit.cpp:56
 msgid "HIDC_INFONOTE"
 msgstr ""
 "Liste des clubs, des juges, ou des endroits de tous vos parcours, plus ceux "
 "créés ici."
 
-#: Win/DlgInfoNoteBasic.cpp:102
-msgid "IDC_INFONOTE_NEW"
-msgstr "&Nouveax..."
-
-#: Win/DlgInfoNoteBasic.cpp:104 Win/DlgInfoNoteBasic.cpp:105
-msgid "HIDC_INFONOTE_NEW"
-msgstr "Créer un nouveau club, un juge ou un endroit."
-
-#: Win/DlgInfoNoteBasic.cpp:108
-msgid "IDC_INFONOTE_DELETE"
-msgstr "&Supprimer"
-
-#: Win/DlgInfoNoteBasic.cpp:110 Win/DlgInfoNoteBasic.cpp:111
-msgid "HIDC_INFONOTE_DELETE"
-msgstr ""
-"Supprimer le club, le juge ou l'endroit sélectionné. Seule les notes seront "
-"supprimées."
-
-#: Win/DlgInfoNoteBasic.cpp:113
+#: Win/DlgInfoNoteEdit.cpp:61
 msgid "IDC_INFONOTE_VISIBLE"
 msgstr "&Visible dans les listes"
 
-#: Win/DlgInfoNoteBasic.cpp:115 Win/DlgInfoNoteBasic.cpp:116
+#: Win/DlgInfoNoteEdit.cpp:66 Win/DlgInfoNoteEdit.cpp:67
 msgid "HIDC_INFONOTE_VISIBLE"
 msgstr "Afficher ou cacher cet article dans des listes sélection."
 
-#: Win/DlgInfoNoteBasic.cpp:126 Win/DlgInfoNoteBasic.cpp:127
+#: Win/DlgInfoNoteEdit.cpp:77 Win/DlgInfoNoteEdit.cpp:78
 msgid "HIDC_INFONOTE_COMMENTS"
 msgstr "Notes sur le club, le juge ou lendroit."
 
@@ -7424,13 +7420,3 @@ msgid "IDS_FILEEXT_FILTER_SETTINGS"
 msgstr ""
 "Paramètres Agility Record Book (*.arbsettings)|*.arbsettings|Tous fichiers (*."
 "*)|*.*||"
-
-#~ msgid "Invalid URL"
-#~ msgstr "URL invalide"
-
-#, fuzzy
-#~ msgid "Error ({0}) reading {1}"
-#~ msgstr "Error ({0}) reading {1}"
-
-#~ msgid "File not found: {}"
-#~ msgstr "Fichier introuvable : {}"

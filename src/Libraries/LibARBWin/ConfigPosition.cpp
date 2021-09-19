@@ -8,6 +8,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-09-19 Changed default config paths.
  * 2021-03-06 Moved into LibARBWin.
  * 2017-12-22 Add support for saving dialogs.
  * 2015-08-11 Add HiDPI support.
@@ -27,8 +28,9 @@
 #endif
 
 
-CConfigPosition::CConfigPosition(uint8_t flags)
-	: m_flags(flags)
+CConfigPosition::CConfigPosition(wxString const& name, uint8_t flags)
+	: m_name(name)
+	, m_flags(flags)
 {
 }
 
@@ -58,7 +60,7 @@ bool CConfigPosition::Set(wxWindow* wnd, bool bUseExisting, bool* pPosSet)
 	if (pPosSet)
 		*pPosSet = false;
 
-	if (LastX())
+	if (!LastX().empty())
 	{
 		if (wxConfig::Get()->Read(LastX(), &x, x))
 		{
@@ -67,7 +69,7 @@ bool CConfigPosition::Set(wxWindow* wnd, bool bUseExisting, bool* pPosSet)
 				*pPosSet = true;
 		}
 	}
-	if (LastY())
+	if (!LastY().empty())
 	{
 		if (wxConfig::Get()->Read(LastY(), &y, y))
 		{
@@ -76,19 +78,19 @@ bool CConfigPosition::Set(wxWindow* wnd, bool bUseExisting, bool* pPosSet)
 				*pPosSet = true;
 		}
 	}
-	if (LastCX())
+	if (!LastCX().empty())
 	{
 		if (wxConfig::Get()->Read(LastCX(), &width, width))
 			width = DPI::Scale(width);
 	}
-	if (LastCY())
+	if (!LastCY().empty())
 	{
 		if (wxConfig::Get()->Read(LastCY(), &height, height))
 			height = DPI::Scale(height);
 	}
 
 	long state = 0;
-	if (LastState())
+	if (!LastState().empty())
 		wxConfig::Get()->Read(LastState(), state);
 
 	bool bCompute = false;
@@ -177,7 +179,7 @@ void CConfigPosition::Save(wxTopLevelWindow* wnd)
 	{
 		SaveWindow(wnd);
 	}
-	if (LastState())
+	if (!LastState().empty())
 		wxConfig::Get()->Write(LastState(), state);
 }
 
@@ -185,12 +187,12 @@ void CConfigPosition::Save(wxTopLevelWindow* wnd)
 void CConfigPosition::SaveWindow(wxWindow* wnd)
 {
 	wxRect r = wnd->GetScreenRect();
-	if (LastX())
+	if (!LastX().empty())
 		wxConfig::Get()->Write(LastX(), DPI::UnScale(wnd, r.x));
-	if (LastY())
+	if (!LastY().empty())
 		wxConfig::Get()->Write(LastY(), DPI::UnScale(wnd, r.y));
-	if (LastCX())
+	if (!LastCX().empty())
 		wxConfig::Get()->Write(LastCX(), DPI::UnScale(wnd, r.width));
-	if (LastCY())
+	if (!LastCY().empty())
 		wxConfig::Get()->Write(LastCY(), DPI::UnScale(wnd, r.height));
 }

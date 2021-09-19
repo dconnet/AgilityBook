@@ -8,6 +8,7 @@
  * @file
  *
  * Revision History
+ * 2021-09-19 Changed default config paths.
  * 2021-03-06 Moved into LibARBWin.
  * 2018-03-31 Added configuration bits.
  * 2017-12-22 Add support for saving dialogs.
@@ -24,6 +25,7 @@
 class ARBWIN_API CConfigPosition
 {
 protected:
+	wxString m_name;
 	uint8_t m_flags;
 	DECLARE_NO_COPY_IMPLEMENTED(CConfigPosition)
 	CConfigPosition() = delete;
@@ -39,7 +41,7 @@ public:
 		eConfigAll = eConfigNoState | eConfigState
 	};
 
-	explicit CConfigPosition(uint8_t flags);
+	CConfigPosition(wxString const& name, uint8_t flags);
 	virtual ~CConfigPosition();
 
 	/**
@@ -55,24 +57,28 @@ public:
 	virtual void SaveWindow(wxWindow* wnd);
 
 protected:
-	virtual wchar_t const* const LastX() const
+	virtual wxString SectionName() const
 	{
-		return (m_flags & eConfigPos) ? L"Settings/lastX" : nullptr;
+		return L"Positions";
 	}
-	virtual wchar_t const* const LastY() const
+	virtual wxString LastX() const
 	{
-		return (m_flags & eConfigPos) ? L"Settings/lastY" : nullptr;
+		return (m_flags & eConfigPos) ? wxString::Format(L"%s/%sLastX", SectionName(), m_name) : wxString();
 	}
-	virtual wchar_t const* const LastCX() const
+	virtual wxString LastY() const
 	{
-		return (m_flags & eConfigSize) ? L"Settings/lastCX" : nullptr;
+		return (m_flags & eConfigPos) ? wxString::Format(L"%s/%sLastY", SectionName(), m_name) : wxString();
 	}
-	virtual wchar_t const* const LastCY() const
+	virtual wxString LastCX() const
 	{
-		return (m_flags & eConfigSize) ? L"Settings/lastCY" : nullptr;
+		return (m_flags & eConfigSize) ? wxString::Format(L"%s/%sLastCX", SectionName(), m_name) : wxString();
 	}
-	virtual wchar_t const* const LastState() const
+	virtual wxString LastCY() const
 	{
-		return (m_flags & eConfigState) ? L"Settings/lastState" : nullptr;
+		return (m_flags & eConfigSize) ? wxString::Format(L"%s/%sLastCY", SectionName(), m_name) : wxString();
+	}
+	virtual wxString LastState() const
+	{
+		return (m_flags & eConfigState) ? wxString::Format(L"%s/%sLastState", SectionName(), m_name) : wxString();
 	}
 };

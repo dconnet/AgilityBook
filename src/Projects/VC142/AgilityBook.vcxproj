@@ -460,8 +460,7 @@
     <ClCompile Include="..\..\Win\DlgFind.cpp" />
     <ClCompile Include="..\..\Win\DlgFindLinks.cpp" />
     <ClCompile Include="..\..\Win\DlgInfoNote.cpp" />
-    <ClCompile Include="..\..\Win\DlgInfoNoteAlt.cpp" />
-    <ClCompile Include="..\..\Win\DlgInfoNoteBasic.cpp" />
+    <ClCompile Include="..\..\Win\DlgInfoNoteEdit.cpp" />
     <ClCompile Include="..\..\Win\DlgListCtrl.cpp" />
     <ClCompile Include="..\..\Win\DlgListViewer.cpp" />
     <ClCompile Include="..\..\Win\DlgMessage.cpp" />
@@ -589,6 +588,7 @@
     <ClInclude Include="..\..\Win\DlgFind.h" />
     <ClInclude Include="..\..\Win\DlgFindLinks.h" />
     <ClInclude Include="..\..\Win\DlgInfoNote.h" />
+    <ClInclude Include="..\..\Win\DlgInfoNoteEdit.h" />
     <ClInclude Include="..\..\Win\DlgListCtrl.h" />
     <ClInclude Include="..\..\Win\DlgListViewer.h" />
     <ClInclude Include="..\..\Win\DlgMessage.h" />

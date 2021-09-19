@@ -12,6 +12,7 @@
  * Remember, when adding an entry, it is only saved if there is a comment.
  *
  * Revision History
+ * 2021-09-19 Changed infonote from a combobox to a listctrl.
  * 2014-12-31 Changed pixels to dialog units.
  * 2012-05-22 Change KillFocus handler to text change handler.
  * 2012-02-16 Fix initial focus.
@@ -40,24 +41,203 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
+#include "DlgInfoNoteEdit.h"
+#include "ImageHelper.h"
 
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ConfigPosition.h"
+#include "LibARBWin/ListData.h"
+#include "LibARBWin/ReportListCtrl.h"
+#include "LibARBWin/ReportListHeader.h"
+#include "LibARBWin/Widgets.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
 
+namespace
+{
+constexpr int k_colIcon = 0;
+constexpr int k_colName = 1;
+constexpr int k_colComment = 2;
+static const std::vector<CReportListHeader::ColumnInfo> k_columns{
+	{k_colIcon, wxLIST_FORMAT_LEFT, L""},
+	{k_colName, wxLIST_FORMAT_LEFT, arbT("IDS_COL_NAME")},
+	{k_colComment, wxLIST_FORMAT_LEFT, arbT("IDS_COL_COMMENTS")},
+};
+} // namespace
+
 /////////////////////////////////////////////////////////////////////////////
 
-InfoNotePanel::InfoNotePanel(
-	std::set<std::wstring> const& namesInUse,
-	std::wstring const& inSelect,
-	CDlgInfoNote* parent)
-	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0)
-	, m_parent(parent)
-	, m_NamesInUse(namesInUse)
-	, m_Select(StringUtil::stringWX(inSelect))
+class CConfigInfoNote : public CConfigPosition
 {
+public:
+	CConfigInfoNote()
+		: CConfigPosition(L"InfoNote", CConfigPosition::eConfigSize)
+	{
+	}
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+class InfoNoteListData : public CListData
+{
+	DECLARE_NO_COPY_IMPLEMENTED(InfoNoteListData)
+public:
+	InfoNoteListData(CDlgInfoNote* parent, size_t idxName)
+		: m_parent(parent)
+		, m_idxName(idxName)
+		, m_item()
+	{
+		m_item = m_parent->FindName(m_parent->GetNames()[m_idxName].m_name);
+	}
+	ARBInfoItemPtr UpdateItem(std::wstring const& name, ARBInfoItemList& info);
+
+	int OnCompare(CListDataPtr const& item, long iCol) const override;
+	std::wstring OnNeedText(long iCol) const override;
+	void OnNeedListItem(long iCol, wxListItem& info) const override;
+	bool OnNeedCheck() const override
+	{
+		return IsVisible();
+	}
+
+	bool IsVisible() const
+	{
+		return !m_item || m_item->IsVisible();
+	}
+	size_t GetIndex() const
+	{
+		return m_idxName;
+	}
+	ARBInfoItemPtr GetItem() const
+	{
+		return m_item;
+	}
+
+protected:
+	int GetIcon() const;
+
+	CDlgInfoNote* m_parent;
+	size_t m_idxName;
+	ARBInfoItemPtr m_item;
+};
+
+
+ARBInfoItemPtr InfoNoteListData::UpdateItem(std::wstring const& name, ARBInfoItemList& info)
+{
+	if (!m_item)
+	{
+		if (!info.FindItem(name, &m_item))
+		{
+			info.AddItem(name);
+			info.FindItem(name, &m_item);
+		}
+	}
+	return m_item;
+}
+
+
+int InfoNoteListData::OnCompare(CListDataPtr const& item, long iCol) const
+{
+	InfoNoteListDataPtr pData2 = std::dynamic_pointer_cast<InfoNoteListData, CListData>(item);
+	if (!pData2)
+		return 1;
+
+	int rc = 0;
+	switch (iCol)
+	{
+	case k_colIcon:
+	{
+		int icon1 = GetIcon();
+		int icon2 = pData2->GetIcon();
+		if (icon1 < icon2)
+			rc = -1;
+		else if (icon1 > icon2)
+			rc = 1;
+	}
+	break;
+	case k_colName:
+	{
+		std::wstring n1 = m_parent->GetNames()[m_idxName].m_name;
+		std::wstring n2 = m_parent->GetNames()[pData2->m_idxName].m_name;
+		if (n1 < n2)
+			rc = -1;
+		else if (n1 > n2)
+			rc = 1;
+	}
+	break;
+	case k_colComment:
+	{
+		std::wstring s1 = m_item ? m_item->GetComment() : L"";
+		std::wstring s2 = pData2->m_item ? pData2->m_item->GetComment() : L"";
+		if (s1 < s2)
+			rc = -1;
+		else if (s1 > s2)
+			rc = 1;
+	}
+	break;
+	default:
+		assert(0);
+		break;
+	}
+	return rc;
+}
+
+
+std::wstring InfoNoteListData::OnNeedText(long iCol) const
+{
+	std::wstring str;
+	switch (iCol)
+	{
+	case k_colIcon:
+		break;
+	case k_colName:
+		str = m_parent->GetNames()[m_idxName].m_name;
+		break;
+	case k_colComment:
+	{
+		if (m_item)
+			str = m_item->GetComment();
+	}
+	break;
+	default:
+		assert(0);
+		break;
+	}
+	return str;
+}
+
+
+void InfoNoteListData::OnNeedListItem(long iCol, wxListItem& info) const
+{
+	switch (iCol)
+	{
+	case k_colIcon:
+		info.SetMask(info.GetMask() | wxLIST_MASK_IMAGE);
+		info.SetImage(GetIcon());
+		break;
+	default:
+		info.SetText(StringUtil::stringWX(OnNeedText(iCol)));
+	}
+}
+
+
+int InfoNoteListData::GetIcon() const
+{
+	int image = m_parent->m_imgNone;
+	if (0 < m_parent->GetAddedCount() && NameInfo::Usage::NotInUse == m_parent->GetNames()[m_idxName].m_usage)
+	{
+		if (m_parent->GetNames()[m_idxName].m_hasData)
+			image = m_parent->m_imgNoteAdded;
+		else
+			image = m_parent->m_imgAdded;
+	}
+	else
+	{
+		if (m_parent->GetNames()[m_idxName].m_hasData)
+			image = m_parent->m_imgNote;
+	}
+	return image;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -73,41 +253,46 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	, m_Names()
 	, m_nAdded(0)
 	, m_CurSel()
-	, m_panelBasic(nullptr)
-	, m_panelAlternate(nullptr)
+	, m_ctrlEdit(nullptr)
+	, m_ctrlDelete(nullptr)
+	, m_ctrlList(nullptr)
+	, m_reportColumn()
+	, m_imgNone(-1)
+	, m_imgNote(-1)
+	, m_imgAdded(-1)
+	, m_imgNoteAdded(-1)
 {
 	std::wstring caption = L"?";
-	std::set<std::wstring> names;
+	std::set<std::wstring> allNames;
 	switch (m_type)
 	{
 	case ARBInfoType::Club:
+		// Names in use only
 		m_pDoc->Book().GetAllClubNames(m_NamesInUse, false, false);
-		m_pDoc->Book().GetAllClubNames(names, true, false);
+		// Names in use, plus names added
+		m_pDoc->Book().GetAllClubNames(allNames, true, false);
 		caption = _("IDS_INFO_CLUB");
 		break;
 	case ARBInfoType::Judge:
 		m_pDoc->Book().GetAllJudges(m_NamesInUse, false, false);
-		m_pDoc->Book().GetAllJudges(names, true, false);
+		m_pDoc->Book().GetAllJudges(allNames, true, false);
 		caption = _("IDS_INFO_JUDGE");
 		break;
 	case ARBInfoType::Location:
 		m_pDoc->Book().GetAllTrialLocations(m_NamesInUse, false, false);
-		m_pDoc->Book().GetAllTrialLocations(names, true, false);
+		m_pDoc->Book().GetAllTrialLocations(allNames, true, false);
 		caption = _("IDS_INFO_LOCATION");
 		break;
 	}
 	m_InfoOrig.Clone(m_Info);
 
-	m_Names.reserve(names.size());
-	for (std::set<std::wstring>::iterator iter = names.begin(); iter != names.end(); ++iter)
+	m_Names.reserve(allNames.size());
+	for (std::set<std::wstring>::iterator iter = allNames.begin(); iter != allNames.end(); ++iter)
 	{
 		NameInfo data(*iter);
 		ARBInfoItemPtr item;
 		if (m_Info.FindItem(data.m_name, &item))
-		{
-			if (!item->GetComment().empty() || !item->IsVisible())
-				data.m_hasData = true;
-		}
+			data.m_hasData = item->HasData();
 		if (m_NamesInUse.end() != std::find(m_NamesInUse.begin(), m_NamesInUse.end(), data.m_name))
 			data.m_usage = NameInfo::Usage::InUse;
 		else
@@ -127,59 +312,124 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 
 	// Controls (these are done first to control tab order)
 
-	m_panelBasic = InfoNotePanel::CreateBasic(m_NamesInUse, inSelect, this);
-	m_panelAlternate = InfoNotePanel::CreateAlternate(m_NamesInUse, inSelect, this);
+	wxButton* ctrlNew = new wxButton(this, wxID_ANY, _("IDC_INFONOTE_NEW"), wxDefaultPosition, wxDefaultSize, 0);
+	ctrlNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, [this](wxCommandEvent& evt) { DoEdit(-1); });
+	ctrlNew->SetHelpText(_("HIDC_INFONOTE_NEW"));
+	ctrlNew->SetToolTip(_("HIDC_INFONOTE_NEW"));
 
-	wxWindow* ctrlFocus = nullptr;
-	wxString textAlternate;
-	bool showBasic = true; // TODO: remember last shown
-	if (showBasic)
-	{
-		m_panelAlternate->Show(false);
-		textAlternate = _("IDC_INFONOTE_ALTERNATE_EXPAND");
-		ctrlFocus = m_panelBasic->GetInitialFocus();
-	}
-	else
-	{
-		m_panelBasic->Show(false);
-		textAlternate = _("IDC_INFONOTE_ALTERNATE_COLLAPSE");
-		ctrlFocus = m_panelAlternate->GetInitialFocus();
-	}
+	m_ctrlEdit = new wxButton(this, wxID_ANY, _("IDC_INFONOTE_EDIT"), wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlEdit->Bind(wxEVT_COMMAND_BUTTON_CLICKED, [this](wxCommandEvent& evt) { DoEdit(); });
+	m_ctrlEdit->SetHelpText(_("HIDC_INFONOTE_EDIT"));
+	m_ctrlEdit->SetToolTip(_("HIDC_INFONOTE_EDIT"));
 
-	wxButton* ctrlAlternate = new wxButton(this, wxID_ANY, textAlternate, wxDefaultPosition, wxDefaultSize);
-	ctrlAlternate->SetHelpText(_("HIDC_INFONOTE_ALTERNATE"));
-	ctrlAlternate->SetToolTip(_("HIDC_INFONOTE_ALTERNATE"));
-	ctrlAlternate->Bind(wxEVT_COMMAND_BUTTON_CLICKED, [this, ctrlAlternate](wxCommandEvent&) {
-		bool showBasic = !m_panelBasic->IsShown();
-		auto panelActive = showBasic ? m_panelBasic : m_panelAlternate;
-		auto panelHidden = !showBasic ? m_panelBasic : m_panelAlternate;
-		panelActive->Show(true);
-		panelHidden->Show(false);
-		panelActive->SetSelection(panelHidden->GetSelection());
-		panelActive->LoadData();
-		ctrlAlternate->SetLabel(showBasic ? _("IDC_INFONOTE_ALTERNATE_EXPAND") : _("IDC_INFONOTE_ALTERNATE_COLLAPSE"));
-		panelActive->GetInitialFocus()->SetFocus();
-		// Reset min size constraints or dialog won't scale down.
-		m_minWidth = -1;
-		m_maxWidth = -1;
-		m_minHeight = -1;
-		m_maxHeight = -1;
-		// Resize dialog
-		GetSizer()->Fit(this);
-		SetSizeHints(GetSize(), wxDefaultSize);
-		CenterOnParent();
+	m_ctrlDelete = new wxButton(this, wxID_ANY, _("IDC_INFONOTE_DELETE"), wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgInfoNote::OnDeleteItem, this);
+	m_ctrlDelete->SetHelpText(_("HIDC_INFONOTE_DELETE"));
+	m_ctrlDelete->SetToolTip(_("HIDC_INFONOTE_DELETE"));
+
+	m_ctrlList = new CReportListCtrl(this, false, CReportListCtrl::SortHeader::Sort, true, true);
+	m_imgNone = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrBlank));
+	m_imgNote = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrInfoNote));
+	m_imgAdded = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrInfoNoteAdded));
+	m_imgNoteAdded = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrInfoNoteNoteAdded));
+	m_ctrlList->SetHelpText(_("HIDC_INFONOTE"));
+	m_ctrlList->SetToolTip(_("HIDC_INFONOTE"));
+	m_ctrlList->EnableCheckBoxes();
+	assert(m_ctrlList->HasCheckBoxes());
+	// TODO: not getting selected when selecting 2nd item via shift-click (wx bug)
+	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, [this](wxListEvent& evt) { UpdateControls(); });
+	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_DESELECTED, [this](wxListEvent& evt) { UpdateControls(); });
+	// Listen to focused because of https://trac.wxwidgets.org/ticket/4541
+	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_FOCUSED, [this](wxListEvent& evt) { UpdateControls(); });
+	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, [this](wxListEvent& evt) { DoEdit(); });
+	m_ctrlList->Bind(wxEVT_KEY_DOWN, [this](wxKeyEvent& evt) {
+		switch (evt.GetKeyCode())
+		{
+		default:
+			evt.Skip();
+			break;
+		case WXK_SPACE:
+		case WXK_NUMPAD_SPACE:
+			DoEdit();
+			break;
+		}
 	});
+	m_ctrlList->Bind(wxEVT_LIST_ITEM_CHECKED, [this](wxListEvent& evt) {
+		if (wxNOT_FOUND != evt.GetIndex())
+		{
+			auto data = GetData(evt.GetIndex());
+			if (data)
+			{
+				ARBInfoItemPtr item = data->UpdateItem(m_Names[data->GetIndex()].m_name, m_Info);
+				item->SetIsVisible(true);
+				m_ctrlList->RefreshItem(evt.GetIndex());
+			}
+		}
+	});
+	m_ctrlList->Bind(wxEVT_LIST_ITEM_UNCHECKED, [this](wxListEvent& evt) {
+		if (wxNOT_FOUND != evt.GetIndex())
+		{
+			auto data = GetData(evt.GetIndex());
+			if (data)
+			{
+				ARBInfoItemPtr item = data->UpdateItem(m_Names[data->GetIndex()].m_name, m_Info);
+				item->SetIsVisible(false);
+				m_ctrlList->RefreshItem(evt.GetIndex());
+			}
+		}
+	});
+
+	m_reportColumn.Initialize(this, m_ctrlList);
+	m_reportColumn.CreateColumns(k_columns, k_colName);
+
+	InfoNoteListDataPtr pSelected;
+	for (size_t idxName = 0; idxName < m_Names.size(); ++idxName)
+	{
+		InfoNoteListDataPtr data(std::make_shared<InfoNoteListData>(this, idxName));
+		m_ctrlList->InsertItem(data);
+		if (!pSelected && 0 < inSelect.length())
+		{
+			auto name = m_Names[idxName].m_name;
+			if (0 == name.find(inSelect))
+			{
+				pSelected = data;
+			}
+		}
+	}
+
+	m_reportColumn.SizeColumns();
+	m_reportColumn.Sort();
+
+	if (pSelected)
+	{
+		for (long i = 0; i < m_ctrlList->GetItemCount(); ++i)
+		{
+			InfoNoteListDataPtr data = GetData(i);
+			if (data->OnNeedText(1) == pSelected->OnNeedText(1))
+			{
+				m_ctrlList->Select(i, true);
+				m_ctrlList->Focus(i);
+				break;
+			}
+		}
+	}
 
 	// Sizers
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
-	bSizer->Add(m_panelBasic, 1, wxEXPAND);
-	bSizer->Add(m_panelAlternate, 1, wxEXPAND);
+	wxBoxSizer* sizerButtons = new wxBoxSizer(wxVERTICAL);
+	sizerButtons->Add(ctrlNew, 0, wxBOTTOM, wxDLG_UNIT_X(parent, 5));
+	sizerButtons->Add(m_ctrlEdit, 0, wxBOTTOM, wxDLG_UNIT_X(parent, 5));
+	sizerButtons->Add(m_ctrlDelete);
 
-	wxSizer* sdbSizer = CreateStdDialogButtonSizer(wxOK | wxCANCEL);
-	sdbSizer->Insert(0, ctrlAlternate);
-	sdbSizer = CreateSeparatedSizer(sdbSizer);
+	wxBoxSizer* sizerControls = new wxBoxSizer(wxHORIZONTAL);
+	sizerControls->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(parent, 5));
+	sizerControls->Add(sizerButtons);
+
+	bSizer->Add(sizerControls, 1, wxEXPAND | wxTOP | wxLEFT | wxRIGHT, wxDLG_UNIT_X(parent, 5));
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgInfoNote::OnOk, this, wxID_OK);
@@ -190,7 +440,10 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgInfoNote, ctrlFocus)
+	CConfigInfoNote pos;
+	pos.Set(this, true);
+
+	IMPLEMENT_ON_INIT(CDlgInfoNote, m_ctrlList)
 }
 
 
@@ -222,10 +475,13 @@ std::wstring CDlgInfoNote::CurrentSelection() const
 }
 
 
-// Note: Only called during OnOk.
-void CDlgInfoNote::SetCurrentSelection(size_t current)
+bool CDlgInfoNote::NameExists(std::wstring const& name)
 {
-	m_CurSel = m_Names[current].m_name;
+	auto iter = std::find(m_Names.begin(), m_Names.end(), name);
+	if (iter == m_Names.end())
+		return false;
+	size_t idxName = iter - m_Names.begin();
+	return NameInfo::Usage::Deleted != m_Names[idxName].m_usage;
 }
 
 
@@ -291,7 +547,7 @@ void CDlgInfoNote::SetNameVisible(size_t idxName, bool visible)
 	if (!item)
 		return;
 	item->SetIsVisible(visible);
-	m_Names[idxName].m_hasData = (!item->GetComment().empty() || !item->IsVisible());
+	m_Names[idxName].m_hasData = item->HasData();
 }
 
 
@@ -303,7 +559,7 @@ void CDlgInfoNote::SetNameComment(size_t idxName, std::wstring const& data)
 	if (!item)
 		return;
 	item->SetComment(data);
-	m_Names[idxName].m_hasData = (!item->GetComment().empty() || !item->IsVisible());
+	m_Names[idxName].m_hasData = item->HasData();
 }
 
 
@@ -315,14 +571,166 @@ ARBInfoItemPtr CDlgInfoNote::FindName(std::wstring const& name) const
 }
 
 
+InfoNoteListDataPtr CDlgInfoNote::GetData(long index) const
+{
+	return std::dynamic_pointer_cast<InfoNoteListData, CListData>(m_ctrlList->GetData(index));
+}
+
+
+void CDlgInfoNote::UpdateControls()
+{
+	std::vector<long> items;
+	m_ctrlList->GetSelection(items);
+
+	bool bEnableEdit = false;
+	bool bEnableDelete = false;
+
+	if (1 == items.size())
+	{
+		auto data = GetData(items[0]);
+		if (data)
+		{
+			bEnableEdit = true;
+			bEnableDelete = NameInfo::Usage::NotInUse == m_Names[data->GetIndex()].m_usage;
+		}
+	}
+	else if (1 < items.size())
+	{
+		size_t deletable = 0;
+		for (auto item : items)
+		{
+			auto data = GetData(item);
+			if (data && NameInfo::Usage::NotInUse == m_Names[data->GetIndex()].m_usage)
+			{
+				++deletable;
+			}
+		}
+		bEnableDelete = deletable == items.size();
+	}
+	m_ctrlEdit->Enable(bEnableEdit);
+	m_ctrlDelete->Enable(bEnableDelete);
+}
+
+
+void CDlgInfoNote::DoEdit()
+{
+	if (!m_ctrlList)
+		return;
+	auto index = m_ctrlList->GetSelection(true);
+	if (wxNOT_FOUND != index)
+		DoEdit(index);
+}
+
+
+void CDlgInfoNote::DoEdit(long index)
+{
+	InfoNoteListDataPtr data;
+	std::wstring name, comment;
+	bool isVisible = true;
+	if (wxNOT_FOUND != index)
+	{
+		data = GetData(index);
+		assert(data);
+		name = data->OnNeedText(k_colName);
+		comment = data->OnNeedText(k_colComment);
+		isVisible = data->IsVisible();
+	}
+
+	CDlgInfoNoteEdit dlg(name, comment, isVisible, this);
+	if (wxID_OK == dlg.ShowModal())
+	{
+		bool doSort = false;
+		name = dlg.Name();
+		comment = dlg.Comment();
+		if (!data || data->OnNeedText(k_colName) != name)
+		{
+			std::vector<NameInfo>::iterator iter = std::find(m_Names.begin(), m_Names.end(), name);
+			if (iter != m_Names.end())
+			{
+				size_t idxName = iter - m_Names.begin();
+				if (NameInfo::Usage::Deleted != m_Names[idxName].m_usage)
+				{
+					iter = m_Names.end();
+				}
+			}
+			else
+			{
+				NameInfo info(name);
+				m_Names.push_back(info);
+				iter = m_Names.end() - 1;
+			}
+			if (iter != m_Names.end())
+			{
+				doSort = true;
+
+				size_t idxName = iter - m_Names.begin();
+				m_Info.AddItem(m_Names[idxName].m_name);
+
+				ARBInfoItemPtr item;
+				if (m_Info.FindItem(m_Names[idxName].m_name, &item))
+				{
+					item->SetIsVisible(dlg.IsVisible());
+					item->SetComment(comment);
+					m_Names[data->GetIndex()].m_hasData = item->HasData();
+				}
+
+				++m_nAdded;
+				if (!data || m_Names[data->GetIndex()].m_hasData)
+				{
+					data = std::make_shared<InfoNoteListData>(this, idxName);
+					index = m_ctrlList->InsertItem(data);
+					m_ctrlList->SetSelection(index, true);
+				}
+			}
+		}
+		else
+		{
+			ARBInfoItemPtr item = data->UpdateItem(m_Names[data->GetIndex()].m_name, m_Info);
+			assert(item);
+			item->SetIsVisible(dlg.IsVisible());
+			item->SetComment(comment);
+			m_ctrlList->RefreshItem(index);
+		}
+		if (doSort)
+			m_reportColumn.Sort();
+	}
+}
+
+
+void CDlgInfoNote::OnDeleteItem(wxCommandEvent& evt)
+{
+	std::vector<long> items;
+	if (0 < m_ctrlList->GetSelection(items))
+	{
+		for (size_t idx = items.size(); idx > 0; --idx)
+		{
+			long nItem = items[idx - 1];
+			auto data = GetData(nItem);
+			assert(data);
+			if (data->GetItem())
+				m_Info.DeleteItem(data->GetItem());
+			m_ctrlList->DeleteItem(nItem);
+			if (nItem == m_ctrlList->GetItemCount())
+				--nItem;
+			if (0 <= nItem)
+				m_ctrlList->Select(nItem);
+		}
+	}
+}
+
+
 void CDlgInfoNote::OnOk(wxCommandEvent& evt)
 {
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	auto ok = m_panelBasic->IsShown() ? m_panelBasic->OnOk() : m_panelAlternate->OnOk();
-	if (!ok)
-		return;
+	auto sel = m_ctrlList->GetSelection(true);
+	if (wxNOT_FOUND != sel)
+	{
+		auto data = GetData(sel);
+		assert(data);
+		m_CurSel = m_Names[data->GetIndex()].m_name;
+	}
 
 	m_Info.CondenseContent(m_NamesInUse);
 	if (m_Info != m_InfoOrig)
@@ -330,5 +738,9 @@ void CDlgInfoNote::OnOk(wxCommandEvent& evt)
 		m_pDoc->Book().GetInfo().GetInfo(m_type) = m_Info;
 		m_pDoc->Modify(true);
 	}
+
+	CConfigInfoNote pos;
+	pos.SaveWindow(this);
+
 	EndDialog(wxID_OK);
 }
