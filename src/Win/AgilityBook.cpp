@@ -347,95 +347,7 @@ bool CAgilityBookApp::OnInit()
 	wxSystemOptions::SetOption(L"mac.listctrl.always_use_generic", 1);
 #endif
 
-	int x = wxDefaultCoord, y = wxDefaultCoord;
-	if (wxConfig::Get()->Read(CFG_SETTINGS_LASTXPOS, &x, x))
-		x = DPI::Scale(x);
-	if (wxConfig::Get()->Read(CFG_SETTINGS_LASTYPOS, &y, y))
-		y = DPI::Scale(y);
-
-	bool bCompute = false;
-	wxMouseState mouseState = ::wxGetMouseState();
-	if (wxDefaultCoord != x)
-	{
-		bCompute = true;
-		mouseState.SetX(x);
-	}
-	if (wxDefaultCoord != y)
-	{
-		bCompute = true;
-		mouseState.SetY(y);
-	}
-
-	// Determine where window will be. At least which screen.
-	wxPoint curPt;
-	wxRect rWorkSpace;
-	if (bCompute)
-	{
-		curPt = wxPoint(mouseState.GetX(), mouseState.GetY());
-		int display = wxDisplay::GetFromPoint(curPt);
-		if (wxNOT_FOUND == display)
-			display = 0; // If the display can't be found, use the primary.
-		wxDisplay monitor(display);
-		rWorkSpace = monitor.GetClientArea();
-	}
-
 	CMainFrame* frame = new CMainFrame(m_manager.get());
-	int width = DPI::Scale(600);
-	int height = DPI::Scale(400);
-	int defWidth = width;
-	int defHeight = height;
-	if (wxConfig::Get()->Read(CFG_SETTINGS_LASTCX, &width, width))
-		width = DPI::Scale(frame, width);
-	if (wxConfig::Get()->Read(CFG_SETTINGS_LASTCY, &height, height))
-		height = DPI::Scale(frame, height);
-	long state = wxConfig::Get()->Read(CFG_SETTINGS_LASTSTATE, 0L);
-	wxSize curSize(defWidth, defHeight);
-	if (defWidth != width)
-	{
-		bCompute = true;
-		curSize.SetWidth(width);
-	}
-	if (defHeight != height)
-	{
-		bCompute = true;
-		curSize.SetHeight(height);
-	}
-	if (bCompute)
-	{
-		wxRect rect(curPt, curSize);
-		// Make sure window is not bigger.
-		if (rect.GetWidth() > rWorkSpace.GetWidth())
-			rect.SetRight(rect.GetLeft() + rWorkSpace.GetWidth());
-		if (rect.GetHeight() > rWorkSpace.GetHeight())
-			rect.SetBottom(rect.GetTop() + rWorkSpace.GetHeight());
-		// Make sure the window is fully visible in the screen.
-		if (!rWorkSpace.Contains(rect.GetTopLeft()))
-		{
-			if (rect.GetLeft() < rWorkSpace.GetLeft())
-				rect.Offset(rWorkSpace.GetLeft() - rect.GetLeft(), 0);
-			if (rect.GetTop() < rWorkSpace.GetTop())
-				rect.Offset(0, rWorkSpace.GetTop() - rect.GetTop());
-		}
-		// Only check the bottom-right if the rect has size.
-		if (!rect.IsEmpty() && !rWorkSpace.Contains(rect.GetBottomRight()))
-		{
-			if (rect.GetRight() > rWorkSpace.GetRight())
-				rect.Offset(rWorkSpace.GetRight() - rect.GetRight(), 0);
-			if (rect.GetBottom() > rWorkSpace.GetBottom())
-				rect.Offset(0, rWorkSpace.GetBottom() - rect.GetBottom());
-		}
-		// This _shouldn't_ cause a change of screens...
-		if (wxDefaultCoord != x)
-			x = rect.GetLeft();
-		if (wxDefaultCoord != y)
-			y = rect.GetTop();
-		if (defWidth != width)
-			width = rect.GetWidth();
-		if (defHeight != height)
-			height = rect.GetHeight();
-	}
-
-	frame->SetSize(x, y, width, height);
 
 	// Should we open the last open file?
 	if (filename.empty())
@@ -466,7 +378,8 @@ bool CAgilityBookApp::OnInit()
 	if (bNew)
 		m_manager->CreateDocument(wxEmptyString, wxDOC_NEW);
 
-	if (0 < state)
+	CConfigProgram pos;
+	if (pos.Set(frame, true))
 		frame->Maximize();
 	frame->Show(true);
 

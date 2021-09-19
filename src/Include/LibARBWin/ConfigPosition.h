@@ -41,6 +41,7 @@ public:
 		eConfigAll = eConfigNoState | eConfigState
 	};
 
+	explicit CConfigPosition(uint8_t flags);
 	CConfigPosition(wxString const& name, uint8_t flags);
 	virtual ~CConfigPosition();
 

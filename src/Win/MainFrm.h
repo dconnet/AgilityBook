@@ -18,6 +18,7 @@
  */
 
 #include "AgilityBookMenu.h"
+#include "LibARBWin/ConfigPosition.h"
 #include "LibARBWin/StatusBarHelper.h"
 #include "UpdateInfo.h"
 #include <wx/dnd.h>
@@ -91,4 +92,19 @@ private:
 	void OnHelpCheckUpdates(wxCommandEvent& evt);
 	void OnHelpSysinfo(wxCommandEvent& evt);
 	void OnHelpAbout(wxCommandEvent& evt);
+};
+
+
+class CConfigProgram : public CConfigPosition
+{
+public:
+	CConfigProgram();
+
+protected:
+	wxString SectionName() const override;
+	wxString LastX() const override;
+	wxString LastY() const override;
+	wxString LastCX() const override;
+	wxString LastCY() const override;
+	wxString LastState() const override;
 };

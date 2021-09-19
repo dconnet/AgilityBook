@@ -28,6 +28,12 @@
 #endif
 
 
+CConfigPosition::CConfigPosition(uint8_t flags)
+	: CConfigPosition(wxString(), flags)
+{
+}
+
+
 CConfigPosition::CConfigPosition(wxString const& name, uint8_t flags)
 	: m_name(name)
 	, m_flags(flags)
