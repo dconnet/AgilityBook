@@ -44,25 +44,21 @@ public:
 	NameInfo()
 		: m_name()
 		, m_usage(Usage::NotInUse)
-		, m_hasData(false)
 	{
 	}
 	NameInfo(std::wstring const& inName)
 		: m_name(inName)
 		, m_usage(Usage::NotInUse)
-		, m_hasData(false)
 	{
 	}
 	NameInfo(NameInfo const& rhs)
 		: m_name(rhs.m_name)
 		, m_usage(rhs.m_usage)
-		, m_hasData(rhs.m_hasData)
 	{
 	}
 	NameInfo(NameInfo&& rhs)
 		: m_name(std::move(rhs.m_name))
 		, m_usage(std::move(rhs.m_usage))
-		, m_hasData(std::move(rhs.m_hasData))
 	{
 	}
 	~NameInfo()
@@ -75,7 +71,6 @@ public:
 		{
 			m_name = rhs.m_name;
 			m_usage = rhs.m_usage;
-			m_hasData = rhs.m_hasData;
 		}
 		return *this;
 	}
@@ -85,7 +80,6 @@ public:
 		{
 			m_name = std::move(rhs.m_name);
 			m_usage = std::move(rhs.m_usage);
-			m_hasData = std::move(rhs.m_hasData);
 		}
 		return *this;
 	}
@@ -100,7 +94,6 @@ public:
 
 	std::wstring m_name;
 	Usage m_usage;
-	bool m_hasData;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -124,8 +117,6 @@ public:
 	};
 	size_t AddName(std::wstring const& name, UpdateStatus& status);
 	bool DeleteName(size_t idxName);
-	void SetNameVisible(size_t idxName, bool visible);
-	void SetNameComment(size_t idxName, std::wstring const& data);
 
 	size_t GetAddedCount() const
 	{
@@ -140,6 +131,9 @@ public:
 
 private:
 	InfoNoteListDataPtr GetData(long index) const;
+	bool IsItemVisible(size_t idxName) const;
+	void InsertItems(std::wstring const* inSelect = nullptr);
+	bool UpdateItem(long index, size_t idxName);
 	void UpdateControls();
 	void DoEdit();
 	void DoEdit(long index);
@@ -152,6 +146,20 @@ private:
 	std::vector<NameInfo> m_Names;
 	size_t m_nAdded;
 	std::wstring m_CurSel;
+	enum class ViewVis
+	{
+		All,
+		Visible,
+		Hidden,
+	};
+	ViewVis m_viewVis;
+	enum class ViewUse
+	{
+		All,
+		InUse,
+		NotInUse,
+	};
+	ViewUse m_viewUse;
 
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlDelete;

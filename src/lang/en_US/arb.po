@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-19 12:37-0700\n"
-"PO-Revision-Date: 2021-09-19 12:37-0700\n"
+"POT-Creation-Date: 2021-09-20 12:39-0700\n"
+"PO-Revision-Date: 2021-09-20 12:39-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -155,7 +155,7 @@ msgstr "Code"
 #: CalSites/DlgCalendarQueryDetail.cpp:120 CalSites/DlgQueryDetail.cpp:85
 #: Win/AgilityBookCalendarView.cpp:643 Win/DlgAssignColumns.cpp:217
 #: Win/DlgAssignColumns.cpp:317 Win/DlgAssignColumns.cpp:374
-#: Win/DlgAssignColumns.cpp:458 Win/DlgInfoNote.cpp:425 Win/DlgListCtrl.cpp:448
+#: Win/DlgAssignColumns.cpp:458 Win/DlgInfoNote.cpp:442 Win/DlgListCtrl.cpp:448
 #: Win/DlgListViewer.cpp:975 Win/DlgListViewer.cpp:1013
 #: Win/DlgListViewer.cpp:1025 Win/DlgListViewer.cpp:1174
 #: Win/DlgListViewer.cpp:1241 Win/DlgListViewer.cpp:1294 Win/Print.cpp:262
@@ -306,7 +306,7 @@ msgstr "{0} Location and {1} Venue Code(s)"
 #: Win/DlgConfigure.cpp:432 Win/DlgConfigureData.cpp:187
 #: Win/DlgConfigureData.cpp:233 Win/DlgConfigureData.cpp:330
 #: Win/DlgConfigureData.cpp:398 Win/DlgConfigureData.cpp:501
-#: Win/DlgConfigureData.cpp:620 Win/DlgInfoNoteEdit.cpp:115
+#: Win/DlgConfigureData.cpp:620 Win/DlgInfoNoteEdit.cpp:121
 msgid "IDS_NAME_IN_USE"
 msgstr "Name is already in use."
 
@@ -1053,7 +1053,7 @@ msgstr "End Date"
 
 #: Win/AgilityBookCalendarView.cpp:644 Win/DlgAssignColumns.cpp:214
 #: Win/DlgAssignColumns.cpp:320 Win/DlgAssignColumns.cpp:368
-#: Win/DlgInfoNote.cpp:419 Win/DlgListCtrl.cpp:449 Win/DlgListViewer.cpp:969
+#: Win/DlgInfoNote.cpp:436 Win/DlgListCtrl.cpp:449 Win/DlgListViewer.cpp:969
 #: Win/DlgListViewer.cpp:1007 Win/DlgListViewer.cpp:1019
 #: Win/DlgListViewer.cpp:1175 Win/DlgListViewer.cpp:1242
 #: Win/DlgListViewer.cpp:1295 Win/DlgListViewer.cpp:1371 Win/DlgTrial.cpp:377
@@ -2209,7 +2209,7 @@ msgstr ""
 "\n"
 "Please send any bug reports or suggestions to:"
 
-#: Win/DlgAbout.cpp:84 Win/DlgMessageBox.cpp:54 Win/MainFrm.cpp:111
+#: Win/DlgAbout.cpp:84 Win/DlgMessageBox.cpp:54 Win/MainFrm.cpp:154
 msgid "Agility Record Book"
 msgstr "Agility Record Book"
 
@@ -2428,7 +2428,7 @@ msgstr "Event"
 msgid "IDS_COL_HEIGHT"
 msgstr "Height"
 
-#: Win/DlgAssignColumns.cpp:235 Win/DlgInfoNote.cpp:422
+#: Win/DlgAssignColumns.cpp:235 Win/DlgInfoNote.cpp:439
 #: Win/DlgListViewer.cpp:972 Win/DlgListViewer.cpp:1010
 #: Win/DlgListViewer.cpp:1022 Win/DlgListViewer.cpp:1176
 #: Win/DlgListViewer.cpp:1243 Win/Print.cpp:264
@@ -2530,7 +2530,7 @@ msgid "IDS_COL_TITLE_PTS"
 msgstr "Title Points"
 
 #: Win/DlgAssignColumns.cpp:298 Win/DlgDogPanelPoints.cpp:63
-#: Win/DlgInfoNote.cpp:64 Win/DlgListViewer.cpp:1406 Win/Print.cpp:279
+#: Win/DlgInfoNote.cpp:66 Win/DlgListViewer.cpp:1406 Win/Print.cpp:279
 msgid "IDS_COL_COMMENTS"
 msgstr "Comments"
 
@@ -2543,7 +2543,7 @@ msgid "IDS_COL_ENTERED"
 msgstr "Entered"
 
 #: Win/DlgAssignColumns.cpp:339 Win/DlgDogPanelTitles.cpp:56
-#: Win/DlgFindLinks.cpp:119 Win/DlgInfoNote.cpp:63 Win/DlgListCtrl.cpp:554
+#: Win/DlgFindLinks.cpp:119 Win/DlgInfoNote.cpp:65 Win/DlgListCtrl.cpp:554
 #: Win/DlgListViewer.cpp:1405 Win/DlgRunPanelRefRuns.cpp:62
 msgid "IDS_COL_NAME"
 msgstr "Name"
@@ -4752,60 +4752,64 @@ msgstr "&Open"
 msgid "HIDC_FINDLINKS_OPEN"
 msgstr "View the selected link."
 
-#: Win/DlgInfoNote.cpp:257
+#: Win/DlgInfoNote.cpp:281
 msgid "IDS_INFO_CLUB"
 msgstr "Club's Information"
 
-#: Win/DlgInfoNote.cpp:262
+#: Win/DlgInfoNote.cpp:286
 msgid "IDS_INFO_JUDGE"
 msgstr "Judge's Information"
 
-#: Win/DlgInfoNote.cpp:267
+#: Win/DlgInfoNote.cpp:291
 msgid "IDS_INFO_LOCATION"
 msgstr "Location Information"
 
-#: Win/DlgInfoNote.cpp:298
+#: Win/DlgInfoNote.cpp:322
 msgid "IDC_INFONOTE_NEW"
 msgstr "&New..."
 
-#: Win/DlgInfoNote.cpp:300 Win/DlgInfoNote.cpp:301
+#: Win/DlgInfoNote.cpp:324 Win/DlgInfoNote.cpp:325
 msgid "HIDC_INFONOTE_NEW"
 msgstr "Create a new club, judge, or location."
 
-#: Win/DlgInfoNote.cpp:303
+#: Win/DlgInfoNote.cpp:327
 msgid "IDC_INFONOTE_EDIT"
 msgstr "&Edit..."
 
-#: Win/DlgInfoNote.cpp:308 Win/DlgInfoNote.cpp:309
+#: Win/DlgInfoNote.cpp:329 Win/DlgInfoNote.cpp:330
 msgid "HIDC_INFONOTE_EDIT"
 msgstr "Edit a club, judge, or location."
 
-#: Win/DlgInfoNote.cpp:311
+#: Win/DlgInfoNote.cpp:332
 msgid "IDC_INFONOTE_DELETE"
 msgstr "&Delete"
 
-#: Win/DlgInfoNote.cpp:313 Win/DlgInfoNote.cpp:314
+#: Win/DlgInfoNote.cpp:334 Win/DlgInfoNote.cpp:335
 msgid "HIDC_INFONOTE_DELETE"
 msgstr ""
 "Delete the selected club, judge, or location. If this item is currently in "
 "use, only the comments will be deleted."
 
-#: Win/DlgInfoNote.cpp:321 Win/DlgInfoNote.cpp:322 Win/DlgInfoNoteEdit.cpp:55
-#: Win/DlgInfoNoteEdit.cpp:56
+#: Win/DlgInfoNote.cpp:342 Win/DlgInfoNote.cpp:343 Win/DlgInfoNoteEdit.cpp:61
+#: Win/DlgInfoNoteEdit.cpp:62
 msgid "HIDC_INFONOTE"
 msgstr ""
 "List of clubs, judges, or locations from all your runs, plus any created "
 "here."
 
-#: Win/DlgInfoNoteEdit.cpp:61
+#: Win/DlgInfoNote.cpp:676
+msgid "IDS_INFONOTE_FILTERED"
+msgstr "Edited information is currently hidden by the viewing options."
+
+#: Win/DlgInfoNoteEdit.cpp:67
 msgid "IDC_INFONOTE_VISIBLE"
 msgstr "&Visible in lists"
 
-#: Win/DlgInfoNoteEdit.cpp:66 Win/DlgInfoNoteEdit.cpp:67
+#: Win/DlgInfoNoteEdit.cpp:72 Win/DlgInfoNoteEdit.cpp:73
 msgid "HIDC_INFONOTE_VISIBLE"
 msgstr "Show or hide this item in various selection lists."
 
-#: Win/DlgInfoNoteEdit.cpp:77 Win/DlgInfoNoteEdit.cpp:78
+#: Win/DlgInfoNoteEdit.cpp:83 Win/DlgInfoNoteEdit.cpp:84
 msgid "HIDC_INFONOTE_COMMENTS"
 msgstr "Comments about the club, judge or location."
 
@@ -6448,19 +6452,19 @@ msgstr ""
 "Are you sure you want to continue?"
 
 # This is 11 spaces
-#: Win/MainFrm.cpp:144
+#: Win/MainFrm.cpp:187
 msgid "ID_INDICATOR_DOG"
 msgstr "          "
 
-#: Win/MainFrm.cpp:147
+#: Win/MainFrm.cpp:190
 msgid "ID_INDICATOR_STATUS"
 msgstr "status"
 
-#: Win/MainFrm.cpp:150 Win/MainFrm.cpp:185
+#: Win/MainFrm.cpp:193 Win/MainFrm.cpp:228
 msgid "ID_INDICATOR_FILTERED"
 msgstr "Filtered"
 
-#: Win/MainFrm.cpp:306
+#: Win/MainFrm.cpp:349
 msgid "Canceling file download..."
 msgstr "Canceling file download..."
 

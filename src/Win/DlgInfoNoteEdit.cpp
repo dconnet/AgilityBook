@@ -9,6 +9,12 @@
  * @brief implementation of the CDlgInfoNoteEdit class
  * @author David Connet
  *
+ * Note: An item can go from NotInUse (with an entry in ARBInfoItemList) to
+ * InUse and no entry in ARBInfoItemList simply by a club/judge/location being
+ * added that uses the entered item. When saved, that item will no longer be
+ * stored in the ARB file (because it's in use now). If the item has a comment
+ * or is set to not-visible, it will remain in the ARB file.
+ *
  * Revision History
  * 2021-09-19 Created
  */

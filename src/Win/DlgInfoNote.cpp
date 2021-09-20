@@ -91,6 +91,13 @@ public:
 	{
 		m_item = m_parent->FindName(m_parent->GetNames()[m_idxName].m_name);
 	}
+	// We edited an existing item into a new one.
+	void UpdateItem(size_t index, ARBInfoItemPtr item)
+	{
+		m_idxName = index;
+		m_item = item;
+	}
+	// Force an update
 	ARBInfoItemPtr UpdateItem(std::wstring const& name, ARBInfoItemList& info);
 
 	int OnCompare(CListDataPtr const& item, long iCol) const override;
@@ -125,13 +132,10 @@ protected:
 
 ARBInfoItemPtr InfoNoteListData::UpdateItem(std::wstring const& name, ARBInfoItemList& info)
 {
-	if (!m_item)
+	if (!info.FindItem(name, &m_item))
 	{
-		if (!info.FindItem(name, &m_item))
-		{
-			info.AddItem(name);
-			info.FindItem(name, &m_item);
-		}
+		info.AddItem(name);
+		info.FindItem(name, &m_item);
 	}
 	return m_item;
 }
@@ -227,14 +231,14 @@ int InfoNoteListData::GetIcon() const
 	int image = m_parent->m_imgNone;
 	if (0 < m_parent->GetAddedCount() && NameInfo::Usage::NotInUse == m_parent->GetNames()[m_idxName].m_usage)
 	{
-		if (m_parent->GetNames()[m_idxName].m_hasData)
+		if (m_item && m_item->HasData())
 			image = m_parent->m_imgNoteAdded;
 		else
 			image = m_parent->m_imgAdded;
 	}
 	else
 	{
-		if (m_parent->GetNames()[m_idxName].m_hasData)
+		if (m_item && m_item->HasData())
 			image = m_parent->m_imgNote;
 	}
 	return image;
@@ -253,6 +257,8 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	, m_Names()
 	, m_nAdded(0)
 	, m_CurSel()
+	, m_viewVis(ViewVis::All)
+	, m_viewUse(ViewUse::All)
 	, m_ctrlEdit(nullptr)
 	, m_ctrlDelete(nullptr)
 	, m_ctrlList(nullptr)
@@ -261,6 +267,7 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	, m_imgNote(-1)
 	, m_imgAdded(-1)
 	, m_imgNoteAdded(-1)
+
 {
 	std::wstring caption = L"?";
 	std::set<std::wstring> allNames;
@@ -291,8 +298,6 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	{
 		NameInfo data(*iter);
 		ARBInfoItemPtr item;
-		if (m_Info.FindItem(data.m_name, &item))
-			data.m_hasData = item->HasData();
 		if (m_NamesInUse.end() != std::find(m_NamesInUse.begin(), m_NamesInUse.end(), data.m_name))
 			data.m_usage = NameInfo::Usage::InUse;
 		else
@@ -311,6 +316,8 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
+
+#pragma PRAGMA_TODO(Add controls for filtering m_viewVis/m_viewUse)
 
 	wxButton* ctrlNew = new wxButton(this, wxID_ANY, _("IDC_INFONOTE_NEW"), wxDefaultPosition, wxDefaultSize, 0);
 	ctrlNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, [this](wxCommandEvent& evt) { DoEdit(-1); });
@@ -362,7 +369,7 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 			{
 				ARBInfoItemPtr item = data->UpdateItem(m_Names[data->GetIndex()].m_name, m_Info);
 				item->SetIsVisible(true);
-				m_ctrlList->RefreshItem(evt.GetIndex());
+				UpdateItem(evt.GetIndex(), data->GetIndex());
 			}
 		}
 	});
@@ -374,7 +381,7 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 			{
 				ARBInfoItemPtr item = data->UpdateItem(m_Names[data->GetIndex()].m_name, m_Info);
 				item->SetIsVisible(false);
-				m_ctrlList->RefreshItem(evt.GetIndex());
+				UpdateItem(evt.GetIndex(), data->GetIndex());
 			}
 		}
 	});
@@ -382,37 +389,7 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	m_reportColumn.Initialize(this, m_ctrlList);
 	m_reportColumn.CreateColumns(k_columns, k_colName);
 
-	InfoNoteListDataPtr pSelected;
-	for (size_t idxName = 0; idxName < m_Names.size(); ++idxName)
-	{
-		InfoNoteListDataPtr data(std::make_shared<InfoNoteListData>(this, idxName));
-		m_ctrlList->InsertItem(data);
-		if (!pSelected && 0 < inSelect.length())
-		{
-			auto name = m_Names[idxName].m_name;
-			if (0 == name.find(inSelect))
-			{
-				pSelected = data;
-			}
-		}
-	}
-
-	m_reportColumn.SizeColumns();
-	m_reportColumn.Sort();
-
-	if (pSelected)
-	{
-		for (long i = 0; i < m_ctrlList->GetItemCount(); ++i)
-		{
-			InfoNoteListDataPtr data = GetData(i);
-			if (data->OnNeedText(1) == pSelected->OnNeedText(1))
-			{
-				m_ctrlList->Select(i, true);
-				m_ctrlList->Focus(i);
-				break;
-			}
-		}
-	}
+	InsertItems(&inSelect);
 
 	// Sizers
 
@@ -539,30 +516,6 @@ bool CDlgInfoNote::DeleteName(size_t idxName)
 }
 
 
-void CDlgInfoNote::SetNameVisible(size_t idxName, bool visible)
-{
-	ARBInfoItemPtr item;
-	if (!m_Info.FindItem(m_Names[idxName].m_name, &item))
-		m_Info.AddItem(m_Names[idxName].m_name, &item);
-	if (!item)
-		return;
-	item->SetIsVisible(visible);
-	m_Names[idxName].m_hasData = item->HasData();
-}
-
-
-void CDlgInfoNote::SetNameComment(size_t idxName, std::wstring const& data)
-{
-	ARBInfoItemPtr item;
-	if (!m_Info.FindItem(m_Names[idxName].m_name, &item))
-		m_Info.AddItem(m_Names[idxName].m_name, &item);
-	if (!item)
-		return;
-	item->SetComment(data);
-	m_Names[idxName].m_hasData = item->HasData();
-}
-
-
 ARBInfoItemPtr CDlgInfoNote::FindName(std::wstring const& name) const
 {
 	ARBInfoItemPtr item;
@@ -574,6 +527,132 @@ ARBInfoItemPtr CDlgInfoNote::FindName(std::wstring const& name) const
 InfoNoteListDataPtr CDlgInfoNote::GetData(long index) const
 {
 	return std::dynamic_pointer_cast<InfoNoteListData, CListData>(m_ctrlList->GetData(index));
+}
+
+
+bool CDlgInfoNote::IsItemVisible(size_t idxName) const
+{
+	if (idxName >= m_Names.size())
+		return false;
+	ARBInfoItemPtr item;
+	m_Info.FindItem(m_Names[idxName].m_name, &item);
+	// !item means there's no addition info. Defaults in use.
+	// - NotInUse, IsVisible, no Comment
+
+	bool vis = !item || item->IsVisible();
+	bool inUse = m_Names[idxName].m_usage == NameInfo::Usage::InUse;
+
+	switch (m_viewVis)
+	{
+	case ViewVis::All:
+		break;
+	case ViewVis::Visible:
+		if (!vis)
+			return false;
+		break;
+	case ViewVis::Hidden:
+		if (vis)
+			return false;
+		break;
+	}
+
+	switch (m_viewUse)
+	{
+	case ViewUse::All:
+		break;
+	case ViewUse::InUse:
+		if (!inUse)
+			return false;
+		break;
+	case ViewUse::NotInUse:
+		if (inUse)
+			return false;
+		break;
+	}
+
+	return true;
+}
+
+
+void CDlgInfoNote::InsertItems(std::wstring const* inSelect)
+{
+	std::vector<long> items;
+	m_ctrlList->GetSelection(items);
+
+	std::vector<size_t> idxSel;
+	for (auto item : items)
+	{
+		auto data = GetData(item);
+		if (data)
+			idxSel.push_back(data->GetIndex());
+	}
+
+	m_ctrlList->DeleteAllItems();
+
+	InfoNoteListDataPtr pSelected;
+	for (size_t idxName = 0; idxName < m_Names.size(); ++idxName)
+	{
+		if (!IsItemVisible(idxName))
+			continue;
+		InfoNoteListDataPtr data(std::make_shared<InfoNoteListData>(this, idxName));
+		m_ctrlList->InsertItem(data);
+		if (inSelect && !pSelected && 0 < inSelect->length())
+		{
+			auto name = m_Names[idxName].m_name;
+			if (0 == name.find(*inSelect))
+			{
+				pSelected = data;
+			}
+		}
+	}
+	if (inSelect)
+		m_reportColumn.SizeColumns();
+	m_reportColumn.Sort();
+
+	if (pSelected || 0 < idxSel.size())
+	{
+		items.clear();
+		for (long i = 0; i < m_ctrlList->GetItemCount(); ++i)
+		{
+			InfoNoteListDataPtr data = GetData(i);
+			if (pSelected)
+			{
+				if (data->OnNeedText(1) == pSelected->OnNeedText(1))
+				{
+					m_ctrlList->Select(i, true);
+					m_ctrlList->Focus(i);
+					break;
+				}
+			}
+			else
+			{
+				if (idxSel.end() != std::find(idxSel.begin(), idxSel.end(), data->GetIndex()))
+					items.push_back(i);
+			}
+		}
+		if (0 < items.size())
+		{
+			m_ctrlList->SetSelection(items);
+			m_ctrlList->EnsureVisible(items[0]);
+			m_ctrlList->Focus(items[0]);
+		}
+	}
+}
+
+
+bool CDlgInfoNote::UpdateItem(long index, size_t idxName)
+{
+	bool vis = IsItemVisible(idxName);
+	if (vis)
+	{
+		m_ctrlList->RefreshItem(index);
+	}
+	else
+	{
+		wxMessageBox(_("IDS_INFONOTE_FILTERED"), GetCaption());
+		m_ctrlList->DeleteItem(index);
+	}
+	return vis;
 }
 
 
@@ -642,23 +721,24 @@ void CDlgInfoNote::DoEdit(long index)
 		bool doSort = false;
 		name = dlg.Name();
 		comment = dlg.Comment();
+		// Create new name entry. It's either a new one or we're modifying an existing entry.
 		if (!data || data->OnNeedText(k_colName) != name)
 		{
+			// Find existing (deleted) entry, or create a new one.
 			std::vector<NameInfo>::iterator iter = std::find(m_Names.begin(), m_Names.end(), name);
 			if (iter != m_Names.end())
 			{
 				size_t idxName = iter - m_Names.begin();
 				if (NameInfo::Usage::Deleted != m_Names[idxName].m_usage)
-				{
 					iter = m_Names.end();
-				}
 			}
-			else
+			if (iter == m_Names.end())
 			{
 				NameInfo info(name);
 				m_Names.push_back(info);
 				iter = m_Names.end() - 1;
 			}
+			assert(iter != m_Names.end());
 			if (iter != m_Names.end())
 			{
 				doSort = true;
@@ -671,25 +751,57 @@ void CDlgInfoNote::DoEdit(long index)
 				{
 					item->SetIsVisible(dlg.IsVisible());
 					item->SetComment(comment);
-					m_Names[data->GetIndex()].m_hasData = item->HasData();
+					if (data)
+						data->UpdateItem(idxName, item);
+				}
+				else
+				{
+					// We just did an AddItem - we BETTER find it!
+					assert(0);
 				}
 
 				++m_nAdded;
-				if (!data || m_Names[data->GetIndex()].m_hasData)
+				if (item->HasData())
 				{
-					data = std::make_shared<InfoNoteListData>(this, idxName);
-					index = m_ctrlList->InsertItem(data);
-					m_ctrlList->SetSelection(index, true);
+					if (data)
+					{
+						if (!UpdateItem(index, idxName))
+							doSort = false;
+					}
+					else
+					{
+						if (IsItemVisible(idxName))
+						{
+							data = std::make_shared<InfoNoteListData>(this, idxName);
+							index = m_ctrlList->InsertItem(data);
+							m_ctrlList->SetSelection(index, true);
+						}
+						else
+						{
+							// filter message
+							doSort = false;
+						}
+					}
 				}
 			}
 		}
-		else
+		// Updating existing (no name change)
+		else if (data)
 		{
 			ARBInfoItemPtr item = data->UpdateItem(m_Names[data->GetIndex()].m_name, m_Info);
 			assert(item);
-			item->SetIsVisible(dlg.IsVisible());
-			item->SetComment(comment);
-			m_ctrlList->RefreshItem(index);
+			if (item->IsVisible() != dlg.IsVisible())
+			{
+				doSort = true;
+				item->SetIsVisible(dlg.IsVisible());
+			}
+			if (item->GetComment() != comment)
+			{
+				doSort = true;
+				item->SetComment(comment);
+			}
+			if (doSort)
+				UpdateItem(index, data->GetIndex());
 		}
 		if (doSort)
 			m_reportColumn.Sort();
