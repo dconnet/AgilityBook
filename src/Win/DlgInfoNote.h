@@ -172,6 +172,7 @@ private:
 
 	DECLARE_ON_INIT()
 
+	void OnItemFocused(wxListEvent& evt);
 	void OnDeleteItem(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };

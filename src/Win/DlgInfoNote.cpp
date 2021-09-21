@@ -317,7 +317,7 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 
 	// Controls (these are done first to control tab order)
 
-#pragma PRAGMA_TODO(Add controls for filtering m_viewVis/m_viewUse)
+#pragma PRAGMA_TODO(Add controls for filtering m_viewVis / m_viewUse)
 
 	wxButton* ctrlNew = new wxButton(this, wxID_ANY, _("IDC_INFONOTE_NEW"), wxDefaultPosition, wxDefaultSize, 0);
 	ctrlNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, [this](wxCommandEvent& evt) { DoEdit(-1); });
@@ -344,10 +344,14 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	m_ctrlList->EnableCheckBoxes();
 	assert(m_ctrlList->HasCheckBoxes());
 	// TODO: not getting selected when selecting 2nd item via shift-click (wx bug)
+	// Listen to focused because of https://trac.wxwidgets.org/ticket/4541
+	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_FOCUSED, &CDlgInfoNote::OnItemFocused, this);
+	m_ctrlList->Bind(wxEVT_DESTROY, [this](wxWindowDestroyEvent& evt) {
+		m_ctrlList->Unbind(wxEVT_COMMAND_LIST_ITEM_FOCUSED, &CDlgInfoNote::OnItemFocused, this);
+	});
+	// End TODO
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, [this](wxListEvent& evt) { UpdateControls(); });
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_DESELECTED, [this](wxListEvent& evt) { UpdateControls(); });
-	// Listen to focused because of https://trac.wxwidgets.org/ticket/4541
-	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_FOCUSED, [this](wxListEvent& evt) { UpdateControls(); });
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, [this](wxListEvent& evt) { DoEdit(); });
 	m_ctrlList->Bind(wxEVT_KEY_DOWN, [this](wxKeyEvent& evt) {
 		switch (evt.GetKeyCode())
@@ -806,6 +810,12 @@ void CDlgInfoNote::DoEdit(long index)
 		if (doSort)
 			m_reportColumn.Sort();
 	}
+}
+
+
+void CDlgInfoNote::OnItemFocused(wxListEvent& evt)
+{
+	UpdateControls();
 }
 
 

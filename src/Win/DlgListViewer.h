@@ -175,6 +175,7 @@ private:
 	CAgilityBookDoc* m_pDoc;
 	int m_SortColumn;
 
+	void OnItemFocused(wxListEvent& evt);
 	void OnColumnClick(wxListEvent& evt);
 	void OnCopy(wxCommandEvent& evt);
 };
