@@ -180,13 +180,17 @@ CAgilityBookPanelRuns::~CAgilityBookPanelRuns()
 
 void CAgilityBookPanelRuns::SplitterOnIdle(wxIdleEvent&)
 {
+	if (m_bInit)
+		return;
 	long cx = wxConfig::Get()->Read(CFG_SETTINGS_SPLITCX, DEFAULT_RUN_WIDTH);
 	if (cx < MIN_RUN_WIDTH)
 		cx = MIN_RUN_WIDTH;
 	cx = DPI::Scale(this, cx);
 	m_splitter->SetSashPosition(cx);
 	m_bInit = true;
+#if !defined(__WXGTK__)
 	m_splitter->Unbind(wxEVT_IDLE, &CAgilityBookPanelRuns::SplitterOnIdle, this);
+#endif
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -278,13 +282,17 @@ CAgilityBookPanelCalendar::~CAgilityBookPanelCalendar()
 
 void CAgilityBookPanelCalendar::SplitterOnIdle(wxIdleEvent&)
 {
+	if (m_bInit)
+		return;
 	long cx = wxConfig::Get()->Read(CFG_SETTINGS_SPLITCX2, DEFAULT_CAL_WIDTH);
 	if (cx < MIN_CAL_WIDTH)
 		cx = MIN_CAL_WIDTH;
 	cx = DPI::Scale(this, cx);
 	m_splitter->SetSashPosition(cx);
 	m_bInit = true;
+#if !defined(__WXGTK__)
 	m_splitter->Unbind(wxEVT_IDLE, &CAgilityBookPanelCalendar::SplitterOnIdle, this);
+#endif
 }
 
 /////////////////////////////////////////////////////////////////////////////
