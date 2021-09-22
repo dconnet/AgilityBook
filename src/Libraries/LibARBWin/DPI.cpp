@@ -23,6 +23,8 @@
 #include "stdafx.h"
 #include "LibARBWin/DPI.h"
 
+#include "LibARBWin/ImageHelperBase.h"
+
 //#ifdef EVT_DPI_CHANGED
 // wx3.1.3 adds much better dpi support
 // TODO: Use it!
@@ -231,10 +233,18 @@ int GetScale(wxWindow const* pWindow)
 		return GetDPI().GetScale();
 	else
 	{
+#ifdef FORCE_SCALE_100
+		// For non-windows, this will be unaware and return 100. This is a
+		// kludge because of the LOAD_BITMAP_PNG macro in ImageHelperHBase.h
+		// On 200% Ubuntu, we can only load the 100% images. So make sure we
+		// scale appropriately.
+		return GetDPI().GetScale();
+#else
 #if wxCHECK_VERSION(3, 1, 4)
 		return static_cast<unsigned int>(pWindow->GetDPIScaleFactor() * 100);
 #else
 		return static_cast<unsigned int>(pWindow->GetContentScaleFactor() * 100);
+#endif
 #endif
 	}
 #endif
