@@ -58,6 +58,7 @@ protected:
 	wxButton* m_btnDelete;
 	wxBoxSizer* m_sizerButtons;
 
+	DECLARE_EVENT_TABLE()
 	void OnItemFocused(wxListEvent& evt);
 	void OnItemActivated(wxListEvent& evt);
 	void OnKeyDown(wxKeyEvent& evt);

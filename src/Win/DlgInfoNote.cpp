@@ -247,6 +247,14 @@ int InfoNoteListData::GetIcon() const
 /////////////////////////////////////////////////////////////////////////////
 // CDlgInfoNote dialog
 
+// TODO: not getting selected when selecting 2nd item via shift-click (wx bug)
+// Listen to focused because of https://trac.wxwidgets.org/ticket/4541
+// Use EventTable because Binding allows a focused event after destroy on mac
+#define LIST_CTRL 1000
+wxBEGIN_EVENT_TABLE(CDlgInfoNote, wxDialog)
+	EVT_LIST_ITEM_FOCUSED(LIST_CTRL, CDlgInfoNote::OnItemFocused)
+wxEND_EVENT_TABLE()
+
 CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstring const& inSelect, wxWindow* parent)
 	: wxDialog()
 	, m_pDoc(pDoc)
@@ -335,6 +343,7 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	m_ctrlDelete->SetToolTip(_("HIDC_INFONOTE_DELETE"));
 
 	m_ctrlList = new CReportListCtrl(this, false, CReportListCtrl::SortHeader::Sort, true, true);
+	m_ctrlList->SetId(LIST_CTRL);
 	m_imgNone = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrBlank));
 	m_imgNote = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrInfoNote));
 	m_imgAdded = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrInfoNoteAdded));
@@ -343,13 +352,6 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	m_ctrlList->SetToolTip(_("HIDC_INFONOTE"));
 	m_ctrlList->EnableCheckBoxes();
 	assert(m_ctrlList->HasCheckBoxes());
-	// TODO: not getting selected when selecting 2nd item via shift-click (wx bug)
-	// Listen to focused because of https://trac.wxwidgets.org/ticket/4541
-	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_FOCUSED, &CDlgInfoNote::OnItemFocused, this);
-	m_ctrlList->Bind(wxEVT_DESTROY, [this](wxWindowDestroyEvent& evt) {
-		m_ctrlList->Unbind(wxEVT_COMMAND_LIST_ITEM_FOCUSED, &CDlgInfoNote::OnItemFocused, this);
-	});
-	// End TODO
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, [this](wxListEvent& evt) { UpdateControls(); });
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_DESELECTED, [this](wxListEvent& evt) { UpdateControls(); });
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, [this](wxListEvent& evt) { DoEdit(); });

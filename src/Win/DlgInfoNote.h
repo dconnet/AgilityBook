@@ -171,6 +171,7 @@ private:
 	int m_imgNoteAdded;
 
 	DECLARE_ON_INIT()
+	DECLARE_EVENT_TABLE()
 
 	void OnItemFocused(wxListEvent& evt);
 	void OnDeleteItem(wxCommandEvent& evt);
