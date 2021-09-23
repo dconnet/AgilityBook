@@ -350,7 +350,8 @@ bool CAgilityBookApp::OnInit()
 	CMainFrame* frame = new CMainFrame(m_manager.get());
 
 	CConfigProgram pos;
-	bool bMax = pos.Set(frame, true);
+	if (pos.Set(frame, true))
+		frame->Maximize();
 
 	// Should we open the last open file?
 	if (filename.empty())
@@ -381,8 +382,6 @@ bool CAgilityBookApp::OnInit()
 	if (bNew)
 		m_manager->CreateDocument(wxEmptyString, wxDOC_NEW);
 
-	if (bMax)
-		frame->Maximize();
 	frame->Show(true);
 
 	std::wstring proxy = CAgilityBookOptions::GetProxy();

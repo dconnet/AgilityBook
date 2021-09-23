@@ -8,6 +8,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-09-23 Fix reading of last state.
  * 2021-09-19 Changed default config paths.
  * 2021-03-06 Moved into LibARBWin.
  * 2017-12-22 Add support for saving dialogs.
@@ -97,7 +98,7 @@ bool CConfigPosition::Set(wxWindow* wnd, bool bUseExisting, bool* pPosSet)
 
 	long state = 0;
 	if (!LastState().empty())
-		wxConfig::Get()->Read(LastState(), state);
+		wxConfig::Get()->Read(LastState(), &state, state);
 
 	bool bCompute = false;
 	wxMouseState mouseState = ::wxGetMouseState();
