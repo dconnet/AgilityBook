@@ -132,7 +132,8 @@ public:
 private:
 	InfoNoteListDataPtr GetData(long index) const;
 	bool IsItemVisible(size_t idxName) const;
-	void InsertItems(std::wstring const* inSelect = nullptr);
+	void LoadItems(std::wstring const* inSelect = nullptr);
+	void UpdateText();
 	bool UpdateItem(long index, size_t idxName);
 	void UpdateControls();
 	void DoEdit();
@@ -163,17 +164,20 @@ private:
 
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlDelete;
+	wxButton* m_ctrlCopy; 
 	CReportListCtrl* m_ctrlList;
 	CReportListHeader m_reportColumn;
 	int m_imgNone;
 	int m_imgNote;
 	int m_imgAdded;
 	int m_imgNoteAdded;
+	wxStaticText* m_textCount;
 
 	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 
 	void OnItemFocused(wxListEvent& evt);
 	void OnDeleteItem(wxCommandEvent& evt);
+	void OnCopyItems(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };

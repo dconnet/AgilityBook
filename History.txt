@@ -1,9 +1,10 @@
-9/8/2021: v3.6.1.<development>
+9/23/2021: v3.6.1.<development>
 - New features / Enhancements:
   - Add gamble closing time to run printout.
   - Condense notes (club/judge/location) when saving.
     (Previously only done on import or 'OK' from the InfoNote dialog.)
   - Add alternate viewing mode for InfoNotes. 
+  - Changed InfoNote dialog (Clubs/Judges/Locations), allow copying of data.
 - Bug fixes:
   - Fix deletion of multiple selected titles in dog properties.
 

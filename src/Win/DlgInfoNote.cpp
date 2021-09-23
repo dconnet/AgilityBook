@@ -41,6 +41,7 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
+#include "ClipBoard.h"
 #include "DlgInfoNoteEdit.h"
 #include "ImageHelper.h"
 
@@ -50,6 +51,7 @@
 #include "LibARBWin/ReportListCtrl.h"
 #include "LibARBWin/ReportListHeader.h"
 #include "LibARBWin/Widgets.h"
+#include <numeric>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -269,13 +271,14 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	, m_viewUse(ViewUse::All)
 	, m_ctrlEdit(nullptr)
 	, m_ctrlDelete(nullptr)
+	, m_ctrlCopy(nullptr)
 	, m_ctrlList(nullptr)
 	, m_reportColumn()
 	, m_imgNone(-1)
 	, m_imgNote(-1)
 	, m_imgAdded(-1)
 	, m_imgNoteAdded(-1)
-
+	, m_textCount(nullptr)
 {
 	std::wstring caption = L"?";
 	std::set<std::wstring> allNames;
@@ -325,8 +328,6 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 
 	// Controls (these are done first to control tab order)
 
-#pragma PRAGMA_TODO(Add controls for filtering m_viewVis / m_viewUse)
-
 	wxButton* ctrlNew = new wxButton(this, wxID_ANY, _("IDC_INFONOTE_NEW"), wxDefaultPosition, wxDefaultSize, 0);
 	ctrlNew->Bind(wxEVT_COMMAND_BUTTON_CLICKED, [this](wxCommandEvent& evt) { DoEdit(-1); });
 	ctrlNew->SetHelpText(_("HIDC_INFONOTE_NEW"));
@@ -341,6 +342,11 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	m_ctrlDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgInfoNote::OnDeleteItem, this);
 	m_ctrlDelete->SetHelpText(_("HIDC_INFONOTE_DELETE"));
 	m_ctrlDelete->SetToolTip(_("HIDC_INFONOTE_DELETE"));
+
+	m_ctrlCopy = new wxButton(this, wxID_ANY, _("IDC_INFONOTE_COPY"), wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlCopy->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgInfoNote::OnCopyItems, this);
+	m_ctrlCopy->SetHelpText(_("HIDC_INFONOTE_COPY"));
+	m_ctrlCopy->SetToolTip(_("HIDC_INFONOTE_COPY"));
 
 	m_ctrlList = new CReportListCtrl(this, false, CReportListCtrl::SortHeader::Sort, true, true);
 	m_ctrlList->SetId(LIST_CTRL);
@@ -395,22 +401,113 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	m_reportColumn.Initialize(this, m_ctrlList);
 	m_reportColumn.CreateColumns(k_columns, k_colName);
 
-	InsertItems(&inSelect);
+	wxStaticBox* boxVis = new wxStaticBox(this, wxID_ANY, _("IDC_INFONOTE_VIS"));
+
+	auto ctrlVisAll
+		= new wxRadioButton(this, wxID_ANY, _("IDC_INFONOTE_VIS_ALL"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
+	ctrlVisAll->SetHelpText(_("HIDC_INFONOTE_VIS_ALL"));
+	ctrlVisAll->SetToolTip(_("HIDC_INFONOTE_VIS_ALL"));
+	ctrlVisAll->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, [this](wxCommandEvent& evt) {
+		if (ViewVis::All != m_viewVis)
+		{
+			m_viewVis = ViewVis::All;
+			LoadItems();
+		}
+	});
+
+	auto ctrlVisVis = new wxRadioButton(this, wxID_ANY, _("IDC_INFONOTE_VIS_VIS"), wxDefaultPosition, wxDefaultSize, 0);
+	ctrlVisVis->SetHelpText(_("HIDC_INFONOTE_VIS_VIS"));
+	ctrlVisVis->SetToolTip(_("HIDC_INFONOTE_VIS_VIS"));
+	ctrlVisVis->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, [this](wxCommandEvent& evt) {
+		if (ViewVis::Visible != m_viewVis)
+		{
+			m_viewVis = ViewVis::Visible;
+			LoadItems();
+		}
+	});
+
+	auto ctrlVisHidden
+		= new wxRadioButton(this, wxID_ANY, _("IDC_INFONOTE_VIS_HIDDEN"), wxDefaultPosition, wxDefaultSize, 0);
+	ctrlVisHidden->SetHelpText(_("HIDC_INFONOTE_VIS_HIDDEN"));
+	ctrlVisHidden->SetToolTip(_("HIDC_INFONOTE_VIS_HIDDEN"));
+	ctrlVisHidden->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, [this](wxCommandEvent& evt) {
+		if (ViewVis::Hidden != m_viewVis)
+		{
+			m_viewVis = ViewVis::Hidden;
+			LoadItems();
+		}
+	});
+
+	wxStaticBox* boxUse = new wxStaticBox(this, wxID_ANY, _("IDC_INFONOTE_USE"));
+
+	auto ctrlUsageAll
+		= new wxRadioButton(this, wxID_ANY, _("IDC_INFONOTE_USE_ALL"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
+	ctrlUsageAll->SetHelpText(_("HIDC_INFONOTE_USE_ALL"));
+	ctrlUsageAll->SetToolTip(_("HIDC_INFONOTE_USE_ALL"));
+	ctrlUsageAll->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, [this](wxCommandEvent& evt) {
+		if (ViewUse::All != m_viewUse)
+		{
+			m_viewUse = ViewUse::All;
+			LoadItems();
+		}
+	});
+
+	auto ctrlUsageInUse
+		= new wxRadioButton(this, wxID_ANY, _("IDC_INFONOTE_USE_INUSE"), wxDefaultPosition, wxDefaultSize, 0);
+	ctrlUsageInUse->SetHelpText(_("HIDC_INFONOTE_USE_INUSE"));
+	ctrlUsageInUse->SetToolTip(_("HIDC_INFONOTE_USE_INUSE"));
+	ctrlUsageInUse->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, [this](wxCommandEvent& evt) {
+		if (ViewUse::InUse != m_viewUse)
+		{
+			m_viewUse = ViewUse::InUse;
+			LoadItems();
+		}
+	});
+
+	auto ctrlUsageNot
+		= new wxRadioButton(this, wxID_ANY, _("IDC_INFONOTE_USE_NOTINUSE"), wxDefaultPosition, wxDefaultSize, 0);
+	ctrlUsageNot->SetHelpText(_("HIDC_INFONOTE_USE_NOTINUSE"));
+	ctrlUsageNot->SetToolTip(_("HIDC_INFONOTE_USE_NOTINUSE"));
+	ctrlUsageNot->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, [this](wxCommandEvent& evt) {
+		if (ViewUse::NotInUse != m_viewUse)
+		{
+			m_viewUse = ViewUse::NotInUse;
+			LoadItems();
+		}
+	});
+
+	m_textCount = new wxStaticText(this, wxID_ANY, wxString(), wxDefaultPosition, wxDefaultSize, 0);
+
+	LoadItems(&inSelect);
 
 	// Sizers
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
+	wxStaticBoxSizer* sizerVis = new wxStaticBoxSizer(boxVis, wxVERTICAL);
+	sizerVis->Add(ctrlVisAll, 0, 0, 0);
+	sizerVis->Add(ctrlVisVis, 0, wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerVis->Add(ctrlVisHidden, 0, wxTOP, wxDLG_UNIT_X(this, 3));
+
+	wxStaticBoxSizer* sizerUse = new wxStaticBoxSizer(boxUse, wxVERTICAL);
+	sizerUse->Add(ctrlUsageAll, 0, 0, 0);
+	sizerUse->Add(ctrlUsageInUse, 0, wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerUse->Add(ctrlUsageNot, 0, wxTOP, wxDLG_UNIT_X(this, 3));
+
 	wxBoxSizer* sizerButtons = new wxBoxSizer(wxVERTICAL);
-	sizerButtons->Add(ctrlNew, 0, wxBOTTOM, wxDLG_UNIT_X(parent, 5));
-	sizerButtons->Add(m_ctrlEdit, 0, wxBOTTOM, wxDLG_UNIT_X(parent, 5));
-	sizerButtons->Add(m_ctrlDelete);
+	sizerButtons->Add(ctrlNew, 0, wxBOTTOM, wxDLG_UNIT_X(parent, 3));
+	sizerButtons->Add(m_ctrlEdit, 0, wxBOTTOM, wxDLG_UNIT_X(parent, 3));
+	sizerButtons->Add(m_ctrlDelete, 0, wxBOTTOM, wxDLG_UNIT_X(parent, 3));
+	sizerButtons->Add(m_ctrlCopy);
+	sizerButtons->Add(sizerVis, 0, wxTOP, wxDLG_UNIT_X(parent, 5));
+	sizerButtons->Add(sizerUse, 0, wxTOP, wxDLG_UNIT_X(parent, 5));
 
 	wxBoxSizer* sizerControls = new wxBoxSizer(wxHORIZONTAL);
 	sizerControls->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(parent, 5));
 	sizerControls->Add(sizerButtons);
 
-	bSizer->Add(sizerControls, 1, wxEXPAND | wxTOP | wxLEFT | wxRIGHT, wxDLG_UNIT_X(parent, 5));
+	bSizer->Add(sizerControls, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(parent, 5));
+	bSizer->Add(m_textCount, 0, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(parent, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
@@ -580,7 +677,7 @@ bool CDlgInfoNote::IsItemVisible(size_t idxName) const
 }
 
 
-void CDlgInfoNote::InsertItems(std::wstring const* inSelect)
+void CDlgInfoNote::LoadItems(std::wstring const* inSelect)
 {
 	std::vector<long> items;
 	m_ctrlList->GetSelection(items);
@@ -615,6 +712,8 @@ void CDlgInfoNote::InsertItems(std::wstring const* inSelect)
 		m_reportColumn.SizeColumns();
 	m_reportColumn.Sort();
 
+	UpdateText();
+
 	if (pSelected || 0 < idxSel.size())
 	{
 		items.clear();
@@ -643,6 +742,18 @@ void CDlgInfoNote::InsertItems(std::wstring const* inSelect)
 			m_ctrlList->Focus(items[0]);
 		}
 	}
+
+	UpdateControls();
+}
+
+
+void CDlgInfoNote::UpdateText()
+{
+	if (static_cast<int>(m_Names.size()) == m_ctrlList->GetItemCount())
+		m_textCount->SetLabel(fmt::format(_("IDS_INFONOTE_FMT_COUNT").wx_str(), m_ctrlList->GetItemCount()));
+	else
+		m_textCount->SetLabel(
+			fmt::format(_("IDS_INFONOTE_FMT_COUNT_OF").wx_str(), m_ctrlList->GetItemCount(), m_Names.size()));
 }
 
 
@@ -657,6 +768,7 @@ bool CDlgInfoNote::UpdateItem(long index, size_t idxName)
 	{
 		wxMessageBox(_("IDS_INFONOTE_FILTERED"), GetCaption());
 		m_ctrlList->DeleteItem(index);
+		UpdateText();
 	}
 	return vis;
 }
@@ -694,6 +806,7 @@ void CDlgInfoNote::UpdateControls()
 	}
 	m_ctrlEdit->Enable(bEnableEdit);
 	m_ctrlDelete->Enable(bEnableDelete);
+	m_ctrlCopy->Enable(m_Names.size() > 0);
 }
 
 
@@ -767,7 +880,7 @@ void CDlgInfoNote::DoEdit(long index)
 				}
 
 				++m_nAdded;
-				if (item->HasData())
+				if (!data || item->HasData())
 				{
 					if (data)
 					{
@@ -781,6 +894,7 @@ void CDlgInfoNote::DoEdit(long index)
 							data = std::make_shared<InfoNoteListData>(this, idxName);
 							index = m_ctrlList->InsertItem(data);
 							m_ctrlList->SetSelection(index, true);
+							UpdateText();
 						}
 						else
 						{
@@ -838,8 +952,61 @@ void CDlgInfoNote::OnDeleteItem(wxCommandEvent& evt)
 				--nItem;
 			if (0 <= nItem)
 				m_ctrlList->Select(nItem);
+			UpdateText();
 		}
 	}
+}
+
+
+void CDlgInfoNote::OnCopyItems(wxCommandEvent& evt)
+{
+	std::vector<long> items;
+	// Only get selection if SHIFT is down.
+	if (::wxGetKeyState(WXK_SHIFT))
+	{
+		m_ctrlList->GetSelection(items);
+	}
+	// Even if SHIFT is down, if we didn't get anything, get all.
+	if (items.empty())
+	{
+		items.resize(m_ctrlList->GetItemCount());
+		std::iota(items.begin(), items.end(), 0);
+	}
+	if (items.empty())
+		return;
+
+	CClipboardDataWriter clpData;
+	if (!clpData.isOkay())
+		return;
+
+	std::wstring tableData;
+	std::wstring tableHtml;
+	CClipboardDataTable table(tableData, tableHtml);
+
+	table.StartLine();
+	table.Cell(0, _("IDC_INFONOTE_VIS_VIS").ToStdWstring());
+	table.Cell(1, _("IDC_INFONOTE_USE_INUSE").ToStdWstring());
+	table.Cell(2, _("IDS_COL_NAME").ToStdWstring());
+	table.Cell(3, _("IDS_COL_COMMENTS").ToStdWstring());
+	table.EndLine();
+
+	for (size_t idx = 0; idx < items.size(); ++idx)
+	{
+		auto data = GetData(items[idx]);
+		assert(data);
+		table.StartLine();
+		table.Cell(0, data->IsVisible() ? _("IDS_INFONOTE_YES").ToStdWstring() : _("IDS_INFONOTE_NO").ToStdWstring());
+		table.Cell(
+			1,
+			m_Names[data->GetIndex()].m_usage == NameInfo::Usage::NotInUse ? _("IDS_INFONOTE_NO").ToStdWstring()
+																		   : _("IDS_INFONOTE_YES").ToStdWstring());
+		table.Cell(2, data->OnNeedText(k_colName));
+		table.Cell(3, data->OnNeedText(k_colComment));
+		table.EndLine();
+	}
+
+	clpData.AddData(table);
+	clpData.CommitData();
 }
 
 

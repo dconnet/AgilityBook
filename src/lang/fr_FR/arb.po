@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-20 12:40-0700\n"
-"PO-Revision-Date: 2021-09-20 12:40-0700\n"
+"POT-Creation-Date: 2021-09-23 14:06-0700\n"
+"PO-Revision-Date: 2021-09-23 14:06-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -154,10 +154,10 @@ msgstr "Code"
 #: CalSites/DlgCalendarQueryDetail.cpp:120 CalSites/DlgQueryDetail.cpp:85
 #: Win/AgilityBookCalendarView.cpp:643 Win/DlgAssignColumns.cpp:217
 #: Win/DlgAssignColumns.cpp:317 Win/DlgAssignColumns.cpp:374
-#: Win/DlgAssignColumns.cpp:458 Win/DlgInfoNote.cpp:442 Win/DlgListCtrl.cpp:448
+#: Win/DlgAssignColumns.cpp:458 Win/DlgInfoNote.cpp:545 Win/DlgListCtrl.cpp:448
 #: Win/DlgListViewer.cpp:975 Win/DlgListViewer.cpp:1013
-#: Win/DlgListViewer.cpp:1025 Win/DlgListViewer.cpp:1174
-#: Win/DlgListViewer.cpp:1241 Win/DlgListViewer.cpp:1294 Win/Print.cpp:262
+#: Win/DlgListViewer.cpp:1025 Win/DlgListViewer.cpp:1182
+#: Win/DlgListViewer.cpp:1249 Win/DlgListViewer.cpp:1302 Win/Print.cpp:262
 msgid "IDS_COL_LOCATION"
 msgstr "Endroit"
 
@@ -205,8 +205,8 @@ msgstr ""
 #: Win/DlgAssignColumns.cpp:323 Win/DlgAssignColumns.cpp:371
 #: Win/DlgDogPanelPoints.cpp:57 Win/DlgDogPanelRegNums.cpp:45
 #: Win/DlgDogPanelTitles.cpp:54 Win/DlgListCtrl.cpp:450
-#: Win/DlgListViewer.cpp:1168 Win/DlgListViewer.cpp:1235
-#: Win/DlgListViewer.cpp:1372 Win/DlgTrial.cpp:378 Win/Print.cpp:259
+#: Win/DlgListViewer.cpp:1176 Win/DlgListViewer.cpp:1243
+#: Win/DlgListViewer.cpp:1380 Win/DlgTrial.cpp:378 Win/Print.cpp:259
 msgid "IDS_COL_VENUE"
 msgstr "Organisation"
 
@@ -480,11 +480,11 @@ msgstr "Description"
 msgid "Location"
 msgstr "Endroit"
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:488 Win/DlgDogPanelBase.cpp:81
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:488 Win/DlgDogPanelBase.cpp:87
 msgid "New..."
 msgstr "Nouveau..."
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:491 Win/DlgDogPanelBase.cpp:84
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:491 Win/DlgDogPanelBase.cpp:90
 msgid "Edit..."
 msgstr "Édition..."
 
@@ -1077,10 +1077,10 @@ msgstr "Dernier date"
 
 #: Win/AgilityBookCalendarView.cpp:644 Win/DlgAssignColumns.cpp:214
 #: Win/DlgAssignColumns.cpp:320 Win/DlgAssignColumns.cpp:368
-#: Win/DlgInfoNote.cpp:436 Win/DlgListCtrl.cpp:449 Win/DlgListViewer.cpp:969
+#: Win/DlgInfoNote.cpp:539 Win/DlgListCtrl.cpp:449 Win/DlgListViewer.cpp:969
 #: Win/DlgListViewer.cpp:1007 Win/DlgListViewer.cpp:1019
-#: Win/DlgListViewer.cpp:1175 Win/DlgListViewer.cpp:1242
-#: Win/DlgListViewer.cpp:1295 Win/DlgListViewer.cpp:1371 Win/DlgTrial.cpp:377
+#: Win/DlgListViewer.cpp:1183 Win/DlgListViewer.cpp:1250
+#: Win/DlgListViewer.cpp:1303 Win/DlgListViewer.cpp:1379 Win/DlgTrial.cpp:377
 #: Win/Print.cpp:260
 msgid "IDS_COL_CLUB"
 msgstr "Club"
@@ -1277,7 +1277,7 @@ msgid "IDS_UPDATED_TRAINING_ITEMS"
 msgstr "{0} nouveaux entrés Log Entraînement rajoutés, {1} entrés mis a jour."
 
 #: Win/AgilityBookDoc.cpp:1574 Win/DlgDog.cpp:68 Win/DlgFindLinks.cpp:120
-#: Win/DlgListCtrl.cpp:506 Win/DlgListViewer.cpp:1230 Win/Print.cpp:257
+#: Win/DlgListCtrl.cpp:506 Win/DlgListViewer.cpp:1238 Win/Print.cpp:257
 msgid "IDS_COL_DOG"
 msgstr "Chien"
 
@@ -2183,18 +2183,18 @@ msgstr ""
 "Cette fenêtre contient toutes les informations concernant vos parcours. C'est "
 "là que vous créez vos chiens, concours et parcours."
 
-#: Win/AgilityBookPanels.cpp:200
+#: Win/AgilityBookPanels.cpp:204
 msgid "PanelPoints"
 msgstr ""
 "Cette fenêtre montre quelques statistiques simples sur vos parcours pour le "
 "chien choisi. Si ce dossier contient plus d'un chien, vous pouvez facilement "
 "changer de chien par un click droit sur le nom du chien dans la barre d'état."
 
-#: Win/AgilityBookPanels.cpp:225
+#: Win/AgilityBookPanels.cpp:229
 msgid "PanelCal"
 msgstr "Cette fenêtre contient des informations concernant les concours à venir."
 
-#: Win/AgilityBookPanels.cpp:298
+#: Win/AgilityBookPanels.cpp:306
 msgid "PanelTraining"
 msgstr ""
 "Cette fenêtre contient toutes les informations concernant vos entrainements."
@@ -2438,9 +2438,9 @@ msgstr "Nom"
 
 #: Win/DlgAssignColumns.cpp:208 Win/DlgAssignColumns.cpp:336
 #: Win/DlgAssignColumns.cpp:381 Win/DlgDogPanelPoints.cpp:53
-#: Win/DlgDogPanelTitles.cpp:53 Win/DlgListViewer.cpp:1164
-#: Win/DlgListViewer.cpp:1231 Win/DlgListViewer.cpp:1291
-#: Win/DlgListViewer.cpp:1368 Win/Print.cpp:258
+#: Win/DlgDogPanelTitles.cpp:53 Win/DlgListViewer.cpp:1172
+#: Win/DlgListViewer.cpp:1239 Win/DlgListViewer.cpp:1299
+#: Win/DlgListViewer.cpp:1376 Win/Print.cpp:258
 msgid "IDS_COL_DATE"
 msgstr "Date"
 
@@ -2450,24 +2450,24 @@ msgstr "Notes concours"
 
 #: Win/DlgAssignColumns.cpp:223 Win/DlgAssignColumns.cpp:390
 #: Win/DlgConfigMultiQ.cpp:164 Win/DlgDogPanelPoints.cpp:59
-#: Win/DlgListViewer.cpp:1169 Win/DlgListViewer.cpp:1236
-#: Win/DlgListViewer.cpp:1338 Win/DlgListViewer.cpp:1373
+#: Win/DlgListViewer.cpp:1177 Win/DlgListViewer.cpp:1244
+#: Win/DlgListViewer.cpp:1346 Win/DlgListViewer.cpp:1381
 #: Win/DlgPointsViewSort.cpp:181
 msgid "IDS_COL_DIVISION"
 msgstr "Niveau conducteur"
 
 #: Win/DlgAssignColumns.cpp:226 Win/DlgAssignColumns.cpp:393
 #: Win/DlgConfigMultiQ.cpp:165 Win/DlgDogPanelPoints.cpp:60
-#: Win/DlgListViewer.cpp:1170 Win/DlgListViewer.cpp:1237
-#: Win/DlgListViewer.cpp:1339 Win/DlgListViewer.cpp:1374
+#: Win/DlgListViewer.cpp:1178 Win/DlgListViewer.cpp:1245
+#: Win/DlgListViewer.cpp:1347 Win/DlgListViewer.cpp:1382
 #: Win/DlgPointsViewSort.cpp:186
 msgid "IDS_COL_LEVEL"
 msgstr "Degré"
 
 #: Win/DlgAssignColumns.cpp:229 Win/DlgAssignColumns.cpp:387
 #: Win/DlgConfigMultiQ.cpp:166 Win/DlgDogPanelPoints.cpp:61
-#: Win/DlgFindLinks.cpp:122 Win/DlgListViewer.cpp:1171 Win/DlgListViewer.cpp:1238
-#: Win/DlgListViewer.cpp:1334 Win/DlgListViewer.cpp:1375
+#: Win/DlgFindLinks.cpp:122 Win/DlgListViewer.cpp:1179 Win/DlgListViewer.cpp:1246
+#: Win/DlgListViewer.cpp:1342 Win/DlgListViewer.cpp:1383
 #: Win/DlgPointsViewSort.cpp:191
 msgid "IDS_COL_EVENT"
 msgstr "Epreuve"
@@ -2478,9 +2478,9 @@ msgstr "Epreuve"
 msgid "IDS_COL_HEIGHT"
 msgstr "Catégorie"
 
-#: Win/DlgAssignColumns.cpp:235 Win/DlgInfoNote.cpp:439 Win/DlgListViewer.cpp:972
+#: Win/DlgAssignColumns.cpp:235 Win/DlgInfoNote.cpp:542 Win/DlgListViewer.cpp:972
 #: Win/DlgListViewer.cpp:1010 Win/DlgListViewer.cpp:1022
-#: Win/DlgListViewer.cpp:1176 Win/DlgListViewer.cpp:1243 Win/Print.cpp:264
+#: Win/DlgListViewer.cpp:1184 Win/DlgListViewer.cpp:1251 Win/Print.cpp:264
 msgid "IDS_COL_JUDGE"
 msgstr "Juge"
 
@@ -2538,47 +2538,48 @@ msgid "IDS_COL_REQ_POINTS"
 msgstr "Points exigé"
 
 #: Win/DlgAssignColumns.cpp:277 Win/DlgDogPanelPoints.cpp:55
-#: Win/DlgListCtrl.cpp:555 Win/DlgListViewer.cpp:1341 Win/DlgListViewer.cpp:1376
+#: Win/DlgListCtrl.cpp:555 Win/DlgListViewer.cpp:1349 Win/DlgListViewer.cpp:1384
 msgid "IDS_COL_POINTS"
 msgstr "Points"
 
 #: Win/DlgAssignColumns.cpp:280 Win/DlgConfigEventMethod.cpp:423
-#: Win/DlgListViewer.cpp:1177 Win/DlgListViewer.cpp:1244
+#: Win/DlgListViewer.cpp:1185 Win/DlgListViewer.cpp:1252
 #: Win/DlgRunPanelRefRuns.cpp:58 Win/Print.cpp:275 Win/Print.cpp:280
 #: Win/Print.cpp:286 Win/Print.cpp:292 Win/Print.cpp:298
 msgid "IDS_COL_PLACE"
 msgstr "Classement"
 
-#: Win/DlgAssignColumns.cpp:283 Win/DlgListViewer.cpp:1178
-#: Win/DlgListViewer.cpp:1245 Win/Print.cpp:276
+#: Win/DlgAssignColumns.cpp:283 Win/DlgListViewer.cpp:1186
+#: Win/DlgListViewer.cpp:1253 Win/Print.cpp:276
 msgid "IDS_COL_IN_CLASS"
 msgstr "Engagés"
 
-#: Win/DlgAssignColumns.cpp:286 Win/DlgListViewer.cpp:1179
-#: Win/DlgListViewer.cpp:1246 Win/Print.cpp:277
+#: Win/DlgAssignColumns.cpp:286 Win/DlgListViewer.cpp:1187
+#: Win/DlgListViewer.cpp:1254 Win/Print.cpp:277
 msgid "IDS_COL_Q_D"
 msgstr "Nombres Q"
 
 #: Win/DlgAssignColumns.cpp:289 Win/DlgAssignColumns.cpp:384
-#: Win/DlgListViewer.cpp:1166 Win/DlgListViewer.cpp:1233
+#: Win/DlgListViewer.cpp:1174 Win/DlgListViewer.cpp:1241
 #: Win/DlgRunPanelRefRuns.cpp:57 Win/Print.cpp:267 Win/Print.cpp:281
 #: Win/Print.cpp:287 Win/Print.cpp:293 Win/Print.cpp:299
 msgid "IDS_COL_Q"
 msgstr "Q"
 
-#: Win/DlgAssignColumns.cpp:292 Win/DlgListViewer.cpp:1377
+#: Win/DlgAssignColumns.cpp:292 Win/DlgListViewer.cpp:1385
 #: Win/DlgRunPanelRefRuns.cpp:59 Win/Print.cpp:274 Win/Print.cpp:283
 #: Win/Print.cpp:289 Win/Print.cpp:295 Win/Print.cpp:301
 msgid "IDS_COL_SCORE"
 msgstr "Resultats"
 
-#: Win/DlgAssignColumns.cpp:295 Win/DlgListViewer.cpp:1167
-#: Win/DlgListViewer.cpp:1234 Win/DlgListViewer.cpp:1293
+#: Win/DlgAssignColumns.cpp:295 Win/DlgListViewer.cpp:1175
+#: Win/DlgListViewer.cpp:1242 Win/DlgListViewer.cpp:1301
 msgid "IDS_COL_TITLE_PTS"
 msgstr "Points Distinction"
 
 #: Win/DlgAssignColumns.cpp:298 Win/DlgDogPanelPoints.cpp:63
-#: Win/DlgInfoNote.cpp:66 Win/DlgListViewer.cpp:1406 Win/Print.cpp:279
+#: Win/DlgInfoNote.cpp:68 Win/DlgInfoNote.cpp:990 Win/DlgListViewer.cpp:1414
+#: Win/Print.cpp:279
 msgid "IDS_COL_COMMENTS"
 msgstr "Notes"
 
@@ -2591,8 +2592,9 @@ msgid "IDS_COL_ENTERED"
 msgstr "Nombre chiens inscrit"
 
 #: Win/DlgAssignColumns.cpp:339 Win/DlgDogPanelTitles.cpp:56
-#: Win/DlgFindLinks.cpp:119 Win/DlgInfoNote.cpp:65 Win/DlgListCtrl.cpp:554
-#: Win/DlgListViewer.cpp:1405 Win/DlgRunPanelRefRuns.cpp:62
+#: Win/DlgFindLinks.cpp:119 Win/DlgInfoNote.cpp:67 Win/DlgInfoNote.cpp:989
+#: Win/DlgListCtrl.cpp:554 Win/DlgListViewer.cpp:1413
+#: Win/DlgRunPanelRefRuns.cpp:62
 msgid "IDS_COL_NAME"
 msgstr "Nom"
 
@@ -2609,8 +2611,8 @@ msgid "IDS_COL_AGE"
 msgstr "Age"
 
 #: Win/DlgAssignColumns.cpp:400 Win/DlgAssignColumns.cpp:558
-#: Win/DlgDogPanelPoints.cpp:62 Win/DlgListViewer.cpp:1173
-#: Win/DlgListViewer.cpp:1240
+#: Win/DlgDogPanelPoints.cpp:62 Win/DlgListViewer.cpp:1181
+#: Win/DlgListViewer.cpp:1248
 msgid "IDS_COL_SUBNAME"
 msgstr "Sous-titre"
 
@@ -2731,7 +2733,7 @@ msgstr "Role"
 msgid "IDS_COL_SCH_PRIORITY"
 msgstr "Horaires+priorité"
 
-#: Win/DlgAssignColumns.cpp:540 Win/DlgListViewer.cpp:1229
+#: Win/DlgAssignColumns.cpp:540 Win/DlgListViewer.cpp:1237
 msgid "IDS_COL_STATUS"
 msgstr "Etats"
 
@@ -4394,11 +4396,11 @@ msgstr "Numéro inscription"
 msgid "IDD_DOG_POINTS"
 msgstr "Points existants"
 
-#: Win/DlgDogPanelBase.cpp:87
+#: Win/DlgDogPanelBase.cpp:93
 msgid "Delete"
 msgstr "Supprimer"
 
-#: Win/DlgDogPanelPoints.cpp:54 Win/DlgListViewer.cpp:1403
+#: Win/DlgDogPanelPoints.cpp:54 Win/DlgListViewer.cpp:1411
 msgid "IDS_COL_TYPE"
 msgstr "Type"
 
@@ -4837,55 +4839,148 @@ msgstr "&Ouvrir"
 msgid "HIDC_FINDLINKS_OPEN"
 msgstr "Montrer le lien sélectionné."
 
-#: Win/DlgInfoNote.cpp:281
+#: Win/DlgInfoNote.cpp:292
 msgid "IDS_INFO_CLUB"
 msgstr "Information Club"
 
-#: Win/DlgInfoNote.cpp:286
+#: Win/DlgInfoNote.cpp:297
 msgid "IDS_INFO_JUDGE"
 msgstr "Information Juge"
 
-#: Win/DlgInfoNote.cpp:291
+#: Win/DlgInfoNote.cpp:302
 msgid "IDS_INFO_LOCATION"
 msgstr "Information Endroit"
 
-#: Win/DlgInfoNote.cpp:322
+#: Win/DlgInfoNote.cpp:331
 msgid "IDC_INFONOTE_NEW"
 msgstr "&Nouveax..."
 
-#: Win/DlgInfoNote.cpp:324 Win/DlgInfoNote.cpp:325
+#: Win/DlgInfoNote.cpp:333 Win/DlgInfoNote.cpp:334
 msgid "HIDC_INFONOTE_NEW"
 msgstr "Créer un nouveau club, un juge, ou un endroit."
 
-#: Win/DlgInfoNote.cpp:327
+#: Win/DlgInfoNote.cpp:336
 msgid "IDC_INFONOTE_EDIT"
 msgstr "&Édition..."
 
-#: Win/DlgInfoNote.cpp:329 Win/DlgInfoNote.cpp:330
+#: Win/DlgInfoNote.cpp:338 Win/DlgInfoNote.cpp:339
 msgid "HIDC_INFONOTE_EDIT"
 msgstr "Éditer un club, un juge, ou un endroit."
 
-#: Win/DlgInfoNote.cpp:332
+#: Win/DlgInfoNote.cpp:341
 msgid "IDC_INFONOTE_DELETE"
 msgstr "&Supprimer"
 
-#: Win/DlgInfoNote.cpp:334 Win/DlgInfoNote.cpp:335
+#: Win/DlgInfoNote.cpp:343 Win/DlgInfoNote.cpp:344
 msgid "HIDC_INFONOTE_DELETE"
 msgstr ""
 "Supprimer le club, le juge, ou l'endroit sélectionné. Seule les notes seront "
 "supprimées."
 
-#: Win/DlgInfoNote.cpp:342 Win/DlgInfoNote.cpp:343 Win/DlgInfoNoteEdit.cpp:61
+#: Win/DlgInfoNote.cpp:346
+msgid "IDC_INFONOTE_COPY"
+msgstr "&Copier"
+
+#: Win/DlgInfoNote.cpp:348 Win/DlgInfoNote.cpp:349
+msgid "HIDC_INFONOTE_COPY"
+msgstr "Copy all items, press SHIFT to copy selection"
+
+#: Win/DlgInfoNote.cpp:357 Win/DlgInfoNote.cpp:358 Win/DlgInfoNoteEdit.cpp:61
 #: Win/DlgInfoNoteEdit.cpp:62
 msgid "HIDC_INFONOTE"
 msgstr ""
 "Liste des clubs, des juges, ou des endroits de tous vos parcours, plus ceux "
 "créés ici."
 
-#: Win/DlgInfoNote.cpp:676
+#: Win/DlgInfoNote.cpp:404
+#, fuzzy
+msgid "IDC_INFONOTE_VIS"
+msgstr "Visibility"
+
+#: Win/DlgInfoNote.cpp:407
+msgid "IDC_INFONOTE_VIS_ALL"
+msgstr "Tous"
+
+#: Win/DlgInfoNote.cpp:408 Win/DlgInfoNote.cpp:409
+#, fuzzy
+msgid "HIDC_INFONOTE_VIS_ALL"
+msgstr "Show all items"
+
+#: Win/DlgInfoNote.cpp:418 Win/DlgInfoNote.cpp:987
+msgid "IDC_INFONOTE_VIS_VIS"
+msgstr "Visible"
+
+#: Win/DlgInfoNote.cpp:419 Win/DlgInfoNote.cpp:420
+#, fuzzy
+msgid "HIDC_INFONOTE_VIS_VIS"
+msgstr "Show only visible items"
+
+#: Win/DlgInfoNote.cpp:430
+#, fuzzy
+msgid "IDC_INFONOTE_VIS_HIDDEN"
+msgstr "Hidden"
+
+#: Win/DlgInfoNote.cpp:431 Win/DlgInfoNote.cpp:432
+#, fuzzy
+msgid "HIDC_INFONOTE_VIS_HIDDEN"
+msgstr "Show only hidden items"
+
+#: Win/DlgInfoNote.cpp:441
+#, fuzzy
+msgid "IDC_INFONOTE_USE"
+msgstr "Usage"
+
+#: Win/DlgInfoNote.cpp:444
+msgid "IDC_INFONOTE_USE_ALL"
+msgstr "Tous"
+
+#: Win/DlgInfoNote.cpp:445 Win/DlgInfoNote.cpp:446
+#, fuzzy
+msgid "HIDC_INFONOTE_USE_ALL"
+msgstr "Show all items"
+
+#: Win/DlgInfoNote.cpp:456 Win/DlgInfoNote.cpp:988
+#, fuzzy
+msgid "IDC_INFONOTE_USE_INUSE"
+msgstr "In use"
+
+#: Win/DlgInfoNote.cpp:457 Win/DlgInfoNote.cpp:458
+#, fuzzy
+msgid "HIDC_INFONOTE_USE_INUSE"
+msgstr "Show only items that are in use but have no comments"
+
+#: Win/DlgInfoNote.cpp:468
+#, fuzzy
+msgid "IDC_INFONOTE_USE_NOTINUSE"
+msgstr "Not in use"
+
+#: Win/DlgInfoNote.cpp:469 Win/DlgInfoNote.cpp:470
+#, fuzzy
+msgid "HIDC_INFONOTE_USE_NOTINUSE"
+msgstr "Show only items that are hidden or have a comment"
+
+#: Win/DlgInfoNote.cpp:753
+#, fuzzy
+msgid "IDS_INFONOTE_FMT_COUNT"
+msgstr "{0} items"
+
+#: Win/DlgInfoNote.cpp:756
+#, fuzzy
+msgid "IDS_INFONOTE_FMT_COUNT_OF"
+msgstr "{0} of {1} items"
+
+#: Win/DlgInfoNote.cpp:769
 #, fuzzy
 msgid "IDS_INFONOTE_FILTERED"
 msgstr "Edited information is currently hidden by the viewing options."
+
+#: Win/DlgInfoNote.cpp:998 Win/DlgInfoNote.cpp:1002
+msgid "IDS_INFONOTE_YES"
+msgstr "Oui"
+
+#: Win/DlgInfoNote.cpp:998 Win/DlgInfoNote.cpp:1001
+msgid "IDS_INFONOTE_NO"
+msgstr "Non"
 
 #: Win/DlgInfoNoteEdit.cpp:67
 msgid "IDC_INFONOTE_VISIBLE"
@@ -4986,24 +5081,24 @@ msgstr "Changé"
 msgid "IDS_SPEEDPTS"
 msgstr "Points vitesse"
 
-#: Win/DlgListViewer.cpp:1370
+#: Win/DlgListViewer.cpp:1378
 msgid "IDS_COL_TRIAL_EXISTPTS"
 msgstr "Concours / Points acquis"
 
-#: Win/DlgListViewer.cpp:1445 Win/DlgListViewer.cpp:1446
+#: Win/DlgListViewer.cpp:1452 Win/DlgListViewer.cpp:1453
 msgid "HIDC_LIST_VIEWER"
 msgstr "Liste des entrées."
 
 # DlgListViewer
-#: Win/DlgListViewer.cpp:1448
+#: Win/DlgListViewer.cpp:1455
 msgid "IDC_LIST_COPY"
 msgstr "Copier"
 
-#: Win/DlgListViewer.cpp:1450 Win/DlgListViewer.cpp:1451
+#: Win/DlgListViewer.cpp:1457 Win/DlgListViewer.cpp:1458
 msgid "HIDC_LIST_COPY"
 msgstr "Copier les articles de la liste dans le presse-papier au format table."
 
-#: Win/DlgListViewer.cpp:1453
+#: Win/DlgListViewer.cpp:1460
 msgid "IDC_LIST_CLOSE"
 msgstr "Quitter"
 
