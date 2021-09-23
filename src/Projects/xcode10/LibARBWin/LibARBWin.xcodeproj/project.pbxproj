@@ -39,6 +39,7 @@
 		E10F39F12526448600E83AB0 /* LanguageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F39D82526448600E83AB0 /* LanguageManager.cpp */; };
 		E10F39F22526448600E83AB0 /* SpreadSheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F39D92526448600E83AB0 /* SpreadSheet.cpp */; };
 		E112AE9321FE3DEA00D6FE27 /* StatusBarHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = E112AE9221FE3DE900D6FE27 /* StatusBarHelper.h */; };
+		E14A806326F7DFF400CBD1D9 /* ConfigPosition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E14A806226F7DFF400CBD1D9 /* ConfigPosition.cpp */; };
 		E198518F2170E5C5003E7B92 /* ReadHttp.h in Headers */ = {isa = PBXBuildFile; fileRef = E198517A2170E5C5003E7B92 /* ReadHttp.h */; };
 		E19851902170E5C5003E7B92 /* RichEditCtrl2.h in Headers */ = {isa = PBXBuildFile; fileRef = E198517B2170E5C5003E7B92 /* RichEditCtrl2.h */; };
 		E19851912170E5C5003E7B92 /* ImageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E198517C2170E5C5003E7B92 /* ImageManager.h */; };
@@ -99,6 +100,7 @@
 		E10F39D82526448600E83AB0 /* LanguageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LanguageManager.cpp; sourceTree = "<group>"; };
 		E10F39D92526448600E83AB0 /* SpreadSheet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpreadSheet.cpp; sourceTree = "<group>"; };
 		E112AE9221FE3DE900D6FE27 /* StatusBarHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusBarHelper.h; sourceTree = "<group>"; };
+		E14A806226F7DFF400CBD1D9 /* ConfigPosition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigPosition.cpp; sourceTree = "<group>"; };
 		E198517A2170E5C5003E7B92 /* ReadHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadHttp.h; sourceTree = "<group>"; };
 		E198517B2170E5C5003E7B92 /* RichEditCtrl2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichEditCtrl2.h; sourceTree = "<group>"; };
 		E198517C2170E5C5003E7B92 /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 		E19B62F3166C090F004DEDA4 /* LibARBWin */ = {
 			isa = PBXGroup;
 			children = (
+				E14A806226F7DFF400CBD1D9 /* ConfigPosition.cpp */,
 				E10F39BF2526445500E83AB0 /* ARBDebug.cpp */,
 				E10F39C52526448200E83AB0 /* ARBWinUtilities.cpp */,
 				E10F39C62526448300E83AB0 /* CheckLink.cpp */,
@@ -358,6 +361,7 @@
 				E10F39EF2526448600E83AB0 /* CheckTreeCtrl.cpp in Sources */,
 				E10F39DD2526448600E83AB0 /* ListData.cpp in Sources */,
 				E10F39E52526448600E83AB0 /* DlgConfigAccel.cpp in Sources */,
+				E14A806326F7DFF400CBD1D9 /* ConfigPosition.cpp in Sources */,
 				E10D89CB25D5A35900D1D8F8 /* ReportListCtrl.cpp in Sources */,
 				E10F39F02526448600E83AB0 /* Validators.cpp in Sources */,
 				E10F39DF2526448600E83AB0 /* CheckLink.cpp in Sources */,

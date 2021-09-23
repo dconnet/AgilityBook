@@ -19,6 +19,7 @@
 		E10D89F425D5AB5D00D1D8F8 /* DlgRunPanelRefRuns.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10D89DB25D5A5FF00D1D8F8 /* DlgRunPanelRefRuns.cpp */; };
 		E10D89F625D5AB6100D1D8F8 /* DlgRunPanelScore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10D89DD25D5A5FF00D1D8F8 /* DlgRunPanelScore.cpp */; };
 		E13371821D173D4800E7344D /* DlgConfigLifetimeName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E13371801D173D4800E7344D /* DlgConfigLifetimeName.cpp */; };
+		E14A806026F7DB8A00CBD1D9 /* DlgInfoNoteEdit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E14A805E26F7DB8900CBD1D9 /* DlgInfoNoteEdit.cpp */; };
 		E165930917ED2E1D00B86062 /* AgilityBookRunsView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E165930717ED2E1D00B86062 /* AgilityBookRunsView.cpp */; };
 		E1748DF725266D28003A196C /* venue_valor.png in Resources */ = {isa = PBXBuildFile; fileRef = E1748DF525266D27003A196C /* venue_valor.png */; };
 		E1748DF825266D28003A196C /* venue_valor@2.png in Resources */ = {isa = PBXBuildFile; fileRef = E1748DF625266D27003A196C /* venue_valor@2.png */; };
@@ -267,6 +268,8 @@
 		E10D89E425D5A60000D1D8F8 /* DlgRunPanelCRCD.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DlgRunPanelCRCD.cpp; sourceTree = "<group>"; };
 		E13371801D173D4800E7344D /* DlgConfigLifetimeName.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgConfigLifetimeName.cpp; sourceTree = "<group>"; };
 		E13371811D173D4800E7344D /* DlgConfigLifetimeName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgConfigLifetimeName.h; sourceTree = "<group>"; };
+		E14A805E26F7DB8900CBD1D9 /* DlgInfoNoteEdit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgInfoNoteEdit.cpp; sourceTree = "<group>"; };
+		E14A805F26F7DB8A00CBD1D9 /* DlgInfoNoteEdit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgInfoNoteEdit.h; sourceTree = "<group>"; };
 		E164622917BFF255004F12AF /* SetupAppARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupAppARB.h; sourceTree = "<group>"; };
 		E165930717ED2E1D00B86062 /* AgilityBookRunsView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookRunsView.cpp; sourceTree = "<group>"; };
 		E165930817ED2E1D00B86062 /* AgilityBookRunsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookRunsView.h; sourceTree = "<group>"; };
@@ -921,6 +924,8 @@
 				E19B6439166C09B9004DEDA4 /* DlgFindLinks.h */,
 				E19B643A166C09B9004DEDA4 /* DlgInfoNote.cpp */,
 				E19B643B166C09B9004DEDA4 /* DlgInfoNote.h */,
+				E14A805E26F7DB8900CBD1D9 /* DlgInfoNoteEdit.cpp */,
+				E14A805F26F7DB8A00CBD1D9 /* DlgInfoNoteEdit.h */,
 				E19B643C166C09B9004DEDA4 /* DlgListCtrl.cpp */,
 				E19B643D166C09B9004DEDA4 /* DlgListCtrl.h */,
 				E19B643E166C09B9004DEDA4 /* DlgListViewer.cpp */,
@@ -1254,7 +1259,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "OUTPUTDIR=${CODESIGNING_FOLDER_PATH}/Contents/Resources\nLANGDIR=${SOURCE_ROOT}/../../../lang\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\nif ! test -d \"${OUTPUTDIR}\"\nthen\n    mkdir \"${OUTPUTDIR}\"\nfi\n\npython3 \"${LANGDIR}/CompileLang.py\" -s \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" ${TARGET_NAME}\n\npython3 \"${LANGDIR}/CompileDataFile.py\" -x \"${LANGDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" ${TARGET_NAME}\n";
+			shellScript = "OUTPUTDIR=${CODESIGNING_FOLDER_PATH}/Contents/Resources\nSCRIPTDIR=${SOURCE_ROOT}/../../../Projects\nLANGDIR=${SOURCE_ROOT}/../../../lang\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\nif ! test -d \"${OUTPUTDIR}\"\nthen\n    mkdir \"${OUTPUTDIR}\"\nfi\n\npython3 \"${SCRIPTDIR}/CompileLang.py\" -s \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" ${TARGET_NAME}\n\npython3 \"${SCRIPTDIR}/CompileDataFile.py\" -x \"${LANGDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" ${TARGET_NAME}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1342,6 +1347,7 @@
 				E19B6545166C09B9004DEDA4 /* Print.cpp in Sources */,
 				E19B6592166C09B9004DEDA4 /* TabView.cpp in Sources */,
 				E19B6593166C09B9004DEDA4 /* UpdateInfo.cpp in Sources */,
+				E14A806026F7DB8A00CBD1D9 /* DlgInfoNoteEdit.cpp in Sources */,
 				E19B6595166C09B9004DEDA4 /* ValidatorsQ.cpp in Sources */,
 				E19B6598166C09B9004DEDA4 /* Wizard.cpp in Sources */,
 				E10D89EA25D5AB3D00D1D8F8 /* DlgDogPanelProp.cpp in Sources */,

@@ -31,6 +31,14 @@ CDlgDogPanelBase::CDlgDogPanelBase(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog
 
 /////////////////////////////////////////////////////////////////////////////
 
+// TODO: not getting selected when selecting 2nd item via shift-click (wx bug)
+// Listen to focused because of https://trac.wxwidgets.org/ticket/4541
+// Use EventTable because Binding allows a focused event after destroy on mac
+#define LIST_CTRL 1000
+wxBEGIN_EVENT_TABLE(CDlgDogPanelReportBase, CDlgDogPanelBase)
+	EVT_LIST_ITEM_FOCUSED(LIST_CTRL, CDlgDogPanelReportBase::OnItemFocused)
+wxEND_EVENT_TABLE()
+
 CDlgDogPanelReportBase::CDlgDogPanelReportBase(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog, wxWindow* parent)
 	: CDlgDogPanelBase(pDoc, inDog, parent)
 	, m_ctrlList(nullptr)
@@ -69,11 +77,9 @@ void CDlgDogPanelReportBase::DeleteListItem(long index)
 void CDlgDogPanelReportBase::DoCreate(bool isSingleSel, bool hasImageList)
 {
 	m_ctrlList = new CReportListCtrl(this, isSingleSel, CReportListCtrl::SortHeader::Sort, true, hasImageList);
-	// TODO: not getting selected when selecting 2nd item via shift-click (wx bug)
+	m_ctrlList->SetId(LIST_CTRL);
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, [this](wxListEvent& evt) { UpdateControls(); });
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_DESELECTED, [this](wxListEvent& evt) { UpdateControls(); });
-	// Listen to focused because of https://trac.wxwidgets.org/ticket/4541
-	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_FOCUSED, [this](wxListEvent& evt) { UpdateControls(); });
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgDogPanelReportBase::OnItemActivated, this);
 	m_ctrlList->Bind(wxEVT_KEY_DOWN, &CDlgDogPanelReportBase::OnKeyDown, this);
 	m_reportColumn.Initialize(this, m_ctrlList);
@@ -118,6 +124,12 @@ void CDlgDogPanelReportBase::UpdateControls()
 		m_btnDelete->Enable(items.size() == 1);
 	else
 		m_btnDelete->Enable(items.size() > 0);
+}
+
+
+void CDlgDogPanelReportBase::OnItemFocused(wxListEvent& evt)
+{
+	UpdateControls();
 }
 
 

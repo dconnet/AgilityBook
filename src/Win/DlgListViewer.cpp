@@ -1117,6 +1117,14 @@ static void InsertRun(
 /////////////////////////////////////////////////////////////////////////////
 // Viewing runs
 
+// TODO: not getting selected when selecting 2nd item via shift-click (wx bug)
+// Listen to focused because of https://trac.wxwidgets.org/ticket/4541
+// Use EventTable because Binding allows a focused event after destroy on mac
+#define LIST_CTRL 1000
+wxBEGIN_EVENT_TABLE(CDlgListViewer, wxDialog)
+	EVT_LIST_ITEM_FOCUSED(LIST_CTRL, CDlgListViewer::OnItemFocused)
+wxEND_EVENT_TABLE()
+
 CDlgListViewer::CDlgListViewer(
 	CAgilityBookDoc* inDoc,
 	std::wstring const& inCaption,
@@ -1437,11 +1445,10 @@ bool CDlgListViewer::Create(std::wstring const& inCaption, wxWindow* pParent)
 		false,
 		CReportListCtrl::SortHeader::Sort,
 		true);
+	m_ctrlList->SetId(LIST_CTRL);
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgListViewer::OnColumnClick, this);
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, [this](wxListEvent& evt) { UpdateControls(); });
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_DESELECTED, [this](wxListEvent& evt) { UpdateControls(); });
-	// Listen to focused because of https://trac.wxwidgets.org/ticket/4541
-	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_FOCUSED, [this](wxListEvent& evt) { UpdateControls(); });
 	m_ctrlList->SetHelpText(_("HIDC_LIST_VIEWER"));
 	m_ctrlList->SetToolTip(_("HIDC_LIST_VIEWER"));
 
@@ -1489,6 +1496,12 @@ void CDlgListViewer::UpdateControls()
 {
 	int items = std::max(m_ctrlList->GetSelectedItemCount(), m_ctrlList->GetItemCount());
 	m_ctrlCopy->Enable(0 < items);
+}
+
+
+void CDlgListViewer::OnItemFocused(wxListEvent& evt)
+{
+	UpdateControls();
 }
 
 

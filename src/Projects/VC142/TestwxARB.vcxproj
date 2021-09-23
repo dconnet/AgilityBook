@@ -248,13 +248,13 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
+      <Command>python "$(BuildScriptDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt;%(Inputs)</Inputs>
@@ -269,13 +269,13 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
+      <Command>python "$(BuildScriptDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt;%(Inputs)</Inputs>
@@ -290,13 +290,13 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
+      <Command>python "$(BuildScriptDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt;%(Inputs)</Inputs>
@@ -311,13 +311,13 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
+      <Command>python "$(BuildScriptDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt;%(Inputs)</Inputs>
@@ -332,13 +332,13 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
+      <Command>python "$(BuildScriptDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt;%(Inputs)</Inputs>
@@ -353,13 +353,13 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
+      <Command>python "$(BuildScriptDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt;%(Inputs)</Inputs>
@@ -374,13 +374,13 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
+      <Command>python "$(BuildScriptDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt;%(Inputs)</Inputs>
@@ -395,13 +395,13 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
+      <Command>python "$(BuildScriptDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt;%(Inputs)</Inputs>
@@ -416,13 +416,13 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
+      <Command>python "$(BuildScriptDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt;%(Inputs)</Inputs>
@@ -437,13 +437,13 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
+      <Command>python "$(BuildScriptDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt;%(Inputs)</Inputs>
@@ -458,13 +458,13 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
+      <Command>python "$(BuildScriptDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt;%(Inputs)</Inputs>
@@ -479,13 +479,13 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>python "$(ProjectDir)..\..\lang\CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>python "$(ProjectDir)..\RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
+      <Command>python "$(BuildScriptDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformShortName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x -f "$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
       <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;$(ProjectDir)..\..\TestARB\res\CompileDatListTest.txt;%(Inputs)</Inputs>

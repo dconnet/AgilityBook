@@ -179,6 +179,12 @@ bool ARBInfoItem::Save(ElementNodePtr const& ioTree, std::wstring const& inItemN
 	return true;
 }
 
+
+bool ARBInfoItem::HasData() const
+{
+	return !m_Comment.empty() || !m_Visible;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 ARBInfoItemList::ARBInfoItemList(std::wstring const& inItemName)
@@ -282,7 +288,7 @@ void ARBInfoItemList::CondenseContent(std::set<std::wstring> const& inNamesInUse
 	for (iterator iter = begin(); iter != end();)
 	{
 		ARBInfoItemPtr item = *iter;
-		if (item->GetComment().empty() && item->IsVisible())
+		if (!item->HasData())
 		{
 			if (inNamesInUse.end() == inNamesInUse.find(item->GetName()))
 				++iter;

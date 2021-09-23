@@ -306,6 +306,9 @@
     <ClCompile Include="..\..\Win\DlgRunPanelRefRuns.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Win\DlgInfoNoteEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Win\AgilityBook.h">
@@ -585,6 +588,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Win\DlgRunPanelRefRuns.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Win\DlgInfoNoteEdit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

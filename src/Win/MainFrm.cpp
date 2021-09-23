@@ -76,6 +76,49 @@ bool CFileDropTarget::OnDropFiles(wxCoord x, wxCoord y, wxArrayString const& fil
 
 /////////////////////////////////////////////////////////////////////////////
 
+CConfigProgram::CConfigProgram()
+	: CConfigPosition(CConfigPosition::eConfigAll)
+{
+}
+
+
+wxString CConfigProgram::SectionName() const
+{
+	return CFG_KEY_SETTINGS;
+}
+
+
+wxString CConfigProgram::LastX() const
+{
+	return CFG_SETTINGS_LASTXPOS;
+}
+
+
+wxString CConfigProgram::LastY() const
+{
+	return CFG_SETTINGS_LASTYPOS;
+}
+
+
+wxString CConfigProgram::LastCX() const
+{
+	return CFG_SETTINGS_LASTCX;
+}
+
+
+wxString CConfigProgram::LastCY() const
+{
+	return CFG_SETTINGS_LASTCY;
+}
+
+
+wxString CConfigProgram::LastState() const
+{
+	return CFG_SETTINGS_LASTSTATE;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 wxBEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
 #ifdef EVT_DPI_CHANGED
 	EVT_DPI_CHANGED(CMainFrame::OnDPIChanged)
@@ -307,24 +350,10 @@ void CMainFrame::OnClose(wxCloseEvent& evt)
 		evt.Veto();
 		return;
 	}
-	long state = 0;
-	if (IsMaximized() || IsFullScreen())
-	{
-		state = 1;
-	}
-	else if (IsIconized())
-	{
-		state = -1;
-	}
-	else
-	{
-		wxRect r = GetScreenRect();
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTXPOS, DPI::UnScale(this, r.x));
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTYPOS, DPI::UnScale(this, r.y));
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTCX, DPI::UnScale(this, r.width));
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTCY, DPI::UnScale(this, r.height));
-	}
-	wxConfig::Get()->Write(CFG_SETTINGS_LASTSTATE, state);
+
+	CConfigProgram pos;
+	pos.Save(this);
+
 	evt.Skip();
 }
 

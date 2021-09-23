@@ -94,6 +94,7 @@ ARBWIN_API void LoadLocalBitmap(wxWindow const* pWindow, wchar_t const* const pI
 #else
 #if !defined(__WXOSX__)
 // OSX auto-loads @2 images.
+#define FORCE_SCALE_100
 #pragma PRAGMA_FIXME(This is not likely to load the correct image);
 #endif
 #define LOAD_BITMAP_PNG(pWindow, name, outBmp) outBmp = wxBITMAP_PNG(name)

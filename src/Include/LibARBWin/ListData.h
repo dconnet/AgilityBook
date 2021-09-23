@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-09-09 Add support for EnableCheckBoxes.
  * 2020-12-07 Add OnCompare for use with CReportListHeader.
  * 2018-10-11 Moved to Win LibARBWin
  * 2009-01-01 Ported to wxWidgets.
@@ -42,6 +43,8 @@ public:
 	virtual std::wstring OnNeedText(long iCol) const = 0;
 	/// By default, just uses OnNeedText to fill in text.
 	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
+	/// When checkboxes are enabled, is this item checked?
+	virtual bool OnNeedCheck() const;
 };
 
 

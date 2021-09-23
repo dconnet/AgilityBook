@@ -98,6 +98,11 @@ public:
 	 */
 	bool Save(ElementNodePtr const& ioTree, std::wstring const& inItemName) const;
 
+	/**
+	 * Item has data. No data will be removed in CondenseContent.
+	 */
+	bool HasData() const;
+
 	/*
 	 * Getters/setters.
 	 */
