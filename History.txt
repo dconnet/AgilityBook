@@ -1,4 +1,4 @@
-9/23/2021: v3.6.1.<development>
+9/29/2021: v3.6.1.<development>
 - New features / Enhancements:
   - Add gamble closing time to run printout.
   - Condense notes (club/judge/location) when saving.
@@ -6,6 +6,7 @@
   - Changed InfoNote dialog (Clubs/Judges/Locations), allow copying of data.
 - Bug fixes:
   - Fix deletion of multiple selected titles in dog properties.
+  - Printing a trial's runs ignored filtering.
 
 6/18/2021: v3.6.0.116
 - New features / Enhancements:

@@ -1501,7 +1501,8 @@ bool CAgilityBookTreeView::OnCmd(int id)
 				 iRun != pData->GetTrial()->GetRuns().end();
 				 ++iRun)
 			{
-				runs.push_back(RunInfo(dog, pData->GetTrial(), *iRun));
+				if (!(*iRun)->IsFiltered())
+					runs.push_back(RunInfo(dog, pData->GetTrial(), *iRun));
 			}
 			PrintRuns(&(GetDocument()->Book().GetConfig()), runs);
 		}

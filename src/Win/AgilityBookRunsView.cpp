@@ -2001,7 +2001,8 @@ bool CAgilityBookRunsView::OnCmd(int id, bool bSilent)
 				 iRun != pData->GetTrial()->GetRuns().end();
 				 ++iRun)
 			{
-				runs.push_back(RunInfo(dog, pData->GetTrial(), *iRun));
+				if (!(*iRun)->IsFiltered())
+					runs.push_back(RunInfo(dog, pData->GetTrial(), *iRun));
 			}
 			PrintRuns(&(GetDocument()->Book().GetConfig()), runs);
 		}
@@ -2060,9 +2061,7 @@ bool CAgilityBookRunsView::OnCmd(int id, bool bSilent)
 			{
 				CAgilityBookRunsViewDataPtr pData = GetItemRunData(*iter);
 				if (pData)
-				{
 					runs.push_back(RunInfo(pData->GetDog(), pData->GetTrial(), pData->GetRun()));
-				}
 			}
 			PrintRuns(&(GetDocument()->Book().GetConfig()), runs);
 		}
