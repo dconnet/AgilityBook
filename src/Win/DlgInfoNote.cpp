@@ -304,12 +304,26 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	}
 	m_InfoOrig.Clone(m_Info);
 
+	// inSelect is from an active dialog edit - make sure it exists - and is 'inuse'.
+	// It may not since the user may have just added it.
+	bool addedSelection = false;
+	if (!inSelect.empty())
+	{
+		if (allNames.end() == std::find(allNames.begin(), allNames.end(), inSelect))
+		{
+			addedSelection = true;
+			allNames.insert(inSelect);
+		}
+	}
+
 	m_Names.reserve(allNames.size());
 	for (std::set<std::wstring>::iterator iter = allNames.begin(); iter != allNames.end(); ++iter)
 	{
 		NameInfo data(*iter);
 		ARBInfoItemPtr item;
 		if (m_NamesInUse.end() != std::find(m_NamesInUse.begin(), m_NamesInUse.end(), data.m_name))
+			data.m_usage = NameInfo::Usage::InUse;
+		else if (addedSelection && data.m_name == inSelect)
 			data.m_usage = NameInfo::Usage::InUse;
 		else
 			++m_nAdded;
@@ -871,7 +885,12 @@ void CDlgInfoNote::DoEdit(long index)
 					item->SetIsVisible(dlg.IsVisible());
 					item->SetComment(comment);
 					if (data)
-						data->UpdateItem(idxName, item);
+					{
+						if (NameInfo::Usage::NotInUse == m_Names[data->GetIndex()].m_usage)
+							data->UpdateItem(idxName, item);
+						else
+							data.reset();
+					}
 				}
 				else
 				{
