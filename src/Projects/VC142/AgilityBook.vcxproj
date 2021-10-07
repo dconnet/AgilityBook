@@ -249,7 +249,7 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(BuildScriptDir)CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
       <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
