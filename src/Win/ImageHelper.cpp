@@ -74,6 +74,7 @@
 #include "images/toolbarRun_png.c"
 #include "images/toolbarSave_png.c"
 #include "images/toolbarSearch_png.c"
+#include "images/toolbarSettings_png.c"
 #include "images/toolbarTitle_png.c"
 #include "images/toolbarTraining_png.c"
 #include "images/toolbarTrial_png.c"
@@ -278,6 +279,8 @@ bool CImageHelper::DoCreateBitmap(
 		LOAD_BITMAP_PNG(pWindow, toolbarSave, outBmp);
 	else if (id == ImageMgrSearch)
 		LOAD_BITMAP_PNG(pWindow, toolbarSearch, outBmp);
+	else if (id == ImageMgrSettings)
+		LOAD_BITMAP_PNG(pWindow, toolbarSettings, outBmp);
 
 	else
 	{

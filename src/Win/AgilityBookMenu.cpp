@@ -76,7 +76,7 @@ static const std::vector<CMenuHelper::ItemData> sc_items = {
 	{IdMenuNone, MENU_ITEM, ID_EDIT_FIND_NEXT,        wxITEM_NORMAL, 1, nullptr, arbT("MenuEditFindNext"), arbT("DescEditFindNext"), nullptr},
 	{IdMenuNone, MENU_ITEM, ID_EDIT_FIND_PREVIOUS,    wxITEM_NORMAL, 1, nullptr, arbT("MenuEditFindPrev"), arbT("DescEditFindPrev"), nullptr},
 	{IdMenuNone, MENU_SEP,  0,                        wxITEM_NORMAL, 1, nullptr, nullptr, nullptr, nullptr},
-	{IdMenuNone, MENU_ITEM, ID_EDIT_CONFIGURATION,    wxITEM_NORMAL, 1, nullptr, arbT("MenuEditConfig"), arbT("DescEditConfig"), nullptr},
+	{IdMenuNone, MENU_ITEM, ID_EDIT_CONFIGURATION,    wxITEM_NORMAL, 1, arbT("MenuEditConfig"), arbT("MenuEditConfig"), arbT("DescEditConfig"), ImageMgrSettings},
 
 	{IdMenuNone, MENU_ITEM, 0,                               wxITEM_NORMAL, 0, nullptr, arbT("MenuAgility"), nullptr, nullptr},
 	{IdMenuNone, MENU_ITEM, 0,                               wxITEM_NORMAL, 1, nullptr, arbT("MenuDog"), nullptr, ImageMgrDog},
