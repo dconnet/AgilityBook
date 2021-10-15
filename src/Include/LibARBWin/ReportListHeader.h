@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-10-15 Add ability to disable sort headers.
  * 2021-01-23 Add ability to change what is saved.
  * 2020-12-11 Moved out of ListCtrl.h
  */
@@ -91,6 +92,19 @@ public:
 	 */
 	void UpdateColumns();
 
+	/**
+	 * Enabled/disable sorting when sort columns are enabled.
+	 * (simply prevents Sort from happening on a column click)
+	 */
+	void EnableSorting(bool enableSort)
+	{
+		m_sortingEnabled = enableSort;
+	}
+	bool IsSortingEnabled() const
+	{
+		return m_sortingEnabled;
+	}
+
 	void SizeColumns();
 	virtual void Sort(); // Only sorts if we're sorting (virtual to allow a different sort)
 	void Sort(int col);  // Actual column index from listctrl, turns on sorting
@@ -133,6 +147,7 @@ protected:
 	std::vector<int> m_colWidths;     // May be empty, if so, we don't remember widths
 	wxArrayInt m_columnOrder;
 	std::vector<bool> m_columnVisible;
+	bool m_sortingEnabled;
 	long m_iSortCol;
 	bool m_bIsSorted;
 	unsigned int m_saveFlags;

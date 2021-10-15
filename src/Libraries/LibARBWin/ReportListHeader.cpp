@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-10-15 Add ability to disable sort headers.
  * 2021-01-23 Add ability to change what is saved.
  * 2020-12-11 Moved out of ListCtrl.cpp
  */
@@ -64,6 +65,7 @@ CReportListHeader::CReportListHeader()
 	, m_colWidths()
 	, m_columnOrder()
 	, m_columnVisible()
+	, m_sortingEnabled(true)
 	, m_iSortCol(0)
 	, m_bIsSorted(false)
 	, m_saveFlags(SaveFlags::Default)
@@ -488,7 +490,8 @@ void CReportListHeader::OnColumnRClick(wxListEvent& evt)
 
 void CReportListHeader::OnColumnClick(wxListEvent& evt)
 {
-	Sort(evt.GetColumn());
+	if (m_sortingEnabled)
+		Sort(evt.GetColumn());
 }
 
 
