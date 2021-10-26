@@ -26,10 +26,12 @@
 #include "DlgPageEncode.h"
 #include "DlgPageEncodeFiles.h"
 #include "DlgPageEncodeFinish.h"
+#include "VersionNumber.h"
 
 #include "../Win/ImageHelper.h"
 #include "ARBCommon/BinaryData.h"
 #include "ARBCommon/StringUtil.h"
+#include "ARBCommon/VersionNum.h"
 #include "fmt/format.h"
 #include <wx/ffile.h>
 #include <wx/filename.h>
@@ -51,7 +53,9 @@ CDlgARBHelp::CDlgARBHelp()
 	: wxWizard(
 		nullptr,
 		wxID_ANY,
-		L"Agility Record Book Helper",
+		wxString::Format(
+			L"Agility Record Book Helper %s",
+			CVersionNum(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD).GetVersionString(3).c_str()),
 		wxNullBitmap,
 		wxDefaultPosition,
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)

@@ -212,4 +212,20 @@ TEST_CASE("VersionNum")
 			REQUIRE(ver[3] == 0);
 		}
 	}
+
+
+	SECTION("str")
+	{
+		if (!g_bMicroTest)
+		{
+			CVersionNum v(1, 2, 3, 4);
+			REQUIRE(v.GetVersionString(0) == L"1.2.3.4");
+			REQUIRE(v.GetVersionString(1) == L"1");
+			REQUIRE(v.GetVersionString(2) == L"1.2");
+			REQUIRE(v.GetVersionString(3) == L"1.2.3");
+			REQUIRE(v.GetVersionString(4) == L"1.2.3.4");
+			REQUIRE(v.GetVersionString(5) == L"1.2.3.4");
+		}
+	}
+
 }

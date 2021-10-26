@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-10-26 Added 'parts' to GetVersionString.
  * 2018-12-16 Convert to fmt.
  * 2018-10-14 Treat a 0.0.0.0 vernum as not valid, even when specifically set.
  * 2018-08-15 Changed VERSION_NUMBER to std::array
@@ -53,7 +54,16 @@ bool CVersionNum::Parse(std::wstring const& inVer)
 }
 
 
-std::wstring CVersionNum::GetVersionString() const
+std::wstring CVersionNum::GetVersionString(int parts) const
 {
+	switch (parts)
+	{
+	case 3:
+		return fmt::format(L"{}.{}.{}", m_Version[0], m_Version[1], m_Version[2]);
+	case 2:
+		return fmt::format(L"{}.{}", m_Version[0], m_Version[1]);
+	case 1:
+		return fmt::format(L"{}", m_Version[0]);
+	}
 	return fmt::format(L"{}.{}.{}.{}", m_Version[0], m_Version[1], m_Version[2], m_Version[3]);
 }

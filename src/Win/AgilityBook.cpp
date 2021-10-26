@@ -87,6 +87,7 @@ class CAgilityBookDocManager : public wxDocManager
 public:
 	CAgilityBookDocManager(size_t historySize);
 	wxFileHistory* OnCreateFileHistory() override;
+	wxString MakeFrameTitle(wxDocument* doc) override;
 	void ActivateView(wxView* view, bool activate = true) override;
 
 private:
@@ -115,6 +116,15 @@ CAgilityBookDocManager::CAgilityBookDocManager(size_t historySize)
 wxFileHistory* CAgilityBookDocManager::OnCreateFileHistory()
 {
 	return new wxFileHistory(m_History);
+}
+
+
+wxString CAgilityBookDocManager::MakeFrameTitle(wxDocument* doc)
+{
+	auto title = wxDocManager::MakeFrameTitle(doc);
+	CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
+	title << L" " << ver.GetVersionString(3);
+	return title;
 }
 
 

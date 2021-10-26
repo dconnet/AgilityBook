@@ -32,6 +32,7 @@
 #include "DlgPluginDetails.h"
 #include "ICalendarSite.h"
 #include "IProgressMeter.h"
+#include "VersionNumber.h"
 
 #include "../Win/AgilityBookOptions.h"
 #include "../Win/DlgAssignColumns.h"
@@ -773,7 +774,10 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	Create(
 		pParent,
 		wxID_ANY,
-		_("IDD_CALENDAR_PLUGINS"),
+		wxString::Format(
+			L"%s %s",
+			_("IDD_CALENDAR_PLUGINS"),
+			CVersionNum(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD).GetVersionString(3).c_str()),
 		wxDefaultPosition,
 		wxDefaultSize,
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);

@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-10-26 Added 'parts' to GetVersionString.
  * 2018-08-15 Changed VERSION_NUMBER to std::array
  * 2012-04-10 Based on wx-group thread, use std::string for internal use
  * 2009-01-28 Removed Windows VERSIONNUM support (use VersionNumber.h)
@@ -36,9 +37,6 @@ public:
 		, m_Version()
 	{
 	}
-	~CVersionNum()
-	{
-	}
 	CVersionNum(unsigned short inMajor, unsigned short inMinor, unsigned short inDot, unsigned short inBuild)
 		: m_Valid(true)
 		, m_Version({inMajor, inMinor, inDot, inBuild})
@@ -58,6 +56,9 @@ public:
 	CVersionNum(CVersionNum&& rhs)
 		: m_Valid(std::move(rhs.m_Valid))
 		, m_Version(std::move(rhs.m_Version))
+	{
+	}
+	~CVersionNum()
 	{
 	}
 	CVersionNum& operator=(CVersionNum const& rhs)
@@ -125,7 +126,8 @@ public:
 		return m_Valid;
 	}
 
-	std::wstring GetVersionString() const;
+	// Any invalid number (<=0, >4) will return 4 parts
+	std::wstring GetVersionString(int parts = 4) const;
 
 	void GetVersion(VERSION_NUMBER& outVer) const
 	{

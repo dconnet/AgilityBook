@@ -19,17 +19,19 @@
 #include "stdafx.h"
 #include "DlgDigest.h"
 
+#include "VersionNumber.h"
+
+#include "../Win/ImageHelper.h"
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBStructure.h"
 #include "ARBCommon/ARBMsgDigest.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
+#include "ARBCommon/VersionNum.h"
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/Validators.h"
-#include "VersionNumber.h"
 
-#include "../Win/ImageHelper.h"
 #include <wx/filedlg.h>
 #include <wx/wfstream.h>
 
@@ -64,7 +66,9 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	Create(
 		nullptr,
 		wxID_ANY,
-		L"MD5/SHA1/SHA256 Checksum",
+		wxString::Format(
+			L"MD5/SHA1/SHA256 Checksum %s",
+			CVersionNum(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD).GetVersionString(3).c_str()),
 		wxDefaultPosition,
 		wxDefaultSize,
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
