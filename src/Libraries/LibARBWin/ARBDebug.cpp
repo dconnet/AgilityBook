@@ -193,7 +193,11 @@ std::wstring ARBDebug::GetSystemInfo(wxWindow const* pWindow, CVersionNum const&
 		else
 			fmt::format_to(str, L"{}\n", _("Unable to determine version information").wx_str());
 
-		fmt::format_to(str, L"Compiled at {} {}\n", StringUtil::stringW(std::string(__DATE__)), StringUtil::stringW(std::string(__TIME__)));
+		fmt::format_to(
+			str,
+			L"Compiled at {} {}\n",
+			StringUtil::stringW(std::string(__DATE__)),
+			StringUtil::stringW(std::string(__TIME__)));
 	}
 
 	// wxWidgets

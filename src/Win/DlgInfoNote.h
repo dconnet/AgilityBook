@@ -164,7 +164,7 @@ private:
 
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlDelete;
-	wxButton* m_ctrlCopy; 
+	wxButton* m_ctrlCopy;
 	CReportListCtrl* m_ctrlList;
 	CReportListHeader m_reportColumn;
 	int m_imgNone;

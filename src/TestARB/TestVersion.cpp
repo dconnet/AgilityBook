@@ -227,5 +227,4 @@ TEST_CASE("VersionNum")
 			REQUIRE(v.GetVersionString(5) == L"1.2.3.4");
 		}
 	}
-
 }
