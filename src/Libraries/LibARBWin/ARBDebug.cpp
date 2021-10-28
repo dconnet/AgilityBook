@@ -35,8 +35,22 @@
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
+namespace ARBDebug
+{
 
-std::wstring ARBDebug::GetOSName()
+std::wstring GetCompileDate()
+{
+	return StringUtil::stringW(std::string(__DATE__));
+}
+
+
+std::wstring GetCompileTime()
+{
+	return StringUtil::stringW(std::string(__TIME__));
+}
+
+
+std::wstring GetOSName()
 {
 	std::wstring str;
 
@@ -102,7 +116,7 @@ std::wstring ARBDebug::GetOSName()
 }
 
 
-std::wstring ARBDebug::GetArchName()
+std::wstring GetArchName()
 {
 #if defined(__WXWINDOWS__)
 	wxPlatformInfo info;
@@ -137,7 +151,7 @@ std::wstring ARBDebug::GetArchName()
 }
 
 
-std::wstring ARBDebug::GetEndiannessName()
+std::wstring GetEndiannessName()
 {
 #if defined(__WXWINDOWS__)
 	wxPlatformInfo info;
@@ -164,9 +178,11 @@ std::wstring ARBDebug::GetEndiannessName()
 
 /////////////////////////////////////////////////////////////////////////////
 
-std::wstring ARBDebug::GetSystemInfo(wxWindow const* pWindow, CVersionNum const& ver)
+std::wstring GetSystemInfo(wxWindow const* pWindow, CVersionNum const& ver)
 {
 	fmt::wmemory_buffer str;
+
+	// Note: This is diagnostic data, so like wxWidgets, we're not translating it.
 
 	// OS version
 	fmt::format_to(str, L"OS: {}\n", GetOSName());
@@ -195,9 +211,9 @@ std::wstring ARBDebug::GetSystemInfo(wxWindow const* pWindow, CVersionNum const&
 
 		fmt::format_to(
 			str,
-			L"Compiled at {} {}\n",
-			StringUtil::stringW(std::string(__DATE__)),
-			StringUtil::stringW(std::string(__TIME__)));
+			L"compiled at {} {}\n", // Lower case for consistency with wxGetLibraryVersionInfo()
+			GetCompileDate(),
+			GetCompileTime());
 	}
 
 	// wxWidgets
@@ -208,7 +224,7 @@ std::wstring ARBDebug::GetSystemInfo(wxWindow const* pWindow, CVersionNum const&
 }
 
 
-std::wstring ARBDebug::GetRegistryInfo()
+std::wstring GetRegistryInfo()
 {
 	fmt::wmemory_buffer data;
 	DumpRegistryGroup(wxEmptyString, &data, nullptr);
@@ -255,7 +271,7 @@ std::wstring ARBDebug::GetRegistryInfo()
 // To delete a value (hyphen after '=' ):
 // "DataItemName4"=-
 
-size_t ARBDebug::DumpRegistryGroup(
+size_t DumpRegistryGroup(
 	wxString const& inGroup,
 	fmt::wmemory_buffer* outData,
 	std::vector<std::wstring>* outItems)
@@ -332,3 +348,5 @@ size_t ARBDebug::DumpRegistryGroup(
 
 	return added;
 }
+
+} // namespace ARBDebug

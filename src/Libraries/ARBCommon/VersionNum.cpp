@@ -67,3 +67,32 @@ std::wstring CVersionNum::GetVersionString(int parts) const
 	}
 	return fmt::format(L"{}.{}.{}.{}", m_Version[0], m_Version[1], m_Version[2], m_Version[3]);
 }
+
+
+std::wstring CVersionNum::GetVersionUsage(
+	wxString const& program,
+	std::string const& date,
+	std::string const& time,
+	bool includeNewline) const
+{
+	auto str = wxString::Format(
+		_("%s version %s\n%s"),
+		program,
+		GetVersionString(4).c_str(),
+		GetCompiledOn(date, time));
+	if (includeNewline)
+		str << L"\n";
+	return StringUtil::stringW(str);
+}
+
+
+wxString CVersionNum::GetCompiledOn(std::string const& date, std::string const& time)
+{
+	return GetCompiledOn(StringUtil::stringW(date), StringUtil::stringW(time));
+}
+
+
+wxString CVersionNum::GetCompiledOn(std::wstring const& date, std::wstring const& time)
+{
+	return wxString::Format(_("Compiled on %s at %s"), date.c_str(), time.c_str());
+}

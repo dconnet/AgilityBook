@@ -129,6 +129,22 @@ public:
 	// Any invalid number (<=0, >4) will return 4 parts
 	std::wstring GetVersionString(int parts = 4) const;
 
+	/**
+	 * Get version info for the a '-v' cmdline argument.
+	 * @param program argv[0]
+	 * @param date __DATE__
+	 * @param time __TIME__
+	 * @param includeNewline Include an ending newline
+	 */
+	std::wstring GetVersionUsage(
+		wxString const& program,
+		std::string const& date,
+		std::string const& time,
+		bool includeNewline = true) const;
+
+	static wxString GetCompiledOn(std::string const& date, std::string const& time);
+	static wxString GetCompiledOn(std::wstring const& date, std::wstring const& time);
+
 	void GetVersion(VERSION_NUMBER& outVer) const
 	{
 		outVer = m_Version;

@@ -37,6 +37,7 @@
 #include "VersionNumber.h"
 
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ARBDebug.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -54,9 +55,9 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, CMainFrame* pParent)
 		parent = wxGetApp().GetTopWindow();
 	Create(parent, wxID_ANY, _("IDD_ABOUTBOX"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
-	std::wstring str = fmt::format(L"{}.{}.{}", ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT);
+	CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 	auto subject = _("LinkHelpUrlSubject");
-	subject.Replace(L"%VERSION%", str);
+	subject.Replace(L"%VERSION%", ver.GetVersionString(3));
 
 	m_mailto.AddTo(_("LinkHelpAddress").wx_str());
 	m_mailto.SetSubject(subject.wx_str());
@@ -77,10 +78,8 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, CMainFrame* pParent)
 		wxID_ANY,
 		fmt::format(
 			_("AboutVersion").wx_str(),
-			ARB_VER_MAJOR,
-			ARB_VER_MINOR,
-			ARB_VER_DOT,
-			ARB_VER_BUILD,
+			ver.GetVersionString(4),
+			ver.GetCompiledOn(ARBDebug::GetCompileDate(), ARBDebug::GetCompileTime()),
 			_("Agility Record Book").wx_str()),
 		wxDefaultPosition,
 		wxDefaultSize,

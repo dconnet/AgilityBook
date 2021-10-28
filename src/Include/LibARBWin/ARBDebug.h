@@ -29,6 +29,11 @@
  */
 namespace ARBDebug
 {
+// These are for consistent reporting in About dialog and sysinfo.
+// The libraries and exe are always compiled together at one time.
+ARBWIN_API std::wstring GetCompileDate();
+ARBWIN_API std::wstring GetCompileTime();
+
 ARBWIN_API std::wstring GetOSName();
 ARBWIN_API std::wstring GetArchName();
 ARBWIN_API std::wstring GetEndiannessName();

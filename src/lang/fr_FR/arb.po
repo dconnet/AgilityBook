@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-23 14:06-0700\n"
-"PO-Revision-Date: 2021-09-23 14:06-0700\n"
+"POT-Creation-Date: 2021-10-28 11:06-0700\n"
+"PO-Revision-Date: 2021-10-28 11:06-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -33,48 +33,48 @@ msgstr ""
 msgid "Get all the events from USDAA. This will parse the HTML returned from {}"
 msgstr "Get all the events from USDAA. This will parse the HTML returned from {}"
 
-#: CalSites/CalendarSiteUSDAA.cpp:203 CalSites/CalendarSites.cpp:1063
+#: CalSites/CalendarSiteUSDAA.cpp:203 CalSites/CalendarSites.cpp:1067
 msgid "IDS_ERR_PARSING_DATA"
 msgstr "Erreur parsing {} data"
 
-#: CalSites/CalendarSites.cpp:654 CalSites/CalendarSites.cpp:667
+#: CalSites/CalendarSites.cpp:655 CalSites/CalendarSites.cpp:668
 msgid "IDS_DISABLED"
 msgstr "Eteindre"
 
 # DlgCalendarPlugins (CalendarSites.cpp)
-#: CalSites/CalendarSites.cpp:776
+#: CalSites/CalendarSites.cpp:779
 msgid "IDD_CALENDAR_PLUGINS"
 msgstr "Plugins calendrier"
 
-#: CalSites/CalendarSites.cpp:794 CalSites/CalendarSites.cpp:795
+#: CalSites/CalendarSites.cpp:798 CalSites/CalendarSites.cpp:799
 msgid "HIDC_PLUGIN_TREE"
 msgstr "Liste de plugins calendrier disponible et leurs entrées de calendrier."
 
-#: CalSites/CalendarSites.cpp:805 CalSites/CalendarSites.cpp:806
+#: CalSites/CalendarSites.cpp:809 CalSites/CalendarSites.cpp:810
 msgid "HIDC_PLUGIN_DETAILS"
 msgstr "Les détails pour l'article choisi dans larborescence."
 
-#: CalSites/CalendarSites.cpp:808
+#: CalSites/CalendarSites.cpp:812
 msgid "IDC_PLUGIN_READ"
 msgstr "&Lire Entrées"
 
-#: CalSites/CalendarSites.cpp:810 CalSites/CalendarSites.cpp:811
+#: CalSites/CalendarSites.cpp:814 CalSites/CalendarSites.cpp:815
 msgid "HIDC_PLUGIN_READ"
 msgstr "Lire les entrées calendrier à partir des plugins choisis."
 
-#: CalSites/CalendarSites.cpp:813
+#: CalSites/CalendarSites.cpp:817
 msgid "IDC_PLUGIN_ADD"
 msgstr "&Rajouter Entrées"
 
-#: CalSites/CalendarSites.cpp:815 CalSites/CalendarSites.cpp:816
+#: CalSites/CalendarSites.cpp:819 CalSites/CalendarSites.cpp:820
 msgid "HIDC_PLUGIN_ADD"
 msgstr "Ajouter les entrées calendrier choisies dans le programme."
 
-#: CalSites/CalendarSites.cpp:818
+#: CalSites/CalendarSites.cpp:822
 msgid "IDC_PLUGIN_ENABLE"
 msgstr "&Activer"
 
-#: CalSites/CalendarSites.cpp:820 CalSites/CalendarSites.cpp:821
+#: CalSites/CalendarSites.cpp:824 CalSites/CalendarSites.cpp:825
 msgid "HIDC_PLUGIN_ENABLE"
 msgstr ""
 "Activer le plugin choisi. Les Plugins peuvent être désactivés si le format du "
@@ -82,51 +82,51 @@ msgstr ""
 "Normalement, un plugin ne devrait être activé que si la dernière version de ce "
 "plugin a été téléchargée."
 
-#: CalSites/CalendarSites.cpp:823
+#: CalSites/CalendarSites.cpp:827
 msgid "IDC_PLUGIN_QUERYDETAILS"
 msgstr "&Détails..."
 
-#: CalSites/CalendarSites.cpp:825 CalSites/CalendarSites.cpp:826
+#: CalSites/CalendarSites.cpp:829 CalSites/CalendarSites.cpp:830
 msgid "HIDC_PLUGIN_QUERYDETAILS"
 msgstr "Éditer l'information détaillée pour le plugin choisi, si disponible."
 
-#: CalSites/CalendarSites.cpp:828
+#: CalSites/CalendarSites.cpp:832
 msgid "IDC_PLUGIN_NEW"
 msgstr "Nouveau..."
 
-#: CalSites/CalendarSites.cpp:830 CalSites/CalendarSites.cpp:831
+#: CalSites/CalendarSites.cpp:834 CalSites/CalendarSites.cpp:835
 msgid "HIDC_PLUGIN_NEW"
 msgstr "Rajouter un nouveau plugin Calendrier à la configuration actuelle."
 
-#: CalSites/CalendarSites.cpp:833
+#: CalSites/CalendarSites.cpp:837
 msgid "IDC_PLUGIN_EDIT"
 msgstr "Édition..."
 
-#: CalSites/CalendarSites.cpp:835 CalSites/CalendarSites.cpp:836
+#: CalSites/CalendarSites.cpp:839 CalSites/CalendarSites.cpp:840
 msgid "HIDC_PLUGIN_EDIT"
 msgstr ""
 "Éditer le plugin Calendrier sélectionné. (Sapplique seulement aux plugins dans "
 "la configuration.)"
 
-#: CalSites/CalendarSites.cpp:838
+#: CalSites/CalendarSites.cpp:842
 msgid "IDC_PLUGIN_DELETE"
 msgstr "Supprimer"
 
-#: CalSites/CalendarSites.cpp:840 CalSites/CalendarSites.cpp:841
+#: CalSites/CalendarSites.cpp:844 CalSites/CalendarSites.cpp:845
 msgid "HIDC_PLUGIN_DELETE"
 msgstr ""
 "Supprimer le plugin Calendrier sélectionné. (Sapplique seulement aux plugins "
 "dans la configuration.)"
 
-#: CalSites/CalendarSites.cpp:843
+#: CalSites/CalendarSites.cpp:847
 msgid "IDC_PLUGIN_CLOSE"
 msgstr "Quitter"
 
-#: CalSites/CalendarSites.cpp:1072
+#: CalSites/CalendarSites.cpp:1076
 msgid "IDS_USE_PLUGIN"
 msgstr "Voulez-vous continuer d'utiliser ce plugin?"
 
-#: CalSites/CalendarSites.cpp:1143 Win/AgilityBookDoc.cpp:1265
+#: CalSites/CalendarSites.cpp:1147 Win/AgilityBookDoc.cpp:1265
 msgid "IDS_UPDATED_CAL_ITEMS"
 msgstr "{0} nouveaux entrés calendrier rajouté, {1} entrés mis a jour."
 
@@ -154,7 +154,7 @@ msgstr "Code"
 #: CalSites/DlgCalendarQueryDetail.cpp:120 CalSites/DlgQueryDetail.cpp:85
 #: Win/AgilityBookCalendarView.cpp:643 Win/DlgAssignColumns.cpp:217
 #: Win/DlgAssignColumns.cpp:317 Win/DlgAssignColumns.cpp:374
-#: Win/DlgAssignColumns.cpp:458 Win/DlgInfoNote.cpp:545 Win/DlgListCtrl.cpp:448
+#: Win/DlgAssignColumns.cpp:458 Win/DlgInfoNote.cpp:559 Win/DlgListCtrl.cpp:448
 #: Win/DlgListViewer.cpp:975 Win/DlgListViewer.cpp:1013
 #: Win/DlgListViewer.cpp:1025 Win/DlgListViewer.cpp:1182
 #: Win/DlgListViewer.cpp:1249 Win/DlgListViewer.cpp:1302 Win/Print.cpp:262
@@ -392,7 +392,21 @@ msgstr "PC"
 msgid "IDS_QTYPE_NA"
 msgstr "INV"
 
-#: Libraries/LibARBWin/ARBDebug.cpp:194
+#: Libraries/ARBCommon/VersionNum.cpp:79
+#, c-format
+msgid ""
+"%s version %s\n"
+"%s"
+msgstr ""
+"%s version %s\n"
+"%s"
+
+#: Libraries/ARBCommon/VersionNum.cpp:97
+#, fuzzy, c-format
+msgid "Compiled on %s at %s"
+msgstr "Compiled on %s at %s"
+
+#: Libraries/LibARBWin/ARBDebug.cpp:210
 msgid "Unable to determine version information"
 msgstr "Impossible de determiner information version"
 
@@ -531,7 +545,7 @@ msgstr "Please enter credentials for accessing:"
 msgid "Credentials"
 msgstr "Credentials"
 
-#: Libraries/LibARBWin/ReportListHeader.cpp:483
+#: Libraries/LibARBWin/ReportListHeader.cpp:485
 msgid "Restore"
 msgstr "restaurer"
 
@@ -1027,15 +1041,15 @@ msgstr ""
 "Subname setting updated in {} runs.\n"
 "(Date, Venue, Event, Division/Level)"
 
-#: Win/AgilityBook.cpp:160 Win/Print.cpp:1021 Win/Print.cpp:1057
+#: Win/AgilityBook.cpp:170 Win/Print.cpp:1021 Win/Print.cpp:1057
 msgid "Sorry, print preview needs a printer to be installed."
 msgstr "L'aperçu avant impression nécessite une imprimante installée."
 
-#: Win/AgilityBook.cpp:166 Win/Print.cpp:1027
+#: Win/AgilityBook.cpp:176 Win/Print.cpp:1027
 msgid "Print Preview"
 msgstr "Aperçu avant impression"
 
-#: Win/AgilityBook.cpp:287
+#: Win/AgilityBook.cpp:297
 msgid "Agility Record Book file"
 msgstr "fichier de Agility Record Book"
 
@@ -1077,7 +1091,7 @@ msgstr "Dernier date"
 
 #: Win/AgilityBookCalendarView.cpp:644 Win/DlgAssignColumns.cpp:214
 #: Win/DlgAssignColumns.cpp:320 Win/DlgAssignColumns.cpp:368
-#: Win/DlgInfoNote.cpp:539 Win/DlgListCtrl.cpp:449 Win/DlgListViewer.cpp:969
+#: Win/DlgInfoNote.cpp:553 Win/DlgListCtrl.cpp:449 Win/DlgListViewer.cpp:969
 #: Win/DlgListViewer.cpp:1007 Win/DlgListViewer.cpp:1019
 #: Win/DlgListViewer.cpp:1183 Win/DlgListViewer.cpp:1250
 #: Win/DlgListViewer.cpp:1303 Win/DlgListViewer.cpp:1379 Win/DlgTrial.cpp:377
@@ -2231,78 +2245,79 @@ msgid "IDS_CREATEDOG_FAILED"
 msgstr "Erreur: Impossible de créer chien."
 
 # DlgAbout
-#: Win/DlgAbout.cpp:55
+#: Win/DlgAbout.cpp:56
 msgid "IDD_ABOUTBOX"
 msgstr "à Propos de"
 
-#: Win/DlgAbout.cpp:58
+#: Win/DlgAbout.cpp:59
 msgid "LinkHelpUrlSubject"
 msgstr "AgilityBook v%VERSION% Help:"
 
-#: Win/DlgAbout.cpp:61 Win/DlgAbout.cpp:104
+#: Win/DlgAbout.cpp:62 Win/DlgAbout.cpp:103
 msgid "LinkHelpAddress"
 msgstr "help@agilityrecordbook.com"
 
-#: Win/DlgAbout.cpp:63
+#: Win/DlgAbout.cpp:64
 msgid "LinkHelpUrlBody"
 msgstr ""
 "SVP decrivez la problème, et si possible, comment c'est arrivé.\n"
 "\n"
 "If une fichier particulé a causé cette problème; SVP attachez une copie au me."
 
-#: Win/DlgAbout.cpp:79
+#: Win/DlgAbout.cpp:80
 msgid "AboutVersion"
 msgstr ""
-"Version {0}.{1}.{2}.{3}\n"
+"Version {0}\n"
+"{1}\n"
 "\n"
-"{4} est Open Source et gratuite a utiliser; nous demandons seulement que vous "
+"{2} est Open Source et gratuite a utiliser; nous demandons seulement que vous "
 "faites une donne de 10 euros ou plus a la SPA ou semblable organisation.\n"
 "\n"
 " SVP envoyez vos rapport d'erreur et suggestions a:"
 
-#: Win/DlgAbout.cpp:84 Win/DlgMessageBox.cpp:54 Win/MainFrm.cpp:154
+#: Win/DlgAbout.cpp:83 Win/DlgMessageBox.cpp:54 Win/MainFrm.cpp:154
 msgid "Agility Record Book"
 msgstr "Agility Record Book"
 
-#: Win/DlgAbout.cpp:93
+#: Win/DlgAbout.cpp:92
 msgid "LinkGroupText"
 msgstr "Forum"
 
-#: Win/DlgAbout.cpp:94 Win/DlgAbout.cpp:98 Win/DlgAbout.cpp:99
+#: Win/DlgAbout.cpp:93 Win/DlgAbout.cpp:97 Win/DlgAbout.cpp:98
 msgid "LinkGroupUrl"
 msgstr "http://groups.io/g/AgilityRecordBook"
 
-#: Win/DlgAbout.cpp:114
+#: Win/DlgAbout.cpp:113
 msgid "UsefulLinks"
 msgstr "Liens utiles:"
 
-#: Win/DlgAbout.cpp:120
+#: Win/DlgAbout.cpp:119
 msgid "LinkArbText"
 msgstr "Site d'internet Agility Record Book"
 
-#: Win/DlgAbout.cpp:121 Win/DlgAbout.cpp:125 Win/DlgAbout.cpp:126
+#: Win/DlgAbout.cpp:120 Win/DlgAbout.cpp:124 Win/DlgAbout.cpp:125
 msgid "LinkArbUrl"
 msgstr "http://www.agilityrecordbook.com"
 
-#: Win/DlgAbout.cpp:131
+#: Win/DlgAbout.cpp:130
 msgid "LinkArbDownloadText"
 msgstr "Telecharger Agility Record Book"
 
-#: Win/DlgAbout.cpp:132 Win/DlgAbout.cpp:136 Win/DlgAbout.cpp:137
+#: Win/DlgAbout.cpp:131 Win/DlgAbout.cpp:135 Win/DlgAbout.cpp:136
 #: Win/UpdateInfo.cpp:209
 msgid "LinkArbDownloadUrl"
 msgstr "http://www.agilityrecordbook.com/download.php"
 
-#: Win/DlgAbout.cpp:139
+#: Win/DlgAbout.cpp:138
 #, fuzzy
 msgid "AboutCredits"
 msgstr "Credits: Some artwork sourced from Vector Graphics by FreeVector.com."
 
-#: Win/DlgAbout.cpp:141
+#: Win/DlgAbout.cpp:140
 msgid "CheckForUpdates"
 msgstr "Chercher des mises à jours..."
 
-#: Win/DlgAbout.cpp:143
+#: Win/DlgAbout.cpp:142
 msgid "HIDC_ABOUT_UPDATE"
 msgstr ""
 "Contrôler s'il y a des mises à jour disponibles. S'il y en a, vous serez "
@@ -2478,7 +2493,7 @@ msgstr "Epreuve"
 msgid "IDS_COL_HEIGHT"
 msgstr "Catégorie"
 
-#: Win/DlgAssignColumns.cpp:235 Win/DlgInfoNote.cpp:542 Win/DlgListViewer.cpp:972
+#: Win/DlgAssignColumns.cpp:235 Win/DlgInfoNote.cpp:556 Win/DlgListViewer.cpp:972
 #: Win/DlgListViewer.cpp:1010 Win/DlgListViewer.cpp:1022
 #: Win/DlgListViewer.cpp:1184 Win/DlgListViewer.cpp:1251 Win/Print.cpp:264
 msgid "IDS_COL_JUDGE"
@@ -2578,7 +2593,7 @@ msgid "IDS_COL_TITLE_PTS"
 msgstr "Points Distinction"
 
 #: Win/DlgAssignColumns.cpp:298 Win/DlgDogPanelPoints.cpp:63
-#: Win/DlgInfoNote.cpp:68 Win/DlgInfoNote.cpp:990 Win/DlgListViewer.cpp:1414
+#: Win/DlgInfoNote.cpp:68 Win/DlgInfoNote.cpp:1009 Win/DlgListViewer.cpp:1414
 #: Win/Print.cpp:279
 msgid "IDS_COL_COMMENTS"
 msgstr "Notes"
@@ -2592,7 +2607,7 @@ msgid "IDS_COL_ENTERED"
 msgstr "Nombre chiens inscrit"
 
 #: Win/DlgAssignColumns.cpp:339 Win/DlgDogPanelTitles.cpp:56
-#: Win/DlgFindLinks.cpp:119 Win/DlgInfoNote.cpp:67 Win/DlgInfoNote.cpp:989
+#: Win/DlgFindLinks.cpp:119 Win/DlgInfoNote.cpp:67 Win/DlgInfoNote.cpp:1008
 #: Win/DlgListCtrl.cpp:554 Win/DlgListViewer.cpp:1413
 #: Win/DlgRunPanelRefRuns.cpp:62
 msgid "IDS_COL_NAME"
@@ -4851,134 +4866,134 @@ msgstr "Information Juge"
 msgid "IDS_INFO_LOCATION"
 msgstr "Information Endroit"
 
-#: Win/DlgInfoNote.cpp:331
+#: Win/DlgInfoNote.cpp:345
 msgid "IDC_INFONOTE_NEW"
 msgstr "&Nouveax..."
 
-#: Win/DlgInfoNote.cpp:333 Win/DlgInfoNote.cpp:334
+#: Win/DlgInfoNote.cpp:347 Win/DlgInfoNote.cpp:348
 msgid "HIDC_INFONOTE_NEW"
 msgstr "Créer un nouveau club, un juge, ou un endroit."
 
-#: Win/DlgInfoNote.cpp:336
+#: Win/DlgInfoNote.cpp:350
 msgid "IDC_INFONOTE_EDIT"
 msgstr "&Édition..."
 
-#: Win/DlgInfoNote.cpp:338 Win/DlgInfoNote.cpp:339
+#: Win/DlgInfoNote.cpp:352 Win/DlgInfoNote.cpp:353
 msgid "HIDC_INFONOTE_EDIT"
 msgstr "Éditer un club, un juge, ou un endroit."
 
-#: Win/DlgInfoNote.cpp:341
+#: Win/DlgInfoNote.cpp:355
 msgid "IDC_INFONOTE_DELETE"
 msgstr "&Supprimer"
 
-#: Win/DlgInfoNote.cpp:343 Win/DlgInfoNote.cpp:344
+#: Win/DlgInfoNote.cpp:357 Win/DlgInfoNote.cpp:358
 msgid "HIDC_INFONOTE_DELETE"
 msgstr ""
 "Supprimer le club, le juge, ou l'endroit sélectionné. Seule les notes seront "
 "supprimées."
 
-#: Win/DlgInfoNote.cpp:346
+#: Win/DlgInfoNote.cpp:360
 msgid "IDC_INFONOTE_COPY"
 msgstr "&Copier"
 
-#: Win/DlgInfoNote.cpp:348 Win/DlgInfoNote.cpp:349
+#: Win/DlgInfoNote.cpp:362 Win/DlgInfoNote.cpp:363
 msgid "HIDC_INFONOTE_COPY"
 msgstr "Copy all items, press SHIFT to copy selection"
 
-#: Win/DlgInfoNote.cpp:357 Win/DlgInfoNote.cpp:358 Win/DlgInfoNoteEdit.cpp:61
+#: Win/DlgInfoNote.cpp:371 Win/DlgInfoNote.cpp:372 Win/DlgInfoNoteEdit.cpp:61
 #: Win/DlgInfoNoteEdit.cpp:62
 msgid "HIDC_INFONOTE"
 msgstr ""
 "Liste des clubs, des juges, ou des endroits de tous vos parcours, plus ceux "
 "créés ici."
 
-#: Win/DlgInfoNote.cpp:404
+#: Win/DlgInfoNote.cpp:418
 #, fuzzy
 msgid "IDC_INFONOTE_VIS"
 msgstr "Visibility"
 
-#: Win/DlgInfoNote.cpp:407
+#: Win/DlgInfoNote.cpp:421
 msgid "IDC_INFONOTE_VIS_ALL"
 msgstr "Tous"
 
-#: Win/DlgInfoNote.cpp:408 Win/DlgInfoNote.cpp:409
+#: Win/DlgInfoNote.cpp:422 Win/DlgInfoNote.cpp:423
 #, fuzzy
 msgid "HIDC_INFONOTE_VIS_ALL"
 msgstr "Show all items"
 
-#: Win/DlgInfoNote.cpp:418 Win/DlgInfoNote.cpp:987
+#: Win/DlgInfoNote.cpp:432 Win/DlgInfoNote.cpp:1006
 msgid "IDC_INFONOTE_VIS_VIS"
 msgstr "Visible"
 
-#: Win/DlgInfoNote.cpp:419 Win/DlgInfoNote.cpp:420
+#: Win/DlgInfoNote.cpp:433 Win/DlgInfoNote.cpp:434
 #, fuzzy
 msgid "HIDC_INFONOTE_VIS_VIS"
 msgstr "Show only visible items"
 
-#: Win/DlgInfoNote.cpp:430
+#: Win/DlgInfoNote.cpp:444
 #, fuzzy
 msgid "IDC_INFONOTE_VIS_HIDDEN"
 msgstr "Hidden"
 
-#: Win/DlgInfoNote.cpp:431 Win/DlgInfoNote.cpp:432
+#: Win/DlgInfoNote.cpp:445 Win/DlgInfoNote.cpp:446
 #, fuzzy
 msgid "HIDC_INFONOTE_VIS_HIDDEN"
 msgstr "Show only hidden items"
 
-#: Win/DlgInfoNote.cpp:441
+#: Win/DlgInfoNote.cpp:455
 #, fuzzy
 msgid "IDC_INFONOTE_USE"
 msgstr "Usage"
 
-#: Win/DlgInfoNote.cpp:444
+#: Win/DlgInfoNote.cpp:458
 msgid "IDC_INFONOTE_USE_ALL"
 msgstr "Tous"
 
-#: Win/DlgInfoNote.cpp:445 Win/DlgInfoNote.cpp:446
+#: Win/DlgInfoNote.cpp:459 Win/DlgInfoNote.cpp:460
 #, fuzzy
 msgid "HIDC_INFONOTE_USE_ALL"
 msgstr "Show all items"
 
-#: Win/DlgInfoNote.cpp:456 Win/DlgInfoNote.cpp:988
+#: Win/DlgInfoNote.cpp:470 Win/DlgInfoNote.cpp:1007
 #, fuzzy
 msgid "IDC_INFONOTE_USE_INUSE"
 msgstr "In use"
 
-#: Win/DlgInfoNote.cpp:457 Win/DlgInfoNote.cpp:458
+#: Win/DlgInfoNote.cpp:471 Win/DlgInfoNote.cpp:472
 #, fuzzy
 msgid "HIDC_INFONOTE_USE_INUSE"
 msgstr "Show only items that are in use but have no comments"
 
-#: Win/DlgInfoNote.cpp:468
+#: Win/DlgInfoNote.cpp:482
 #, fuzzy
 msgid "IDC_INFONOTE_USE_NOTINUSE"
 msgstr "Not in use"
 
-#: Win/DlgInfoNote.cpp:469 Win/DlgInfoNote.cpp:470
+#: Win/DlgInfoNote.cpp:483 Win/DlgInfoNote.cpp:484
 #, fuzzy
 msgid "HIDC_INFONOTE_USE_NOTINUSE"
 msgstr "Show only items that are hidden or have a comment"
 
-#: Win/DlgInfoNote.cpp:753
+#: Win/DlgInfoNote.cpp:767
 #, fuzzy
 msgid "IDS_INFONOTE_FMT_COUNT"
 msgstr "{0} items"
 
-#: Win/DlgInfoNote.cpp:756
+#: Win/DlgInfoNote.cpp:770
 #, fuzzy
 msgid "IDS_INFONOTE_FMT_COUNT_OF"
 msgstr "{0} of {1} items"
 
-#: Win/DlgInfoNote.cpp:769
+#: Win/DlgInfoNote.cpp:783
 #, fuzzy
 msgid "IDS_INFONOTE_FILTERED"
 msgstr "Edited information is currently hidden by the viewing options."
 
-#: Win/DlgInfoNote.cpp:998 Win/DlgInfoNote.cpp:1002
+#: Win/DlgInfoNote.cpp:1017 Win/DlgInfoNote.cpp:1021
 msgid "IDS_INFONOTE_YES"
 msgstr "Oui"
 
-#: Win/DlgInfoNote.cpp:998 Win/DlgInfoNote.cpp:1001
+#: Win/DlgInfoNote.cpp:1017 Win/DlgInfoNote.cpp:1020
 msgid "IDS_INFONOTE_NO"
 msgstr "Non"
 
