@@ -58,6 +58,16 @@ index af5a731807..fd0651f164 100644
 
              int newZoom = currentZoom + delta;
 ---
+>diff ...\wxWidgets-3.1.5\include\msvc\wx\setup.h ...\newone\setup.h
+79c79
+<             #elif _MSC_VER >= 1920 && _MSC_VER < 2000
+---
+>             #elif _MSC_VER >= 1920 && _MSC_VER < 1930
+80a81,82
+>             #elif _MSC_VER >= 1930 && _MSC_VER < 2000
+>                 #define wxCOMPILER_PREFIX vc143
+---
+
 
 To build for VC, see ./build/CompileWX.py
 To build for Mac/Unix, see ./build/setupwx.sh
@@ -129,6 +139,10 @@ Compiler: requires C++14 support.
 VS-2017 and before
 ===================================
    Not supported.
+
+Microsoft Visual Studio 2022 (VC14.3)
+===================================
+   It works, no additional notes.
 
 Microsoft Visual Studio 2019 (VC14.2)
 ===================================
