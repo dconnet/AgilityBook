@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2021-11-09 Add vc143 support
 # 2020-01-26 Change default compiler to vc142, default wx to WXWIN
 # 2019-10-28 wx default is 3.1.3
 # 2019-02-28 Add vc142 support
@@ -31,7 +32,7 @@
    -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
    -c config: 'release' or 'debug' (default, release)
    -t:       Testing, just print commands to run
-   compiler: vc141, vc142 (default: vc142)
+   compiler: vc141, vc142, vc143 (default: vc142)
 """
 
 import getopt
@@ -187,6 +188,20 @@ def GetCompilerPaths(c):
 		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = GetX64Target(baseDir)
 		platformDir = 'vc142'
+		platform = 'x64'
+
+	elif c == 'vc143':
+		baseDir = GetVSDir("17.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = 'x86'
+		platformDir = 'vc143'
+		platform = 'x86'
+
+	elif c == 'vc143x64':
+		baseDir = GetVSDir("17.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = GetX64Target(baseDir)
+		platformDir = 'vc143'
 		platform = 'x64'
 
 	else:
