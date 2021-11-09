@@ -10,6 +10,7 @@
 # an EXE that will run on XP.
 #
 # Revision History
+# 2021-11-09 Add vc143 support
 # 2021-02-13 Add USE_OPENGL=0 for ARM64 (can't find opengl libs).
 # 2020-11-28 Merge pyDcon into ARB.
 # 2020-09-13 Make default vc142.
@@ -49,7 +50,7 @@
 	-m:       Compile as MBCS (default: Unicode)
 	-s name:  Compile sample 'name'
 	-r config: config: release/debug
-	compiler: vc142, vc142x64, vc142arm64
+	compiler: vc142, vc142x64, vc142arm64, vc143, vc143x64, vc143arm64
 """
 
 import getopt
@@ -78,6 +79,12 @@ def AddCompiler(compilers, c):
 	if c == 'vc142x64':
 		if not useUnicode:
 			print('ERROR: VC142x64 does not do MBCS')
+			return False
+
+	# Sanity test
+	elif c == 'vc143x64':
+		if not useUnicode:
+			print('ERROR: VC143x64 does not do MBCS')
 			return False
 
 	compilers.add(c)

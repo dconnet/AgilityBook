@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{40a3ccd3-4769-42bc-ae62-13b70940f897}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{08b1e23c-b147-4cb5-a59c-11ef61013838}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{2d04c527-4bd2-4921-a152-2174cebc64b8}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{179ceeb3-6408-4504-bfa2-ea5dbf1cde67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Platform">
+      <UniqueIdentifier>{6ab6bdfc-e012-4163-928a-cd419c8966da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\LibARBWin">
+      <UniqueIdentifier>{9691f694-55fb-4f8d-bfb4-61e5701227f2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Libraries\LibARBWin\ColumnOrder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\DlgAuthenticate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\Widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\ARBWinUtilities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\ListData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\DlgProgress.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\DPI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\ImageManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\LanguageManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\MenuHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\ReadHttp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\SetupApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\SpreadSheet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\TaskbarProgress.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\Validators.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\ImageHelperBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\RichEditCtrl2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\CheckTreeCtrl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\CheckLink.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\StatusBarHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\ARBDebug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\DlgConfigAccel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\ReportListCtrl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\ReportListHeader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\ConfigPosition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Libraries\LibARBWin\DlgConfigAccel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Libraries\LibARBWin\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\Platform\arbWarningPop.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\Platform\arbWarningPush.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\Platform\SetupARBPost.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\Platform\SetupARBPre.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\Platform\SetupMessages.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\Platform\SetupWX.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\ColumnOrder.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\RegItemsBase.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\DlgAuthenticate.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\Widgets.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\ARBWinUtilities.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\ListData.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\DlgProgress.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\DPI.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\ImageManager.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\LanguageManager.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\MenuHelper.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\ReadHttp.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\SetupApp.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\SpreadSheet.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\TaskbarProgress.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\Validators.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\ImageHelperBase.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\RichEditCtrl2.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\CheckTreeCtrl.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\CheckLink.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\StatusBarHelper.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\ARBDebug.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\LibwxARBWin.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\VersionInfoARB.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\VersionNumber.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\ReportListCtrl.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\ReportListHeader.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\ConfigPosition.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Libraries\LibARBWin\res\LibARBWin.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\Libraries\LibARBWin\LibARBWin.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

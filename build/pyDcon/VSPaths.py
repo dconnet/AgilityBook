@@ -6,6 +6,7 @@
 #  returns tuple (vcDir, vcvarsall cmd, platformDir, platform)
 #    baseDir, baseDir+r'\VC\vcvarsall.bat target', vcNNN, x64/x86
 #
+# 2021-11-09 Add vc143 support
 # 2020-11-28 Make target names case insensitive.
 # 2020-09-13 Changed Win32 target to x86
 # 2019-02-28 Add vc142 support
@@ -176,6 +177,27 @@ def GetCompilerPaths(c, verbose = True):
 		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = GetTarget(baseDir, True, True)
 		platformDir = 'vc142'
+		platform = 'ARM64'
+
+	elif comp == 'vc143':
+		baseDir = GetVSDir("17.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = GetTarget(baseDir, False, False)
+		platformDir = 'vc143'
+		platform = 'x86'
+
+	elif comp == 'vc143x64':
+		baseDir = GetVSDir("17.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = GetTarget(baseDir, True, False)
+		platformDir = 'vc143'
+		platform = 'x64'
+
+	elif comp == 'vc143arm64':
+		baseDir = GetVSDir("17.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = GetTarget(baseDir, True, True)
+		platformDir = 'vc143'
 		platform = 'ARM64'
 
 	else:

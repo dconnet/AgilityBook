@@ -8,6 +8,7 @@
 # GetWindowsSdkDir()
 #  Return the currect SDK directory
 #
+# 2021-11-09 Add vc143 support
 # 2019-02-28 Add vc142 support
 # 2016-06-10 Made into library
 #
@@ -40,7 +41,9 @@ def GetWindowsSdkDir():
 
 # 7.1, 8.0, 9.0, 10.0, 11.0, 12.0, 14.0, 15.0 (as observed on my machine)
 # Yes, VisualStudio2017 == reg("15.0") == _msc_ver191x
+# v16+: Reg paths are in %localappdata%\Microsoft\VisualStudio\<version>\privateregistry.bin
 # 16.0 (VS2019RC) does not install a key - hard code it
+# 17.0 (VS2022) is 64bit now
 def GetVSDir(version):
 	vsdir = GetRegString(win32con.HKEY_LOCAL_MACHINE, r'SOFTWARE\Microsoft\VisualStudio\SxS\VS7', version)
 	if 0 == len(vsdir):
@@ -55,6 +58,10 @@ def GetVSDir(version):
 			vsdir = r'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community' + '\\'
 			if not os.access(vsdir, os.F_OK):
 				vsdir = ''
+	if 0 == len(vsdir) and version == '17.0':
+		vsdir = r'C:\Program Files\Microsoft Visual Studio\2022\Professional' + '\\'
+		if not os.access(vsdir, os.F_OK):
+			vsdir = r'C:\Program Files\Microsoft Visual Studio\2022\Community' + '\\'
 	return vsdir
 
 
