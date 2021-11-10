@@ -12,6 +12,7 @@
     </Midl>
     <ClCompile>
       <PreprocessorDefinitions>USE_OPENGL=0;wxNO_GL_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4746;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
 </Project>
