@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2021-11-11 Add vc143 support, changed default (no args) to '-b all'
 # 2020-01-26 Change default compiler to vc142
 # 2019-09-21 Change to getopt
 # 2019-09-20 Create distribution files automagically.
@@ -69,7 +70,6 @@
 
 import datetime
 import getopt
-import glob
 import msilib
 import os
 import shutil
@@ -389,60 +389,65 @@ def main():
 		WiXdir = os.environ['WIX'] + r'\bin'
 	# This must be set to a valid Package/@InstallScope value.
 	perUser = "perMachine"
-	b32 = 0
-	b64 = 0
-	tidy = 1
-	testing = 0
+	b32 = False
+	b64 = False
+	tidy = True
+	testing = False
 	vcver = '142'
 	platformTools = '142'
 	distrib = DistribDir
 
-	if 1 == len(sys.argv):
-		print('Setting -b 64 -e')
-		b64 = 1
-		testing = 1
-	else:
-		try:
-			opts, args = getopt.getopt(sys.argv[1:], "d:w:b:t:xe")
-		except getopt.error as msg:
-			print(msg)
-			print('Usage', __doc__)
-			return 1
+	try:
+		opts, args = getopt.getopt(sys.argv[1:], "d:w:b:t:xe")
+	except getopt.error as msg:
+		print(msg)
+		print('Usage', __doc__)
+		return 1
 
-		usage = False
+	usage = False
 
-		for o, a in opts:
-			if '-d' == o:
-				distrib = a
-			elif '-w' == o:
-				WiXdir = a
-			elif '-b' == o:
-				if a == '32':
-					b32 = 1
-				elif a == '64':
-					b64 = 1
-				elif a == 'all':
-					b32 = 1
-					b64 = 1
-				elif a == 'user':
-					perUser = "perUser"
-			elif '-t' == o:
-				if a == 'vc141':
-					vcver = '141'
-					platformTools = '141'
-				elif a == 'vc142':
-					vcver = '142'
-					platformTools = '142'
-			elif '-x' == o:
-				tidy = 0
-			elif '-e' == o:
-				testing = 1
+	for o, a in opts:
+		if '-d' == o:
+			distrib = a
+		elif '-w' == o:
+			WiXdir = a
+		elif '-b' == o:
+			if a == '32':
+				b32 = True
+			elif a == '64':
+				b64 = True
+			elif a == 'all':
+				b32 = True
+				b64 = True
+			elif a == 'user':
+				perUser = "perUser"
+		elif '-t' == o:
+			if a == 'vc141':
+				vcver = '141'
+				platformTools = '141'
+			elif a == 'vc142':
+				vcver = '142'
+				platformTools = '142'
+			elif a == 'vc143':
+				vcver = '143'
+				platformTools = '143'
 			else:
 				usage = True
-				break
-		if usage:
-			print('Usage:', __doc__)
-			return 1
+		elif '-x' == o:
+			tidy = False
+		elif '-e' == o:
+			testing = True
+		else:
+			usage = True
+			break
+
+	if len(args) > 0 or usage:
+		print('Usage:', __doc__)
+		return 1
+
+	if not b32 and not b64:
+		b32 = True
+		b64 = True
 
 	if os.access(distrib, os.F_OK):
 		print('ERROR: "' + distrib + '" exists. Please clean this up first.')
@@ -451,10 +456,6 @@ def main():
 	if not os.access(WiXdir, os.W_OK):
 		print('ERROR: "' + WiXdir + '" does not exist!')
 		return 1
-
-	if b32 + b64 == 0:
-		b32 = 1
-		b64 = 1
 
 	ver3Dot, ver3Line = getversion(3)
 	ver4Dot, ver4Line = getversion(4)
