@@ -1,6 +1,7 @@
 # Above line is for python
 #
 # Generate MSI files
+# Must be run from the directory this file is in.
 #
 # vbs scripts copied from:
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
@@ -153,6 +154,7 @@ def RmMinusRF(name):
 
 
 def getversion(numParts):
+	global WinSrcDir
 	ver = '0'
 	ver2 = '0'
 	for i in range(1, numParts):
@@ -190,6 +192,7 @@ def getversion(numParts):
 
 # returns baseDir, outputFile
 def getoutputvars(code, version, platformTools):
+	global AgilityBookDir, code32, code64 
 	outputFile = ''
 	baseDir = ''
 	if code32 == code:
@@ -255,6 +258,7 @@ def WiLangId(baseMsi, sumInfoStream):
 
 
 def WriteCode(baseMsi, ver4Dot, code, vcver):
+	global AgilityBookDir, code64, UpgradeCode
 	database = msilib.OpenDatabase(baseMsi, msilib.MSIDBOPEN_READONLY)
 	view = database.OpenView("SELECT `Value` FROM Property WHERE `Property`='ProductCode'")
 	record = msilib.CreateRecord(1)
@@ -276,6 +280,7 @@ def WriteCode(baseMsi, ver4Dot, code, vcver):
 
 
 def GetWxsFiles(extension):
+	global wxsFiles
 	files = []
 	for file in wxsFiles:
 		files += [file + extension]
@@ -291,6 +296,7 @@ def GetWxsFilesAsString(extension):
 
 
 def CopyCAdll(ver4Line, platformTools):
+	global CA_dll, code32, code64
 	baseDir, outputFile, distDir = getoutputvars(code32, ver4Line, platformTools)
 	arbdll = baseDir + '\\' + CA_dll
 	if not os.access(arbdll, os.F_OK):
@@ -301,6 +307,7 @@ def CopyCAdll(ver4Line, platformTools):
 
 
 def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver, platformTools, distrib):
+	global FilesToCopy, supportedLangs
 	baseDir, outputFile, distDir = getoutputvars(code, ver4Line, platformTools)
 
 	vcdir = os.path.join(distrib, distDir)
@@ -383,7 +390,7 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver, plat
 
 
 def main():
-	global WiXdir
+	global CA_dll, code32, code64, DistribDir, WiXdir
 	# When WiX is installed, it sets "WIX" to point to the top-level directory
 	if 'WIX' in os.environ:
 		WiXdir = os.environ['WIX'] + r'\bin'
