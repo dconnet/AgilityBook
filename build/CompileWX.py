@@ -64,7 +64,7 @@ import pyDcon
 
 tmpfile = 'tmpcomp' + os.environ['USERDOMAIN'] + '.bat'
 
-compileIt = True
+onlyTest = False
 useStatic = True
 useUnicode = True
 
@@ -92,7 +92,7 @@ def AddCompiler(compilers, c):
 
 
 def main():
-	global compileIt, useStatic, useUnicode
+	global onlyTest, useStatic, useUnicode
 
 	wxwin = ''
 	samples = set()
@@ -100,16 +100,14 @@ def main():
 	debug = True
 	release = True
 	try:
-		print(sys.argv)
 		opts, args = getopt.getopt(sys.argv[1:], 'w:eadms:r:')
-		print(opts,args)
 	except getopt.error as msg:
 		print(msg)
 		print('Usage:', __doc__)
 		return 1
 	for o, a in opts:
 		if '-e' == o:
-			compileIt = False
+			onlyTest = True
 		elif '-w' == o:
 			wxwin = a
 		elif '-a' == o:
@@ -173,10 +171,7 @@ def main():
 	for compiler in compilers:
 		vcBaseDir, vcvarsall, platformDir, platform = pyDcon.VSPaths.GetCompilerPaths(compiler)
 
-		newenv = os.environ.copy()
-
-		bat = open(tmpfile, 'w')
-		print('title ' + compiler, file=bat)
+		cmds = ['title ' + compiler]
 
 		# rel will be called first, so if no different, just set that.
 		setenv_rel = ''
@@ -198,7 +193,7 @@ def main():
 
 		build_rel = ''
 		build_dbg = ''
-		if not compileIt:
+		if onlyTest:
 			build_rel += 'echo '
 			build_dbg += 'echo '
 		build_rel += 'nmake -f makefile.vc BUILD=release'
@@ -226,40 +221,34 @@ def main():
 		if 0 < len(samples):
 			for s in samples:
 				if os.access(os.environ['WXWIN'] + '\\samples\\' + s, os.F_OK):
-					print('cd /d "' + os.environ['WXWIN'] + '\\samples\\' + s + '"', file=bat)
-					print('set "VSCMD_START_DIR=%CD%"', file=bat)
+					cmds += ['cd /d "' + os.environ['WXWIN'] + '\\samples\\' + s + '"']
+					cmds += ['set "VSCMD_START_DIR=%CD%"']
 					if release:
-						print(setenv_rel, file=bat)
-						print(build_rel + ' ' + build_flags, file=bat)
+						cmds += [setenv_rel]
+						cmds += [build_rel + ' ' + build_flags]
 					if debug:
 						if 0 < len(setenv_dbg):
-							print(setenv_dbg, file=bat)
+							cmds += [setenv_dbg]
 						elif not release:
-							print(setenv_rel, file=bat)
-						print(build_dbg + ' ' + build_flags, file=bat)
+							cmds += [setenv_rel]
+						cmds += [build_dbg + ' ' + build_flags]
 				else:
 					print('ERROR: sample "' + s + '" does not exist')
 		else:
-			print('set "VSCMD_START_DIR=%CD%"', file=bat)
+			cmds += ['set "VSCMD_START_DIR=%CD%"']
 			if release:
-				print(setenv_rel, file=bat)
-				print(build_rel + ' ' + build_flags, file=bat)
+				cmds += [setenv_rel]
+				cmds += [build_rel + ' ' + build_flags]
 			if debug:
 				if 0 < len(setenv_dbg):
-					print(setenv_dbg, file=bat)
+					cmds += [setenv_dbg]
 				elif not release:
-					print(setenv_rel, file=bat)
-				print(build_dbg + ' ' + build_flags, file=bat)
+					cmds += [setenv_rel]
+				cmds += [build_dbg + ' ' + build_flags]
 		if resetColor:
-			print('color 07', file=bat)
+			cmds += ['color 07']
 
-		bat.close()
-		if compileIt:
-			proc = subprocess.Popen(tmpfile, env=newenv)
-		else:
-			proc = subprocess.Popen('cmd /c type ' + tmpfile, env=newenv)
-		proc.wait()
-		os.remove(tmpfile)
+		pyDcon.Run.RunCmds(cmds, onlyTest)
 
 	return 0
 

@@ -19,7 +19,7 @@ Files to change before marking files for release:
 - If configuration has changed:
   - Same as file version changing above
   - Make sure it is added to TestARB (TestConfig.cpp and CompileDatListTest.txt)
-- Update CD Labels
+- Update CD Labels (.../Misc)
   - lsl: LightScribe Template Labeler
 - History.txt
   Update program version and date, along with any comments.
@@ -39,15 +39,16 @@ Commit all changes to GitHub.
 (note: if doing this on official build machine, can skip this commit)
 
 Switch to build machine, do a full rebuild and verify it.
-- cd src\Projects\Installer
+- cd ...\build
 - 'BuildAll.py -w %WXBASE%\wxWidgets-3.1.5 -b fullupdate' [runs VC142 compile]
   - BuildAll options: -w wxwin [-b fullupdate | clean] compiler*
       -w wxwin: Root of wx tree, normally %WXBASE%\wxWidgets-3.1.5'
                 Default is %WXWIN%
       -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
       -t:       Testing, just print commands to run
-      compiler: vc141,vc142 (default: vc142)
+      compiler: vc141,vc142,vc143 (default: vc142)
     (note: If this needs to be re-run, revert .../configure.in, .../src/Include/VersionNumber.h)
+- cd ...\src\Projects\Installer
 - Run 'GenMSI.py -b all' to create w32/x64 installers (and sign them),
   auto-update Misc\Installations\InstallGUIDs.csv, and create distribution dir.
   - Move distrib dir to \AgilityBook\distrib\vN.N.N.N

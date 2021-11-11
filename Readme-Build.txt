@@ -23,7 +23,7 @@ Once the above software is unpacked, the directory structure should look like:
 --------------------
 
 python: https://www.python.org
-Currently using version 3.9.5.
+Currently using version 3.10.0.
 - Note, also install pyWin32 from https://github.com/mhammond/pywin32
 
 wxWidgets: http://www.wxwidgets.org/
@@ -76,7 +76,7 @@ To build for Mac/Unix, see ./build/setupwx.sh
 
 poedit: http://www.poedit.net
 Cross platform editor for modifying .po files.
-Currently using version 3.0.
+Currently using version 3.0.6387.
 - includes gettext
   - on Mac, probably want to include MacPorts version
 Use this to keep the catalog in sync with the source code.
@@ -94,7 +94,7 @@ This will generate an initial set of strings to translate.
 --------------------
 
 wxFormBuilder: http://sourceforge.net/projects/wxformbuilder/
-Useful for figuring out how a lay a dialog out.
+Useful for figuring out how to lay a dialog out.
 
 --------------------
 
@@ -110,24 +110,25 @@ Currently using version 3.11.2.
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen
 Used to create source code documentation.
-Currently using version 1.8.20.
+Currently using version 1.9.2.
 [Install to default location]
 
 --------------------
 
 GraphViz: http://www.graphviz.org
 Used to create source code documentation.
-Currently using version 2.47.2.
+Currently using version 2.49.3.
 Earlier versions may work. (I used 2.14.1 with no problems for a while)
 [Install to default location]
 
 --------------------
 LLVM: https://releases.llvm.org/download.html
-Currently using version 12.0.0 (ubuntu18: v10, ubuntu20: v11)
+Currently using version 13.0.0 (ubuntu18: v10, ubuntu20: v12)
 [Install to default location, ubuntu: apt install]
 - clang-format -i *.h *.cpp
+  (ubuntu: clang-format-12 -i *.h *.cpp)
 This will run the formatter and rewrite the files.
-(VS2019 automatically detected the .clang-format file.
+(VS2019/22 automatically detected the .clang-format file.
   Edit->Advanced->Format Document)
 
 
@@ -136,10 +137,6 @@ Compiler notes
 
 Compiler: requires C++14 support.
 
-VS-2017 and before
-===================================
-   Not supported.
-
 Microsoft Visual Studio 2022 (VC14.3)
 ===================================
    It works, no additional notes.
@@ -147,6 +144,10 @@ Microsoft Visual Studio 2022 (VC14.3)
 Microsoft Visual Studio 2019 (VC14.2)
 ===================================
    It works, no additional notes.
+
+VS-2017 and before
+===================================
+   Not supported.
 
 Unix
 ====

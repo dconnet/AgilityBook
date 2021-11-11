@@ -202,12 +202,12 @@ def GetCompilerPaths(c, verbose = True):
 
 	else:
 		if verbose:
-			print('ERROR (pyDcon/VSPaths): Unknown target: ' + c)
+			print('ERROR (pyDcon/VSPaths): Unknown target (not installed?): ' + c)
 		return ('', '', '', '')
 
 	if len(baseDir) == 0:
 		if verbose:
-			print('ERROR (pyDcon/VSPaths): Unknown target: ' + c)
+			print('ERROR (pyDcon/VSPaths): Unknown target (not installed?): ' + c)
 		return ('', '', '', '')
 	if not os.access(baseDir, os.F_OK):
 		if verbose:
