@@ -504,7 +504,7 @@ bool ARBAgilityRecordBook::Update(
 					// Move pairs run to new team
 					pRun->SetEvent(L"Team");
 					fmt::format_to(
-						msgPairsRuns,
+						std::back_inserter(msgPairsRuns),
 						L"   {} {} {} {}/{}\n",
 						pRun->GetDate().GetString(ARBDateFormat::ISO),
 						venue,
@@ -543,7 +543,7 @@ bool ARBAgilityRecordBook::Update(
 					{
 						pRun->GetScoring().SetHasTable(false);
 						fmt::format_to(
-							msgTable,
+							std::back_inserter(msgTable),
 							L"   {} {} {} {}/{}\n",
 							pRun->GetDate().GetString(ARBDateFormat::ISO),
 							venue,
@@ -556,7 +556,7 @@ bool ARBAgilityRecordBook::Update(
 					{
 						pRun->SetSubName(std::wstring());
 						fmt::format_to(
-							msgSubname,
+							std::back_inserter(msgSubname),
 							L"   {} {} {} {}/{}\n",
 							pRun->GetDate().GetString(ARBDateFormat::ISO),
 							venue,
@@ -570,7 +570,7 @@ bool ARBAgilityRecordBook::Update(
 				else
 				{
 					fmt::format_to(
-						msgDelRuns,
+						std::back_inserter(msgDelRuns),
 						L"   {} {} {} {}/{}\n",
 						pRun->GetDate().GetString(ARBDateFormat::ISO),
 						venue,
@@ -587,26 +587,26 @@ bool ARBAgilityRecordBook::Update(
 	{
 		nChanges += nUpdatedPairsRuns;
 		std::wstring msg = Localization()->UpdateTeamRuns(nUpdatedPairsRuns, fmt::to_string(msgPairsRuns));
-		fmt::format_to(ioInfo, L"\n{}\n", msg);
+		fmt::format_to(std::back_inserter(ioInfo), L"\n{}\n", msg);
 	}
 	if (0 < nDeletedRuns)
 	{
 		nChanges += nDeletedRuns;
 		std::wstring msg = Localization()->WarnDeletedRuns(nDeletedRuns, fmt::to_string(msgDelRuns));
 		ioCallBack.PostDelete(msg);
-		fmt::format_to(ioInfo, L"\n{}\n", msg);
+		fmt::format_to(std::back_inserter(ioInfo), L"\n{}\n", msg);
 	}
 	if (0 < nUpdatedTable)
 	{
 		nChanges += nUpdatedTable;
 		std::wstring msg = Localization()->UpdateTableRuns(nUpdatedTable, fmt::to_string(msgTable));
-		fmt::format_to(ioInfo, L"\n{}\n", msg);
+		fmt::format_to(std::back_inserter(ioInfo), L"\n{}\n", msg);
 	}
 	if (0 < nUpdatedSubname)
 	{
 		nChanges += nUpdatedSubname;
 		std::wstring msg = Localization()->UpdateSubnameRuns(nUpdatedSubname, fmt::to_string(msgSubname));
-		fmt::format_to(ioInfo, L"\n{}\n", msg);
+		fmt::format_to(std::back_inserter(ioInfo), L"\n{}\n", msg);
 	}
 
 	// This fixup is only done when upgrading from Config version 2 to 3.
@@ -677,7 +677,7 @@ bool ARBAgilityRecordBook::Update(
 		if (0 < nUpdated)
 		{
 			nChanges += nUpdated;
-			fmt::format_to(ioInfo, L"{}\n", Localization()->UpdateTableRuns(nUpdated));
+			fmt::format_to(std::back_inserter(ioInfo), L"{}\n", Localization()->UpdateTableRuns(nUpdated));
 		}
 	}
 

@@ -28,7 +28,7 @@
 
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
-#include "fmt/format.h"
+#include "fmt/xchar.h"
 
 #if HAS_AUTOMATION
 #include "LibARBWin/DlgProgress.h"
@@ -1124,7 +1124,7 @@ bool ISpreadSheet::GetRowCol(long inRow, long inCol, std::wstring& outCell)
 	outCell.clear();
 	if (inRow < GetMaxRows() && inCol < GetMaxCols())
 	{
-		fmt::format_to(output, L"{}{}", sc_ColumnNames[inCol], inRow + 1);
+		fmt::format_to(std::back_inserter(output), L"{}{}", sc_ColumnNames[inCol], inRow + 1);
 		bOk = true;
 	}
 	outCell = fmt::to_string(output);

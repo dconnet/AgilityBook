@@ -20,7 +20,7 @@
 #include "LibwxARBWin.h"
 
 #include "ARBCommon/VersionNum.h"
-#include "fmt/format.h"
+#include "fmt/xchar.h"
 #include <vector>
 
 

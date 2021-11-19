@@ -277,17 +277,23 @@ bool CClipboardDataWriter::AddData(ARBClipFormat clpFmt, std::wstring const& inD
 			size_t lenEndFragment = endFragment.length();
 #endif
 			fmt::memory_buffer out;
-			fmt::format_to(out, "Version:0.9\r\nStartHTML:{:08d}\r\n", lenHeader);
+			fmt::format_to(std::back_inserter(out), "Version:0.9\r\nStartHTML:{:08d}\r\n", lenHeader);
 			fmt::format_to(
-				out,
+				std::back_inserter(out),
 				"EndHTML:{:08d}\r\n",
 				lenHeader + lenStartHtml + lenStartFragment + lenData + lenEndFragment + lenEndHtml);
-			fmt::format_to(out, "StartFragment:{:08d}\r\n", lenHeader + lenStartHtml + lenStartFragment);
-			fmt::format_to(out, "EndFragment:{:08d}\r\n", lenHeader + lenStartHtml + lenStartFragment + lenData);
+			fmt::format_to(
+				std::back_inserter(out),
+				"StartFragment:{:08d}\r\n",
+				lenHeader + lenStartHtml + lenStartFragment);
+			fmt::format_to(
+				std::back_inserter(out),
+				"EndFragment:{:08d}\r\n",
+				lenHeader + lenStartHtml + lenStartFragment + lenData);
 #if defined(_DEBUG) || defined(__WXDEBUG__)
 			assert(out.size() == static_cast<std::string::size_type>(lenHeader));
 #endif
-			fmt::format_to(out, "{}{}{}{}{}", startHtml, startFragment, data, endFragment, endHtml);
+			fmt::format_to(std::back_inserter(out), "{}{}{}{}{}", startHtml, startFragment, data, endFragment, endHtml);
 			data = fmt::to_string(out);
 		}
 		wxCustomDataObject* dataObj = new wxCustomDataObject(wxDataFormat(L"HTML Format"));

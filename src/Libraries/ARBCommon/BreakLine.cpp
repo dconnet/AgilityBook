@@ -19,7 +19,7 @@
 #include "stdafx.h"
 #include "ARBCommon/BreakLine.h"
 
-#include "fmt/format.h"
+#include "fmt/xchar.h"
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -135,7 +135,7 @@ ReadStatus ReadCSV(
 						{
 							if (*(iStr + 1) == L'"')
 							{
-								fmt::format_to(data, L"{}", *iStr);
+								fmt::format_to(std::back_inserter(data), L"{}", *iStr);
 								++iStr;
 							}
 							else if (*(iStr + 1) == inSep)
@@ -144,12 +144,12 @@ ReadStatus ReadCSV(
 							{
 								if (bInQuote)
 									return ReadStatus::Error;
-								fmt::format_to(data, L"{}", *iStr);
+								fmt::format_to(std::back_inserter(data), L"{}", *iStr);
 							}
 						}
 					}
 					else
-						fmt::format_to(data, L"{}", *iStr);
+						fmt::format_to(std::back_inserter(data), L"{}", *iStr);
 				}
 				str = fmt::to_string(data);
 				if (iStr == inRecord.end())
@@ -196,8 +196,8 @@ std::wstring WriteCSV(wchar_t inSep, std::vector<std::wstring> const& inFields, 
 	for (std::vector<std::wstring>::const_iterator i = inFields.begin(); i != inFields.end(); ++i, ++fld)
 	{
 		if (0 < fld)
-			fmt::format_to(val, L"{}", inSep);
-		fmt::format_to(val, L"{}", WriteCSVField(inSep, *i, includeQuote));
+			fmt::format_to(std::back_inserter(val), L"{}", inSep);
+		fmt::format_to(std::back_inserter(val), L"{}", WriteCSVField(inSep, *i, includeQuote));
 	}
 	return fmt::to_string(val);
 }
@@ -210,30 +210,30 @@ std::wstring WriteCSVField(wchar_t inSep, std::wstring const& inField, bool incl
 		|| std::wstring::npos != inField.find(inSep))
 	{
 		std::wstring str(inField);
-		fmt::format_to(val, L"\"");
+		fmt::format_to(std::back_inserter(val), L"\"");
 		while (!str.empty())
 		{
 			std::wstring::size_type pos = str.find(L'"');
 			if (std::wstring::npos == pos)
 			{
-				fmt::format_to(val, L"{}", str);
+				fmt::format_to(std::back_inserter(val), L"{}", str);
 				str.clear();
 			}
 			else
 			{
-				fmt::format_to(val, L"{}\"\"", str.substr(0, pos));
+				fmt::format_to(std::back_inserter(val), L"{}\"\"", str.substr(0, pos));
 				str = str.substr(pos + 1);
 			}
 		}
-		fmt::format_to(val, L"\"");
+		fmt::format_to(std::back_inserter(val), L"\"");
 	}
 	else if (includeQuote)
 	{
-		fmt::format_to(val, L"\"{}\"", inField);
+		fmt::format_to(std::back_inserter(val), L"\"{}\"", inField);
 	}
 	else
 	{
-		fmt::format_to(val, L"{}", inField);
+		fmt::format_to(std::back_inserter(val), L"{}", inField);
 	}
 	return fmt::to_string(val);
 }

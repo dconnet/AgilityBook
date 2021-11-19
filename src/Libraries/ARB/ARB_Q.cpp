@@ -62,9 +62,9 @@ std::wstring ARB_Q::GetValidTypes()
 		if (sc_Qs[i].trans)
 		{
 			if (bComma)
-				fmt::format_to(types, L", ");
+				fmt::format_to(std::back_inserter(types), L", ");
 			bComma = true;
-			fmt::format_to(types, L"{}", StringUtil::GetTranslation(sc_Qs[i].trans));
+			fmt::format_to(std::back_inserter(types), L"{}", StringUtil::GetTranslation(sc_Qs[i].trans));
 		}
 	}
 	return fmt::to_string(types);

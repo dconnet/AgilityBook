@@ -22,7 +22,7 @@
 
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/Element.h"
-#include "fmt/format.h"
+#include "fmt/xchar.h"
 class ARBConfig;
 
 
@@ -268,7 +268,7 @@ public:
 	 */
 	virtual void LogMessage(std::wstring const& inMsg)
 	{
-		fmt::format_to(m_ErrMsg, L"{}", inMsg);
+		fmt::format_to(std::back_inserter(m_ErrMsg), L"{}", inMsg);
 	}
 
 protected:

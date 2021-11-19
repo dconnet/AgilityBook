@@ -27,7 +27,7 @@
 #include "ARBTypes2.h"
 #include "LibwxARB.h"
 
-#include "fmt/format.h"
+#include "fmt/xchar.h"
 
 
 class ARB_API IConfigActionCallback

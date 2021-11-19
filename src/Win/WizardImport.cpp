@@ -859,7 +859,10 @@ bool CWizardImport::DoWizardFinish()
 			// rows/cols has that much overlap, it's just not worth it.
 			if (!pScoring)
 			{
-				fmt::format_to(errLog, L"{}\n", fmt::format(_("IDS_IMPORT_SKIP_NOCONFIG").wx_str(), nItem + 1));
+				fmt::format_to(
+					std::back_inserter(errLog),
+					L"{}\n",
+					fmt::format(_("IDS_IMPORT_SKIP_NOCONFIG").wx_str(), nItem + 1));
 				++nSkipped;
 				continue;
 			}
@@ -927,7 +930,7 @@ bool CWizardImport::DoWizardFinish()
 					else
 					{
 						fmt::format_to(
-							errLog,
+							std::back_inserter(errLog),
 							L"{}\n",
 							fmt::format(_("IDS_IMPORT_BAD_DATE_RUN").wx_str(), nItem + 1, iCol + 1, entry[iCol]));
 						if (pRun)
@@ -1085,7 +1088,7 @@ bool CWizardImport::DoWizardFinish()
 				if (!m_pDoc->Book().GetConfig().GetVenues().FindVenue(primaryVenue))
 				{
 					fmt::format_to(
-						errLog,
+						std::back_inserter(errLog),
 						L"{}\n",
 						fmt::format(_("IDS_IMPORT_BAD_VENUE").wx_str(), nItem + 1, primaryVenue));
 					pRun.reset();
@@ -1097,7 +1100,10 @@ bool CWizardImport::DoWizardFinish()
 							 pRun->GetLevel(),
 							 pRun->GetDate()))
 				{
-					fmt::format_to(errLog, L"{}\n", fmt::format(_("IDS_IMPORT_SKIP_NOCONFIG").wx_str(), nItem + 1));
+					fmt::format_to(
+						std::back_inserter(errLog),
+						L"{}\n",
+						fmt::format(_("IDS_IMPORT_SKIP_NOCONFIG").wx_str(), nItem + 1));
 					pRun.reset();
 				}
 			}
@@ -1259,7 +1265,7 @@ bool CWizardImport::DoWizardFinish()
 					else
 					{
 						fmt::format_to(
-							errLog,
+							std::back_inserter(errLog),
 							L"{}\n",
 							fmt::format(_("IDS_IMPORT_BAD_DATE_CALSTART").wx_str(), nItem + 1, iCol + 1, entry[iCol]));
 						if (pCal)
@@ -1279,7 +1285,7 @@ bool CWizardImport::DoWizardFinish()
 					else
 					{
 						fmt::format_to(
-							errLog,
+							std::back_inserter(errLog),
 							L"{}\n",
 							fmt::format(_("IDS_IMPORT_BAD_DATE_CALEND").wx_str(), nItem + 1, iCol + 1, entry[iCol]));
 						if (pCal)
@@ -1319,7 +1325,7 @@ bool CWizardImport::DoWizardFinish()
 					else
 					{
 						fmt::format_to(
-							errLog,
+							std::back_inserter(errLog),
 							L"{}\n",
 							fmt::format(_("IDS_IMPORT_BAD_CAL_VALUE").wx_str(), nItem + 1, iCol + 1, entry[iCol]));
 						if (pCal)
@@ -1350,7 +1356,7 @@ bool CWizardImport::DoWizardFinish()
 					else
 					{
 						fmt::format_to(
-							errLog,
+							std::back_inserter(errLog),
 							L"{}\n",
 							fmt::format(_("IDS_IMPORT_BAD_DATE_CALOPEN").wx_str(), nItem + 1, iCol + 1, entry[iCol]));
 						if (pCal)
@@ -1370,7 +1376,7 @@ bool CWizardImport::DoWizardFinish()
 					else
 					{
 						fmt::format_to(
-							errLog,
+							std::back_inserter(errLog),
 							L"{}\n",
 							fmt::format(_("IDS_IMPORT_BAD_DATE_CALCLOSE").wx_str(), nItem + 1, iCol + 1, entry[iCol]));
 						if (pCal)
@@ -1410,7 +1416,7 @@ bool CWizardImport::DoWizardFinish()
 					else
 					{
 						fmt::format_to(
-							errLog,
+							std::back_inserter(errLog),
 							L"{}\n",
 							fmt::format(_("IDS_IMPORT_BAD_DATE_LOG").wx_str(), nItem + 1, iCol + 1, entry[iCol]));
 						if (pLog)
@@ -1454,9 +1460,9 @@ bool CWizardImport::DoWizardFinish()
 	if (bSortLog)
 		m_pDoc->Book().GetTraining().sort();
 	if (!errLog.size())
-		fmt::format_to(errLog, L"\n");
+		fmt::format_to(std::back_inserter(errLog), L"\n");
 	fmt::format_to(
-		errLog,
+		std::back_inserter(errLog),
 		L"{}\n",
 		fmt::format(_("IDS_IMPORT_STATS").wx_str(), nAdded, nUpdated, nDuplicate, nSkipped));
 	CDlgMessage dlg(fmt::to_string(errLog), this);

@@ -22,6 +22,7 @@
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/StringUtil.h"
 #include "fmt/printf.h"
+#include "fmt/xchar.h"
 #include <algorithm>
 #include <locale>
 

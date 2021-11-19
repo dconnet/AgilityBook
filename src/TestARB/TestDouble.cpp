@@ -24,8 +24,10 @@
 
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
-#include "fmt/format.h"
+#include "fmt/xchar.h"
+#if FMT_VERSION < 80000
 #include "fmt/locale.h"
+#endif
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

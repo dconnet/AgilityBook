@@ -364,17 +364,20 @@ void CDlgDigest::OnCopy(wxCommandEvent& evt)
 
 	fmt::wmemory_buffer str;
 	fmt::format_to(
-		str,
+		std::back_inserter(str),
 		L"<Platform arch=\"?\" minOS=\"?\" ver=\"{}.{}.{}.{}\" config=\"{}\"\n",
 		ARB_VER_MAJOR,
 		ARB_VER_MINOR,
 		ARB_VER_DOT,
 		ARB_VER_BUILD,
 		m_ConfigVersion);
-	fmt::format_to(str, L"\tfile=\"http://www.agilityrecordbook.com/files/{}\"\n", filename.GetFullName().wx_str());
-	fmt::format_to(str, L"\tmd5=\"{}\"\n", m_MD5.wx_str());
-	fmt::format_to(str, L"\tsha1=\"{}\"\n", m_SHA1.wx_str());
-	fmt::format_to(str, L"\tsize=\"{}\"\n\t/>\n", m_Size);
+	fmt::format_to(
+		std::back_inserter(str),
+		L"\tfile=\"http://www.agilityrecordbook.com/files/{}\"\n",
+		filename.GetFullName().wx_str());
+	fmt::format_to(std::back_inserter(str), L"\tmd5=\"{}\"\n", m_MD5.wx_str());
+	fmt::format_to(std::back_inserter(str), L"\tsha1=\"{}\"\n", m_SHA1.wx_str());
+	fmt::format_to(std::back_inserter(str), L"\tsize=\"{}\"\n\t/>\n", m_Size);
 
 	if (wxTheClipboard->Open())
 	{

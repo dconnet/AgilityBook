@@ -17,7 +17,7 @@
 #include "ARBCommon/MailTo.h"
 
 #include "ARBCommon/StringUtil.h"
-#include <fmt/format.h>
+#include <fmt/xchar.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -94,19 +94,19 @@ void CMailTo::SetBody(std::wstring const& body)
 std::string CMailTo::Uri(bool clearText) const
 {
 	fmt::memory_buffer buffer;
-	fmt::format_to(buffer, "mailto:");
+	fmt::format_to(std::back_inserter(buffer), "mailto:");
 
 	for (size_t i = 0; i < m_to.size(); ++i)
 	{
 		if (0 < i)
-			fmt::format_to(buffer, ",");
-		fmt::format_to(buffer, "{}", Encode(m_to[i], clearText));
+			fmt::format_to(std::back_inserter(buffer), ",");
+		fmt::format_to(std::back_inserter(buffer), "{}", Encode(m_to[i], clearText));
 	}
 
 	if (m_cc.empty() && m_bcc.empty() && m_subject.empty() && m_body.empty())
 		return fmt::to_string(buffer);
 
-	fmt::format_to(buffer, "?");
+	fmt::format_to(std::back_inserter(buffer), "?");
 	bool needAmp = false;
 
 	for (size_t i = 0; i < m_cc.size(); ++i)
@@ -114,12 +114,12 @@ std::string CMailTo::Uri(bool clearText) const
 		if (0 == i)
 		{
 			if (needAmp)
-				fmt::format_to(buffer, "&");
-			fmt::format_to(buffer, "cc=");
+				fmt::format_to(std::back_inserter(buffer), "&");
+			fmt::format_to(std::back_inserter(buffer), "cc=");
 		}
 		else
-			fmt::format_to(buffer, ",");
-		fmt::format_to(buffer, "{}", Encode(m_cc[i], clearText));
+			fmt::format_to(std::back_inserter(buffer), ",");
+		fmt::format_to(std::back_inserter(buffer), "{}", Encode(m_cc[i], clearText));
 		needAmp = true;
 	}
 
@@ -128,28 +128,28 @@ std::string CMailTo::Uri(bool clearText) const
 		if (0 == i)
 		{
 			if (needAmp)
-				fmt::format_to(buffer, "&");
-			fmt::format_to(buffer, "bcc=");
+				fmt::format_to(std::back_inserter(buffer), "&");
+			fmt::format_to(std::back_inserter(buffer), "bcc=");
 		}
 		else
-			fmt::format_to(buffer, ",");
-		fmt::format_to(buffer, "{}", Encode(m_bcc[i], clearText));
+			fmt::format_to(std::back_inserter(buffer), ",");
+		fmt::format_to(std::back_inserter(buffer), "{}", Encode(m_bcc[i], clearText));
 		needAmp = true;
 	}
 
 	if (!m_subject.empty())
 	{
 		if (needAmp)
-			fmt::format_to(buffer, "&");
-		fmt::format_to(buffer, "subject={}", Encode(m_subject, clearText));
+			fmt::format_to(std::back_inserter(buffer), "&");
+		fmt::format_to(std::back_inserter(buffer), "subject={}", Encode(m_subject, clearText));
 		needAmp = true;
 	}
 
 	if (!m_body.empty())
 	{
 		if (needAmp)
-			fmt::format_to(buffer, "&");
-		fmt::format_to(buffer, "body={}", Encode(m_body, clearText));
+			fmt::format_to(std::back_inserter(buffer), "&");
+		fmt::format_to(std::back_inserter(buffer), "body={}", Encode(m_body, clearText));
 		needAmp = true;
 	}
 
@@ -178,12 +178,12 @@ std::string CMailTo::Encode(std::wstring const& str, bool clearText) const
 			|| c == '!' || c == '%' || c == '\'' || c == '(' || c == ')' || c == '*' || c == '+' || c == ',' || c == ';'
 			|| c == ':' || c == '@')
 		{
-			fmt::format_to(buffer, "{}", c);
+			fmt::format_to(std::back_inserter(buffer), "{}", c);
 		}
 		else
 		{
 			// Must cast or things like 'a3' print as '-5d'
-			fmt::format_to(buffer, "%{:02x}", (unsigned char)c);
+			fmt::format_to(std::back_inserter(buffer), "%{:02x}", (unsigned char)c);
 		}
 	}
 	return fmt::to_string(buffer);

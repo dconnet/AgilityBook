@@ -272,10 +272,10 @@ std::wstring CLocalization::ActionRenameOtherPoints(
 	int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, _("IDS_ACTION_RENAME_OTHERPTS").wx_str(), oldName, newName);
+	fmt::format_to(std::back_inserter(buffer), _("IDS_ACTION_RENAME_OTHERPTS").wx_str(), oldName, newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, _("IDS_ACTION_RENAME_OTHERPTS2").wx_str(), nChanges);
+		fmt::format_to(std::back_inserter(buffer), _("IDS_ACTION_RENAME_OTHERPTS2").wx_str(), nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -297,10 +297,10 @@ std::wstring CLocalization::ActionRenameVenue(std::wstring const& oldName, std::
 	const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, _("IDS_ACTION_RENAME_VENUE").wx_str(), oldName, newName);
+	fmt::format_to(std::back_inserter(buffer), _("IDS_ACTION_RENAME_VENUE").wx_str(), oldName, newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, _("IDS_ACTION_RENAME_VENUE2").wx_str(), nChanges);
+		fmt::format_to(std::back_inserter(buffer), _("IDS_ACTION_RENAME_VENUE2").wx_str(), nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -325,10 +325,10 @@ std::wstring CLocalization::ActionRenameMultiQ(
 	int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, _("IDS_ACTION_RENAME_MULTIQ").wx_str(), venue, oldName, newName);
+	fmt::format_to(std::back_inserter(buffer), _("IDS_ACTION_RENAME_MULTIQ").wx_str(), venue, oldName, newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, _("IDS_ACTION_RENAME_MULTIQ2").wx_str(), nChanges);
+		fmt::format_to(std::back_inserter(buffer), _("IDS_ACTION_RENAME_MULTIQ2").wx_str(), nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -354,10 +354,10 @@ std::wstring CLocalization::ActionRenameDivision(
 	int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, _("IDS_ACTION_RENAME_DIV").wx_str(), venue, oldName, newName);
+	fmt::format_to(std::back_inserter(buffer), _("IDS_ACTION_RENAME_DIV").wx_str(), venue, oldName, newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, _("IDS_ACTION_RENAME_DIV2").wx_str(), nChanges);
+		fmt::format_to(std::back_inserter(buffer), _("IDS_ACTION_RENAME_DIV2").wx_str(), nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -383,10 +383,10 @@ std::wstring CLocalization::ActionRenameLevel(
 	int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, _("IDS_ACTION_RENAME_LEVEL").wx_str(), venue, oldName, newName);
+	fmt::format_to(std::back_inserter(buffer), _("IDS_ACTION_RENAME_LEVEL").wx_str(), venue, oldName, newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, _("IDS_ACTION_RENAME_LEVEL2").wx_str(), nChanges);
+		fmt::format_to(std::back_inserter(buffer), _("IDS_ACTION_RENAME_LEVEL2").wx_str(), nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -412,10 +412,10 @@ std::wstring CLocalization::ActionRenameTitle(
 	int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, _("IDS_ACTION_RENAME_TITLE").wx_str(), venue, oldName, newName);
+	fmt::format_to(std::back_inserter(buffer), _("IDS_ACTION_RENAME_TITLE").wx_str(), venue, oldName, newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, _("IDS_ACTION_RENAME_TITLE2").wx_str(), nChanges);
+		fmt::format_to(std::back_inserter(buffer), _("IDS_ACTION_RENAME_TITLE2").wx_str(), nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -441,10 +441,10 @@ std::wstring CLocalization::ActionRenameEvent(
 	int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, _("IDS_ACTION_RENAME_EVENT").wx_str(), venue, oldName, newName);
+	fmt::format_to(std::back_inserter(buffer), _("IDS_ACTION_RENAME_EVENT").wx_str(), venue, oldName, newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, _("IDS_ACTION_RENAME_EVENT2").wx_str(), nChanges);
+		fmt::format_to(std::back_inserter(buffer), _("IDS_ACTION_RENAME_EVENT2").wx_str(), nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -561,9 +561,15 @@ std::wstring CLocalization::ErrorMissingAttribute(
 	wchar_t const* const inMsg) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, L"{}{}{}{}'.", m_InvalidFileFormat, inElement, m_InvalidFileMissingAttrib, inAttrib);
+	fmt::format_to(
+		std::back_inserter(buffer),
+		L"{}{}{}{}'.",
+		m_InvalidFileFormat,
+		inElement,
+		m_InvalidFileMissingAttrib,
+		inAttrib);
 	if (inMsg)
-		fmt::format_to(buffer, L" {}\n", inMsg);
+		fmt::format_to(std::back_inserter(buffer), L" {}\n", inMsg);
 	return fmt::to_string(buffer);
 }
 
@@ -574,8 +580,14 @@ std::wstring CLocalization::ErrorInvalidAttributeValue(
 	wchar_t const* const inMsg) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, L"{}{}{}{}'.", m_InvalidFileFormat, inElement, m_InvalidFileBadAttrib, inAttrib);
+	fmt::format_to(
+		std::back_inserter(buffer),
+		L"{}{}{}{}'.",
+		m_InvalidFileFormat,
+		inElement,
+		m_InvalidFileBadAttrib,
+		inAttrib);
 	if (inMsg)
-		fmt::format_to(buffer, L" {}\n", inMsg);
+		fmt::format_to(std::back_inserter(buffer), L" {}\n", inMsg);
 	return fmt::to_string(buffer);
 }

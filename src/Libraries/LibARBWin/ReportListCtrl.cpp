@@ -44,7 +44,7 @@
 #include "LibARBWin/ImageHelperBase.h"
 #include "LibARBWin/ListData.h"
 //#include "LibARBWin/RegItemsBase.h"
-#include "fmt/format.h"
+#include "fmt/xchar.h"
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -377,31 +377,31 @@ CListDataPtr CReportListCtrl::GetData(long item) const
 
 static void PushData(fmt::wmemory_buffer& data, CReportListCtrl const* ctrl, int item, bool bBold)
 {
-	fmt::format_to(data, L"<tr>");
+	fmt::format_to(std::back_inserter(data), L"<tr>");
 	std::vector<std::wstring> line;
 	ctrl->GetPrintLine(item, line);
 	for (std::vector<std::wstring>::const_iterator i = line.begin(); i != line.end(); ++i)
 	{
 		if (bBold)
-			fmt::format_to(data, L"<td><strong>{}</strong></td>\n", *i);
+			fmt::format_to(std::back_inserter(data), L"<td><strong>{}</strong></td>\n", *i);
 		else
-			fmt::format_to(data, L"<td>{}</td>\n", *i);
+			fmt::format_to(std::back_inserter(data), L"<td>{}</td>\n", *i);
 	}
-	fmt::format_to(data, L"</tr>\n");
+	fmt::format_to(std::back_inserter(data), L"</tr>\n");
 }
 
 
 std::wstring CReportListCtrl::GetPrintDataAsHtmlTable(bool bFirstLineIsHeader) const
 {
 	fmt::wmemory_buffer data;
-	fmt::format_to(data, L"<table border=\"0\">");
+	fmt::format_to(std::back_inserter(data), L"<table border=\"0\">");
 	if (!bFirstLineIsHeader)
 		PushData(data, this, -1, true);
 	for (long item = 0; item < GetItemCount(); ++item)
 	{
 		PushData(data, this, item, bFirstLineIsHeader && item == 0);
 	}
-	fmt::format_to(data, L"</table>\n");
+	fmt::format_to(std::back_inserter(data), L"</table>\n");
 	return fmt::to_string(data);
 }
 

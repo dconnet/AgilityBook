@@ -28,7 +28,7 @@
 #include "ARBTypes.h"
 #include "LibwxARBCommon.h"
 
-#include "fmt/format.h"
+#include "fmt/xchar.h"
 #include <istream>
 #include <map>
 #include <vector>

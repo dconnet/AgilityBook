@@ -27,7 +27,7 @@
 #include "ARBMsgDigestImpl.h"
 
 #include "ARBCommon/StringUtil.h"
-#include "fmt/format.h"
+#include "fmt/xchar.h"
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
@@ -758,7 +758,7 @@ static std::wstring ConvertDigest(const unsigned int digest[5])
 	fmt::wmemory_buffer str;
 	for (int i = 0; i < 5; ++i)
 	{
-		fmt::format_to(str, L"{:08x}", digest[i]);
+		fmt::format_to(std::back_inserter(str), L"{:08x}", digest[i]);
 	}
 	return fmt::to_string(str);
 }

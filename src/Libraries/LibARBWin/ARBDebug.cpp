@@ -185,17 +185,17 @@ std::wstring GetSystemInfo(wxWindow const* pWindow, CVersionNum const& ver)
 	// Note: This is diagnostic data, so like wxWidgets, we're not translating it.
 
 	// OS version
-	fmt::format_to(str, L"OS: {}\n", GetOSName());
-	fmt::format_to(str, L"Architecture: {}, {}\n", GetArchName(), GetEndiannessName());
+	fmt::format_to(std::back_inserter(str), L"OS: {}\n", GetOSName());
+	fmt::format_to(std::back_inserter(str), L"Architecture: {}, {}\n", GetArchName(), GetEndiannessName());
 
 	// DPI
 
-	fmt::format_to(str, L"DPI Scaling: {}\n", DPI::GetScale(pWindow));
+	fmt::format_to(std::back_inserter(str), L"DPI Scaling: {}\n", DPI::GetScale(pWindow));
 
 	// Me.
 	{
 		fmt::format_to(
-			str,
+			std::back_inserter(str),
 			L"{}{}",
 			wxStandardPaths::Get().GetExecutablePath().wx_str(),
 #ifdef ARB_64BIT
@@ -205,12 +205,12 @@ std::wstring GetSystemInfo(wxWindow const* pWindow, CVersionNum const& ver)
 #endif
 		);
 		if (ver.Valid())
-			fmt::format_to(str, L"{}\n", ver.GetVersionString());
+			fmt::format_to(std::back_inserter(str), L"{}\n", ver.GetVersionString());
 		else
-			fmt::format_to(str, L"{}\n", _("Unable to determine version information").wx_str());
+			fmt::format_to(std::back_inserter(str), L"{}\n", _("Unable to determine version information").wx_str());
 
 		fmt::format_to(
-			str,
+			std::back_inserter(str),
 			L"compiled at {} {}\n", // Lower case for consistency with wxGetLibraryVersionInfo()
 			GetCompileDate(),
 			GetCompileTime());
@@ -218,7 +218,7 @@ std::wstring GetSystemInfo(wxWindow const* pWindow, CVersionNum const& ver)
 
 	// wxWidgets
 	auto info = wxGetLibraryVersionInfo();
-	fmt::format_to(str, L"\n{}\n", info.GetDescription().wx_str());
+	fmt::format_to(std::back_inserter(str), L"\n{}\n", info.GetDescription().wx_str());
 
 	return fmt::to_string(str);
 }
@@ -271,10 +271,7 @@ std::wstring GetRegistryInfo()
 // To delete a value (hyphen after '=' ):
 // "DataItemName4"=-
 
-size_t DumpRegistryGroup(
-	wxString const& inGroup,
-	fmt::wmemory_buffer* outData,
-	std::vector<std::wstring>* outItems)
+size_t DumpRegistryGroup(wxString const& inGroup, fmt::wmemory_buffer* outData, std::vector<std::wstring>* outItems)
 {
 	size_t added = 0; // Added to outData
 
@@ -293,15 +290,26 @@ size_t DumpRegistryGroup(
 				if (outData)
 				{
 					++added;
-					fmt::format_to(*outData, L"{}/{} unknown\n", wxConfig::Get()->GetPath().wx_str(), str.wx_str());
+					fmt::format_to(
+						std::back_inserter(*outData),
+						L"{}/{} unknown\n",
+						wxConfig::Get()->GetPath().wx_str(),
+						str.wx_str());
 				}
 				break;
 			case wxConfigBase::Type_String:
 				if (outData)
 				{
 					++added;
-					fmt::format_to(*outData, L"{}/{} string\n", wxConfig::Get()->GetPath().wx_str(), str.wx_str());
-					fmt::format_to(*outData, L"{}\n", wxConfig::Get()->Read(str, wxEmptyString).wx_str());
+					fmt::format_to(
+						std::back_inserter(*outData),
+						L"{}/{} string\n",
+						wxConfig::Get()->GetPath().wx_str(),
+						str.wx_str());
+					fmt::format_to(
+						std::back_inserter(*outData),
+						L"{}\n",
+						wxConfig::Get()->Read(str, wxEmptyString).wx_str());
 				}
 				if (outItems)
 					outItems->push_back(StringUtil::stringW(wxConfig::Get()->Read(str, wxEmptyString)));
@@ -310,28 +318,40 @@ size_t DumpRegistryGroup(
 				if (outData)
 				{
 					++added;
-					fmt::format_to(*outData, L"{}/{} bool\n", wxConfig::Get()->GetPath().wx_str(), str.wx_str());
+					fmt::format_to(
+						std::back_inserter(*outData),
+						L"{}/{} bool\n",
+						wxConfig::Get()->GetPath().wx_str(),
+						str.wx_str());
 					bool b;
 					wxConfig::Get()->Read(str, &b);
-					fmt::format_to(*outData, L"{}\n", b);
+					fmt::format_to(std::back_inserter(*outData), L"{}\n", b);
 				}
 				break;
 			case wxConfigBase::Type_Integer:
 				if (outData)
 				{
 					++added;
-					fmt::format_to(*outData, L"{}/{} int\n", wxConfig::Get()->GetPath().wx_str(), str.wx_str());
-					fmt::format_to(*outData, L"{}\n", wxConfig::Get()->Read(str, 0L));
+					fmt::format_to(
+						std::back_inserter(*outData),
+						L"{}/{} int\n",
+						wxConfig::Get()->GetPath().wx_str(),
+						str.wx_str());
+					fmt::format_to(std::back_inserter(*outData), L"{}\n", wxConfig::Get()->Read(str, 0L));
 				}
 				break;
 			case wxConfigBase::Type_Float:
 				if (outData)
 				{
 					++added;
-					fmt::format_to(*outData, L"{}/{} float\n", wxConfig::Get()->GetPath().wx_str(), str.wx_str());
+					fmt::format_to(
+						std::back_inserter(*outData),
+						L"{}/{} float\n",
+						wxConfig::Get()->GetPath().wx_str(),
+						str.wx_str());
 					double d;
 					wxConfig::Get()->Read(str, &d);
-					fmt::format_to(*outData, L"{}\n", d);
+					fmt::format_to(std::back_inserter(*outData), L"{}\n", d);
 				}
 				break;
 			}

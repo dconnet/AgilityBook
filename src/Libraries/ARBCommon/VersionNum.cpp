@@ -30,7 +30,7 @@
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/BreakLine.h"
 #include "ARBCommon/StringUtil.h"
-#include "fmt/format.h"
+#include "fmt/xchar.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -75,11 +75,8 @@ std::wstring CVersionNum::GetVersionUsage(
 	std::string const& time,
 	bool includeNewline) const
 {
-	auto str = wxString::Format(
-		_("%s version %s\n%s"),
-		program,
-		GetVersionString(4).c_str(),
-		GetCompiledOn(date, time));
+	auto str
+		= wxString::Format(_("%s version %s\n%s"), program, GetVersionString(4).c_str(), GetCompiledOn(date, time));
 	if (includeNewline)
 		str << L"\n";
 	return StringUtil::stringW(str);

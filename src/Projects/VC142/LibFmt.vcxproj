@@ -275,6 +275,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\args.h" />
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\chrono.h" />
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\color.h" />
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\compile.h" />
@@ -284,9 +285,9 @@
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\locale.h" />
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\os.h" />
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\ostream.h" />
-    <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\posix.h" />
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\printf.h" />
     <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\ranges.h" />
+    <ClInclude Include="..\..\3rdParty\LibFmt\include\fmt\xchar.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\3rdParty\LibFmt\src\format.cc" />

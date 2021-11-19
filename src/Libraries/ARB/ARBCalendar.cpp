@@ -475,17 +475,17 @@ std::wstring ARBCalendar::GetUID(UidType inType) const
 	switch (inType)
 	{
 	case UidType::vEvent:
-		fmt::format_to(str, L"e");
+		fmt::format_to(std::back_inserter(str), L"e");
 		break;
 	case UidType::vTodo:
-		fmt::format_to(str, L"t");
+		fmt::format_to(std::back_inserter(str), L"t");
 		break;
 	}
-	fmt::format_to(str, L"{}", m_DateStart.GetString(ARBDateFormat::YYYYMMDD));
-	fmt::format_to(str, L"{}", m_DateEnd.GetString(ARBDateFormat::YYYYMMDD));
-	fmt::format_to(str, L"{}", m_DateOpening.GetString(ARBDateFormat::YYYYMMDD, true));
-	fmt::format_to(str, L"{}", m_DateDraw.GetString(ARBDateFormat::YYYYMMDD, true));
-	fmt::format_to(str, L"{}", m_DateClosing.GetString(ARBDateFormat::YYYYMMDD, true));
+	fmt::format_to(std::back_inserter(str), L"{}", m_DateStart.GetString(ARBDateFormat::YYYYMMDD));
+	fmt::format_to(std::back_inserter(str), L"{}", m_DateEnd.GetString(ARBDateFormat::YYYYMMDD));
+	fmt::format_to(std::back_inserter(str), L"{}", m_DateOpening.GetString(ARBDateFormat::YYYYMMDD, true));
+	fmt::format_to(std::back_inserter(str), L"{}", m_DateDraw.GetString(ARBDateFormat::YYYYMMDD, true));
+	fmt::format_to(std::back_inserter(str), L"{}", m_DateClosing.GetString(ARBDateFormat::YYYYMMDD, true));
 	return fmt::to_string(str);
 }
 
@@ -797,39 +797,39 @@ void ARBCalendar::iCalendar(ICalendarPtr inIoStream, int inAlarm) const
 	{
 		fmt::wmemory_buffer str;
 		if (IsTentative())
-			fmt::format_to(str, L"{} ", Localization()->CalendarTentative());
+			fmt::format_to(std::back_inserter(str), L"{} ", Localization()->CalendarTentative());
 		switch (GetEntered())
 		{
 		case ARBCalendarEntry::Not:
-			fmt::format_to(str, L"{} ", Localization()->CalendarStatusN());
+			fmt::format_to(std::back_inserter(str), L"{} ", Localization()->CalendarStatusN());
 			break;
 		case ARBCalendarEntry::Entered:
-			fmt::format_to(str, L"{} ", Localization()->CalendarStatusE());
+			fmt::format_to(std::back_inserter(str), L"{} ", Localization()->CalendarStatusE());
 			break;
 		case ARBCalendarEntry::Pending:
-			fmt::format_to(str, L"{} ", Localization()->CalendarStatusO());
+			fmt::format_to(std::back_inserter(str), L"{} ", Localization()->CalendarStatusO());
 			break;
 		case ARBCalendarEntry::Planning:
-			fmt::format_to(str, L"{} ", Localization()->CalendarStatusP());
+			fmt::format_to(std::back_inserter(str), L"{} ", Localization()->CalendarStatusP());
 			break;
 		}
 		if (m_DateOpening.IsValid())
 		{
-			fmt::format_to(str, L"{}{} ", Localization()->CalendarOpens(), m_DateOpening.GetString(ARBDateFormat::ISO));
+			fmt::format_to(std::back_inserter(str), L"{}{} ", Localization()->CalendarOpens(), m_DateOpening.GetString(ARBDateFormat::ISO));
 		}
 		if (m_DateDraw.IsValid())
 		{
-			fmt::format_to(str, L"{}{} ", Localization()->CalendarDraw(), m_DateDraw.GetString(ARBDateFormat::ISO));
+			fmt::format_to(std::back_inserter(str), L"{}{} ", Localization()->CalendarDraw(), m_DateDraw.GetString(ARBDateFormat::ISO));
 		}
 		if (m_DateClosing.IsValid())
 		{
 			fmt::format_to(
-				str,
+				std::back_inserter(str),
 				L"{}{} ",
 				Localization()->CalendarCloses(),
 				m_DateClosing.GetString(ARBDateFormat::ISO));
 		}
-		fmt::format_to(str, L"{}", GetNote());
+		fmt::format_to(std::back_inserter(str), L"{}", GetNote());
 		ioStream->DoDESCRIPTION(fmt::to_string(str));
 	}
 	if (ARBCalendarEntry::Planning == m_eEntered && m_DateOpening.IsValid())

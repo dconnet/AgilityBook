@@ -509,7 +509,7 @@ std::wstring ARBConfigTitle::GetCompleteName(short inInstance, bool bAbbrevFirst
 {
 	fmt::wmemory_buffer buffer;
 	fmt::format_to(
-		buffer,
+		std::back_inserter(buffer),
 		L"{}",
 		TitleInstance(
 			0 > inInstance ? false : m_MultipleOnFirst,
@@ -521,30 +521,30 @@ std::wstring ARBConfigTitle::GetCompleteName(short inInstance, bool bAbbrevFirst
 	// Special formatting used in configuration dialogs.
 	if (0 > inInstance && 0 < m_MultipleStartAt)
 	{
-		fmt::format_to(buffer, L"+");
+		fmt::format_to(std::back_inserter(buffer), L"+");
 	}
 	fmt::wmemory_buffer name;
 	if (0 < m_LongName.length())
 	{
 		if (bAbbrevFirst)
 		{
-			fmt::format_to(name, L"[{}{}] ", m_Name, fmt::to_string(buffer));
+			fmt::format_to(std::back_inserter(name), L"[{}{}] ", m_Name, fmt::to_string(buffer));
 		}
-		fmt::format_to(name, L"{}", m_LongName);
+		fmt::format_to(std::back_inserter(name), L"{}", m_LongName);
 		if (!bAbbrevFirst)
 		{
-			fmt::format_to(name, L" [{}{}]", m_Name, fmt::to_string(buffer));
+			fmt::format_to(std::back_inserter(name), L" [{}{}]", m_Name, fmt::to_string(buffer));
 		}
 	}
 	else
 	{
-		fmt::format_to(name, L"{}{}", m_Name, fmt::to_string(buffer));
+		fmt::format_to(std::back_inserter(name), L"{}{}", m_Name, fmt::to_string(buffer));
 	}
 	if (bAddDates)
 	{
 		std::wstring dates = ARBDate::GetValidDateString(m_ValidFrom, m_ValidTo);
 		if (!dates.empty())
-			fmt::format_to(name, L" {}", dates);
+			fmt::format_to(std::back_inserter(name), L" {}", dates);
 	}
 	return fmt::to_string(name);
 }

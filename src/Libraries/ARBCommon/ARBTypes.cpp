@@ -38,7 +38,7 @@
 
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
-#include "fmt/format.h"
+#include "fmt/xchar.h"
 #include <math.h>
 #include <time.h>
 

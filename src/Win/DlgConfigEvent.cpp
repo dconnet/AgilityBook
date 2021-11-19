@@ -697,7 +697,11 @@ void CDlgConfigEvent::FillControls()
 				fmt::wmemory_buffer info;
 				ARBScoringStyle style = pScoring->GetScoringStyle();
 				str1 = _("IDS_CONFIGEVENT_STYLE");
-				fmt::format_to(info, L"{}: {}\n", str1, ARBConfigScoring::GetScoringStyleStr(style));
+				fmt::format_to(
+					std::back_inserter(info),
+					L"{}: {}\n",
+					str1,
+					ARBConfigScoring::GetScoringStyleStr(style));
 				// The following strings should be the same as they are in
 				// the Method Configuration dialog.
 				switch (style)
@@ -708,13 +712,13 @@ void CDlgConfigEvent::FillControls()
 				case ARBScoringStyle::Faults100ThenTime:
 				case ARBScoringStyle::Faults200ThenTime:
 					str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
-					fmt::format_to(info, L"{}: {}", str1, pScoring->TimeFaultMultiplier());
+					fmt::format_to(std::back_inserter(info), L"{}: {}", str1, pScoring->TimeFaultMultiplier());
 					break;
 				case ARBScoringStyle::OCScoreThenTime:
 					str1 = _("IDS_CONFIGEVENT_REQOPEN");
 					str2 = _("IDS_CONFIGEVENT_REQCLOSE");
 					fmt::format_to(
-						info,
+						std::back_inserter(info),
 						L"{}: {}; {}: {}",
 						str1,
 						pScoring->GetRequiredOpeningPoints(),
@@ -723,66 +727,66 @@ void CDlgConfigEvent::FillControls()
 					if (pScoring->SubtractTimeFaultsFromScore())
 					{
 						str1 = _("IDS_CONFIGEVENT_TF_FROMSCORE");
-						fmt::format_to(info, L"; {}", str1);
+						fmt::format_to(std::back_inserter(info), L"; {}", str1);
 						str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
-						fmt::format_to(info, L"; {}: {}", str1, pScoring->TimeFaultMultiplier());
+						fmt::format_to(std::back_inserter(info), L"; {}: {}", str1, pScoring->TimeFaultMultiplier());
 						if (pScoring->ComputeTimeFaultsUnder())
 						{
 							str1 = _("IDS_CONFIGEVENT_TF_UNDER");
-							fmt::format_to(info, L"; {}", str1);
+							fmt::format_to(std::back_inserter(info), L"; {}", str1);
 						}
 						if (pScoring->ComputeTimeFaultsOver())
 						{
 							str1 = _("IDS_CONFIGEVENT_TF_OVER");
-							fmt::format_to(info, L"; {}", str1);
+							fmt::format_to(std::back_inserter(info), L"; {}", str1);
 						}
 					}
 					break;
 				case ARBScoringStyle::ScoreThenTime:
 					str1 = _("IDS_POINTS");
-					fmt::format_to(info, L"{}: {}", str1, pScoring->GetRequiredOpeningPoints());
+					fmt::format_to(std::back_inserter(info), L"{}: {}", str1, pScoring->GetRequiredOpeningPoints());
 					if (pScoring->SubtractTimeFaultsFromScore())
 					{
 						str1 = _("IDS_CONFIGEVENT_TF_FROMSCORE");
-						fmt::format_to(info, L"; {}", str1);
+						fmt::format_to(std::back_inserter(info), L"; {}", str1);
 						str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
-						fmt::format_to(info, L"; {}: {}", str1, pScoring->TimeFaultMultiplier());
+						fmt::format_to(std::back_inserter(info), L"; {}: {}", str1, pScoring->TimeFaultMultiplier());
 						if (pScoring->ComputeTimeFaultsUnder())
 						{
 							str1 = _("IDS_CONFIGEVENT_TF_UNDER");
-							fmt::format_to(info, L"; {}", str1);
+							fmt::format_to(std::back_inserter(info), L"; {}", str1);
 						}
 						if (pScoring->ComputeTimeFaultsOver())
 						{
 							str1 = _("IDS_CONFIGEVENT_TF_OVER");
-							fmt::format_to(info, L"; {}", str1);
+							fmt::format_to(std::back_inserter(info), L"; {}", str1);
 						}
 					}
 					break;
 				case ARBScoringStyle::TimePlusFaults:
 					str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
-					fmt::format_to(info, L"{}: {}", str1, pScoring->TimeFaultMultiplier());
+					fmt::format_to(std::back_inserter(info), L"{}: {}", str1, pScoring->TimeFaultMultiplier());
 					if (pScoring->QsMustBeClean())
 					{
 						// This string is slightly different: Just dropped
 						// the 'Time+Fault' at start.
 						str1 = _("IDS_CONFIGEVENT_CLEANQ");
-						fmt::format_to(info, L"; {}", str1);
+						fmt::format_to(std::back_inserter(info), L"; {}", str1);
 					}
 					if (pScoring->ComputeTimeFaultsUnder() || pScoring->ComputeTimeFaultsOver())
 					{
 						str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
-						fmt::format_to(info, L"; {}: {}", str1, pScoring->TimeFaultMultiplier());
+						fmt::format_to(std::back_inserter(info), L"; {}: {}", str1, pScoring->TimeFaultMultiplier());
 					}
 					if (pScoring->ComputeTimeFaultsUnder())
 					{
 						str1 = _("IDS_CONFIGEVENT_TF_UNDER");
-						fmt::format_to(info, L"; {}", str1);
+						fmt::format_to(std::back_inserter(info), L"; {}", str1);
 					}
 					if (pScoring->ComputeTimeFaultsOver())
 					{
 						str1 = _("IDS_CONFIGEVENT_TF_OVER");
-						fmt::format_to(info, L"; {}", str1);
+						fmt::format_to(std::back_inserter(info), L"; {}", str1);
 					}
 					break;
 				case ARBScoringStyle::TimeNoPlaces:
@@ -792,35 +796,39 @@ void CDlgConfigEvent::FillControls()
 				if (pScoring->DropFractions())
 				{
 					str1 = _("IDS_CONFIGEVENT_DROPFRAC");
-					fmt::format_to(info, L"; {}", str1);
+					fmt::format_to(std::back_inserter(info), L"; {}", str1);
 				}
 				if (pScoring->HasBonusTitlePts())
 				{
 					str1 = _("IDS_CONFIGEVENT_BONUSTITLE");
-					fmt::format_to(info, L"; {}", str1);
+					fmt::format_to(std::back_inserter(info), L"; {}", str1);
 				}
 				if (pScoring->HasSuperQ())
 				{
 					str1 = _("IDS_CONFIGEVENT_SUPERQ");
-					fmt::format_to(info, L"; {}", str1);
+					fmt::format_to(std::back_inserter(info), L"; {}", str1);
 				}
 				if (pScoring->HasSpeedPts())
 				{
 					str1 = _("IDS_CONFIGEVENT_SPEEDPTS");
-					fmt::format_to(info, L"; {}", str1);
+					fmt::format_to(std::back_inserter(info), L"; {}", str1);
 					if (0 < pScoring->GetPlaceInfo().size())
 					{
-						fmt::format_to(info, L" [");
+						fmt::format_to(std::back_inserter(info), L" [");
 						int idx = 0;
 						for (ARBConfigPlaceInfoList::iterator iter = pScoring->GetPlaceInfo().begin();
 							 iter != pScoring->GetPlaceInfo().end();
 							 ++idx, ++iter)
 						{
 							if (0 < idx)
-								fmt::format_to(info, L", ");
-							fmt::format_to(info, L"{}={}", (*iter)->GetPlace(), (*iter)->GetValue());
+								fmt::format_to(std::back_inserter(info), L", ");
+							fmt::format_to(
+								std::back_inserter(info),
+								L"{}={}",
+								(*iter)->GetPlace(),
+								(*iter)->GetValue());
 						}
-						fmt::format_to(info, L"]");
+						fmt::format_to(std::back_inserter(info), L"]");
 					}
 				}
 				m_ctrlInfo->SetLabel(StringUtil::stringWX(fmt::to_string(info)));

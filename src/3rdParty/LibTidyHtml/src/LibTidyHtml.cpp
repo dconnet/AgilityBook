@@ -56,7 +56,7 @@ ElementNodePtr TidyHtmlData(std::string const& data, fmt::wmemory_buffer& err, s
 			if (errbuf.size > 0)
 			{
 				std::string errmsg((const char*)errbuf.bp, errbuf.size);
-				fmt::format_to(err, L"TIDY Error: {}", StringUtil::stringW(errmsg));
+				fmt::format_to(std::back_inserter(err), L"TIDY Error: {}", StringUtil::stringW(errmsg));
 			}
 			tidyBufFree(&errbuf);
 			tidyRelease(tdoc);
@@ -68,7 +68,7 @@ ElementNodePtr TidyHtmlData(std::string const& data, fmt::wmemory_buffer& err, s
 			if (errbuf.size > 0)
 			{
 				std::string errmsg((const char*)errbuf.bp, errbuf.size);
-				fmt::format_to(err, L"TIDY Error: {}", StringUtil::stringW(errmsg));
+				fmt::format_to(std::back_inserter(err), L"TIDY Error: {}", StringUtil::stringW(errmsg));
 			}
 			tidyBufFree(&errbuf);
 			tidyRelease(tdoc);
@@ -84,7 +84,7 @@ ElementNodePtr TidyHtmlData(std::string const& data, fmt::wmemory_buffer& err, s
 			if (errbuf.size > 0)
 			{
 				std::string errmsg((const char*)errbuf.bp, errbuf.size);
-				fmt::format_to(err, L"TIDY Error: {}", StringUtil::stringW(errmsg));
+				fmt::format_to(std::back_inserter(err), L"TIDY Error: {}", StringUtil::stringW(errmsg));
 			}
 			tidyBufFree(&errbuf);
 			tidyBufFree(&output);

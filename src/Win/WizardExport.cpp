@@ -1204,24 +1204,32 @@ void CWizardExport::UpdatePreview()
 					fmt::wmemory_buffer tmp;
 					if (pCal->IsTentative())
 					{
-						fmt::format_to(tmp, L"{} ", Localization()->CalendarTentative());
+						fmt::format_to(std::back_inserter(tmp), L"{} ", Localization()->CalendarTentative());
 					}
 					date = pCal->GetOpeningDate();
 					if (date.IsValid())
 					{
-						fmt::format_to(tmp, L"{} {} ", Localization()->CalendarOpens(), date.GetString(format));
+						fmt::format_to(
+							std::back_inserter(tmp),
+							L"{} {} ",
+							Localization()->CalendarOpens(),
+							date.GetString(format));
 					}
 					date = pCal->GetClosingDate();
 					if (date.IsValid())
 					{
-						fmt::format_to(tmp, L"{} {} ", Localization()->CalendarCloses(), date.GetString(format));
+						fmt::format_to(
+							std::back_inserter(tmp),
+							L"{} {} ",
+							Localization()->CalendarCloses(),
+							date.GetString(format));
 					}
 					fmt::format_to(
-						tmp,
+						std::back_inserter(tmp),
 						_("IDS_TRIAL_DATES").wx_str(),
 						pCal->GetStartDate().GetString(format),
 						pCal->GetEndDate().GetString(format));
-					fmt::format_to(tmp, L" {}", pCal->GetNote());
+					fmt::format_to(std::back_inserter(tmp), L" {}", pCal->GetNote());
 					data += AddPreviewData(iLine, idx, fmt::to_string(tmp));
 				}
 				break;

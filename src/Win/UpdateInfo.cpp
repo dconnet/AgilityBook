@@ -439,10 +439,10 @@ bool CUpdateInfo::ReadVersionFile(std::string const& data, bool bVerbose)
 			if (bVerbose)
 			{
 				fmt::wmemory_buffer msg;
-				fmt::format_to(msg, _("IDS_LOAD_FAILED").wx_str(), k_versionFile);
+				fmt::format_to(std::back_inserter(msg), _("IDS_LOAD_FAILED").wx_str(), k_versionFile);
 				if (0 < errMsg2.size())
 				{
-					fmt::format_to(msg, L"\n\n{}", fmt::to_string(errMsg2));
+					fmt::format_to(std::back_inserter(msg), L"\n\n{}", fmt::to_string(errMsg2));
 				}
 				wxMessageBox(fmt::to_string(msg), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			}
@@ -716,10 +716,10 @@ bool CUpdateInfo::CheckConfig(CAgilityBookDoc* pDoc, wxString url, std::string c
 		if (!tree->LoadXML(strConfig.c_str(), strConfig.length(), errMsg2))
 		{
 			fmt::wmemory_buffer msg2;
-			fmt::format_to(msg2, _("IDS_LOAD_FAILED").wx_str(), url.wx_str());
+			fmt::format_to(std::back_inserter(msg2), _("IDS_LOAD_FAILED").wx_str(), url.wx_str());
 			if (0 < errMsg2.size())
 			{
-				fmt::format_to(msg2, L"\n\n{}", fmt::to_string(errMsg2));
+				fmt::format_to(std::back_inserter(msg2), L"\n\n{}", fmt::to_string(errMsg2));
 			}
 			wxMessageBox(fmt::to_string(msg2), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
@@ -764,7 +764,7 @@ bool CUpdateInfo::DownloadFile(wxString const& filename)
 	{
 		delete output;
 		fmt::wmemory_buffer errMsg;
-		fmt::format_to(errMsg, _("IDS_CANNOT_OPEN").wx_str(), filename.wx_str());
+		fmt::format_to(std::back_inserter(errMsg), _("IDS_CANNOT_OPEN").wx_str(), filename.wx_str());
 		wxMessageBox(fmt::to_string(errMsg));
 		return false;
 	}

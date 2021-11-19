@@ -122,8 +122,8 @@ static wxString TrainingNames(std::set<std::wstring> const& inNames)
 	for (std::set<std::wstring>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
 	{
 		if (0 < names.size())
-			fmt::format_to(names, L":");
-		fmt::format_to(names, L"{}", *iter);
+			fmt::format_to(std::back_inserter(names), L":");
+		fmt::format_to(std::back_inserter(names), L"{}", *iter);
 	}
 	return StringUtil::stringWX(fmt::to_string(names));
 }

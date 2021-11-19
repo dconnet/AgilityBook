@@ -1147,82 +1147,82 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr const& inTree, wxWindow* p
 			m_Records.GetInfo().GetInfo(ARBInfoType::Location).CondenseContent(namesInUse);
 		}
 		fmt::wmemory_buffer str;
-		fmt::format_to(str, L"{} ", _("IDS_ADDED").wx_str());
+		fmt::format_to(std::back_inserter(str), L"{} ", _("IDS_ADDED").wx_str());
 		bool bAdded = false;
 		if (0 < countDog)
 		{
 			if (bAdded)
-				fmt::format_to(str, L", ");
+				fmt::format_to(std::back_inserter(str), L", ");
 			bAdded = true;
-			fmt::format_to(str, _("IDS_ADDED_DOGS").wx_str(), countDog);
+			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_DOGS").wx_str(), countDog);
 		}
 		if (0 < countRegNumsAdded)
 		{
 			if (bAdded)
-				fmt::format_to(str, L", ");
+				fmt::format_to(std::back_inserter(str), L", ");
 			bAdded = true;
-			fmt::format_to(str, _("IDS_ADDED_REGNUMS").wx_str(), countRegNumsAdded);
+			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_REGNUMS").wx_str(), countRegNumsAdded);
 		}
 		if (0 < countExistingPts)
 		{
 			if (bAdded)
-				fmt::format_to(str, L", ");
+				fmt::format_to(std::back_inserter(str), L", ");
 			bAdded = true;
-			fmt::format_to(str, _("IDS_ADDED_EXISTINGPTS").wx_str(), countExistingPts);
+			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_EXISTINGPTS").wx_str(), countExistingPts);
 		}
 		if (0 < countTitlesAdded)
 		{
 			if (bAdded)
-				fmt::format_to(str, L", ");
+				fmt::format_to(std::back_inserter(str), L", ");
 			bAdded = true;
-			fmt::format_to(str, _("IDS_ADDED_TITLES").wx_str(), countTitlesAdded);
+			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_TITLES").wx_str(), countTitlesAdded);
 		}
 		if (0 < countTrials)
 		{
 			if (bAdded)
-				fmt::format_to(str, L", ");
+				fmt::format_to(std::back_inserter(str), L", ");
 			bAdded = true;
-			fmt::format_to(str, _("IDS_ADDED_TRIALS").wx_str(), countTrials);
+			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_TRIALS").wx_str(), countTrials);
 		}
 		if (0 < countClubs)
 		{
 			if (bAdded)
-				fmt::format_to(str, L", ");
+				fmt::format_to(std::back_inserter(str), L", ");
 			bAdded = true;
-			fmt::format_to(str, _("IDS_ADDED_CLUBS").wx_str(), countClubs);
+			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_CLUBS").wx_str(), countClubs);
 		}
 		if (0 < countJudges)
 		{
 			if (bAdded)
-				fmt::format_to(str, L", ");
+				fmt::format_to(std::back_inserter(str), L", ");
 			bAdded = true;
-			fmt::format_to(str, _("IDS_ADDED_JUDGES").wx_str(), countJudges);
+			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_JUDGES").wx_str(), countJudges);
 		}
 		if (0 < countLocations)
 		{
 			if (bAdded)
-				fmt::format_to(str, L", ");
+				fmt::format_to(std::back_inserter(str), L", ");
 			bAdded = true;
-			fmt::format_to(str, _("IDS_ADDED_LOCATIONS").wx_str(), countLocations);
+			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_LOCATIONS").wx_str(), countLocations);
 		}
 		bAdded = false;
 		if (0 < countRegNumsUpdated)
 		{
 			if (bAdded)
-				fmt::format_to(str, L", ");
+				fmt::format_to(std::back_inserter(str), L", ");
 			else
-				fmt::format_to(str, L"\n{} ", _("IDS_UPDATED").wx_str());
+				fmt::format_to(std::back_inserter(str), L"\n{} ", _("IDS_UPDATED").wx_str());
 			bAdded = true;
-			fmt::format_to(str, _("IDS_ADDED_REGNUMS").wx_str(), countRegNumsUpdated);
+			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_REGNUMS").wx_str(), countRegNumsUpdated);
 		}
 		if (0 < countTitlesUpdated)
 		{
 			if (bAdded)
-				fmt::format_to(str, L", ");
+				fmt::format_to(std::back_inserter(str), L", ");
 			else
-				fmt::format_to(str, L"\n{} ", _("IDS_UPDATED").wx_str());
+				fmt::format_to(std::back_inserter(str), L"\n{} ", _("IDS_UPDATED").wx_str());
 			bAdded = true;
-			fmt::format_to(str, _("IDS_ADDED_TITLES").wx_str(), countTitlesUpdated);
+			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_TITLES").wx_str(), countTitlesUpdated);
 		}
 		wxMessageBox(fmt::to_string(str), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
@@ -1655,10 +1655,10 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		{
 			wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
 			fmt::wmemory_buffer msg;
-			fmt::format_to(msg, _("Cannot open file '{}'.").wx_str(), filename.wx_str());
+			fmt::format_to(std::back_inserter(msg), _("Cannot open file '{}'.").wx_str(), filename.wx_str());
 			if (0 < err.size())
 			{
-				fmt::format_to(msg, L"\n\n{}", fmt::to_string(err));
+				fmt::format_to(std::back_inserter(msg), L"\n\n{}", fmt::to_string(err));
 			}
 			wxMessageBox(fmt::to_string(msg), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
@@ -1671,10 +1671,10 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		{
 			wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
 			fmt::wmemory_buffer msg;
-			fmt::format_to(msg, _("Cannot open file '{}'.").wx_str(), filename.wx_str());
+			fmt::format_to(std::back_inserter(msg), _("Cannot open file '{}'.").wx_str(), filename.wx_str());
 			if (0 < callback.m_ErrMsg.size())
 			{
-				fmt::format_to(msg, L"\n\n{}", fmt::to_string(callback.m_ErrMsg));
+				fmt::format_to(std::back_inserter(msg), L"\n\n{}", fmt::to_string(callback.m_ErrMsg));
 			}
 			wxMessageBox(fmt::to_string(msg), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
@@ -2290,48 +2290,51 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 		wxFileName file(filename);
 		if (file.Exists())
 		{
-			fmt::format_to(str, _("IDS_FILEPROP_NAME").wx_str(), filename.wx_str());
+			fmt::format_to(std::back_inserter(str), _("IDS_FILEPROP_NAME").wx_str(), filename.wx_str());
 
 			if (!wxFileName::IsFileWritable(filename))
-				fmt::format_to(str, L" {}", _("IDS_FILEPROP_NAME_READONLY").wx_str());
+				fmt::format_to(std::back_inserter(str), L" {}", _("IDS_FILEPROP_NAME_READONLY").wx_str());
 
 			if (IsModified())
-				fmt::format_to(str, L" {}", _("IDS_FILEPROP_NAME_MODIFIED").wx_str());
+				fmt::format_to(std::back_inserter(str), L" {}", _("IDS_FILEPROP_NAME_MODIFIED").wx_str());
 
-			fmt::format_to(str, L"\n{}\n", fmt::format(_("IDS_FILEPROP_SIZE").wx_str(), file.GetSize().GetValue()));
+			fmt::format_to(
+				std::back_inserter(str),
+				L"\n{}\n",
+				fmt::format(_("IDS_FILEPROP_SIZE").wx_str(), file.GetSize().GetValue()));
 
 			wxDateTime timeCreate, timeMod;
 			if (GetFileTimes(file, nullptr, &timeMod, &timeCreate))
 			{
 				fmt::format_to(
-					str,
+					std::back_inserter(str),
 					L"{}\n",
 					fmt::format(_("IDS_FILEPROP_CREATED").wx_str(), timeCreate.FormatISOCombined().wx_str()));
 				fmt::format_to(
-					str,
+					std::back_inserter(str),
 					L"{}\n",
 					fmt::format(_("IDS_FILEPROP_MODIFIED").wx_str(), timeMod.FormatISOCombined().wx_str()));
 			}
 		}
 		else
 		{
-			fmt::format_to(str, filename.wx_str());
+			fmt::format_to(std::back_inserter(str), filename.wx_str());
 			if (IsModified())
-				fmt::format_to(str, _("IDS_FILEPROP_NAME_MODIFIED").wx_str());
-			fmt::format_to(str, L"\n");
+				fmt::format_to(std::back_inserter(str), _("IDS_FILEPROP_NAME_MODIFIED").wx_str());
+			fmt::format_to(std::back_inserter(str), L"\n");
 		}
 	}
 
-	fmt::format_to(str, L"\n");
+	fmt::format_to(std::back_inserter(str), L"\n");
 
 	if (Book().GetConfig().GetVersion() == GetCurrentConfigVersion())
 		fmt::format_to(
-			str,
+			std::back_inserter(str),
 			L"{}\n",
 			fmt::format(_("IDS_FILEPROP_CONFIGURATION").wx_str(), Book().GetConfig().GetVersion()));
 	else
 		fmt::format_to(
-			str,
+			std::back_inserter(str),
 			L"{}\n",
 			fmt::format(
 				_("IDS_FILEPROP_CONFIGURATION_CURRENT").wx_str(),
@@ -2342,10 +2345,13 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 	{
 		ARBVersion ver(Book().GetFileInfo(ARBFileInfo::Book));
 		if (ver == ARBAgilityRecordBook::GetCurrentDocVersion())
-			fmt::format_to(str, L"{}\n", fmt::format(_("IDS_FILEPROP_VERSION").wx_str(), ver.str()));
+			fmt::format_to(
+				std::back_inserter(str),
+				L"{}\n",
+				fmt::format(_("IDS_FILEPROP_VERSION").wx_str(), ver.str()));
 		else
 			fmt::format_to(
-				str,
+				std::back_inserter(str),
 				L"{}\n",
 				fmt::format(
 					_("IDS_FILEPROP_VERSION_CURRENT").wx_str(),
@@ -2357,7 +2363,7 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 		|| !Book().GetFileInfo(ARBFileInfo::TimeStamp).empty() || !Book().GetFileInfo(ARBFileInfo::Version).empty())
 	{
 		fmt::format_to(
-			str,
+			std::back_inserter(str),
 			L"\n{}\n{}\n",
 			fmt::format(
 				_("IDS_FILEPROP_FILEWRITTEN").wx_str(),

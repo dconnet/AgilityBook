@@ -21,7 +21,7 @@
 #include "ARBCommon/ARBMisc.h"
 
 #include "ARBCommon/StringUtil.h"
-#include "fmt/format.h"
+#include "fmt/xchar.h"
 #include <math.h>
 
 // For testing in ARB
@@ -54,13 +54,13 @@ std::wstring SanitizeStringForHTML(std::wstring const& inRawData, bool bConvertC
 		switch (inRawData[nChar])
 		{
 		case L'&':
-			fmt::format_to(data, L"{}", L"&amp;");
+			fmt::format_to(std::back_inserter(data), L"{}", L"&amp;");
 			break;
 		case L'<':
-			fmt::format_to(data, L"{}", L"&lt;");
+			fmt::format_to(std::back_inserter(data), L"{}", L"&lt;");
 			break;
 		case L'>':
-			fmt::format_to(data, L"{}", L"&gt;");
+			fmt::format_to(std::back_inserter(data), L"{}", L"&gt;");
 			break;
 		case L'\r':
 			if (bConvertCR)
@@ -68,19 +68,19 @@ std::wstring SanitizeStringForHTML(std::wstring const& inRawData, bool bConvertC
 				if (nChar + 1 < inRawData.length() && '\n' == inRawData[nChar + 1])
 					continue;
 				else
-					fmt::format_to(data, L"{}", L"<br/>");
+					fmt::format_to(std::back_inserter(data), L"{}", L"<br/>");
 			}
 			else
-				fmt::format_to(data, L"{}", inRawData[nChar]);
+				fmt::format_to(std::back_inserter(data), L"{}", inRawData[nChar]);
 			break;
 		case '\n':
 			if (bConvertCR)
-				fmt::format_to(data, L"<br/>");
+				fmt::format_to(std::back_inserter(data), L"<br/>");
 			else
-				fmt::format_to(data, L"{}", inRawData[nChar]);
+				fmt::format_to(std::back_inserter(data), L"{}", inRawData[nChar]);
 			break;
 		default:
-			fmt::format_to(data, L"{}", inRawData[nChar]);
+			fmt::format_to(std::back_inserter(data), L"{}", inRawData[nChar]);
 			break;
 		}
 	}
@@ -271,7 +271,7 @@ std::wstring ShortToRoman(short value)
 		short digit = value / power;
 		value -= digit * power;
 		if (digit > 0)
-			fmt::format_to(result, L"{}", romanDigits[digit - 1][index]);
+			fmt::format_to(std::back_inserter(result), L"{}", romanDigits[digit - 1][index]);
 	}
 	return fmt::to_string(result);
 }

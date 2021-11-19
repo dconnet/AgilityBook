@@ -32,7 +32,7 @@
 #include "ARBCommon/BinaryData.h"
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
-#include "fmt/format.h"
+#include "fmt/xchar.h"
 #include <wx/ffile.h>
 #include <wx/filename.h>
 
@@ -113,42 +113,47 @@ std::wstring CDlgARBHelp::GetEncodedData()
 	{
 		std::wstring data;
 		BinaryData::EncodeString(m_SysInfo, data);
-		fmt::format_to(rawdata, L"\n{}\n{}\n{}\n", STREAM_SYSTEM_BEGIN, data, STREAM_SYSTEM_END);
+		fmt::format_to(std::back_inserter(rawdata), L"\n{}\n{}\n{}\n", STREAM_SYSTEM_BEGIN, data, STREAM_SYSTEM_END);
 	}
 
 	// Registry information.
 	{
 		std::wstring data;
 		BinaryData::EncodeString(m_RegInfo, data);
-		fmt::format_to(rawdata, L"\n{}\n{}\n{}\n", STREAM_REGISTRY_BEGIN, data, STREAM_REGISTRY_END);
+		fmt::format_to(
+			std::back_inserter(rawdata),
+			L"\n{}\n{}\n{}\n",
+			STREAM_REGISTRY_BEGIN,
+			data,
+			STREAM_REGISTRY_END);
 	}
 
 	// Data files.
 	for (FileMap::iterator iFile = m_IncFile.begin(); iFile != m_IncFile.end(); ++iFile)
 	{
-		fmt::format_to(rawdata, L"\n{}", (*iFile).first);
+		fmt::format_to(std::back_inserter(rawdata), L"\n{}", (*iFile).first);
 		wxFileName fileName((*iFile).first.c_str());
 		wxDateTime dtMod, dtCreate;
 		if (!(*iFile).second)
-			fmt::format_to(rawdata, L": Skipped");
-		fmt::format_to(rawdata, L"\n");
+			fmt::format_to(std::back_inserter(rawdata), L": Skipped");
+		fmt::format_to(std::back_inserter(rawdata), L"\n");
 		if (fileName.GetTimes(nullptr, &dtMod, &dtCreate))
 		{
-			fmt::format_to(rawdata, L"Created: {}\n", dtCreate.Format().wx_str());
-			fmt::format_to(rawdata, L"Modified: {}\n", dtMod.Format().wx_str());
+			fmt::format_to(std::back_inserter(rawdata), L"Created: {}\n", dtCreate.Format().wx_str());
+			fmt::format_to(std::back_inserter(rawdata), L"Modified: {}\n", dtMod.Format().wx_str());
 		}
 		wxULongLong size = fileName.GetSize();
 		if (wxInvalidSize != size)
-			fmt::format_to(rawdata, L"Size: {}\n", StringUtil::stringW(size.ToString()));
+			fmt::format_to(std::back_inserter(rawdata), L"Size: {}\n", StringUtil::stringW(size.ToString()));
 		if ((*iFile).second)
 		{
 			std::wstring data;
 			if (BinaryData::EncodeFile((*iFile).first, data))
 			{
-				fmt::format_to(rawdata, L"{}\n{}\n{}\n", STREAM_FILE_BEGIN, data, STREAM_FILE_END);
+				fmt::format_to(std::back_inserter(rawdata), L"{}\n{}\n{}\n", STREAM_FILE_BEGIN, data, STREAM_FILE_END);
 			}
 			else
-				fmt::format_to(rawdata, L"Error: Cannot read file\n");
+				fmt::format_to(std::back_inserter(rawdata), L"Error: Cannot read file\n");
 		}
 	}
 

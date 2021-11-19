@@ -32,7 +32,7 @@
 
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/ARBTypes.h"
-#include "fmt/format.h"
+#include "fmt/xchar.h"
 #include <algorithm>
 #include <sstream>
 #if defined(__WXWINDOWS__)
@@ -710,15 +710,15 @@ T ReplaceImpl(T const& format, T const& inStr, T const& inReplace, T const& inRe
 		{
 			if (0 < pos)
 			{
-				fmt::format_to(str, format, text.substr(0, pos));
+				fmt::format_to(std::back_inserter(str), format, text.substr(0, pos));
 			}
 			if (!inReplaceWith.empty())
-				fmt::format_to(str, format, inReplaceWith);
+				fmt::format_to(std::back_inserter(str), format, inReplaceWith);
 			text = text.substr(pos + inReplace.length(), T::npos);
 		}
 		else
 		{
-			fmt::format_to(str, format, text);
+			fmt::format_to(std::back_inserter(str), format, text);
 			text.clear();
 		}
 	}

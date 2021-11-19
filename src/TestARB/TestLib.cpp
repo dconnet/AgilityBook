@@ -109,13 +109,13 @@ private:
 		if (!m_Localization.Load())
 		{
 			std::string msg = fmt::format("ERROR: Unable to load '{}.mo'.", OnGetCatalogName().ToStdString());
-			fmt::print(std::cerr, "{}\n", msg);
+			fmt::print(stderr, "{}\n", msg);
 			throw std::runtime_error(msg);
 		}
 	}
 	void OnErrorMessage(wxString const& msg) const override
 	{
-		fmt::print(std::wcerr, L"{}\n", msg.wx_str());
+		fmt::print(stderr, L"{}\n", msg.wx_str());
 	}
 	std::unique_ptr<CLanguageManager> m_langMgr;
 #else // __WXWINDOWS__

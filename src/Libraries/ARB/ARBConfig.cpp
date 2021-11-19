@@ -298,7 +298,7 @@ bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, fmt::wmemory_bu
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		fmt::format_to(ioInfo, L"{}\n", Localization()->UpdateFaults(nNew, nSkipped));
+		fmt::format_to(std::back_inserter(ioInfo), L"{}\n", Localization()->UpdateFaults(nNew, nSkipped));
 	}
 
 	// Update OtherPoints.
@@ -333,7 +333,7 @@ bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, fmt::wmemory_bu
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		fmt::format_to(ioInfo, L"{}\n", Localization()->UpdateOtherPts(nNew, nUpdated, nSkipped));
+		fmt::format_to(std::back_inserter(ioInfo), L"{}\n", Localization()->UpdateOtherPts(nNew, nUpdated, nSkipped));
 	}
 
 	// Update Venues.
@@ -372,11 +372,11 @@ bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, fmt::wmemory_bu
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		fmt::format_to(ioInfo, L"{}\n", Localization()->UpdateVenues(nNew, nUpdated, nSkipped));
+		fmt::format_to(std::back_inserter(ioInfo), L"{}\n", Localization()->UpdateVenues(nNew, nUpdated, nSkipped));
 	}
 	if (0 < venueInfo.length())
 	{
-		fmt::format_to(ioInfo, L"{}", venueInfo);
+		fmt::format_to(std::back_inserter(ioInfo), L"{}", venueInfo);
 	}
 	// Even if there are no changes, update the version number so we don't
 	// prompt anymore.

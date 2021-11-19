@@ -53,7 +53,7 @@
 #include "ARBCommon/ARBDate.h"
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
-#include "fmt/printf.h"
+#include "fmt/xchar.h"
 #include <fstream>
 #include <list>
 #include <map>
@@ -553,7 +553,7 @@ static void LogMessage(fmt::wmemory_buffer& msg)
 #if defined(__WXWINDOWS__)
 	wxLogMessage(L"%s", fmt::to_string(msg).c_str());
 #else
-	fmt::format_to(msg, L"\n");
+	fmt::format_to(std::back_inserter(msg), L"\n");
 	OutputDebugString(fmt::to_string(msg).c_str());
 #endif
 }
@@ -615,12 +615,12 @@ void ElementNode::Dump(int inLevel) const
 {
 	int i;
 	fmt::wmemory_buffer msg;
-	fmt::format_to(msg, L"{}{}", GetIndentBuffer(inLevel), m_Name);
+	fmt::format_to(std::back_inserter(msg), L"{}{}", GetIndentBuffer(inLevel), m_Name);
 	for (i = 0; i < GetAttribCount(); ++i)
 	{
 		std::wstring name, value;
 		GetNthAttrib(i, name, value);
-		fmt::format_to(msg, L" {}=\"{}\"", name, value);
+		fmt::format_to(std::back_inserter(msg), L" {}=\"{}\"", name, value);
 	}
 	LogMessage(msg);
 	for (i = 0; i < GetElementCount(); ++i)
@@ -1348,7 +1348,7 @@ bool ElementNode::LoadXML(std::istream& inStream, fmt::wmemory_buffer& ioErrMsg)
 		if (XML_Parse(source, buffer, len, 0) == XML_STATUS_ERROR)
 		{
 			fmt::format_to(
-				ioErrMsg,
+				std::back_inserter(ioErrMsg),
 				L"Parse error at line {}: {}",
 				XML_GetCurrentLineNumber(source),
 				XML_ErrorString(XML_GetErrorCode(source)));
@@ -1372,7 +1372,7 @@ bool ElementNode::LoadXML(std::istream& inStream, fmt::wmemory_buffer& ioErrMsg)
 	catch (Poco::Exception& e)
 	{
 		std::wstring str = StringUtil::stringW(e.displayText());
-		fmt::format_to(ioErrMsg, L"{}", str);
+		fmt::format_to(std::back_inserter(ioErrMsg), L"{}", str);
 		return false;
 	}
 
@@ -1387,7 +1387,7 @@ bool ElementNode::LoadXML(std::istream& inStream, fmt::wmemory_buffer& ioErrMsg)
 	wxXmlDocument source;
 	if (!source.Load(stream))
 	{
-		fmt::format_to(ioErrMsg, L"{}", log->GetBuffer().wx_str());
+		fmt::format_to(std::back_inserter(ioErrMsg), L"{}", log->GetBuffer().wx_str());
 		// This does not call Flush (which displays a dialog). Yea!
 		chain.SetLog(nullptr);
 		return false;
@@ -1634,10 +1634,10 @@ ElementText::ElementText(std::wstring const& inText)
 void ElementText::Dump(int inLevel) const
 {
 	fmt::wmemory_buffer msg;
-	fmt::format_to(msg, L"{}{}", GetIndentBuffer(inLevel), GetName());
+	fmt::format_to(std::back_inserter(msg), L"{}{}", GetIndentBuffer(inLevel), GetName());
 	if (0 < m_Value.length())
 	{
-		fmt::format_to(msg, L": {}", m_Value);
+		fmt::format_to(std::back_inserter(msg), L": {}", m_Value);
 	}
 	LogMessage(msg);
 }

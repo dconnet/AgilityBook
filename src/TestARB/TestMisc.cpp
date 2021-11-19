@@ -35,6 +35,7 @@
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/CheckLink.h"
 #include "fmt/printf.h"
+#include "fmt/xchar.h"
 
 #include <stdarg.h>
 
@@ -201,7 +202,13 @@ TEST_CASE("Misc")
 					{
 						langdata[i].Desc[j] = info->Description;
 						langdata[i].ArbDesc[j] = wxGetTranslation(info->Description);
-						fmt::format_to(out, L"{} {} {} {}\n", i, j, langdata[i].Desc[j], langdata[i].ArbDesc[j]);
+						fmt::format_to(
+							std::back_inserter(out),
+							L"{} {} {} {}\n",
+							i,
+							j,
+							langdata[i].Desc[j],
+							langdata[i].ArbDesc[j]);
 					}
 				}
 			}

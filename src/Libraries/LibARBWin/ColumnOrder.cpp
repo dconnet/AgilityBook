@@ -97,8 +97,8 @@ void CColumnOrder::Save()
 		for (int i = 0; i < m_nColumns; ++i)
 		{
 			if (0 < i)
-				fmt::format_to(str, L",");
-			fmt::format_to(str, L"{}", m_order[i]);
+				fmt::format_to(std::back_inserter(str), L",");
+			fmt::format_to(std::back_inserter(str), L"{}", m_order[i]);
 		}
 		wxConfig::Get()->Write(CFG_SORTING_ORDER(m_Item.wx_str()), fmt::to_string(str).c_str());
 	}
@@ -107,8 +107,8 @@ void CColumnOrder::Save()
 		for (int i = 0; i < m_nColumns; ++i)
 		{
 			if (0 < i)
-				fmt::format_to(str, L",");
-			fmt::format_to(str, L"{}", static_cast<int>(m_bDescending[i]));
+				fmt::format_to(std::back_inserter(str), L",");
+			fmt::format_to(std::back_inserter(str), L"{}", static_cast<int>(m_bDescending[i]));
 		}
 		wxConfig::Get()->Write(CFG_SORTING_SORT(m_Item.wx_str()), fmt::to_string(str).c_str());
 	}

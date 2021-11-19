@@ -412,8 +412,8 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 				 ++i, ++iter)
 			{
 				if (0 < i)
-					fmt::format_to(buf, L", ");
-				fmt::format_to(buf, L"{}", (*iter));
+					fmt::format_to(std::back_inserter(buf), L", ");
+				fmt::format_to(std::back_inserter(buf), L"{}", (*iter));
 			}
 			str = fmt::to_string(buf);
 		}

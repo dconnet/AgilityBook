@@ -15,6 +15,7 @@
  * framework, then include SetupARBPost.h
  *
  * Revision History
+ * 2021-11-19 Added C4582 suppression in order to update to fmtv8.
  * 2020-04-09 Min WINVER check was wrong, should be 0x601.
  * 2019-01-27 Min C++ is now 14 (for make_unique)
  * 2018-10-06 Dropping support for pre VS2017 (and XP).
@@ -116,6 +117,7 @@
 #pragma warning(disable : 4371) // layout of class may have changed from a previous version of the compiler due to better packing of member '<name>'
 #pragma warning(disable : 4464) // relative include path contains '..'
 #pragma warning(disable : 4514) // unreferenced inline function has been removed
+#pragma warning(disable : 4582) // '<name>': constructor is not implicitly called
 #pragma warning(disable : 4668) // '<name>' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
 #pragma warning(disable : 4710) // function not inlined
 #pragma warning(disable : 4711) // function '<name>' selected for automatic inline expansion

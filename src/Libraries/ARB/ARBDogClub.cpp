@@ -296,9 +296,9 @@ std::wstring ARBDogClubList::GetClubList(bool bNames, bool bIncCosanction) const
 		{
 			dedup.insert(str);
 			if (0 < i)
-				fmt::format_to(buf, L"/");
+				fmt::format_to(std::back_inserter(buf), L"/");
 			++i;
-			fmt::format_to(buf, L"{}", str);
+			fmt::format_to(std::back_inserter(buf), L"{}", str);
 		}
 	}
 	return fmt::to_string(buf);
@@ -311,12 +311,12 @@ std::wstring ARBDogClubList::GetClubList(bool bNames, ARBDogRunPtr inRun) const
 		return std::wstring();
 	fmt::wmemory_buffer buf;
 	std::wstring str = bNames ? inRun->GetClub()->GetName() : inRun->GetClub()->GetVenue();
-	fmt::format_to(buf, L"{}", str);
+	fmt::format_to(std::back_inserter(buf), L"{}", str);
 	ARBDogClubPtr pPrimary = FindCoSanctioningClub(inRun->GetClub());
 	if (pPrimary)
 	{
 		str = bNames ? pPrimary->GetName() : pPrimary->GetVenue();
-		fmt::format_to(buf, L"/{}", str);
+		fmt::format_to(std::back_inserter(buf), L"/{}", str);
 	}
 
 	return fmt::to_string(buf);

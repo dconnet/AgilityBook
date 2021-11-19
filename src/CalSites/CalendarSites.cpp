@@ -689,21 +689,21 @@ public:
 			m_Cal->GetLocation(),
 			m_Cal->GetClub());
 		fmt::wmemory_buffer desc;
-		fmt::format_to(desc, L"{}\n", m_Cal->GetSecEmail());
+		fmt::format_to(std::back_inserter(desc), L"{}\n", m_Cal->GetSecEmail());
 		if (m_Cal->GetOpeningDate().IsValid())
 		{
 			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_OPENS);
-			fmt::format_to(desc, L"{} {}\n", str, m_Cal->GetOpeningDate().GetString());
+			fmt::format_to(std::back_inserter(desc), L"{} {}\n", str, m_Cal->GetOpeningDate().GetString());
 		}
 		if (m_Cal->GetDrawDate().IsValid())
 		{
 			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_DRAWS);
-			fmt::format_to(desc, L"{} {}\n", str, m_Cal->GetDrawDate().GetString());
+			fmt::format_to(std::back_inserter(desc), L"{} {}\n", str, m_Cal->GetDrawDate().GetString());
 		}
 		if (m_Cal->GetClosingDate().IsValid())
 		{
 			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_CLOSES);
-			fmt::format_to(desc, L"{} {}\n", str, m_Cal->GetClosingDate().GetString());
+			fmt::format_to(std::back_inserter(desc), L"{} {}\n", str, m_Cal->GetClosingDate().GetString());
 		}
 		m_Desc = fmt::to_string(desc);
 	}
@@ -1064,16 +1064,16 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 					else
 					{
 						fmt::wmemory_buffer err;
-						fmt::format_to(err, _("IDS_ERR_PARSING_DATA").wx_str(), pData->OnNeedText());
+						fmt::format_to(std::back_inserter(err), _("IDS_ERR_PARSING_DATA").wx_str(), pData->OnNeedText());
 						if (0 < errMsg.size())
 						{
-							fmt::format_to(err, L":\n\t", fmt::to_string(errMsg));
+							fmt::format_to(std::back_inserter(err), L":\n\t", fmt::to_string(errMsg));
 						}
 						int flags = wxCENTRE | wxICON_WARNING;
 						if (pData->CanDisable())
 						{
 							flags |= wxYES_NO | wxNO_DEFAULT;
-							fmt::format_to(err, L"\n\n{}", _("IDS_USE_PLUGIN").wx_str());
+							fmt::format_to(std::back_inserter(err), L"\n\n{}", _("IDS_USE_PLUGIN").wx_str());
 						}
 						else
 							flags |= wxOK;

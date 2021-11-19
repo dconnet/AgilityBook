@@ -45,6 +45,7 @@
 #include "ARB/ARBLocalization.h"
 #include "ARBCommon/Element.h"
 #include "fmt/printf.h"
+#include "fmt/xchar.h"
 #include <algorithm>
 
 #ifdef __WXMSW__

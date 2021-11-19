@@ -1177,10 +1177,10 @@ static std::wstring GetLastKey(
 		// The 'Clean' routines below have "knowledge" of
 		//  <key>/<dog>/<venue> order.
 		fmt::wmemory_buffer buf;
-		fmt::format_to(buf, L"{}/{}", keyGroup, inDog->GetCallName());
+		fmt::format_to(std::back_inserter(buf), L"{}/{}", keyGroup, inDog->GetCallName());
 		if (inVenue && !inVenue->GetName().empty())
 		{
-			fmt::format_to(buf, L"/{}", inVenue->GetName());
+			fmt::format_to(std::back_inserter(buf), L"/{}", inVenue->GetName());
 		}
 		key = fmt::to_string(buf);
 		// Fall back
@@ -1793,8 +1793,8 @@ void CAgilityBookOptions::SetColumnOrder(
 	for (size_t i = 0; i < inValues.size(); ++i)
 	{
 		if (0 < i)
-			fmt::format_to(data, L",");
-		fmt::format_to(data, L"{}", inValues[i]);
+			fmt::format_to(std::back_inserter(data), L",");
+		fmt::format_to(std::back_inserter(data), L"{}", inValues[i]);
 	}
 	std::wstring item;
 	if (!namedColumn.empty())

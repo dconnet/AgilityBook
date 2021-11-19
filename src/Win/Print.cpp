@@ -384,14 +384,14 @@ static void RefRunHelper(fmt::wmemory_buffer& text, ARBDogReferenceRunPtr const&
 	case CODE_REFPLACE3:
 	case CODE_REFPLACE4:
 		if (0 < inRef->GetPlace())
-			fmt::format_to(text, L"{}", inRef->GetPlace());
+			fmt::format_to(std::back_inserter(text), L"{}", inRef->GetPlace());
 		break;
 	case CODE_REFQ1:
 	case CODE_REFQ2:
 	case CODE_REFQ3:
 	case CODE_REFQ4:
 		if (Q::UNK != inRef->GetQ() && Q::NA != inRef->GetQ())
-			fmt::format_to(text, L"{}", inRef->GetQ().str());
+			fmt::format_to(std::back_inserter(text), L"{}", inRef->GetQ().str());
 		break;
 	case CODE_REFTIME1:
 	case CODE_REFTIME2:
@@ -400,30 +400,30 @@ static void RefRunHelper(fmt::wmemory_buffer& text, ARBDogReferenceRunPtr const&
 	{
 		double val = inRef->GetTime();
 		if (0.0 < val)
-			fmt::format_to(text, L"{}", ARBDouble::ToString(val));
+			fmt::format_to(std::back_inserter(text), L"{}", ARBDouble::ToString(val));
 	}
 	break;
 	case CODE_REFSCORE1:
 	case CODE_REFSCORE2:
 	case CODE_REFSCORE3:
 	case CODE_REFSCORE4:
-		fmt::format_to(text, L"{}", inRef->GetScore());
+		fmt::format_to(std::back_inserter(text), L"{}", inRef->GetScore());
 		break;
 	case CODE_REFHT1:
 	case CODE_REFHT2:
 	case CODE_REFHT3:
 	case CODE_REFHT4:
-		fmt::format_to(text, L"{}", inRef->GetHeight());
+		fmt::format_to(std::back_inserter(text), L"{}", inRef->GetHeight());
 		break;
 	case CODE_REF1:
 	case CODE_REF2:
 	case CODE_REF3:
 	case CODE_REF4:
-		fmt::format_to(text, L"{}", inRef->GetName());
+		fmt::format_to(std::back_inserter(text), L"{}", inRef->GetName());
 		if (!inRef->GetBreed().empty())
-			fmt::format_to(text, L"/{}", inRef->GetBreed());
+			fmt::format_to(std::back_inserter(text), L"/{}", inRef->GetBreed());
 		if (!inRef->GetNote().empty())
-			fmt::format_to(text, L"/{}", inRef->GetNote());
+			fmt::format_to(std::back_inserter(text), L"/{}", inRef->GetNote());
 		break;
 	}
 }
@@ -442,23 +442,23 @@ std::wstring CPrintRuns::GetFieldText(
 		break;
 	case CODE_DOG:
 		if (inDog)
-			fmt::format_to(text, L"{}", inDog->GetCallName());
+			fmt::format_to(std::back_inserter(text), L"{}", inDog->GetCallName());
 		break;
 	case CODE_DATE:
 		if (inRun)
-			fmt::format_to(text, L"{}", inRun->GetDate().GetString());
+			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetDate().GetString());
 		break;
 	case CODE_VENUE:
 		if (inRun && inRun->GetClub())
-			fmt::format_to(text, L"{}", inRun->GetClub()->GetVenue());
+			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetClub()->GetVenue());
 		else if (inTrial)
-			fmt::format_to(text, L"{}", inTrial->GetClubs().GetClubList(false, true));
+			fmt::format_to(std::back_inserter(text), L"{}", inTrial->GetClubs().GetClubList(false, true));
 		break;
 	case CODE_CLUB:
 		if (inRun && inRun->GetClub())
-			fmt::format_to(text, L"{}", inRun->GetClub()->GetName());
+			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetClub()->GetName());
 		else if (inTrial)
-			fmt::format_to(text, L"{}", inTrial->GetClubs().GetClubList(true, true));
+			fmt::format_to(std::back_inserter(text), L"{}", inTrial->GetClubs().GetClubList(true, true));
 		break;
 	case CODE_DIV:
 		if (inRun)
@@ -524,34 +524,34 @@ std::wstring CPrintRuns::GetFieldText(
 					}
 				}
 			}
-			fmt::format_to(text, L"{}/{}/{}", div, lvl, evt);
+			fmt::format_to(std::back_inserter(text), L"{}/{}/{}", div, lvl, evt);
 		}
 		break;
 	case CODE_LOCATION:
 		if (inTrial)
-			fmt::format_to(text, L"{}", inTrial->GetLocation());
+			fmt::format_to(std::back_inserter(text), L"{}", inTrial->GetLocation());
 		break;
 	case CODE_HEIGHT:
 		if (inRun)
-			fmt::format_to(text, L"{}", inRun->GetHeight());
+			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetHeight());
 		break;
 	case CODE_JUDGE:
 		if (inRun)
-			fmt::format_to(text, L"{}", inRun->GetJudge());
+			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetJudge());
 		break;
 	case CODE_HANDLER:
 		if (inRun)
-			fmt::format_to(text, L"{}", inRun->GetHandler());
+			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetHandler());
 		break;
 	case CODE_CONDITIONS:
 		if (inRun)
-			fmt::format_to(text, L"{}", inRun->GetConditions());
+			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetConditions());
 		break;
 	case CODE_Q:
 		if (inRun)
 		{
 			if (Q::UNK != inRun->GetQ() && Q::NA != inRun->GetQ())
-				fmt::format_to(text, L"{}", inRun->GetQ().str());
+				fmt::format_to(std::back_inserter(text), L"{}", inRun->GetQ().str());
 		}
 		break;
 	case CODE_SCT:
@@ -562,17 +562,17 @@ std::wstring CPrintRuns::GetFieldText(
 			{
 				double sct2 = inRun->GetScoring().GetSCT2();
 				if (0.0 < sct)
-					fmt::format_to(text, L"{}", ARBDouble::ToString(sct));
+					fmt::format_to(std::back_inserter(text), L"{}", ARBDouble::ToString(sct));
 				else
-					fmt::format_to(text, L"  ");
-				fmt::format_to(text, L" / ");
+					fmt::format_to(std::back_inserter(text), L"  ");
+				fmt::format_to(std::back_inserter(text), L" / ");
 				if (0.0 < sct2)
-					fmt::format_to(text, L"{}", ARBDouble::ToString(sct2));
+					fmt::format_to(std::back_inserter(text), L"{}", ARBDouble::ToString(sct2));
 				else
-					fmt::format_to(text, L"  ");
+					fmt::format_to(std::back_inserter(text), L"  ");
 			}
 			else if (0.0 < sct)
-				fmt::format_to(text, L"{}", ARBDouble::ToString(sct));
+				fmt::format_to(std::back_inserter(text), L"{}", ARBDouble::ToString(sct));
 		}
 		break;
 	case CODE_YARDS:
@@ -580,7 +580,7 @@ std::wstring CPrintRuns::GetFieldText(
 		{
 			double val = inRun->GetScoring().GetYards();
 			if (0.0 < val)
-				fmt::format_to(text, L"{}", ARBDouble::ToString(val, 0));
+				fmt::format_to(std::back_inserter(text), L"{}", ARBDouble::ToString(val, 0));
 		}
 		break;
 	case CODE_OPEN:
@@ -594,14 +594,14 @@ std::wstring CPrintRuns::GetFieldText(
 				break;
 			case ARBScoringType::ByOpenClose:
 				if (0 < inRun->GetScoring().GetNeedOpenPts())
-					fmt::format_to(text, L"{}", inRun->GetScoring().GetNeedOpenPts());
-				fmt::format_to(text, L" / ");
+					fmt::format_to(std::back_inserter(text), L"{}", inRun->GetScoring().GetNeedOpenPts());
+				fmt::format_to(std::back_inserter(text), L" / ");
 				if (0 < inRun->GetScoring().GetNeedClosePts())
-					fmt::format_to(text, L"{}", inRun->GetScoring().GetNeedClosePts());
+					fmt::format_to(std::back_inserter(text), L"{}", inRun->GetScoring().GetNeedClosePts());
 				break;
 			case ARBScoringType::ByPoints:
 				if (0 < inRun->GetScoring().GetNeedOpenPts())
-					fmt::format_to(text, L"{}", inRun->GetScoring().GetNeedOpenPts());
+					fmt::format_to(std::back_inserter(text), L"{}", inRun->GetScoring().GetNeedOpenPts());
 				break;
 			}
 		}
@@ -611,7 +611,7 @@ std::wstring CPrintRuns::GetFieldText(
 		{
 			double val = inRun->GetScoring().GetTime();
 			if (0.0 < val)
-				fmt::format_to(text, L"{}", ARBDouble::ToString(val));
+				fmt::format_to(std::back_inserter(text), L"{}", ARBDouble::ToString(val));
 		}
 		break;
 	case CODE_FAULTS:
@@ -630,9 +630,9 @@ std::wstring CPrintRuns::GetFieldText(
 			double timeFaults = inRun->GetScoring().GetTimeFaults(pScoring);
 			if (inRun->GetQ().AllowTally() || (0 < inRun->GetScoring().GetCourseFaults() || 0.0 < timeFaults))
 			{
-				fmt::format_to(text, L"{}", inRun->GetScoring().GetCourseFaults());
+				fmt::format_to(std::back_inserter(text), L"{}", inRun->GetScoring().GetCourseFaults());
 				if (0.0 < timeFaults)
-					fmt::format_to(text, L"+{}", ARBDouble::ToString(timeFaults, 0));
+					fmt::format_to(std::back_inserter(text), L"+{}", ARBDouble::ToString(timeFaults, 0));
 			}
 		}
 		break;
@@ -647,33 +647,33 @@ std::wstring CPrintRuns::GetFieldText(
 				break;
 			case ARBScoringType::ByOpenClose:
 				if (0 < inRun->GetScoring().GetOpenPts())
-					fmt::format_to(text, L"{}", inRun->GetScoring().GetOpenPts());
-				fmt::format_to(text, L" / ");
+					fmt::format_to(std::back_inserter(text), L"{}", inRun->GetScoring().GetOpenPts());
+				fmt::format_to(std::back_inserter(text), L" / ");
 				if (0 < inRun->GetScoring().GetClosePts())
-					fmt::format_to(text, L"{}", inRun->GetScoring().GetClosePts());
+					fmt::format_to(std::back_inserter(text), L"{}", inRun->GetScoring().GetClosePts());
 				break;
 			case ARBScoringType::ByPoints:
 				if (0 < inRun->GetScoring().GetOpenPts())
-					fmt::format_to(text, L"{}", inRun->GetScoring().GetOpenPts());
+					fmt::format_to(std::back_inserter(text), L"{}", inRun->GetScoring().GetOpenPts());
 				break;
 			}
 		}
 		break;
 	case CODE_PLACE:
 		if (inRun && 0 < inRun->GetPlace())
-			fmt::format_to(text, L"{}", inRun->GetPlace());
+			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetPlace());
 		break;
 	case CODE_INCLASS:
 		if (inRun && 0 <= inRun->GetInClass())
-			fmt::format_to(text, L"{}", inRun->GetInClass());
+			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetInClass());
 		break;
 	case CODE_QD:
 		if (inRun && 0 <= inRun->GetDogsQd())
-			fmt::format_to(text, L"{}", inRun->GetDogsQd());
+			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetDogsQd());
 		break;
 	case CODE_COMMENTS:
 		if (inRun)
-			fmt::format_to(text, L"{}", inRun->GetNote());
+			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetNote());
 		break;
 	case CODE_OTHER:
 		if (inRun && 0 < inRun->GetOtherPoints().size())
@@ -684,8 +684,8 @@ std::wstring CPrintRuns::GetFieldText(
 				 ++iter, ++i)
 			{
 				if (0 < i)
-					fmt::format_to(text, L" ");
-				fmt::format_to(text, L"{}:{}", (*iter)->GetName(), (*iter)->GetPoints());
+					fmt::format_to(std::back_inserter(text), L" ");
+				fmt::format_to(std::back_inserter(text), L"{}:{}", (*iter)->GetName(), (*iter)->GetPoints());
 			}
 		}
 		break;

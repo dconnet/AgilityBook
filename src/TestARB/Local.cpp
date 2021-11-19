@@ -294,10 +294,17 @@ std::wstring CLocalization::ActionRenameOtherPoints(
 	int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_OTHERPTS")), oldName, newName);
+	fmt::format_to(
+		std::back_inserter(buffer),
+		StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_OTHERPTS")),
+		oldName,
+		newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_OTHERPTS2")), nChanges);
+		fmt::format_to(
+			std::back_inserter(buffer),
+			StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_OTHERPTS2")),
+			nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -319,10 +326,17 @@ std::wstring CLocalization::ActionRenameVenue(std::wstring const& oldName, std::
 	const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_VENUE")), oldName, newName);
+	fmt::format_to(
+		std::back_inserter(buffer),
+		StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_VENUE")),
+		oldName,
+		newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_VENUE2")), nChanges);
+		fmt::format_to(
+			std::back_inserter(buffer),
+			StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_VENUE2")),
+			nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -347,10 +361,18 @@ std::wstring CLocalization::ActionRenameMultiQ(
 	int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_MULTIQ")), venue, oldName, newName);
+	fmt::format_to(
+		std::back_inserter(buffer),
+		StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_MULTIQ")),
+		venue,
+		oldName,
+		newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_MULTIQ2")), nChanges);
+		fmt::format_to(
+			std::back_inserter(buffer),
+			StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_MULTIQ2")),
+			nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -376,10 +398,18 @@ std::wstring CLocalization::ActionRenameDivision(
 	int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_DIV")), venue, oldName, newName);
+	fmt::format_to(
+		std::back_inserter(buffer),
+		StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_DIV")),
+		venue,
+		oldName,
+		newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_DIV2")), nChanges);
+		fmt::format_to(
+			std::back_inserter(buffer),
+			StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_DIV2")),
+			nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -405,10 +435,18 @@ std::wstring CLocalization::ActionRenameLevel(
 	int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_LEVEL")), venue, oldName, newName);
+	fmt::format_to(
+		std::back_inserter(buffer),
+		StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_LEVEL")),
+		venue,
+		oldName,
+		newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_LEVEL2")), nChanges);
+		fmt::format_to(
+			std::back_inserter(buffer),
+			StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_LEVEL2")),
+			nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -434,10 +472,18 @@ std::wstring CLocalization::ActionRenameTitle(
 	int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_TITLE")), venue, oldName, newName);
+	fmt::format_to(
+		std::back_inserter(buffer),
+		StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_TITLE")),
+		venue,
+		oldName,
+		newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_TITLE2")), nChanges);
+		fmt::format_to(
+			std::back_inserter(buffer),
+			StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_TITLE2")),
+			nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -463,10 +509,18 @@ std::wstring CLocalization::ActionRenameEvent(
 	int nChanges) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_EVENT")), venue, oldName, newName);
+	fmt::format_to(
+		std::back_inserter(buffer),
+		StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_EVENT")),
+		venue,
+		oldName,
+		newName);
 	if (0 < nChanges)
 	{
-		fmt::format_to(buffer, StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_EVENT2")), nChanges);
+		fmt::format_to(
+			std::back_inserter(buffer),
+			StringUtil::GetTranslation(arbT("IDS_ACTION_RENAME_EVENT2")),
+			nChanges);
 	}
 	return fmt::to_string(buffer);
 }
@@ -608,9 +662,15 @@ std::wstring CLocalization::ErrorMissingAttribute(
 	wchar_t const* const inMsg) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, L"{}{}{}{}'.", m_InvalidFileFormat, inElement, m_InvalidFileMissingAttrib, inAttrib);
+	fmt::format_to(
+		std::back_inserter(buffer),
+		L"{}{}{}{}'.",
+		m_InvalidFileFormat,
+		inElement,
+		m_InvalidFileMissingAttrib,
+		inAttrib);
 	if (inMsg)
-		fmt::format_to(buffer, L" {}\n", inMsg);
+		fmt::format_to(std::back_inserter(buffer), L" {}\n", inMsg);
 	return fmt::to_string(buffer);
 }
 
@@ -621,8 +681,14 @@ std::wstring CLocalization::ErrorInvalidAttributeValue(
 	wchar_t const* const inMsg) const
 {
 	fmt::wmemory_buffer buffer;
-	fmt::format_to(buffer, L"{}{}{}{}'.", m_InvalidFileFormat, inElement, m_InvalidFileBadAttrib, inAttrib);
+	fmt::format_to(
+		std::back_inserter(buffer),
+		L"{}{}{}{}'.",
+		m_InvalidFileFormat,
+		inElement,
+		m_InvalidFileBadAttrib,
+		inAttrib);
 	if (inMsg)
-		fmt::format_to(buffer, L" {}\n", inMsg);
+		fmt::format_to(std::back_inserter(buffer), L" {}\n", inMsg);
 	return fmt::to_string(buffer);
 }

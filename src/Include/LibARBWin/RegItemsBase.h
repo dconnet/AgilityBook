@@ -19,7 +19,7 @@
  * 2018-10-11 Separated from RegItems.h.
  */
 
-#include "fmt/format.h"
+#include "fmt/xchar.h"
 
 // Sorting:
 #define CFG_KEY_SORTING L"Sorting"

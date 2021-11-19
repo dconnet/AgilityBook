@@ -21,7 +21,7 @@
 #include "LibARBWin/MenuHelper.h"
 #include "LibARBWin/ReportListCtrl.h"
 #include "LibARBWin/Validators.h"
-#include "fmt/format.h"
+#include "fmt/xchar.h"
 #include <wx/utils.h>
 
 #if defined(__WXMSW__)
@@ -297,14 +297,14 @@ public:
 				for (size_t i = 0; i < m_accels.size(); ++i)
 				{
 					if (0 < i)
-						fmt::format_to(data, L", ");
+						fmt::format_to(std::back_inserter(data), L", ");
 					if (m_accels[i].bCtrl)
-						fmt::format_to(data, _("Ctrl+").wx_str());
+						fmt::format_to(std::back_inserter(data), _("Ctrl+").wx_str());
 					if (m_accels[i].bAlt)
-						fmt::format_to(data, _("Alt+").wx_str());
+						fmt::format_to(std::back_inserter(data), _("Alt+").wx_str());
 					if (m_accels[i].bShift)
-						fmt::format_to(data, _("Shift+").wx_str());
-					fmt::format_to(data, L"{}", GetKeyCode(m_keyMap, m_accels[i].keyCode).wx_str());
+						fmt::format_to(std::back_inserter(data), _("Shift+").wx_str());
+					fmt::format_to(std::back_inserter(data), L"{}", GetKeyCode(m_keyMap, m_accels[i].keyCode).wx_str());
 				}
 				return fmt::to_string(data);
 			}
@@ -445,9 +445,9 @@ CDlgConfigAccel::CDlgConfigAccel(
 			for (size_t n = 0; n < path.size(); ++n)
 			{
 				if (0 == n)
-					fmt::format_to(data, L"{}", path[n]);
+					fmt::format_to(std::back_inserter(data), L"{}", path[n]);
 				else
-					fmt::format_to(data, L" | {}", path[n]);
+					fmt::format_to(std::back_inserter(data), L" | {}", path[n]);
 			}
 
 			MenuData menudata;
