@@ -8,6 +8,7 @@
 # Note: Found old OSX SDKs at https://github.com/phracker/MacOSX-SDKs/releases
 #
 # History
+# 2021-11-30 Added SDK12.0
 # 2021-04-14 Upgraded 3.1.4 to 3.1.5
 # 2021-01-20 Added SDK11.1
 # 2020-11-22 Added SDK11.0 (reordered to make older SDKs prefered)
@@ -136,6 +137,11 @@ Darwin*)
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk; then
 		echo "Using 11.1 SDK"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk
+		MIN_OS=$MAC_MIN_OS
+
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.0.sdk; then
+		echo "Using 12.0 SDK"
+		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.0.sdk
 		MIN_OS=$MAC_MIN_OS
 
 	fi
