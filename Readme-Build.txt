@@ -166,8 +166,9 @@ Install xcode command line tools
 Install MacPorts: http://www.macports.org
 sudo port -v selfupdate
 sudo port upgrade outdated
-initial: sudo port install autoconf gettext git python39 py39-readline
-         sudo port select --set python3 python39
+initial: sudo port install autoconf gettext git python310 py310-readline
+         sudo port select --set python python310
+         sudo port select --set python3 python310
 Download SDK 10.11 from github.com/phracker/MacOSX-SDKs/releases/
  (this is the min SDK wx supports - use that)
  Unpack into /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/
