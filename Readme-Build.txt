@@ -173,6 +173,9 @@ Download SDK 10.11 from github.com/phracker/MacOSX-SDKs/releases/
  (this is the min SDK wx supports - use that)
  Unpack into /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/
 
+Note, to build using the xcode project, you need to enable xcode to use env vars
+  defaults write com.apple.dt.Xcode UseSanitizedBuildSystemEnvironment -bool NO
+
 To determine clang precessor defines (works for gcc also):
   clang -dM -E -x c /dev/null
 
