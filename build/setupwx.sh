@@ -8,7 +8,8 @@
 # Note: Found old OSX SDKs at https://github.com/phracker/MacOSX-SDKs/releases
 #
 # History
-# 2021-11-30 Added SDK12.0, arm64
+# 2021-11-30 Added SDK12.0, arm64.
+#            Change -with...builtin options to --disable-sys-libs
 # 2021-04-14 Upgraded 3.1.4 to 3.1.5
 # 2021-01-20 Added SDK11.1
 # 2020-11-22 Added SDK11.0 (reordered to make older SDKs prefered)
@@ -176,7 +177,7 @@ esac
 
 CONFIG_PARAMS+=" $TARGETARCH"
 
-LIBRARIES+=" --with-cxx=14 --with-expat=builtin --with-regex=builtin --with-zlib=builtin --without-libiconv --without-liblzma"
+LIBRARIES+=" --with-cxx=14 --disable-sys-libs --without-libiconv --without-liblzma"
 
 echo "../configure $COMPILERS $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS"
 
