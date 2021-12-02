@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2021-12-02 EN/FR language descriptions changed slightly in wx3.1.6.
  * 2019-12-13 Fix issue when loading non-existing .mo file.
  * 2019-09-13 Fix initialization issue.
  * 2018-10-11 Moved to Win LibARBWin
@@ -183,6 +184,9 @@ wxLanguage CLanguageManager::SelectLang(wxWindow* parent)
 #if 0
 			wchar_t* x1 = _("English (U.S.)");
 			wchar_t* x1 = _("French");
+			// This changed in 3.1.6
+			wchar_t* x1 = _("English (United States)");
+			wchar_t* x1 = _("French (France)");
 #endif
 			choices.Add(wxGetTranslation(info->Description));
 			langId.push_back(static_cast<wxLanguage>(info->Language));

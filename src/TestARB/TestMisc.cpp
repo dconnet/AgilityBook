@@ -230,6 +230,9 @@ TEST_CASE("Misc")
 			{
 				for (size_t j = 0; j < MAX_LANGS; ++j)
 				{
+					// A failure here means the string in wx changed.
+					// Edit LibARBWin/LanguageManager.cpp, around line 183.
+					// Add the new strings so poedit can capture them.
 					REQUIRE(langdata[i].Desc[j] != langdata[i].ArbDesc[j]);
 				}
 			}

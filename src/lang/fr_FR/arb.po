@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-28 11:06-0700\n"
-"PO-Revision-Date: 2021-10-28 11:06-0700\n"
+"POT-Creation-Date: 2021-12-02 09:36-0800\n"
+"PO-Revision-Date: 2021-12-02 09:36-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -299,7 +299,7 @@ msgstr "Configurer les codes Endroit et Organisation qui sont permis."
 msgid "IDC_PLUGINDETAIL_CODES_TEXT"
 msgstr "{0} Code(s) Endroit et {1} Organisation"
 
-#: CalSites/DlgPluginDetails.cpp:232 Win/DlgConfigEvent.cpp:1616
+#: CalSites/DlgPluginDetails.cpp:232 Win/DlgConfigEvent.cpp:1624
 #: Win/DlgConfigLifetimeName.cpp:134 Win/DlgConfigMultiQ.cpp:396
 #: Win/DlgConfigOtherPoints.cpp:68 Win/DlgConfigVenue.cpp:102
 #: Win/DlgConfigVenue.cpp:193 Win/DlgConfigVenue.cpp:690 Win/DlgConfigure.cpp:432
@@ -401,7 +401,7 @@ msgstr ""
 "%s version %s\n"
 "%s"
 
-#: Libraries/ARBCommon/VersionNum.cpp:97
+#: Libraries/ARBCommon/VersionNum.cpp:94
 #, fuzzy, c-format
 msgid "Compiled on %s at %s"
 msgstr "Compiled on %s at %s"
@@ -514,24 +514,34 @@ msgstr "Progression"
 
 # Description strings returned by wxWidgets wxLocale.
 # Keep each one in the native form (like Win7's display language selection)
-#: Libraries/LibARBWin/LanguageManager.cpp:184
+#: Libraries/LibARBWin/LanguageManager.cpp:185
 msgid "English (U.S.)"
 msgstr "English"
 
-#: Libraries/LibARBWin/LanguageManager.cpp:185
+#: Libraries/LibARBWin/LanguageManager.cpp:186
 msgid "French"
 msgstr "français"
 
-#: Libraries/LibARBWin/LanguageManager.cpp:201
+# Description strings returned by wxWidgets wxLocale.
+# Keep each one in the native form (like Win7's display language selection)
+#: Libraries/LibARBWin/LanguageManager.cpp:188
+msgid "English (United States)"
+msgstr "English"
+
+#: Libraries/LibARBWin/LanguageManager.cpp:189
+msgid "French (France)"
+msgstr "français"
+
+#: Libraries/LibARBWin/LanguageManager.cpp:205
 msgid "Choose a language:"
 msgstr "Choisir la Langue:"
 
 # DlgLanguage
-#: Libraries/LibARBWin/LanguageManager.cpp:201
+#: Libraries/LibARBWin/LanguageManager.cpp:205
 msgid "Language Selection"
 msgstr "Choisir la Langue"
 
-#: Libraries/LibARBWin/LanguageManager.cpp:202
+#: Libraries/LibARBWin/LanguageManager.cpp:206
 msgid "Select a language to use."
 msgstr "Choisir une langue."
 
@@ -567,7 +577,7 @@ msgstr "Lire {} lignes"
 msgid "Please enter a valid number"
 msgstr "Merci d'enter un nombre valide."
 
-#: TestARB/Local.cpp:52 TestARB/TestMisc.cpp:162 Win/Localization.cpp:50
+#: TestARB/Local.cpp:52 TestARB/TestMisc.cpp:163 Win/Localization.cpp:50
 msgid "IDS_ARB_UNKNOWN_VERSION"
 msgstr "Version document inconnu"
 
@@ -676,15 +686,15 @@ msgstr "Passé"
 msgid "IDS_CALENDAR_NOTENTERED"
 msgstr "Pas inscrit"
 
-#: TestARB/Local.cpp:86 Win/Localization.cpp:83 Win/WizardImport.cpp:1314
+#: TestARB/Local.cpp:86 Win/Localization.cpp:83 Win/WizardImport.cpp:1320
 msgid "IDS_CALENDAR_ENTERED"
 msgstr "Inscrit"
 
-#: TestARB/Local.cpp:87 Win/Localization.cpp:84 Win/WizardImport.cpp:1308
+#: TestARB/Local.cpp:87 Win/Localization.cpp:84 Win/WizardImport.cpp:1314
 msgid "IDS_CALENDAR_PENDING"
 msgstr "En attente"
 
-#: TestARB/Local.cpp:88 Win/Localization.cpp:85 Win/WizardImport.cpp:1302
+#: TestARB/Local.cpp:88 Win/Localization.cpp:85 Win/WizardImport.cpp:1308
 msgid "IDS_CALENDAR_PLANNING"
 msgstr "Prevue"
 
@@ -790,9 +800,9 @@ msgid "IDS_UPDATE_IDENTICAL"
 msgstr "{} identique"
 
 #: TestARB/Local.cpp:131 Win/DlgConfigure.cpp:238 Win/DlgDogPanelPoints.cpp:56
-#: Win/DlgListCtrl.cpp:551 Win/Localization.cpp:127 Win/PointsData.cpp:1320
-#: Win/PointsData.cpp:1361 Win/PointsData.cpp:1402 Win/PointsData.cpp:1446
-#: Win/PointsData.cpp:1703
+#: Win/DlgListCtrl.cpp:551 Win/Localization.cpp:127 Win/PointsData.cpp:1351
+#: Win/PointsData.cpp:1392 Win/PointsData.cpp:1433 Win/PointsData.cpp:1477
+#: Win/PointsData.cpp:1734
 msgid "IDS_OTHERPOINTS"
 msgstr "Autres Points"
 
@@ -847,7 +857,7 @@ msgid "IDS_COL_LEVELS"
 msgstr "Degrés"
 
 #: TestARB/Local.cpp:243 TestARB/Local.cpp:254 Win/Localization.cpp:227
-#: Win/Localization.cpp:236 Win/PointsData.cpp:1190
+#: Win/Localization.cpp:236 Win/PointsData.cpp:1218
 msgid "IDS_TITLES"
 msgstr "Distinctions"
 
@@ -860,181 +870,181 @@ msgstr "SousDegré"
 msgid "IDS_UPDATE_RULES"
 msgstr "regles"
 
-#: TestARB/Local.cpp:297 Win/Localization.cpp:275
+#: TestARB/Local.cpp:299 Win/Localization.cpp:275
 msgid "IDS_ACTION_RENAME_OTHERPTS"
 msgstr "Action: Changer nom autres points [{0}] pour [{1}]"
 
-#: TestARB/Local.cpp:300 Win/Localization.cpp:278
+#: TestARB/Local.cpp:306 Win/Localization.cpp:278
 msgid "IDS_ACTION_RENAME_OTHERPTS2"
 msgstr ", mise à jours {} Autres points"
 
-#: TestARB/Local.cpp:308 Win/Localization.cpp:286
+#: TestARB/Local.cpp:315 Win/Localization.cpp:286
 msgid "IDS_ACTION_PREDELETE_OTHERPTS"
 msgstr "SUPPRESSION: Autres points [{0}] {1} Objets"
 
-#: TestARB/Local.cpp:314 Win/Localization.cpp:292
+#: TestARB/Local.cpp:321 Win/Localization.cpp:292
 msgid "IDS_ACTION_DELETE_OTHERPTS"
 msgstr "Action: Suppression Autres points [{}]"
 
-#: TestARB/Local.cpp:322 Win/Localization.cpp:300
+#: TestARB/Local.cpp:331 Win/Localization.cpp:300
 msgid "IDS_ACTION_RENAME_VENUE"
 msgstr "Action: Changer nom organisaton [{0}] pour [{1}]"
 
-#: TestARB/Local.cpp:325 Win/Localization.cpp:303
+#: TestARB/Local.cpp:338 Win/Localization.cpp:303
 msgid "IDS_ACTION_RENAME_VENUE2"
 msgstr ", mise à jours {} objects associés"
 
-#: TestARB/Local.cpp:333 Win/Localization.cpp:311
+#: TestARB/Local.cpp:347 Win/Localization.cpp:311
 msgid "IDS_ACTION_PREDELETE_VENUE"
 msgstr "SUPPRESSION: Organisation [{0}] {1} objets"
 
-#: TestARB/Local.cpp:339 Win/Localization.cpp:317
+#: TestARB/Local.cpp:353 Win/Localization.cpp:317
 msgid "IDS_ACTION_DELETE_VENUE"
 msgstr "Action: Suppression organisation [{}]"
 
-#: TestARB/Local.cpp:350 Win/Localization.cpp:328
+#: TestARB/Local.cpp:366 Win/Localization.cpp:328
 msgid "IDS_ACTION_RENAME_MULTIQ"
 msgstr "Action: Changer nom {0} MultiQ [{1}] pour [{2}]"
 
-#: TestARB/Local.cpp:353 Win/Localization.cpp:331
+#: TestARB/Local.cpp:374 Win/Localization.cpp:331
 msgid "IDS_ACTION_RENAME_MULTIQ2"
 msgstr ", mise à jours {} MultiQs"
 
-#: TestARB/Local.cpp:362 Win/Localization.cpp:340
+#: TestARB/Local.cpp:384 Win/Localization.cpp:340
 msgid "IDS_ACTION_PREDELETE_MULTIQ"
 msgstr "SUPPRESSION: {0} MultiQ [{1}] {2} Objets"
 
-#: TestARB/Local.cpp:368 Win/Localization.cpp:346
+#: TestARB/Local.cpp:390 Win/Localization.cpp:346
 msgid "IDS_ACTION_DELETE_MULTIQ"
 msgstr "Action: Suppression {0} MultiQ [{1}]"
 
-#: TestARB/Local.cpp:379 Win/Localization.cpp:357
+#: TestARB/Local.cpp:403 Win/Localization.cpp:357
 msgid "IDS_ACTION_RENAME_DIV"
 msgstr "Action: Changement nom niveau conducteur {0} [{1}] pour [{2}]"
 
-#: TestARB/Local.cpp:382 Win/Localization.cpp:360
+#: TestARB/Local.cpp:411 Win/Localization.cpp:360
 msgid "IDS_ACTION_RENAME_DIV2"
 msgstr ", mise à jours {} parcours"
 
-#: TestARB/Local.cpp:391 Win/Localization.cpp:369
+#: TestARB/Local.cpp:421 Win/Localization.cpp:369
 msgid "IDS_ACTION_PREDELETE_DIV"
 msgstr "SUPPRESSION: {0} Niveau conducteur [{1}] {2} parcours et points existant"
 
-#: TestARB/Local.cpp:397 Win/Localization.cpp:375
+#: TestARB/Local.cpp:427 Win/Localization.cpp:375
 msgid "IDS_ACTION_DELETE_DIV"
 msgstr "Action: Suppression {0} Niveau conducteur [{1}]"
 
-#: TestARB/Local.cpp:408 Win/Localization.cpp:386
+#: TestARB/Local.cpp:440 Win/Localization.cpp:386
 msgid "IDS_ACTION_RENAME_LEVEL"
 msgstr "Action: Changement de noms {0} Degré [{1}] pour [{2}]"
 
-#: TestARB/Local.cpp:411 Win/Localization.cpp:389
+#: TestARB/Local.cpp:448 Win/Localization.cpp:389
 msgid "IDS_ACTION_RENAME_LEVEL2"
 msgstr ", mise a jour {} parcours"
 
-#: TestARB/Local.cpp:420 Win/Localization.cpp:398
+#: TestARB/Local.cpp:458 Win/Localization.cpp:398
 msgid "IDS_ACTION_PREDELETE_LEVEL"
 msgstr "SUPPRESSION: {0} Degré [{1}] {2} parcours"
 
-#: TestARB/Local.cpp:426 Win/Localization.cpp:404
+#: TestARB/Local.cpp:464 Win/Localization.cpp:404
 msgid "IDS_ACTION_DELETE_LEVEL"
 msgstr "Action: Suppression {0} Degré [{1}]"
 
-#: TestARB/Local.cpp:437 Win/Localization.cpp:415
+#: TestARB/Local.cpp:477 Win/Localization.cpp:415
 msgid "IDS_ACTION_RENAME_TITLE"
 msgstr "Action: Changement de noms {0} Distinction [{1}] pour [{2}]"
 
-#: TestARB/Local.cpp:440 Win/Localization.cpp:418
+#: TestARB/Local.cpp:485 Win/Localization.cpp:418
 msgid "IDS_ACTION_RENAME_TITLE2"
 msgstr ", mise à jours {} Distinction"
 
-#: TestARB/Local.cpp:449 Win/Localization.cpp:427
+#: TestARB/Local.cpp:495 Win/Localization.cpp:427
 msgid "IDS_ACTION_PREDELETE_TITLE"
 msgstr "SUPPRESSION: {0} Distinction [{1}] {2} distinctions"
 
-#: TestARB/Local.cpp:455 Win/Localization.cpp:433
+#: TestARB/Local.cpp:501 Win/Localization.cpp:433
 msgid "IDS_ACTION_DELETE_TITLE"
 msgstr "Action: Suppression {0} Distinction [{1}]"
 
-#: TestARB/Local.cpp:466 Win/Localization.cpp:444
+#: TestARB/Local.cpp:514 Win/Localization.cpp:444
 msgid "IDS_ACTION_RENAME_EVENT"
 msgstr "Action: Changement de noms {0} Epreuve [{1}] pour [{2}]"
 
-#: TestARB/Local.cpp:469 Win/Localization.cpp:447
+#: TestARB/Local.cpp:522 Win/Localization.cpp:447
 msgid "IDS_ACTION_RENAME_EVENT2"
 msgstr ", mise à jours {} epreuves"
 
-#: TestARB/Local.cpp:478 Win/Localization.cpp:456
+#: TestARB/Local.cpp:532 Win/Localization.cpp:456
 msgid "IDS_ACTION_PREDELETE_EVENT"
 msgstr "SUPPRESSION: {0} Epreuve [{1}] {2} epreuves"
 
-#: TestARB/Local.cpp:484 Win/Localization.cpp:462
+#: TestARB/Local.cpp:538 Win/Localization.cpp:462
 msgid "IDS_ACTION_DELETE_EVENT"
 msgstr "Action: Suppression {0} Epreuve [{1}]"
 
-#: TestARB/Local.cpp:496 Win/Localization.cpp:473
+#: TestARB/Local.cpp:550 Win/Localization.cpp:473
 #, fuzzy
 msgid "IDS_ACTION_RENAME_LIFETIMENAME_0"
 msgstr "Action: Renaming Lifetime Name '{0}' to '{1}' [{2}]"
 
-#: TestARB/Local.cpp:502 Win/Localization.cpp:475
+#: TestARB/Local.cpp:556 Win/Localization.cpp:475
 #, fuzzy
 msgid "IDS_ACTION_RENAME_LIFETIMENAME_N"
 msgstr "Action: Renaming Lifetime Name '{0}' to '{1}' in {3} events [{2}]"
 
-#: TestARB/Local.cpp:516 Win/Localization.cpp:485
+#: TestARB/Local.cpp:570 Win/Localization.cpp:485
 #, fuzzy
 msgid "IDS_ACTION_DELETE_LIFETIMENAME_0"
 msgstr "Action: Deleting Lifetime Name '{0}' [{1}]"
 
-#: TestARB/Local.cpp:519 Win/Localization.cpp:487
+#: TestARB/Local.cpp:573 Win/Localization.cpp:487
 #, fuzzy
 msgid "IDS_ACTION_DELETE_LIFETIMENAME_N"
 msgstr "Action: Deleting Lifetime Name '{0}' from {2} events [{1}]"
 
-#: TestARB/Local.cpp:528 Win/Localization.cpp:493
+#: TestARB/Local.cpp:582 Win/Localization.cpp:493
 msgid "IDS_TITLEPOINTSNAME"
 msgstr "{0:g} points avec {1:g} fautes"
 
-#: TestARB/Local.cpp:535 TestARB/Local.cpp:544 Win/Localization.cpp:500
+#: TestARB/Local.cpp:589 TestARB/Local.cpp:598 Win/Localization.cpp:500
 #: Win/Localization.cpp:509
 msgid "IDS_LIFETITLEPOINTSNAME"
 msgstr "{0} points pour la vie avec {1:g} fautes"
 
-#: TestARB/Local.cpp:536 Win/DlgAssignColumns.cpp:406 Win/Localization.cpp:501
+#: TestARB/Local.cpp:590 Win/DlgAssignColumns.cpp:406 Win/Localization.cpp:501
 msgid "IDS_COL_SPEED"
 msgstr "Vitesse"
 
-#: TestARB/Local.cpp:550 Win/Localization.cpp:515
+#: TestARB/Local.cpp:604 Win/Localization.cpp:515
 msgid "IDS_PLACEMENTPOINTSNAME"
 msgstr "{0:g} points avec rang {1}"
 
-#: TestARB/Local.cpp:558 Win/Localization.cpp:521
+#: TestARB/Local.cpp:612 Win/Localization.cpp:521
 msgid "IDS_WARN_DELETED_RUNS"
 msgstr ""
 "ATTENTION\n"
 "\n"
 "{} parcour(s) suprimmé a cause de changement configuration."
 
-#: TestARB/Local.cpp:567 Win/Localization.cpp:527
+#: TestARB/Local.cpp:621 Win/Localization.cpp:527
 #, fuzzy
 msgid "IDS_UPDATE_TEAM_RUNS"
 msgstr ""
 "Updated {} Team runs.\n"
 "(Date, Venue, Event, Division/Level)"
 
-#: TestARB/Local.cpp:574 Win/Localization.cpp:533
+#: TestARB/Local.cpp:628 Win/Localization.cpp:533
 msgid "IDS_UPDATE_TABLE_RUNS"
 msgstr "Parametre table changé pour {} parcours."
 
-#: TestARB/Local.cpp:582 Win/Localization.cpp:539
+#: TestARB/Local.cpp:636 Win/Localization.cpp:539
 #, fuzzy
 msgid "IDS_UPDATE_TABLE_RUNS2"
 msgstr ""
 "Table setting updated in {} runs.\n"
 "(Date, Venue, Event, Division/Level)"
 
-#: TestARB/Local.cpp:591 Win/Localization.cpp:545
+#: TestARB/Local.cpp:645 Win/Localization.cpp:545
 #, fuzzy
 msgid "IDS_UPDATE_SUBNAME_RUNS"
 msgstr ""
@@ -1340,47 +1350,47 @@ msgstr "File name: {}"
 msgid "IDS_FILEPROP_NAME_READONLY"
 msgstr "[readonly]"
 
-#: Win/AgilityBookDoc.cpp:2299 Win/AgilityBookDoc.cpp:2320
+#: Win/AgilityBookDoc.cpp:2299 Win/AgilityBookDoc.cpp:2323
 #, fuzzy
 msgid "IDS_FILEPROP_NAME_MODIFIED"
 msgstr "[changes pending]"
 
-#: Win/AgilityBookDoc.cpp:2301
+#: Win/AgilityBookDoc.cpp:2304
 #, fuzzy
 msgid "IDS_FILEPROP_SIZE"
 msgstr "File size: {} bytes"
 
-#: Win/AgilityBookDoc.cpp:2309
+#: Win/AgilityBookDoc.cpp:2312
 #, fuzzy
 msgid "IDS_FILEPROP_CREATED"
 msgstr "Created: {}"
 
-#: Win/AgilityBookDoc.cpp:2313
+#: Win/AgilityBookDoc.cpp:2316
 #, fuzzy
 msgid "IDS_FILEPROP_MODIFIED"
 msgstr "Modified: {}"
 
-#: Win/AgilityBookDoc.cpp:2331
+#: Win/AgilityBookDoc.cpp:2334
 #, fuzzy
 msgid "IDS_FILEPROP_CONFIGURATION"
 msgstr "Configuration: {}"
 
-#: Win/AgilityBookDoc.cpp:2337
+#: Win/AgilityBookDoc.cpp:2340
 #, fuzzy
 msgid "IDS_FILEPROP_CONFIGURATION_CURRENT"
 msgstr "Configuration: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2345
+#: Win/AgilityBookDoc.cpp:2351
 #, fuzzy
 msgid "IDS_FILEPROP_VERSION"
 msgstr "Document version: {}"
 
-#: Win/AgilityBookDoc.cpp:2351
+#: Win/AgilityBookDoc.cpp:2357
 #, fuzzy
 msgid "IDS_FILEPROP_VERSION_CURRENT"
 msgstr "Document version: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2363
+#: Win/AgilityBookDoc.cpp:2369
 #, fuzzy
 msgid "IDS_FILEPROP_FILEWRITTEN"
 msgstr ""
@@ -1390,7 +1400,7 @@ msgstr ""
 "Local time: {2}\n"
 "ARB: {3}"
 
-#: Win/AgilityBookDoc.cpp:2371
+#: Win/AgilityBookDoc.cpp:2377
 msgid "IDS_FILE_PROPERTIES"
 msgstr "Propriétés du fichier"
 
@@ -2214,7 +2224,7 @@ msgstr ""
 "Cette fenêtre contient toutes les informations concernant vos entrainements."
 
 #: Win/AgilityBookRunsView.cpp:345 Win/AgilityBookRunsView.cpp:347
-#: Win/AgilityBookTreeData.cpp:575 Win/WizardExport.cpp:844
+#: Win/AgilityBookTreeData.cpp:578 Win/WizardExport.cpp:844
 msgid "IDS_SQ"
 msgstr "SQ"
 
@@ -2226,11 +2236,11 @@ msgstr "{0} entrés, {1} parcours, {2} Qs"
 msgid "IDS_NUM_TRAINING"
 msgstr "{} entrés"
 
-#: Win/AgilityBookTreeData.cpp:143
+#: Win/AgilityBookTreeData.cpp:145
 msgid "IDS_YEARS"
 msgstr "{} ans"
 
-#: Win/AgilityBookTreeData.cpp:205
+#: Win/AgilityBookTreeData.cpp:208
 msgid "IDS_DELETE_DOG_DATA"
 msgstr ""
 "ATTENTION\n"
@@ -3395,67 +3405,67 @@ msgstr "<Tous>"
 msgid "IDS_CONFIGEVENT_STYLE"
 msgstr "Method pour calculer les resultats"
 
-#: Win/DlgConfigEvent.cpp:710 Win/DlgConfigEvent.cpp:727
-#: Win/DlgConfigEvent.cpp:748 Win/DlgConfigEvent.cpp:763
-#: Win/DlgConfigEvent.cpp:774
+#: Win/DlgConfigEvent.cpp:714 Win/DlgConfigEvent.cpp:731
+#: Win/DlgConfigEvent.cpp:752 Win/DlgConfigEvent.cpp:767
+#: Win/DlgConfigEvent.cpp:778
 msgid "IDS_CONFIGEVENT_TIMEFAULTMULT"
 msgstr "Temps Faut Multiplicateur"
 
-#: Win/DlgConfigEvent.cpp:714
+#: Win/DlgConfigEvent.cpp:718
 msgid "IDS_CONFIGEVENT_REQOPEN"
 msgstr "Ouverture necessaire"
 
-#: Win/DlgConfigEvent.cpp:715
+#: Win/DlgConfigEvent.cpp:719
 msgid "IDS_CONFIGEVENT_REQCLOSE"
 msgstr "Fermeture necessaire"
 
-#: Win/DlgConfigEvent.cpp:725 Win/DlgConfigEvent.cpp:746
+#: Win/DlgConfigEvent.cpp:729 Win/DlgConfigEvent.cpp:750
 msgid "IDS_CONFIGEVENT_TF_FROMSCORE"
 msgstr "Soustraire Fautes temps de resultat"
 
-#: Win/DlgConfigEvent.cpp:731 Win/DlgConfigEvent.cpp:752
-#: Win/DlgConfigEvent.cpp:779
+#: Win/DlgConfigEvent.cpp:735 Win/DlgConfigEvent.cpp:756
+#: Win/DlgConfigEvent.cpp:783
 msgid "IDS_CONFIGEVENT_TF_UNDER"
 msgstr "Calculer Fautes Temps sur TPS"
 
-#: Win/DlgConfigEvent.cpp:736 Win/DlgConfigEvent.cpp:757
-#: Win/DlgConfigEvent.cpp:784
+#: Win/DlgConfigEvent.cpp:740 Win/DlgConfigEvent.cpp:761
+#: Win/DlgConfigEvent.cpp:788
 msgid "IDS_CONFIGEVENT_TF_OVER"
 msgstr "Calculer Fautes Temps sous TPS"
 
-#: Win/DlgConfigEvent.cpp:742 Win/DlgRunPanelScore.cpp:1994 Win/TabView.cpp:242
+#: Win/DlgConfigEvent.cpp:746 Win/DlgRunPanelScore.cpp:1994 Win/TabView.cpp:242
 #: Win/TabView.cpp:289 Win/TabView.cpp:364
 msgid "IDS_POINTS"
 msgstr "Points"
 
-#: Win/DlgConfigEvent.cpp:769
+#: Win/DlgConfigEvent.cpp:773
 msgid "IDS_CONFIGEVENT_CLEANQ"
 msgstr "Parcours doit etre sans fautes pour Q."
 
-#: Win/DlgConfigEvent.cpp:794
+#: Win/DlgConfigEvent.cpp:798
 msgid "IDS_CONFIGEVENT_DROPFRAC"
 msgstr "Supprimer fraction temps pour fautes"
 
-#: Win/DlgConfigEvent.cpp:799
+#: Win/DlgConfigEvent.cpp:803
 #, fuzzy
 msgid "IDS_CONFIGEVENT_BONUSTITLE"
 msgstr "Points Bonus existent"
 
-#: Win/DlgConfigEvent.cpp:804
+#: Win/DlgConfigEvent.cpp:808
 msgid "IDS_CONFIGEVENT_SUPERQ"
 msgstr "Super Qs existant"
 
-#: Win/DlgConfigEvent.cpp:809
+#: Win/DlgConfigEvent.cpp:813
 msgid "IDS_CONFIGEVENT_SPEEDPTS"
 msgstr "Points vitesse existent"
 
-#: Win/DlgConfigEvent.cpp:1107 Win/DlgConfigEvent.cpp:1119
-#: Win/DlgConfigEvent.cpp:1127 Win/DlgConfigEvent.cpp:1410
-#: Win/DlgConfigEvent.cpp:1421 Win/DlgConfigEvent.cpp:1428
+#: Win/DlgConfigEvent.cpp:1115 Win/DlgConfigEvent.cpp:1127
+#: Win/DlgConfigEvent.cpp:1135 Win/DlgConfigEvent.cpp:1418
+#: Win/DlgConfigEvent.cpp:1429 Win/DlgConfigEvent.cpp:1436
 msgid "IDS_TITLEPTS_EXISTS"
 msgstr "Il y a deja un entré pour ces fautes"
 
-#: Win/DlgConfigEvent.cpp:1604
+#: Win/DlgConfigEvent.cpp:1612
 msgid "IDS_CONFIGEVENT_OVERLAPDATES"
 msgstr ""
 "ATTENTION\n"
@@ -4127,7 +4137,7 @@ msgstr ""
 "Cumulatifs' est utilisé."
 
 #: Win/DlgConfigTitlePoints.cpp:212 Win/DlgConfigTitlePoints.cpp:223
-#: Win/DlgConfigureData.cpp:801 Win/PointsData.cpp:409 Win/PointsData.cpp:441
+#: Win/DlgConfigureData.cpp:801 Win/PointsData.cpp:412 Win/PointsData.cpp:448
 msgid "IDS_TITLEPOINT_LIFETIME_NAME"
 msgstr "Lifetime"
 
@@ -6697,56 +6707,56 @@ msgstr "Filtré"
 msgid "Canceling file download..."
 msgstr "Canceling file download..."
 
-#: Win/PointsData.cpp:251 Win/PointsData.cpp:1201 Win/Print.cpp:116
+#: Win/PointsData.cpp:254 Win/PointsData.cpp:1229 Win/Print.cpp:116
 #: Win/Print.cpp:1063 Win/TabView.cpp:237 Win/TabView.cpp:363
 msgid "IDS_RUNS"
 msgstr "Parcours"
 
-#: Win/PointsData.cpp:284
+#: Win/PointsData.cpp:287
 msgid "IDS_POINTS_SPEED"
 msgstr "{} vitesse"
 
-#: Win/PointsData.cpp:410 Win/PointsData.cpp:442
+#: Win/PointsData.cpp:413 Win/PointsData.cpp:449
 msgid "IDS_LIFETIME_POINTS"
 msgstr "{} Points"
 
-#: Win/PointsData.cpp:413 Win/PointsData.cpp:445
+#: Win/PointsData.cpp:416 Win/PointsData.cpp:452
 msgid "IDS_PLACEMENT_POINTS"
 msgstr "Classement Points"
 
-#: Win/PointsData.cpp:419
+#: Win/PointsData.cpp:422
 msgid "IDS_TOTAL"
 msgstr "Total"
 
-#: Win/PointsData.cpp:822
+#: Win/PointsData.cpp:833
 msgid "IDS_POINTS_RUNS_JUDGES"
 msgstr "{0} parcours, {1} juges"
 
-#: Win/PointsData.cpp:827 Win/PointsData.cpp:850
+#: Win/PointsData.cpp:840 Win/PointsData.cpp:869
 msgid "IDS_POINTS_PARTNERS"
 msgstr ", {} partners"
 
-#: Win/PointsData.cpp:837
+#: Win/PointsData.cpp:851
 msgid "IDS_POINTS_QS"
 msgstr "{0} Qs ({1}%)"
 
-#: Win/PointsData.cpp:842
+#: Win/PointsData.cpp:856
 msgid "IDS_POINTS_CLEAN"
 msgstr ", ({} sans fautes)"
 
-#: Win/PointsData.cpp:846
+#: Win/PointsData.cpp:862
 msgid "IDS_POINTS_JUDGES"
 msgstr ", {} juges"
 
-#: Win/PointsData.cpp:857
+#: Win/PointsData.cpp:877
 msgid "IDS_POINTS_SQS"
 msgstr "[{} SQ]"
 
-#: Win/PointsData.cpp:862
+#: Win/PointsData.cpp:882
 msgid "IDS_POINTS_SPEED_SUBTOTAL"
 msgstr "[{} vitesse]"
 
-#: Win/PointsData.cpp:1671 Win/PointsData.cpp:1679
+#: Win/PointsData.cpp:1702 Win/PointsData.cpp:1710
 msgid "IDS_TITLING_POINTS"
 msgstr "Points Distinction"
 
@@ -6969,28 +6979,28 @@ msgstr ""
 msgid "IDS_NO_DELIM_SPECIFIED"
 msgstr "Aucun délimiteur specifié. Impossible de prevoir data."
 
-#: Win/WizardExport.cpp:1221
+#: Win/WizardExport.cpp:1229
 msgid "IDS_TRIAL_DATES"
 msgstr "Dates concours: {0} a {1}"
 
 # WizardExport
-#: Win/WizardExport.cpp:1413
+#: Win/WizardExport.cpp:1421
 msgid "IDD_WIZARD_EXPORT"
 msgstr "Utilitaire d'Exportation"
 
-#: Win/WizardExport.cpp:1445 Win/WizardImport.cpp:764
+#: Win/WizardExport.cpp:1453 Win/WizardImport.cpp:764
 msgid "IDS_SPECIFY_DATEFORMAT"
 msgstr "SVP specifiez un format date."
 
-#: Win/WizardExport.cpp:1472
+#: Win/WizardExport.cpp:1480
 msgid "IDS_EXPORTING"
 msgstr "Exporter..."
 
-#: Win/WizardExport.cpp:1501
+#: Win/WizardExport.cpp:1509
 msgid "IDS_EXPORT_FAILED"
 msgstr "Impossible d'exporter data."
 
-#: Win/WizardExport.cpp:1512 Win/WizardImport.cpp:392
+#: Win/WizardExport.cpp:1520 Win/WizardImport.cpp:392
 msgid "IDS_FILEEXT_FILTER_TXTCSV"
 msgstr "Fichiers Texte (*.txt; *.csv)|*.txt;*.csv|Tous fichiers (*.*)|*.*||"
 
@@ -7138,48 +7148,48 @@ msgstr "Impossible de lire data."
 msgid "IDD_WIZARD_IMPORT"
 msgstr "Utilitaire d'Importation"
 
-#: Win/WizardImport.cpp:862 Win/WizardImport.cpp:1100
+#: Win/WizardImport.cpp:865 Win/WizardImport.cpp:1106
 msgid "IDS_IMPORT_SKIP_NOCONFIG"
 msgstr ""
 "Attention: Ligne {}: Entré passé, impossible de trouver un entré configuration "
 "valide"
 
-#: Win/WizardImport.cpp:932
+#: Win/WizardImport.cpp:935
 msgid "IDS_IMPORT_BAD_DATE_RUN"
 msgstr "ERREUR: Ligne {0}, Colonne {1}: Date parcours invalide: {2}"
 
-#: Win/WizardImport.cpp:1090
+#: Win/WizardImport.cpp:1093
 msgid "IDS_IMPORT_BAD_VENUE"
 msgstr "Attention: Ligne {0}: Entré passé, nom organisation invalide: {1}"
 
-#: Win/WizardImport.cpp:1264
+#: Win/WizardImport.cpp:1270
 msgid "IDS_IMPORT_BAD_DATE_CALSTART"
 msgstr ""
 "ERREUR: Ligne {0}, colonne {1}: Date commencement calendrier invalide: {2}"
 
-#: Win/WizardImport.cpp:1284
+#: Win/WizardImport.cpp:1290
 msgid "IDS_IMPORT_BAD_DATE_CALEND"
 msgstr "ERREUR: Ligne {0}, colonne {1}: Date fermeture calendrier invalide: {2}"
 
-#: Win/WizardImport.cpp:1324
+#: Win/WizardImport.cpp:1330
 msgid "IDS_IMPORT_BAD_CAL_VALUE"
 msgstr ""
 "ERREUR: Ligne {0}, colonne {1}: Invalide entré calendrier: {2} (valide: N, P "
 "ou E)"
 
-#: Win/WizardImport.cpp:1355
+#: Win/WizardImport.cpp:1361
 msgid "IDS_IMPORT_BAD_DATE_CALOPEN"
 msgstr "ERREUR: Ligne {0}, colonne {1}: Date ouverture calendrier invalide: {2}"
 
-#: Win/WizardImport.cpp:1375
+#: Win/WizardImport.cpp:1381
 msgid "IDS_IMPORT_BAD_DATE_CALCLOSE"
 msgstr "ERREUR: Ligne {0}, colonne {1}: Date fermeture calendrier invalide: {2}"
 
-#: Win/WizardImport.cpp:1415
+#: Win/WizardImport.cpp:1421
 msgid "IDS_IMPORT_BAD_DATE_LOG"
 msgstr "ERREUR: Ligne {0}, colonne {1}: Date log entraînement invalide: {2}"
 
-#: Win/WizardImport.cpp:1461
+#: Win/WizardImport.cpp:1467
 msgid "IDS_IMPORT_STATS"
 msgstr ""
 "{0} entrés rajoutés\n"
