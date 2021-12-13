@@ -343,7 +343,7 @@ std::wstring CDlgListViewerDataRun::OnNeedText(long iCol) const
 			 ++iter2)
 		{
 			if (iter2 != m_Run->GetPartners().begin())
-				fmt::format_to(std::back_inserter(buffer), L", ");
+				fmt::format_to(std::back_inserter(buffer), L"{}", L", ");
 			fmt::format_to(std::back_inserter(buffer), L"{}/{}", (*iter2)->GetHandler(), (*iter2)->GetDog());
 		}
 		str = fmt::to_string(buffer);

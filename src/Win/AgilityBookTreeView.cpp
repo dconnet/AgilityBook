@@ -988,7 +988,7 @@ void CAgilityBookTreeView::PrintLine(fmt::wmemory_buffer& data, wxTreeItemId id,
 	if (id.IsOk() && id != m_Ctrl->GetRootItem())
 	{
 		for (int idx = 0; idx < indent; ++idx)
-			fmt::format_to(std::back_inserter(data), spaces);
+			fmt::format_to(std::back_inserter(data), L"{}", spaces);
 		fmt::format_to(
 			std::back_inserter(data),
 			L"{}<br />\n",
@@ -1007,9 +1007,9 @@ void CAgilityBookTreeView::PrintLine(fmt::wmemory_buffer& data, wxTreeItemId id,
 std::wstring CAgilityBookTreeView::GetPrintDataAsHtmlTable() const
 {
 	fmt::wmemory_buffer data;
-	fmt::format_to(std::back_inserter(data), L"<html><body><p>\n");
+	fmt::format_to(std::back_inserter(data), L"{}", L"<html><body><p>\n");
 	PrintLine(data, m_Ctrl->GetRootItem(), -1);
-	fmt::format_to(std::back_inserter(data), L"</p></body></html>\n");
+	fmt::format_to(std::back_inserter(data), L"{}", L"</p></body></html>\n");
 	return fmt::to_string(data);
 }
 

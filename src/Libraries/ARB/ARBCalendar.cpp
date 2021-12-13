@@ -475,10 +475,10 @@ std::wstring ARBCalendar::GetUID(UidType inType) const
 	switch (inType)
 	{
 	case UidType::vEvent:
-		fmt::format_to(std::back_inserter(str), L"e");
+		fmt::format_to(std::back_inserter(str), L"{}", L"e");
 		break;
 	case UidType::vTodo:
-		fmt::format_to(std::back_inserter(str), L"t");
+		fmt::format_to(std::back_inserter(str), L"{}", L"t");
 		break;
 	}
 	fmt::format_to(std::back_inserter(str), L"{}", m_DateStart.GetString(ARBDateFormat::YYYYMMDD));

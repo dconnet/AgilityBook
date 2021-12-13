@@ -564,12 +564,12 @@ std::wstring CPrintRuns::GetFieldText(
 				if (0.0 < sct)
 					fmt::format_to(std::back_inserter(text), L"{}", ARBDouble::ToString(sct));
 				else
-					fmt::format_to(std::back_inserter(text), L"  ");
-				fmt::format_to(std::back_inserter(text), L" / ");
+					fmt::format_to(std::back_inserter(text), L"{}", L"  ");
+				fmt::format_to(std::back_inserter(text), L"{}", L" / ");
 				if (0.0 < sct2)
 					fmt::format_to(std::back_inserter(text), L"{}", ARBDouble::ToString(sct2));
 				else
-					fmt::format_to(std::back_inserter(text), L"  ");
+					fmt::format_to(std::back_inserter(text), L"{}", L"  ");
 			}
 			else if (0.0 < sct)
 				fmt::format_to(std::back_inserter(text), L"{}", ARBDouble::ToString(sct));
@@ -595,7 +595,7 @@ std::wstring CPrintRuns::GetFieldText(
 			case ARBScoringType::ByOpenClose:
 				if (0 < inRun->GetScoring().GetNeedOpenPts())
 					fmt::format_to(std::back_inserter(text), L"{}", inRun->GetScoring().GetNeedOpenPts());
-				fmt::format_to(std::back_inserter(text), L" / ");
+				fmt::format_to(std::back_inserter(text), L"{}", L" / ");
 				if (0 < inRun->GetScoring().GetNeedClosePts())
 					fmt::format_to(std::back_inserter(text), L"{}", inRun->GetScoring().GetNeedClosePts());
 				break;
@@ -648,7 +648,7 @@ std::wstring CPrintRuns::GetFieldText(
 			case ARBScoringType::ByOpenClose:
 				if (0 < inRun->GetScoring().GetOpenPts())
 					fmt::format_to(std::back_inserter(text), L"{}", inRun->GetScoring().GetOpenPts());
-				fmt::format_to(std::back_inserter(text), L" / ");
+				fmt::format_to(std::back_inserter(text), L"{}", L" / ");
 				if (0 < inRun->GetScoring().GetClosePts())
 					fmt::format_to(std::back_inserter(text), L"{}", inRun->GetScoring().GetClosePts());
 				break;
@@ -684,7 +684,7 @@ std::wstring CPrintRuns::GetFieldText(
 				 ++iter, ++i)
 			{
 				if (0 < i)
-					fmt::format_to(std::back_inserter(text), L" ");
+					fmt::format_to(std::back_inserter(text), L"{}", L" ");
 				fmt::format_to(std::back_inserter(text), L"{}:{}", (*iter)->GetName(), (*iter)->GetPoints());
 			}
 		}

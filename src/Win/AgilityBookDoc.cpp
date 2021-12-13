@@ -1152,56 +1152,56 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr const& inTree, wxWindow* p
 		if (0 < countDog)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L", ");
+				fmt::format_to(std::back_inserter(str), L"{}", L", ");
 			bAdded = true;
 			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_DOGS").wx_str(), countDog);
 		}
 		if (0 < countRegNumsAdded)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L", ");
+				fmt::format_to(std::back_inserter(str), L"{}", L", ");
 			bAdded = true;
 			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_REGNUMS").wx_str(), countRegNumsAdded);
 		}
 		if (0 < countExistingPts)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L", ");
+				fmt::format_to(std::back_inserter(str), L"{}", L", ");
 			bAdded = true;
 			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_EXISTINGPTS").wx_str(), countExistingPts);
 		}
 		if (0 < countTitlesAdded)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L", ");
+				fmt::format_to(std::back_inserter(str), L"{}", L", ");
 			bAdded = true;
 			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_TITLES").wx_str(), countTitlesAdded);
 		}
 		if (0 < countTrials)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L", ");
+				fmt::format_to(std::back_inserter(str), L"{}", L", ");
 			bAdded = true;
 			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_TRIALS").wx_str(), countTrials);
 		}
 		if (0 < countClubs)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L", ");
+				fmt::format_to(std::back_inserter(str), L"{}", L", ");
 			bAdded = true;
 			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_CLUBS").wx_str(), countClubs);
 		}
 		if (0 < countJudges)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L", ");
+				fmt::format_to(std::back_inserter(str), L"{}", L", ");
 			bAdded = true;
 			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_JUDGES").wx_str(), countJudges);
 		}
 		if (0 < countLocations)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L", ");
+				fmt::format_to(std::back_inserter(str), L"{}", L", ");
 			bAdded = true;
 			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_LOCATIONS").wx_str(), countLocations);
 		}
@@ -1209,7 +1209,7 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr const& inTree, wxWindow* p
 		if (0 < countRegNumsUpdated)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L", ");
+				fmt::format_to(std::back_inserter(str), L"{}", L", ");
 			else
 				fmt::format_to(std::back_inserter(str), L"\n{} ", _("IDS_UPDATED").wx_str());
 			bAdded = true;
@@ -1218,7 +1218,7 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr const& inTree, wxWindow* p
 		if (0 < countTitlesUpdated)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L", ");
+				fmt::format_to(std::back_inserter(str), L"{}", L", ");
 			else
 				fmt::format_to(std::back_inserter(str), L"\n{} ", _("IDS_UPDATED").wx_str());
 			bAdded = true;
@@ -2318,14 +2318,14 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 		}
 		else
 		{
-			fmt::format_to(std::back_inserter(str), filename.wx_str());
+			fmt::format_to(std::back_inserter(str), L"{}", filename.wx_str());
 			if (IsModified())
 				fmt::format_to(std::back_inserter(str), _("IDS_FILEPROP_NAME_MODIFIED").wx_str());
-			fmt::format_to(std::back_inserter(str), L"\n");
+			fmt::format_to(std::back_inserter(str), L"{}", L"\n");
 		}
 	}
 
-	fmt::format_to(std::back_inserter(str), L"\n");
+	fmt::format_to(std::back_inserter(str), L"{}", L"\n");
 
 	if (Book().GetConfig().GetVersion() == GetCurrentConfigVersion())
 		fmt::format_to(

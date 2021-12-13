@@ -135,8 +135,8 @@ std::wstring CDlgARBHelp::GetEncodedData()
 		wxFileName fileName((*iFile).first.c_str());
 		wxDateTime dtMod, dtCreate;
 		if (!(*iFile).second)
-			fmt::format_to(std::back_inserter(rawdata), L": Skipped");
-		fmt::format_to(std::back_inserter(rawdata), L"\n");
+			fmt::format_to(std::back_inserter(rawdata), L"{}", L": Skipped");
+		fmt::format_to(std::back_inserter(rawdata), L"{}", L"\n");
 		if (fileName.GetTimes(nullptr, &dtMod, &dtCreate))
 		{
 			fmt::format_to(std::back_inserter(rawdata), L"Created: {}\n", dtCreate.Format().wx_str());
@@ -153,7 +153,7 @@ std::wstring CDlgARBHelp::GetEncodedData()
 				fmt::format_to(std::back_inserter(rawdata), L"{}\n{}\n{}\n", STREAM_FILE_BEGIN, data, STREAM_FILE_END);
 			}
 			else
-				fmt::format_to(std::back_inserter(rawdata), L"Error: Cannot read file\n");
+				fmt::format_to(std::back_inserter(rawdata), L"{}", L"Error: Cannot read file\n");
 		}
 	}
 

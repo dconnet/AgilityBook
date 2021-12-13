@@ -814,21 +814,21 @@ void CDlgConfigEvent::FillControls()
 					fmt::format_to(std::back_inserter(info), L"; {}", str1);
 					if (0 < pScoring->GetPlaceInfo().size())
 					{
-						fmt::format_to(std::back_inserter(info), L" [");
+						fmt::format_to(std::back_inserter(info), L"{}", L" [");
 						int idx = 0;
 						for (ARBConfigPlaceInfoList::iterator iter = pScoring->GetPlaceInfo().begin();
 							 iter != pScoring->GetPlaceInfo().end();
 							 ++idx, ++iter)
 						{
 							if (0 < idx)
-								fmt::format_to(std::back_inserter(info), L", ");
+								fmt::format_to(std::back_inserter(info), L"{}", L", ");
 							fmt::format_to(
 								std::back_inserter(info),
 								L"{}={}",
 								(*iter)->GetPlace(),
 								(*iter)->GetValue());
 						}
-						fmt::format_to(std::back_inserter(info), L"]");
+						fmt::format_to(std::back_inserter(info), L"{}", L"]");
 					}
 				}
 				m_ctrlInfo->SetLabel(StringUtil::stringWX(fmt::to_string(info)));

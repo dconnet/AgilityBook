@@ -377,7 +377,7 @@ CListDataPtr CReportListCtrl::GetData(long item) const
 
 static void PushData(fmt::wmemory_buffer& data, CReportListCtrl const* ctrl, int item, bool bBold)
 {
-	fmt::format_to(std::back_inserter(data), L"<tr>");
+	fmt::format_to(std::back_inserter(data), L"{}", L"<tr>");
 	std::vector<std::wstring> line;
 	ctrl->GetPrintLine(item, line);
 	for (std::vector<std::wstring>::const_iterator i = line.begin(); i != line.end(); ++i)
@@ -387,21 +387,21 @@ static void PushData(fmt::wmemory_buffer& data, CReportListCtrl const* ctrl, int
 		else
 			fmt::format_to(std::back_inserter(data), L"<td>{}</td>\n", *i);
 	}
-	fmt::format_to(std::back_inserter(data), L"</tr>\n");
+	fmt::format_to(std::back_inserter(data), L"{}", L"</tr>\n");
 }
 
 
 std::wstring CReportListCtrl::GetPrintDataAsHtmlTable(bool bFirstLineIsHeader) const
 {
 	fmt::wmemory_buffer data;
-	fmt::format_to(std::back_inserter(data), L"<table border=\"0\">");
+	fmt::format_to(std::back_inserter(data), L"{}", L"<table border=\"0\">");
 	if (!bFirstLineIsHeader)
 		PushData(data, this, -1, true);
 	for (long item = 0; item < GetItemCount(); ++item)
 	{
 		PushData(data, this, item, bFirstLineIsHeader && item == 0);
 	}
-	fmt::format_to(std::back_inserter(data), L"</table>\n");
+	fmt::format_to(std::back_inserter(data), L"{}", L"</table>\n");
 	return fmt::to_string(data);
 }
 

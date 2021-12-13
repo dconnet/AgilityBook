@@ -1460,7 +1460,7 @@ bool CWizardImport::DoWizardFinish()
 	if (bSortLog)
 		m_pDoc->Book().GetTraining().sort();
 	if (!errLog.size())
-		fmt::format_to(std::back_inserter(errLog), L"\n");
+		fmt::format_to(std::back_inserter(errLog), L"{}", L"\n");
 	fmt::format_to(
 		std::back_inserter(errLog),
 		L"{}\n",

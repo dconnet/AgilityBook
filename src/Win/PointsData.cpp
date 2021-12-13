@@ -127,7 +127,7 @@ OtherPtInfo::OtherPtInfo(ARBDogExistingPointsPtr const& inExisting)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataTitle::CPointsDataTitle(CAgilityBookDoc* pDoc, ARBDogTitlePtr pTitle)
-	: m_refTag(fmt::format(s_refTitle, pTitle->GetGenericName()))
+	: m_refTag(fmt::format(s_refTitle, L"{}", pTitle->GetGenericName()))
 	, m_pDoc(pDoc)
 	, m_pTitle(pTitle)
 {
@@ -151,8 +151,8 @@ void CPointsDataTitle::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 
 	fmt::format_to(std::back_inserter(data), L"{}", Sanitize(str));
 	if (!bNoInternalLinks)
-		fmt::format_to(std::back_inserter(data), L"</a>");
-	fmt::format_to(std::back_inserter(data), L"</td>\n</tr>\n");
+		fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
+	fmt::format_to(std::back_inserter(data), L"{}", L"</td>\n</tr>\n");
 }
 
 
@@ -224,7 +224,7 @@ void CPointsDataEvent::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 	}
 	fmt::format_to(std::back_inserter(data), L"{}", Sanitize(m_RunCount, true));
 	if (!bNoInternalLinks)
-		fmt::format_to(std::back_inserter(data), L"</a>");
+		fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
 	fmt::format_to(std::back_inserter(data), L"</td>\n<td>{}</td>\n", Sanitize(m_Qcount, true));
 	fmt::format_to(std::back_inserter(data), L"<td align=\"right\">{}</td>\n", Sanitize(m_Pts, true));
 	{ // SuperQ/SpeedPts
@@ -346,8 +346,8 @@ void CPointsDataMultiQs::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLink
 		ARBDouble::ToString(m_ExistingDblQs + static_cast<double>(m_MQs.size())),
 		Sanitize(m_MultiQ->GetShortName()));
 	if (!bNoInternalLinks)
-		fmt::format_to(std::back_inserter(data), L"</a>");
-	fmt::format_to(std::back_inserter(data), L"</td>\n</tr>\n");
+		fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
+	fmt::format_to(std::back_inserter(data), L"{}", L"</td>\n</tr>\n");
 }
 
 
@@ -404,7 +404,7 @@ void CPointsDataLifetime::AddLifetimeInfo(
 
 void CPointsDataLifetime::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 {
-	fmt::format_to(std::back_inserter(data), L"<tr>\n<td>");
+	fmt::format_to(std::back_inserter(data), L"{}", L"<tr>\n<td>");
 	if (m_LifetimeName)
 	{
 		std::wstring lifetime = m_LifetimeName->GetName();
@@ -414,7 +414,7 @@ void CPointsDataLifetime::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLin
 	}
 	else
 		fmt::format_to(std::back_inserter(data), L"{}", _("IDS_PLACEMENT_POINTS").wx_str());
-	fmt::format_to(std::back_inserter(data), L"</td>\n<td align=\"right\">");
+	fmt::format_to(std::back_inserter(data), L"{}", L"</td>\n<td align=\"right\">");
 	if (!bNoInternalLinks)
 	{
 		fmt::format_to(std::back_inserter(data), L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, m_refTag);
@@ -429,8 +429,8 @@ void CPointsDataLifetime::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLin
 	else
 		fmt::format_to(std::back_inserter(data), L"{}", ARBDouble::ToString(m_Lifetime));
 	if (!bNoInternalLinks)
-		fmt::format_to(std::back_inserter(data), L"</a>");
-	fmt::format_to(std::back_inserter(data), L"</td>\n</tr>\n");
+		fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
+	fmt::format_to(std::back_inserter(data), L"{}", L"</td>\n</tr>\n");
 }
 
 
@@ -497,7 +497,7 @@ void CPointsDataLifetimeByName::AddLifetimeInfo(
 
 void CPointsDataLifetimeByName::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 {
-	fmt::format_to(std::back_inserter(data), L"<tr>\n<td>&nbsp;</td>\n<td align=\"right\">");
+	fmt::format_to(std::back_inserter(data), L"{}", L"<tr>\n<td>&nbsp;</td>\n<td align=\"right\">");
 	fmt::format_to(std::back_inserter(data), L"{}: ", Sanitize(m_Name, true));
 	if (0 < m_Filtered)
 		fmt::format_to(
@@ -507,7 +507,7 @@ void CPointsDataLifetimeByName::GetHtml(fmt::wmemory_buffer& data, bool bNoInter
 			ARBDouble::ToString(m_Lifetime));
 	else
 		fmt::format_to(std::back_inserter(data), L"{}", ARBDouble::ToString(m_Lifetime));
-	fmt::format_to(std::back_inserter(data), L"</td>\n</tr>\n");
+	fmt::format_to(std::back_inserter(data), L"{}", L"</td>\n</tr>\n");
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1177,7 +1177,7 @@ void CPointsDataVenue::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 	// Venue header
 	if (m_pVenue)
 	{
-		fmt::format_to(std::back_inserter(data), L"<h2>");
+		fmt::format_to(std::back_inserter(data), L"{}", L"<h2>");
 		if (m_pVenue->GetURL().empty())
 		{
 			fmt::format_to(std::back_inserter(data), L"{}", Sanitize(m_pVenue->GetName()));
@@ -1195,7 +1195,7 @@ void CPointsDataVenue::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 			ARBDogRegNumPtr pRegNum;
 			if (m_pDog->GetRegNums().FindRegNum(m_pVenue->GetName(), &pRegNum))
 			{
-				fmt::format_to(std::back_inserter(data), L" [");
+				fmt::format_to(std::back_inserter(data), L"{}", L" [");
 				if (!bNoInternalLinks)
 				{
 					fmt::format_to(
@@ -1206,11 +1206,11 @@ void CPointsDataVenue::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 				}
 				fmt::format_to(std::back_inserter(data), L"{}", Sanitize(pRegNum->GetNumber()));
 				if (!bNoInternalLinks)
-					fmt::format_to(std::back_inserter(data), L"</a>");
-				fmt::format_to(std::back_inserter(data), L"]\n");
+					fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
+				fmt::format_to(std::back_inserter(data), L"{}", L"]\n");
 			}
 		}
-		fmt::format_to(std::back_inserter(data), L"</h2>\n");
+		fmt::format_to(std::back_inserter(data), L"{}", L"</h2>\n");
 	}
 
 	if (!m_titles.empty())
@@ -1221,7 +1221,7 @@ void CPointsDataVenue::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 		{
 			ptr->GetHtml(data, bNoInternalLinks);
 		}
-		fmt::format_to(std::back_inserter(data), L"</table>");
+		fmt::format_to(std::back_inserter(data), L"{}", L"</table>");
 	}
 
 	if (!m_events.empty() || !m_speedPts.empty() || !m_multiQs.empty() || !m_lifetime.empty())
@@ -1240,12 +1240,12 @@ void CPointsDataVenue::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 			ptr->GetHtml(data, bNoInternalLinks);
 		}
 		if (!m_lifetime.empty())
-			fmt::format_to(std::back_inserter(data), L"<tr><td>&nbsp;</td></tr>\n");
+			fmt::format_to(std::back_inserter(data), L"{}", L"<tr><td>&nbsp;</td></tr>\n");
 		for (auto ptr : m_lifetime)
 		{
 			ptr->GetHtml(data, bNoInternalLinks);
 		}
-		fmt::format_to(std::back_inserter(data), L"</table>");
+		fmt::format_to(std::back_inserter(data), L"{}", L"</table>");
 	}
 }
 
@@ -1338,8 +1338,8 @@ void CPointsDataOtherPointsTallyAll::GetHtml(fmt::wmemory_buffer& data, bool bNo
 	}
 	fmt::format_to(std::back_inserter(data), L"{}", ARBDouble::ToString(m_Points));
 	if (!bNoInternalLinks)
-		fmt::format_to(std::back_inserter(data), L"</a>");
-	fmt::format_to(std::back_inserter(data), L"</td>\n</tr>\n");
+		fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
+	fmt::format_to(std::back_inserter(data), L"{}", L"</td>\n</tr>\n");
 }
 
 
@@ -1379,8 +1379,8 @@ void CPointsDataOtherPointsTallyAllByEvent::GetHtml(fmt::wmemory_buffer& data, b
 	}
 	fmt::format_to(std::back_inserter(data), L"{}", ARBDouble::ToString(m_Points));
 	if (!bNoInternalLinks)
-		fmt::format_to(std::back_inserter(data), L"</a>");
-	fmt::format_to(std::back_inserter(data), L"</td>\n</tr>\n");
+		fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
+	fmt::format_to(std::back_inserter(data), L"{}", L"</td>\n</tr>\n");
 }
 
 
@@ -1420,8 +1420,8 @@ void CPointsDataOtherPointsTallyLevel::GetHtml(fmt::wmemory_buffer& data, bool b
 	}
 	fmt::format_to(std::back_inserter(data), L"{}", ARBDouble::ToString(m_Points));
 	if (!bNoInternalLinks)
-		fmt::format_to(std::back_inserter(data), L"</a>");
-	fmt::format_to(std::back_inserter(data), L"</td>\n</tr>\n");
+		fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
+	fmt::format_to(std::back_inserter(data), L"{}", L"</td>\n</tr>\n");
 }
 
 
@@ -1464,8 +1464,8 @@ void CPointsDataOtherPointsTallyLevelByEvent::GetHtml(fmt::wmemory_buffer& data,
 	}
 	fmt::format_to(std::back_inserter(data), L"{}", ARBDouble::ToString(m_Points));
 	if (!bNoInternalLinks)
-		fmt::format_to(std::back_inserter(data), L"</a>");
-	fmt::format_to(std::back_inserter(data), L"</td>\n</tr>\n");
+		fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
+	fmt::format_to(std::back_inserter(data), L"{}", L"</td>\n</tr>\n");
 }
 
 
@@ -1711,15 +1711,15 @@ wxString CPointsDataItems::GetHtml(bool bFragment, bool bNoInternalLinks)
 		Sanitize(today.GetString()));
 	if (m_pDog)
 	{
-		fmt::format_to(std::back_inserter(data), L"<h1>");
+		fmt::format_to(std::back_inserter(data), L"{}", L"<h1>");
 		if (!bNoInternalLinks)
 			fmt::format_to(std::back_inserter(data), L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, s_refDog);
 		fmt::format_to(std::back_inserter(data), L"{}", Sanitize(m_pDog->GetCallName()));
 		if (!bNoInternalLinks)
-			fmt::format_to(std::back_inserter(data), L"</a>");
+			fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
 		if (!m_pDog->GetRegisteredName().empty())
 			fmt::format_to(std::back_inserter(data), L" [{}]", Sanitize(m_pDog->GetRegisteredName()));
-		fmt::format_to(std::back_inserter(data), L"</h1>\n");
+		fmt::format_to(std::back_inserter(data), L"{}", L"</h1>\n");
 	}
 
 	// Venues
@@ -1751,8 +1751,8 @@ wxString CPointsDataItems::GetHtml(bool bFragment, bool bNoInternalLinks)
 	}
 
 	if (!bFragment)
-		fmt::format_to(std::back_inserter(data), L"</body></html>");
-	fmt::format_to(std::back_inserter(data), L"\n");
+		fmt::format_to(std::back_inserter(data), L"{}", L"</body></html>");
+	fmt::format_to(std::back_inserter(data), L"{}", L"\n");
 
 	return StringUtil::stringWX(fmt::to_string(data));
 }

@@ -296,7 +296,7 @@ std::wstring ARBDogClubList::GetClubList(bool bNames, bool bIncCosanction) const
 		{
 			dedup.insert(str);
 			if (0 < i)
-				fmt::format_to(std::back_inserter(buf), L"/");
+				fmt::format_to(std::back_inserter(buf), L"{}", L"/");
 			++i;
 			fmt::format_to(std::back_inserter(buf), L"{}", str);
 		}

@@ -75,7 +75,7 @@ std::wstring SanitizeStringForHTML(std::wstring const& inRawData, bool bConvertC
 			break;
 		case '\n':
 			if (bConvertCR)
-				fmt::format_to(std::back_inserter(data), L"<br/>");
+				fmt::format_to(std::back_inserter(data), L"{}", L"<br/>");
 			else
 				fmt::format_to(std::back_inserter(data), L"{}", inRawData[nChar]);
 			break;

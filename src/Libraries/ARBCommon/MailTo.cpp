@@ -94,19 +94,19 @@ void CMailTo::SetBody(std::wstring const& body)
 std::string CMailTo::Uri(bool clearText) const
 {
 	fmt::memory_buffer buffer;
-	fmt::format_to(std::back_inserter(buffer), "mailto:");
+	fmt::format_to(std::back_inserter(buffer), "{}", "mailto:");
 
 	for (size_t i = 0; i < m_to.size(); ++i)
 	{
 		if (0 < i)
-			fmt::format_to(std::back_inserter(buffer), ",");
+			fmt::format_to(std::back_inserter(buffer), "{}", ",");
 		fmt::format_to(std::back_inserter(buffer), "{}", Encode(m_to[i], clearText));
 	}
 
 	if (m_cc.empty() && m_bcc.empty() && m_subject.empty() && m_body.empty())
 		return fmt::to_string(buffer);
 
-	fmt::format_to(std::back_inserter(buffer), "?");
+	fmt::format_to(std::back_inserter(buffer), "{}", "?");
 	bool needAmp = false;
 
 	for (size_t i = 0; i < m_cc.size(); ++i)
@@ -114,11 +114,11 @@ std::string CMailTo::Uri(bool clearText) const
 		if (0 == i)
 		{
 			if (needAmp)
-				fmt::format_to(std::back_inserter(buffer), "&");
-			fmt::format_to(std::back_inserter(buffer), "cc=");
+				fmt::format_to(std::back_inserter(buffer), "{}", "&");
+			fmt::format_to(std::back_inserter(buffer), "{}", "cc=");
 		}
 		else
-			fmt::format_to(std::back_inserter(buffer), ",");
+			fmt::format_to(std::back_inserter(buffer), "{}", ",");
 		fmt::format_to(std::back_inserter(buffer), "{}", Encode(m_cc[i], clearText));
 		needAmp = true;
 	}
@@ -128,11 +128,11 @@ std::string CMailTo::Uri(bool clearText) const
 		if (0 == i)
 		{
 			if (needAmp)
-				fmt::format_to(std::back_inserter(buffer), "&");
-			fmt::format_to(std::back_inserter(buffer), "bcc=");
+				fmt::format_to(std::back_inserter(buffer), "{}", "&");
+			fmt::format_to(std::back_inserter(buffer), "{}", "bcc=");
 		}
 		else
-			fmt::format_to(std::back_inserter(buffer), ",");
+			fmt::format_to(std::back_inserter(buffer), "{}", ",");
 		fmt::format_to(std::back_inserter(buffer), "{}", Encode(m_bcc[i], clearText));
 		needAmp = true;
 	}
@@ -140,7 +140,7 @@ std::string CMailTo::Uri(bool clearText) const
 	if (!m_subject.empty())
 	{
 		if (needAmp)
-			fmt::format_to(std::back_inserter(buffer), "&");
+			fmt::format_to(std::back_inserter(buffer), "{}", "&");
 		fmt::format_to(std::back_inserter(buffer), "subject={}", Encode(m_subject, clearText));
 		needAmp = true;
 	}
@@ -148,7 +148,7 @@ std::string CMailTo::Uri(bool clearText) const
 	if (!m_body.empty())
 	{
 		if (needAmp)
-			fmt::format_to(std::back_inserter(buffer), "&");
+			fmt::format_to(std::back_inserter(buffer), "{}", "&");
 		fmt::format_to(std::back_inserter(buffer), "body={}", Encode(m_body, clearText));
 		needAmp = true;
 	}

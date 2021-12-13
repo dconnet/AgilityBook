@@ -1067,7 +1067,7 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 						fmt::format_to(std::back_inserter(err), _("IDS_ERR_PARSING_DATA").wx_str(), pData->OnNeedText());
 						if (0 < errMsg.size())
 						{
-							fmt::format_to(std::back_inserter(err), L":\n\t", fmt::to_string(errMsg));
+							fmt::format_to(std::back_inserter(err), L":\n\t{}", fmt::to_string(errMsg));
 						}
 						int flags = wxCENTRE | wxICON_WARNING;
 						if (pData->CanDisable())

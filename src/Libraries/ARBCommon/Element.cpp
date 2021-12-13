@@ -553,7 +553,7 @@ static void LogMessage(fmt::wmemory_buffer& msg)
 #if defined(__WXWINDOWS__)
 	wxLogMessage(L"%s", fmt::to_string(msg).c_str());
 #else
-	fmt::format_to(std::back_inserter(msg), L"\n");
+	fmt::format_to(std::back_inserter(msg), L"{}", L"\n");
 	OutputDebugString(fmt::to_string(msg).c_str());
 #endif
 }

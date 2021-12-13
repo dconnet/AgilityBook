@@ -521,7 +521,7 @@ std::wstring ARBConfigTitle::GetCompleteName(short inInstance, bool bAbbrevFirst
 	// Special formatting used in configuration dialogs.
 	if (0 > inInstance && 0 < m_MultipleStartAt)
 	{
-		fmt::format_to(std::back_inserter(buffer), L"+");
+		fmt::format_to(std::back_inserter(buffer), L"{}", L"+");
 	}
 	fmt::wmemory_buffer name;
 	if (0 < m_LongName.length())

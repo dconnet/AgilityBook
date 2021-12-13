@@ -1814,7 +1814,7 @@ int ARBConfigActionList::Apply(
 			break;
 	}
 	if (0 < nChanges)
-		fmt::format_to(std::back_inserter(ioInfo), L"\n");
+		fmt::format_to(std::back_inserter(ioInfo), L"{}", L"\n");
 	return nChanges;
 }
 

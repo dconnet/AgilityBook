@@ -210,7 +210,7 @@ std::wstring WriteCSVField(wchar_t inSep, std::wstring const& inField, bool incl
 		|| std::wstring::npos != inField.find(inSep))
 	{
 		std::wstring str(inField);
-		fmt::format_to(std::back_inserter(val), L"\"");
+		fmt::format_to(std::back_inserter(val), L"{}", L"\"");
 		while (!str.empty())
 		{
 			std::wstring::size_type pos = str.find(L'"');
@@ -225,7 +225,7 @@ std::wstring WriteCSVField(wchar_t inSep, std::wstring const& inField, bool incl
 				str = str.substr(pos + 1);
 			}
 		}
-		fmt::format_to(std::back_inserter(val), L"\"");
+		fmt::format_to(std::back_inserter(val), L"{}", L"\"");
 	}
 	else if (includeQuote)
 	{

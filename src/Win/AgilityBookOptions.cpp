@@ -1793,7 +1793,7 @@ void CAgilityBookOptions::SetColumnOrder(
 	for (size_t i = 0; i < inValues.size(); ++i)
 	{
 		if (0 < i)
-			fmt::format_to(std::back_inserter(data), L",");
+			fmt::format_to(std::back_inserter(data), L"{}", L",");
 		fmt::format_to(std::back_inserter(data), L"{}", inValues[i]);
 	}
 	std::wstring item;

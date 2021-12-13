@@ -297,13 +297,13 @@ public:
 				for (size_t i = 0; i < m_accels.size(); ++i)
 				{
 					if (0 < i)
-						fmt::format_to(std::back_inserter(data), L", ");
+						fmt::format_to(std::back_inserter(data), L"{}", L", ");
 					if (m_accels[i].bCtrl)
-						fmt::format_to(std::back_inserter(data), _("Ctrl+").wx_str());
+						fmt::format_to(std::back_inserter(data), L"{}", _("Ctrl+").wx_str());
 					if (m_accels[i].bAlt)
-						fmt::format_to(std::back_inserter(data), _("Alt+").wx_str());
+						fmt::format_to(std::back_inserter(data), L"{}", _("Alt+").wx_str());
 					if (m_accels[i].bShift)
-						fmt::format_to(std::back_inserter(data), _("Shift+").wx_str());
+						fmt::format_to(std::back_inserter(data), L"{}", _("Shift+").wx_str());
 					fmt::format_to(std::back_inserter(data), L"{}", GetKeyCode(m_keyMap, m_accels[i].keyCode).wx_str());
 				}
 				return fmt::to_string(data);
