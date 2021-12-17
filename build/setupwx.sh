@@ -36,7 +36,7 @@ export TARGETSDK=
 export VERSION=
 export WXWIN=
 
-USAGE="Usage $0 trunk|3.1.5|3.1.4|3.1.3|3.1.2 [debug|release]"
+USAGE="Usage $0 trunk|3.1.5|3.1.4|3.1.3|3.1.2 [debug|release] [test]"
 
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/devtools/wx/trunk
@@ -93,9 +93,16 @@ else
 	exit
 fi
 
-rm -rf $BUILDDIR
-mkdir $BUILDDIR
-cd $BUILDDIR
+TEST_ONLY=0
+if test "x$3" = "xtest"; then
+	TEST_ONLY=1
+fi
+
+if test $TEST_ONLY = 0; then
+	rm -rf $BUILDDIR
+	mkdir $BUILDDIR
+	cd $BUILDDIR
+fi
 
 case `uname` in
 Darwin*)
@@ -181,4 +188,6 @@ LIBRARIES+=" --with-cxx=14 --disable-sys-libs --without-libiconv --without-liblz
 
 echo "../configure $COMPILERS $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS"
 
-../configure $COMPILERS $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS
+if test $TEST_ONLY = 0; then
+	../configure $COMPILERS $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS
+fi
