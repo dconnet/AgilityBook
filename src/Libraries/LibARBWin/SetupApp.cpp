@@ -148,6 +148,9 @@ bool CBaseApp::OnInit()
 	// Now I don't need to tweak the wx source!
 	wxStandardPaths::Get().DontIgnoreAppSubDir();
 #endif
+#if defined(__WXGTK__) && wxCHECK_VERSION(3, 1, 6)
+	GTKSuppressDiagnostics();
+#endif
 
 	// Suppress PNG loading messages.
 	// Specifically: "iCCP: known incorrect sRGB profile"
