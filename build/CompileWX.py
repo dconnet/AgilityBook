@@ -10,6 +10,7 @@
 # an EXE that will run on XP.
 #
 # Revision History
+# 2021-12-18 Add ability to compile utils
 # 2021-11-09 Add vc143 support
 # 2021-02-13 Add USE_OPENGL=0 for ARM64 (can't find opengl libs).
 # 2020-11-28 Merge pyDcon into ARB.
@@ -49,6 +50,7 @@
 	-d:       Compile as DLLs (default: static)
 	-m:       Compile as MBCS (default: Unicode)
 	-s name:  Compile sample 'name'
+	-u name:  Compile util 'name'
 	-r config: config: release/debug
 	compiler: vc142, vc142x64, vc142arm64, vc143, vc143x64, vc143arm64
 """
@@ -96,11 +98,12 @@ def main():
 
 	wxwin = ''
 	samples = set()
+	utils = set()
 	compilers = set()
 	debug = True
 	release = True
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], 'w:eadms:r:')
+		opts, args = getopt.getopt(sys.argv[1:], 'w:eadms:u:r:')
 	except getopt.error as msg:
 		print(msg)
 		print('Usage:', __doc__)
@@ -119,6 +122,8 @@ def main():
 			useUnicode = False
 		elif '-s' == o:
 			samples.add(a)
+		elif '-u' == o:
+			utils.add(a)
 		elif '-r' == o:
 			if a == 'release':
 				release = True
@@ -165,7 +170,7 @@ def main():
 	os.environ['INCLUDE'] = ''
 	os.environ['LIB'] = ''
 
-	if 0 == len(samples):
+	if 0 == len(samples) and 0 == len(utils):
 		os.chdir(os.environ['WXWIN'] + r'\build\msw')
 
 	for compiler in compilers:
@@ -234,6 +239,24 @@ def main():
 						cmds += [build_dbg + ' ' + build_flags]
 				else:
 					print('ERROR: sample "' + s + '" does not exist')
+
+		elif 0 < len(utils):
+			for s in utils:
+				if os.access(os.environ['WXWIN'] + '\\utils\\' + s, os.F_OK):
+					cmds += ['cd /d "' + os.environ['WXWIN'] + '\\utils\\' + s + '"']
+					cmds += ['set "VSCMD_START_DIR=%CD%"']
+					if release:
+						cmds += [setenv_rel]
+						cmds += [build_rel + ' ' + build_flags]
+					if debug:
+						if 0 < len(setenv_dbg):
+							cmds += [setenv_dbg]
+						elif not release:
+							cmds += [setenv_rel]
+						cmds += [build_dbg + ' ' + build_flags]
+				else:
+					print('ERROR: util "' + s + '" does not exist')
+
 		else:
 			cmds += ['set "VSCMD_START_DIR=%CD%"']
 			if release:
