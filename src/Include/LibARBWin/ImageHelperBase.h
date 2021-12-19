@@ -69,18 +69,14 @@ ARBWIN_API void LoadLocalBitmap(wxWindow const* pWindow, wchar_t const* const pI
 // Setup image ids for things used in LibARBWin.
 // Note the user app must provide the loading of these in the Do* functions.
 
-// Note: wx3.1.5 effectively make wxART_MAKE_ART_ID a private macro.
-// So create my own.
-#define MAKE_IMAGE_ID(id) wxArtID(#id)
+#define ImageMgrBlank     wxART_MAKE_ART_ID(ImageMgrBlank)
+#define ImageMgrChecked   wxART_MAKE_ART_ID(ImageMgrChecked)
+#define ImageMgrUnChecked wxART_MAKE_ART_ID(ImageMgrUnChecked)
+#define ImageMgrCheck     wxART_MAKE_ART_ID(ImageMgrCheck)
+#define ImageMgrQuestion  wxART_MAKE_ART_ID(ImageMgrQuestion)
 
-#define ImageMgrBlank     MAKE_IMAGE_ID(ImageMgrBlank)
-#define ImageMgrChecked   MAKE_IMAGE_ID(ImageMgrChecked)
-#define ImageMgrUnChecked MAKE_IMAGE_ID(ImageMgrUnChecked)
-#define ImageMgrCheck     MAKE_IMAGE_ID(ImageMgrCheck)
-#define ImageMgrQuestion  MAKE_IMAGE_ID(ImageMgrQuestion)
-
-#define ImageMgrHeaderDown MAKE_IMAGE_ID(ImageMgrHeaderDown)
-#define ImageMgrHeaderUp   MAKE_IMAGE_ID(ImageMgrHeaderUp)
+#define ImageMgrHeaderDown wxART_MAKE_ART_ID(ImageMgrHeaderDown)
+#define ImageMgrHeaderUp   wxART_MAKE_ART_ID(ImageMgrHeaderUp)
 
 #if defined(__WINDOWS__)
 #define LOAD_BITMAP_PNG(pWindow, name, outBmp) ImageHelper::LoadLocalBitmap(pWindow, L#name, outBmp)
