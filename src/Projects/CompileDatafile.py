@@ -2,6 +2,7 @@
 # Generate the message libraries and data files
 #
 # Revision History
+# 2021-12-20 Added -q option, removed unused -d option.
 # 2016-06-10 Convert to Python3
 # 2016-03-28 Cleanup lockfile on exception
 # 2015-01-02 Fixed ARBUpdater inclusion
@@ -11,14 +12,15 @@
 # 2012-03-03 Fixed writing file into dat file.
 # 2012-02-19 Remove --use-fuzzy option, reoganized how po files.
 # 2012-01-29 Change msgfmt options to not do header checks
-# 2011-12-17 Add -x option.
+# 2011-12-30 Write files with their relative name, not the full path.
+# 2011-12-17 Add -f, -x option.
 # 2011-11-11 Made generic for easy use in other projects.
 # 2009-03-05 Fixed some parameter passing issues (spaces/hyphens in names)
 # 2009-03-01 Support multiple po files (by using msgcat)
 # 2009-01-02 Updated to support creation of data files
-"""CompileDatafile.py [-x] [-d] [-f extrafilelist] filelist intermediateDir targetname
+"""CompileDatafile.py [-x] [-q] [-f extrafilelist] filelist intermediateDir targetname
 -x: Exclude ARBUpdater (not needed in test program)
--d: Debugging mode (does not delete generated autogen.po file)
+-q: Quiet mode
 -f extrafilelist: Additional files to include
 filelist: List of files to include in .dat file
 intermediateDir: Directory where dat file is created (ARBUpdater assumes in ..)
@@ -33,6 +35,9 @@ import sys
 import subprocess
 import time
 import zipfile
+
+
+fileExtension = 'dat'
 
 
 class LockFile:
@@ -107,7 +112,7 @@ def RunCommand(command, toastErr):
 	ReadPipe(sys.stdout, p.stdout)
 
 
-def GenFile(inputfiles, intermediateDir, targetname, bIncUpdater):
+def GenFile(inputfiles, intermediateDir, targetname, verbose, bIncUpdater):
 	for filelist in inputfiles:
 		# The files listed in the list are relative to the filelist location.
 		if not os.access(filelist, os.F_OK):
@@ -115,8 +120,11 @@ def GenFile(inputfiles, intermediateDir, targetname, bIncUpdater):
 			print('Usage:', __doc__)
 			return 1;
 
-	zip = zipfile.ZipFile(os.path.join(intermediateDir, targetname + '.dat'), 'w')
+	zipfileName = os.path.join(intermediateDir, targetname + '.' + fileExtension)
+	zip = zipfile.ZipFile(zipfileName, 'w')
 
+	size = 0
+	fileCount = 0
 	for filelist in inputfiles:
 		basepath = os.path.dirname(filelist)
 		files = open(filelist)
@@ -127,6 +135,11 @@ def GenFile(inputfiles, intermediateDir, targetname, bIncUpdater):
 				inputfile = os.path.abspath(os.path.join(basepath, line))
 				filename = os.path.split(inputfile)[1]
 				if os.access(inputfile, os.F_OK):
+					fileCount = fileCount + 1
+					sizefile = os.path.getsize(inputfile)
+					#if verbose:
+					#	print(sizefile, inputfile)
+					size = size + os.path.getsize(inputfile)
 					zip.write(inputfile, filename)
 				else:
 					print('ERROR: File "' + inputfile + '" in "' + filelist + '" does not exist!')
@@ -135,32 +148,42 @@ def GenFile(inputfiles, intermediateDir, targetname, bIncUpdater):
 				break
 
 	if bIncUpdater:
-		if os.access(intermediateDir + r'\..\ARBUpdater.exe', os.F_OK):
-			zip.write(intermediateDir + r'\..\ARBUpdater.exe', 'ARBUpdater.exe')
+		arbUpdater = intermediateDir + r'\..\ARBUpdater.exe'
+		if os.access(arbUpdater, os.F_OK):
+			fileCount = fileCount + 1
+			zip.write(arbUpdater, 'ARBUpdater.exe')
+			sizefile = os.path.getsize(arbUpdater )
+			#if verbose:
+			#	print(sizefile, arbUpdater)
+			size = size + os.path.getsize(arbUpdater)
 		else:
-			print('ERROR: File "' + intermediateDir + r'\..\ARBUpdater.exe' + '" does not exist!')
+			print('ERROR: File "' + arbUpdater + '" does not exist!')
 			return 1
 
 	zip.close()
-
+	if verbose:
+		print('Generated', zipfileName)
+		print('Added', fileCount, 'files')
+		print('Total file size:', size)
+		print(fileExtension, 'file size:', os.path.getsize(zipfileName))
 
 def main():
-	bIncUpdater = 1
-	bDebug = 0
 	inputfiles = set()
+	verbose = True
+	bIncUpdater = True
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], 'df:x')
+		opts, args = getopt.getopt(sys.argv[1:], 'qf:x')
 	except getopt.error as msg:
 		print(msg)
 		print('Usage:', __doc__)
 		return 1
 	for o, a in opts:
-		if '-d' == o:
-			bDebug = 1
+		if '-q' == o:
+			verbose = False
 		elif '-f' == o:
 			inputfiles.add(a)
 		elif '-x' == o:
-			bIncUpdater = 0
+			bIncUpdater = False
 	if not len(args) == 3:
 		print('Usage:', __doc__)
 		return 1
@@ -178,7 +201,7 @@ def main():
 	lockfile = LockFile(os.path.join(intermediateDir, "CompileDatafile.lck"))
 	if lockfile.acquire():
 		try:
-			rc = GenFile(inputfiles, intermediateDir, targetname, bIncUpdater)
+			rc = GenFile(inputfiles, intermediateDir, targetname, verbose, bIncUpdater)
 		except:
 			lockfile.release()
 			raise
