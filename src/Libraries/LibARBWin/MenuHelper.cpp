@@ -617,6 +617,7 @@ bool CMenuHelper::VerifyMenuShortcuts(wxMenu* menu, int level)
 #if defined(_DEBUG) || defined(__WXDEBUG__)
 	if (!menu)
 		return hasDups;
+	// wxLogDebug(L"Processing %s", menu->GetTitle());
 	std::map<wchar_t, wxString> shortcuts;
 	for (auto const& item : menu->GetMenuItems())
 	{
