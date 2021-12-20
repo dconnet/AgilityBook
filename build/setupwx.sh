@@ -8,6 +8,7 @@
 # Note: Found old OSX SDKs at https://github.com/phracker/MacOSX-SDKs/releases
 #
 # History
+# 2021-12-20 Added SDK12.1
 # 2021-11-30 Added SDK12.0, arm64.
 #            Change -with...builtin options to --disable-sys-libs
 # 2021-04-14 Upgraded 3.1.4 to 3.1.5
@@ -153,10 +154,18 @@ Darwin*)
 		TARGETARCH="--enable-macosx_arch=x86_64,arm64"
 		MIN_OS=$MAC_MIN_OS
 
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk; then
+		echo "Using 12.1 SDK"
+		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk
+		TARGETARCH="--enable-macosx_arch=x86_64,arm64"
+		MIN_OS=$MAC_MIN_OS
+
 	fi
 
 	if test "x$TARGETSDK" = "x"; then
 		echo "ERROR: Can't find an SDK - 10.11 or newer is required"
+		echo ls -CF /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
+		ls -CF /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
 		exit
 	fi
 
