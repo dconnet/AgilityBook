@@ -192,12 +192,22 @@ int UnScale(wxWindow const* pWindow, int x)
 }
 
 
-unsigned int GetScale(wxWindow const* pWindow)
+int unsigned GetScale(wxWindow const* pWindow)
 {
 	if (!pWindow)
 		return GetDPI().GetScale();
 	else
+	{
+#ifdef FORCE_SCALE_100
+		// For non-windows, this will be unaware and return 100. This is a
+		// kludge because of the LOAD_BITMAP_PNG macro in ImageHelperHBase.h
+		// On 200% Ubuntu, we can only load the 100% images. So make sure we
+		// scale appropriately.
+		return GetDPI().GetScale();
+#else
 		return static_cast<unsigned int>(pWindow->GetDPIScaleFactor() * 100);
+#endif
+	}
 }
 
 }; // namespace DPI

@@ -60,9 +60,8 @@ CIconList::CIconList()
 
 bool CIconList::Create(wxWindow const* pWindow)
 {
-#ifndef __WXWINDOWS__
-	// The mac wants this in logical units.
-	// Also linux blows up - but that's more because we don't have the 2x images and we don't auto-scale images.
+#ifdef __WXMAC__
+	// The mac wants this in logical units. Windows does not.
 	if (!wxImageList::Create(16, 16))
 		return false;
 #else
