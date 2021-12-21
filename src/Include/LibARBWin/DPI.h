@@ -36,5 +36,5 @@ ARBWIN_API int Scale(int x);
 ARBWIN_API int UnScale(wxWindow const* pWindow, int x);
 
 /// Current scaling (200 == 200%)
-ARBWIN_API int GetScale(wxWindow const* pWindow);
+ARBWIN_API unsigned int GetScale(wxWindow const* pWindow);
 }; // namespace DPI
