@@ -14,6 +14,7 @@
  * user32.dll, winuser.h
  *
  * Revision History
+ * 2021-12-21 Use wxDisplay to determine scaling.
  * 2020-05-20 Change GetScale from uint to int (otherwise a negative coord is munged)
  * 2019-01-01 GetContentScaleFactor is causing a problem on Mac (wx3.1.2)
  * 2018-10-11 Moved to Win LibARBWin
@@ -24,6 +25,8 @@
 #include "LibARBWin/DPI.h"
 
 #include "LibARBWin/ImageHelperBase.h"
+
+#include <wx/display.h>
 
 //#ifdef EVT_DPI_CHANGED
 // wx3.1.3 adds much better dpi support
@@ -39,14 +42,6 @@ typedef enum PROCESS_DPI_AWARENESS
 	PROCESS_SYSTEM_DPI_AWARE = 1,
 	PROCESS_PER_MONITOR_DPI_AWARE = 2
 } PROCESS_DPI_AWARENESS;
-
-typedef enum MONITOR_DPI_TYPE
-{
-	MDT_EFFECTIVE_DPI = 0,
-	MDT_ANGULAR_DPI = 1,
-	MDT_RAW_DPI = 2,
-	MDT_DEFAULT = MDT_EFFECTIVE_DPI
-} MONITOR_DPI_TYPE;
 #endif
 
 #ifdef __WXMSW__
@@ -65,10 +60,8 @@ class CDPI
 	PROCESS_DPI_AWARENESS m_Awareness;
 #ifdef WIN32
 	typedef HRESULT(WINAPI* GETPROCESSDPIAWARENESS)(HANDLE, PROCESS_DPI_AWARENESS*);
-	typedef HRESULT(WINAPI* GETDPIFORMONITOR)(HMONITOR, MONITOR_DPI_TYPE, UINT*, UINT*);
 	typedef BOOL(WINAPI* ISPROCESSDPIAWARE)(void);
 	GETPROCESSDPIAWARENESS m_pGetProcessDpiAwareness;
-	GETDPIFORMONITOR m_pGetDpiForMonitor;
 	ISPROCESSDPIAWARE m_pIsIsProcessDPIAware;
 #endif
 
@@ -79,7 +72,6 @@ public:
 		, m_Awareness(PROCESS_DPI_UNAWARE)
 #ifdef WIN32
 		, m_pGetProcessDpiAwareness(nullptr)
-		, m_pGetDpiForMonitor(nullptr)
 		, m_pIsIsProcessDPIAware(nullptr)
 #endif
 	{
@@ -88,7 +80,6 @@ public:
 		if (hCore)
 		{
 			m_pGetProcessDpiAwareness = (GETPROCESSDPIAWARENESS)GetProcAddress(hCore, "GetProcessDpiAwareness");
-			m_pGetDpiForMonitor = (GETDPIFORMONITOR)GetProcAddress(hCore, "GetDpiForMonitor");
 		}
 
 		HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, GetCurrentProcessId());
@@ -117,33 +108,8 @@ public:
 
 	void SetScale(int x, int y)
 	{
-#ifdef WIN32
-		bool bNotSet = true;
-		POINT pt;
-		pt.x = x;
-		pt.y = y;
-		HMONITOR hMonitor = MonitorFromPoint(pt, MONITOR_DEFAULTTONEAREST);
-		UINT dpix = 0, dpiy = 0;
-		if (m_pGetDpiForMonitor)
-		{
-			if (SUCCEEDED(m_pGetDpiForMonitor(hMonitor, MDT_EFFECTIVE_DPI, &dpix, &dpiy)))
-			{
-				bNotSet = false;
-				SetScale(dpix);
-			}
-		}
-		if (bNotSet)
-#endif
-		{
-			wxScreenDC dc;
-			wxSize ppi = dc.GetPPI();
-			SetScale(ppi.x);
-		}
-	}
-
-	void SetScale(unsigned int scale)
-	{
-		m_nScaleFactor = scale * 100 / 96;
+		wxDisplay display;
+		m_nScaleFactor = static_cast<unsigned int>(display.GetScaleFactor() * 100);
 		if (m_nScaleFactorSDA == 0)
 			m_nScaleFactorSDA = m_nScaleFactor; // Save the first scale factor, which is all that SDA apps know about
 	}
