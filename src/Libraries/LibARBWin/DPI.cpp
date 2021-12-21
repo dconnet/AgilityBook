@@ -106,8 +106,14 @@ public:
 
 	void SetScale(int x, int y)
 	{
+		// Multimon TODO: determine with display it is on.
 		wxDisplay display;
-		m_nScaleFactor = static_cast<unsigned int>(display.GetScaleFactor() * 100);
+		SetScale(static_cast<unsigned int>(display.GetScaleFactor() * 100));
+	}
+
+	void SetScale(unsigned int scale)
+	{
+		m_nScaleFactor = scale;
 		if (m_nScaleFactorSDA == 0)
 			m_nScaleFactorSDA = m_nScaleFactor; // Save the first scale factor, which is all that SDA apps know about
 	}
@@ -188,11 +194,6 @@ int UnScale(wxWindow const* pWindow, int x)
 
 int GetScale(wxWindow const* pWindow)
 {
-	// this is basically wxScreenDC::GetPPI()
-#pragma PRAGMA_TODO(Fix on mac)
-#if defined(__WXMAC__) && !wxCHECK_VERSION(3, 1, 4)
-	return GetDPI().GetScale(); // GetContentScaleFactor on Mac keeps returning 0 on destroy (and sometimes on create)
-#else
 	if (!pWindow)
 		return GetDPI().GetScale();
 	else
@@ -204,14 +205,9 @@ int GetScale(wxWindow const* pWindow)
 		// scale appropriately.
 		return GetDPI().GetScale();
 #else
-#if wxCHECK_VERSION(3, 1, 4)
 		return static_cast<unsigned int>(pWindow->GetDPIScaleFactor() * 100);
-#else
-		return static_cast<unsigned int>(pWindow->GetContentScaleFactor() * 100);
-#endif
 #endif
 	}
-#endif
 }
 
 }; // namespace DPI
