@@ -49,6 +49,10 @@ typedef enum PROCESS_DPI_AWARENESS
 #pragma warning(disable : 4191) // unsafe conversion from 'FARPROC' to 'DPI::CDPI::GETPROCESSDPIAWARENESS'
 #endif
 
+#if !defined(__WXMSW__) && !defined(__WXMAC__)
+#define FORCE_SCALE_100
+#endif
+
 namespace DPI
 {
 
@@ -106,9 +110,13 @@ public:
 
 	void SetScale(int x, int y)
 	{
+#ifdef FORCE_SCALE_100
+		SetScale(100);
+#else
 		// Multimon TODO: determine with display it is on.
 		wxDisplay display;
 		SetScale(static_cast<unsigned int>(display.GetScaleFactor() * 100));
+#endif
 	}
 
 	void SetScale(unsigned int scale)

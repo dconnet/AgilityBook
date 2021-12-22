@@ -60,7 +60,7 @@ CIconList::CIconList()
 
 bool CIconList::Create(wxWindow const* pWindow)
 {
-#ifdef __WXMAC__
+#ifndef __WXMSW__
 	// The mac wants this in logical units. Windows does not.
 	if (!wxImageList::Create(16, 16))
 		return false;
