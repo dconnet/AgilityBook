@@ -49,7 +49,7 @@ typedef enum PROCESS_DPI_AWARENESS
 #pragma warning(disable : 4191) // unsafe conversion from 'FARPROC' to 'DPI::CDPI::GETPROCESSDPIAWARENESS'
 #endif
 
-#if !defined(__WXMSW__) && !defined(__WXMAC__)
+#if !defined(__WXMSW__)
 #define FORCE_SCALE_100
 #endif
 

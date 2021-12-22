@@ -60,14 +60,8 @@ CIconList::CIconList()
 
 bool CIconList::Create(wxWindow const* pWindow)
 {
-#ifndef __WXMSW__
-	// The mac wants this in logical units. Windows does not.
-	if (!wxImageList::Create(16, 16))
-		return false;
-#else
 	if (!wxImageList::Create(DPI::Scale(pWindow, 16), DPI::Scale(pWindow, 16)))
 		return false;
-#endif
 
 	m_idxDog = Add(CImageManager::Get()->GetIcon(ImageMgrDog));
 	m_idxTrial = Add(CImageManager::Get()->GetIcon(ImageMgrTrial));
