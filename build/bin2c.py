@@ -105,9 +105,6 @@ def main():
 			if os.access(fileSrc, os.F_OK):
 				print('ERROR: File "' + fileSrc + '" already exists. (Use -o to overwrite)')
 				return 1
-			print(newName)
-			print(fileHeader)
-			print(fileSrc)
 		files.add(fileName)
 
 	scope = ''
