@@ -116,9 +116,6 @@ void CDlgConfigLifetimeName::InitDlg(wxWindow* pParent)
 }
 
 
-DEFINE_ON_INIT(CDlgConfigLifetimeName)
-
-
 void CDlgConfigLifetimeName::OnOk(wxCommandEvent& evt)
 {
 	if (!Validate() || !TransferDataFromWindow())

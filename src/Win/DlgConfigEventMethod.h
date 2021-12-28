@@ -89,7 +89,6 @@ private:
 	short m_OpeningPts;
 	short m_ClosingPts;
 
-	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnSelchangeDivision(wxCommandEvent& evt);
 	void OnValidFrom(wxCommandEvent& evt);

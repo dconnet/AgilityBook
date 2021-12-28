@@ -110,9 +110,6 @@ CDlgAuthenticate::CDlgAuthenticate(
 }
 
 
-DEFINE_ON_INIT(CDlgAuthenticate)
-
-
 std::wstring CDlgAuthenticate::GetUserName() const
 {
 	return StringUtil::stringW(m_Name);

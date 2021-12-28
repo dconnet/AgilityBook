@@ -156,9 +156,6 @@ CDlgPartner::CDlgPartner(
 }
 
 
-DEFINE_ON_INIT(CDlgPartner)
-
-
 void CDlgPartner::OnOk(wxCommandEvent& evt)
 {
 	if (!Validate() || !TransferDataFromWindow())

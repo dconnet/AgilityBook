@@ -47,7 +47,6 @@ private:
 	CDlgDogPanelRegNums* m_panelRegNums;
 	CDlgDogPanelPoints* m_panelPoints;
 
-	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnPageChanging(wxBookCtrlEvent& evt);
 	void OnOk(wxCommandEvent& evt);

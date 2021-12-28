@@ -490,9 +490,6 @@ CDlgConfigVenue::CDlgConfigVenue(
 }
 
 
-DEFINE_ON_INIT(CDlgConfigVenue)
-
-
 CDlgConfigVenue::~CDlgConfigVenue()
 {
 	m_DlgFixup.clear();

@@ -175,9 +175,6 @@ CDlgRegNum::CDlgRegNum(
 }
 
 
-DEFINE_ON_INIT(CDlgRegNum)
-
-
 void CDlgRegNum::OnOk(wxCommandEvent& evt)
 {
 	if (!Validate() || !TransferDataFromWindow())

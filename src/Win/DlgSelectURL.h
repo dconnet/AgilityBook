@@ -34,6 +34,5 @@ private:
 
 	void InitDlg(wxWindow* pParent, bool bAllowEmpty);
 
-	DECLARE_ON_INIT()
 	void OnFilename(wxCommandEvent& evt);
 };

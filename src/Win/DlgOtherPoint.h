@@ -34,7 +34,6 @@ private:
 	CRichEditCtrl2* m_ctrlDesc;
 	double m_Points;
 
-	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnSelchangeOtherpoints(wxCommandEvent& evt);
 	void OnOtherNew(wxCommandEvent& evt);

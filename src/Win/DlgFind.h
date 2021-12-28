@@ -108,7 +108,6 @@ private:
 	wxRadioBox* m_radioBoxDir;
 	wxButton* m_btnFind;
 
-	DECLARE_ON_INIT()
 	void OnChangeName(wxCommandEvent& evt);
 	void OnFind(wxCommandEvent& evt);
 };

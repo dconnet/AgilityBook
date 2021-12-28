@@ -392,9 +392,6 @@ CDlgTrial::CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrialPtr const& inTrial, wxWin
 }
 
 
-DEFINE_ON_INIT(CDlgTrial)
-
-
 ARBDogClubPtr CDlgTrial::GetClubData(long index) const
 {
 	CListTrialDataPtr pData = std::dynamic_pointer_cast<CListTrialData, CListData>(m_ctrlClubs->GetData(index));

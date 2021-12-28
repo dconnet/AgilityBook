@@ -154,9 +154,6 @@ CDlgQueryDetail::CDlgQueryDetail(
 }
 
 
-DEFINE_ON_INIT(CDlgQueryDetail)
-
-
 std::wstring CDlgQueryDetail::GetDetailCode() const
 {
 	return StringUtil::stringW(m_Code);

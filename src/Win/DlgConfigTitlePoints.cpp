@@ -339,9 +339,6 @@ bool CDlgConfigTitlePoints::UpdateControls(ARBTitlePointType oldType)
 }
 
 
-DEFINE_ON_INIT(CDlgConfigTitlePoints)
-
-
 void CDlgConfigTitlePoints::OnUseSpeedPoints(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();

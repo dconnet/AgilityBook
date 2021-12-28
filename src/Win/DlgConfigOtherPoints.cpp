@@ -236,9 +236,6 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 }
 
 
-DEFINE_ON_INIT(CDlgConfigOtherPoints)
-
-
 bool CDlgConfigOtherPoints::IsNameOkay(std::wstring const& name) const
 {
 	if (m_pOther->GetName() != name && m_Config.GetOtherPoints().FindOtherPoints(name))

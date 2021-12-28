@@ -189,6 +189,3 @@ CDlgConfigPlaceInfo::CDlgConfigPlaceInfo(
 
 	IMPLEMENT_ON_INIT(CDlgConfigPlaceInfo, ctrlPlace)
 }
-
-
-DEFINE_ON_INIT(CDlgConfigPlaceInfo)

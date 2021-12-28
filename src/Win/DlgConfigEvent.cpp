@@ -512,9 +512,6 @@ CDlgConfigEvent::CDlgConfigEvent(
 }
 
 
-DEFINE_ON_INIT(CDlgConfigEvent)
-
-
 CDlgConfigEvent::~CDlgConfigEvent()
 {
 	ClearFixups();

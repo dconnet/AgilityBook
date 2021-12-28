@@ -73,7 +73,6 @@ private:
 	void ListClubs(ARBDogClubPtr const* inClub = nullptr);
 	void EditClub();
 
-	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnEnChangeLocation(wxCommandEvent& evt);
 	void OnSelchangeLocation(wxCommandEvent& evt);

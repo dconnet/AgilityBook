@@ -86,9 +86,6 @@ CDlgFault::CDlgFault(std::set<std::wstring>& inFaults, std::wstring const& fault
 }
 
 
-DEFINE_ON_INIT(CDlgFault)
-
-
 std::wstring CDlgFault::GetFault() const
 {
 	return StringUtil::stringW(m_Fault);

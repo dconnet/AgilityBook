@@ -414,9 +414,6 @@ CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pPa
 }
 
 
-DEFINE_ON_INIT(CDlgConfigTitle)
-
-
 void CDlgConfigTitle::UpdateButtons()
 {
 	m_ctrlDateFrom->Enable(m_DateFrom);

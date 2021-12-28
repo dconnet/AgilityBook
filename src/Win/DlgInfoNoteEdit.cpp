@@ -106,9 +106,6 @@ CDlgInfoNoteEdit::CDlgInfoNoteEdit(
 }
 
 
-DEFINE_ON_INIT(CDlgInfoNoteEdit)
-
-
 void CDlgInfoNoteEdit::OnOk(wxCommandEvent& evt)
 {
 	if (!Validate() || !TransferDataFromWindow())

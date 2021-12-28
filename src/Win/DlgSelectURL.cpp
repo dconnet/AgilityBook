@@ -107,9 +107,6 @@ void CDlgSelectURL::InitDlg(wxWindow* pParent, bool bAllowEmpty)
 }
 
 
-DEFINE_ON_INIT(CDlgSelectURL)
-
-
 std::wstring CDlgSelectURL::Name() const
 {
 	return StringUtil::stringW(m_Name);

@@ -93,7 +93,6 @@ private:
 	CSpellCheckCtrl* m_ctrlNote;
 	int m_idxMethod;
 
-	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnClickedTable(wxCommandEvent& evt);
 	void OnClickedSubNames(wxCommandEvent& evt);

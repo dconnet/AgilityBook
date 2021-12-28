@@ -102,7 +102,6 @@ private:
 	bool UpdateControls(ARBTitlePointType oldType);
 
 	DECLARE_EVENT_TABLE()
-	DECLARE_ON_INIT()
 	void OnUseSpeedPoints(wxCommandEvent& evt);
 	void OnSelchangeTitlePoints(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);

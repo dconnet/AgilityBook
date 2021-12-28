@@ -154,9 +154,6 @@ CDlgRun::CDlgRun(
 }
 
 
-DEFINE_ON_INIT(CDlgRun)
-
-
 std::wstring CDlgRun::GetCurrentVenueName() const
 {
 	return m_panelScore->GetCurrentVenueName();

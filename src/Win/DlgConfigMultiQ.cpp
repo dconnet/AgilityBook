@@ -245,9 +245,6 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 }
 
 
-DEFINE_ON_INIT(CDlgConfigMultiQ)
-
-
 void CDlgConfigMultiQ::UpdateControls()
 {
 	m_ctrlDateFrom->Enable(m_bFrom);

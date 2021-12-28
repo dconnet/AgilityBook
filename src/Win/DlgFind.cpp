@@ -150,9 +150,6 @@ CDlgFind::CDlgFind(IFindCallback& callback, wxWindow* pParent)
 }
 
 
-DEFINE_ON_INIT(CDlgFind)
-
-
 void CDlgFind::OnChangeName(wxCommandEvent& evt)
 {
 	m_btnFind->Enable(0 < m_textCtrl->GetValue().length());

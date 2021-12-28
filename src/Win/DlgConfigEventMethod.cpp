@@ -672,9 +672,6 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 }
 
 
-DEFINE_ON_INIT(CDlgConfigEventMethod)
-
-
 ARBScoringStyle CDlgConfigEventMethod::GetType(int index) const
 {
 	return static_cast<ARBScoringStyle>(reinterpret_cast<size_t>(m_ctrlType->GetClientData(index)));

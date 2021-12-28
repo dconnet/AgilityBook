@@ -541,9 +541,6 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 }
 
 
-DEFINE_ON_INIT(CDlgInfoNote)
-
-
 wxString CDlgInfoNote::GetCaption() const
 {
 	wxString caption;

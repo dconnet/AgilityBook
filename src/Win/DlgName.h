@@ -29,6 +29,4 @@ private:
 	wxString m_Name;
 
 	bool Create(wxString const& caption, wxWindow* pParent = nullptr);
-
-	DECLARE_ON_INIT()
 };

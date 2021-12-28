@@ -70,7 +70,6 @@ public:
 	bool GetData(CMenuHelper::ItemAccel& item);
 
 private:
-	DECLARE_ON_INIT()
 	void OnKeyDown(wxKeyEvent& evt);
 	void OnClear(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
@@ -181,9 +180,6 @@ CDlgEditAccel::CDlgEditAccel(
 
 	IMPLEMENT_ON_INIT(CDlgEditAccel, m_ctrlKey)
 }
-
-
-DEFINE_ON_INIT(CDlgEditAccel)
 
 
 bool CDlgEditAccel::GetData(CMenuHelper::ItemAccel& item)

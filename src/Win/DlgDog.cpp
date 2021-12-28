@@ -120,9 +120,6 @@ CDlgDog::CDlgDog(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog, wxWindow* pParen
 }
 
 
-DEFINE_ON_INIT(CDlgDog)
-
-
 void CDlgDog::OnPageChanging(wxBookCtrlEvent& evt)
 {
 	if (wxNOT_FOUND != evt.GetOldSelection())

@@ -36,7 +36,6 @@ private:
 	wxString m_RegNum;
 	ARBDogRunPartnerPtr m_Partner;
 
-	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);
 };

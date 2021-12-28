@@ -40,6 +40,4 @@ public:
 private:
 	short m_Place;
 	double m_Value;
-
-	DECLARE_ON_INIT()
 };

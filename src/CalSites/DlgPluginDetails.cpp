@@ -183,9 +183,6 @@ CDlgPluginDetails::CDlgPluginDetails(
 }
 
 
-DEFINE_ON_INIT(CDlgPluginDetails)
-
-
 void CDlgPluginDetails::SetCodeText()
 {
 	std::wstring str = fmt::format(

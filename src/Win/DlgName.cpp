@@ -90,9 +90,6 @@ bool CDlgName::Create(wxString const& caption, wxWindow* pParent)
 }
 
 
-DEFINE_ON_INIT(CDlgName)
-
-
 std::wstring CDlgName::Name() const
 {
 	return StringUtil::stringW(m_Name);

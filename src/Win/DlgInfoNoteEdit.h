@@ -47,6 +47,5 @@ private:
 	bool m_isVisible;
 	CSpellCheckCtrl* m_ctrlNotes;
 
-	DECLARE_ON_INIT()
 	void OnOk(wxCommandEvent& evt);
 };

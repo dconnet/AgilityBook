@@ -173,9 +173,7 @@ private:
 	int m_imgNoteAdded;
 	wxStaticText* m_textCount;
 
-	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
-
 	void OnItemFocused(wxListEvent& evt);
 	void OnDeleteItem(wxCommandEvent& evt);
 	void OnCopyItems(wxCommandEvent& evt);

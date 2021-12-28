@@ -51,7 +51,6 @@ private:
 	CDlgRunPanelScore* m_panelScore;
 	std::vector<CDlgRunPanelBase*> m_panels;
 
-	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnPageChanging(wxBookCtrlEvent& evt);
 	void OnPageChanged(wxBookCtrlEvent& evt);

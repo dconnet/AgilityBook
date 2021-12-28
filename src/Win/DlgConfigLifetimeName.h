@@ -40,7 +40,6 @@ private:
 	std::wstring m_NewName;
 
 protected:
-	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);
 };

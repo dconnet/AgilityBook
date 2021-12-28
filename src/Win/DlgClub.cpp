@@ -230,9 +230,6 @@ CDlgClub::CDlgClub(
 }
 
 
-DEFINE_ON_INIT(CDlgClub)
-
-
 ARBDogClubPtr CDlgClub::AddClub(ARBDogClubList& clubs) const
 {
 	ARBDogClubPtr club;

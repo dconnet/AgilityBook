@@ -147,9 +147,6 @@ CDlgOtherPoint::CDlgOtherPoint(ARBConfig& config, ARBDogRunOtherPointsPtr const&
 }
 
 
-DEFINE_ON_INIT(CDlgOtherPoint)
-
-
 void CDlgOtherPoint::LoadPoints(ARBConfigOtherPointsPtr const& inOther)
 {
 	m_ctrlOtherPoints->Clear();

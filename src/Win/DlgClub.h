@@ -49,7 +49,6 @@ private:
 	wxString m_Venue;
 	bool m_bCoSanction;
 
-	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnClickedPrimary(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);

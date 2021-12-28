@@ -296,9 +296,6 @@ CDlgReferenceRun::CDlgReferenceRun(
 }
 
 
-DEFINE_ON_INIT(CDlgReferenceRun)
-
-
 void CDlgReferenceRun::OnEnChangeRefRunTime(wxCommandEvent& evt)
 {
 	wxString strTime = m_ctrlTime->GetValue();

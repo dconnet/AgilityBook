@@ -15,6 +15,7 @@
  * include files that are used frequently, but are changed infrequently
  *
  * Revision History
+ * 2021-12-28 Simplify OnInit macro to a single one that uses a lamba.
  * 2020-04-14 Up minimum wx to 3.1.2.
  * 2019-08-24 Up minimum wx to 3.1.
  * 2015-11-25 Created ARB_64BIT
@@ -154,28 +155,23 @@
 /**
  * Macros to enable easy first control focus.
  */
-#define DECLARE_ON_INIT() \
-	wxWindow* m_Focus = nullptr; \
-	void OnInit(wxInitDialogEvent& evt);
 #define IMPLEMENT_ON_INIT(cls, ctrl) \
 	{ \
-		Bind(wxEVT_INIT_DIALOG, &cls::OnInit, this); \
-		m_Focus = ctrl; \
-	}
-#define DEFINE_ON_INIT(cls) \
-	void cls::OnInit(wxInitDialogEvent& evt) \
-	{ \
-		/* wxWindowBase::OnInitDialog */ \
-		TransferDataToWindow(); \
-		UpdateWindowUI(wxUPDATE_UI_RECURSE); \
-		/* end wxWindowBase */ \
-		if (m_Focus) \
-		{ \
-			m_Focus->SetFocus(); \
-			wxTextCtrl* pText = wxDynamicCast(m_Focus, wxTextCtrl); \
-			if (pText) \
-				pText->SelectAll(); \
-		} \
+		wxWindow* localVar = ctrl; \
+		Bind(wxEVT_INIT_DIALOG, [this, localVar](wxInitDialogEvent& evt) \
+		{\
+			/* wxWindowBase::OnInitDialog */ \
+			TransferDataToWindow(); \
+			UpdateWindowUI(wxUPDATE_UI_RECURSE); \
+			/* end wxWindowBase */ \
+			if (localVar) \
+			{ \
+				localVar->SetFocus(); \
+				wxTextCtrl* pText = wxDynamicCast(localVar, wxTextCtrl); \
+				if (pText) \
+					pText->SelectAll(); \
+			} \
+		}); \
 	}
 
 #include "Platform/SetupARBPost.h"
