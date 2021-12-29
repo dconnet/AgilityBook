@@ -2,6 +2,7 @@
 # Generate the message libraries and data files
 #
 # Revision History
+# 2021-12-29 Fixed zip compression (py default was uncompressed archive)
 # 2021-12-20 Added -q option, removed unused -d option.
 # 2016-06-10 Convert to Python3
 # 2016-03-28 Cleanup lockfile on exception
@@ -121,7 +122,10 @@ def GenFile(inputfiles, intermediateDir, targetname, verbose, bIncUpdater):
 			return 1;
 
 	zipfileName = os.path.join(intermediateDir, targetname + '.' + fileExtension)
-	zip = zipfile.ZipFile(zipfileName, 'w')
+	# Note: ZIP_DEFLATED requires the zlib module
+	# According to docs, the default compresslevel is currently 6 [0-9].
+	# So we'll use that explicitly so it's clear.
+	zip = zipfile.ZipFile(zipfileName, mode='w', compression=zipfile.ZIP_DEFLATED, compresslevel=6)
 
 	size = 0
 	fileCount = 0
@@ -163,9 +167,11 @@ def GenFile(inputfiles, intermediateDir, targetname, verbose, bIncUpdater):
 	zip.close()
 	if verbose:
 		print('Generated', zipfileName)
-		print('Added', fileCount, 'files')
-		print('Total file size:', size)
-		print(fileExtension, 'file size:', os.path.getsize(zipfileName))
+		print('  Added', fileCount, 'files')
+		print('  Total file size:', size)
+		zipsize = os.path.getsize(zipfileName)
+		print('  "' + fileExtension + '" file size:', zipsize)
+		print('  Compressed by', size - zipsize, 'bytes')
 
 def main():
 	inputfiles = set()
