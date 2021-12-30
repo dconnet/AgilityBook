@@ -55,7 +55,7 @@ CDlgARBHelp::CDlgARBHelp()
 		wxID_ANY,
 		wxString::Format(
 			L"Agility Record Book Helper %s",
-			CVersionNum(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD).GetVersionString(3).c_str()),
+			CVersionNum(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD).GetVersionString(VER_PARTS).c_str()),
 		wxNullBitmap,
 		wxDefaultPosition,
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)

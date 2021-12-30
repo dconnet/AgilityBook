@@ -57,7 +57,7 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, CMainFrame* pParent)
 
 	CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 	auto subject = _("LinkHelpUrlSubject");
-	subject.Replace(L"%VERSION%", ver.GetVersionString(3));
+	subject.Replace(L"%VERSION%", ver.GetVersionString(VER_PARTS));
 
 	m_mailto.AddTo(_("LinkHelpAddress").wx_str());
 	m_mailto.SetSubject(subject.wx_str());

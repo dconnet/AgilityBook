@@ -68,7 +68,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 		wxID_ANY,
 		wxString::Format(
 			L"MD5/SHA1/SHA256 Checksum %s",
-			CVersionNum(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD).GetVersionString(3).c_str()),
+			CVersionNum(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD).GetVersionString(VER_PARTS).c_str()),
 		wxDefaultPosition,
 		wxDefaultSize,
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);

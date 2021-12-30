@@ -47,6 +47,11 @@ import pyDcon
 
 onlyTest = False
 
+# Verbosity:detailed, multiprocessors
+# Verbosity:q/m/n/d/diag
+msbuildOfficial = 'official.props'
+msbuildOpts = '/v:n /m'
+
 
 def AddCompilers(compilers, c):
 	if not AddCompiler(compilers, c):
@@ -66,7 +71,8 @@ def AddCompiler(compilers, c):
 
 
 def main():
-	global onlyTest
+	global onlyTest, msbuildOfficial, msbuildOpts
+
 	bit64on64 = False
 	# 64bit on 64bit
 	if 'PROCESSOR_ARCHITECTURE' in os.environ and os.environ['PROCESSOR_ARCHITECTURE'] == 'AMD64':
@@ -129,9 +135,13 @@ def main():
 
 	curDir = os.getcwd()
 
+	# Add the official build props. Note: Do not use Directory.Build.props
+	# for automatic inclusion. Building directly in devenv will pick that up.
+	msbuildOpts = msbuildOpts + ' /p:ForceImportBeforeCppTargets=' + os.path.abspath(curDir + '\\..\\src\\Projects\\props\\' + msbuildOfficial)
+
 	if updateBuildNumber:
 		cmds = [
-			r'cd ' + curDir + '\\src\\Include',
+			r'cd ' + curDir + '\\..\\src\\Include',
 			r'python SetBuildNumber.py --official',
 			r'cd ' + curDir]
 		pyDcon.Run.RunCmds(cmds, onlyTest)
@@ -150,7 +160,7 @@ def main():
 			r'cd ' + curDir + '\\..\\src\\Projects\\' + compiler,
 			r'set "VSCMD_START_DIR=%CD%"',
 			r'call ' + vcvarsall,
-			r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + configuration + ';Platform=' + platform]
+			r'msbuild AgilityBook.sln ' + msbuildOpts + ' /t:Build /p:Configuration=' + configuration + ';Platform=' + platform]
 
 		if clean:
 			pyDcon.RmMinusRF.RmMinusRF(curDir + '/../bin/' + platformDir + platform)
@@ -165,7 +175,7 @@ def main():
 			r'cd ' + curDir + '\\..\\src\\Projects\\' + compiler,
 			r'set "VSCMD_START_DIR=%CD%"',
 			r'call ' + vcvarsall,
-			r'msbuild AgilityBook.sln /m /t:Build /p:Configuration=' + configuration + ';Platform=' + platform]
+			r'msbuild AgilityBook.sln ' + msbuildOpts + ' /t:Build /p:Configuration=' + configuration + ';Platform=' + platform]
 
 		if clean:
 			pyDcon.RmMinusRF.RmMinusRF(curDir + '/../bin/' + platformDir + platform)

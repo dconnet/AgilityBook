@@ -123,7 +123,7 @@ wxString CAgilityBookDocManager::MakeFrameTitle(wxDocument* doc)
 {
 	auto title = wxDocManager::MakeFrameTitle(doc);
 	CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
-	title << L" " << ver.GetVersionString(3);
+	title << L" " << ver.GetVersionString(VER_PARTS);
 	return title;
 }
 
