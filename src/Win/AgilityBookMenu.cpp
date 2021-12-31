@@ -72,7 +72,7 @@ static const std::vector<CMenuHelper::ItemData> sc_items = {
 	{IdMenuNone, MENU_ITEM, ID_COPY_TITLES_LIST,      wxITEM_NORMAL, 1, nullptr, arbT("MenuEditCopyTitles"), arbT("DescEditCopyTitles"), nullptr},
 	{IdMenuNone, MENU_ITEM, ID_REORDER,               wxITEM_NORMAL, 1, nullptr, arbT("MenuEditReorder"), arbT("DescEditReorder"), nullptr},
 	{IdMenuNone, MENU_SEP,  0,                        wxITEM_NORMAL, 1, nullptr, nullptr, nullptr, nullptr},
-	{IdMenuNone, MENU_ITEM, wxID_FIND,                wxITEM_NORMAL, 1, nullptr, arbT("MenuEditFind"), arbT("DescEditFind"), ImageMgrSearch},
+	{IdMenuNone, MENU_ITEM, wxID_FIND,                wxITEM_NORMAL, 1, nullptr, arbT("MenuEditFind"), arbT("DescEditFind"), ImageMgrFind},
 	{IdMenuNone, MENU_ITEM, ID_EDIT_FIND_NEXT,        wxITEM_NORMAL, 1, nullptr, arbT("MenuEditFindNext"), arbT("DescEditFindNext"), nullptr},
 	{IdMenuNone, MENU_ITEM, ID_EDIT_FIND_PREVIOUS,    wxITEM_NORMAL, 1, nullptr, arbT("MenuEditFindPrev"), arbT("DescEditFindPrev"), nullptr},
 	{IdMenuNone, MENU_SEP,  0,                        wxITEM_NORMAL, 1, nullptr, nullptr, nullptr, nullptr},

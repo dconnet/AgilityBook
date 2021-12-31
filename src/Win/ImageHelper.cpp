@@ -103,6 +103,8 @@
 #include "images/toolbarDelete_png.c"
 #include "images/toolbarDog_2x_png.c"
 #include "images/toolbarDog_png.c"
+#include "images/toolbarFind_2x_png.c"
+#include "images/toolbarFind_png.c"
 #include "images/toolbarNew_2x_png.c"
 #include "images/toolbarNew_png.c"
 #include "images/toolbarOpen_2x_png.c"
@@ -117,8 +119,6 @@
 #include "images/toolbarRun_png.c"
 #include "images/toolbarSave_2x_png.c"
 #include "images/toolbarSave_png.c"
-#include "images/toolbarSearch_2x_png.c"
-#include "images/toolbarSearch_png.c"
 #include "images/toolbarSettings_2x_png.c"
 #include "images/toolbarSettings_png.c"
 #include "images/toolbarTitle_2x_png.c"
@@ -334,6 +334,8 @@ bool CImageHelper::DoCreateBitmap(
 		LOAD_BITMAP_PNG(pWindow, toolbarCut, outBmp);
 	else if (id == ImageMgrDelete)
 		LOAD_BITMAP_PNG(pWindow, toolbarDelete, outBmp);
+	else if (id == ImageMgrFind)
+		LOAD_BITMAP_PNG(pWindow, toolbarFind, outBmp);
 	else if (id == ImageMgrNew)
 		LOAD_BITMAP_PNG(pWindow, toolbarNew, outBmp);
 	else if (id == ImageMgrOpen)
@@ -346,8 +348,6 @@ bool CImageHelper::DoCreateBitmap(
 		LOAD_BITMAP_PNG(pWindow, toolbarPrint, outBmp);
 	else if (id == ImageMgrSave)
 		LOAD_BITMAP_PNG(pWindow, toolbarSave, outBmp);
-	else if (id == ImageMgrSearch)
-		LOAD_BITMAP_PNG(pWindow, toolbarSearch, outBmp);
 	else if (id == ImageMgrSettings)
 		LOAD_BITMAP_PNG(pWindow, toolbarSettings, outBmp);
 
