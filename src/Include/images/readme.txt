@@ -1,43 +1,34 @@
-Some artwork is sourced from Vector Graphics by FreeVector.com. 
-(www.vecteezy.com)
-
-Using their original files, the following files were created from those:
-- dog, dog@2, toolbarDog, toolbarDog@2 (dog_head_sticker)
-- AccConfirm, AccConfirm@2 (Sleep_And_Bed_logos_ai)
-- AccNone, AccNone@2 (Car_Logos_ai)
-- calender, calender@2, toolbarCalender, toolbarCalender@2 (calendar_template)
-- toolbarTitle, toolbarTitle@2 (blue_medal_with_ribbons)
-- trial, trial@2, toolbarTrial, toolbarTrial@2 (Folding_Tents_ai)
-- run, run@2, toolbarRun, toolbarRun@2 (circus_dog_graphics)
-
 From www.iconfinder.com
+ 2667288_auto_car_chevrolet_transport_travel_icon.svg
+  License: Creative Commons, Attribution 3.0 Unported
+  Author: https://www.iconfinder.com/iconika
  315739_award_icon.svg
   License: Free for commercial use
   Author: https://www.iconfinder.com/yanlu
- 2239663_check_pinterest_save_save link_icon.svg
-  License: Creative Commons, Attribution 3.0 Unported
-  Author: https://www.iconfinder.com/vectto
- 4634454_delete_interface_remove_x_x mark_icon.svg
-  License: Creative Commons, Attribution 3.0 Unported
-  Author: https://www.iconfinder.com/roywj
  4634440_circle_delete_interface_ui_x_icon.svg
   License: Creative Commons, Attribution 3.0 Unported
   Author: https://www.iconfinder.com/roywj
- 3363563_cab_car_taxi_taxicab_icon.svg
+ 4634454_delete_interface_remove_x_x mark_icon.svg
   License: Creative Commons, Attribution 3.0 Unported
-  Author: https://www.iconfinder.com/josyanimator
+  Author: https://www.iconfinder.com/roywj
+ 1815562_question_faq_help_icon.svg
+  License: Free for commercial use
+  Author: https://www.iconfinder.com/encoderxsolutions
 
 https://freesvg.org: CCO 1.0 Universal license. There is no copyright.
+ Brown-bed.svg [https://freesvg.org/brown-bed]
  Cartoon-Dog-Fido.svg [https://freesvg.org/cartoon-dog]
+ checkOk.svg [https://freesvg.org/checkok]
+ dog-agility.svg [https://freesvg.org/dog-agility]
+ ghunshu.svg [https://freesvg.org/ghunshu]
  house-2015053135-clean.svg [https://freesvg.org/house-2015053135-clean]
  Minduka_Notebook.svg [https://freesvg.org/notebook-and-pen-vector-illustration]
- dog-agility.svg (edited) [https://freesvg.org/dog-agility]
- ghunshu.svg (edited, color) [https://freesvg.org/ghunshu]
  Mobile Phone Icon.svg [https://freesvg.org/mobile-phone-icon-46179]
- Brown-bed.svg [https://freesvg.org/brown-bed]
+
+Note: Pretty much all the original SVGs have been edited
 
 AccConfirm.svg Brown-bed.svg
-AccNone.svg 3363563_cab_car_taxi_taxicab_icon.svg
+AccNone.svg 2667288_auto_car_chevrolet_transport_travel_icon.svg
 AccTodo.svg "Mobile Phone Icon.svg"
 AgilityBook16.png
 AgilityBook256.png
@@ -53,7 +44,7 @@ check.svg VS2015 Image Library\2015_VSIcon\Checkmark\Checkmark_16xMD.svg
 checked.svg VS2015 Image Library\2015_VSIcon\Checkbox\Checkbox_16x.svg
 crcd.png
 dog.svg Cartoon-Dog-Fido.svg
-have.svg 2239663_check_pinterest_save_save link_icon.svg
+have.svg checkOk.svg
 HdrDown.png
 HdrUp.png
 hidden.svg ghunshu.svg
@@ -61,7 +52,7 @@ Note.svg VS2019 Image Library\vswin2019\Note\Note_16x.svg
 NotePlus.svg VS2015 Image Library\2015_VSIcon\Add\Add_16x.svg
 NoteAdded.png (Note + NotePlus)
 points.png title
-question.svg VS2019 Image Library\vswin2019\Question\Question_16x.svg (modified to red)
+question.svg 1815562_question_faq_help_icon.svg
 run.svg dog-agility.svg
 title.svg 315739_award_icon.svg
 title_hidden.png (title_visible + hidden)
