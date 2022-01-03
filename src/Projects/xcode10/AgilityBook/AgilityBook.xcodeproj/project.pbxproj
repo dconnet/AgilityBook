@@ -110,8 +110,6 @@
 		E18BCDFF277194E1007B17AC /* toolbarRun@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E1748E2F25266D59003A196C /* toolbarRun@2x.png */; };
 		E18BCE00277194E1007B17AC /* toolbarSave.png in Resources */ = {isa = PBXBuildFile; fileRef = E1748E2B25266D59003A196C /* toolbarSave.png */; };
 		E18BCE01277194E1007B17AC /* toolbarSave@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E1748DFB25266D53003A196C /* toolbarSave@2x.png */; };
-		E18BCE02277194E1007B17AC /* toolbarSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = E1928D9627716409002F7778 /* toolbarSearch.png */; };
-		E18BCE03277194E1007B17AC /* toolbarSearch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E1928D9827716409002F7778 /* toolbarSearch@2x.png */; };
 		E18BCE04277194E1007B17AC /* toolbarSettings.png in Resources */ = {isa = PBXBuildFile; fileRef = E1928D9727716409002F7778 /* toolbarSettings.png */; };
 		E18BCE05277194E1007B17AC /* toolbarSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E1928D992771640A002F7778 /* toolbarSettings@2x.png */; };
 		E18BCE06277194E1007B17AC /* toolbarTitle.png in Resources */ = {isa = PBXBuildFile; fileRef = E1748E2125266D58003A196C /* toolbarTitle.png */; };
@@ -240,6 +238,8 @@
 		E1CE612217ECB2BF0026B41B /* libARB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE611E17ECB2BF0026B41B /* libARB.a */; };
 		E1CE612317ECB2BF0026B41B /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE611F17ECB2BF0026B41B /* libARBCommon.a */; };
 		E1CE612417ECB2BF0026B41B /* libLibArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE612017ECB2BF0026B41B /* libLibArchive.a */; };
+		E1D274B62783707A0077D9AD /* toolbarFind.png in Resources */ = {isa = PBXBuildFile; fileRef = E1D274B42783707A0077D9AD /* toolbarFind.png */; };
+		E1D274B72783707A0077D9AD /* toolbarFind@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E1D274B52783707A0077D9AD /* toolbarFind@2x.png */; };
 		E1D2AFEA1A292424006EA87D /* ImageHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D2AFE81A292424006EA87D /* ImageHelper.cpp */; };
 		E1E1D05517234DEF00D7D1E4 /* ComboBoxQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E1D05117234DEF00D7D1E4 /* ComboBoxQ.cpp */; };
 		E1E1D05617234DEF00D7D1E4 /* ComboBoxVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E1D05317234DEF00D7D1E4 /* ComboBoxVenue.cpp */; };
@@ -414,9 +414,7 @@
 		E17B99542526542900C6E3B6 /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AgilityBook.icns; sourceTree = "<group>"; };
 		E17B99552526542900C6E3B6 /* AgilityRecordBook.dtd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = AgilityRecordBook.dtd; sourceTree = "<group>"; };
 		E17B99562526542900C6E3B6 /* DefaultConfig.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DefaultConfig.xml; sourceTree = "<group>"; };
-		E1928D9627716409002F7778 /* toolbarSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbarSearch.png; sourceTree = "<group>"; };
 		E1928D9727716409002F7778 /* toolbarSettings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbarSettings.png; sourceTree = "<group>"; };
-		E1928D9827716409002F7778 /* toolbarSearch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbarSearch@2x.png"; sourceTree = "<group>"; };
 		E1928D992771640A002F7778 /* toolbarSettings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbarSettings@2x.png"; sourceTree = "<group>"; };
 		E19851CC2170E6AD003E7B92 /* libLibARBWin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libLibARBWin.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19B63BB166C096E004DEDA4 /* AgilityBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgilityBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -586,6 +584,8 @@
 		E1CE611E17ECB2BF0026B41B /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../build/AgilityBook/Build/Products/Debug/libARB.a; sourceTree = "<group>"; };
 		E1CE611F17ECB2BF0026B41B /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../build/AgilityBook/Build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
 		E1CE612017ECB2BF0026B41B /* libLibArchive.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibArchive.a; path = ../build/AgilityBook/Build/Products/Debug/libLibArchive.a; sourceTree = "<group>"; };
+		E1D274B42783707A0077D9AD /* toolbarFind.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbarFind.png; sourceTree = "<group>"; };
+		E1D274B52783707A0077D9AD /* toolbarFind@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbarFind@2x.png"; sourceTree = "<group>"; };
 		E1D2AFE81A292424006EA87D /* ImageHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageHelper.cpp; sourceTree = "<group>"; };
 		E1D2AFE91A292424006EA87D /* ImageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageHelper.h; sourceTree = "<group>"; };
 		E1E1D05117234DEF00D7D1E4 /* ComboBoxQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboBoxQ.cpp; sourceTree = "<group>"; };
@@ -690,6 +690,8 @@
 				E17B98452526520100C6E3B6 /* toolbarDelete@2x.png */,
 				E17B98652526520500C6E3B6 /* toolbarDog.png */,
 				E17B984F2526520200C6E3B6 /* toolbarDog@2x.png */,
+				E1D274B42783707A0077D9AD /* toolbarFind.png */,
+				E1D274B52783707A0077D9AD /* toolbarFind@2x.png */,
 				E17B98902526520B00C6E3B6 /* toolbarNew.png */,
 				E17B9820252651FC00C6E3B6 /* toolbarNew@2x.png */,
 				E17B98392526520000C6E3B6 /* toolbarOpen.png */,
@@ -704,8 +706,6 @@
 				E1748E2F25266D59003A196C /* toolbarRun@2x.png */,
 				E1748E2B25266D59003A196C /* toolbarSave.png */,
 				E1748DFB25266D53003A196C /* toolbarSave@2x.png */,
-				E1928D9627716409002F7778 /* toolbarSearch.png */,
-				E1928D9827716409002F7778 /* toolbarSearch@2x.png */,
 				E1928D9727716409002F7778 /* toolbarSettings.png */,
 				E1928D992771640A002F7778 /* toolbarSettings@2x.png */,
 				E1748E2125266D58003A196C /* toolbarTitle.png */,
@@ -1192,6 +1192,8 @@
 				E18BCDF1277194E1007B17AC /* toolbarDelete@2x.png in Resources */,
 				E18BCDF2277194E1007B17AC /* toolbarDog.png in Resources */,
 				E18BCDF3277194E1007B17AC /* toolbarDog@2x.png in Resources */,
+				E1D274B62783707A0077D9AD /* toolbarFind.png in Resources */,
+				E1D274B72783707A0077D9AD /* toolbarFind@2x.png in Resources */,
 				E18BCDF4277194E1007B17AC /* toolbarNew.png in Resources */,
 				E18BCDF5277194E1007B17AC /* toolbarNew@2x.png in Resources */,
 				E18BCDF6277194E1007B17AC /* toolbarOpen.png in Resources */,
@@ -1206,8 +1208,6 @@
 				E18BCDFF277194E1007B17AC /* toolbarRun@2x.png in Resources */,
 				E18BCE00277194E1007B17AC /* toolbarSave.png in Resources */,
 				E18BCE01277194E1007B17AC /* toolbarSave@2x.png in Resources */,
-				E18BCE02277194E1007B17AC /* toolbarSearch.png in Resources */,
-				E18BCE03277194E1007B17AC /* toolbarSearch@2x.png in Resources */,
 				E18BCE04277194E1007B17AC /* toolbarSettings.png in Resources */,
 				E18BCE05277194E1007B17AC /* toolbarSettings@2x.png in Resources */,
 				E18BCE06277194E1007B17AC /* toolbarTitle.png in Resources */,
