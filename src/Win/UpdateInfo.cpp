@@ -324,6 +324,7 @@ void CUpdateInfo::UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outDownloadSt
  * This will read the version2.xml file and cache it.
  * In addition, it will ask to update if a newer version is found.
  * @param bVerbose Show error message.
+ * @param callback Function to call on completion of download.
  */
 CReadHttp::ReturnCode CUpdateInfo::ReadVersionFile(bool bVerbose, OnReadComplete callback)
 {
