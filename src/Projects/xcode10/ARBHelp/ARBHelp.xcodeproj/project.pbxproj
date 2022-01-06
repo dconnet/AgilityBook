@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E13EDD1A27715E08008FD8F4 /* AgilityBook16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E13EDD1727715E08008FD8F4 /* AgilityBook16@2x.png */; };
-		E13EDD1B27715E08008FD8F4 /* AgilityBook32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E13EDD1827715E08008FD8F4 /* AgilityBook32@2x.png */; };
-		E13EDD1C27715E08008FD8F4 /* AgilityBook48@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E13EDD1927715E08008FD8F4 /* AgilityBook48@2x.png */; };
 		E17B997A25265CCD00C6E3B6 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E17B997925265CCD00C6E3B6 /* AgilityBook.icns */; };
 		E19851CF2170E6E8003E7B92 /* libLibARBWin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E19851CE2170E6E8003E7B92 /* libLibARBWin.a */; };
 		E19B6603166C1640004DEDA4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19B6602166C1640004DEDA4 /* Cocoa.framework */; };
@@ -19,10 +16,7 @@
 		E19B6637166C166F004DEDA4 /* DlgPageEncode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6628166C166F004DEDA4 /* DlgPageEncode.cpp */; };
 		E19B6638166C166F004DEDA4 /* DlgPageEncodeFiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B662A166C166F004DEDA4 /* DlgPageEncodeFiles.cpp */; };
 		E19B6639166C166F004DEDA4 /* DlgPageEncodeFinish.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B662C166C166F004DEDA4 /* DlgPageEncodeFinish.cpp */; };
-		E1BED435237F903E0091278E /* AgilityBook32.png in Resources */ = {isa = PBXBuildFile; fileRef = E1BED42E237F903E0091278E /* AgilityBook32.png */; };
-		E1BED436237F903E0091278E /* AgilityBook16.png in Resources */ = {isa = PBXBuildFile; fileRef = E1BED42F237F903E0091278E /* AgilityBook16.png */; };
-		E1BED437237F903E0091278E /* AgilityBook256.png in Resources */ = {isa = PBXBuildFile; fileRef = E1BED430237F903E0091278E /* AgilityBook256.png */; };
-		E1BED439237F903E0091278E /* AgilityBook48.png in Resources */ = {isa = PBXBuildFile; fileRef = E1BED432237F903E0091278E /* AgilityBook48.png */; };
+		E1B89C372787A325008ACA56 /* libLibArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1B89C362787A325008ACA56 /* libLibArchive.a */; };
 		E1CAE57C16B5BFA200B33FE5 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CAE57A16B5BFA200B33FE5 /* stdafx.cpp */; };
 		E1CE612817ECB2CA0026B41B /* libARB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE612617ECB2CA0026B41B /* libARB.a */; };
 		E1CE612917ECB2CA0026B41B /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE612717ECB2CA0026B41B /* libARBCommon.a */; };
@@ -55,6 +49,7 @@
 		E19B662B166C166F004DEDA4 /* DlgPageEncodeFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPageEncodeFiles.h; sourceTree = "<group>"; };
 		E19B662C166C166F004DEDA4 /* DlgPageEncodeFinish.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgPageEncodeFinish.cpp; sourceTree = "<group>"; };
 		E19B662D166C166F004DEDA4 /* DlgPageEncodeFinish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgPageEncodeFinish.h; sourceTree = "<group>"; };
+		E1B89C362787A325008ACA56 /* libLibArchive.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libLibArchive.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1BED42E237F903E0091278E /* AgilityBook32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AgilityBook32.png; sourceTree = "<group>"; };
 		E1BED42F237F903E0091278E /* AgilityBook16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AgilityBook16.png; sourceTree = "<group>"; };
 		E1BED430237F903E0091278E /* AgilityBook256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AgilityBook256.png; sourceTree = "<group>"; };
@@ -72,6 +67,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1E2517D21CC5F05004A1D6A /* libLibFmt.a in Frameworks */,
+				E1B89C372787A325008ACA56 /* libLibArchive.a in Frameworks */,
 				E1CE612917ECB2CA0026B41B /* libARBCommon.a in Frameworks */,
 				E1CE612817ECB2CA0026B41B /* libARB.a in Frameworks */,
 				E19851CF2170E6E8003E7B92 /* libLibARBWin.a in Frameworks */,
@@ -139,6 +135,7 @@
 		E19B6601166C1640004DEDA4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E1B89C362787A325008ACA56 /* libLibArchive.a */,
 				E1E2517C21CC5F05004A1D6A /* libLibFmt.a */,
 				E19B6602166C1640004DEDA4 /* Cocoa.framework */,
 				E19B6604166C1640004DEDA4 /* Other Frameworks */,
@@ -217,6 +214,7 @@
 				E19B65FA166C1640004DEDA4 /* Sources */,
 				E19B65FB166C1640004DEDA4 /* Frameworks */,
 				E19B65FC166C1640004DEDA4 /* Resources */,
+				E1B89C382787A371008ACA56 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -266,18 +264,31 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E13EDD1A27715E08008FD8F4 /* AgilityBook16@2x.png in Resources */,
 				E17B997A25265CCD00C6E3B6 /* AgilityBook.icns in Resources */,
-				E1BED437237F903E0091278E /* AgilityBook256.png in Resources */,
-				E13EDD1C27715E08008FD8F4 /* AgilityBook48@2x.png in Resources */,
-				E1BED435237F903E0091278E /* AgilityBook32.png in Resources */,
-				E1BED439237F903E0091278E /* AgilityBook48.png in Resources */,
-				E13EDD1B27715E08008FD8F4 /* AgilityBook32@2x.png in Resources */,
-				E1BED436237F903E0091278E /* AgilityBook16.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E1B89C382787A371008ACA56 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "OUTPUTDIR=${CODESIGNING_FOLDER_PATH}/Contents/Resources\nSCRIPTDIR=${SOURCE_ROOT}/../../../Projects\nLANGDIR=${SOURCE_ROOT}/../../../lang\nRESDIR=${SOURCE_ROOT}/../../../ARBHelp/res\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\nif ! test -d \"${OUTPUTDIR}\"\nthen\n    mkdir \"${OUTPUTDIR}\"\nfi\n\n#python3 \"${SCRIPTDIR}/CompileLang.py\" -s \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" ${TARGET_NAME}\n\npython3 \"${SCRIPTDIR}/CompileDataFile.py\" -x \"${RESDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" ${TARGET_NAME}\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E19B65FA166C1640004DEDA4 /* Sources */ = {
@@ -511,6 +522,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ARBHelp/ARBHelp-Prefix.pch";
 				INFOPLIST_FILE = "ARBHelp/ARBHelp-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agilityrecordbook.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -528,6 +540,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ARBHelp/ARBHelp-Prefix.pch";
 				INFOPLIST_FILE = "ARBHelp/ARBHelp-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agilityrecordbook.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
