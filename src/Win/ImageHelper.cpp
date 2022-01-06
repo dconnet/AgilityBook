@@ -41,7 +41,6 @@
 #include "images/AgilityBook32_png.c"
 #include "images/AgilityBook48_2x_png.c"
 #include "images/AgilityBook48_png.c"
-#include "images/blank_png.c"
 #include "images/calendar_2x_png.c"
 #include "images/calendar_png.c"
 #include "images/CalEntered_2x_png.c"
@@ -274,7 +273,23 @@ bool CImageHelper::DoCreateBitmap(
 	else if (id == ImageMgrCRCD)
 		LOAD_BITMAP_PNG(pWindow, crcd, outBmp);
 	else if (id == ImageMgrBlank)
-		LOAD_BITMAP_PNG(pWindow, blank, outBmp);
+	{
+		int imageSize = size.x;
+		if (imageSize <= 0)
+		{
+			if (wxART_OTHER == client)
+				imageSize = 16 * DPI::GetScale(pWindow) / 100;
+			else if (wxART_MESSAGE_BOX == client)
+				imageSize = 32 * DPI::GetScale(pWindow) / 100;
+		}
+		outBmp.Create(imageSize, imageSize);
+		wxMemoryDC dc;
+		dc.SelectObject(outBmp);
+		dc.SetPen(wxColor(255, 255, 255, 0));
+		dc.SetBrush(wxColor(255, 255, 255, 0));
+		dc.DrawRectangle(0, 0, imageSize, imageSize);
+		dc.SelectObject(wxNullBitmap);
+	}
 	else if (id == ImageMgrChecked)
 		LOAD_BITMAP_PNG(pWindow, checked, outBmp);
 	else if (id == ImageMgrUnChecked)
