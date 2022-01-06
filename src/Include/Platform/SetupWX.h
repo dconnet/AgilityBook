@@ -158,8 +158,7 @@
 #define IMPLEMENT_ON_INIT(cls, ctrl) \
 	{ \
 		wxWindow* localVar = ctrl; \
-		Bind(wxEVT_INIT_DIALOG, [this, localVar](wxInitDialogEvent& evt) \
-		{\
+		Bind(wxEVT_INIT_DIALOG, [this, localVar](wxInitDialogEvent& evt) { \
 			/* wxWindowBase::OnInitDialog */ \
 			TransferDataToWindow(); \
 			UpdateWindowUI(wxUPDATE_UI_RECURSE); \

@@ -23,9 +23,9 @@
  * 2012-08-13 Moved dconSetupApp out of Globals.cpp
  */
 
-#include "ImageManager.h"
 #include "LanguageManager.h"
 #include "LibwxARBWin.h"
+#include "ResourceManager.h"
 
 #if wxUSE_DEBUGREPORT && wxUSE_ON_FATAL_EXCEPTION
 #define USE_DBGREPORT 1
@@ -48,7 +48,7 @@ enum class ARBLanguageCatalog
 class ARBWIN_API CBaseApp
 	: public wxApp
 	, public ILanguageCallback
-	, public IImageManagerCallback
+	, public IResourceManagerCallback
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CBaseApp)
 protected:
@@ -69,7 +69,7 @@ protected:
 	}
 
 	// wxApp virtual
-	// Will init Element, ImageManager, wxApp::SetAppName and wxConfig::Set.
+	// Will init Element, ResourceManager, wxApp::SetAppName and wxConfig::Set.
 	// If OnInit fails, BaseAppCleanup will be called before returning.
 	bool OnInit() override;
 	int OnExit() override;
@@ -126,10 +126,6 @@ protected:
 	wxString OnGetLanguageDir() const override;
 	void OnSetLanguage(wxLanguage langId) override;
 	void OnErrorMessage(wxString const& msg) const override;
-
-	// IImageManagerCallback interface
-	bool OnCreateBitmap(const wxArtID& id, const wxArtClient& client, const wxSize& size, wxBitmap& outBmp) override;
-	bool OnCreateIconBundle(const wxArtID& id, const wxArtClient& client, wxIconBundle& outIcon) override;
 
 	virtual bool InitLanguage();
 	virtual int SelectLang(wxWindow* parent = nullptr);

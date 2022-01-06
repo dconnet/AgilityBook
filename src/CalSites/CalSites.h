@@ -15,7 +15,6 @@
  * 2020-09-12 Created
  */
 
-#include "../Win/ImageHelper.h"
 #include "../Win/Localization.h"
 #include "ARB/ARBTypes2.h"
 #include "LibARBWin/SetupApp.h"
@@ -27,16 +26,17 @@ class CCalSitesApp : public CBaseApp
 public:
 	CCalSitesApp();
 
-	// IImageManagerCallback interface
-	bool OnCreateBitmap(const wxArtID& id, const wxArtClient& client, const wxSize& size, wxBitmap& outBmp) override;
-	bool OnCreateIconBundle(const wxArtID& id, const wxArtClient& client, wxIconBundle& outIcon) override;
+	bool OnInit() override;
 
 	bool InitLanguage() override;
-	bool OnInit() override;
+
+	// IResourceManagerCallback
+	wxWindow* GetResourceWindow() override;
+	bool GetResImageName(wxArtID const& id, wxArtClient const& client, std::wstring& outName, bool& outSvg)
+		const override;
 
 private:
 	CLocalization m_Localization;
-	CImageHelper m_imageHelper;
 };
 
 wxDECLARE_APP(CCalSitesApp);

@@ -68,7 +68,7 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, CMainFrame* pParent)
 	wxStaticBitmap* icon = new wxStaticBitmap(
 		this,
 		wxID_ANY,
-		CImageManager::Get()->GetIcon(ImageMgrApp, wxART_MESSAGE_BOX),
+		CResourceManager::Get()->GetIcon(ImageMgrApp, wxART_MESSAGE_BOX),
 		wxDLG_UNIT(this, wxPoint(2, 1)),
 		wxDefaultSize,
 		0);

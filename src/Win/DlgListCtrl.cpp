@@ -591,13 +591,13 @@ bool CDlgListCtrl::Create(std::wstring const& inCaption, wxWindow* pParent, bool
 		bHasImageList);
 	if (bHasImageList)
 	{
-		m_imgTentative = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrQuestion));
-		m_imgPlan = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCheck));
-		m_imgPlanTentative = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalPlanTentative));
-		m_imgPending = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalPending));
-		m_imgPendingTentative = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalPendingTentative));
-		m_imgEntered = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalEntered));
-		m_imgEnteredTentative = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalEnteredTentative));
+		m_imgTentative = m_ctrlList->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrQuestion));
+		m_imgPlan = m_ctrlList->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrCheck));
+		m_imgPlanTentative = m_ctrlList->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrCalPlanTentative));
+		m_imgPending = m_ctrlList->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrCalPending));
+		m_imgPendingTentative = m_ctrlList->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrCalPendingTentative));
+		m_imgEntered = m_ctrlList->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrCalEntered));
+		m_imgEnteredTentative = m_ctrlList->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrCalEnteredTentative));
 	}
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgListCtrl::OnItemSelected, this);
 	m_ctrlList->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgListCtrl::OnItemActivated, this);

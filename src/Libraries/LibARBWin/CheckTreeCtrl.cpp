@@ -33,6 +33,7 @@
 
 #include "LibARBWin/DPI.h"
 #include "LibARBWin/ImageHelperBase.h"
+#include "LibARBWin/ResourceManager.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -63,9 +64,9 @@ CCheckTreeCtrl::CCheckTreeCtrl(wxWindow* pParent, const wxPoint& pos, const wxSi
 
 	m_stateList.Create(DPI::Scale(this, 16), DPI::Scale(this, 16));
 
-	m_stateNone = m_stateList.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
-	m_stateUnChecked = m_stateList.Add(CImageManager::Get()->GetIcon(ImageMgrUnChecked));
-	m_stateChecked = m_stateList.Add(CImageManager::Get()->GetIcon(ImageMgrChecked));
+	m_stateNone = m_stateList.Add(CResourceManager::Get()->GetIcon(ImageMgrBlank));
+	m_stateUnChecked = m_stateList.Add(CResourceManager::Get()->GetIcon(ImageMgrUnChecked));
+	m_stateChecked = m_stateList.Add(CResourceManager::Get()->GetIcon(ImageMgrChecked));
 #ifdef WX_TREE_HAS_STATE
 	SetStateImageList(&m_stateList);
 #else

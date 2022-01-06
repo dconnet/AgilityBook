@@ -1,2 +1,0 @@
-../Win/res/DefaultConfig.xml
-../Win/res/AgilityRecordBook.dtd

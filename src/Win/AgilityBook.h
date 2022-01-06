@@ -21,7 +21,6 @@
  */
 
 #include "AgilityBookMenu.h"
-#include "ImageHelper.h"
 #include "Localization.h"
 
 #include "ARBCommon/ARBUtils.h"
@@ -66,11 +65,11 @@ protected:
 	wxString OnGetLangConfigName() const override;
 	void OnSetLanguage(wxLanguage langId) override;
 
-	// IImageManagerCallback interface
-	bool OnCreateBitmap(const wxArtID& id, const wxArtClient& client, const wxSize& size, wxBitmap& outBmp) override;
-	bool OnCreateIconBundle(const wxArtID& id, const wxArtClient& client, wxIconBundle& outIcon) override;
-
 	bool InitLanguage() override;
+
+	// IResourceManagerCallback
+	wxWindow* GetResourceWindow() override;
+	bool GetResImageName(wxArtID const& id, wxArtClient const& client, std::wstring& outName, bool& outSvg) const override;
 
 	DECLARE_EVENT_TABLE()
 	void OnQueryEndSession(wxCloseEvent& evt);
@@ -78,7 +77,6 @@ protected:
 
 	bool m_bShutdownSocket;
 	CLocalization m_Localization;
-	CImageHelper m_imageHelper;
 	std::unique_ptr<CAgilityBookDocManager> m_manager;
 	wxPrintDialogData* m_printDialogData;
 	CHtmlEasyPrinting* m_Prn;

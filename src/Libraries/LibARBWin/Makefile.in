@@ -39,13 +39,13 @@ libarbwin_SRCS = \
 	DlgProgress.cpp \
 	DPI.cpp \
 	ImageHelperBase.cpp \
-	ImageManager.cpp \
 	LanguageManager.cpp \
 	ListData.cpp \
 	MenuHelper.cpp \
 	ReadHttp.cpp \
 	ReportListCtrl.cpp \
 	ReportListHeader.cpp \
+	ResourceManager.cpp \
 	RichEditCtrl2.cpp \
 	SetupApp.cpp \
 	SpreadSheet.cpp \

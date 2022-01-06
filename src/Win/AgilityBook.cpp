@@ -210,7 +210,6 @@ CAgilityBookApp::CAgilityBookApp()
 	: CBaseApp(ARB_CONFIG_ENTRY, ARBLanguageCatalog::Embedded)
 	, m_bShutdownSocket(false)
 	, m_Localization()
-	, m_imageHelper()
 	, m_manager(nullptr)
 	, m_printDialogData(nullptr)
 	, m_Prn(nullptr)
@@ -535,23 +534,215 @@ void CAgilityBookApp::OnSetLanguage(wxLanguage langId)
 	}
 }
 
-
-bool CAgilityBookApp::OnCreateBitmap(const wxArtID& id, const wxArtClient& client, const wxSize& size, wxBitmap& outBmp)
-{
-	return m_imageHelper.DoCreateBitmap(GetTopWindow(), id, client, size, outBmp);
-}
-
-
-bool CAgilityBookApp::OnCreateIconBundle(const wxArtID& id, const wxArtClient& client, wxIconBundle& outIcon)
-{
-	return m_imageHelper.DoCreateIconBundle(GetTopWindow(), id, client, outIcon);
-}
-
-
 bool CAgilityBookApp::InitLanguage()
 {
 	IARBLocalization::Init(&m_Localization);
 	return CBaseApp::InitLanguage();
+}
+
+
+wxWindow* CAgilityBookApp::GetResourceWindow()
+{
+	return wxGetApp().GetTopWindow();
+}
+
+
+bool CAgilityBookApp::GetResImageName(wxArtID const& id, wxArtClient const& client, std::wstring& outName, bool& outSvg)
+	const
+{
+	bool found = true;
+	outSvg = false;
+
+	if (id == ImageMgrApp)
+	{
+		if (client == wxART_MESSAGE_BOX)
+			outName = L"AgilityBook32";
+		else
+			outName = L"AgilityBook16";
+	}
+	else if (id == ImageMgrApp48)
+		outName = L"AgilityBook48";
+	else if (id == ImageMgrApp256)
+		outName = L"AgilityBook256";
+
+	else if (id == ImageMgrRuns)
+	{
+		if (client == wxART_TOOLBAR)
+			outName = L"toolbarRun";
+		else
+			outName = L"run";
+	}
+
+	else if (id == ImageMgrPoints)
+		outName = L"points";
+
+	else if (id == ImageMgrCalendar)
+	{
+		if (client == wxART_TOOLBAR)
+			outName = L"toolbarCalendar";
+		else
+			outName = L"calendar";
+	}
+
+	else if (id == ImageMgrTraining)
+	{
+		if (client == wxART_TOOLBAR)
+			outName = L"toolbarTraining";
+		else
+			outName = L"training";
+	}
+
+	else if (id == ImageMgrDog)
+	{
+		if (client == wxART_TOOLBAR)
+			outName = L"toolbarDog";
+		else
+			outName = L"dog";
+	}
+
+	else if (id == ImageMgrTrial)
+	{
+		if (client == wxART_TOOLBAR)
+			outName = L"toolbarTrial";
+		else
+			outName = L"trial";
+	}
+
+	else if (id == ImageMgrVenueAAC)
+		outName = L"venue_aac";
+	else if (id == ImageMgrVenueAKC)
+		outName = L"venue_akc";
+	else if (id == ImageMgrVenueASCA)
+		outName = L"venue_asca";
+	else if (id == ImageMgrVenueBHA)
+		outName = L"venue_bha";
+	else if (id == ImageMgrVenueCKC)
+		outName = L"venue_ckc";
+	else if (id == ImageMgrVenueCKCSC)
+		outName = L"venue_ckcsc";
+	else if (id == ImageMgrVenueCPE)
+		outName = L"venue_cpe";
+	else if (id == ImageMgrVenueDOCNA)
+		outName = L"venue_docna";
+	else if (id == ImageMgrVenueFCI)
+		outName = L"venue_fci";
+	else if (id == ImageMgrVenueNADAC)
+		outName = L"venue_nadac";
+	else if (id == ImageMgrVenueSCC)
+		outName = L"venue_scc";
+	else if (id == ImageMgrVenueSweepstakes)
+		outName = L"venue_sweep";
+	else if (id == ImageMgrVenueTDAA)
+		outName = L"venue_tdaa";
+	else if (id == ImageMgrVenueUKC)
+		outName = L"venue_ukc";
+	else if (id == ImageMgrVenueUKI)
+		outName = L"venue_uki";
+	else if (id == ImageMgrVenueUSDAA)
+		outName = L"venue_usdaa";
+	else if (id == ImageMgrVenueVALOR)
+		outName = L"venue_valor";
+
+	else if (id == ImageMgrCRCD)
+		outName = L"crcd";
+	else if (id == ImageMgrChecked)
+		outName = L"checked";
+	else if (id == ImageMgrUnChecked)
+		outName = L"unchecked";
+	else if (id == ImageMgrAccomConfirm)
+		outName = L"AccConfirm";
+	else if (id == ImageMgrAccomNone)
+		outName = L"AccNone";
+	else if (id == ImageMgrAccomTodo)
+		outName = L"AccTodo";
+	else if (id == ImageMgrCalEntered)
+		outName = L"CalEntered";
+	else if (id == ImageMgrCalEnteredTentative)
+		outName = L"CalEnteredTentative";
+	else if (id == ImageMgrCalPending)
+		outName = L"CalPending";
+	else if (id == ImageMgrCalPendingTentative)
+		outName = L"CalPendingTentative";
+	else if (id == ImageMgrCheck)
+		outName = L"check";
+	else if (id == ImageMgrCalPlanTentative)
+		outName = L"CalPlanTentative";
+	else if (id == ImageMgrQuestion)
+		outName = L"question";
+	else if (id == ImageMgrHeaderDown)
+		outName = L"HdrDown";
+	else if (id == ImageMgrHeaderUp)
+		outName = L"HdrUp";
+
+	else if (id == ImageMgrTitle)
+		outName = L"toolbarTitle";
+	else if (id == ImageMgrTitleHidden)
+		outName = L"hidden";
+	else if (id == ImageMgrTitleTitledHidden)
+		outName = L"title_hidden";
+	else if (id == ImageMgrTitleTitledHiddenHave)
+		outName = L"title_hidden_have";
+	else if (id == ImageMgrTitleTitled)
+		outName = L"title_visible";
+	else if (id == ImageMgrTitleTitledHave)
+		outName = L"title_visible_have";
+
+	else if (id == ImageMgrNoteButton)
+		outName = L"Note";
+	else if (id == ImageMgrInfoNote)
+		outName = L"NoteNote";
+	else if (id == ImageMgrInfoNoteAdded)
+		outName = L"NoteAdded";
+	else if (id == ImageMgrInfoNoteNoteAdded)
+		outName = L"NoteNoteAdded";
+
+	else if (id == ImageMgrAbout)
+		outName = L"toolbarAbout";
+	else if (id == ImageMgrCopy)
+		outName = L"toolbarCopy";
+	else if (id == ImageMgrCut)
+		outName = L"toolbarCut";
+	else if (id == ImageMgrDelete)
+		outName = L"toolbarDelete";
+	else if (id == ImageMgrFind)
+		outName = L"toolbarFind";
+	else if (id == ImageMgrNew)
+		outName = L"toolbarNew";
+	else if (id == ImageMgrOpen)
+		outName = L"toolbarOpen";
+	else if (id == ImageMgrPaste)
+		outName = L"toolbarPaste";
+	else if (id == ImageMgrPreview)
+		outName = L"toolbarPreview";
+	else if (id == ImageMgrPrint)
+		outName = L"toolbarPrint";
+	else if (id == ImageMgrSave)
+		outName = L"toolbarSave";
+	else if (id == ImageMgrSettings)
+		outName = L"toolbarSettings";
+	else
+	{
+		found = false;
+#if defined(_DEBUG) || defined(__WXDEBUG__)
+		// clang-format off
+		if (id == wxART_FILE_SAVE_AS
+		|| id == wxART_INFORMATION
+		|| id == wxART_PRINT
+		|| id == wxART_GOTO_FIRST
+		|| id == wxART_GOTO_LAST
+		|| id == wxART_GO_BACK
+		|| id == wxART_GO_FORWARD
+		|| id == wxART_MINUS
+		|| id == wxART_PLUS
+		|| id == wxART_WARNING
+		|| id == wxART_ERROR)
+		// clang-format on
+			;
+		else
+			assert(0);
+#endif
+	}
+	return found;
 }
 
 

@@ -315,9 +315,9 @@ bool CAgilityBookTreeView::Create(
 #ifdef WX_TREE_HAS_STATE
 	m_ImageListStates.Create(DPI::Scale(m_Ctrl, 16), DPI::Scale(m_Ctrl, 16));
 	// Note: Position 0 cannot be used.
-	m_ImageListStates.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
-	m_idxEmpty = m_ImageListStates.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
-	m_idxChecked = m_ImageListStates.Add(CImageManager::Get()->GetIcon(ImageMgrCheck));
+	m_ImageListStates.Add(CResourceManager::Get()->GetIcon(ImageMgrBlank));
+	m_idxEmpty = m_ImageListStates.Add(CResourceManager::Get()->GetIcon(ImageMgrBlank));
+	m_idxChecked = m_ImageListStates.Add(CResourceManager::Get()->GetIcon(ImageMgrCheck));
 	m_Ctrl->SetStateImageList(&m_ImageListStates);
 #endif
 #if defined(__WXMAC__)

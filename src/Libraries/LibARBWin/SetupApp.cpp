@@ -30,8 +30,8 @@
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
-#include "LibARBWin/ImageManager.h"
 #include "LibARBWin/LanguageManager.h"
+#include "LibARBWin/ResourceManager.h"
 
 #include <wx/config.h>
 #include <wx/dir.h>
@@ -163,7 +163,7 @@ bool CBaseApp::OnInit()
 		return false;
 	}
 
-	CImageManager::Get()->SetCallback(this);
+	CResourceManager::Get()->Initialize(this);
 
 	bool bConfigSet = false;
 	if (!m_BaseAppName.empty())
@@ -256,7 +256,7 @@ void CBaseApp::BaseAppCleanup(bool deleteConfig)
 	}
 	m_langMgr.reset();
 
-	CImageManager::Get()->SetCallback(nullptr);
+	CResourceManager::Get()->Cleanup();
 	Element::Terminate();
 }
 
@@ -318,18 +318,6 @@ void CBaseApp::OnSetLanguage(wxLanguage langId)
 void CBaseApp::OnErrorMessage(wxString const& msg) const
 {
 	wxMessageBox(msg, wxMessageBoxCaptionStr, wxICON_ERROR | wxOK);
-}
-
-
-bool CBaseApp::OnCreateBitmap(const wxArtID& id, const wxArtClient& client, const wxSize& size, wxBitmap& outBmp)
-{
-	return false;
-}
-
-
-bool CBaseApp::OnCreateIconBundle(const wxArtID& id, const wxArtClient& client, wxIconBundle& outIcon)
-{
-	return false;
 }
 
 

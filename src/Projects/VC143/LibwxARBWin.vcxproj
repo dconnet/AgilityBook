@@ -129,72 +129,84 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonDebugLibARM64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLibARM64.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonDebugLib32.props" />
+    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib32.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonDebugLib64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib64.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonDebugDllARM64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDllARM64.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonDebugDll32.props" />
+    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDll32.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonDebugDll64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDll64.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonReleaseLibARM64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLibARM64.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonReleaseLib32.props" />
+    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib32.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonReleaseLib64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib64.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonReleaseDllARM64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDllARM64.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonReleaseDll32.props" />
+    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDll32.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(SolutionDir)\..\props\CommonReleaseDll64.props" />
+    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDll64.props" />
   </ImportGroup>
@@ -274,13 +286,13 @@
     <ClCompile Include="..\..\Libraries\LibARBWin\DlgProgress.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\DPI.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\ImageHelperBase.cpp" />
-    <ClCompile Include="..\..\Libraries\LibARBWin\ImageManager.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\LanguageManager.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\ListData.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\MenuHelper.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\ReadHttp.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\ReportListCtrl.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\ReportListHeader.cpp" />
+    <ClCompile Include="..\..\Libraries\LibARBWin\ResourceManager.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\RichEditCtrl2.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\SetupApp.cpp" />
     <ClCompile Include="..\..\Libraries\LibARBWin\SpreadSheet.cpp" />
@@ -326,7 +338,6 @@
     <ClInclude Include="..\..\Include\LibARBWin\DlgProgress.h" />
     <ClInclude Include="..\..\Include\LibARBWin\DPI.h" />
     <ClInclude Include="..\..\Include\LibARBWin\ImageHelperBase.h" />
-    <ClInclude Include="..\..\Include\LibARBWin\ImageManager.h" />
     <ClInclude Include="..\..\Include\LibARBWin\LanguageManager.h" />
     <ClInclude Include="..\..\Include\LibARBWin\LibwxARBWin.h" />
     <ClInclude Include="..\..\Include\LibARBWin\ListData.h" />
@@ -335,6 +346,7 @@
     <ClInclude Include="..\..\Include\LibARBWin\RegItemsBase.h" />
     <ClInclude Include="..\..\Include\LibARBWin\ReportListCtrl.h" />
     <ClInclude Include="..\..\Include\LibARBWin\ReportListHeader.h" />
+    <ClInclude Include="..\..\Include\LibARBWin\ResourceManager.h" />
     <ClInclude Include="..\..\Include\LibARBWin\RichEditCtrl2.h" />
     <ClInclude Include="..\..\Include\LibARBWin\SetupApp.h" />
     <ClInclude Include="..\..\Include\LibARBWin\SpreadSheet.h" />
@@ -359,6 +371,9 @@
     </ProjectReference>
     <ProjectReference Include="LibwxARBCommon.vcxproj">
       <Project>{b8e4cee7-cd97-4355-b998-c5c37fa2f285}</Project>
+    </ProjectReference>
+    <ProjectReference Include="LibwxArchive.vcxproj">
+      <Project>{0b172fdd-7b2e-4d76-a32c-1b2f627ccf1c}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

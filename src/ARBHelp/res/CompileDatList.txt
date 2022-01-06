@@ -1,0 +1,7 @@
+../../Include/images/AgilityBook16.png
+../../Include/images/AgilityBook16@2x.png
+../../Include/images/AgilityBook32.png
+../../Include/images/AgilityBook32@2x.png
+../../Include/images/AgilityBook48.png
+../../Include/images/AgilityBook48@2x.png
+../../Include/images/AgilityBook256.png

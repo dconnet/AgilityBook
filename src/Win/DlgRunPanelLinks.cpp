@@ -27,6 +27,7 @@
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/CheckLink.h"
 #include "LibARBWin/DPI.h"
+#include "LibARBWin/ResourceManager.h"
 #include "LibARBWin/Widgets.h"
 #include <wx/dnd.h>
 
@@ -92,9 +93,9 @@ CDlgRunPanelLinks::CDlgRunPanelLinks(
 		wxDefaultSize,
 		wxLC_NO_HEADER | wxLC_REPORT | wxLC_SINGLE_SEL);
 	m_ctrlLinks->SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
-	m_imgEmpty = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
-	m_imgOk = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrCheck));
-	m_imgMissing = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrQuestion));
+	m_imgEmpty = m_ImageList.Add(CResourceManager::Get()->GetIcon(ImageMgrBlank));
+	m_imgOk = m_ImageList.Add(CResourceManager::Get()->GetIcon(ImageMgrCheck));
+	m_imgMissing = m_ImageList.Add(CResourceManager::Get()->GetIcon(ImageMgrQuestion));
 	m_ctrlLinks->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgRunPanelLinks::OnLinksItemSelected, this);
 	m_ctrlLinks->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgRunPanelLinks::OnLinksItemActivated, this);
 	m_ctrlLinks->Bind(wxEVT_KEY_DOWN, &CDlgRunPanelLinks::OnLinksKeyDown, this);

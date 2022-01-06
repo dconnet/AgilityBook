@@ -23,6 +23,7 @@
 #include "ARB/ARBStructure.h"
 #include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/Element.h"
+#include "LibARBWin/ResourceManager.h"
 #include "fmt/printf.h"
 
 #if defined(__WXWINDOWS__)
@@ -54,39 +55,15 @@ TEST_CASE("ARB")
 }
 
 
-std::wstring GetDataFile()
-{
-#if defined(__WXWINDOWS__)
-	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	std::wstring datafile
-		= wxString(GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat").wx_str();
-#else
-#pragma PRAGMA_TODO(write LoadXMLData)
-#ifdef WIN32
-	wchar_t fileName[MAX_PATH];
-	GetModuleFileNameW(nullptr, fileName, _countof(fileName));
-	std::wstring datafile(fileName);
-	size_t n = datafile.find_last_of('.');
-	datafile = datafile.substr(0, n);
-	datafile += L".dat";
-#else
-	std::wstring datafile = L"./testarb.dat";
-#endif
-#endif
-	return datafile;
-}
-
-
 ElementNodePtr LoadXMLData(size_t id)
 {
 	fmt::wmemory_buffer errMsg;
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
 	assert(tree);
-	std::wstring datafile = GetDataFile();
 	assert(id < gc_NumConfigs);
 	std::stringstream data;
-	bool bOk = CConfigHandler::LoadWxFile(datafile, gc_Configs[id], data);
+	bool bOk = CResourceManager::Get()->LoadFile(gc_Configs[id], data);
 	assert(bOk);
 	if (!bOk || !tree->LoadXML(data, errMsg))
 	{

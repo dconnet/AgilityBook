@@ -32,10 +32,10 @@
 #include "ARB/ARBDog.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ImageHelperBase.h"
-#include "LibARBWin/ImageManager.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/ReportListCtrl.h"
 #include "LibARBWin/ReportListHeader.h"
+#include "LibARBWin/ResourceManager.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -223,12 +223,13 @@ CDlgDogPanelTitles::CDlgDogPanelTitles(CAgilityBookDoc* pDoc, ARBDogPtr const& i
 	m_ctrlList->SetHelpText(_("HIDC_DOG_TITLE_TITLES"));
 	m_ctrlList->SetToolTip(_("HIDC_DOG_TITLE_TITLES"));
 
-	m_imgTitlesEmpty = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrBlank));
-	m_imgTitlesTitled = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrTitleTitled));
-	m_imgTitlesTitledReceived = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrTitleTitledHave));
-	m_imgTitlesHidden = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrTitleHidden));
-	m_imgTitlesTitledHidden = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrTitleTitledHidden));
-	m_imgTitlesTitledHiddenReceived = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrTitleTitledHiddenHave));
+	m_imgTitlesEmpty = m_ctrlList->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrBlank));
+	m_imgTitlesTitled = m_ctrlList->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrTitleTitled));
+	m_imgTitlesTitledReceived = m_ctrlList->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrTitleTitledHave));
+	m_imgTitlesHidden = m_ctrlList->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrTitleHidden));
+	m_imgTitlesTitledHidden = m_ctrlList->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrTitleTitledHidden));
+	m_imgTitlesTitledHiddenReceived
+		= m_ctrlList->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrTitleTitledHiddenHave));
 
 	m_btnNew->SetLabel(_("IDC_DOG_TITLE_NEW"));
 	m_btnNew->SetHelpText(_("HIDC_DOG_TITLE_NEW"));

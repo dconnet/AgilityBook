@@ -20,6 +20,7 @@
 #include "TestARB.h"
 
 #include "ARBCommon/ARBUtils.h"
+#include "LibARBWin/ResourceManager.h"
 #include "LibTidyHtml/LibTidyHtml.h"
 #include "fmt/printf.h"
 
@@ -40,10 +41,8 @@ TEST_CASE("LibTidy")
 	{
 		if (!g_bMicroTest)
 		{
-			std::wstring datafile = GetDataFile();
 			std::stringstream filedata;
-			bool bOk = CConfigHandler::LoadWxFile(datafile, L"tidytest.xml", filedata);
-			REQUIRE(bOk);
+			REQUIRE(CResourceManager::Get()->LoadFile(L"tidytest.xml", filedata));
 
 			std::string data(filedata.str());
 

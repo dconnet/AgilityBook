@@ -60,9 +60,6 @@
     <ClCompile Include="..\..\Win\ConfigHandler.cpp">
       <Filter>ARB</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Win\ImageHelper.cpp">
-      <Filter>ARB</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Win\Localization.cpp">
       <Filter>ARB</Filter>
     </ClCompile>

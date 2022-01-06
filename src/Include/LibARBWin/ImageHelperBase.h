@@ -22,17 +22,15 @@
  * 2012-12-29 Created.
  */
 
-#include "ImageManager.h"
 #include "LibwxARBWin.h"
 
+#include <wx/artprov.h>
+#include <wx/bitmap.h>
+#include <wx/icon.h>
 
-// Helper functions called from IImageManagerCallback interfaces
 
 namespace ImageHelper
 {
-ARBWIN_API wxSize GetScaledSize(wxWindow const* pWindow, int logical);
-ARBWIN_API wxSize GetScaledSize(wxWindow const* pWindow, wxSize const& szLogical);
-
 ARBWIN_API wxBitmap GetBitmap(
 	wxWindow* pWindow,
 	const wxArtID& id,
@@ -46,28 +44,16 @@ ARBWIN_API wxIcon GetIcon(
 	const wxSize& size = wxDefaultSize);
 
 ARBWIN_API wxIcon CreateIconFromBitmap(const wxBitmap& bitmap);
+} // namespace ImageHelper
 
-// These are in each user of this.
-// That's where the mapping of names happens via IImageManagerCallback
-// ARBWIN_API bool DoCreateBitmap(
-//		wxWindow* pWindow,
-//		const wxArtID& id,
-//		const wxArtClient& client,
-//		const wxSize& size,
-//		wxBitmap& outBmp);
-// ARBWIN_API bool DoCreateIconBundle(
-//		wxWindow* pWindow,
-//		const wxArtID& id,
-//		const wxArtClient& client,
-//		wxIconBundle& outIcon);
-
-#if defined(__WINDOWS__)
-ARBWIN_API void LoadLocalBitmap(wxWindow const* pWindow, wchar_t const* const pImageName, wxBitmap& outBmp);
-#endif
-}; // namespace ImageHelper
 
 // Setup image ids for things used in LibARBWin.
 // Note the user app must provide the loading of these in the Do* functions.
+
+#define ImageMgrAppBundle wxART_MAKE_ART_ID(ImageMgrAppBundle)
+#define ImageMgrApp       wxART_MAKE_ART_ID(ImageMgrApp)
+#define ImageMgrApp48     wxART_MAKE_ART_ID(ImageMgrApp48)
+#define ImageMgrApp256    wxART_MAKE_ART_ID(ImageMgrApp256)
 
 #define ImageMgrBlank     wxART_MAKE_ART_ID(ImageMgrBlank)
 #define ImageMgrChecked   wxART_MAKE_ART_ID(ImageMgrChecked)
@@ -77,21 +63,3 @@ ARBWIN_API void LoadLocalBitmap(wxWindow const* pWindow, wchar_t const* const pI
 
 #define ImageMgrHeaderDown wxART_MAKE_ART_ID(ImageMgrHeaderDown)
 #define ImageMgrHeaderUp   wxART_MAKE_ART_ID(ImageMgrHeaderUp)
-
-#if defined(__WINDOWS__)
-#define LOAD_BITMAP_PNG(pWindow, name, outBmp) ImageHelper::LoadLocalBitmap(pWindow, L#name, outBmp)
-#define LOAD_BUNDLE_PNG(pWindow, name, outIcon) \
-	{ \
-		wxBitmap bmp; \
-		ImageHelper::LoadLocalBitmap(pWindow, L#name, bmp); \
-		outIcon.AddIcon(ImageHelper::CreateIconFromBitmap(bmp)); \
-	}
-
-#else
-#define LOAD_BITMAP_PNG(pWindow, name, outBmp) outBmp = wxBITMAP_PNG(name)
-#define LOAD_BUNDLE_PNG(pWindow, name, outIcon) \
-	{ \
-		wxBitmap bmp = wxBITMAP_PNG(name); \
-		outIcon.AddIcon(ImageHelper::CreateIconFromBitmap(bmp)); \
-	}
-#endif

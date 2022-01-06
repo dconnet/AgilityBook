@@ -23,19 +23,8 @@ class CConfigHandler : public IARBConfigHandler
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CConfigHandler)
 public:
-	/**
-	 * Load a file from a wxWidget archive (zip file)
-	 * @param zipFile Full path name.
-	 * @param archiveFile Name of file in zip file to extract.
-	 * @param outData Data from archiveFile.
-	 * @return Success
-	 */
-	static bool LoadWxFile(std::wstring const& zipFile, std::wstring const& archiveFile, std::ostream& outData);
-
 	CConfigHandler();
-	virtual ~CConfigHandler()
-	{
-	}
+	virtual ~CConfigHandler();
 
 	ElementNodePtr LoadDefaultConfig() const override;
 	std::string LoadDTD() const override;

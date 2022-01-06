@@ -21,6 +21,7 @@
 #include "ImageHelper.h"
 
 #include "LibARBWin/DPI.h"
+#include "LibARBWin/ResourceManager.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -30,7 +31,7 @@
 CNoteButton::CNoteButton(wxWindow* parent)
 	: wxBitmapButton()
 {
-	wxBitmap image = CImageManager::Get()->GetBitmap(ImageMgrNoteButton);
+	wxBitmap image = CResourceManager::Get()->GetBitmap(ImageMgrNoteButton);
 	wxSize size = image.GetSize();
 	size.x += DPI::Scale(parent, 4);
 	size.y += DPI::Scale(parent, 4);

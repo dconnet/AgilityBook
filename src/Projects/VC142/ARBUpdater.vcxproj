@@ -202,35 +202,107 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">
     <ClCompile>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
     <ClCompile>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
@@ -239,6 +311,12 @@
     <PostBuildEvent>
       <Command>python "$(BuildScriptDir)SignStuff.py" "$(TargetPath)"</Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -247,6 +325,12 @@
     <PostBuildEvent>
       <Command>python "$(BuildScriptDir)SignStuff.py" "$(TargetPath)"</Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -255,6 +339,12 @@
     <PostBuildEvent>
       <Command>python "$(BuildScriptDir)SignStuff.py" "$(TargetPath)"</Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">
     <ClCompile>
@@ -263,6 +353,12 @@
     <PostBuildEvent>
       <Command>python "$(BuildScriptDir)SignStuff.py" "$(TargetPath)"</Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
     <ClCompile>
@@ -271,6 +367,12 @@
     <PostBuildEvent>
       <Command>python "$(BuildScriptDir)SignStuff.py" "$(TargetPath)"</Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
     <ClCompile>
@@ -279,6 +381,12 @@
     <PostBuildEvent>
       <Command>python "$(BuildScriptDir)SignStuff.py" "$(TargetPath)"</Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ARBUpdater\ARBUpdater.cpp" />
@@ -309,7 +417,6 @@
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">false</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">false</MultiProcessorCompilation>
     </ClCompile>
-    <ClCompile Include="..\..\Win\ImageHelper.cpp" />
     <ClCompile Include="..\..\Win\Localization.cpp" />
   </ItemGroup>
   <ItemGroup>

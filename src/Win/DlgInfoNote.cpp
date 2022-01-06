@@ -364,10 +364,10 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 
 	m_ctrlList = new CReportListCtrl(this, false, CReportListCtrl::SortHeader::Sort, true, true);
 	m_ctrlList->SetId(LIST_CTRL);
-	m_imgNone = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrBlank));
-	m_imgNote = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrInfoNote));
-	m_imgAdded = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrInfoNoteAdded));
-	m_imgNoteAdded = m_ctrlList->AddIcon(CImageManager::Get()->GetIcon(ImageMgrInfoNoteNoteAdded));
+	m_imgNone = m_ctrlList->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrBlank));
+	m_imgNote = m_ctrlList->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrInfoNote));
+	m_imgAdded = m_ctrlList->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrInfoNoteAdded));
+	m_imgNoteAdded = m_ctrlList->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrInfoNoteNoteAdded));
 	m_ctrlList->SetHelpText(_("HIDC_INFONOTE"));
 	m_ctrlList->SetToolTip(_("HIDC_INFONOTE"));
 	m_ctrlList->EnableCheckBoxes();

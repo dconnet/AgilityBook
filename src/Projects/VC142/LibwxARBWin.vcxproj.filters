@@ -48,9 +48,6 @@
     <ClCompile Include="..\..\Libraries\LibARBWin\DPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Libraries\LibARBWin\ImageManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Libraries\LibARBWin\LanguageManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -102,6 +99,9 @@
     <ClCompile Include="..\..\Libraries\LibARBWin\ConfigPosition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Libraries\LibARBWin\ResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Libraries\LibARBWin\DlgConfigAccel.h">
@@ -150,9 +150,6 @@
       <Filter>Include\LibARBWin</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\LibARBWin\DPI.h">
-      <Filter>Include\LibARBWin</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\LibARBWin\ImageManager.h">
       <Filter>Include\LibARBWin</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\LibARBWin\LanguageManager.h">
@@ -210,6 +207,9 @@
       <Filter>Include\LibARBWin</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\LibARBWin\ConfigPosition.h">
+      <Filter>Include\LibARBWin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\LibARBWin\ResourceManager.h">
       <Filter>Include\LibARBWin</Filter>
     </ClInclude>
   </ItemGroup>

@@ -43,7 +43,7 @@
 #include "LibARBWin/DPI.h"
 #include "LibARBWin/ImageHelperBase.h"
 #include "LibARBWin/ListData.h"
-//#include "LibARBWin/RegItemsBase.h"
+#include "LibARBWin/ResourceManager.h"
 #include "fmt/xchar.h"
 
 #if defined(__WXMSW__)
@@ -134,9 +134,9 @@ bool CReportListCtrl::Create(
 	if (bHasImageList || sortHeader == SortHeader::Sort)
 	{
 		m_ImageList.Create(DPI::Scale(this, 16), DPI::Scale(this, 16));
-		m_imgEmpty = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
-		m_imgSortUp = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrHeaderUp));
-		m_imgSortDn = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrHeaderDown));
+		m_imgEmpty = m_ImageList.Add(CResourceManager::Get()->GetIcon(ImageMgrBlank));
+		m_imgSortUp = m_ImageList.Add(CResourceManager::Get()->GetIcon(ImageMgrHeaderUp));
+		m_imgSortDn = m_ImageList.Add(CResourceManager::Get()->GetIcon(ImageMgrHeaderDown));
 		CListCtrl::SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
 	}
 	return true;

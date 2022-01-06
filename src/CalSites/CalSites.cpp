@@ -24,6 +24,7 @@
 
 #include "../Win/ConfigHandler.h"
 #include "../Win/SetupAppARB.h"
+#include "LibARBWin/ImageHelperBase.h"
 #include "LibARBWin/SetupApp.h"
 #include <wx/cmdline.h>
 #include <wx/config.h>
@@ -39,21 +40,8 @@ wxIMPLEMENT_APP(CCalSitesApp);
 CCalSitesApp::CCalSitesApp()
 	: CBaseApp(ARB_CONFIG_ENTRY, wxEmptyString, ARBLanguageCatalog::Embedded)
 	, m_Localization()
-	, m_imageHelper()
 {
 	m_BaseInfoName = ARB_CONFIG_INFO;
-}
-
-
-bool CCalSitesApp::OnCreateBitmap(const wxArtID& id, const wxArtClient& client, const wxSize& size, wxBitmap& outBmp)
-{
-	return m_imageHelper.DoCreateBitmap(GetTopWindow(), id, client, size, outBmp);
-}
-
-
-bool CCalSitesApp::OnCreateIconBundle(const wxArtID& id, const wxArtClient& client, wxIconBundle& outIcon)
-{
-	return m_imageHelper.DoCreateIconBundle(GetTopWindow(), id, client, outIcon);
 }
 
 
@@ -210,6 +198,43 @@ List of venues we can select from.
 
 	BaseAppCleanup(true);
 	return false;
+}
+
+
+wxWindow* CCalSitesApp::GetResourceWindow()
+{
+	return wxGetApp().GetTopWindow();
+}
+
+
+bool CCalSitesApp::GetResImageName(wxArtID const& id, wxArtClient const& client, std::wstring& outName, bool& outSvg)
+	const
+{
+	bool found = true;
+	outSvg = false;
+
+	if (id == ImageMgrApp)
+	{
+		if (client == wxART_MESSAGE_BOX)
+			outName = L"AgilityBook32";
+		else
+			outName = L"AgilityBook16";
+	}
+	else if (id == ImageMgrApp48)
+		outName = L"AgilityBook48";
+	else if (id == ImageMgrApp256)
+		outName = L"AgilityBook256";
+	else if (id == ImageMgrChecked)
+		outName = L"checked";
+	else if (id == ImageMgrUnChecked)
+		outName = L"unchecked";
+	else
+		found = false;
+
+#if defined(_DEBUG) || defined(__WXDEBUG__)
+	assert(!outName.empty());
+#endif
+	return found;
 }
 
 /////////////////////////////////////////////////////////////////////////////

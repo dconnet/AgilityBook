@@ -554,16 +554,16 @@ bool CAgilityBookCalendarListView::Create(
 	m_Ctrl->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CAgilityBookCalendarListView::OnCtrlItemSelected, this);
 	m_Ctrl->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CAgilityBookCalendarListView::OnCtrlItemActivated, this);
 	m_Ctrl->Bind(wxEVT_KEY_DOWN, &CAgilityBookCalendarListView::OnCtrlKeyDown, this);
-	m_imgTentative = m_Ctrl->AddIcon(CImageManager::Get()->GetIcon(ImageMgrQuestion));
-	m_imgPlan = m_Ctrl->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCheck));
-	m_imgPlanTentative = m_Ctrl->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalPlanTentative));
-	m_imgPending = m_Ctrl->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalPending));
-	m_imgPendingTentative = m_Ctrl->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalPendingTentative));
-	m_imgEntered = m_Ctrl->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalEntered));
-	m_imgEnteredTentative = m_Ctrl->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCalEnteredTentative));
-	m_imgAccomNone = m_Ctrl->AddIcon(CImageManager::Get()->GetIcon(ImageMgrAccomNone));
-	m_imgAccomTodo = m_Ctrl->AddIcon(CImageManager::Get()->GetIcon(ImageMgrAccomTodo));
-	m_imgAccomConfirm = m_Ctrl->AddIcon(CImageManager::Get()->GetIcon(ImageMgrAccomConfirm));
+	m_imgTentative = m_Ctrl->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrQuestion));
+	m_imgPlan = m_Ctrl->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrCheck));
+	m_imgPlanTentative = m_Ctrl->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrCalPlanTentative));
+	m_imgPending = m_Ctrl->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrCalPending));
+	m_imgPendingTentative = m_Ctrl->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrCalPendingTentative));
+	m_imgEntered = m_Ctrl->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrCalEntered));
+	m_imgEnteredTentative = m_Ctrl->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrCalEnteredTentative));
+	m_imgAccomNone = m_Ctrl->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrAccomNone));
+	m_imgAccomTodo = m_Ctrl->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrAccomTodo));
+	m_imgAccomConfirm = m_Ctrl->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrAccomConfirm));
 #if defined(__WXMAC__)
 	m_Ctrl->SetDropTarget(new CFileDropTarget(doc->GetDocumentManager()));
 #endif

@@ -22,6 +22,7 @@
 #include "DlgPageDecode.h"
 
 #include "../Win/SetupAppARB.h"
+#include "LibARBWin/ImageHelperBase.h"
 #include "LibARBWin/SetupApp.h"
 #include <wx/cmdline.h>
 #include <wx/config.h>
@@ -41,6 +42,10 @@ public:
 		return true;
 	}
 	bool OnInit() override;
+
+	wxWindow* GetResourceWindow() override;
+	bool GetResImageName(wxArtID const& id, wxArtClient const& client, std::wstring& outName, bool& outSvg)
+		const override;
 };
 
 
@@ -87,4 +92,37 @@ bool CARBHelpApp::OnInit()
 	SetTopWindow(dlg);
 
 	return true;
+}
+
+
+wxWindow* CARBHelpApp::GetResourceWindow()
+{
+	return wxGetApp().GetTopWindow();
+}
+
+
+bool CARBHelpApp::GetResImageName(wxArtID const& id, wxArtClient const& client, std::wstring& outName, bool& outSvg)
+	const
+{
+	bool found = true;
+	outSvg = false;
+
+	if (id == ImageMgrApp)
+	{
+		if (client == wxART_MESSAGE_BOX)
+			outName = L"AgilityBook32";
+		else
+			outName = L"AgilityBook16";
+	}
+	else if (id == ImageMgrApp48)
+		outName = L"AgilityBook48";
+	else if (id == ImageMgrApp256)
+		outName = L"AgilityBook256";
+	else
+		found = false;
+
+#if defined(_DEBUG) || defined(__WXDEBUG__)
+	assert(!outName.empty());
+#endif
+	return found;
 }

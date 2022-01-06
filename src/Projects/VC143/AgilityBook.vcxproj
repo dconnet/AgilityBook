@@ -235,10 +235,10 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -249,10 +249,10 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -263,10 +263,10 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">
@@ -277,10 +277,10 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
@@ -291,10 +291,10 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
@@ -305,10 +305,10 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
@@ -319,10 +319,10 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
     <PostBuildEvent>
       <Command>python "$(BuildScriptDir)SignStuff.py" "$(TargetPath)"</Command>
@@ -336,10 +336,10 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
     <PostBuildEvent>
       <Command>python "$(BuildScriptDir)SignStuff.py" "$(TargetPath)"</Command>
@@ -353,10 +353,10 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
     <PostBuildEvent>
       <Command>python "$(BuildScriptDir)SignStuff.py" "$(TargetPath)"</Command>
@@ -370,10 +370,10 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
     <PostBuildEvent>
       <Command>python "$(BuildScriptDir)SignStuff.py" "$(TargetPath)"</Command>
@@ -387,10 +387,10 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
     <PostBuildEvent>
       <Command>python "$(BuildScriptDir)SignStuff.py" "$(TargetPath)"</Command>
@@ -404,10 +404,10 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\lang\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
-      <Inputs>$(ProjectDir)..\..\lang\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
+      <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
     </CustomBuildStep>
     <PostBuildEvent>
       <Command>python "$(BuildScriptDir)SignStuff.py" "$(TargetPath)"</Command>
@@ -491,7 +491,6 @@
     <ClCompile Include="..\..\Win\DlgTrial.cpp" />
     <ClCompile Include="..\..\Win\FilterOptions.cpp" />
     <ClCompile Include="..\..\Win\IconList.cpp" />
-    <ClCompile Include="..\..\Win\ImageHelper.cpp" />
     <ClCompile Include="..\..\Win\Localization.cpp" />
     <ClCompile Include="..\..\Win\MainFrm.cpp" />
     <ClCompile Include="..\..\Win\NamedColumns.cpp" />

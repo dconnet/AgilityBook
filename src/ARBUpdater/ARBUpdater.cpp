@@ -20,6 +20,7 @@
 #include "DlgDigest.h"
 
 #include "../Win/SetupAppARB.h"
+#include "LibARBWin/ImageHelperBase.h"
 #include "LibARBWin/SetupApp.h"
 #include <wx/cmdline.h>
 #include <wx/config.h>
@@ -39,6 +40,13 @@ public:
 		return true;
 	}
 	bool OnInit() override;
+
+	wxWindow* GetResourceWindow() override;
+	bool GetResImageName(wxArtID const& id, wxArtClient const& client, std::wstring& outName, bool& outSvg)
+		const override;
+
+private:
+	wxWindow* m_dlg;
 };
 
 
@@ -47,6 +55,7 @@ wxIMPLEMENT_APP(CARBUpdaterApp);
 
 CARBUpdaterApp::CARBUpdaterApp()
 	: CBaseApp(ARB_CONFIG_ENTRY)
+	, m_dlg(nullptr)
 {
 	m_BaseInfoName = ARB_CONFIG_INFO;
 }
@@ -85,7 +94,9 @@ bool CARBUpdaterApp::OnInit()
 	if (cmdline.Found(L"generate") || !bHasFile)
 	{
 		CDlgDigest dlg(file);
+		m_dlg = &dlg;
 		dlg.ShowModal();
+		m_dlg = nullptr;
 	}
 	else if (bHasFile)
 	{
@@ -115,4 +126,37 @@ bool CARBUpdaterApp::OnInit()
 
 	BaseAppCleanup(true);
 	return false;
+}
+
+
+wxWindow* CARBUpdaterApp::GetResourceWindow()
+{
+	return m_dlg;
+}
+
+
+bool CARBUpdaterApp::GetResImageName(wxArtID const& id, wxArtClient const& client, std::wstring& outName, bool& outSvg)
+	const
+{
+	bool found = true;
+	outSvg = false;
+
+	if (id == ImageMgrApp)
+	{
+		if (client == wxART_MESSAGE_BOX)
+			outName = L"AgilityBook32";
+		else
+			outName = L"AgilityBook16";
+	}
+	else if (id == ImageMgrApp48)
+		outName = L"AgilityBook48";
+	else if (id == ImageMgrApp256)
+		outName = L"AgilityBook256";
+	else
+		found = false;
+
+#if defined(_DEBUG) || defined(__WXDEBUG__)
+	assert(!outName.empty());
+#endif
+	return found;
 }

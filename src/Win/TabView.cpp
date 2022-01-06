@@ -331,10 +331,10 @@ bool CTabView::OnCreate(wxDocument* doc, long flags)
 	assert(m_frame);
 
 	m_imageList.Create(DPI::Scale(m_frame, 16), DPI::Scale(m_frame, 16));
-	m_imageList.Add(CImageManager::Get()->GetIcon(ImageMgrRuns));
-	m_imageList.Add(CImageManager::Get()->GetIcon(ImageMgrPoints));
-	m_imageList.Add(CImageManager::Get()->GetIcon(ImageMgrCalendar));
-	m_imageList.Add(CImageManager::Get()->GetIcon(ImageMgrTraining));
+	m_imageList.Add(CResourceManager::Get()->GetIcon(ImageMgrRuns));
+	m_imageList.Add(CResourceManager::Get()->GetIcon(ImageMgrPoints));
+	m_imageList.Add(CResourceManager::Get()->GetIcon(ImageMgrCalendar));
+	m_imageList.Add(CResourceManager::Get()->GetIcon(ImageMgrTraining));
 
 	m_sizerFrame = new wxBoxSizer(wxVERTICAL);
 	m_frame->SetSizer(m_sizerFrame);

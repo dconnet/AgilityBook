@@ -42,7 +42,7 @@
 #include "LibARBWin/DPI.h"
 #include "LibARBWin/ImageHelperBase.h"
 #include "LibARBWin/ListData.h"
-#include "LibARBWin/RegItemsBase.h"
+#include "LibARBWin/ResourceManager.h"
 #include "fmt/format.h"
 
 #if defined(__WXMSW__)
@@ -69,9 +69,9 @@ CCheckListCtrl::CCheckListCtrl(wxWindow* parent, const wxPoint& pos, const wxSiz
 		Bind(wxEVT_LEFT_DOWN, &CCheckListCtrl::OnClick, this);
 		Bind(wxEVT_KEY_DOWN, &CCheckListCtrl::OnKeyDown, this);
 		m_ImageList.Create(DPI::Scale(this, 16), DPI::Scale(this, 16));
-		m_imgEmpty = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
-		m_imgNoCheck = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrUnChecked));
-		m_imgChecked = m_ImageList.Add(CImageManager::Get()->GetIcon(ImageMgrChecked));
+		m_imgEmpty = m_ImageList.Add(CResourceManager::Get()->GetIcon(ImageMgrBlank));
+		m_imgNoCheck = m_ImageList.Add(CResourceManager::Get()->GetIcon(ImageMgrUnChecked));
+		m_imgChecked = m_ImageList.Add(CResourceManager::Get()->GetIcon(ImageMgrChecked));
 		CListCtrl::SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
 	}
 }

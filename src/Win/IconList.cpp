@@ -63,29 +63,29 @@ bool CIconList::Create(wxWindow const* pWindow)
 	if (!wxImageList::Create(DPI::Scale(pWindow, 16), DPI::Scale(pWindow, 16)))
 		return false;
 
-	m_idxDog = Add(CImageManager::Get()->GetIcon(ImageMgrDog));
-	m_idxTrial = Add(CImageManager::Get()->GetIcon(ImageMgrTrial));
-	m_idxRun = Add(CImageManager::Get()->GetIcon(ImageMgrRuns));
-	m_idxVenueAAC = Add(CImageManager::Get()->GetIcon(ImageMgrVenueAAC));
-	m_idxVenueAKC = Add(CImageManager::Get()->GetIcon(ImageMgrVenueAKC));
-	m_idxVenueASCA = Add(CImageManager::Get()->GetIcon(ImageMgrVenueASCA));
-	m_idxVenueCKC = Add(CImageManager::Get()->GetIcon(ImageMgrVenueCKC));
-	m_idxVenueCPE = Add(CImageManager::Get()->GetIcon(ImageMgrVenueCPE));
-	m_idxVenueDOCNA = Add(CImageManager::Get()->GetIcon(ImageMgrVenueDOCNA));
-	m_idxVenueNADAC = Add(CImageManager::Get()->GetIcon(ImageMgrVenueNADAC));
-	m_idxVenueSweep = Add(CImageManager::Get()->GetIcon(ImageMgrVenueSweepstakes));
-	m_idxVenueTDAA = Add(CImageManager::Get()->GetIcon(ImageMgrVenueTDAA));
-	m_idxVenueUKC = Add(CImageManager::Get()->GetIcon(ImageMgrVenueUKC));
-	m_idxVenueUSDAA = Add(CImageManager::Get()->GetIcon(ImageMgrVenueUSDAA));
-	m_idxVenueFCI = Add(CImageManager::Get()->GetIcon(ImageMgrVenueFCI));
-	m_idxVenueSCC = Add(CImageManager::Get()->GetIcon(ImageMgrVenueSCC));
-	m_idxVenueBHA = Add(CImageManager::Get()->GetIcon(ImageMgrVenueBHA));
-	m_idxVenueCKCSC = Add(CImageManager::Get()->GetIcon(ImageMgrVenueCKCSC));
-	m_idxVenueUKI = Add(CImageManager::Get()->GetIcon(ImageMgrVenueUKI));
-	m_idxVenueVALOR = Add(CImageManager::Get()->GetIcon(ImageMgrVenueVALOR));
+	m_idxDog = Add(CResourceManager::Get()->GetIcon(ImageMgrDog));
+	m_idxTrial = Add(CResourceManager::Get()->GetIcon(ImageMgrTrial));
+	m_idxRun = Add(CResourceManager::Get()->GetIcon(ImageMgrRuns));
+	m_idxVenueAAC = Add(CResourceManager::Get()->GetIcon(ImageMgrVenueAAC));
+	m_idxVenueAKC = Add(CResourceManager::Get()->GetIcon(ImageMgrVenueAKC));
+	m_idxVenueASCA = Add(CResourceManager::Get()->GetIcon(ImageMgrVenueASCA));
+	m_idxVenueCKC = Add(CResourceManager::Get()->GetIcon(ImageMgrVenueCKC));
+	m_idxVenueCPE = Add(CResourceManager::Get()->GetIcon(ImageMgrVenueCPE));
+	m_idxVenueDOCNA = Add(CResourceManager::Get()->GetIcon(ImageMgrVenueDOCNA));
+	m_idxVenueNADAC = Add(CResourceManager::Get()->GetIcon(ImageMgrVenueNADAC));
+	m_idxVenueSweep = Add(CResourceManager::Get()->GetIcon(ImageMgrVenueSweepstakes));
+	m_idxVenueTDAA = Add(CResourceManager::Get()->GetIcon(ImageMgrVenueTDAA));
+	m_idxVenueUKC = Add(CResourceManager::Get()->GetIcon(ImageMgrVenueUKC));
+	m_idxVenueUSDAA = Add(CResourceManager::Get()->GetIcon(ImageMgrVenueUSDAA));
+	m_idxVenueFCI = Add(CResourceManager::Get()->GetIcon(ImageMgrVenueFCI));
+	m_idxVenueSCC = Add(CResourceManager::Get()->GetIcon(ImageMgrVenueSCC));
+	m_idxVenueBHA = Add(CResourceManager::Get()->GetIcon(ImageMgrVenueBHA));
+	m_idxVenueCKCSC = Add(CResourceManager::Get()->GetIcon(ImageMgrVenueCKCSC));
+	m_idxVenueUKI = Add(CResourceManager::Get()->GetIcon(ImageMgrVenueUKI));
+	m_idxVenueVALOR = Add(CResourceManager::Get()->GetIcon(ImageMgrVenueVALOR));
 
-	m_idxARB = Add(CImageManager::Get()->GetIcon(ImageMgrApp));
-	m_idxEmpty = Add(CImageManager::Get()->GetIcon(ImageMgrBlank));
+	m_idxARB = Add(CResourceManager::Get()->GetIcon(ImageMgrApp));
+	m_idxEmpty = Add(CResourceManager::Get()->GetIcon(ImageMgrBlank));
 
 #if defined(_DEBUG) || defined(__WXDEBUG__)
 	struct

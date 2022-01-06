@@ -1286,8 +1286,8 @@ bool CAgilityBookRunsView::Create(
 	m_Ctrl->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CAgilityBookRunsView::OnCtrlItemSelected, this);
 	m_Ctrl->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CAgilityBookRunsView::OnCtrlItemActivated, this);
 	m_Ctrl->Bind(wxEVT_KEY_DOWN, &CAgilityBookRunsView::OnCtrlKeyDown, this);
-	m_imgCourse = m_Ctrl->AddIcon(CImageManager::Get()->GetIcon(ImageMgrApp));
-	m_imgMap = m_Ctrl->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCRCD));
+	m_imgCourse = m_Ctrl->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrApp));
+	m_imgMap = m_Ctrl->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrCRCD));
 #if defined(__WXMAC__)
 	m_Ctrl->SetDropTarget(new CFileDropTarget(doc->GetDocumentManager()));
 #endif

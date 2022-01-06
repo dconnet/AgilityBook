@@ -228,9 +228,6 @@
     <ClCompile Include="..\..\Win\IconList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Win\ImageHelper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Win\Localization.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

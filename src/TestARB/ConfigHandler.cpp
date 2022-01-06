@@ -25,26 +25,19 @@
 #include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
-#include "LibArchive/LibArchive.h"
-
-#if defined(__WXWINDOWS__)
-#include <wx/filename.h>
-#include <wx/stdpaths.h>
-#endif
+#include "LibARBWin/ResourceManager.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
 
 
-bool CConfigHandler::LoadWxFile(std::wstring const& zipFile, std::wstring const& archiveFile, std::ostream& outData)
+CConfigHandler::CConfigHandler()
 {
-	CLibArchive archive(zipFile);
-	return archive.ExtractFile(archiveFile, outData);
 }
 
 
-CConfigHandler::CConfigHandler()
+CConfigHandler::~CConfigHandler()
 {
 }
 
@@ -56,24 +49,10 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
 
-#if defined(__WXWINDOWS__)
-	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	std::wstring datafile
-		= StringUtil::stringW(GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat");
-#else
-#ifdef WIN32
-	wchar_t fileName[MAX_PATH];
-	GetModuleFileNameW(nullptr, fileName, _countof(fileName));
-	std::wstring datafile(fileName);
-	size_t n = datafile.find_last_of('.');
-	datafile = datafile.substr(0, n);
-	datafile += L".dat";
-#else
-	std::wstring datafile = L"./testarb.dat";
-#endif
-#endif
+	auto resMgr = CResourceManager::Get();
+	assert(resMgr);
 	std::stringstream data;
-	if (LoadWxFile(datafile, L"DefaultConfig.xml", data))
+	if (resMgr->LoadFile(L"DefaultConfig.xml", data))
 		bOk = tree->LoadXML(data, errMsg);
 
 	return bOk ? tree : ElementNodePtr();
@@ -82,25 +61,9 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 
 std::string CConfigHandler::LoadDTD() const
 {
-#if defined(__WXWINDOWS__)
-	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	std::wstring datafile
-		= StringUtil::stringW(GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat");
-#else
-#ifdef WIN32
-	wchar_t fileName[MAX_PATH];
-	GetModuleFileNameW(nullptr, fileName, _countof(fileName));
-	std::wstring datafile(fileName);
-	size_t n = datafile.find_last_of('.');
-	datafile = datafile.substr(0, n);
-	datafile += L".dat";
-#else
-	std::wstring datafile = L"./testarb.dat";
-#endif
-#endif
-
-	std::ostringstream data;
-	LoadWxFile(datafile, L"AgilityRecordBook.dtd", data);
-
+	auto resMgr = CResourceManager::Get();
+	assert(resMgr);
+	std::stringstream data;
+	resMgr->LoadFile(L"AgilityRecordBook.dtd", data);
 	return data.str();
 }

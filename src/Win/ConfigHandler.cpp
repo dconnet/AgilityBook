@@ -24,20 +24,11 @@
 #include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
-#include "LibArchive/LibArchive.h"
-#include <wx/filename.h>
-#include <wx/stdpaths.h>
+#include "LibARBWin/ResourceManager.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
-
-
-bool CConfigHandler::LoadWxFile(std::wstring const& zipFile, std::wstring const& archiveFile, std::ostream& outData)
-{
-	CLibArchive archive(zipFile);
-	return archive.ExtractFile(archiveFile, outData);
-}
 
 
 CConfigHandler::CConfigHandler()
@@ -57,10 +48,10 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
 
-	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	wxString datafile = GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
+	auto resMgr = CResourceManager::Get();
+	assert(resMgr);
 	std::stringstream data;
-	if (LoadWxFile(StringUtil::stringW(datafile), L"DefaultConfig.xml", data))
+	if (resMgr->LoadFile(L"DefaultConfig.xml", data))
 		bOk = tree->LoadXML(data, errMsg);
 
 	return bOk ? tree : ElementNodePtr();
@@ -69,11 +60,9 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 
 std::string CConfigHandler::LoadDTD() const
 {
-	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	wxString datafile = GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
-
+	auto resMgr = CResourceManager::Get();
+	assert(resMgr);
 	std::stringstream data;
-	LoadWxFile(StringUtil::stringW(datafile), L"AgilityRecordBook.dtd", data);
-
+	resMgr->LoadFile(L"AgilityRecordBook.dtd", data);
 	return data.str();
 }

@@ -205,8 +205,8 @@ CDlgFindLinks::CDlgFindLinks(ARBDogList& inDogs, wxWindow* pParent)
 	m_ctrlLinks->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgFindLinks::OnItemSelected, this);
 	m_ctrlLinks->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgFindLinks::OnItemActivated, this);
 	m_ctrlLinks->Bind(wxEVT_KEY_DOWN, &CDlgFindLinks::OnKeyDown, this);
-	m_imgOk = m_ctrlLinks->AddIcon(CImageManager::Get()->GetIcon(ImageMgrCheck));
-	m_imgMissing = m_ctrlLinks->AddIcon(CImageManager::Get()->GetIcon(ImageMgrQuestion));
+	m_imgOk = m_ctrlLinks->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrCheck));
+	m_imgMissing = m_ctrlLinks->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrQuestion));
 	m_ctrlLinks->SetHelpText(_("HIDC_FINDLINKS_LIST"));
 	m_ctrlLinks->SetToolTip(_("HIDC_FINDLINKS_LIST"));
 

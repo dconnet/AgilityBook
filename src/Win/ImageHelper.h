@@ -21,35 +21,7 @@
  */
 
 #include "LibARBWin/ImageHelperBase.h"
-#include "LibARBWin/ImageManager.h"
 
-
-class CImageHelper
-{
-public:
-	CImageHelper()
-	{
-	}
-
-	bool DoCreateBitmap(
-		wxWindow const* pWindow,
-		const wxArtID& id,
-		const wxArtClient& client,
-		const wxSize& size,
-		wxBitmap& outBmp);
-
-	bool DoCreateIconBundle(
-		wxWindow const* pWindow,
-		const wxArtID& id,
-		const wxArtClient& client,
-		wxIconBundle& outIcon);
-};
-
-
-#define ImageMgrAppBundle wxART_MAKE_ART_ID(ImageMgrAppBundle)
-#define ImageMgrApp       wxART_MAKE_ART_ID(ImageMgrApp)
-#define ImageMgrApp48     wxART_MAKE_ART_ID(ImageMgrApp48)
-#define ImageMgrApp256    wxART_MAKE_ART_ID(ImageMgrApp256)
 
 #define ImageMgrRuns                wxART_MAKE_ART_ID(ImageMgrRuns)
 #define ImageMgrPoints              wxART_MAKE_ART_ID(ImageMgrPoints)

@@ -60,14 +60,6 @@ END
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "../Win/res/AgilityBook.ico"
 
-AGILITYBOOK16           RCDATA                  "images/AgilityBook16.png"
-AGILITYBOOK16_2         RCDATA                  "images/AgilityBook16@2x.png"
-AGILITYBOOK32           RCDATA                  "images/AgilityBook32.png"
-AGILITYBOOK32_2         RCDATA                  "images/AgilityBook32@2x.png"
-AGILITYBOOK48           RCDATA                  "images/AgilityBook48.png"
-AGILITYBOOK48_2         RCDATA                  "images/AgilityBook48@2x.png"
-AGILITYBOOK256          RCDATA                  "images/AgilityBook256.png"
-
 
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////

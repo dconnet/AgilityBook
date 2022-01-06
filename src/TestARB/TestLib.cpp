@@ -36,6 +36,7 @@
 #include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/ResourceManager.h"
 #include "fmt/printf.h"
 #include <iostream>
 #include <stdexcept>
@@ -55,16 +56,42 @@
 
 bool g_bMicroTest = false;
 
+namespace
+{
+std::wstring GetDataFile()
+{
+#if defined(__WXWINDOWS__)
+	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
+	std::wstring datafile
+		= wxString(GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat").wx_str();
+#else
+#pragma PRAGMA_TODO(write LoadXMLData)
+#ifdef WIN32
+	wchar_t fileName[MAX_PATH];
+	GetModuleFileNameW(nullptr, fileName, _countof(fileName));
+	std::wstring datafile(fileName);
+	size_t n = datafile.find_last_of('.');
+	datafile = datafile.substr(0, n);
+	datafile += L".dat";
+#else
+	std::wstring datafile = L"./testarb.dat";
+#endif
+#endif
+	return datafile;
+}
+} // namespace
 
-class CLangManager
+
+class CCallbackManager
 #if defined(__WXWINDOWS__)
 	: public ILanguageCallback
+	, public IResourceManagerCallback
 #endif
 {
-	DECLARE_NO_COPY_IMPLEMENTED(CLangManager);
+	DECLARE_NO_COPY_IMPLEMENTED(CCallbackManager);
 
 public:
-	CLangManager(CLocalization& localization)
+	CCallbackManager(CLocalization& localization)
 		: m_Localization(localization)
 #if defined(__WXWINDOWS__)
 		, m_langMgr(nullptr)
@@ -75,9 +102,12 @@ public:
 #if defined(__WXWINDOWS__)
 		m_langMgr = std::make_unique<CLanguageManager>(this, true);
 		m_langMgr->InitLanguage();
+
+		auto datafile = GetDataFile();
+		CResourceManager::Get()->Initialize(this, &datafile);
 #endif
 	}
-	virtual ~CLangManager()
+	virtual ~CCallbackManager()
 	{
 	}
 
@@ -124,11 +154,22 @@ private:
 	}
 	int m_CurLang;
 #endif
+
+	// IResourceManagerCallback
+	wxWindow* GetResourceWindow() override
+	{
+		return nullptr;
+	}
+	bool GetResImageName(wxArtID const& id, wxArtClient const& client, std::wstring& outName, bool& outSvg)
+		const override
+	{
+		return false;
+	}
 };
-static CLangManager* g_LangMgr = nullptr;
+static CCallbackManager* g_LangMgr = nullptr;
 
 
-bool CLangManager::SetLang(wxLanguage langId)
+bool CCallbackManager::SetLang(wxLanguage langId)
 {
 #if defined(__WXWINDOWS__)
 	return m_langMgr->SetLang(langId);
@@ -225,7 +266,7 @@ int main(int argc, char** argv)
 
 	bool bRunTests = true;
 #if defined(__WXWINDOWS__)
-	g_LangMgr = new CLangManager(m_Localization);
+	g_LangMgr = new CCallbackManager(m_Localization);
 	try
 	{
 		SetLang(wxLANGUAGE_ENGLISH_US);

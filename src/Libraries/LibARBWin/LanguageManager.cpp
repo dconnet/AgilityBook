@@ -34,7 +34,6 @@
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
-#include "LibARBWin/ImageManager.h"
 
 #include <wx/config.h>
 #include <wx/dir.h>
