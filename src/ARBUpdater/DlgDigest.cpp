@@ -30,6 +30,7 @@
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
 #include "LibARBWin/ARBWinUtilities.h"
+#include "LibARBWin/ResourceManager.h"
 #include "LibARBWin/Validators.h"
 
 #include <wx/filedlg.h>
@@ -39,15 +40,6 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-// Copy test from gdicmn.h for wxBITMAP_PNG
-#if !((defined(__WINDOWS__) && wxUSE_WXDIB) || defined(__WXOSX__))
-#include "images/AgilityBook16_png.c"
-#include "images/AgilityBook256_png.c"
-#include "images/AgilityBook32_png.c"
-#include "images/AgilityBook48_png.c"
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
 
 CDlgDigest::CDlgDigest(wxString const& inFile)
 	: m_Localization()
@@ -73,16 +65,12 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 		wxDefaultSize,
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
-	wxString baseConfig(L"\\AgilityBook\\trunk\\AgilityBook\\src\\Win\\res\\DefaultConfig.xml");
+	wxString baseConfig(L"\\AgilityBook\\AgilityBook\\src\\Win\\res\\DefaultConfig.xml");
 	m_Config = L"D:" + baseConfig;
 	if (!wxFile::Access(m_Config, wxFile::read))
 		m_Config = L"C:" + baseConfig;
 
-	wxIconBundle icons;
-	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook16)));
-	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook32)));
-	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook48)));
-	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook256)));
+	wxIconBundle icons = CResourceManager::Get()->CreateIconBundle(ImageMgrAppBundle, wxART_OTHER);
 	SetIcons(icons);
 
 	m_Localization.Load();

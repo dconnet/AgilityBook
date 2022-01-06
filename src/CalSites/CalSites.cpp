@@ -58,6 +58,7 @@ bool CCalSitesApp::OnInit()
 		return false;
 
 	wxImage::AddHandler(new wxPNGHandler);
+	InitFSHandlers();
 
 	/*
 	static const wxCmdLineEntryDesc cmdLineDesc[] = {

@@ -60,6 +60,8 @@ END
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "../Win/res/AgilityBook.ico"
 
+ARBHELP_DAT             DATAFILE                "ARBHelp.dat"
+
 
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////

@@ -32,20 +32,13 @@
 #include "ARBCommon/BinaryData.h"
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
+#include "LibARBWin/ResourceManager.h"
 #include "fmt/xchar.h"
 #include <wx/ffile.h>
 #include <wx/filename.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
-#endif
-
-// Copy test from gdicmn.h for wxBITMAP_PNG
-#if !((defined(__WINDOWS__) && wxUSE_WXDIB) || defined(__WXOSX__))
-#include "images/AgilityBook16_png.c"
-#include "images/AgilityBook256_png.c"
-#include "images/AgilityBook32_png.c"
-#include "images/AgilityBook48_png.c"
 #endif
 
 
@@ -60,11 +53,7 @@ CDlgARBHelp::CDlgARBHelp()
 		wxDefaultPosition,
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-	wxIconBundle icons;
-	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook16)));
-	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook32)));
-	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook48)));
-	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook256)));
+	wxIconBundle icons = CResourceManager::Get()->CreateIconBundle(ImageMgrAppBundle, wxART_OTHER);
 	SetIcons(icons);
 
 	m_firstPage = new CDlgPageEncode(this);

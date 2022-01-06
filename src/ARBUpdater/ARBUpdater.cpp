@@ -67,6 +67,7 @@ bool CARBUpdaterApp::OnInit()
 		return false;
 
 	wxImage::AddHandler(new wxPNGHandler);
+	InitFSHandlers();
 
 	static const wxCmdLineEntryDesc cmdLineDesc[] = {
 		{wxCMD_LINE_SWITCH, "g", "generate", "Ignore all other options and display a dialog allowing MD5 generation"},

@@ -47,6 +47,7 @@
 #include "LibARBWin/DlgProgress.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/ReadHttp.h"
+#include "LibARBWin/ResourceManager.h"
 #include <wx/dir.h>
 #include <wx/dynlib.h>
 #include <wx/file.h>
@@ -67,17 +68,10 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-// Copy test from gdicmn.h for wxBITMAP_PNG
-#if !((defined(__WINDOWS__) && wxUSE_WXDIB) || defined(__WXOSX__))
-#include "images/AgilityBook16_png.c"
-#include "images/AgilityBook256_png.c"
-#include "images/AgilityBook32_png.c"
-#include "images/AgilityBook48_png.c"
-#endif
 
-/////////////////////////////////////////////////////////////////////////////
-
-static CVersionNum GetCalSitePermanentStatus(std::wstring const& filename)
+namespace
+{
+CVersionNum GetCalSitePermanentStatus(std::wstring const& filename)
 {
 	CVersionNum ver;
 	if (!filename.empty())
@@ -90,7 +84,7 @@ static CVersionNum GetCalSitePermanentStatus(std::wstring const& filename)
 	return ver;
 }
 
-static bool IsCalSiteVisible(std::wstring const& filename, CVersionNum const& inVer)
+bool IsCalSiteVisible(std::wstring const& filename, CVersionNum const& inVer)
 {
 	assert(inVer.Valid());
 	if (filename.empty())
@@ -111,7 +105,7 @@ static bool IsCalSiteVisible(std::wstring const& filename, CVersionNum const& in
 }
 
 
-static void SuppressCalSite(std::wstring const& filename, bool bSuppress)
+void SuppressCalSite(std::wstring const& filename, bool bSuppress)
 {
 	if (filename.empty())
 		return;
@@ -121,7 +115,7 @@ static void SuppressCalSite(std::wstring const& filename, bool bSuppress)
 
 
 /*
-static void SuppressCalSitePermanently(
+void SuppressCalSitePermanently(
 	std::wstring const& filename,
 	CVersionNum const& inVer,
 	bool bSuppress)
@@ -144,9 +138,8 @@ static void SuppressCalSitePermanently(
 }
 */
 
-/////////////////////////////////////////////////////////////////////////////
 
-static size_t TranslateCodeMap(std::map<std::wstring, std::wstring> const& inMap, std::vector<std::wstring>& outKeys)
+size_t TranslateCodeMap(std::map<std::wstring, std::wstring> const& inMap, std::vector<std::wstring>& outKeys)
 {
 	outKeys.clear();
 	for (std::map<std::wstring, std::wstring>::const_iterator iMap = inMap.begin(); iMap != inMap.end(); ++iMap)
@@ -155,6 +148,7 @@ static size_t TranslateCodeMap(std::map<std::wstring, std::wstring> const& inMap
 	}
 	return outKeys.size();
 }
+} // namespace
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -782,11 +776,7 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 		wxDefaultSize,
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
-	wxIconBundle icons;
-	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook16)));
-	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook32)));
-	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook48)));
-	icons.AddIcon(ImageHelper::CreateIconFromBitmap(wxBITMAP_PNG(AgilityBook256)));
+	wxIconBundle icons = CResourceManager::Get()->CreateIconBundle(ImageMgrAppBundle, wxART_OTHER);
 	SetIcons(icons);
 
 	// Controls (these are done first to control tab order)

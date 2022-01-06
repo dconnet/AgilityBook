@@ -65,6 +65,7 @@ bool CARBHelpApp::OnInit()
 		return false;
 
 	wxImage::AddHandler(new wxPNGHandler);
+	InitFSHandlers();
 
 	static const wxCmdLineEntryDesc cmdLineDesc[] = {
 		{wxCMD_LINE_SWITCH, "decode", nullptr, "Decode ARBHelp data from clipboard"},
