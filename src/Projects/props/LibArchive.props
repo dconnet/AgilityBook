@@ -4,8 +4,5 @@
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\3rdParty\LibArchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
-    <Link>
-      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
   </ItemDefinitionGroup>
 </Project>

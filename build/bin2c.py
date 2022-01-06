@@ -2,9 +2,10 @@
 # Above line is for python
 #
 # Revision History
+# 2022-01-04 Added -n option
 # 2021-12-22 Added -v (verbose) option, fixed globbing
 # 2021-12-21 Created from CPP source
-"""bin2c.py [-b] [-h] [-H] [-P] [-i indent] [-l] [-m] [-o] [-v] file [file...]
+"""bin2c.py [-b] [-h] [-H] [-P] [-i indent] [-l] [-m] [-n] [-o] [-v] file [file...]
   -h:   Usage message
   -b:   Use basename of file (default: full path)
   -H:   Generate .h file also (default: false)
@@ -12,6 +13,7 @@
   -i indent: Indent 'indent' spaces (default (indent==0): one tab)
   -l:   Use 'unsigned long' (default: size_t)
   -m:   Use macro instead of variable for size, implies -H (default: false)
+  -n:   Append a null byte at end of array (default: false)
   -o:   Overwrite existing file (default: false)
   -v:   Verbose
 """
@@ -46,11 +48,12 @@ def main():
 	indent = 0
 	useLong = False
 	useMacro = False
+	appendNull = False
 	bOverwrite = False
 	verbose = False
 
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], 'hbHPi:lmpov') 
+		opts, args = getopt.getopt(sys.argv[1:], 'hbHPi:lmnpov') 
 	except getopt.error as msg:
 		print(msg)
 		print('Usage:', __doc__)
@@ -76,6 +79,8 @@ def main():
 			useLong = True
 		elif '-m' == o:
 			useMacro = True
+		elif '-n' == o:
+			appendNull = True
 		elif '-o' == o:
 			bOverwrite = True
 		elif '-v' == o:
@@ -118,6 +123,8 @@ def main():
 			print(msg)
 
 		fileSize = os.stat(fileName)[stat.ST_SIZE]
+		if appendNull:
+			fileSize = fileSize + 1
 
 		fileInput = open(fileName, 'rb')
 
@@ -190,6 +197,8 @@ def main():
 					outSrc.write('{}'.format(b))
 				fileBytesWritten = fileBytesWritten + 1
 
+		if appendNull:
+			outSrc.write(',0')
 		outSrc.write('};\n')
 		outSrc.close()
 		fileInput.close()
