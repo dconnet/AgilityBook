@@ -109,7 +109,6 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	DlgTrial.cpp \
 	FilterOptions.cpp \
 	IconList.cpp \
-	ImageHelper.cpp \
 	Localization.cpp \
 	MainFrm.cpp \
 	NamedColumns.cpp \
@@ -152,7 +151,7 @@ resources: @PACKAGE_ARB_SHORTNAME@
 	python3 $(TOPSRCDIR)/Projects/CompileLang.py -w $(WXWIN) -s $(TOPSRCDIR)/lang arb.po $(CURDIR) @PACKAGE_ARB_SHORTNAME@
 	python3 $(TOPSRCDIR)/Projects/CompileDatafile.py -x $(TOPSRCDIR)/Win/res/CompileDatList.txt $(CURDIR) @PACKAGE_ARB_SHORTNAME@
 
-all: @PACKAGE_ARB_SHORTNAME@ resources
+all: resources @PACKAGE_ARB_SHORTNAME@
 
 dist:: all $(PHONY)
 	mkdir -p $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/MacOS
@@ -163,7 +162,6 @@ dist:: all $(PHONY)
 	cp @PACKAGE_ARB_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/MacOS/@PACKAGE_ARB_SHORTNAME@
 	mkdir -p $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 	cp $(TOPSRCDIR)/Win/res/@PACKAGE_ARB_SHORTNAME@.icns $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
-	cp $(TOPSRCDIR)/Include/images/*.png $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 	cp -pR lang $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 	cp @PACKAGE_ARB_SHORTNAME@.dat $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 

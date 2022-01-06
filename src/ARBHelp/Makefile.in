@@ -38,7 +38,7 @@ PROGRAMS = @PACKAGE_HLP_SHORTNAME@
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-@PACKAGE_HLP_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/Libraries/LibARBWin -larbwin -L$(TOPBUILDDIR)/Libraries/ARB -larb -L$(TOPBUILDDIR)/Libraries/ARBCommon -larbcommon -L$(TOPBUILDDIR)/3rdParty/LibFmt -lfmt
+@PACKAGE_HLP_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/Libraries/LibARBWin -larbwin -L$(TOPBUILDDIR)/Libraries/ARB -larb -L$(TOPBUILDDIR)/Libraries/ARBCommon -larbcommon -L$(TOPBUILDDIR)/3rdParty/LibArchive -larchive -L$(TOPBUILDDIR)/3rdParty/LibFmt -lfmt
 
 ##########
 # Precompiled headers
@@ -52,10 +52,10 @@ PRECOMP_HEADER = $(TOPSRCDIR)/ARBHelp/stdafx.h
 
 @NAM_RULES@
 
-resources: @PACKAGE_ARB_SHORTNAME@
+resources: @PACKAGE_HLP_SHORTNAME@
 	python3 $(TOPSRCDIR)/Projects/CompileDatafile.py -x $(TOPSRCDIR)/ARBHelp/res/CompileDatList.txt $(CURDIR) @PACKAGE_HLP_SHORTNAME@
 
-all: @PACKAGE_HLP_SHORTNAME@
+all: resources @PACKAGE_HLP_SHORTNAME@
 
 dist:: all $(PHONY)
 	mkdir -p $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/MacOS
