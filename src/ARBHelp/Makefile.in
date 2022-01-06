@@ -52,6 +52,9 @@ PRECOMP_HEADER = $(TOPSRCDIR)/ARBHelp/stdafx.h
 
 @NAM_RULES@
 
+resources: @PACKAGE_ARB_SHORTNAME@
+	python3 $(TOPSRCDIR)/Projects/CompileDatafile.py -x $(TOPSRCDIR)/ARBHelp/res/CompileDatList.txt $(CURDIR) @PACKAGE_HLP_SHORTNAME@
+
 all: @PACKAGE_HLP_SHORTNAME@
 
 dist:: all $(PHONY)
@@ -63,7 +66,7 @@ dist:: all $(PHONY)
 	cp @PACKAGE_HLP_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/MacOS/@PACKAGE_HLP_SHORTNAME@
 	mkdir -p $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources
 	cp $(TOPSRCDIR)/Win/res/AgilityBook.icns $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/
-	cp $(TOPSRCDIR)/Include/images/AgilityBook*.png $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/
+	cp @PACKAGE_HLP_SHORTNAME@.dat $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/
 
 ################################################################################
 # End of File: Makefile                                                        #
