@@ -665,9 +665,6 @@
     <Image Include="..\..\Include\images\AgilityBook256.png">
       <Filter>Resource Files\PNG</Filter>
     </Image>
-    <Image Include="..\..\Include\images\blank.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
     <Image Include="..\..\Include\images\calendar.png">
       <Filter>Resource Files\PNG</Filter>
     </Image>

@@ -650,7 +650,6 @@
     <Image Include="..\..\Include\images\AgilityBook32.png" />
     <Image Include="..\..\Include\images\AgilityBook48%402.png" />
     <Image Include="..\..\Include\images\AgilityBook48.png" />
-    <Image Include="..\..\Include\images\blank.png" />
     <Image Include="..\..\Include\images\calendar%402.png" />
     <Image Include="..\..\Include\images\calendar.png" />
     <Image Include="..\..\Include\images\CalEntered%402.png" />
