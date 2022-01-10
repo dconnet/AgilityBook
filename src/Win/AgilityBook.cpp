@@ -547,12 +547,17 @@ wxWindow* CAgilityBookApp::GetResourceWindow()
 }
 
 
-bool CAgilityBookApp::GetResImageName(wxArtID const& id, wxArtClient const& client, std::wstring& outName, bool& outSvg)
-	const
+bool CAgilityBookApp::GetResImageName(
+	wxArtID const& id,
+	wxArtClient const& client,
+	std::wstring& outName,
+	bool& outSvg,
+	bool& outCall) const
 {
-	bool found = true;
 	outSvg = false;
+	outCall = false;
 
+	bool found = true;
 	if (id == ImageMgrApp)
 	{
 		if (client == wxART_MESSAGE_BOX)
@@ -736,13 +741,19 @@ bool CAgilityBookApp::GetResImageName(wxArtID const& id, wxArtClient const& clie
 		|| id == wxART_PLUS
 		|| id == wxART_WARNING
 		|| id == wxART_ERROR)
-		// clang-format on
+			// clang-format on
 			;
 		else
 			assert(0);
 #endif
 	}
 	return found;
+}
+
+
+wxBitmap CAgilityBookApp::GetResImage(wxArtID const& id, wxArtClient const& client) const
+{
+	return wxBitmap();
 }
 
 

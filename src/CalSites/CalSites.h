@@ -32,8 +32,13 @@ public:
 
 	// IResourceManagerCallback
 	wxWindow* GetResourceWindow() override;
-	bool GetResImageName(wxArtID const& id, wxArtClient const& client, std::wstring& outName, bool& outSvg)
-		const override;
+	bool GetResImageName(
+		wxArtID const& id,
+		wxArtClient const& client,
+		std::wstring& outName,
+		bool& outSvg,
+		bool& outCall) const override;
+	wxBitmap GetResImage(wxArtID const& id, wxArtClient const& client) const override;
 
 private:
 	CLocalization m_Localization;

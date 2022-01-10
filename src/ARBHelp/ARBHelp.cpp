@@ -44,8 +44,13 @@ public:
 	bool OnInit() override;
 
 	wxWindow* GetResourceWindow() override;
-	bool GetResImageName(wxArtID const& id, wxArtClient const& client, std::wstring& outName, bool& outSvg)
-		const override;
+	bool GetResImageName(
+		wxArtID const& id,
+		wxArtClient const& client,
+		std::wstring& outName,
+		bool& outSvg,
+		bool& outCall) const override;
+	wxBitmap GetResImage(wxArtID const& id, wxArtClient const& client) const override;
 };
 
 
@@ -102,12 +107,17 @@ wxWindow* CARBHelpApp::GetResourceWindow()
 }
 
 
-bool CARBHelpApp::GetResImageName(wxArtID const& id, wxArtClient const& client, std::wstring& outName, bool& outSvg)
-	const
+bool CARBHelpApp::GetResImageName(
+	wxArtID const& id,
+	wxArtClient const& client,
+	std::wstring& outName,
+	bool& outSvg,
+	bool& outCall) const
 {
-	bool found = true;
 	outSvg = false;
+	outCall = false;
 
+	bool found = true;
 	if (id == ImageMgrApp)
 	{
 		if (client == wxART_MESSAGE_BOX)
@@ -126,4 +136,10 @@ bool CARBHelpApp::GetResImageName(wxArtID const& id, wxArtClient const& client, 
 	assert(!outName.empty());
 #endif
 	return found;
+}
+
+
+wxBitmap CARBHelpApp::GetResImage(wxArtID const& id, wxArtClient const& client) const
+{
+	return wxBitmap();
 }

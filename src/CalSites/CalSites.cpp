@@ -208,12 +208,17 @@ wxWindow* CCalSitesApp::GetResourceWindow()
 }
 
 
-bool CCalSitesApp::GetResImageName(wxArtID const& id, wxArtClient const& client, std::wstring& outName, bool& outSvg)
-	const
+bool CCalSitesApp::GetResImageName(
+	wxArtID const& id,
+	wxArtClient const& client,
+	std::wstring& outName,
+	bool& outSvg,
+	bool& outCall) const
 {
-	bool found = true;
 	outSvg = false;
+	outCall = false;
 
+	bool found = true;
 	if (id == ImageMgrApp)
 	{
 		if (client == wxART_MESSAGE_BOX)
@@ -236,6 +241,12 @@ bool CCalSitesApp::GetResImageName(wxArtID const& id, wxArtClient const& client,
 	assert(!outName.empty());
 #endif
 	return found;
+}
+
+
+wxBitmap CCalSitesApp::GetResImage(wxArtID const& id, wxArtClient const& client) const
+{
+	return wxBitmap();
 }
 
 /////////////////////////////////////////////////////////////////////////////
