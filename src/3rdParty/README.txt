@@ -1,6 +1,6 @@
 3rd Party code.
 
-Catch: v2.13.3
+Catch: v2.13.8
 .../catch/catch2/
 - https://github.com/philsquared/Catch/releases
 -- #include "catch2/catch.hpp"
@@ -16,12 +16,13 @@ LibArchive: zlib v1.2.11: My wrapper to hide zlib
 - zlib is only compiled in the non wxWidget case.
 -- #include "LibArchive/LibArchive.h"
 
-LibFmt: fmtlib v8.1.0
+LibFmt: fmtlib v8.1.1
 .../LibFmt/
 DevNote: When updating, update .../res/LibFmt.rc2 with version number and copyright
 - https://github.com/fmtlib/fmt/releases
 - http://fmtlib.net/dev/index.html
 - Only README.rst, LICENSE.rst, include, src
+(note: diffs are agains 8.1.0)
 -- Changes (diff -c e:original.h mine.h)
 *** e:core.h	Mon Jan 03 06:30:43 2022
 --- core.h	Mon Jan 03 09:35:08 2022
