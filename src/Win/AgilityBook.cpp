@@ -289,8 +289,6 @@ bool CAgilityBookApp::OnInit()
 	m_bShutdownSocket = true;
 
 	wxImage::AddHandler(new wxGIFHandler);
-	wxImage::AddHandler(new wxPNGHandler);
-	InitFSHandlers();
 
 	wxCmdLineParser cmdline(argc, argv);
 	cmdline.AddParam(_("Agility Record Book file"), wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL);
@@ -541,12 +539,6 @@ bool CAgilityBookApp::InitLanguage()
 }
 
 
-wxWindow* CAgilityBookApp::GetResourceWindow()
-{
-	return wxGetApp().GetTopWindow();
-}
-
-
 bool CAgilityBookApp::GetResImageName(
 	wxArtID const& id,
 	wxArtClient const& client,
@@ -725,35 +717,10 @@ bool CAgilityBookApp::GetResImageName(
 		outName = L"toolbarSave";
 	else if (id == ImageMgrSettings)
 		outName = L"toolbarSettings";
+
 	else
-	{
 		found = false;
-#if defined(_DEBUG) || defined(__WXDEBUG__)
-		// clang-format off
-		if (id == wxART_FILE_SAVE_AS
-		|| id == wxART_INFORMATION
-		|| id == wxART_PRINT
-		|| id == wxART_GOTO_FIRST
-		|| id == wxART_GOTO_LAST
-		|| id == wxART_GO_BACK
-		|| id == wxART_GO_FORWARD
-		|| id == wxART_MINUS
-		|| id == wxART_PLUS
-		|| id == wxART_WARNING
-		|| id == wxART_ERROR)
-			// clang-format on
-			;
-		else
-			assert(0);
-#endif
-	}
 	return found;
-}
-
-
-wxBitmap CAgilityBookApp::GetResImage(wxArtID const& id, wxArtClient const& client) const
-{
-	return wxBitmap();
 }
 
 

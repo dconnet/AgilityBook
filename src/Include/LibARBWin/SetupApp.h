@@ -89,15 +89,22 @@ protected:
 	// Note: If called before creating a frame, config needs to be deleted.
 	virtual void BaseAppCleanup(bool deleteConfig = false); // So dlg apps can cleanup.
 
-	// CBaseApp virtual
-	// Initialize typical wxFileSystem handlers that may be used.
-	virtual void InitFSHandlers();
-
 public:
 	/**
 	 * Key to use in UpdateInfo (default registry value)
 	 */
 	virtual std::wstring GetUpdateInfoKey() const;
+
+	// IResourceManagerCallback
+	// Derived classes need to override these to use the resource manager.
+	wxWindow* GetResourceWindow() override;
+	bool GetResImageName(
+		wxArtID const& id,
+		wxArtClient const& client,
+		std::wstring& outName,
+		bool& outSvg,
+		bool& outCall) const override;
+	wxBitmap GetResImage(wxArtID const& id, wxArtClient const& client) const override;
 
 	// Language control
 

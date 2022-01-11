@@ -2,6 +2,7 @@
 # Generate the message libraries and data files
 #
 # Revision History
+# 2022-01-10 Ignore blank lines and '#' in filelist.
 # 2021-12-29 Fixed zip compression (py default was uncompressed archive)
 # 2021-12-20 Added -q option, removed unused -d option.
 # 2016-06-10 Convert to Python3
@@ -136,18 +137,19 @@ def GenFile(inputfiles, intermediateDir, targetname, verbose, bIncUpdater):
 			line = files.readline()
 			if line:
 				line = line.rstrip()
-				inputfile = os.path.abspath(os.path.join(basepath, line))
-				filename = os.path.split(inputfile)[1]
-				if os.access(inputfile, os.F_OK):
-					fileCount = fileCount + 1
-					sizefile = os.path.getsize(inputfile)
-					#if verbose:
-					#	print(sizefile, inputfile)
-					size = size + os.path.getsize(inputfile)
-					zip.write(inputfile, filename)
-				else:
-					print('ERROR: File "' + inputfile + '" in "' + filelist + '" does not exist!')
-					return 1
+				if len(line) > 0 and line[0] != '#':
+					inputfile = os.path.abspath(os.path.join(basepath, line))
+					filename = os.path.split(inputfile)[1]
+					if os.access(inputfile, os.F_OK):
+						fileCount = fileCount + 1
+						sizefile = os.path.getsize(inputfile)
+						#if verbose:
+						#	print(sizefile, inputfile)
+						size = size + os.path.getsize(inputfile)
+						zip.write(inputfile, filename)
+					else:
+						print('ERROR: File "' + inputfile + '" in "' + filelist + '" does not exist!')
+						return 1
 			else:
 				break
 

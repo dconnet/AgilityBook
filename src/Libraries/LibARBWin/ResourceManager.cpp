@@ -179,7 +179,29 @@ wxBitmap CResourceManager::CreateBitmap(wxArtID const& id, wxArtClient const& cl
 			}
 		}
 		else
+		{
+#if defined(_DEBUG) || defined(__WXDEBUG__)
+			// Image not found - and it's not something we except.
+			// (if we start using other wx art, add to this list)
+			// clang-format off
+			if (id == wxART_FILE_SAVE_AS
+			|| id == wxART_INFORMATION
+			|| id == wxART_PRINT
+			|| id == wxART_GOTO_FIRST
+			|| id == wxART_GOTO_LAST
+			|| id == wxART_GO_BACK
+			|| id == wxART_GO_FORWARD
+			|| id == wxART_MINUS
+			|| id == wxART_PLUS
+			|| id == wxART_WARNING
+			|| id == wxART_ERROR)
+				// clang-format on
+				;
+			else
+				assert(0);
+#endif
 			bmp = wxArtProvider::CreateBitmap(id, client, size);
+		}
 	}
 	return bmp;
 }

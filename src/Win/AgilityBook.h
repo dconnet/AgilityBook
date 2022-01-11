@@ -68,14 +68,12 @@ protected:
 	bool InitLanguage() override;
 
 	// IResourceManagerCallback
-	wxWindow* GetResourceWindow() override;
 	bool GetResImageName(
 		wxArtID const& id,
 		wxArtClient const& client,
 		std::wstring& outName,
 		bool& outSvg,
 		bool& outCall) const override;
-	wxBitmap GetResImage(wxArtID const& id, wxArtClient const& client) const override;
 
 	DECLARE_EVENT_TABLE()
 	void OnQueryEndSession(wxCloseEvent& evt);

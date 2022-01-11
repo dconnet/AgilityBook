@@ -57,9 +57,6 @@ bool CCalSitesApp::OnInit()
 	if (!CBaseApp::OnInit())
 		return false;
 
-	wxImage::AddHandler(new wxPNGHandler);
-	InitFSHandlers();
-
 	/*
 	static const wxCmdLineEntryDesc cmdLineDesc[] = {
 		{wxCMD_LINE_SWITCH, "g", "generate", "Ignore all other options and display a dialog allowing MD5 generation"},
@@ -202,12 +199,6 @@ List of venues we can select from.
 }
 
 
-wxWindow* CCalSitesApp::GetResourceWindow()
-{
-	return wxGetApp().GetTopWindow();
-}
-
-
 bool CCalSitesApp::GetResImageName(
 	wxArtID const& id,
 	wxArtClient const& client,
@@ -234,19 +225,10 @@ bool CCalSitesApp::GetResImageName(
 		outName = L"checked";
 	else if (id == ImageMgrUnChecked)
 		outName = L"unchecked";
+
 	else
 		found = false;
-
-#if defined(_DEBUG) || defined(__WXDEBUG__)
-	assert(!outName.empty());
-#endif
 	return found;
-}
-
-
-wxBitmap CCalSitesApp::GetResImage(wxArtID const& id, wxArtClient const& client) const
-{
-	return wxBitmap();
 }
 
 /////////////////////////////////////////////////////////////////////////////

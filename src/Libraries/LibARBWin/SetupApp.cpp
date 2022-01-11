@@ -152,6 +152,11 @@ bool CBaseApp::OnInit()
 	GTKSuppressDiagnostics();
 #endif
 
+	// Initialize critical handlers
+	wxImage::AddHandler(new wxPNGHandler);
+	wxFileSystem::AddHandler(new wxArchiveFSHandler);
+	wxFileSystem::AddHandler(new wxMemoryFSHandler);
+
 	// Suppress PNG loading messages.
 	// Specifically: "iCCP: known incorrect sRGB profile"
 	wxImage::SetDefaultLoadFlags(wxImage::GetDefaultLoadFlags() & ~wxImage::Load_Verbose);
@@ -261,10 +266,26 @@ void CBaseApp::BaseAppCleanup(bool deleteConfig)
 }
 
 
-void CBaseApp::InitFSHandlers()
+wxWindow* CBaseApp::GetResourceWindow()
 {
-	wxFileSystem::AddHandler(new wxArchiveFSHandler);
-	wxFileSystem::AddHandler(new wxMemoryFSHandler);
+	return GetTopWindow();
+}
+
+
+bool CBaseApp::GetResImageName(
+	wxArtID const& id,
+	wxArtClient const& client,
+	std::wstring& outName,
+	bool& outSvg,
+	bool& outCall) const
+{
+	return false;
+}
+
+
+wxBitmap CBaseApp::GetResImage(wxArtID const& id, wxArtClient const& client) const
+{
+	return wxBitmap();
 }
 
 

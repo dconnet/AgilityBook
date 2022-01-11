@@ -43,14 +43,12 @@ public:
 	}
 	bool OnInit() override;
 
-	wxWindow* GetResourceWindow() override;
 	bool GetResImageName(
 		wxArtID const& id,
 		wxArtClient const& client,
 		std::wstring& outName,
 		bool& outSvg,
 		bool& outCall) const override;
-	wxBitmap GetResImage(wxArtID const& id, wxArtClient const& client) const override;
 };
 
 
@@ -68,9 +66,6 @@ bool CARBHelpApp::OnInit()
 {
 	if (!CBaseApp::OnInit())
 		return false;
-
-	wxImage::AddHandler(new wxPNGHandler);
-	InitFSHandlers();
 
 	static const wxCmdLineEntryDesc cmdLineDesc[] = {
 		{wxCMD_LINE_SWITCH, "decode", nullptr, "Decode ARBHelp data from clipboard"},
@@ -101,12 +96,6 @@ bool CARBHelpApp::OnInit()
 }
 
 
-wxWindow* CARBHelpApp::GetResourceWindow()
-{
-	return wxGetApp().GetTopWindow();
-}
-
-
 bool CARBHelpApp::GetResImageName(
 	wxArtID const& id,
 	wxArtClient const& client,
@@ -129,17 +118,8 @@ bool CARBHelpApp::GetResImageName(
 		outName = L"AgilityBook48";
 	else if (id == ImageMgrApp256)
 		outName = L"AgilityBook256";
+
 	else
 		found = false;
-
-#if defined(_DEBUG) || defined(__WXDEBUG__)
-	assert(!outName.empty());
-#endif
 	return found;
-}
-
-
-wxBitmap CARBHelpApp::GetResImage(wxArtID const& id, wxArtClient const& client) const
-{
-	return wxBitmap();
 }

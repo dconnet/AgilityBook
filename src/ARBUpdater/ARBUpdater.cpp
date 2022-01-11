@@ -41,17 +41,12 @@ public:
 	}
 	bool OnInit() override;
 
-	wxWindow* GetResourceWindow() override;
 	bool GetResImageName(
 		wxArtID const& id,
 		wxArtClient const& client,
 		std::wstring& outName,
 		bool& outSvg,
 		bool& outCall) const override;
-	wxBitmap GetResImage(wxArtID const& id, wxArtClient const& client) const override;
-
-private:
-	wxWindow* m_dlg;
 };
 
 
@@ -60,7 +55,6 @@ wxIMPLEMENT_APP(CARBUpdaterApp);
 
 CARBUpdaterApp::CARBUpdaterApp()
 	: CBaseApp(ARB_CONFIG_ENTRY)
-	, m_dlg(nullptr)
 {
 	m_BaseInfoName = ARB_CONFIG_INFO;
 }
@@ -70,9 +64,6 @@ bool CARBUpdaterApp::OnInit()
 {
 	if (!CBaseApp::OnInit())
 		return false;
-
-	wxImage::AddHandler(new wxPNGHandler);
-	InitFSHandlers();
 
 	static const wxCmdLineEntryDesc cmdLineDesc[] = {
 		{wxCMD_LINE_SWITCH, "g", "generate", "Ignore all other options and display a dialog allowing MD5 generation"},
@@ -100,9 +91,9 @@ bool CARBUpdaterApp::OnInit()
 	if (cmdline.Found(L"generate") || !bHasFile)
 	{
 		CDlgDigest dlg(file);
-		m_dlg = &dlg;
+		SetTopWindow(&dlg);
 		dlg.ShowModal();
-		m_dlg = nullptr;
+		SetTopWindow(nullptr);
 	}
 	else if (bHasFile)
 	{
@@ -135,12 +126,6 @@ bool CARBUpdaterApp::OnInit()
 }
 
 
-wxWindow* CARBUpdaterApp::GetResourceWindow()
-{
-	return m_dlg;
-}
-
-
 bool CARBUpdaterApp::GetResImageName(
 	wxArtID const& id,
 	wxArtClient const& client,
@@ -163,17 +148,8 @@ bool CARBUpdaterApp::GetResImageName(
 		outName = L"AgilityBook48";
 	else if (id == ImageMgrApp256)
 		outName = L"AgilityBook256";
+
 	else
 		found = false;
-
-#if defined(_DEBUG) || defined(__WXDEBUG__)
-	assert(!outName.empty());
-#endif
 	return found;
-}
-
-
-wxBitmap CARBUpdaterApp::GetResImage(wxArtID const& id, wxArtClient const& client) const
-{
-	return wxBitmap();
 }
