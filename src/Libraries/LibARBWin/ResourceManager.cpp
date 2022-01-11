@@ -105,13 +105,10 @@ wxBitmap CResourceManager::CreateBitmap(wxArtID const& id, wxArtClient const& cl
 
 	if (id == ImageMgrBlank)
 	{
-		bmp.Create(imageSize, imageSize);
-		wxMemoryDC dc;
-		dc.SelectObject(bmp);
-		dc.SetPen(wxColor(255, 255, 255, 0));
-		dc.SetBrush(wxColor(255, 255, 255, 0));
-		dc.DrawRectangle(0, 0, imageSize, imageSize);
-		dc.SelectObject(wxNullBitmap);
+		// Initialize image to black.
+		wxImage img(imageSize, imageSize, true);
+		img.SetMaskColour(wxBLACK->Red(), wxBLACK->Green(), wxBLACK->Blue());
+		bmp = wxBitmap(img);
 	}
 	else
 	{
