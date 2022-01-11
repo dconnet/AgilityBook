@@ -212,15 +212,18 @@ bool CCalSitesApp::GetResImageName(
 	bool found = true;
 	if (id == ImageMgrApp)
 	{
+		// No SVG for the icon yet
+		//#if wxCHECK_VERSION(3, 1, 6)
+		// outName = L"AgilityBook";
+		// outSvg = true;
+		//#else
 		if (client == wxART_MESSAGE_BOX)
 			outName = L"AgilityBook32";
 		else
 			outName = L"AgilityBook16";
+		//#endif
 	}
-	else if (id == ImageMgrApp48)
-		outName = L"AgilityBook48";
-	else if (id == ImageMgrApp256)
-		outName = L"AgilityBook256";
+
 	else if (id == ImageMgrChecked)
 		outName = L"checked";
 	else if (id == ImageMgrUnChecked)

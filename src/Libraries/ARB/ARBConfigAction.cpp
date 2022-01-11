@@ -146,7 +146,10 @@ bool ARBConfigActionRenameOtherPoints::Apply(
 		int nPoints = 0;
 		if (ioDogs)
 			nPoints = ioDogs->NumOtherPointsInUse(m_OldName);
-		fmt::format_to(std::back_inserter(ioInfo), L"{}\n", Localization()->ActionRenameOtherPoints(m_OldName, m_NewName, nPoints));
+		fmt::format_to(
+			std::back_inserter(ioInfo),
+			L"{}\n",
+			Localization()->ActionRenameOtherPoints(m_OldName, m_NewName, nPoints));
 		if (0 < nPoints && ioDogs)
 		{
 			ioDogs->RenameOtherPoints(m_OldName, m_NewName);
@@ -306,7 +309,10 @@ bool ARBConfigActionRenameVenue::Apply(
 		{
 			ioDogs->RenameVenue(m_OldName, m_NewName);
 		}
-		fmt::format_to(std::back_inserter(ioInfo), L"{}\n", Localization()->ActionRenameVenue(m_OldName, m_NewName, nVenues));
+		fmt::format_to(
+			std::back_inserter(ioInfo),
+			L"{}\n",
+			Localization()->ActionRenameVenue(m_OldName, m_NewName, nVenues));
 		// If the new venue exists, just delete the old.
 		// Otherwise, rename the old to new.
 		if (ioConfig.GetVenues().FindVenue(m_NewName))
@@ -668,7 +674,10 @@ bool ARBConfigActionRenameDivision::Apply(
 			{
 				ioDogs->RenameDivision(venue, m_OldName, m_NewName);
 			}
-			fmt::format_to(std::back_inserter(ioInfo), L"{}\n", Localization()->ActionRenameDivision(m_Venue, m_OldName, m_NewName, nRuns));
+			fmt::format_to(
+				std::back_inserter(ioInfo),
+				L"{}\n",
+				Localization()->ActionRenameDivision(m_Venue, m_OldName, m_NewName, nRuns));
 			// If the new division exists, just delete the old.
 			// Otherwise, rename the old to new.
 			if (venue->GetDivisions().FindDivision(m_NewName))
@@ -1229,7 +1238,10 @@ bool ARBConfigActionRenameTitle::Apply(
 			{
 				ioDogs->RenameTitle(m_Venue, m_OldName, m_NewName);
 			}
-			fmt::format_to(std::back_inserter(ioInfo), L"{}\n", Localization()->ActionRenameTitle(m_Venue, m_OldName, m_NewName, nTitles));
+			fmt::format_to(
+				std::back_inserter(ioInfo),
+				L"{}\n",
+				Localization()->ActionRenameTitle(m_Venue, m_OldName, m_NewName, nTitles));
 			// If the new title exists, just delete the old.
 			// Otherwise, rename the old to new.
 			if (venue->GetTitles().FindTitle(m_NewName))
@@ -1439,7 +1451,10 @@ bool ARBConfigActionRenameEvent::Apply(
 			{
 				ioDogs->RenameEvent(m_Venue, m_OldName, m_NewName);
 			}
-			fmt::format_to(std::back_inserter(ioInfo), L"{}\n", Localization()->ActionRenameEvent(m_Venue, m_OldName, m_NewName, nEvents));
+			fmt::format_to(
+				std::back_inserter(ioInfo),
+				L"{}\n",
+				Localization()->ActionRenameEvent(m_Venue, m_OldName, m_NewName, nEvents));
 			// If the new event exists, just delete the old.
 			// Otherwise, rename the old to new.
 			if (venue->GetEvents().FindEvent(m_NewName))
@@ -1695,7 +1710,10 @@ bool ARBConfigActionDeleteLifetimeName::Apply(
 		{
 			bChanged = true;
 			int nEvents = venue->GetEvents().DeleteLifetimeName(m_Name);
-			fmt::format_to(std::back_inserter(ioInfo), L"{}\n", Localization()->ActionDeleteLifetimeName(m_Venue, m_Name, nEvents));
+			fmt::format_to(
+				std::back_inserter(ioInfo),
+				L"{}\n",
+				Localization()->ActionDeleteLifetimeName(m_Venue, m_Name, nEvents));
 			if (ioDogs)
 				ioDogs->DeleteLifetimeName(m_Venue, m_Name);
 		}

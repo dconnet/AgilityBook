@@ -815,11 +815,19 @@ void ARBCalendar::iCalendar(ICalendarPtr inIoStream, int inAlarm) const
 		}
 		if (m_DateOpening.IsValid())
 		{
-			fmt::format_to(std::back_inserter(str), L"{}{} ", Localization()->CalendarOpens(), m_DateOpening.GetString(ARBDateFormat::ISO));
+			fmt::format_to(
+				std::back_inserter(str),
+				L"{}{} ",
+				Localization()->CalendarOpens(),
+				m_DateOpening.GetString(ARBDateFormat::ISO));
 		}
 		if (m_DateDraw.IsValid())
 		{
-			fmt::format_to(std::back_inserter(str), L"{}{} ", Localization()->CalendarDraw(), m_DateDraw.GetString(ARBDateFormat::ISO));
+			fmt::format_to(
+				std::back_inserter(str),
+				L"{}{} ",
+				Localization()->CalendarDraw(),
+				m_DateDraw.GetString(ARBDateFormat::ISO));
 		}
 		if (m_DateClosing.IsValid())
 		{

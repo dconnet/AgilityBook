@@ -552,171 +552,437 @@ bool CAgilityBookApp::GetResImageName(
 	bool found = true;
 	if (id == ImageMgrApp)
 	{
+		// No SVG for the icon yet
+		//#if wxCHECK_VERSION(3, 1, 6)
+		// outName = L"AgilityBook";
+		// outSvg = true;
+		//#else
 		if (client == wxART_MESSAGE_BOX)
 			outName = L"AgilityBook32";
 		else
 			outName = L"AgilityBook16";
+		//#endif
 	}
-	else if (id == ImageMgrApp48)
-		outName = L"AgilityBook48";
-	else if (id == ImageMgrApp256)
-		outName = L"AgilityBook256";
 
 	else if (id == ImageMgrRuns)
 	{
+#if wxCHECK_VERSION(3, 1, 6)
+		outName = L"run";
+		outSvg = true;
+#else
 		if (client == wxART_TOOLBAR)
 			outName = L"toolbarRun";
 		else
 			outName = L"run";
+#endif
 	}
 
 	else if (id == ImageMgrPoints)
+	{
+#if wxCHECK_VERSION(3, 1, 6)
+		outName = L"title";
+		outSvg = true;
+#else
 		outName = L"points";
+#endif
+	}
 
 	else if (id == ImageMgrCalendar)
 	{
+#if wxCHECK_VERSION(3, 1, 6)
+		outName = L"toolbarCalendar";
+		outSvg = true;
+#else
 		if (client == wxART_TOOLBAR)
 			outName = L"toolbarCalendar";
 		else
 			outName = L"calendar";
+#endif
 	}
 
 	else if (id == ImageMgrTraining)
 	{
+#if wxCHECK_VERSION(3, 1, 6)
+		outName = L"training";
+		outSvg = true;
+#else
 		if (client == wxART_TOOLBAR)
 			outName = L"toolbarTraining";
 		else
 			outName = L"training";
+#endif
 	}
 
 	else if (id == ImageMgrDog)
 	{
+#if wxCHECK_VERSION(3, 1, 6)
+		outName = L"dog";
+		outSvg = true;
+#else
 		if (client == wxART_TOOLBAR)
 			outName = L"toolbarDog";
 		else
 			outName = L"dog";
+#endif
 	}
 
 	else if (id == ImageMgrTrial)
 	{
+#if wxCHECK_VERSION(3, 1, 6)
+		outName = L"trial";
+		outSvg = true;
+#else
 		if (client == wxART_TOOLBAR)
 			outName = L"toolbarTrial";
 		else
 			outName = L"trial";
+#endif
 	}
 
 	else if (id == ImageMgrVenueAAC)
+	{
 		outName = L"venue_aac";
+	}
 	else if (id == ImageMgrVenueAKC)
+	{
 		outName = L"venue_akc";
+	}
 	else if (id == ImageMgrVenueASCA)
+	{
 		outName = L"venue_asca";
+	}
 	else if (id == ImageMgrVenueBHA)
+	{
 		outName = L"venue_bha";
+	}
 	else if (id == ImageMgrVenueCKC)
+	{
 		outName = L"venue_ckc";
+	}
 	else if (id == ImageMgrVenueCKCSC)
+	{
 		outName = L"venue_ckcsc";
+	}
 	else if (id == ImageMgrVenueCPE)
+	{
 		outName = L"venue_cpe";
+	}
 	else if (id == ImageMgrVenueDOCNA)
+	{
 		outName = L"venue_docna";
+	}
 	else if (id == ImageMgrVenueFCI)
+	{
 		outName = L"venue_fci";
+	}
 	else if (id == ImageMgrVenueNADAC)
+	{
 		outName = L"venue_nadac";
+	}
 	else if (id == ImageMgrVenueSCC)
+	{
 		outName = L"venue_scc";
+	}
 	else if (id == ImageMgrVenueSweepstakes)
+	{
 		outName = L"venue_sweep";
+	}
 	else if (id == ImageMgrVenueTDAA)
+	{
 		outName = L"venue_tdaa";
+	}
 	else if (id == ImageMgrVenueUKC)
+	{
 		outName = L"venue_ukc";
+	}
 	else if (id == ImageMgrVenueUKI)
+	{
 		outName = L"venue_uki";
+	}
 	else if (id == ImageMgrVenueUSDAA)
+	{
 		outName = L"venue_usdaa";
+	}
 	else if (id == ImageMgrVenueVALOR)
+	{
 		outName = L"venue_valor";
+	}
 
 	else if (id == ImageMgrCRCD)
+	{
 		outName = L"crcd";
+	}
 	else if (id == ImageMgrChecked)
+	{
 		outName = L"checked";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrUnChecked)
+	{
 		outName = L"unchecked";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrAccomConfirm)
+	{
 		outName = L"AccConfirm";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrAccomNone)
+	{
 		outName = L"AccNone";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrAccomTodo)
+	{
 		outName = L"AccTodo";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrCalEntered)
+	{
 		outName = L"CalEntered";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrCalEnteredTentative)
+	{
 		outName = L"CalEnteredTentative";
+#if wxCHECK_VERSION(3, 1, 6)
+		// outSvg = true;
+		// outCall = true;
+		// TODO: combine (CalEntered + question)
+#endif
+	}
 	else if (id == ImageMgrCalPending)
+	{
 		outName = L"CalPending";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrCalPendingTentative)
+	{
 		outName = L"CalPendingTentative";
+#if wxCHECK_VERSION(3, 1, 6)
+		// outSvg = true;
+		// outCall = true;
+		// TODO: combine (CalPending + question)
+#endif
+	}
 	else if (id == ImageMgrCheck)
+	{
 		outName = L"check";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrCalPlanTentative)
+	{
 		outName = L"CalPlanTentative";
+#if wxCHECK_VERSION(3, 1, 6)
+		// outSvg = true;
+		// outCall = true;
+		// TODO: combine (check + question)
+#endif
+	}
 	else if (id == ImageMgrQuestion)
+	{
 		outName = L"question";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrHeaderDown)
+	{
 		outName = L"HdrDown";
+	}
 	else if (id == ImageMgrHeaderUp)
+	{
 		outName = L"HdrUp";
+	}
 
 	else if (id == ImageMgrTitle)
+	{
+#if wxCHECK_VERSION(3, 1, 6)
+		outName = L"title";
+		outSvg = true;
+#else
 		outName = L"toolbarTitle";
+#endif
+	}
 	else if (id == ImageMgrTitleHidden)
+	{
 		outName = L"hidden";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrTitleTitledHidden)
+	{
 		outName = L"title_hidden";
+#if wxCHECK_VERSION(3, 1, 6)
+		// outSvg = true;
+		// outCall = true;
+		// TODO combine (title + hidden)
+#endif
+	}
 	else if (id == ImageMgrTitleTitledHiddenHave)
+	{
 		outName = L"title_hidden_have";
+#if wxCHECK_VERSION(3, 1, 6)
+		// outSvg = true;
+		// outCall = true;
+		// TODO combine (title_visible_have + hidden)
+#endif
+	}
 	else if (id == ImageMgrTitleTitled)
+	{
+#if wxCHECK_VERSION(3, 1, 6)
+		outName = L"title";
+		outSvg = true;
+#else
 		outName = L"title_visible";
+#endif
+	}
 	else if (id == ImageMgrTitleTitledHave)
+	{
 		outName = L"title_visible_have";
+#if wxCHECK_VERSION(3, 1, 6)
+		// outSvg = true;
+		// outCall = true;
+		// TODO combine (title + have)
+#endif
+	}
 
 	else if (id == ImageMgrNoteButton)
+	{
 		outName = L"Note";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrInfoNote)
+	{
+#if wxCHECK_VERSION(3, 1, 6)
+		outName = L"Note";
+		outSvg = true;
+#else
 		outName = L"NoteNote";
+#endif
+	}
 	else if (id == ImageMgrInfoNoteAdded)
+	{
 		outName = L"NoteAdded";
+#if wxCHECK_VERSION(3, 1, 6)
+		// outSvg = true;
+		// outCall = true;
+		// TODO combine (Note + NotePlus)
+#endif
+	}
 	else if (id == ImageMgrInfoNoteNoteAdded)
+	{
 		outName = L"NoteNoteAdded";
+#if wxCHECK_VERSION(3, 1, 6)
+		// outSvg = true;
+		// outCall = true;
+		// TODO combine (Note + NotePlus)
+#endif
+	}
 
 	else if (id == ImageMgrAbout)
+	{
 		outName = L"toolbarAbout";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrCopy)
+	{
 		outName = L"toolbarCopy";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrCut)
+	{
 		outName = L"toolbarCut";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrDelete)
+	{
 		outName = L"toolbarDelete";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrFind)
+	{
 		outName = L"toolbarFind";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrNew)
+	{
 		outName = L"toolbarNew";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrOpen)
+	{
 		outName = L"toolbarOpen";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrPaste)
+	{
 		outName = L"toolbarPaste";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrPreview)
+	{
 		outName = L"toolbarPreview";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrPrint)
+	{
 		outName = L"toolbarPrint";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrSave)
+	{
 		outName = L"toolbarSave";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 	else if (id == ImageMgrSettings)
+	{
 		outName = L"toolbarSettings";
+#if wxCHECK_VERSION(3, 1, 6)
+		outSvg = true;
+#endif
+	}
 
 	else
 		found = false;
