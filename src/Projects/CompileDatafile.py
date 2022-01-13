@@ -160,7 +160,7 @@ def GenFile(inputfiles, langdir, intermediateDir, targetname, verbose, bIncUpdat
 			fileCount = fileCount + 1
 			sizefile = os.path.getsize(mofile)
 			#if verbose:
-			#	print(sizefile, inputfile)
+			#	print(sizefile, mofile)
 			size = size + sizefile
 			zip.write(mofile, 'lang/' + langid + '/' + os.path.basename(mofile))
 
@@ -185,6 +185,7 @@ def GenFile(inputfiles, langdir, intermediateDir, targetname, verbose, bIncUpdat
 		zipsize = os.path.getsize(zipfileName)
 		print('  "' + fileExtension + '" file size:', zipsize)
 		print('  Compressed by', size - zipsize, 'bytes')
+
 
 def main():
 	langdir = ''
