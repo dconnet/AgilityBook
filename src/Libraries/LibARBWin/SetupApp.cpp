@@ -61,6 +61,7 @@ CBaseApp::CBaseApp(wxString const& appName, wxString const& appRegKey, ARBLangua
 	, m_ConfigTest(L"Settings/isLocal")
 	, m_bFallback(true)
 	, m_bStandalone(false)
+	, m_useLangCatalog(useLangCatalog)
 	, m_langMgr(nullptr)
 {
 	wxStandardPaths::Get().SetFileLayout(wxStandardPaths::FileLayout_XDG);
@@ -68,9 +69,6 @@ CBaseApp::CBaseApp(wxString const& appName, wxString const& appRegKey, ARBLangua
 #if USE_DBGREPORT
 	wxHandleFatalExceptions();
 #endif
-	m_langMgr = std::make_unique<CLanguageManager>(
-		ARBLanguageCatalog::None != useLangCatalog ? this : nullptr,
-		ARBLanguageCatalog::Embedded == useLangCatalog);
 }
 
 
@@ -169,6 +167,8 @@ bool CBaseApp::OnInit()
 	}
 
 	CResourceManager::Get()->Initialize(this);
+
+	m_langMgr = std::make_unique<CLanguageManager>(ARBLanguageCatalog::None != m_useLangCatalog ? this : nullptr);
 
 	bool bConfigSet = false;
 	if (!m_BaseAppName.empty())
@@ -275,7 +275,7 @@ wxWindow* CBaseApp::GetResourceWindow()
 bool CBaseApp::GetResImageName(
 	wxArtID const& id,
 	wxArtClient const& client,
-	std::wstring& outName,
+	wxString& outName,
 	bool& outSvg,
 	bool& outCall) const
 {
@@ -307,6 +307,12 @@ wxLanguage CBaseApp::CurrentLanguageId() const
 }
 
 
+size_t CBaseApp::AvailableLanguages() const
+{
+	return m_langMgr->AvailableLanguages();
+}
+
+
 wxLanguage CBaseApp::OnGetLanguage() const
 {
 	return m_langMgr->GetDefaultLanguage();
@@ -322,12 +328,6 @@ wxString CBaseApp::OnGetCatalogName() const
 wxString CBaseApp::OnGetLangConfigName() const
 {
 	return wxEmptyString;
-}
-
-
-wxString CBaseApp::OnGetLanguageDir() const
-{
-	return m_langMgr->GetDefaultLanguageDir();
 }
 
 

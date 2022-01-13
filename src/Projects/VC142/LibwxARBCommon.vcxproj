@@ -275,6 +275,7 @@
     <ClCompile Include="..\..\Libraries\ARBCommon\BinaryData.cpp" />
     <ClCompile Include="..\..\Libraries\ARBCommon\BreakLine.cpp" />
     <ClCompile Include="..\..\Libraries\ARBCommon\Element.cpp" />
+    <ClCompile Include="..\..\Libraries\ARBCommon\LibArchive.cpp" />
     <ClCompile Include="..\..\Libraries\ARBCommon\MailTo.cpp" />
     <ClCompile Include="..\..\Libraries\ARBCommon\StringUtil.cpp" />
     <ClCompile Include="..\..\Libraries\ARBCommon\VersionNum.cpp" />
@@ -315,6 +316,7 @@
     <ClInclude Include="..\..\Include\ARBCommon\BinaryData.h" />
     <ClInclude Include="..\..\Include\ARBCommon\BreakLine.h" />
     <ClInclude Include="..\..\Include\ARBCommon\Element.h" />
+    <ClInclude Include="..\..\Include\ARBCommon\LibArchive.h" />
     <ClInclude Include="..\..\Include\ARBCommon\LibwxARBCommon.h" />
     <ClInclude Include="..\..\Include\ARBCommon\MailTo.h" />
     <ClInclude Include="..\..\Include\ARBCommon\StringUtil.h" />

@@ -149,7 +149,7 @@ PRECOMP_HEADER = $(TOPSRCDIR)/Win/stdafx.h
 resources: @PACKAGE_ARB_SHORTNAME@
 	echo "LANGDIR $(CURDIR)"
 	python3 $(TOPSRCDIR)/Projects/CompileLang.py -w $(WXWIN) -s $(TOPSRCDIR)/lang arb.po $(CURDIR) @PACKAGE_ARB_SHORTNAME@
-	python3 $(TOPSRCDIR)/Projects/CompileDatafile.py -x $(TOPSRCDIR)/Win/res/CompileDatList.txt $(CURDIR) @PACKAGE_ARB_SHORTNAME@
+	python3 $(TOPSRCDIR)/Projects/CompileDatafile.py -x -l $(CURDIR) $(TOPSRCDIR)/Win/res/CompileDatList.txt $(CURDIR) @PACKAGE_ARB_SHORTNAME@
 
 all: resources @PACKAGE_ARB_SHORTNAME@
 
@@ -162,7 +162,6 @@ dist:: all $(PHONY)
 	cp @PACKAGE_ARB_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/MacOS/@PACKAGE_ARB_SHORTNAME@
 	mkdir -p $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 	cp $(TOPSRCDIR)/Win/res/@PACKAGE_ARB_SHORTNAME@.icns $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
-	cp -pR lang $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 	cp @PACKAGE_ARB_SHORTNAME@.dat $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 
 ################################################################################

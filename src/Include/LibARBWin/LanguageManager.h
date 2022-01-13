@@ -31,7 +31,6 @@ public:
 	virtual wxLanguage OnGetLanguage() const = 0;
 	virtual wxString OnGetCatalogName() const = 0;
 	virtual wxString OnGetLangConfigName() const = 0;
-	virtual wxString OnGetLanguageDir() const = 0;
 	virtual void OnSetLanguage(wxLanguage langId) = 0;
 	virtual void OnErrorMessage(wxString const& msg) const = 0;
 };
@@ -42,12 +41,8 @@ class ARBWIN_API CLanguageManager
 	DECLARE_NO_COPY_IMPLEMENTED(CLanguageManager)
 public:
 	// Must use callback to enable catalogs.
-	// Embedding language MO files is only supported on Windows.
-#if defined(WIN32)
-	CLanguageManager(ILanguageCallback* pCallback, bool bEmbedded);
-#else
-	explicit CLanguageManager(ILanguageCallback* pCallback, bool bEmbedded = false);
-#endif
+	// MO files are assumed to be embedded in DAT file in 'lang' directory structure.
+	explicit CLanguageManager(ILanguageCallback* pCallback);
 
 	bool InitLanguage();
 
@@ -61,21 +56,18 @@ public:
 	}
 	wxLanguage GetDefaultLanguage() const;
 	wxString GetDefaultCatalogName() const;
-	wxString GetDefaultLanguageDir() const
-	{
-		return m_dirLangDefault;
-	}
+
+	size_t AvailableLanguages() const;
 
 	bool SelectLanguage(wxWindow* parent = nullptr);
 	wxLanguage SelectLang(wxWindow* parent = nullptr);
 	bool SetLang(wxLanguage langId);
 
 private:
+	int GetAvailableLanguages(wxLanguage& lang, std::vector<wxLanguage>& langId, wxArrayString& choices) const;
+
 	ILanguageCallback* m_pCallback;
 	wxLanguage m_CurLang;
-	wxString m_dirLangDefault;
-	wxString m_dirLang;           /// Where the en/fr/etc directories are located
 	std::wstring m_dirLoadedLang; /// 'en'/'fr' etc
 	std::unique_ptr<wxLocale> m_locale;
-	bool m_bEmbedded; // On Win32, mo files are embedded in rc file
 };

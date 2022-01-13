@@ -64,7 +64,7 @@ PRECOMP_HEADER = $(TOPSRCDIR)/CalSites/stdafx.h
 resources: @PACKAGE_CAL_SHORTNAME@
 	echo "LANGDIR $(CURDIR)"
 	python3 $(TOPSRCDIR)/Projects/CompileLang.py -w $(WXWIN) -s $(TOPSRCDIR)/lang arb.po $(CURDIR) @PACKAGE_CAL_SHORTNAME@
-	python3 $(TOPSRCDIR)/Projects/CompileDatafile.py -x $(TOPSRCDIR)/CalSites/res/CompileDatList.txt $(CURDIR) @PACKAGE_CAL_SHORTNAME@
+	python3 $(TOPSRCDIR)/Projects/CompileDatafile.py -x -l $(CURDIR) $(TOPSRCDIR)/CalSites/res/CompileDatList.txt $(CURDIR) @PACKAGE_CAL_SHORTNAME@
 
 all: resources @PACKAGE_CAL_SHORTNAME@
 
@@ -77,7 +77,6 @@ dist:: all $(PHONY)
 	cp @PACKAGE_CAL_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/MacOS/@PACKAGE_CAL_SHORTNAME@
 	mkdir -p $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/Resources/
 	cp $(TOPSRCDIR)/Win/res/AgilityBook.icns $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/Resources/
-	cp -pR lang $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/Resources/
 	cp @PACKAGE_CAL_SHORTNAME@.dat $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/Resources/
 
 ################################################################################

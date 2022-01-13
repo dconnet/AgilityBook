@@ -177,7 +177,6 @@ AC_SUBST_FILE(NAM_RULES)
 ################################################################################
 AC_CONFIG_FILES([NAM_rules.mk Makefile \
 	3rdParty/Makefile \
-	3rdParty/LibArchive/Makefile \
 	3rdParty/LibFmt/Makefile \
 	3rdParty/LibTidyHtml/Makefile \
 	Libraries/ARB/Makefile \

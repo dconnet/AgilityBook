@@ -38,7 +38,7 @@ public:
 	virtual bool GetResImageName(
 		wxArtID const& id,
 		wxArtClient const& client,
-		std::wstring& outName,
+		wxString& outName,
 		bool& outSvg,
 		bool& outCall) const = 0;
 	virtual wxBitmap GetResImage(wxArtID const& id, wxArtClient const& client) const = 0;
@@ -56,11 +56,14 @@ public:
 	 * @param pCallback Ask the main app for resource names
 	 * @param archiveName Default is the <exename>.dat. Allow for override.
 	 */
-	void Initialize(IResourceManagerCallback* pCallback, std::wstring const* archiveName = nullptr);
+	void Initialize(IResourceManagerCallback* pCallback, wxString const* archiveName = nullptr);
 	// Called during wxApp::OnExit
 	void Cleanup();
 
-	bool LoadFile(std::wstring const& archiveFile, std::ostream& outData);
+	bool Exists(wxString const& archiveFile) const;
+	size_t FindDirectories(wxString const& archiveDir, std::vector<wxString>& outDirectories) const;
+
+	bool LoadFile(wxString const& archiveFile, std::ostream& outData);
 
 	wxBitmap CreateBitmap(wxArtID const& id, wxArtClient const& client, wxSize const& size) override;
 	wxIconBundle CreateIconBundle(wxArtID const& id, wxArtClient const& client) override;

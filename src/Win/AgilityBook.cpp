@@ -542,7 +542,7 @@ bool CAgilityBookApp::InitLanguage()
 bool CAgilityBookApp::GetResImageName(
 	wxArtID const& id,
 	wxArtClient const& client,
-	std::wstring& outName,
+	wxString& outName,
 	bool& outSvg,
 	bool& outCall) const
 {

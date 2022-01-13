@@ -5,17 +5,6 @@ Catch: v2.13.8
 - https://github.com/philsquared/Catch/releases
 -- #include "catch2/catch.hpp"
 
-LibArchive: zlib v1.2.11: My wrapper to hide zlib
-.../LibArchive/
-- http://www.zlib.net/
-- The files in the LibArchive/zlib folder have been reduced to the minimum set.
-  - *.c *.h
-- In addition, the files from <zlib>contrib/minizip/ have been copied in here.
-  - ioapi.* unzip.* zip.*
-- Source files are unmodified.
-- zlib is only compiled in the non wxWidget case.
--- #include "LibArchive/LibArchive.h"
-
 LibFmt: fmtlib v8.1.1
 .../LibFmt/
 DevNote: When updating, update .../res/LibFmt.rc2 with version number and copyright

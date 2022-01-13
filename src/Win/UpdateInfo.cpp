@@ -63,7 +63,7 @@
 #include "ARBCommon/VersionNum.h"
 #include "LibARBWin/DlgProgress.h"
 #include "LibARBWin/ReadHttp.h"
-#include "LibArchive/LibArchive.h"
+#include "LibARBWin/ResourceManager.h"
 #include <wx/config.h>
 #include <wx/filedlg.h>
 #include <wx/filename.h>
@@ -864,11 +864,7 @@ bool CUpdateInfo::DownloadFile(wxString const& filename)
 								std::string filenameA = StringUtil::stringA(outFile);
 								std::ofstream output(filenameA.c_str(), std::ios::out | std::ios::binary);
 #endif
-								wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-								wxString zipfile = GetARBResourceDir() + wxFileName::GetPathSeparator()
-												   + fileName.GetName() + L".dat";
-								CLibArchive filesys(StringUtil::stringW(zipfile));
-								if (!filesys.ExtractFile(k_arbUpdater, outputUpdater))
+								if (!CResourceManager::Get()->LoadFile(k_arbUpdater, outputUpdater))
 								{
 									gotoWeb = true;
 									wxMessageBox(_("IDS_ERROR_AUTOUPDATE"));

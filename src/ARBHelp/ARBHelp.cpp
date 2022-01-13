@@ -43,12 +43,8 @@ public:
 	}
 	bool OnInit() override;
 
-	bool GetResImageName(
-		wxArtID const& id,
-		wxArtClient const& client,
-		std::wstring& outName,
-		bool& outSvg,
-		bool& outCall) const override;
+	bool GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg, bool& outCall)
+		const override;
 };
 
 
@@ -99,7 +95,7 @@ bool CARBHelpApp::OnInit()
 bool CARBHelpApp::GetResImageName(
 	wxArtID const& id,
 	wxArtClient const& client,
-	std::wstring& outName,
+	wxString& outName,
 	bool& outSvg,
 	bool& outCall) const
 {

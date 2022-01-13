@@ -60,9 +60,6 @@ END
 // remains consistent on all systems.
 AGILITYBOOK             ICON                    "../Win/res/AgilityBook.ico"
 
-CALSITES_EN_US          MOFILE                  "lang/en_US/CalSites.mo"
-CALSITES_FR_FR          MOFILE                  "lang/fr_FR/CalSites.mo"
-
 CALSITES_DAT            DATAFILE                "CalSites.dat"
 
 

@@ -17,9 +17,9 @@
 #include "LibARBWin/ResourceManager.h"
 
 #include "ARBCommon/ARBUtils.h"
+#include "ARBCommon/LibArchive.h"
 #include "LibARBWin/DPI.h"
 #include "LibARBWin/ImageHelperBase.h"
-#include "LibArchive/LibArchive.h"
 
 #if wxCHECK_VERSION(3, 1, 6)
 #include <wx/bmpbndl.h>
@@ -53,7 +53,7 @@ CResourceManager::CResourceManager()
 }
 
 
-void CResourceManager::Initialize(IResourceManagerCallback* pCallback, std::wstring const* archiveName)
+void CResourceManager::Initialize(IResourceManagerCallback* pCallback, wxString const* archiveName)
 {
 	m_callback = pCallback;
 
@@ -77,7 +77,25 @@ void CResourceManager::Cleanup()
 }
 
 
-bool CResourceManager::LoadFile(std::wstring const& archiveFile, std::ostream& outData)
+bool CResourceManager::Exists(wxString const& archiveFile) const
+{
+	return m_archive && m_archive->Exists(archiveFile);
+}
+
+
+size_t CResourceManager::FindDirectories(wxString const& archiveDir, std::vector<wxString>& outDirectories)
+	const
+{
+	if (!m_archive)
+	{
+		outDirectories.clear();
+		return 0;
+	}
+	return m_archive->FindDirectories(archiveDir, outDirectories);
+}
+
+
+bool CResourceManager::LoadFile(wxString const& archiveFile, std::ostream& outData)
 {
 	return m_archive && m_archive->ExtractFile(archiveFile, outData);
 }
@@ -112,7 +130,7 @@ wxBitmap CResourceManager::CreateBitmap(wxArtID const& id, wxArtClient const& cl
 	}
 	else
 	{
-		std::wstring name;
+		wxString name;
 		bool isSvg, callRes;
 		if (m_callback->GetResImageName(id, client, name, isSvg, callRes))
 		{
@@ -147,7 +165,7 @@ wxBitmap CResourceManager::CreateBitmap(wxArtID const& id, wxArtClient const& cl
 				unsigned int rescale = 1;
 				if (scale > 100)
 				{
-					std::wstring png(name);
+					wxString png(name);
 					png += L"@2x.png";
 
 					if (m_archive->ExtractFile(png, str))

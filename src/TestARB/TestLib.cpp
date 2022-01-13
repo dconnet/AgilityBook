@@ -58,12 +58,11 @@ bool g_bMicroTest = false;
 
 namespace
 {
-std::wstring GetDataFile()
+wxString GetDataFile()
 {
 #if defined(__WXWINDOWS__)
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	std::wstring datafile
-		= wxString(GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat").wx_str();
+	wxString datafile = GetARBResourceDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
 #else
 #pragma PRAGMA_TODO(write LoadXMLData)
 #ifdef WIN32
@@ -74,7 +73,7 @@ std::wstring GetDataFile()
 	datafile = datafile.substr(0, n);
 	datafile += L".dat";
 #else
-	std::wstring datafile = L"./testarb.dat";
+	wxString datafile = L"./testarb.dat";
 #endif
 #endif
 	return datafile;
@@ -100,11 +99,11 @@ public:
 #endif
 	{
 #if defined(__WXWINDOWS__)
-		m_langMgr = std::make_unique<CLanguageManager>(this, true);
-		m_langMgr->InitLanguage();
-
 		auto datafile = GetDataFile();
 		CResourceManager::Get()->Initialize(this, &datafile);
+
+		m_langMgr = std::make_unique<CLanguageManager>(this);
+		m_langMgr->InitLanguage();
 #endif
 	}
 	virtual ~CCallbackManager()
@@ -129,10 +128,6 @@ private:
 	wxString OnGetLangConfigName() const override
 	{
 		return wxEmptyString;
-	}
-	wxString OnGetLanguageDir() const override
-	{
-		return m_langMgr->GetDefaultLanguageDir();
 	}
 	void OnSetLanguage(wxLanguage langId) override
 	{
@@ -160,12 +155,8 @@ private:
 	{
 		return nullptr;
 	}
-	bool GetResImageName(
-		wxArtID const& id,
-		wxArtClient const& client,
-		std::wstring& outName,
-		bool& outSvg,
-		bool& outCall) const override
+	bool GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg, bool& outCall)
+		const override
 	{
 		return false;
 	}

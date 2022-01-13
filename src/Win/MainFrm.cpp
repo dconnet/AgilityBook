@@ -382,6 +382,8 @@ void CMainFrame::OnUpdateCmd(wxUpdateUIEvent& evt)
 		}
 		break;
 	case ID_FILE_LANGUAGE_CHOOSE:
+		bEnable = wxGetApp().AvailableLanguages() > 1;
+		break;
 	case ID_FILE_PRINT_BLANK_RUNS:
 		bEnable = true;
 		break;

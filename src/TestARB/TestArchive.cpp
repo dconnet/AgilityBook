@@ -17,8 +17,8 @@
 #include "stdafx.h"
 #include "TestLib.h"
 
+#include "ARBCommon/LibArchive.h"
 #include "ARBCommon/StringUtil.h"
-#include "LibArchive/LibArchive.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>

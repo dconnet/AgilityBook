@@ -34,7 +34,9 @@
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
-
+#include "LibARBWin/ResourceManager.h"
+#include "fmt/xchar.h"
+#include <wx/buffer.h>
 #include <wx/config.h>
 #include <wx/dir.h>
 #include <wx/fileconf.h>
@@ -46,21 +48,65 @@
 #endif
 
 
-CLanguageManager::CLanguageManager(ILanguageCallback* pCallback, bool bEmbedded)
+class wxDatTranslationsLoader : public wxTranslationsLoader
+{
+public:
+	wxMsgCatalog* LoadCatalog(const wxString& domain, const wxString& lang) override;
+	wxArrayString GetAvailableTranslations(const wxString& domain) const override;
+};
+
+
+wxMsgCatalog* wxDatTranslationsLoader::LoadCatalog(const wxString& domain, const wxString& lang)
+{
+	wxMsgCatalog* catalog = nullptr;
+
+	auto resMgr = CResourceManager::Get();
+	if (!resMgr)
+		return catalog;
+
+	std::wstring name = fmt::format(L"lang/{}/{}.mo", lang, domain);
+
+	std::ostringstream str;
+	if (resMgr->LoadFile(name, str))
+	{
+		auto const& s = str.str();
+		catalog
+			= wxMsgCatalog::CreateFromData(wxScopedCharTypeBuffer<char>::CreateNonOwned(s.c_str(), s.size()), domain);
+	}
+	return catalog;
+}
+
+
+wxArrayString wxDatTranslationsLoader::GetAvailableTranslations(const wxString& domain) const
+{
+	wxArrayString langs;
+
+	auto resMgr = CResourceManager::Get();
+	if (resMgr)
+	{
+		std::vector<wxString> directories; 
+		if (0 < resMgr->FindDirectories(L"lang", directories))
+		{
+			for (auto dir : directories)
+			{
+				std::wstring name = fmt::format(L"lang/{}/{}.mo", dir, domain);
+				if (resMgr->Exists(name))
+					langs.Add(dir);
+			}
+		}
+	}
+
+	return langs;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+CLanguageManager::CLanguageManager(ILanguageCallback* pCallback)
 	: m_pCallback(pCallback)
 	, m_CurLang(wxLANGUAGE_DEFAULT)
-	, m_dirLangDefault()
-	, m_dirLang()
 	, m_dirLoadedLang()
 	, m_locale(nullptr)
-#if defined(WIN32)
-	, m_bEmbedded(bEmbedded)
-#else
-	, m_bEmbedded(false)
-#endif
 {
-	if (!m_bEmbedded)
-		m_dirLangDefault = GetARBResourceDir() + wxFileName::GetPathSeparator() + L"lang";
 	wxTranslations::Set(new wxTranslations);
 }
 
@@ -95,19 +141,8 @@ bool CLanguageManager::InitLanguage()
 {
 	bool bInit = true;
 
-	if (!m_bEmbedded && m_pCallback)
-	{
-		m_dirLang = m_pCallback->OnGetLanguageDir();
-		wxFileTranslationsLoader* loader = new wxFileTranslationsLoader;
-		loader->AddCatalogLookupPathPrefix(m_dirLang);
-		wxTranslations::Get()->SetLoader(loader);
-	}
-#if defined(WIN32)
-	else if (m_bEmbedded)
-	{
-		wxTranslations::Get()->SetLoader(new wxResourceTranslationsLoader);
-	}
-#endif
+	wxDatTranslationsLoader* loader = new wxDatTranslationsLoader;
+	wxTranslations::Get()->SetLoader(loader);
 
 	m_locale = std::make_unique<wxLocale>(wxLANGUAGE_DEFAULT); // Initialize wx with the default system settings
 
@@ -155,6 +190,16 @@ bool CLanguageManager::InitLanguage()
 }
 
 
+size_t CLanguageManager::AvailableLanguages() const
+{
+	wxLanguage lang = m_CurLang;
+	std::vector<wxLanguage> langId;
+	wxArrayString choices;
+	GetAvailableLanguages(lang, langId, choices);
+	return choices.size();
+}
+
+
 bool CLanguageManager::SelectLanguage(wxWindow* parent)
 {
 	return SetLang(SelectLang(parent));
@@ -168,36 +213,20 @@ wxLanguage CLanguageManager::SelectLang(wxWindow* parent)
 
 	wxLanguage lang = m_CurLang;
 
-	int idxLang = -1;
 	std::vector<wxLanguage> langId;
 	wxArrayString choices;
-
-	wxArrayString files = wxTranslations::Get()->GetAvailableTranslations(m_pCallback->OnGetCatalogName());
-	for (auto it = files.begin(); it != files.end(); ++it)
-	{
-		wxLanguageInfo const* info = wxLocale::FindLanguageInfo(*it);
-		if (info)
-		{
-			// Trigger poedit to capture these.
-			// These are the strings wx returns.
-#if 0
-			wchar_t* x1 = _("English (U.S.)");
-			wchar_t* x1 = _("French");
-			// This changed in 3.1.6
-			wchar_t* x1 = _("English (United States)");
-			wchar_t* x1 = _("French (France)");
-#endif
-			choices.Add(wxGetTranslation(info->Description));
-			langId.push_back(static_cast<wxLanguage>(info->Language));
-			if (info->Language == lang)
-				idxLang = static_cast<int>(langId.size()) - 1;
-		}
-	}
+	int idxLang = GetAvailableLanguages(lang, langId, choices);
 
 	if (0 == choices.size())
+	{
 		lang = wxLANGUAGE_ENGLISH_US;
+		wxMessageBox(_("No other languages are available."));
+	}
 	else if (1 == choices.size())
+	{
 		lang = langId[0];
+		wxMessageBox(_("No other languages are available."));
+	}
 	else
 	{
 		// Note, the size arguments are ignored. sigh.
@@ -270,4 +299,35 @@ bool CLanguageManager::SetLang(wxLanguage langId)
 	}
 
 	return rc;
+}
+
+
+int CLanguageManager::GetAvailableLanguages(wxLanguage& lang, std::vector<wxLanguage>& langId, wxArrayString& choices)
+	const
+{
+	int idxLang = -1;
+
+	wxArrayString files = wxTranslations::Get()->GetAvailableTranslations(m_pCallback->OnGetCatalogName());
+	for (auto it = files.begin(); it != files.end(); ++it)
+	{
+		wxLanguageInfo const* info = wxLocale::FindLanguageInfo(*it);
+		if (info)
+		{
+			// Trigger poedit to capture these.
+			// These are the strings wx returns.
+#if 0
+			wchar_t* x1 = _("English (U.S.)");
+			wchar_t* x1 = _("French");
+			// This changed in 3.1.6
+			wchar_t* x1 = _("English (United States)");
+			wchar_t* x1 = _("French (France)");
+#endif
+			choices.Add(wxGetTranslation(info->Description));
+			langId.push_back(static_cast<wxLanguage>(info->Language));
+			if (info->Language == lang)
+				idxLang = static_cast<int>(langId.size()) - 1;
+		}
+	}
+
+	return idxLang;
 }

@@ -19,17 +19,10 @@
  * 2013-01-30 Created
  */
 
-#if defined(_DLL) && defined(_WIN32)
-#if defined(LIBARCHIVE_EXPORT)
-#define LIBARCHIVE_API __declspec(dllexport)
-#else
-#define LIBARCHIVE_API __declspec(dllimport)
-#endif
-#else
-#define LIBARCHIVE_API
-#endif
+#include "LibwxARBCommon.h"
 
 #include <string>
+#include <vector>
 
 // TODO: Change api. On Win32, this because ReplaceFile[AW]
 #ifdef ReplaceFile
@@ -45,17 +38,20 @@ enum class ArchiveLocation
 };
 
 
-class LIBARCHIVE_API CLibArchive
+class ARBCOMMON_API CLibArchive
 {
 public:
-	CLibArchive(std::wstring const& zipFile, ArchiveLocation location = ArchiveLocation::ResourceOrFileSystem);
+	CLibArchive(wxString const& zipFile, ArchiveLocation location = ArchiveLocation::ResourceOrFileSystem);
 	~CLibArchive();
 
 	bool IsResource() const;
 
-	bool ExtractFile(std::wstring const& archiveFile, std::ostream& outData);
+	bool Exists(wxString const& archiveFile) const;
+	size_t FindDirectories(wxString const& archiveDir, std::vector<wxString>& outDirectories) const;
 
-	bool ReplaceFile(std::wstring const& archiveFile, std::istream& inData);
+	bool ExtractFile(wxString const& archiveFile, std::ostream& outData);
+
+	bool ReplaceFile(wxString const& archiveFile, std::istream& inData);
 
 private:
 	class CLibArchiveImpl* m_pImpl;

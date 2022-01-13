@@ -202,7 +202,7 @@ List of venues we can select from.
 bool CCalSitesApp::GetResImageName(
 	wxArtID const& id,
 	wxArtClient const& client,
-	std::wstring& outName,
+	wxString& outName,
 	bool& outSvg,
 	bool& outCall) const
 {

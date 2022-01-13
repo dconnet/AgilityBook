@@ -17,7 +17,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Recursively make in these subdirectories
 ##########
-SUBDIRS = LibFmt LibArchive LibTidyHtml
+SUBDIRS = LibFmt LibTidyHtml
 
 ##########
 # Compile flags, list include directories

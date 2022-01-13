@@ -20,10 +20,11 @@
 # 2009-03-05 Fixed some parameter passing issues (spaces/hyphens in names)
 # 2009-03-01 Support multiple po files (by using msgcat)
 # 2009-01-02 Updated to support creation of data files
-"""CompileDatafile.py [-x] [-q] [-f extrafilelist] filelist intermediateDir targetname
+"""CompileDatafile.py [-x] [-q] [-l langdir] [-f extrafilelist] filelist intermediateDir targetname
 -x: Exclude ARBUpdater (not needed in test program)
 -q: Quiet mode
 -f extrafilelist: Additional files to include
+-l langdir: 'lang' directory containing MO files in lang ids dirs
 filelist: List of files to include in .dat file
 intermediateDir: Directory where dat file is created (ARBUpdater assumes in ..)
 targetname: Name of .dat files to generate
@@ -114,7 +115,7 @@ def RunCommand(command, toastErr):
 	ReadPipe(sys.stdout, p.stdout)
 
 
-def GenFile(inputfiles, intermediateDir, targetname, verbose, bIncUpdater):
+def GenFile(inputfiles, langdir, intermediateDir, targetname, verbose, bIncUpdater):
 	for filelist in inputfiles:
 		# The files listed in the list are relative to the filelist location.
 		if not os.access(filelist, os.F_OK):
@@ -153,6 +154,16 @@ def GenFile(inputfiles, intermediateDir, targetname, verbose, bIncUpdater):
 			else:
 				break
 
+	for lang in glob.glob(os.path.join(langdir, r'*')):
+		for mofile in glob.glob(os.path.join(lang, r'*')):
+			langid = os.path.basename(os.path.dirname(mofile))
+			fileCount = fileCount + 1
+			sizefile = os.path.getsize(inputfile)
+			#if verbose:
+			#	print(sizefile, inputfile)
+			size = size + os.path.getsize(inputfile)
+			zip.write(mofile, 'lang/' + langid + '/' + os.path.basename(mofile))
+
 	if bIncUpdater:
 		arbUpdater = intermediateDir + r'\..\ARBUpdater.exe'
 		if os.access(arbUpdater, os.F_OK):
@@ -176,11 +187,12 @@ def GenFile(inputfiles, intermediateDir, targetname, verbose, bIncUpdater):
 		print('  Compressed by', size - zipsize, 'bytes')
 
 def main():
+	langdir = ''
 	inputfiles = set()
 	verbose = True
 	bIncUpdater = True
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], 'qf:x')
+		opts, args = getopt.getopt(sys.argv[1:], 'ql:f:x')
 	except getopt.error as msg:
 		print(msg)
 		print('Usage:', __doc__)
@@ -188,6 +200,8 @@ def main():
 	for o, a in opts:
 		if '-q' == o:
 			verbose = False
+		elif '-l' == o:
+			langdir = a
 		elif '-f' == o:
 			inputfiles.add(a)
 		elif '-x' == o:
@@ -209,7 +223,7 @@ def main():
 	lockfile = LockFile(os.path.join(intermediateDir, "CompileDatafile.lck"))
 	if lockfile.acquire():
 		try:
-			rc = GenFile(inputfiles, intermediateDir, targetname, verbose, bIncUpdater)
+			rc = GenFile(inputfiles, langdir, intermediateDir, targetname, verbose, bIncUpdater)
 		except:
 			lockfile.release()
 			raise

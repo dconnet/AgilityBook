@@ -131,7 +131,6 @@
     <Import Project="$(SolutionDir)\..\props\CommonDebugLibARM64.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLibARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
@@ -139,7 +138,6 @@
     <Import Project="$(SolutionDir)\..\props\CommonDebugLib32.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib32.props" />
-    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
@@ -147,7 +145,6 @@
     <Import Project="$(SolutionDir)\..\props\CommonDebugLib64.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'" Label="PropertySheets">
@@ -155,7 +152,6 @@
     <Import Project="$(SolutionDir)\..\props\CommonDebugDllARM64.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDllARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="PropertySheets">
@@ -163,7 +159,6 @@
     <Import Project="$(SolutionDir)\..\props\CommonDebugDll32.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDll32.props" />
-    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" Label="PropertySheets">
@@ -171,7 +166,6 @@
     <Import Project="$(SolutionDir)\..\props\CommonDebugDll64.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDll64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="PropertySheets">
@@ -179,7 +173,6 @@
     <Import Project="$(SolutionDir)\..\props\CommonReleaseLibARM64.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLibARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
@@ -187,7 +180,6 @@
     <Import Project="$(SolutionDir)\..\props\CommonReleaseLib32.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib32.props" />
-    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
@@ -195,7 +187,6 @@
     <Import Project="$(SolutionDir)\..\props\CommonReleaseLib64.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsLib64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'" Label="PropertySheets">
@@ -203,7 +194,6 @@
     <Import Project="$(SolutionDir)\..\props\CommonReleaseDllARM64.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDllARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="PropertySheets">
@@ -211,7 +201,6 @@
     <Import Project="$(SolutionDir)\..\props\CommonReleaseDll32.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDll32.props" />
-    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'" Label="PropertySheets">
@@ -219,7 +208,6 @@
     <Import Project="$(SolutionDir)\..\props\CommonReleaseDll64.props" />
     <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
     <Import Project="$(SolutionDir)\..\props\wxWidgetsDll64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibArchive.props" />
     <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -235,7 +223,7 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
       <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
@@ -249,7 +237,7 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
       <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
@@ -263,7 +251,7 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
       <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
@@ -277,7 +265,7 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
       <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
@@ -291,7 +279,7 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
       <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
@@ -305,7 +293,7 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
       <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
@@ -319,7 +307,7 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
       <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
@@ -336,7 +324,7 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
       <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
@@ -353,7 +341,7 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
       <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
@@ -370,7 +358,7 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
       <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
@@ -387,7 +375,7 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
       <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
@@ -404,7 +392,7 @@
       <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(BuildScriptDir)CompileDatafile.py" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
       <Outputs>$(IntDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
       <Inputs>$(ProjectDir)..\..\Win\res\CompileDatList.txt;$(ProjectDir)..\..\Win\res\DefaultConfig.xml;$(ProjectDir)..\..\Win\res\AgilityRecordBook.dtd;%(Inputs)</Inputs>
@@ -873,9 +861,6 @@
     </ProjectReference>
     <ProjectReference Include="LibwxARBWin.vcxproj">
       <Project>{73c15f6d-530f-4b95-9a2c-81ad1958573f}</Project>
-    </ProjectReference>
-    <ProjectReference Include="LibwxArchive.vcxproj">
-      <Project>{0b172fdd-7b2e-4d76-a32c-1b2f627ccf1c}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

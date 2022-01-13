@@ -98,12 +98,8 @@ public:
 	// IResourceManagerCallback
 	// Derived classes need to override these to use the resource manager.
 	wxWindow* GetResourceWindow() override;
-	bool GetResImageName(
-		wxArtID const& id,
-		wxArtClient const& client,
-		std::wstring& outName,
-		bool& outSvg,
-		bool& outCall) const override;
+	bool GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg, bool& outCall)
+		const override;
 	wxBitmap GetResImage(wxArtID const& id, wxArtClient const& client) const override;
 
 	// Language control
@@ -117,6 +113,7 @@ public:
 	 */
 	std::wstring CurrentLanguage() const;
 	wxLanguage CurrentLanguageId() const;
+	size_t AvailableLanguages() const;
 
 	// Are we running in standalone mode? (wxConfig is using .info file)
 
@@ -130,7 +127,6 @@ protected:
 	wxLanguage OnGetLanguage() const override;
 	wxString OnGetCatalogName() const override;
 	wxString OnGetLangConfigName() const override;
-	wxString OnGetLanguageDir() const override;
 	void OnSetLanguage(wxLanguage langId) override;
 	void OnErrorMessage(wxString const& msg) const override;
 
@@ -157,5 +153,6 @@ protected:
 	bool m_bStandalone;
 
 private:
+	ARBLanguageCatalog m_useLangCatalog;
 	std::unique_ptr<CLanguageManager> m_langMgr;
 };

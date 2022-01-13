@@ -454,9 +454,6 @@
     <ProjectReference Include="LibwxARBWin.vcxproj">
       <Project>{73c15f6d-530f-4b95-9a2c-81ad1958573f}</Project>
     </ProjectReference>
-    <ProjectReference Include="LibwxArchive.vcxproj">
-      <Project>{0b172fdd-7b2e-4d76-a32c-1b2f627ccf1c}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
