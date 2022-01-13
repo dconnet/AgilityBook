@@ -145,6 +145,8 @@ wxBitmap CResourceManager::CreateBitmap(wxArtID const& id, wxArtClient const& cl
 				std::ostringstream str;
 #ifdef _DEBUG
 				bool extracted =
+#else
+				bool extracted = true;
 #endif
 					m_archive->ExtractFile(name, str);
 				assert(extracted);
