@@ -34,6 +34,8 @@
 		E110B522177FD146004071B5 /* Element.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B519177FD146004071B5 /* Element.h */; };
 		E110B523177FD146004071B5 /* StringUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B51A177FD146004071B5 /* StringUtil.h */; };
 		E110B524177FD146004071B5 /* VersionNum.h in Headers */ = {isa = PBXBuildFile; fileRef = E110B51B177FD146004071B5 /* VersionNum.h */; };
+		E13495DE2790D24100718C5E /* LibArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = E13495DD2790D24100718C5E /* LibArchive.h */; };
+		E13495E02790D25C00718C5E /* LibArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E13495DF2790D25C00718C5E /* LibArchive.cpp */; };
 		E1A4DBD4261648C100FCD08D /* MailTo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1A4DBD3261648C000FCD08D /* MailTo.cpp */; };
 		E1A4DBD7261648E500FCD08D /* MailTo.h in Headers */ = {isa = PBXBuildFile; fileRef = E1A4DBD6261648E500FCD08D /* MailTo.h */; };
 		E1B443C41A3B6DCC005CBE64 /* ARBUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B443C31A3B6DCC005CBE64 /* ARBUtils.h */; };
@@ -69,6 +71,8 @@
 		E110B519177FD146004071B5 /* Element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Element.h; sourceTree = "<group>"; };
 		E110B51A177FD146004071B5 /* StringUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtil.h; sourceTree = "<group>"; };
 		E110B51B177FD146004071B5 /* VersionNum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionNum.h; sourceTree = "<group>"; };
+		E13495DD2790D24100718C5E /* LibArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibArchive.h; sourceTree = "<group>"; };
+		E13495DF2790D25C00718C5E /* LibArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LibArchive.cpp; sourceTree = "<group>"; };
 		E1A4DBD3261648C000FCD08D /* MailTo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MailTo.cpp; sourceTree = "<group>"; };
 		E1A4DBD6261648E500FCD08D /* MailTo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailTo.h; sourceTree = "<group>"; };
 		E1B443C31A3B6DCC005CBE64 /* ARBUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBUtils.h; sourceTree = "<group>"; };
@@ -132,6 +136,7 @@
 				E110B517177FD146004071B5 /* BinaryData.h */,
 				E110B518177FD146004071B5 /* BreakLine.h */,
 				E110B519177FD146004071B5 /* Element.h */,
+				E13495DD2790D24100718C5E /* LibArchive.h */,
 				E10F39F5252644E000E83AB0 /* LibwxARBCommon.h */,
 				E1A4DBD6261648E500FCD08D /* MailTo.h */,
 				E110B51A177FD146004071B5 /* StringUtil.h */,
@@ -156,6 +161,7 @@
 				E10F3A2E2526495D00E83AB0 /* BinaryData.cpp */,
 				E10F3A262526495C00E83AB0 /* BreakLine.cpp */,
 				E10F3A1F2526495C00E83AB0 /* Element.cpp */,
+				E13495DF2790D25C00718C5E /* LibArchive.cpp */,
 				E1A4DBD3261648C000FCD08D /* MailTo.cpp */,
 				E10F3A202526495C00E83AB0 /* stdafx.cpp */,
 				E10F3A2B2526495D00E83AB0 /* stdafx.h */,
@@ -184,6 +190,7 @@
 				E110B521177FD146004071B5 /* BreakLine.h in Headers */,
 				E110B522177FD146004071B5 /* Element.h in Headers */,
 				E10F3A3C2526495D00E83AB0 /* stdafx.h in Headers */,
+				E13495DE2790D24100718C5E /* LibArchive.h in Headers */,
 				E110B523177FD146004071B5 /* StringUtil.h in Headers */,
 				E110B524177FD146004071B5 /* VersionNum.h in Headers */,
 				E1A4DBD7261648E500FCD08D /* MailTo.h in Headers */,
@@ -245,6 +252,7 @@
 			files = (
 				E10F3A3A2526495D00E83AB0 /* ARBBase64.cpp in Sources */,
 				E1A4DBD4261648C100FCD08D /* MailTo.cpp in Sources */,
+				E13495E02790D25C00718C5E /* LibArchive.cpp in Sources */,
 				E10F3A402526495D00E83AB0 /* ARBMsgDigestSHA256.cpp in Sources */,
 				E10F3A352526495D00E83AB0 /* StringUtil.cpp in Sources */,
 				E10F3A3D2526495D00E83AB0 /* ARBMsgDigestSHA1.cpp in Sources */,

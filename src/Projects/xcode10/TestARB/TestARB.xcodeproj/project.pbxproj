@@ -63,7 +63,6 @@
 		E1A4DBDB2616491200FCD08D /* TestMailto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1A4DBDA2616491200FCD08D /* TestMailto.cpp */; };
 		E1D7D1822354B53D00C2CDAD /* TestLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D7D1802354B53C00C2CDAD /* TestLib.cpp */; };
 		E1E2517F21CC5F13004A1D6A /* libLibFmt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E2517E21CC5F13004A1D6A /* libLibFmt.a */; };
-		E1EE26B61809B3EA002E7A5F /* libLibArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1EE26B41809B3EA002E7A5F /* libLibArchive.a */; };
 		E1EE26B71809B3EA002E7A5F /* libLibTidyHtml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1EE26B51809B3EA002E7A5F /* libLibTidyHtml.a */; };
 /* End PBXBuildFile section */
 
@@ -142,7 +141,6 @@
 		E1D7D1802354B53C00C2CDAD /* TestLib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestLib.cpp; sourceTree = "<group>"; };
 		E1D7D1812354B53C00C2CDAD /* TestLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLib.h; sourceTree = "<group>"; };
 		E1E2517E21CC5F13004A1D6A /* libLibFmt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libLibFmt.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		E1EE26B41809B3EA002E7A5F /* libLibArchive.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibArchive.a; path = ../build/AgilityBook/Build/Products/Debug/libLibArchive.a; sourceTree = "<group>"; };
 		E1EE26B51809B3EA002E7A5F /* libLibTidyHtml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibTidyHtml.a; path = ../build/AgilityBook/Build/Products/Debug/libLibTidyHtml.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,7 +150,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1E2517F21CC5F13004A1D6A /* libLibFmt.a in Frameworks */,
-				E1EE26B61809B3EA002E7A5F /* libLibArchive.a in Frameworks */,
 				E1EE26B71809B3EA002E7A5F /* libLibTidyHtml.a in Frameworks */,
 				E193AC691809B39E008C6257 /* libARB.a in Frameworks */,
 				E193AC671809B399008C6257 /* libARBCommon.a in Frameworks */,
@@ -169,7 +166,6 @@
 				E193AC681809B39E008C6257 /* libARB.a */,
 				E193AC661809B399008C6257 /* libARBCommon.a */,
 				E19851D12170E6FD003E7B92 /* libLibARBWin.a */,
-				E1EE26B41809B3EA002E7A5F /* libLibArchive.a */,
 				E1EE26B51809B3EA002E7A5F /* libLibTidyHtml.a */,
 				E151065818089169002AC401 /* Source */,
 				E151064D1808913A002AC401 /* Products */,
@@ -332,7 +328,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "OUTPUTDIR=${CONFIGURATION_BUILD_DIR}\nSCRIPTDIR=${SOURCE_ROOT}/../../../Projects\nLANGDIR=${SOURCE_ROOT}/../../../lang\nRESDIR=${SOURCE_ROOT}/../../../TestARB/res\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\npython3 \"${SCRIPTDIR}/CompileLang.py\" -s \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" testarb\n\npython3 \"${SCRIPTDIR}/CompileDataFile.py\" -x \"${RESDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" testarb\n\npython3 ${SOURCE_ROOT}/../../../Projects/RunARBTests.py ${SOURCE_ROOT}/../../../ \"${OUTPUTDIR}\" testarb Mac\n";
+			shellScript = "OUTPUTDIR=${CONFIGURATION_BUILD_DIR}\nSCRIPTDIR=${SOURCE_ROOT}/../../../Projects\nLANGDIR=${SOURCE_ROOT}/../../../lang\nRESDIR=${SOURCE_ROOT}/../../../TestARB/res\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\npython3 \"${SCRIPTDIR}/CompileLang.py\" -s \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" testarb\n\npython3 \"${SCRIPTDIR}/CompileDataFile.py\" -x -l \"${OUTPUTDIR}/lang\" \"${RESDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" testarb\n\npython3 ${SOURCE_ROOT}/../../../Projects/RunARBTests.py ${SOURCE_ROOT}/../../../ \"${OUTPUTDIR}\" testarb Mac\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -451,7 +447,6 @@
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
 					"-I$SRCROOT/../../../3rdParty/LibTidyHtml/include",
-					"-I$SRCROOT/../../../3rdParty/LibArchive/include",
 					"-I$SRCROOT/../../../3rdParty/catch",
 					"-I$WXWIN/build-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
 					"-I$WXWIN/include",
@@ -551,7 +546,6 @@
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
 					"-I$SRCROOT/../../../3rdParty/LibTidyHtml/include",
-					"-I$SRCROOT/../../../3rdParty/LibArchive/include",
 					"-I$SRCROOT/../../../3rdParty/catch",
 					"-I$WXWIN/build-release/lib/wx/include/osx_cocoa-unicode-static-3.1",
 					"-I$WXWIN/include",

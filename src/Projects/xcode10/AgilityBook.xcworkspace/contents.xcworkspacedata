@@ -11,9 +11,6 @@
       location = "group:LibTidyHtml/LibTidyHtml.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:LibArchive/LibArchive.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:ARBCommon/ARBCommon.xcodeproj">
    </FileRef>
    <FileRef

@@ -101,7 +101,6 @@
 		E1CAE57816B5BF8700B33FE5 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1CAE57616B5BF8700B33FE5 /* stdafx.cpp */; };
 		E1CE612217ECB2BF0026B41B /* libARB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE611E17ECB2BF0026B41B /* libARB.a */; };
 		E1CE612317ECB2BF0026B41B /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE611F17ECB2BF0026B41B /* libARBCommon.a */; };
-		E1CE612417ECB2BF0026B41B /* libLibArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE612017ECB2BF0026B41B /* libLibArchive.a */; };
 		E1E1D05517234DEF00D7D1E4 /* ComboBoxQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E1D05117234DEF00D7D1E4 /* ComboBoxQ.cpp */; };
 		E1E1D05617234DEF00D7D1E4 /* ComboBoxVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E1D05317234DEF00D7D1E4 /* ComboBoxVenue.cpp */; };
 		E1E2517B21CC5EF7004A1D6A /* libLibFmt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E2517A21CC5EF7004A1D6A /* libLibFmt.a */; };
@@ -443,7 +442,6 @@
 		E1CAE57716B5BF8700B33FE5 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
 		E1CE611E17ECB2BF0026B41B /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../build/AgilityBook/Build/Products/Debug/libARB.a; sourceTree = "<group>"; };
 		E1CE611F17ECB2BF0026B41B /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../build/AgilityBook/Build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
-		E1CE612017ECB2BF0026B41B /* libLibArchive.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLibArchive.a; path = ../build/AgilityBook/Build/Products/Debug/libLibArchive.a; sourceTree = "<group>"; };
 		E1D274B42783707A0077D9AD /* toolbarFind.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbarFind.png; sourceTree = "<group>"; };
 		E1D274B52783707A0077D9AD /* toolbarFind@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbarFind@2x.png"; sourceTree = "<group>"; };
 		E1D2AFE91A292424006EA87D /* ImageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageHelper.h; sourceTree = "<group>"; };
@@ -460,7 +458,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1E2517B21CC5EF7004A1D6A /* libLibFmt.a in Frameworks */,
-				E1CE612417ECB2BF0026B41B /* libLibArchive.a in Frameworks */,
 				E1CE612317ECB2BF0026B41B /* libARBCommon.a in Frameworks */,
 				E1CE612217ECB2BF0026B41B /* libARB.a in Frameworks */,
 				E19851CD2170E6AD003E7B92 /* libLibARBWin.a in Frameworks */,
@@ -643,7 +640,6 @@
 				E1CE611E17ECB2BF0026B41B /* libARB.a */,
 				E1CE611F17ECB2BF0026B41B /* libARBCommon.a */,
 				E19851CC2170E6AD003E7B92 /* libLibARBWin.a */,
-				E1CE612017ECB2BF0026B41B /* libLibArchive.a */,
 				E19B63C5166C096E004DEDA4 /* Source */,
 				E19B63BE166C096E004DEDA4 /* Frameworks */,
 				E19B63BC166C096E004DEDA4 /* Products */,
@@ -993,7 +989,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "OUTPUTDIR=${CODESIGNING_FOLDER_PATH}/Contents/Resources\nSCRIPTDIR=${SOURCE_ROOT}/../../../Projects\nLANGDIR=${SOURCE_ROOT}/../../../lang\nRESDIR=${SOURCE_ROOT}/../../../Win/res\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\nif ! test -d \"${OUTPUTDIR}\"\nthen\n    mkdir \"${OUTPUTDIR}\"\nfi\n\npython3 \"${SCRIPTDIR}/CompileLang.py\" -s \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" ${TARGET_NAME}\n\npython3 \"${SCRIPTDIR}/CompileDataFile.py\" -x \"${RESDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" ${TARGET_NAME}\n";
+			shellScript = "OUTPUTDIR=${CODESIGNING_FOLDER_PATH}/Contents/Resources\nSCRIPTDIR=${SOURCE_ROOT}/../../../Projects\nLANGDIR=${SOURCE_ROOT}/../../../lang\nRESDIR=${SOURCE_ROOT}/../../../Win/res\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\nif ! test -d \"${OUTPUTDIR}\"\nthen\n    mkdir \"${OUTPUTDIR}\"\nfi\n\npython3 \"${SCRIPTDIR}/CompileLang.py\" -s \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" ${TARGET_NAME}\n\npython3 \"${SCRIPTDIR}/CompileDataFile.py\" -x -l \"${OUTPUTDIR}/lang\" \"${RESDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" ${TARGET_NAME}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1150,7 +1146,6 @@
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
-					"-I$SRCROOT/../../../3rdParty/LibArchive/include",
 					"-I$SRCROOT/../../../3rdParty/LibTidyHtml/include",
 					"-I$WXWIN/build-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
 					"-I$WXWIN/include",
@@ -1248,7 +1243,6 @@
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
-					"-I$SRCROOT/../../../3rdParty/LibArchive/include",
 					"-I$SRCROOT/../../../3rdParty/LibTidyHtml/include",
 					"-I$WXWIN/build-release/lib/wx/include/osx_cocoa-unicode-static-3.1",
 					"-I$WXWIN/include",
