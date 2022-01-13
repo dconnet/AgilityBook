@@ -182,7 +182,7 @@ size_t CLibArchive::FindDirectories(wxString const& inArchiveDir, std::vector<wx
 	wxString zipfile = m_pImpl->GetZipfileName();
 	wxFileSystem filesys;
 
-	std::auto_ptr<wxFSFile> file;
+	std::unique_ptr<wxFSFile> file;
 	file.reset(filesys.OpenFile(zipfile));
 	if (!file.get())
 		return 0;
@@ -196,8 +196,8 @@ size_t CLibArchive::FindDirectories(wxString const& inArchiveDir, std::vector<wx
 	wxFileName archiveDir(inArchiveDir, wxString());
 	auto archiveDirs = archiveDir.GetDirs();
 
-	std::auto_ptr<wxZipEntry> entry;
-	while (entry.reset(zip.GetNextEntry()), entry.get() != NULL)
+	std::unique_ptr<wxZipEntry> entry;
+	for (entry.reset(zip.GetNextEntry()); entry.get() != NULL; entry.reset(zip.GetNextEntry()))
 	{
 		wxString name = entry->GetName();
 		wxFileName filename(name);
