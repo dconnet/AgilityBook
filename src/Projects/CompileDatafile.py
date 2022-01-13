@@ -146,7 +146,7 @@ def GenFile(inputfiles, langdir, intermediateDir, targetname, verbose, bIncUpdat
 						sizefile = os.path.getsize(inputfile)
 						#if verbose:
 						#	print(sizefile, inputfile)
-						size = size + os.path.getsize(inputfile)
+						size = size + sizefile
 						zip.write(inputfile, filename)
 					else:
 						print('ERROR: File "' + inputfile + '" in "' + filelist + '" does not exist!')
@@ -158,10 +158,10 @@ def GenFile(inputfiles, langdir, intermediateDir, targetname, verbose, bIncUpdat
 		for mofile in glob.glob(os.path.join(lang, r'*')):
 			langid = os.path.basename(os.path.dirname(mofile))
 			fileCount = fileCount + 1
-			sizefile = os.path.getsize(inputfile)
+			sizefile = os.path.getsize(mofile)
 			#if verbose:
 			#	print(sizefile, inputfile)
-			size = size + os.path.getsize(inputfile)
+			size = size + sizefile
 			zip.write(mofile, 'lang/' + langid + '/' + os.path.basename(mofile))
 
 	if bIncUpdater:
@@ -169,10 +169,10 @@ def GenFile(inputfiles, langdir, intermediateDir, targetname, verbose, bIncUpdat
 		if os.access(arbUpdater, os.F_OK):
 			fileCount = fileCount + 1
 			zip.write(arbUpdater, 'ARBUpdater.exe')
-			sizefile = os.path.getsize(arbUpdater )
+			sizefile = os.path.getsize(arbUpdater)
 			#if verbose:
 			#	print(sizefile, arbUpdater)
-			size = size + os.path.getsize(arbUpdater)
+			size = size + sizefile
 		else:
 			print('ERROR: File "' + arbUpdater + '" does not exist!')
 			return 1
