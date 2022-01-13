@@ -17,7 +17,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/Include -I$(TOPSRCDIR)/3rdParty/LibFmt/include -I$(TOPSRCDIR)/3rdParty/LibArchive/include -I$(TOPSRCDIR)/3rdParty/LibTidyHtml/include -I$(TOPSRCDIR)/3rdParty/catch -DUSING_CATCH2
+INCLUDES += -I$(TOPSRCDIR)/Include -I$(TOPSRCDIR)/3rdParty/LibFmt/include -I$(TOPSRCDIR)/3rdParty/LibTidyHtml/include -I$(TOPSRCDIR)/3rdParty/catch -DUSING_CATCH2
 
 ##########
 # List of programs and archives to link
@@ -83,7 +83,7 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-@PACKAGE_TEST_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/Libraries/LibARBWin -larbwin -L$(TOPBUILDDIR)/Libraries/ARB -larb -L$(TOPBUILDDIR)/Libraries/ARBCommon -larbcommon -L$(TOPBUILDDIR)/3rdParty/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/3rdParty/LibArchive -larchive -L$(TOPBUILDDIR)/3rdParty/LibFmt -lfmt
+@PACKAGE_TEST_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/Libraries/LibARBWin -larbwin -L$(TOPBUILDDIR)/Libraries/ARB -larb -L$(TOPBUILDDIR)/Libraries/ARBCommon -larbcommon -L$(TOPBUILDDIR)/3rdParty/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/3rdParty/LibFmt -lfmt
 
 ##########
 # Precompiled headers
