@@ -155,14 +155,9 @@ private:
 	{
 		return nullptr;
 	}
-	bool GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg, bool& outCall)
-		const override
+	bool GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg) const override
 	{
 		return false;
-	}
-	wxBitmap GetResImage(wxArtID const& id, wxArtClient const& client) const override
-	{
-		return wxBitmap();
 	}
 };
 static CCallbackManager* g_LangMgr = nullptr;

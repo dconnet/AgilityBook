@@ -51,14 +51,13 @@ hidden.svg ghunshu.svg
 Note.svg VS2019 Image Library\vswin2019\Note\Note_16x.svg
 NotePlus.svg VS2015 Image Library\2015_VSIcon\Add\Add_16x.svg
 NoteAdded.png (Note + NotePlus)
-points.png title
+points.png title_visible
 question.svg 1815562_question_faq_help_icon.svg
 run.svg dog-agility.svg
-title.svg 315739_award_icon.svg
 title_hidden.png (title_visible + hidden)
 title_hidden_have.png (title_visible_have + hidden)
-title_visible.png title
-title_visible_have.png (title + have)
+title_visible.svg 315739_award_icon.svg
+title_visible_have.png (title_visible + have)
 toolbarAbout.svg VS2019 Image Library\vswin2019\SystemInformation\SystemInformation_16x.svg
 toolbarCalendar.png VS2019 Image Library\vswin2019\MonthCalendar\MonthCalendar_16x.svg
 toolbarCopy.svg VS2019 Image Library\vswin2019\Copy\Copy_16x.svg
@@ -74,7 +73,7 @@ toolbarFind.svg VS2019 Image Library\vswin2019\FindInFile\FindInFile_16x.svg
 toolbarRun.png run
 toolbarSave.svg VS2019 Image Library\vswin2019\Save\Save_16x.svg
 toolbarSettings.svg VS2019 Image Library\vswin2019\Settings\Settings_16x.svg
-toolbarTitle.png title
+toolbarTitle.png title_visible
 toolbarTraining.png training
 toolbarTrial.png trial
 training.svg Minduka_Notebook.svg

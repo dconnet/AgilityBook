@@ -34,14 +34,8 @@ public:
 	virtual wxWindow* GetResourceWindow() = 0;
 	// Get the name of the archived file.
 	// outName is the basename, without ".svg", ".png", or "@2x.png"
-	// outCall: Call GetResImage to get image (used for combining images into 1)
-	virtual bool GetResImageName(
-		wxArtID const& id,
-		wxArtClient const& client,
-		wxString& outName,
-		bool& outSvg,
-		bool& outCall) const = 0;
-	virtual wxBitmap GetResImage(wxArtID const& id, wxArtClient const& client) const = 0;
+	virtual bool GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg)
+		const = 0;
 };
 
 

@@ -199,15 +199,9 @@ List of venues we can select from.
 }
 
 
-bool CCalSitesApp::GetResImageName(
-	wxArtID const& id,
-	wxArtClient const& client,
-	wxString& outName,
-	bool& outSvg,
-	bool& outCall) const
+bool CCalSitesApp::GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg) const
 {
 	outSvg = false;
-	outCall = false;
 
 	bool found = true;
 	if (id == ImageMgrApp)

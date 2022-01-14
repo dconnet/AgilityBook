@@ -272,20 +272,9 @@ wxWindow* CBaseApp::GetResourceWindow()
 }
 
 
-bool CBaseApp::GetResImageName(
-	wxArtID const& id,
-	wxArtClient const& client,
-	wxString& outName,
-	bool& outSvg,
-	bool& outCall) const
+bool CBaseApp::GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg) const
 {
 	return false;
-}
-
-
-wxBitmap CBaseApp::GetResImage(wxArtID const& id, wxArtClient const& client) const
-{
-	return wxBitmap();
 }
 
 

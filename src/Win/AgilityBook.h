@@ -68,8 +68,7 @@ protected:
 	bool InitLanguage() override;
 
 	// IResourceManagerCallback
-	bool GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg, bool& outCall)
-		const override;
+	bool GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg) const override;
 
 	DECLARE_EVENT_TABLE()
 	void OnQueryEndSession(wxCloseEvent& evt);

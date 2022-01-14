@@ -98,9 +98,7 @@ public:
 	// IResourceManagerCallback
 	// Derived classes need to override these to use the resource manager.
 	wxWindow* GetResourceWindow() override;
-	bool GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg, bool& outCall)
-		const override;
-	wxBitmap GetResImage(wxArtID const& id, wxArtClient const& client) const override;
+	bool GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg) const override;
 
 	// Language control
 

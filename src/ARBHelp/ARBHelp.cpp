@@ -43,8 +43,7 @@ public:
 	}
 	bool OnInit() override;
 
-	bool GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg, bool& outCall)
-		const override;
+	bool GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg) const override;
 };
 
 
@@ -92,15 +91,9 @@ bool CARBHelpApp::OnInit()
 }
 
 
-bool CARBHelpApp::GetResImageName(
-	wxArtID const& id,
-	wxArtClient const& client,
-	wxString& outName,
-	bool& outSvg,
-	bool& outCall) const
+bool CARBHelpApp::GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg) const
 {
 	outSvg = false;
-	outCall = false;
 
 	bool found = true;
 	if (id == ImageMgrApp)

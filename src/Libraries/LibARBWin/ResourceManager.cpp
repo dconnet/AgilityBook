@@ -130,14 +130,10 @@ wxBitmap CResourceManager::CreateBitmap(wxArtID const& id, wxArtClient const& cl
 	else
 	{
 		wxString name;
-		bool isSvg, callRes;
-		if (m_callback->GetResImageName(id, client, name, isSvg, callRes))
+		bool isSvg;
+		if (m_callback->GetResImageName(id, client, name, isSvg))
 		{
-			if (callRes)
-			{
-				bmp = m_callback->GetResImage(id, client);
-			}
-			else if (isSvg)
+			if (isSvg)
 			{
 #if wxCHECK_VERSION(3, 1, 6)
 				name += L".svg";

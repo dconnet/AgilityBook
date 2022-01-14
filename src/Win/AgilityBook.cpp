@@ -539,15 +539,10 @@ bool CAgilityBookApp::InitLanguage()
 }
 
 
-bool CAgilityBookApp::GetResImageName(
-	wxArtID const& id,
-	wxArtClient const& client,
-	wxString& outName,
-	bool& outSvg,
-	bool& outCall) const
+bool CAgilityBookApp::GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg)
+	const
 {
 	outSvg = false;
-	outCall = false;
 
 	bool found = true;
 	if (id == ImageMgrApp)
@@ -580,7 +575,7 @@ bool CAgilityBookApp::GetResImageName(
 	else if (id == ImageMgrPoints)
 	{
 #if wxCHECK_VERSION(3, 1, 6)
-		outName = L"title";
+		outName = L"title_visible";
 		outSvg = true;
 #else
 		outName = L"points";
@@ -758,9 +753,7 @@ bool CAgilityBookApp::GetResImageName(
 	{
 		outName = L"CalEnteredTentative";
 #if wxCHECK_VERSION(3, 1, 6)
-		// outSvg = true;
-		// outCall = true;
-		// TODO: combine (CalEntered + question)
+		outSvg = true;
 #endif
 	}
 	else if (id == ImageMgrCalPending)
@@ -774,9 +767,7 @@ bool CAgilityBookApp::GetResImageName(
 	{
 		outName = L"CalPendingTentative";
 #if wxCHECK_VERSION(3, 1, 6)
-		// outSvg = true;
-		// outCall = true;
-		// TODO: combine (CalPending + question)
+		outSvg = true;
 #endif
 	}
 	else if (id == ImageMgrCheck)
@@ -790,9 +781,7 @@ bool CAgilityBookApp::GetResImageName(
 	{
 		outName = L"CalPlanTentative";
 #if wxCHECK_VERSION(3, 1, 6)
-		// outSvg = true;
-		// outCall = true;
-		// TODO: combine (check + question)
+		outSvg = true;
 #endif
 	}
 	else if (id == ImageMgrQuestion)
@@ -814,7 +803,7 @@ bool CAgilityBookApp::GetResImageName(
 	else if (id == ImageMgrTitle)
 	{
 #if wxCHECK_VERSION(3, 1, 6)
-		outName = L"title";
+		outName = L"title_visible";
 		outSvg = true;
 #else
 		outName = L"toolbarTitle";
@@ -831,24 +820,20 @@ bool CAgilityBookApp::GetResImageName(
 	{
 		outName = L"title_hidden";
 #if wxCHECK_VERSION(3, 1, 6)
-		// outSvg = true;
-		// outCall = true;
-		// TODO combine (title + hidden)
+		outSvg = true;
 #endif
 	}
 	else if (id == ImageMgrTitleTitledHiddenHave)
 	{
 		outName = L"title_hidden_have";
 #if wxCHECK_VERSION(3, 1, 6)
-		// outSvg = true;
-		// outCall = true;
-		// TODO combine (title_visible_have + hidden)
+		outSvg = true;
 #endif
 	}
 	else if (id == ImageMgrTitleTitled)
 	{
 #if wxCHECK_VERSION(3, 1, 6)
-		outName = L"title";
+		outName = L"title_visible";
 		outSvg = true;
 #else
 		outName = L"title_visible";
@@ -858,9 +843,7 @@ bool CAgilityBookApp::GetResImageName(
 	{
 		outName = L"title_visible_have";
 #if wxCHECK_VERSION(3, 1, 6)
-		// outSvg = true;
-		// outCall = true;
-		// TODO combine (title + have)
+		outSvg = true;
 #endif
 	}
 
@@ -884,18 +867,14 @@ bool CAgilityBookApp::GetResImageName(
 	{
 		outName = L"NoteAdded";
 #if wxCHECK_VERSION(3, 1, 6)
-		// outSvg = true;
-		// outCall = true;
-		// TODO combine (Note + NotePlus)
+		outSvg = true;
 #endif
 	}
 	else if (id == ImageMgrInfoNoteNoteAdded)
 	{
 		outName = L"NoteNoteAdded";
 #if wxCHECK_VERSION(3, 1, 6)
-		// outSvg = true;
-		// outCall = true;
-		// TODO combine (Note + NotePlus)
+		outSvg = true;
 #endif
 	}
 
