@@ -83,8 +83,7 @@ bool CResourceManager::Exists(wxString const& archiveFile) const
 }
 
 
-size_t CResourceManager::FindDirectories(wxString const& archiveDir, std::vector<wxString>& outDirectories)
-	const
+size_t CResourceManager::FindDirectories(wxString const& archiveDir, std::vector<wxString>& outDirectories) const
 {
 	if (!m_archive)
 	{

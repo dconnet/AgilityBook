@@ -84,7 +84,7 @@ wxArrayString wxDatTranslationsLoader::GetAvailableTranslations(const wxString& 
 	auto resMgr = CResourceManager::Get();
 	if (resMgr)
 	{
-		std::vector<wxString> directories; 
+		std::vector<wxString> directories;
 		if (0 < resMgr->FindDirectories(L"lang", directories))
 		{
 			for (auto dir : directories)
