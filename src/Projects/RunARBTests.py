@@ -9,6 +9,7 @@
 # run via the post-build. So we pad a blank in the quotes and strip it here.
 #
 # Revision History
+# 2022-01-13 Per 2014-11-19, stop it. (Mac/unix Makefile generates it)
 # 2018-11-16 Added ARM64 support.
 # 2016-06-10 Convert to Python3
 # 2014-11-19 DAT file is now embedded on Windows. Don't generate file here.
@@ -61,15 +62,6 @@ def main():
 	if not "x86" == platform and not "x64" == platform and not "ARM64" == platform and not "Mac" == platform:
 		print('Unknown platform:', platform)
 		return 1
-
-	if not "x86" == platform and not "x64" == platform:
-		# Create "TestARB.dat"
-		zip = zipfile.ZipFile(os.path.join(executableDir, targetname + '.dat'), 'w')
-		zip.write(srcDir + r'/Win/res/DefaultConfig.xml', 'DefaultConfig.xml')
-		zip.write(srcDir + r'/Win/res/AgilityRecordBook.dtd', 'AgilityRecordBook.dtd')
-		for file in glob.glob(srcDir + r'/TestARB/res/*.xml'):
-			zip.write(file, os.path.basename(file))
-		zip.close()
 
 	os.chdir(executableDir)
 
