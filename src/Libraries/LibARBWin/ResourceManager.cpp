@@ -144,11 +144,11 @@ wxBitmap CResourceManager::CreateBitmap(wxArtID const& id, wxArtClient const& cl
 				std::ostringstream str;
 #ifdef _DEBUG
 				bool extracted =
-#else
-				bool extracted = true;
 #endif
 					m_archive->ExtractFile(name, str);
+#ifdef _DEBUG
 				assert(extracted);
+#endif
 
 				wxBitmapBundle bundle = wxBitmapBundle::FromSVG(str.str().c_str(), wxSize(imageSize, imageSize));
 				assert(bundle.IsOk());
