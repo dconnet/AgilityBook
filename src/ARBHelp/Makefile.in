@@ -52,10 +52,10 @@ PRECOMP_HEADER = $(TOPSRCDIR)/ARBHelp/stdafx.h
 
 @NAM_RULES@
 
-resources: @PACKAGE_HLP_SHORTNAME@
+@PACKAGE_HLP_SHORTNAME@.dat: res/CompileDatList.txt
 	python3 $(TOPSRCDIR)/Projects/CompileDatafile.py -x $(TOPSRCDIR)/ARBHelp/res/CompileDatList.txt $(CURDIR) @PACKAGE_HLP_SHORTNAME@
 
-all: resources @PACKAGE_HLP_SHORTNAME@
+all: @PACKAGE_HLP_SHORTNAME@.dat @PACKAGE_HLP_SHORTNAME@
 
 dist:: all $(PHONY)
 	mkdir -p $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/MacOS

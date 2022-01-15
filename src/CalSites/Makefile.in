@@ -61,12 +61,12 @@ PRECOMP_HEADER = $(TOPSRCDIR)/CalSites/stdafx.h
 
 @NAM_RULES@
 
-resources: @PACKAGE_CAL_SHORTNAME@
+@PACKAGE_CAL_SHORTNAME@.dat: res/CompileDatList.txt
 	echo "LANGDIR $(CURDIR)"
 	python3 $(TOPSRCDIR)/Projects/CompileLang.py -w $(WXWIN) -s $(TOPSRCDIR)/lang arb.po $(CURDIR) @PACKAGE_CAL_SHORTNAME@
 	python3 $(TOPSRCDIR)/Projects/CompileDatafile.py -x -l $(CURDIR)/lang $(TOPSRCDIR)/CalSites/res/CompileDatList.txt $(CURDIR) @PACKAGE_CAL_SHORTNAME@
 
-all: resources @PACKAGE_CAL_SHORTNAME@
+all: @PACKAGE_CAL_SHORTNAME@.dat @PACKAGE_CAL_SHORTNAME@
 
 dist:: all $(PHONY)
 	mkdir -p $(TOPBUILDDIR)/@PACKAGE_CAL_SHORTNAME@.app/Contents/MacOS
