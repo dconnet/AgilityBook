@@ -791,6 +791,7 @@ bool CAgilityBookApp::GetResImageName(wxArtID const& id, wxArtClient const& clie
 		outSvg = true;
 #endif
 	}
+#if !wxCHECK_VERSION(3, 1, 6)
 	else if (id == ImageMgrHeaderDown)
 	{
 		outName = L"HdrDown";
@@ -799,6 +800,7 @@ bool CAgilityBookApp::GetResImageName(wxArtID const& id, wxArtClient const& clie
 	{
 		outName = L"HdrUp";
 	}
+#endif
 
 	else if (id == ImageMgrTitle)
 	{

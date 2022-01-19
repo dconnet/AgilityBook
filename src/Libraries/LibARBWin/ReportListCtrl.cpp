@@ -71,8 +71,10 @@ CReportListCtrl::CReportListCtrl(
 	: CListCtrl()
 	, m_ImageList()
 	, m_imgEmpty(-1)
+#if !wxCHECK_VERSION(3, 1, 6)
 	, m_imgSortUp(-1)
 	, m_imgSortDn(-1)
+#endif
 {
 	Create(
 		parent,
@@ -97,8 +99,10 @@ CReportListCtrl::CReportListCtrl(
 	: CListCtrl()
 	, m_ImageList()
 	, m_imgEmpty(-1)
+#if !wxCHECK_VERSION(3, 1, 6)
 	, m_imgSortUp(-1)
 	, m_imgSortDn(-1)
+#endif
 {
 	Create(parent, pos, size, bSingleSel, sortHeader, bHasBorder, bHasImageList, m_enableRowColors);
 }
@@ -131,12 +135,18 @@ bool CReportListCtrl::Create(
 
 	// Make the blank one the 1st icon so if an icon isn't set in a list
 	// it will use this by default
-	if (bHasImageList || sortHeader == SortHeader::Sort)
+	if (bHasImageList
+#if !wxCHECK_VERSION(3, 1, 6)
+		|| sortHeader == SortHeader::Sort
+#endif
+	)
 	{
 		m_ImageList.Create(DPI::Scale(this, 16), DPI::Scale(this, 16));
 		m_imgEmpty = m_ImageList.Add(CResourceManager::Get()->GetIcon(ImageMgrBlank));
+#if !wxCHECK_VERSION(3, 1, 6)
 		m_imgSortUp = m_ImageList.Add(CResourceManager::Get()->GetIcon(ImageMgrHeaderUp));
 		m_imgSortDn = m_ImageList.Add(CResourceManager::Get()->GetIcon(ImageMgrHeaderDown));
+#endif
 		CListCtrl::SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
 	}
 	return true;
@@ -202,6 +212,14 @@ bool CReportListCtrl::OnGetItemIsChecked(long item) const
 
 void CReportListCtrl::SetColumnSort(long column, int iconDirection)
 {
+#if wxCHECK_VERSION(3, 1, 6)
+	if (iconDirection > 0)
+		ShowSortIndicator(column, true);
+	else if (iconDirection < 0)
+		ShowSortIndicator(column, false);
+	else if (iconDirection == 0)
+		ShowSortIndicator(-1);
+#else
 	bool bSet = false;
 	wxListItem item;
 	item.SetMask(wxLIST_MASK_TEXT | wxLIST_MASK_FORMAT | wxLIST_MASK_IMAGE);
@@ -223,6 +241,7 @@ void CReportListCtrl::SetColumnSort(long column, int iconDirection)
 	}
 	if (bSet)
 		SetColumn(column, item);
+#endif
 }
 
 
