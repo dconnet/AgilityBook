@@ -1,7 +1,4 @@
 From www.iconfinder.com
- 2667288_auto_car_chevrolet_transport_travel_icon.svg
-  License: Creative Commons, Attribution 3.0 Unported
-  Author: https://www.iconfinder.com/iconika
  315739_award_icon.svg
   License: Free for commercial use
   Author: https://www.iconfinder.com/yanlu
@@ -16,20 +13,21 @@ From www.iconfinder.com
   Author: https://www.iconfinder.com/encoderxsolutions
 
 https://freesvg.org: CCO 1.0 Universal license. There is no copyright.
- Brown-bed.svg [https://freesvg.org/brown-bed]
- Cartoon-Dog-Fido.svg [https://freesvg.org/cartoon-dog]
- checkOk.svg [https://freesvg.org/checkok]
- dog-agility.svg [https://freesvg.org/dog-agility]
- ghunshu.svg [https://freesvg.org/ghunshu]
- house-2015053135-clean.svg [https://freesvg.org/house-2015053135-clean]
- Minduka_Notebook.svg [https://freesvg.org/notebook-and-pen-vector-illustration]
- Mobile Phone Icon.svg [https://freesvg.org/mobile-phone-icon-46179]
+ 1473103359.svg: https://freesvg.org/car-sign
+ Brown-bed.svg: https://freesvg.org/brown-bed
+ Cartoon-Dog-Fido.svg: https://freesvg.org/cartoon-dog
+ checkOk.svg: https://freesvg.org/checkok
+ dog-agility.svg: https://freesvg.org/dog-agility
+ ghunshu.svg: https://freesvg.org/ghunshu
+ johnny-automatic-NPS-map-pictographs-part-94.svg: https://freesvg.org/telephone-icon
+ house-2015053135-clean.svg: https://freesvg.org/house-2015053135-clean
+ Minduka_Notebook.svg: https://freesvg.org/notebook-and-pen-vector-illustration
 
 Note: Pretty much all the original SVGs have been edited
 
 AccConfirm.svg Brown-bed.svg
-AccNone.svg 2667288_auto_car_chevrolet_transport_travel_icon.svg
-AccTodo.svg "Mobile Phone Icon.svg"
+AccNone.svg 1473103359.svg
+AccTodo.svg johnny-automatic-NPS-map-pictographs-part-94.svg
 AgilityBook16.png
 AgilityBook256.png
 AgilityBook32.png

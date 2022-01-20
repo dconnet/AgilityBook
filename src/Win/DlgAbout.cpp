@@ -135,7 +135,9 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, CMainFrame* pParent)
 	link4->SetToolTip(_("LinkArbDownloadUrl"));
 	link4->SetHelpText(_("LinkArbDownloadUrl"));
 
-	wxStaticText* credits = new wxStaticText(this, wxID_ANY, _("AboutCredits"), wxDefaultPosition, wxDefaultSize, 0);
+	// Currently, the only credits were about FreeVector.
+	// Those images have been replaced.
+	// wxStaticText* credits = new wxStaticText(this, wxID_ANY, _("AboutCredits"), wxDefaultPosition, wxDefaultSize, 0);
 
 	wxButton* updates = new wxButton(this, wxID_ANY, _("CheckForUpdates"), wxDefaultPosition, wxDefaultSize, 0);
 	updates->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgAbout::OnCheckForUpdates, this);
@@ -175,7 +177,7 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, CMainFrame* pParent)
 
 	sizerBox->Add(sizerLinksBox2, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 1));
 
-	sizerBox->Add(credits, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
+	// sizerBox->Add(credits, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerButtons = new wxBoxSizer(wxHORIZONTAL);
 	sizerButtons->Add(updates, 0, 0, 0);
