@@ -8,7 +8,7 @@
 # Note: Found old OSX SDKs at https://github.com/phracker/MacOSX-SDKs/releases
 #
 # History
-# 2022-01-22 Changed to C++17.
+# 2022-01-22 Changed to C++17. Min OSX10.12
 # 2021-12-20 Added SDK12.1
 # 2021-11-30 Added SDK12.0, arm64.
 #            Change -with...builtin options to --disable-sys-libs
@@ -44,12 +44,12 @@ if test "x$1" = "xtrunk"; then
 	WXWIN=~/devtools/wx/trunk
 	VERSION="--disable-compat28 --disable-compat30"
 	MAC_CONFIG_PARAMS=" --disable-nativedvc"
-	MAC_MIN_OS=10.10
+	MAC_MIN_OS=10.12
 elif test "x$1" = "x3.1.5"; then
 	WXWIN=~/devtools/wx/wxWidgets-3.1.5
 	VERSION="--disable-compat28 --disable-compat30"
 	MAC_CONFIG_PARAMS=" --disable-nativedvc"
-	MAC_MIN_OS=10.10
+	MAC_MIN_OS=10.12
 elif test "x$1" = "x3.1.4"; then
 	WXWIN=~/devtools/wx/wxWidgets-3.1.4
 	VERSION="--disable-compat28 --disable-compat30"
@@ -114,12 +114,7 @@ Darwin*)
 	export LIBS="-lc++"
 	TARGETARCH="--enable-macosx_arch=x86_64"
 
-	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk; then
-		echo "Using 10.11 SDK"
-		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
-		MIN_OS=$MAC_MIN_OS
-
-	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk; then
+	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk; then
 		echo "Using 10.12 SDK"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk
 		MIN_OS=$MAC_MIN_OS
@@ -164,7 +159,7 @@ Darwin*)
 	fi
 
 	if test "x$TARGETSDK" = "x"; then
-		echo "ERROR: Can't find an SDK - 10.11 or newer is required"
+		echo "ERROR: Can't find an SDK - 10.12 or newer is required"
 		echo ls -CF /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
 		ls -CF /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
 		exit
