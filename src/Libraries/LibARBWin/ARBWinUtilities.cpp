@@ -176,7 +176,8 @@ void DrawBetterLabel(wxDC* pDC, wxString const& inStr, wxRect& rect, int flags, 
 						s = L"";
 						a = szChar.x;
 					}
-					s << words[k][iWord];
+					wxString word = words[k][iWord];
+					s << word;
 				}
 				words[k] = s;
 				width = a;
