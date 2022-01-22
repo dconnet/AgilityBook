@@ -1,9 +1,12 @@
 9/29/2021: v3.6.1.<development>
+- Notes:
+  - pre Mac-10.12 support dropped.
 - New features / Enhancements:
   - Add gamble closing time to run printout.
   - Condense notes (club/judge/location) when saving.
     (Previously only done on import or 'OK' from the InfoNote dialog.)
   - Changed InfoNote dialog (Clubs/Judges/Locations), allow copying of data.
+  - Natively support Mac M2.
 - Bug fixes:
   - Fix deletion of multiple selected titles in dog properties.
   - Printing a trial's runs ignored filtering.

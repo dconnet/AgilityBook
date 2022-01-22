@@ -67,64 +67,64 @@ Darwin*)
 	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
 	then
 		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
-		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++14 -stdlib=libc++")
-		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++14 -stdlib=libc++")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
 		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -stdlib=libc++"])
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk
 	then
 		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
-		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++14 -stdlib=libc++")
-		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++14 -stdlib=libc++")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
 		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -stdlib=libc++"])
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk
 	then
 		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
-		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++14 -stdlib=libc++")
-		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++14 -stdlib=libc++")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
 		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -stdlib=libc++"])
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk
 	then
 		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
-		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++14 -stdlib=libc++")
-		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++14 -stdlib=libc++")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
 		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -stdlib=libc++"])
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk
 	then
 		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
-		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++14 -stdlib=libc++")
-		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++14 -stdlib=libc++")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
 		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -stdlib=libc++"])
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk
 	then
 		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
-		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++14 -stdlib=libc++")
-		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++14 -stdlib=libc++")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
 		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -stdlib=libc++"])
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk
 	then
 		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
-		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++14 -stdlib=libc++")
-		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++14 -stdlib=libc++")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
 		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -stdlib=libc++"])
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.0.sdk
 	then
 		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64 -arch arm64")
-		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++14 -stdlib=libc++")
-		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -arch arm64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++14 -stdlib=libc++")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -arch arm64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
 		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -arch arm64 -stdlib=libc++"])
 
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk
 	then
 		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64 -arch arm64")
-		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++14 -stdlib=libc++")
-		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -arch arm64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++14 -stdlib=libc++")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -arch arm64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
 		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -arch arm64 -stdlib=libc++"])
 
 	else
@@ -144,8 +144,8 @@ Linux)
 	AC_SUBST(ARFLAGS, 'Ucru')
 	AC_SUBST(CFLAGS, "$CFLAGS -g")
 	#AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
-	AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -g -std=c++14")
-	AC_SUBST(CXXFLAGS, "$CXXFLAGS -g -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++14")
+	AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -g -std=c++17")
+	AC_SUBST(CXXFLAGS, "$CXXFLAGS -g -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17")
 	AC_SUBST(LDFLAGS, ["$LDFLAGS -no-pie"])
 	AC_SUBST(NOPRECOMP,1)
 	;;

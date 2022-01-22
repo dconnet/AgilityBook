@@ -11,7 +11,7 @@ Additional software packages required (all free):
 - Doxygen (optional)
 - GraphViz (optional)
 - clang-format (optional, but helpful)
-- C++14 compiler
+- C++17 compiler
 [See "Compiler notes" at bottom of file for supported compilers]
 
 Once the above software is unpacked, the directory structure should look like:
@@ -135,7 +135,7 @@ This will run the formatter and rewrite the files.
 Compiler notes
 ==============
 
-Compiler: requires C++14 support.
+Compiler: requires C++17 support.
 
 Microsoft Visual Studio 2022 (VC14.3)
 ===================================
@@ -169,9 +169,7 @@ sudo port upgrade outdated
 initial: sudo port install autoconf gettext git python310 py310-readline
          sudo port select --set python python310
          sudo port select --set python3 python310
-Download SDK 10.11 from github.com/phracker/MacOSX-SDKs/releases/
- (this is the min SDK wx supports - use that)
- Unpack into /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/
+Note: I'm now compiling on an M2 macOS Monterey.
 
 Note, to build using the xcode project, you need to enable xcode to use env vars
   defaults write com.apple.dt.Xcode UseSanitizedBuildSystemEnvironment -bool NO

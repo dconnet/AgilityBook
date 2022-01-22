@@ -53,14 +53,14 @@ Platforms
 Agility Record Book currently supports:
 
 - Windows Windows 7 and higher (32/64 bit)
-- MacOS 10.10 and higher (64 bit)
+- MacOS 10.12 and higher (64 bit)
 
 The binaries for the platforms above can be found in
 [Releases](https://github.com/dconnet/AgilityBook/releases).
 
 In theory, it should be able to be compiled on any platform that is supported by
 [wxWidgets](http://wxwidgets.org/).
-Caveat: ARB requires a C++14 compliant compiler.
+Caveat: ARB requires a C++17 compliant compiler.
 See [Readme-Build.txt](https://github.com/dconnet/AgilityBook/blob/master/Readme-Build.txt)
 for more information on building the source code.
 

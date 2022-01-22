@@ -8,6 +8,7 @@
 # Note: Found old OSX SDKs at https://github.com/phracker/MacOSX-SDKs/releases
 #
 # History
+# 2022-01-22 Changed to C++17.
 # 2021-12-20 Added SDK12.1
 # 2021-11-30 Added SDK12.0, arm64.
 #            Change -with...builtin options to --disable-sys-libs
@@ -107,8 +108,8 @@ fi
 
 case `uname` in
 Darwin*)
-	export CXXFLAGS="-std=c++14 -stdlib=libc++"
-	export OBJCXXFLAGS="-std=c++14 -stdlib=libc++"
+	export CXXFLAGS="-std=c++17 -stdlib=libc++"
+	export OBJCXXFLAGS="-std=c++17 -stdlib=libc++"
 	export LDFLAGS="-stdlib=libc++"
 	export LIBS="-lc++"
 	TARGETARCH="--enable-macosx_arch=x86_64"
@@ -175,11 +176,11 @@ Darwin*)
 Linux)
 	if test "x$2" = "xdebug"; then
 		export CFLAGS="-g"
-		export CXXFLAGS="-g -std=c++14"
-		export OBJCXXFLAGS="-g -std=c++14"
+		export CXXFLAGS="-g -std=c++17"
+		export OBJCXXFLAGS="-g -std=c++17"
 	else
-		export CXXFLAGS="-std=c++14"
-		export OBJCXXFLAGS="-std=c++14"
+		export CXXFLAGS="-std=c++17"
+		export OBJCXXFLAGS="-std=c++17"
 	fi
 	#export LDFLAGS="-stdlib=libc++"
 	#export LIBS="-lc++"
@@ -193,7 +194,7 @@ esac
 
 CONFIG_PARAMS+=" $TARGETARCH"
 
-LIBRARIES+=" --with-cxx=14 --disable-sys-libs --without-libiconv --without-liblzma"
+LIBRARIES+=" --with-cxx=17 --disable-sys-libs --without-libiconv --without-liblzma"
 
 echo "../configure $COMPILERS $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS"
 

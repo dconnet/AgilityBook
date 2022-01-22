@@ -10,6 +10,7 @@
 # an EXE that will run on XP.
 #
 # Revision History
+# 2022-01-22 Changed to C++17.
 # 2021-12-18 Add ability to compile utils
 # 2021-11-09 Add vc143 support
 # 2021-02-13 Add USE_OPENGL=0 for ARM64 (can't find opengl libs).
@@ -69,6 +70,7 @@ tmpfile = 'tmpcomp' + os.environ['USERDOMAIN'] + '.bat'
 onlyTest = False
 useStatic = True
 useUnicode = True
+stdCpp = '/std:c++17'
 
 
 def AddCompiler(compilers, c):
@@ -164,8 +166,7 @@ def main():
 	if not useStatic:
 		vendor = ' VENDOR=dconsoft'
 
-	# Used in wx2.9.1+, not used earlier so won't hurt anything
-	common_cppflags = '/DwxMSVC_VERSION_AUTO=1'
+	common_cppflags = '/DwxMSVC_VERSION_AUTO=1 ' + stdCpp
 
 	os.environ['INCLUDE'] = ''
 	os.environ['LIB'] = ''
