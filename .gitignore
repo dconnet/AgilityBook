@@ -21,6 +21,7 @@
 
 /src/autom4te.cache/*
 /src/configure
+/src/configure~
 
 xcuserdata/
 /src/Projects/xcode*/build/*
