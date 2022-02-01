@@ -956,7 +956,7 @@ bool ElementNode::AddAttrib(std::wstring const& inName, ARBDate const& inValue)
 bool ElementNode::AddAttrib(std::wstring const& inName, wxDateTime const& inValue)
 {
 	if (inValue.IsValid())
-		AddAttrib(inName, inValue.FormatISOCombined(' '));
+		AddAttrib(inName, inValue.FormatISOCombined(' ').wc_str());
 	return false;
 }
 #endif
