@@ -234,6 +234,8 @@ public:
 	static void SetAutoUpdateCheckInterval(long days);
 	static long GetNumBackupFiles();
 	static void SetNumBackupFiles(long nFiles);
+	static wxString GetBackupDirectory();
+	static void SetBackupDirectory(wxString const& dir);
 	static bool AutoShowPropertiesOnNewTitle();
 	static void AutoShowPropertiesOnNewTitle(bool bShow);
 	static bool UseAlternateRowColor();

@@ -1866,6 +1866,18 @@ void CAgilityBookOptions::SetNumBackupFiles(long nFiles)
 }
 
 
+wxString CAgilityBookOptions::GetBackupDirectory()
+{
+	return wxConfig::Get()->Read(CFG_SETTINGS_BACKUPDIR, wxString());
+}
+
+
+void CAgilityBookOptions::SetBackupDirectory(wxString const& dir)
+{
+	wxConfig::Get()->Write(CFG_SETTINGS_BACKUPDIR, dir);
+}
+
+
 bool CAgilityBookOptions::AutoShowPropertiesOnNewTitle()
 {
 	bool val = sc_ShowPropOnNewTitle;

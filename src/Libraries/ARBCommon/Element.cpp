@@ -12,6 +12,7 @@
  * Actual reading and writing of XML is done using wxWidgets
  *
  * Revision History
+ * 2022-01-31 Add wxDateTime support.
  * 2018-12-16 Convert to fmt.
  * 2017-08-03 Added initial expat support (reader, not write)
  * 2015-04-04 Add support for C99 printf formats. (Breaking change)
@@ -797,6 +798,24 @@ ARBAttribLookup ElementNode::GetAttrib(std::wstring const& inName, ARBDate& outV
 }
 
 
+#if defined(__WXWINDOWS__)
+ARBAttribLookup ElementNode::GetAttrib(std::wstring const& inName, wxDateTime& outValue) const
+{
+	std::wstring value;
+	ARBAttribLookup rc = GetAttrib(inName, value);
+	if (ARBAttribLookup::Found == rc)
+	{
+		wxDateTime date;
+		if (date.ParseISOCombined(value, ' '))
+			outValue = date;
+		else
+			rc = ARBAttribLookup::Invalid;
+	}
+	return rc;
+}
+#endif
+
+
 ARBAttribLookup ElementNode::GetAttrib(std::wstring const& inName, bool& outValue) const
 {
 	std::wstring value;
@@ -931,6 +950,16 @@ bool ElementNode::AddAttrib(std::wstring const& inName, ARBDate const& inValue)
 		AddAttrib(inName, inValue.GetString(ARBDateFormat::DashYMD));
 	return false;
 }
+
+
+#if defined(__WXWINDOWS__)
+bool ElementNode::AddAttrib(std::wstring const& inName, wxDateTime const& inValue)
+{
+	if (inValue.IsValid())
+		AddAttrib(inName, inValue.FormatISOCombined(' '));
+	return false;
+}
+#endif
 
 
 bool ElementNode::AddAttrib(std::wstring const& inName, bool inValue)

@@ -249,4 +249,6 @@ TEST_CASE("Utils")
 			}
 		}
 	}
+
+#pragma PRAGMA_TODO(Add tests for new backupdir parameter)
 }

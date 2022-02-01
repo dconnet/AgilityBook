@@ -313,6 +313,8 @@ inline wxString CFG_SELECTION_DOG(int n)
 #define CFG_SETTINGS_USEALTROWCOLOR		CFG_KEY_SETTINGS L"/useAltRowColor"
 //	DW BackupFiles
 #define CFG_SETTINGS_BACKUPFILES		CFG_KEY_SETTINGS L"/BackupFiles"
+//	ST BackupDir
+#define CFG_SETTINGS_BACKUPDIR			CFG_KEY_SETTINGS L"/BackupDir"
 //	DW isLocal (defined in SetupApp.cpp)
 //#define CFG_SETTINGS_ISLOCAL			CFG_KEY_SETTINGS L"/isLocal"
 //	Obsolete(2.0.0.0) DW Lang (LanguageManager.cpp)

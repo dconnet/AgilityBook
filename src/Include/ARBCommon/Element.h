@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2022-01-31 Add wxDateTime support.
  * 2018-12-16 Convert to fmt.
  * 2012-11-25 Add libxml support back in.
  * 2012-04-10 Based on wx-group thread, use std::string for internal use
@@ -193,6 +194,9 @@ public:
 	ARBAttribLookup GetAttrib(std::wstring const& inName, std::wstring& outValue) const;
 	ARBAttribLookup GetAttrib(std::wstring const& inName, ARBVersion& outValue) const;
 	ARBAttribLookup GetAttrib(std::wstring const& inName, ARBDate& outValue) const;
+#if defined(__WXWINDOWS__)
+	ARBAttribLookup GetAttrib(std::wstring const& inName, wxDateTime& outValue) const;
+#endif
 	ARBAttribLookup GetAttrib(std::wstring const& inName, bool& outValue) const;
 	ARBAttribLookup GetAttrib(std::wstring const& inName, short& outValue) const;
 	ARBAttribLookup GetAttrib(std::wstring const& inName, unsigned short& outValue) const;
@@ -211,6 +215,9 @@ public:
 	bool AddAttrib(std::wstring const& inName, wchar_t const* const inValue);
 	bool AddAttrib(std::wstring const& inName, ARBVersion const& inValue);
 	bool AddAttrib(std::wstring const& inName, ARBDate const& inValue);
+#if defined(__WXWINDOWS__)
+	bool AddAttrib(std::wstring const& inName, wxDateTime const& inValue);
+#endif
 	bool AddAttrib(std::wstring const& inName, bool inValue);
 	bool AddAttrib(std::wstring const& inName, short inValue);
 	bool AddAttrib(std::wstring const& inName, unsigned short inValue);

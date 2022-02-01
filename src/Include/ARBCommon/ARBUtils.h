@@ -14,6 +14,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2022-02-01 Added backup directory to CreateBackupFile.
  * 2021-08-24 Make StackTracer work on non-Win32 platforms.
  * 2019-08-15 Added GetARBResourceDir
  * 2018-10-30 Moved some utils from ARBWin.
@@ -54,9 +55,10 @@ ARBCOMMON_API wxString GetARBResourceDir();
  * Create a backup file (and reorganize if some were deleted)
  * @param inFilename File name to backup.
  * @param nBackups Number of backups to keep.
+ * @param inDirectory Directory where backups are kept. (default: inFilename)
  * @return Backup files reorganized.
  */
-ARBCOMMON_API bool CreateBackupFile(wxString const& inFilename, int nBackups);
+ARBCOMMON_API bool CreateBackupFile(wxString const& inFilename, int nBackups, wxString const& inDirectory = wxString());
 
 
 /**

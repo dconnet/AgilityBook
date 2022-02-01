@@ -1538,7 +1538,7 @@ CAgilityBookTrainingView* CAgilityBookDoc::GetTrainingView() const
 
 void CAgilityBookDoc::BackupFile(wxString const& lpszPathName)
 {
-	CreateBackupFile(lpszPathName, CAgilityBookOptions::GetNumBackupFiles());
+	CreateBackupFile(lpszPathName, CAgilityBookOptions::GetNumBackupFiles(), CAgilityBookOptions::GetBackupDirectory());
 }
 
 

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2022-02-01 Added backup directory to CreateBackupFile.
  * 2021-08-24 Make StackTracer work on non-Win32 platforms.
  * 2019-08-15 Added GetARBResourceDir
  * 2019-06-28 Fix issue with change nBackups to less than existing backups.
@@ -90,17 +91,34 @@ wxString GetARBResourceDir()
 }
 
 
-bool CreateBackupFile(wxString const& inFilename, int nBackups)
+bool CreateBackupFile(wxString const& inFilename, int nBackups, wxString const& inDirectory)
 {
 	bool bChanged = false;
 	if (0 < nBackups)
 	{
+		wxString filename(inFilename);
+		if (!inDirectory.empty())
+		{
+			wxString dir = wxExpandEnvVars(inDirectory);
+			wxFileName backup(dir, wxString());
+			if (!backup.Exists())
+			{
+				if (!backup.Mkdir())
+				{
+					wxLogError("ERROR: Cannot create directory %s", backup.GetFullPath());
+					return false;
+				}
+			}
+			wxFileName file(inFilename);
+			backup.SetFullName(file.GetFullName());
+			filename = backup.GetFullPath();
+		}
 		// First find a hole.
 		int nHole = -1;
 		int i;
 		for (i = 1; i <= nBackups; ++i)
 		{
-			wxString backup = wxString::Format(L"%s.bck%d", inFilename.c_str(), i);
+			wxString backup = wxString::Format(L"%s.bck%d", filename.c_str(), i);
 			if (!wxFile::Exists(backup))
 			{
 				nHole = i;
@@ -112,18 +130,18 @@ bool CreateBackupFile(wxString const& inFilename, int nBackups)
 		// Then shift all the files into the hole.
 		for (i = nHole; i > 1; --i)
 		{
-			wxString backup = wxString::Format(L"%s.bck%d", inFilename.c_str(), i);
+			wxString backup = wxString::Format(L"%s.bck%d", filename.c_str(), i);
 			if (wxFile::Exists(backup))
 				wxRemoveFile(backup);
-			wxString filename = wxString::Format(L"%s.bck%d", inFilename.c_str(), i - 1);
-			wxRenameFile(filename, backup);
+			wxString oldFilename = wxString::Format(L"%s.bck%d", filename.c_str(), i - 1);
+			wxRenameFile(oldFilename, backup);
 			bChanged = true;
 		}
 		// File may not exist if doing a 'save as'
 		if (wxFile::Exists(inFilename))
 		{
 			bChanged = true;
-			wxString backup = inFilename + L".bck1";
+			wxString backup = filename + L".bck1";
 			wxCopyFile(inFilename, backup, true); // Force an overwrite (if nBackups+1 exists, we error out otherwise)
 		}
 	}
