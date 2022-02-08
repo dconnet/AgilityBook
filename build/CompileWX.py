@@ -70,6 +70,7 @@ tmpfile = 'tmpcomp' + os.environ['USERDOMAIN'] + '.bat'
 onlyTest = False
 useStatic = True
 useUnicode = True
+common_cppflags = '/DwxMSVC_VERSION_AUTO=1 /Zc:__cplusplus'
 stdCpp = '/std:c++17'
 
 
@@ -166,8 +167,6 @@ def main():
 	if not useStatic:
 		vendor = ' VENDOR=dconsoft'
 
-	common_cppflags = '/DwxMSVC_VERSION_AUTO=1 ' + stdCpp
-
 	os.environ['INCLUDE'] = ''
 	os.environ['LIB'] = ''
 
@@ -191,7 +190,7 @@ def main():
 		cfg = ' COMPILER_PREFIX=' + platformDir
 
 		setenv_rel = 'call ' + vcvarsall
-		cppflags = common_cppflags
+		cppflags = common_cppflags + ' ' + stdCpp
 		if platform == 'x64':
 			target_cpu = ' TARGET_CPU=x64'
 		elif platform == 'ARM64':
