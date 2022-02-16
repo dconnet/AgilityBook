@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-02 09:36-0800\n"
-"PO-Revision-Date: 2021-12-02 09:36-0800\n"
+"POT-Creation-Date: 2022-02-16 10:38-0800\n"
+"PO-Revision-Date: 2022-02-16 10:38-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: _;arbT\n"
 "X-Poedit-Basepath: ../..\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Poedit-SearchPath-0: Libraries/ARB\n"
 "X-Poedit-SearchPath-1: Libraries/ARBCommon\n"
 "X-Poedit-SearchPath-2: Libraries/LibARBWin\n"
@@ -33,48 +33,48 @@ msgstr ""
 msgid "Get all the events from USDAA. This will parse the HTML returned from {}"
 msgstr "Get all the events from USDAA. This will parse the HTML returned from {}"
 
-#: CalSites/CalendarSiteUSDAA.cpp:203 CalSites/CalendarSites.cpp:1067
+#: CalSites/CalendarSiteUSDAA.cpp:203 CalSites/CalendarSites.cpp:1057
 msgid "IDS_ERR_PARSING_DATA"
 msgstr "Erreur parsing {} data"
 
-#: CalSites/CalendarSites.cpp:655 CalSites/CalendarSites.cpp:668
+#: CalSites/CalendarSites.cpp:649 CalSites/CalendarSites.cpp:662
 msgid "IDS_DISABLED"
 msgstr "Eteindre"
 
 # DlgCalendarPlugins (CalendarSites.cpp)
-#: CalSites/CalendarSites.cpp:779
+#: CalSites/CalendarSites.cpp:773
 msgid "IDD_CALENDAR_PLUGINS"
 msgstr "Plugins calendrier"
 
-#: CalSites/CalendarSites.cpp:798 CalSites/CalendarSites.cpp:799
+#: CalSites/CalendarSites.cpp:788 CalSites/CalendarSites.cpp:789
 msgid "HIDC_PLUGIN_TREE"
 msgstr "Liste de plugins calendrier disponible et leurs entrées de calendrier."
 
-#: CalSites/CalendarSites.cpp:809 CalSites/CalendarSites.cpp:810
+#: CalSites/CalendarSites.cpp:799 CalSites/CalendarSites.cpp:800
 msgid "HIDC_PLUGIN_DETAILS"
 msgstr "Les détails pour l'article choisi dans larborescence."
 
-#: CalSites/CalendarSites.cpp:812
+#: CalSites/CalendarSites.cpp:802
 msgid "IDC_PLUGIN_READ"
 msgstr "&Lire Entrées"
 
-#: CalSites/CalendarSites.cpp:814 CalSites/CalendarSites.cpp:815
+#: CalSites/CalendarSites.cpp:804 CalSites/CalendarSites.cpp:805
 msgid "HIDC_PLUGIN_READ"
 msgstr "Lire les entrées calendrier à partir des plugins choisis."
 
-#: CalSites/CalendarSites.cpp:817
+#: CalSites/CalendarSites.cpp:807
 msgid "IDC_PLUGIN_ADD"
 msgstr "&Rajouter Entrées"
 
-#: CalSites/CalendarSites.cpp:819 CalSites/CalendarSites.cpp:820
+#: CalSites/CalendarSites.cpp:809 CalSites/CalendarSites.cpp:810
 msgid "HIDC_PLUGIN_ADD"
 msgstr "Ajouter les entrées calendrier choisies dans le programme."
 
-#: CalSites/CalendarSites.cpp:822
+#: CalSites/CalendarSites.cpp:812
 msgid "IDC_PLUGIN_ENABLE"
 msgstr "&Activer"
 
-#: CalSites/CalendarSites.cpp:824 CalSites/CalendarSites.cpp:825
+#: CalSites/CalendarSites.cpp:814 CalSites/CalendarSites.cpp:815
 msgid "HIDC_PLUGIN_ENABLE"
 msgstr ""
 "Activer le plugin choisi. Les Plugins peuvent être désactivés si le format du "
@@ -82,51 +82,51 @@ msgstr ""
 "Normalement, un plugin ne devrait être activé que si la dernière version de ce "
 "plugin a été téléchargée."
 
-#: CalSites/CalendarSites.cpp:827
+#: CalSites/CalendarSites.cpp:817
 msgid "IDC_PLUGIN_QUERYDETAILS"
 msgstr "&Détails..."
 
-#: CalSites/CalendarSites.cpp:829 CalSites/CalendarSites.cpp:830
+#: CalSites/CalendarSites.cpp:819 CalSites/CalendarSites.cpp:820
 msgid "HIDC_PLUGIN_QUERYDETAILS"
 msgstr "Éditer l'information détaillée pour le plugin choisi, si disponible."
 
-#: CalSites/CalendarSites.cpp:832
+#: CalSites/CalendarSites.cpp:822
 msgid "IDC_PLUGIN_NEW"
 msgstr "Nouveau..."
 
-#: CalSites/CalendarSites.cpp:834 CalSites/CalendarSites.cpp:835
+#: CalSites/CalendarSites.cpp:824 CalSites/CalendarSites.cpp:825
 msgid "HIDC_PLUGIN_NEW"
 msgstr "Rajouter un nouveau plugin Calendrier à la configuration actuelle."
 
-#: CalSites/CalendarSites.cpp:837
+#: CalSites/CalendarSites.cpp:827
 msgid "IDC_PLUGIN_EDIT"
 msgstr "Édition..."
 
-#: CalSites/CalendarSites.cpp:839 CalSites/CalendarSites.cpp:840
+#: CalSites/CalendarSites.cpp:829 CalSites/CalendarSites.cpp:830
 msgid "HIDC_PLUGIN_EDIT"
 msgstr ""
 "Éditer le plugin Calendrier sélectionné. (Sapplique seulement aux plugins dans "
 "la configuration.)"
 
-#: CalSites/CalendarSites.cpp:842
+#: CalSites/CalendarSites.cpp:832
 msgid "IDC_PLUGIN_DELETE"
 msgstr "Supprimer"
 
-#: CalSites/CalendarSites.cpp:844 CalSites/CalendarSites.cpp:845
+#: CalSites/CalendarSites.cpp:834 CalSites/CalendarSites.cpp:835
 msgid "HIDC_PLUGIN_DELETE"
 msgstr ""
 "Supprimer le plugin Calendrier sélectionné. (Sapplique seulement aux plugins "
 "dans la configuration.)"
 
-#: CalSites/CalendarSites.cpp:847
+#: CalSites/CalendarSites.cpp:837
 msgid "IDC_PLUGIN_CLOSE"
 msgstr "Quitter"
 
-#: CalSites/CalendarSites.cpp:1076
+#: CalSites/CalendarSites.cpp:1066
 msgid "IDS_USE_PLUGIN"
 msgstr "Voulez-vous continuer d'utiliser ce plugin?"
 
-#: CalSites/CalendarSites.cpp:1147 Win/AgilityBookDoc.cpp:1265
+#: CalSites/CalendarSites.cpp:1137 Win/AgilityBookDoc.cpp:1265
 msgid "IDS_UPDATED_CAL_ITEMS"
 msgstr "{0} nouveaux entrés calendrier rajouté, {1} entrés mis a jour."
 
@@ -154,7 +154,7 @@ msgstr "Code"
 #: CalSites/DlgCalendarQueryDetail.cpp:120 CalSites/DlgQueryDetail.cpp:85
 #: Win/AgilityBookCalendarView.cpp:643 Win/DlgAssignColumns.cpp:217
 #: Win/DlgAssignColumns.cpp:317 Win/DlgAssignColumns.cpp:374
-#: Win/DlgAssignColumns.cpp:458 Win/DlgInfoNote.cpp:559 Win/DlgListCtrl.cpp:448
+#: Win/DlgAssignColumns.cpp:458 Win/DlgInfoNote.cpp:556 Win/DlgListCtrl.cpp:448
 #: Win/DlgListViewer.cpp:975 Win/DlgListViewer.cpp:1013
 #: Win/DlgListViewer.cpp:1025 Win/DlgListViewer.cpp:1182
 #: Win/DlgListViewer.cpp:1249 Win/DlgListViewer.cpp:1302 Win/Print.cpp:262
@@ -295,18 +295,18 @@ msgstr "Codes..."
 msgid "HIDC_PLUGINDETAIL_CODES"
 msgstr "Configurer les codes Endroit et Organisation qui sont permis."
 
-#: CalSites/DlgPluginDetails.cpp:192
+#: CalSites/DlgPluginDetails.cpp:189
 msgid "IDC_PLUGINDETAIL_CODES_TEXT"
 msgstr "{0} Code(s) Endroit et {1} Organisation"
 
-#: CalSites/DlgPluginDetails.cpp:232 Win/DlgConfigEvent.cpp:1624
-#: Win/DlgConfigLifetimeName.cpp:134 Win/DlgConfigMultiQ.cpp:396
+#: CalSites/DlgPluginDetails.cpp:229 Win/DlgConfigEvent.cpp:1621
+#: Win/DlgConfigLifetimeName.cpp:131 Win/DlgConfigMultiQ.cpp:393
 #: Win/DlgConfigOtherPoints.cpp:68 Win/DlgConfigVenue.cpp:102
-#: Win/DlgConfigVenue.cpp:193 Win/DlgConfigVenue.cpp:690 Win/DlgConfigure.cpp:432
+#: Win/DlgConfigVenue.cpp:193 Win/DlgConfigVenue.cpp:687 Win/DlgConfigure.cpp:432
 #: Win/DlgConfigureData.cpp:187 Win/DlgConfigureData.cpp:233
 #: Win/DlgConfigureData.cpp:330 Win/DlgConfigureData.cpp:398
 #: Win/DlgConfigureData.cpp:501 Win/DlgConfigureData.cpp:620
-#: Win/DlgInfoNoteEdit.cpp:121
+#: Win/DlgInfoNoteEdit.cpp:118
 msgid "IDS_NAME_IN_USE"
 msgstr "Ce nom existe deja."
 
@@ -335,16 +335,16 @@ msgid "HIDC_QUERYDETAIL_NAME"
 msgstr ""
 "Ceci est le nom qui va être affiché à lutilisateur pour sélectionner un code."
 
-#: CalSites/DlgQueryDetail.cpp:208 Libraries/LibARBWin/Validators.cpp:447
+#: CalSites/DlgQueryDetail.cpp:205 Libraries/LibARBWin/Validators.cpp:447
 #: Libraries/LibARBWin/Validators.cpp:545
 msgid "Please enter a value"
 msgstr "Renseignez le champ, svp."
 
-#: CalSites/DlgQueryDetail.cpp:208 Libraries/LibARBWin/Validators.cpp:452
-#: Libraries/LibARBWin/Validators.cpp:551 Win/DlgClub.cpp:286 Win/DlgClub.cpp:295
+#: CalSites/DlgQueryDetail.cpp:205 Libraries/LibARBWin/Validators.cpp:452
+#: Libraries/LibARBWin/Validators.cpp:551 Win/DlgClub.cpp:283 Win/DlgClub.cpp:292
 #: Win/DlgConfigOtherPoints.cpp:68 Win/DlgConfigPlaceInfo.cpp:68
 #: Win/DlgConfigPlaceInfo.cpp:74 Win/DlgConfigPlaceInfo.cpp:112
-#: Win/DlgRegNum.cpp:188 Win/ValidatorsQ.cpp:93 Win/ValidatorsQ.cpp:102
+#: Win/DlgRegNum.cpp:185 Win/ValidatorsQ.cpp:93 Win/ValidatorsQ.cpp:102
 msgid "Validation conflict"
 msgstr "Conflit de validation"
 
@@ -423,86 +423,86 @@ msgstr "Nom d'utilisateur"
 msgid "Password"
 msgstr "Mot de passe"
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:100
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:99
 #, fuzzy
 msgid "Assign Key"
 msgstr "Assign Key"
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:103
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:102
 #, fuzzy
 msgid "Key:"
 msgstr "Key:"
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:114
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:113
 #, fuzzy
 msgid "Modifiers:"
 msgstr "Modifiers:"
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:119
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:118
 msgid "Ctrl"
 msgstr "Ctrl"
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:128
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:127
 msgid "Alt"
 msgstr "Alt"
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:137
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:136
 msgid "Shift"
 msgstr "Majuscule"
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:143
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:494
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:142
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:490
 #, fuzzy
 msgid "Clear"
 msgstr "Clear"
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:235
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:231
 #, fuzzy
 msgid "ERROR: This accelerator is already in use."
 msgstr "ERROR: This accelerator is already in use."
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:302
-#: Libraries/LibARBWin/MenuHelper.cpp:706
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:298
+#: Libraries/LibARBWin/MenuHelper.cpp:707
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:304
-#: Libraries/LibARBWin/MenuHelper.cpp:708
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:300
+#: Libraries/LibARBWin/MenuHelper.cpp:709
 msgid "Alt+"
 msgstr "Alt+"
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:306
-#: Libraries/LibARBWin/MenuHelper.cpp:710
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:302
+#: Libraries/LibARBWin/MenuHelper.cpp:711
 msgid "Shift+"
 msgstr "Majuscule+"
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:462
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:458
 #, fuzzy
 msgid "Configure Keyboard Shortcuts"
 msgstr "Configure Keyboard Shortcuts"
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:480
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:476
 #, fuzzy
 msgid "Keyboard Shortcut"
 msgstr "Keyboard Shortcut"
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:481
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:477
 msgid "Description"
 msgstr "Description"
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:483
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:479
 msgid "Location"
 msgstr "Endroit"
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:488 Win/DlgDogPanelBase.cpp:87
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:484 Win/DlgDogPanelBase.cpp:87
 msgid "New..."
 msgstr "Nouveau..."
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:491 Win/DlgDogPanelBase.cpp:90
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:487 Win/DlgDogPanelBase.cpp:90
 msgid "Edit..."
 msgstr "Édition..."
 
-#: Libraries/LibARBWin/DlgConfigAccel.cpp:497
+#: Libraries/LibARBWin/DlgConfigAccel.cpp:493
 #, fuzzy
 msgid "Set Defaults"
 msgstr "Set Defaults"
@@ -512,38 +512,44 @@ msgstr "Set Defaults"
 msgid "Progress"
 msgstr "Progression"
 
+#: Libraries/LibARBWin/LanguageManager.cpp:223
+#: Libraries/LibARBWin/LanguageManager.cpp:228
+#, fuzzy
+msgid "No other languages are available."
+msgstr "No other languages are available."
+
+#: Libraries/LibARBWin/LanguageManager.cpp:233
+msgid "Choose a language:"
+msgstr "Choisir la Langue:"
+
+# DlgLanguage
+#: Libraries/LibARBWin/LanguageManager.cpp:233
+msgid "Language Selection"
+msgstr "Choisir la Langue"
+
+#: Libraries/LibARBWin/LanguageManager.cpp:234
+msgid "Select a language to use."
+msgstr "Choisir une langue."
+
 # Description strings returned by wxWidgets wxLocale.
 # Keep each one in the native form (like Win7's display language selection)
-#: Libraries/LibARBWin/LanguageManager.cpp:185
+#: Libraries/LibARBWin/LanguageManager.cpp:319
 msgid "English (U.S.)"
 msgstr "English"
 
-#: Libraries/LibARBWin/LanguageManager.cpp:186
+#: Libraries/LibARBWin/LanguageManager.cpp:320
 msgid "French"
 msgstr "français"
 
 # Description strings returned by wxWidgets wxLocale.
 # Keep each one in the native form (like Win7's display language selection)
-#: Libraries/LibARBWin/LanguageManager.cpp:188
+#: Libraries/LibARBWin/LanguageManager.cpp:322
 msgid "English (United States)"
 msgstr "English"
 
-#: Libraries/LibARBWin/LanguageManager.cpp:189
+#: Libraries/LibARBWin/LanguageManager.cpp:323
 msgid "French (France)"
 msgstr "français"
-
-#: Libraries/LibARBWin/LanguageManager.cpp:205
-msgid "Choose a language:"
-msgstr "Choisir la Langue:"
-
-# DlgLanguage
-#: Libraries/LibARBWin/LanguageManager.cpp:205
-msgid "Language Selection"
-msgstr "Choisir la Langue"
-
-#: Libraries/LibARBWin/LanguageManager.cpp:206
-msgid "Select a language to use."
-msgstr "Choisir une langue."
 
 #: Libraries/LibARBWin/ReadHttp.cpp:146
 #, fuzzy
@@ -559,7 +565,7 @@ msgstr "Credentials"
 msgid "Restore"
 msgstr "restaurer"
 
-#: Libraries/LibARBWin/SetupApp.cpp:123
+#: Libraries/LibARBWin/SetupApp.cpp:121
 #, fuzzy, c-format
 msgid "Report generated in \"%s\"."
 msgstr "Report generated in \"%s\"."
@@ -1059,7 +1065,7 @@ msgstr "L'aperçu avant impression nécessite une imprimante installée."
 msgid "Print Preview"
 msgstr "Aperçu avant impression"
 
-#: Win/AgilityBook.cpp:297
+#: Win/AgilityBook.cpp:294
 msgid "Agility Record Book file"
 msgstr "fichier de Agility Record Book"
 
@@ -1101,7 +1107,7 @@ msgstr "Dernier date"
 
 #: Win/AgilityBookCalendarView.cpp:644 Win/DlgAssignColumns.cpp:214
 #: Win/DlgAssignColumns.cpp:320 Win/DlgAssignColumns.cpp:368
-#: Win/DlgInfoNote.cpp:553 Win/DlgListCtrl.cpp:449 Win/DlgListViewer.cpp:969
+#: Win/DlgInfoNote.cpp:550 Win/DlgListCtrl.cpp:449 Win/DlgListViewer.cpp:969
 #: Win/DlgListViewer.cpp:1007 Win/DlgListViewer.cpp:1019
 #: Win/DlgListViewer.cpp:1183 Win/DlgListViewer.cpp:1250
 #: Win/DlgListViewer.cpp:1303 Win/DlgListViewer.cpp:1379 Win/DlgTrial.cpp:377
@@ -1324,7 +1330,7 @@ msgstr ""
 "Warning: This file has been modified after it was opened. Are you sure you "
 "want to overwrite any changes?"
 
-#: Win/AgilityBookDoc.cpp:1833 Win/UpdateInfo.cpp:767
+#: Win/AgilityBookDoc.cpp:1833 Win/UpdateInfo.cpp:768
 msgid "IDS_CANNOT_OPEN"
 msgstr "Impossible d'ouvrir fichier '{}' pour ecriture."
 
@@ -2318,16 +2324,11 @@ msgstr "Telecharger Agility Record Book"
 msgid "LinkArbDownloadUrl"
 msgstr "http://www.agilityrecordbook.com/download.php"
 
-#: Win/DlgAbout.cpp:138
-#, fuzzy
-msgid "AboutCredits"
-msgstr "Credits: Some artwork sourced from Vector Graphics by FreeVector.com."
-
-#: Win/DlgAbout.cpp:140
+#: Win/DlgAbout.cpp:142
 msgid "CheckForUpdates"
 msgstr "Chercher des mises à jours..."
 
-#: Win/DlgAbout.cpp:142
+#: Win/DlgAbout.cpp:144
 msgid "HIDC_ABOUT_UPDATE"
 msgstr ""
 "Contrôler s'il y a des mises à jour disponibles. S'il y en a, vous serez "
@@ -2503,7 +2504,7 @@ msgstr "Epreuve"
 msgid "IDS_COL_HEIGHT"
 msgstr "Catégorie"
 
-#: Win/DlgAssignColumns.cpp:235 Win/DlgInfoNote.cpp:556 Win/DlgListViewer.cpp:972
+#: Win/DlgAssignColumns.cpp:235 Win/DlgInfoNote.cpp:553 Win/DlgListViewer.cpp:972
 #: Win/DlgListViewer.cpp:1010 Win/DlgListViewer.cpp:1022
 #: Win/DlgListViewer.cpp:1184 Win/DlgListViewer.cpp:1251 Win/Print.cpp:264
 msgid "IDS_COL_JUDGE"
@@ -2603,7 +2604,7 @@ msgid "IDS_COL_TITLE_PTS"
 msgstr "Points Distinction"
 
 #: Win/DlgAssignColumns.cpp:298 Win/DlgDogPanelPoints.cpp:63
-#: Win/DlgInfoNote.cpp:68 Win/DlgInfoNote.cpp:1009 Win/DlgListViewer.cpp:1414
+#: Win/DlgInfoNote.cpp:68 Win/DlgInfoNote.cpp:1006 Win/DlgListViewer.cpp:1414
 #: Win/Print.cpp:279
 msgid "IDS_COL_COMMENTS"
 msgstr "Notes"
@@ -2617,7 +2618,7 @@ msgid "IDS_COL_ENTERED"
 msgstr "Nombre chiens inscrit"
 
 #: Win/DlgAssignColumns.cpp:339 Win/DlgDogPanelTitles.cpp:56
-#: Win/DlgFindLinks.cpp:119 Win/DlgInfoNote.cpp:67 Win/DlgInfoNote.cpp:1008
+#: Win/DlgFindLinks.cpp:119 Win/DlgInfoNote.cpp:67 Win/DlgInfoNote.cpp:1005
 #: Win/DlgListCtrl.cpp:554 Win/DlgListViewer.cpp:1413
 #: Win/DlgRunPanelRefRuns.cpp:62
 msgid "IDS_COL_NAME"
@@ -3182,11 +3183,11 @@ msgid "HIDC_CLUB_PRIMARY"
 msgstr ""
 "This club is the primary club in a co-sanctioned trial. Its rules are used."
 
-#: Win/DlgClub.cpp:286 Win/DlgRegNum.cpp:188 Win/DlgRunPanelScore.cpp:1126
+#: Win/DlgClub.cpp:283 Win/DlgRegNum.cpp:185 Win/DlgRunPanelScore.cpp:1126
 msgid "IDS_SELECT_VENUE"
 msgstr "Choisissez un epreuve."
 
-#: Win/DlgClub.cpp:295
+#: Win/DlgClub.cpp:292
 #, fuzzy
 msgid "IDS_SELECT_COSANCTION"
 msgstr "Please select a co-sanctioning club."
@@ -3394,78 +3395,78 @@ msgstr ""
 msgid "HIDC_CONFIG_EVENT_NOTES"
 msgstr "Les notes concernant la méthode couramment sélectionnée."
 
-#: Win/DlgConfigEvent.cpp:583 Win/DlgConfigEventMethod.cpp:207
-#: Win/DlgConfigEventMethod.cpp:840 Win/FilterOptions.cpp:271
+#: Win/DlgConfigEvent.cpp:580 Win/DlgConfigEventMethod.cpp:207
+#: Win/DlgConfigEventMethod.cpp:837 Win/FilterOptions.cpp:271
 #: Win/FilterOptions.cpp:354 Win/FilterOptions.cpp:423 Win/FilterOptions.cpp:431
 #: Win/FilterOptions.cpp:462
 msgid "IDS_ALL"
 msgstr "<Tous>"
 
-#: Win/DlgConfigEvent.cpp:699
+#: Win/DlgConfigEvent.cpp:696
 msgid "IDS_CONFIGEVENT_STYLE"
 msgstr "Method pour calculer les resultats"
 
-#: Win/DlgConfigEvent.cpp:714 Win/DlgConfigEvent.cpp:731
-#: Win/DlgConfigEvent.cpp:752 Win/DlgConfigEvent.cpp:767
-#: Win/DlgConfigEvent.cpp:778
+#: Win/DlgConfigEvent.cpp:711 Win/DlgConfigEvent.cpp:728
+#: Win/DlgConfigEvent.cpp:749 Win/DlgConfigEvent.cpp:764
+#: Win/DlgConfigEvent.cpp:775
 msgid "IDS_CONFIGEVENT_TIMEFAULTMULT"
 msgstr "Temps Faut Multiplicateur"
 
-#: Win/DlgConfigEvent.cpp:718
+#: Win/DlgConfigEvent.cpp:715
 msgid "IDS_CONFIGEVENT_REQOPEN"
 msgstr "Ouverture necessaire"
 
-#: Win/DlgConfigEvent.cpp:719
+#: Win/DlgConfigEvent.cpp:716
 msgid "IDS_CONFIGEVENT_REQCLOSE"
 msgstr "Fermeture necessaire"
 
-#: Win/DlgConfigEvent.cpp:729 Win/DlgConfigEvent.cpp:750
+#: Win/DlgConfigEvent.cpp:726 Win/DlgConfigEvent.cpp:747
 msgid "IDS_CONFIGEVENT_TF_FROMSCORE"
 msgstr "Soustraire Fautes temps de resultat"
 
-#: Win/DlgConfigEvent.cpp:735 Win/DlgConfigEvent.cpp:756
-#: Win/DlgConfigEvent.cpp:783
+#: Win/DlgConfigEvent.cpp:732 Win/DlgConfigEvent.cpp:753
+#: Win/DlgConfigEvent.cpp:780
 msgid "IDS_CONFIGEVENT_TF_UNDER"
 msgstr "Calculer Fautes Temps sur TPS"
 
-#: Win/DlgConfigEvent.cpp:740 Win/DlgConfigEvent.cpp:761
-#: Win/DlgConfigEvent.cpp:788
+#: Win/DlgConfigEvent.cpp:737 Win/DlgConfigEvent.cpp:758
+#: Win/DlgConfigEvent.cpp:785
 msgid "IDS_CONFIGEVENT_TF_OVER"
 msgstr "Calculer Fautes Temps sous TPS"
 
-#: Win/DlgConfigEvent.cpp:746 Win/DlgRunPanelScore.cpp:1994 Win/TabView.cpp:242
+#: Win/DlgConfigEvent.cpp:743 Win/DlgRunPanelScore.cpp:1994 Win/TabView.cpp:242
 #: Win/TabView.cpp:289 Win/TabView.cpp:364
 msgid "IDS_POINTS"
 msgstr "Points"
 
-#: Win/DlgConfigEvent.cpp:773
+#: Win/DlgConfigEvent.cpp:770
 msgid "IDS_CONFIGEVENT_CLEANQ"
 msgstr "Parcours doit etre sans fautes pour Q."
 
-#: Win/DlgConfigEvent.cpp:798
+#: Win/DlgConfigEvent.cpp:795
 msgid "IDS_CONFIGEVENT_DROPFRAC"
 msgstr "Supprimer fraction temps pour fautes"
 
-#: Win/DlgConfigEvent.cpp:803
+#: Win/DlgConfigEvent.cpp:800
 #, fuzzy
 msgid "IDS_CONFIGEVENT_BONUSTITLE"
 msgstr "Points Bonus existent"
 
-#: Win/DlgConfigEvent.cpp:808
+#: Win/DlgConfigEvent.cpp:805
 msgid "IDS_CONFIGEVENT_SUPERQ"
 msgstr "Super Qs existant"
 
-#: Win/DlgConfigEvent.cpp:813
+#: Win/DlgConfigEvent.cpp:810
 msgid "IDS_CONFIGEVENT_SPEEDPTS"
 msgstr "Points vitesse existent"
 
-#: Win/DlgConfigEvent.cpp:1115 Win/DlgConfigEvent.cpp:1127
-#: Win/DlgConfigEvent.cpp:1135 Win/DlgConfigEvent.cpp:1418
-#: Win/DlgConfigEvent.cpp:1429 Win/DlgConfigEvent.cpp:1436
+#: Win/DlgConfigEvent.cpp:1112 Win/DlgConfigEvent.cpp:1124
+#: Win/DlgConfigEvent.cpp:1132 Win/DlgConfigEvent.cpp:1415
+#: Win/DlgConfigEvent.cpp:1426 Win/DlgConfigEvent.cpp:1433
 msgid "IDS_TITLEPTS_EXISTS"
 msgstr "Il y a deja un entré pour ces fautes"
 
-#: Win/DlgConfigEvent.cpp:1612
+#: Win/DlgConfigEvent.cpp:1609
 msgid "IDS_CONFIGEVENT_OVERLAPDATES"
 msgstr ""
 "ATTENTION\n"
@@ -3670,7 +3671,7 @@ msgstr ""
 "Compute titling points using raw faults. This implies that a run must be under "
 "SCT to qualify."
 
-#: Win/DlgConfigEventMethod.cpp:534 Win/DlgConfigEventMethod.cpp:786
+#: Win/DlgConfigEventMethod.cpp:534 Win/DlgConfigEventMethod.cpp:783
 msgid "IDC_CONFIG_EVENT_OPENING_PTS"
 msgstr "Exigé pour débuter"
 
@@ -3688,27 +3689,27 @@ msgstr "Exigé pour finir"
 msgid "HIDC_CONFIG_EVENT_CLOSING_PTS"
 msgstr "Le nombre de points de clôture nécessaires pour qualifier."
 
-#: Win/DlgConfigEventMethod.cpp:801 Win/DlgRunPanelScore.cpp:1983
+#: Win/DlgConfigEventMethod.cpp:798 Win/DlgRunPanelScore.cpp:1983
 msgid "IDS_SCORING_REQUIRED_POINTS"
 msgstr "Points Necessaire"
 
-#: Win/DlgConfigEventMethod.cpp:1030 Win/DlgRunPanelScore.cpp:1135
+#: Win/DlgConfigEventMethod.cpp:1027 Win/DlgRunPanelScore.cpp:1135
 msgid "IDS_SELECT_DIVISION"
 msgstr "Choisissez un nouveau conducteur."
 
-#: Win/DlgConfigEventMethod.cpp:1037 Win/DlgRunPanelScore.cpp:1144
+#: Win/DlgConfigEventMethod.cpp:1034 Win/DlgRunPanelScore.cpp:1144
 msgid "IDS_SELECT_LEVEL"
 msgstr "Choisissez un degré."
 
-#: Win/DlgConfigEventMethod.cpp:1044
+#: Win/DlgConfigEventMethod.cpp:1041
 msgid "IDS_SELECT_STYLE"
 msgstr "Choisissez une méthode calculation points"
 
-#: Win/DlgConfigEventMethod.cpp:1057
+#: Win/DlgConfigEventMethod.cpp:1054
 msgid "IDS_CONFIGEVENT_DATEORDER"
 msgstr "Date commencement doit etre avant date fermeture."
 
-#: Win/DlgConfigEventMethod.cpp:1070
+#: Win/DlgConfigEventMethod.cpp:1067
 msgid "IDS_CONFIGEVENT_PLACEMENT0"
 msgstr ""
 "Pour une rang de 0, il faut des endroits specifiés ou que les points vitesses "
@@ -4583,35 +4584,35 @@ msgstr ""
 "La liste des Récompenses. L'icône indique si la Récompense est cachée et si "
 "vous avez reçu le certificat."
 
-#: Win/DlgDogPanelTitles.cpp:233
+#: Win/DlgDogPanelTitles.cpp:234
 msgid "IDC_DOG_TITLE_NEW"
 msgstr "&Nouveau..."
 
-#: Win/DlgDogPanelTitles.cpp:234 Win/DlgDogPanelTitles.cpp:235
+#: Win/DlgDogPanelTitles.cpp:235 Win/DlgDogPanelTitles.cpp:236
 msgid "HIDC_DOG_TITLE_NEW"
 msgstr "Créer une nouvelle Récompense."
 
-#: Win/DlgDogPanelTitles.cpp:237
+#: Win/DlgDogPanelTitles.cpp:238
 msgid "IDC_DOG_TITLE_EDIT"
 msgstr "&Édition..."
 
-#: Win/DlgDogPanelTitles.cpp:238 Win/DlgDogPanelTitles.cpp:239
+#: Win/DlgDogPanelTitles.cpp:239 Win/DlgDogPanelTitles.cpp:240
 msgid "HIDC_DOG_TITLE_EDIT"
 msgstr "Éditer la Récompense sélectionnée."
 
-#: Win/DlgDogPanelTitles.cpp:241
+#: Win/DlgDogPanelTitles.cpp:242
 msgid "IDC_DOG_TITLE_DELETE"
 msgstr "&Supprimer"
 
-#: Win/DlgDogPanelTitles.cpp:242 Win/DlgDogPanelTitles.cpp:243
+#: Win/DlgDogPanelTitles.cpp:243 Win/DlgDogPanelTitles.cpp:244
 msgid "HIDC_DOG_TITLE_DELETE"
 msgstr "Supprimer la Récompense sélectionnée."
 
-#: Win/DlgDogPanelTitles.cpp:248
+#: Win/DlgDogPanelTitles.cpp:249
 msgid "IDC_DOG_TITLE_HIDDEN"
 msgstr "Voir cachés"
 
-#: Win/DlgDogPanelTitles.cpp:254 Win/DlgDogPanelTitles.cpp:255
+#: Win/DlgDogPanelTitles.cpp:255 Win/DlgDogPanelTitles.cpp:256
 msgid "HIDC_DOG_TITLE_HIDDEN"
 msgstr ""
 "Régler laffichage pour les Récompenses cachées. Cette fonction est aussi "
@@ -4931,7 +4932,7 @@ msgstr "Tous"
 msgid "HIDC_INFONOTE_VIS_ALL"
 msgstr "Show all items"
 
-#: Win/DlgInfoNote.cpp:432 Win/DlgInfoNote.cpp:1006
+#: Win/DlgInfoNote.cpp:432 Win/DlgInfoNote.cpp:1003
 msgid "IDC_INFONOTE_VIS_VIS"
 msgstr "Visible"
 
@@ -4964,7 +4965,7 @@ msgstr "Tous"
 msgid "HIDC_INFONOTE_USE_ALL"
 msgstr "Show all items"
 
-#: Win/DlgInfoNote.cpp:470 Win/DlgInfoNote.cpp:1007
+#: Win/DlgInfoNote.cpp:470 Win/DlgInfoNote.cpp:1004
 #, fuzzy
 msgid "IDC_INFONOTE_USE_INUSE"
 msgstr "In use"
@@ -4984,26 +4985,26 @@ msgstr "Not in use"
 msgid "HIDC_INFONOTE_USE_NOTINUSE"
 msgstr "Show only items that are hidden or have a comment"
 
-#: Win/DlgInfoNote.cpp:767
+#: Win/DlgInfoNote.cpp:764
 #, fuzzy
 msgid "IDS_INFONOTE_FMT_COUNT"
 msgstr "{0} items"
 
-#: Win/DlgInfoNote.cpp:770
+#: Win/DlgInfoNote.cpp:767
 #, fuzzy
 msgid "IDS_INFONOTE_FMT_COUNT_OF"
 msgstr "{0} of {1} items"
 
-#: Win/DlgInfoNote.cpp:783
+#: Win/DlgInfoNote.cpp:780
 #, fuzzy
 msgid "IDS_INFONOTE_FILTERED"
 msgstr "Edited information is currently hidden by the viewing options."
 
-#: Win/DlgInfoNote.cpp:1017 Win/DlgInfoNote.cpp:1021
+#: Win/DlgInfoNote.cpp:1014 Win/DlgInfoNote.cpp:1018
 msgid "IDS_INFONOTE_YES"
 msgstr "Oui"
 
-#: Win/DlgInfoNote.cpp:1017 Win/DlgInfoNote.cpp:1020
+#: Win/DlgInfoNote.cpp:1014 Win/DlgInfoNote.cpp:1017
 msgid "IDS_INFONOTE_NO"
 msgstr "Non"
 
@@ -6032,39 +6033,39 @@ msgstr "&Fautes..."
 msgid "HIDC_RUNCOMMENT_COMMENTS_FAULTS"
 msgstr "Ajouter une faute à la liste des fautes."
 
-#: Win/DlgRunPanelLinks.cpp:101 Win/DlgRunPanelLinks.cpp:102
+#: Win/DlgRunPanelLinks.cpp:102 Win/DlgRunPanelLinks.cpp:103
 msgid "HIDC_RUNLINK_LIST"
 msgstr "Liste de fichiers liés."
 
-#: Win/DlgRunPanelLinks.cpp:108
+#: Win/DlgRunPanelLinks.cpp:109
 msgid "IDC_RUNLINK_NEW"
 msgstr "&Nouveau..."
 
-#: Win/DlgRunPanelLinks.cpp:110 Win/DlgRunPanelLinks.cpp:111
+#: Win/DlgRunPanelLinks.cpp:111 Win/DlgRunPanelLinks.cpp:112
 msgid "HIDC_RUNLINK_NEW"
 msgstr "Créer un nouveau lien."
 
-#: Win/DlgRunPanelLinks.cpp:113
+#: Win/DlgRunPanelLinks.cpp:114
 msgid "IDC_RUNLINK_EDIT"
 msgstr "&Édition..."
 
-#: Win/DlgRunPanelLinks.cpp:115 Win/DlgRunPanelLinks.cpp:116
+#: Win/DlgRunPanelLinks.cpp:116 Win/DlgRunPanelLinks.cpp:117
 msgid "HIDC_RUNLINK_EDIT"
 msgstr "Éditer le chemin du lien sélectionné."
 
-#: Win/DlgRunPanelLinks.cpp:118
+#: Win/DlgRunPanelLinks.cpp:119
 msgid "IDC_RUNLINK_DELETE"
 msgstr "&Supprimer"
 
-#: Win/DlgRunPanelLinks.cpp:120 Win/DlgRunPanelLinks.cpp:121
+#: Win/DlgRunPanelLinks.cpp:121 Win/DlgRunPanelLinks.cpp:122
 msgid "HIDC_RUNLINK_DELETE"
 msgstr "Supprimer le lien sélectionné."
 
-#: Win/DlgRunPanelLinks.cpp:123
+#: Win/DlgRunPanelLinks.cpp:124
 msgid "IDC_RUNLINK_OPEN"
 msgstr "&Ouvrir"
 
-#: Win/DlgRunPanelLinks.cpp:125 Win/DlgRunPanelLinks.cpp:126
+#: Win/DlgRunPanelLinks.cpp:126 Win/DlgRunPanelLinks.cpp:127
 msgid "HIDC_RUNLINK_OPEN"
 msgstr "Ouvrir le lien sélectionné en utilisant le programme Windows associé."
 
@@ -6461,7 +6462,7 @@ msgstr "Chercher..."
 msgid "HIDC_SELECTURL_FILENAME"
 msgstr "Explorer pour sélectionner un fichier."
 
-#: Win/DlgSelectURL.cpp:126
+#: Win/DlgSelectURL.cpp:123
 msgid "IDS_FILEEXT_FILTER_ALL"
 msgstr "Tous fichiers (*.*)|*.*||"
 
@@ -6674,12 +6675,12 @@ msgstr "Notes sur le club sélectionné."
 msgid "IDS_COL_COSANCTION"
 msgstr "Co-Sanctioned"
 
-#: Win/DlgTrial.cpp:600
+#: Win/DlgTrial.cpp:597
 #, fuzzy
 msgid "IDS_ADD_CLUB_FAILED"
 msgstr "This club and venue are already in the trial."
 
-#: Win/DlgTrial.cpp:735
+#: Win/DlgTrial.cpp:732
 msgid "IDS_CONFIG_DELETE_RUNS"
 msgstr ""
 "Attention!!!\n"
@@ -6811,46 +6812,46 @@ msgstr ""
 "An update is available but cannot be installed at this time. Make sure the "
 "system is not updating or waiting to be rebooted."
 
-#: Win/UpdateInfo.cpp:340 Win/UpdateInfo.cpp:518
+#: Win/UpdateInfo.cpp:341 Win/UpdateInfo.cpp:519
 msgid "IDS_UPDATE_UNKNOWN"
 msgstr "Version current pas determinable."
 
-#: Win/UpdateInfo.cpp:442 Win/UpdateInfo.cpp:719
+#: Win/UpdateInfo.cpp:443 Win/UpdateInfo.cpp:720
 msgid "IDS_LOAD_FAILED"
 msgstr "Impossible de charger '{}'."
 
-#: Win/UpdateInfo.cpp:592
+#: Win/UpdateInfo.cpp:593
 msgid "IDS_VERSION_AVAILABLE"
 msgstr "Version {} accesible. Voulez-vous le telecharger? "
 
-#: Win/UpdateInfo.cpp:705
+#: Win/UpdateInfo.cpp:706
 msgid "IDS_UPDATE_CURRENT"
 msgstr "Pas des mises a jour."
 
-#: Win/UpdateInfo.cpp:775
+#: Win/UpdateInfo.cpp:776
 msgid "IDS_DOWNLOADING"
 msgstr "Téléchargement en cours..."
 
-#: Win/UpdateInfo.cpp:798
+#: Win/UpdateInfo.cpp:799
 msgid "IDS_DOWNLOAD_AND_RESTART"
 msgstr ""
 "{} a fini de télécharger. Agility Record Book va fermer pour vous laisser "
 "l'installer."
 
-#: Win/UpdateInfo.cpp:800
+#: Win/UpdateInfo.cpp:801
 msgid "IDS_VALIDATING"
 msgstr "Validation en cours..."
 
-#: Win/UpdateInfo.cpp:805 Win/UpdateInfo.cpp:815 Win/UpdateInfo.cpp:823
-#: Win/UpdateInfo.cpp:831 Win/UpdateInfo.cpp:903
+#: Win/UpdateInfo.cpp:806 Win/UpdateInfo.cpp:816 Win/UpdateInfo.cpp:824
+#: Win/UpdateInfo.cpp:832 Win/UpdateInfo.cpp:900
 msgid "IDS_ERROR_DOWNLOAD"
 msgstr "ERREUR: Le fichier téléchargé est corrompu."
 
-#: Win/UpdateInfo.cpp:839
+#: Win/UpdateInfo.cpp:840
 msgid "IDS_ERROR_UNEXPECTED"
 msgstr "ERREUR: Format de fichier non reconnu, fichier MSI attendu."
 
-#: Win/UpdateInfo.cpp:873 Win/UpdateInfo.cpp:894
+#: Win/UpdateInfo.cpp:870 Win/UpdateInfo.cpp:891
 msgid "IDS_ERROR_AUTOUPDATE"
 msgstr "ERREUR: Erreur interne pendant la mise à jour. Procédure annulée."
 
