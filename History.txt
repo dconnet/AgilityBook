@@ -1,6 +1,8 @@
 9/29/2021: v3.6.1.<development>
 - Notes:
   - pre Mac-10.12 support dropped.
+- Bumped Configuration v66:
+  - NADAC. Removed Extreme, Hoopers, Barrelers, added Grounders.
 - New features / Enhancements:
   - Add gamble closing time to run printout.
   - Condense notes (club/judge/location) when saving.
