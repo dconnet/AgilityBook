@@ -211,7 +211,10 @@ void CTabView::RecreateBook(wxDocument* doc, long inFlags, bool bOnCreate)
 	}
 
 	if (!m_ctrlBook)
+	{
+		m_ctrlBook = oldBook;
 		return;
+	}
 
 	m_ctrlBook->SetImageList(&m_imageList);
 
