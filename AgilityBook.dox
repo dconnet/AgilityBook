@@ -828,7 +828,6 @@ WARN_LOGFILE           = DoxWarnings.log
 
 INPUT                  = . \
                          src/Include \
-                         src/3rdParty/LibArchive \
                          src/3rdParty/LibFmt \
                          src/3rdParty/LibTidyHtml \
                          src/Libraries/ARB \

@@ -48,7 +48,7 @@ public:
 
 	/** Called during wxApp::OnInit
 	 * @param pCallback Ask the main app for resource names
-	 * @param archiveName Default is the <exename>.dat. Allow for override.
+	 * @param archiveName Default is the \<exename\>.dat. Allow for override.
 	 */
 	void Initialize(IResourceManagerCallback* pCallback, wxString const* archiveName = nullptr);
 	// Called during wxApp::OnExit
