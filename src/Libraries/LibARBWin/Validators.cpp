@@ -34,6 +34,11 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+namespace
+{
+constexpr wchar_t k_TimeFormatHMS[] = L"%I:%M:%S %p";
+constexpr wchar_t k_TimeFormatHM[] = L"%I:%M %p";
+} //
 
 wxIMPLEMENT_CLASS(CGenericValidator, wxValidator)
 wxIMPLEMENT_CLASS(CTrimValidator, wxGenericValidator)
@@ -55,6 +60,7 @@ CGenericValidator::CGenericValidator(
 	, m_bUseDefOnEmpty(bUseDefOnEmpty)
 	, m_pDate(nullptr)
 	, m_pTime(nullptr)
+	, m_showTimeSeconds(true)
 	, m_ErrMsg()
 {
 	m_Default.us = defVal;
@@ -74,6 +80,7 @@ CGenericValidator::CGenericValidator(short* val, short defVal, bool bUseDefOnEmp
 	, m_bUseDefOnEmpty(bUseDefOnEmpty)
 	, m_pDate(nullptr)
 	, m_pTime(nullptr)
+	, m_showTimeSeconds(true)
 	, m_ErrMsg()
 {
 	m_Default.s = defVal;
@@ -93,6 +100,7 @@ CGenericValidator::CGenericValidator(long* val, long defVal, bool bUseDefOnEmpty
 	, m_bUseDefOnEmpty(bUseDefOnEmpty)
 	, m_pDate(nullptr)
 	, m_pTime(nullptr)
+	, m_showTimeSeconds(true)
 	, m_ErrMsg()
 {
 	m_Default.l = defVal;
@@ -124,6 +132,7 @@ CGenericValidator::CGenericValidator(
 	, m_bUseDefOnEmpty(bUseDefOnEmpty)
 	, m_pDate(nullptr)
 	, m_pTime(nullptr)
+	, m_showTimeSeconds(true)
 	, m_ErrMsg()
 {
 	m_Default.dbl = defVal;
@@ -143,6 +152,7 @@ CGenericValidator::CGenericValidator(ARBDate* val, wxChar const* errMsg)
 	, m_bUseDefOnEmpty(false)
 	, m_pDate(val)
 	, m_pTime(nullptr)
+	, m_showTimeSeconds(true)
 	, m_ErrMsg()
 {
 	if (errMsg)
@@ -161,6 +171,26 @@ CGenericValidator::CGenericValidator(wxDateTime* val, wxChar const* errMsg)
 	, m_bUseDefOnEmpty(false)
 	, m_pDate(nullptr)
 	, m_pTime(val)
+	, m_showTimeSeconds(true)
+	, m_ErrMsg()
+{
+	if (errMsg)
+		m_ErrMsg = errMsg;
+}
+
+
+CGenericValidator::CGenericValidator(wxDateTime* val, bool showSeconds, wxChar const* errMsg)
+	: m_pUShort(nullptr)
+	, m_pShort(nullptr)
+	, m_pLong(nullptr)
+	, m_pDouble(nullptr)
+	, m_strip(ARBDouble::ZeroStrip::Compatible)
+	, m_Prec(0)
+	, m_Default()
+	, m_bUseDefOnEmpty(false)
+	, m_pDate(nullptr)
+	, m_pTime(val)
+	, m_showTimeSeconds(showSeconds)
 	, m_ErrMsg()
 {
 	if (errMsg)
@@ -179,6 +209,7 @@ CGenericValidator::CGenericValidator(CGenericValidator const& rhs)
 	, m_bUseDefOnEmpty(rhs.m_bUseDefOnEmpty)
 	, m_pDate(rhs.m_pDate)
 	, m_pTime(rhs.m_pTime)
+	, m_showTimeSeconds(rhs.m_showTimeSeconds)
 	, m_ErrMsg(rhs.m_ErrMsg)
 {
 	Copy(rhs);
@@ -198,11 +229,11 @@ bool CGenericValidator::Copy(CGenericValidator const& val)
 	m_bUseDefOnEmpty = val.m_bUseDefOnEmpty;
 	m_pDate = val.m_pDate;
 	m_pTime = val.m_pTime;
+	m_showTimeSeconds = val.m_showTimeSeconds;
 	m_ErrMsg = val.m_ErrMsg;
 	return true;
 }
 
-static const wxChar* s_TimeFormat = L"%I:%M:%S %p";
 
 bool CGenericValidator::TransferFromWindow()
 {
@@ -262,7 +293,10 @@ bool CGenericValidator::TransferFromWindow()
 		else if (m_pTime)
 		{
 			textVal.MakeUpper();
-			return m_pTime->ParseFormat(textVal, s_TimeFormat);
+			if (m_showTimeSeconds)
+				return m_pTime->ParseFormat(textVal, k_TimeFormatHMS);
+			else
+				return m_pTime->ParseFormat(textVal, k_TimeFormatHM);
 		}
 	}
 	else if (m_validatorWindow->IsKindOf(CLASSINFO(wxDatePickerCtrlBase)))
@@ -320,7 +354,10 @@ bool CGenericValidator::TransferToWindow()
 		}
 		else if (m_pTime)
 		{
-			pTextControl->ChangeValue(m_pTime->Format(s_TimeFormat));
+			if (m_showTimeSeconds)
+				pTextControl->ChangeValue(m_pTime->Format(k_TimeFormatHMS));
+			else
+				pTextControl->ChangeValue(m_pTime->Format(k_TimeFormatHM));
 			return true;
 		}
 	}
@@ -430,11 +467,14 @@ bool CGenericValidator::Validate(wxWindow* parent)
 			{
 				textVal.MakeUpper();
 				wxDateTime date(*m_pTime);
-				if (!date.ParseFormat(textVal, s_TimeFormat))
+				if (m_showTimeSeconds)
+					ok = date.ParseFormat(textVal, k_TimeFormatHMS);
+				else
+					ok = date.ParseFormat(textVal, k_TimeFormatHM);
+				if (!ok)
 				{
-					ok = false;
 					if (errormsg.empty())
-						errormsg = _("Please enter a valid number");
+						errormsg = _("Please enter a valid time");
 				}
 			}
 		}

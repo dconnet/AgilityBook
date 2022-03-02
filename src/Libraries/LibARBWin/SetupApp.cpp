@@ -135,6 +135,11 @@ std::wstring CBaseApp::GetUpdateInfoKey() const
 }
 
 
+void CBaseApp::OnConfigInitialized()
+{
+}
+
+
 bool CBaseApp::OnInit()
 {
 #if defined(__WXMSW__)
@@ -228,6 +233,8 @@ bool CBaseApp::OnInit()
 			bConfigSet = true;
 		}
 	}
+
+	OnConfigInitialized();
 
 	bool rc = InitLanguage();
 	if (!rc && bConfigSet)

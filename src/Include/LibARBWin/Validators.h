@@ -63,6 +63,7 @@ public:
 		wxChar const* errMsg = nullptr);
 	explicit CGenericValidator(ARBDate* val, wxChar const* errMsg = nullptr);
 	explicit CGenericValidator(wxDateTime* val, wxChar const* errMsg = nullptr);
+	explicit CGenericValidator(wxDateTime* val, bool showSeconds, wxChar const* errMsg = nullptr);
 	CGenericValidator(CGenericValidator const& rhs);
 	~CGenericValidator()
 	{
@@ -95,6 +96,7 @@ private:
 	bool m_bUseDefOnEmpty;
 	ARBDate* m_pDate;
 	wxDateTime* m_pTime;
+	bool m_showTimeSeconds;
 	wxString m_ErrMsg;
 };
 

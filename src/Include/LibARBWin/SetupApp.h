@@ -95,6 +95,11 @@ public:
 	 */
 	virtual std::wstring GetUpdateInfoKey() const;
 
+	/**
+	 * Called after setting config path. Derived app should create settings here.
+	 */
+	virtual void OnConfigInitialized();
+
 	// IResourceManagerCallback
 	// Derived classes need to override these to use the resource manager.
 	wxWindow* GetResourceWindow() override;
