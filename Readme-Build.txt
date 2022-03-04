@@ -67,6 +67,18 @@ index af5a731807..fd0651f164 100644
 >             #elif _MSC_VER >= 1930 && _MSC_VER < 2000
 >                 #define wxCOMPILER_PREFIX vc143
 ---
+>diff -c toolbkg.cpp.orig toolbkg.cpp
+*** toolbkg.cpp.orig    Mon Apr 12 14:23:58 2021
+--- toolbkg.cpp Fri Mar 04 09:58:50 2022
+***************
+*** 403,408 ****
+--- 403,409 ----
+      if (page == wxNOT_FOUND)
+      {
+          // this happens only of page id has changed afterwards
++         event.Skip();
+          return;
+      }
 
 
 To build for VC, see ./build/CompileWX.py
