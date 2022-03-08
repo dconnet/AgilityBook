@@ -20,7 +20,6 @@
 #include "LibARBWin/ARBDebug.h"
 
 #include "ARBCommon/ARBMisc.h"
-#include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
 #include "LibARBWin/DPI.h"
@@ -275,7 +274,7 @@ size_t DumpRegistryGroup(wxString const& inGroup, fmt::wmemory_buffer* outData, 
 {
 	size_t added = 0; // Added to outData
 
-	CConfigPathHelper config(inGroup);
+	wxConfigPathChanger config(wxConfig::Get(), inGroup);
 
 	wxString str;
 	long dummy;

@@ -315,7 +315,7 @@ bool CAgilityBookApp::OnInit()
 	m_manager = std::make_unique<CAgilityBookDocManager>(CAgilityBookOptions::GetMRUFileCount());
 	m_manager->SetMaxDocsOpen(1);
 	{
-		CConfigPathHelper config(CFG_KEY_RECENT_FILES);
+		wxConfigPathChanger config(wxConfig::Get(), CFG_KEY_RECENT_FILES);
 		m_manager->FileHistoryLoad(*wxConfig::Get());
 	}
 
@@ -405,7 +405,7 @@ bool CAgilityBookApp::OnInit()
 int CAgilityBookApp::OnExit()
 {
 	{
-		CConfigPathHelper config(CFG_KEY_RECENT_FILES);
+		wxConfigPathChanger config(wxConfig::Get(), CFG_KEY_RECENT_FILES);
 		m_manager->FileHistorySave(*wxConfig::Get());
 	}
 	m_manager.reset();
