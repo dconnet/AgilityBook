@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2022-03-09 Changed ColumnInfo::name to a string to allow dynamically adding.
  * 2021-10-15 Add ability to disable sort headers.
  * 2021-01-23 Add ability to change what is saved.
  * 2020-12-11 Moved out of ListCtrl.cpp
@@ -231,7 +232,7 @@ void CReportListHeader::CreateColumns(
 		if (iCol < static_cast<long>(m_colWidths.size()))
 			width = m_colWidths[iCol];
 
-		m_ctrlList->InsertColumn(iCol, wxGetTranslation(m_columnInfo[iCol].name), m_columnInfo[iCol].fmt, width);
+		m_ctrlList->InsertColumn(iCol, wxGetTranslation(m_columnInfo[iCol].name.c_str()), m_columnInfo[iCol].fmt, width);
 		if (!m_columnVisible[iCol])
 			m_ctrlList->SetColumnWidth(iCol, 0);
 	}
@@ -250,7 +251,7 @@ void CReportListHeader::UpdateColumns()
 		wxListItem item;
 		if (m_ctrlList->GetColumn(iCol, item))
 		{
-			item.SetText(wxGetTranslation(m_columnInfo[iCol].name));
+			item.SetText(wxGetTranslation(m_columnInfo[iCol].name.c_str()));
 			m_ctrlList->SetColumn(iCol, item);
 		}
 	}
@@ -479,7 +480,7 @@ void CReportListHeader::OnColumnRClick(wxListEvent& evt)
 	for (auto col : m_columnOrder)
 	{
 		assert(col >= 0 && col < static_cast<int>(m_columnInfo.size()));
-		menu.AppendCheckItem(m_idFirst + col, StringUtil::GetTranslation(m_columnInfo[col].name));
+		menu.AppendCheckItem(m_idFirst + col, StringUtil::GetTranslation(m_columnInfo[col].name.c_str()));
 	}
 	menu.AppendSeparator();
 	menu.Append(static_cast<int>(m_idFirst + m_columnInfo.size()), _("Restore"));

@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2022-03-09 Changed ColumnInfo::name to a string to allow dynamically adding.
  * 2021-10-15 Add ability to disable sort headers.
  * 2021-01-23 Add ability to change what is saved.
  * 2020-12-11 Moved out of ListCtrl.h
@@ -19,6 +20,7 @@
 
 #include "LibwxARBWin.h"
 
+#include <string>
 #include <vector>
 class CReportListCtrl;
 
@@ -31,7 +33,7 @@ public:
 	{
 		long index; // For debugging to ensure integrity
 		int fmt;
-		wchar_t const* name;
+		std::wstring name;
 	};
 
 	CReportListHeader();
