@@ -18,10 +18,7 @@
 #pragma comment(lib, "msi.lib")
 
 
-BOOL APIENTRY DllMain(
-		HMODULE /*hModule*/,
-		DWORD  ul_reason_for_call,
-		LPVOID /*lpReserved*/) noexcept
+BOOL APIENTRY DllMain(HMODULE /*hModule*/, DWORD ul_reason_for_call, LPVOID /*lpReserved*/) noexcept
 {
 	switch (ul_reason_for_call)
 	{

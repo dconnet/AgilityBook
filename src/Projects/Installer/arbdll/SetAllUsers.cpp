@@ -23,10 +23,7 @@ static const int cchGUID = 38;
 
 //////////////////////////////////////////////////////////////////////////////
 
-static void SetAllUserDefaults(
-		MSIHANDLE hInstall,
-		bool bAdmin,
-		bool bSuppressDialog)
+static void SetAllUserDefaults(MSIHANDLE hInstall, bool bAdmin, bool bSuppressDialog)
 {
 	if (bSuppressDialog)
 	{
@@ -75,7 +72,7 @@ extern "C" UINT __stdcall ARBSetAllUsers(MSIHANDLE hInstall)
 	LogMessage(hInstall, L"==== ARBSetAllUsers");
 
 	// Get the installers UpgradeCode
-	WCHAR upgradeCode[cchGUID+1] = {0};
+	WCHAR upgradeCode[cchGUID + 1] = {0};
 	DWORD buflen = _countof(upgradeCode);
 	if (ERROR_SUCCESS != (rc = MsiGetProperty(hInstall, L"UpgradeCode", upgradeCode, &buflen)))
 	{

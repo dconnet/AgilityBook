@@ -42,32 +42,31 @@ bool CheckOS(DWORD dwMajor, DWORD dwMinor, int op)
 	osvi.wServicePackMajor = 0;
 	osvi.wServicePackMinor = 0;
 
-#pragma warning (push)
+#pragma warning(push)
 // warning C4244: 'argument' : conversion from 'int' to 'BYTE', possible loss of data
-#pragma warning (disable : 4244)
+#pragma warning(disable : 4244)
 	VER_SET_CONDITION(dwlConditionMask, VER_MAJORVERSION, op);
 	VER_SET_CONDITION(dwlConditionMask, VER_MINORVERSION, op);
 	VER_SET_CONDITION(dwlConditionMask, VER_SERVICEPACKMAJOR, op);
 	VER_SET_CONDITION(dwlConditionMask, VER_SERVICEPACKMINOR, op);
-#pragma warning (pop)
+#pragma warning(pop)
 
-	return !!VerifyVersionInfo(&osvi, 
-			VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR | VER_SERVICEPACKMINOR,
-			dwlConditionMask);
+	return !!VerifyVersionInfo(
+		&osvi,
+		VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR | VER_SERVICEPACKMINOR,
+		dwlConditionMask);
 }
 
 //////////////////////////////////////////////////////////////////////////////
 
-size_t FindProductCodes(
-		WCHAR const* const pUpgradeCode,
-		std::map<std::wstring, bool>& productCodes)
+size_t FindProductCodes(WCHAR const* const pUpgradeCode, std::map<std::wstring, bool>& productCodes)
 {
 	size_t hasPerMachine = 0;
 
 	productCodes.clear();
 
 	DWORD iProductIndex = 0;
-	WCHAR productCode[cchGUID+1];
+	WCHAR productCode[cchGUID + 1];
 	while (ERROR_SUCCESS == MsiEnumRelatedProducts(pUpgradeCode, 0, iProductIndex++, productCode))
 	{
 		WCHAR szAssignmentType[10] = {0};
@@ -76,7 +75,8 @@ size_t FindProductCodes(
 
 		// Note: This will only see the current users per-user installs.
 		// Other user per-user installs are invisible.
-		if (ERROR_SUCCESS == MsiGetProductInfo(productCode, INSTALLPROPERTY_ASSIGNMENTTYPE, szAssignmentType, &cchAssignmentType))
+		if (ERROR_SUCCESS
+			== MsiGetProductInfo(productCode, INSTALLPROPERTY_ASSIGNMENTTYPE, szAssignmentType, &cchAssignmentType))
 		{
 			if (L'1' == szAssignmentType[0])
 			{
@@ -95,7 +95,8 @@ size_t FindProductCodes(
 class CHandle
 {
 public:
-	CHandle(HANDLE& handle) : m_Handle(handle)
+	CHandle(HANDLE& handle)
+		: m_Handle(handle)
 	{
 	}
 	~CHandle()
@@ -105,6 +106,7 @@ public:
 	}
 
 	HANDLE& m_Handle;
+
 private:
 	CHandle() = delete;
 	CHandle(CHandle const&) = delete;

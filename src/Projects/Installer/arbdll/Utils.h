@@ -19,10 +19,7 @@
 #include <string>
 
 
-extern void LogMessage(
-		MSIHANDLE hInstall,
-		std::wstring const& msg,
-		INSTALLMESSAGE level = INSTALLMESSAGE_INFO);
+extern void LogMessage(MSIHANDLE hInstall, std::wstring const& msg, INSTALLMESSAGE level = INSTALLMESSAGE_INFO);
 
 // Ops (in WinNT.h):
 // VER_EQUAL
@@ -32,10 +29,7 @@ extern void LogMessage(
 // VER_LESS_EQUAL
 // VER_AND
 // VER_OR
-extern bool CheckOS(
-		DWORD dwMajor,
-		DWORD dwMinor,
-		int op);
+extern bool CheckOS(DWORD dwMajor, DWORD dwMinor, int op);
 
 inline bool IsVistaOrBetter()
 {
@@ -49,9 +43,7 @@ inline bool IsWin7OrBetter()
 
 
 // Returns number of per-machine installs
-extern size_t FindProductCodes(
-		WCHAR const* const pUpgradeCode,
-		std::map<std::wstring, bool>& productCodes);
+extern size_t FindProductCodes(WCHAR const* const pUpgradeCode, std::map<std::wstring, bool>& productCodes);
 
 
 extern bool IsUserAdmin();

@@ -38,7 +38,7 @@ namespace
 {
 constexpr wchar_t k_TimeFormatHMS[] = L"%I:%M:%S %p";
 constexpr wchar_t k_TimeFormatHM[] = L"%I:%M %p";
-} //
+} // namespace
 
 wxIMPLEMENT_CLASS(CGenericValidator, wxValidator)
 wxIMPLEMENT_CLASS(CTrimValidator, wxGenericValidator)
