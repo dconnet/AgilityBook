@@ -40,8 +40,7 @@
 enum class ARBLanguageCatalog
 {
 	None,      // Not using MO files.
-	Directory, // Files are in 'lang' directory
-	Embedded,  // Files are embedded in rc file (win only)
+	Embedded,  // 'mo' files are embedded in dat file
 };
 
 
