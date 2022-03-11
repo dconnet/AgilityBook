@@ -41,13 +41,13 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ConfigHandler.h"
-#include "DlgMessage.h"
 #include "VersionNumber.h"
 #include "Wizard.h"
 
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
+#include "LibARBWin/DlgMessage.h"
 #include <wx/config.h>
 #include <wx/wfstream.h>
 

@@ -45,12 +45,12 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "DlgAssignColumns.h"
-#include "DlgMessage.h"
 #include "Wizard.h"
 
 #include "ARBCommon/BreakLine.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
+#include "LibARBWin/DlgMessage.h"
 #include "LibARBWin/DlgProgress.h"
 #include "LibARBWin/ReportListCtrl.h"
 #include <wx/spinctrl.h>
@@ -1465,7 +1465,7 @@ bool CWizardImport::DoWizardFinish()
 		std::back_inserter(errLog),
 		L"{}\n",
 		fmt::format(_("IDS_IMPORT_STATS").wx_str(), nAdded, nUpdated, nDuplicate, nSkipped));
-	CDlgMessage dlg(fmt::to_string(errLog), this);
+	CDlgMessage dlg(fmt::to_string(errLog), wxString(), this);
 	dlg.ShowModal();
 	if (0 < nAdded)
 	{

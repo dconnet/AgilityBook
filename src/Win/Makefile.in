@@ -81,7 +81,6 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	DlgInfoNoteEdit.cpp \
 	DlgListCtrl.cpp \
 	DlgListViewer.cpp \
-	DlgMessage.cpp \
 	DlgMessageBox.cpp \
 	DlgName.cpp \
 	DlgOptions.cpp \

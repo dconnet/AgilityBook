@@ -39,7 +39,6 @@
 #include "DlgConfigVenue.h"
 #include "DlgConfigureData.h"
 #include "DlgListViewer.h"
-#include "DlgMessage.h"
 #include "DlgMessageBox.h"
 #include "DlgName.h"
 #include "ImageHelper.h"
@@ -49,6 +48,7 @@
 #include "ARB/ARBConfigVenue.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
+#include "LibARBWin/DlgMessage.h"
 #include "LibARBWin/Widgets.h"
 
 #ifdef __WXMSW__
@@ -819,7 +819,7 @@ void CDlgConfigure::OnUpdate(wxCommandEvent& evt)
 		// Update the config.
 		if (m_Config.Update(0, update, info) || bUpdated)
 		{
-			CDlgMessage dlgMsg(fmt::to_string(info), this);
+			CDlgMessage dlgMsg(fmt::to_string(info), wxString(), this);
 			dlgMsg.ShowModal();
 			LoadData(Action::Venues);
 			LoadData(Action::Faults);

@@ -85,7 +85,6 @@
 #include "DlgFindLinks.h"
 #include "DlgInfoNote.h"
 #include "DlgListViewer.h"
-#include "DlgMessage.h"
 #include "DlgOptions.h"
 #include "DlgRun.h"
 #include "DlgSelectDog.h"
@@ -103,6 +102,7 @@
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
+#include "LibARBWin/DlgMessage.h"
 #include <wx/config.h>
 #include <wx/file.h>
 #include <wx/filefn.h>
@@ -848,7 +848,7 @@ bool CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 	if (bChanges)
 	{
 		CAgilityBookOptions::CleanLastItems(m_Records.GetConfig());
-		CDlgMessage dlg(fmt::to_string(info), wxGetApp().GetTopWindow());
+		CDlgMessage dlg(fmt::to_string(info), wxString(), wxGetApp().GetTopWindow());
 		dlg.ShowModal();
 		Modify(true);
 		CUpdateHint hint(UPDATE_CONFIG | iHint);
@@ -2374,7 +2374,7 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 			wxVERSION_STRING);
 	}
 
-	CDlgMessage dlg(fmt::to_string(str), wxGetApp().GetTopWindow(), _("IDS_FILE_PROPERTIES").wc_str());
+	CDlgMessage dlg(fmt::to_string(str), _("IDS_FILE_PROPERTIES"), wxGetApp().GetTopWindow());
 	dlg.ShowModal();
 }
 

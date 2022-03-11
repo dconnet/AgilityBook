@@ -36,7 +36,6 @@
 #include "AgilityBookOptions.h"
 #include "CommonView.h"
 #include "DlgAbout.h"
-#include "DlgMessage.h"
 #include "ImageHelper.h"
 #include "PointsData.h"
 #include "Print.h"
@@ -49,6 +48,7 @@
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBDebug.h"
 #include "LibARBWin/DPI.h"
+#include "LibARBWin/DlgMessage.h"
 #include <wx/config.h>
 #include <wx/dnd.h>
 #include <wx/platinfo.h>
@@ -515,7 +515,7 @@ void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 {
 	CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 	std::wstring str = ARBDebug::GetSystemInfo(this, ver);
-	CDlgMessage dlg(str, this);
+	CDlgMessage dlg(str, wxString(), this);
 	dlg.ShowModal();
 }
 

@@ -6,16 +6,17 @@
 
 /**
  * @file
- * @brief implementation of the CDlgMessage class
+ * @brief Generic multiline edit dialog
  * @author David Connet
  *
  * Revision History
+ * 2022-03-11 Moved from Win to LibARBWin, tweaked arguments
  * 2014-12-31 Changed pixels to dialog units.
  * 2009-02-09 Ported to wxWidgets.
  */
 
 #include "stdafx.h"
-#include "DlgMessage.h"
+#include "LibARBWin/DlgMessage.h"
 
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/Widgets.h"
@@ -25,26 +26,21 @@
 #endif
 
 
-CDlgMessage::CDlgMessage(std::wstring const& msg, wxWindow* pParent, std::wstring caption)
+CDlgMessage::CDlgMessage(wxString const& msg, wxString caption, wxWindow* pParent, wxSize szDlgUnits)
 	: wxDialog()
 {
 	if (caption.empty())
-		caption = StringUtil::stringW(_("IDD_MESSAGE"));
-	Create(
-		pParent,
-		wxID_ANY,
-		caption.c_str(),
-		wxDefaultPosition,
-		wxDefaultSize,
-		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+		caption = _("IDD_MESSAGE");
+	Create(pParent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+
 	// Controls (these are done first to control tab order)
 
 	CTextCtrl* textCtrl = new CTextCtrl(
 		this,
 		wxID_ANY,
-		msg.c_str(),
+		msg,
 		wxDefaultPosition,
-		wxDLG_UNIT(this, wxSize(260, 160)),
+		wxDLG_UNIT(this, szDlgUnits),
 		wxTE_MULTILINE | wxTE_READONLY | wxTE_WORDWRAP);
 
 	wxButton* btnClose = new wxButton(this, wxID_OK, _("IDC_MESSAGE_CLOSE"));

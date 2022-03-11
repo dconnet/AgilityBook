@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-16 10:38-0800\n"
-"PO-Revision-Date: 2022-02-16 10:38-0800\n"
+"POT-Creation-Date: 2022-03-11 13:21-0800\n"
+"PO-Revision-Date: 2022-03-11 13:22-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -335,13 +335,13 @@ msgid "HIDC_QUERYDETAIL_NAME"
 msgstr ""
 "Ceci est le nom qui va être affiché à lutilisateur pour sélectionner un code."
 
-#: CalSites/DlgQueryDetail.cpp:205 Libraries/LibARBWin/Validators.cpp:447
-#: Libraries/LibARBWin/Validators.cpp:545
+#: CalSites/DlgQueryDetail.cpp:205 Libraries/LibARBWin/Validators.cpp:487
+#: Libraries/LibARBWin/Validators.cpp:585
 msgid "Please enter a value"
 msgstr "Renseignez le champ, svp."
 
-#: CalSites/DlgQueryDetail.cpp:205 Libraries/LibARBWin/Validators.cpp:452
-#: Libraries/LibARBWin/Validators.cpp:551 Win/DlgClub.cpp:283 Win/DlgClub.cpp:292
+#: CalSites/DlgQueryDetail.cpp:205 Libraries/LibARBWin/Validators.cpp:492
+#: Libraries/LibARBWin/Validators.cpp:591 Win/DlgClub.cpp:283 Win/DlgClub.cpp:292
 #: Win/DlgConfigOtherPoints.cpp:68 Win/DlgConfigPlaceInfo.cpp:68
 #: Win/DlgConfigPlaceInfo.cpp:74 Win/DlgConfigPlaceInfo.cpp:112
 #: Win/DlgRegNum.cpp:185 Win/ValidatorsQ.cpp:93 Win/ValidatorsQ.cpp:102
@@ -406,7 +406,7 @@ msgstr ""
 msgid "Compiled on %s at %s"
 msgstr "Compiled on %s at %s"
 
-#: Libraries/LibARBWin/ARBDebug.cpp:210
+#: Libraries/LibARBWin/ARBDebug.cpp:209
 msgid "Unable to determine version information"
 msgstr "Impossible de determiner information version"
 
@@ -462,17 +462,17 @@ msgid "ERROR: This accelerator is already in use."
 msgstr "ERROR: This accelerator is already in use."
 
 #: Libraries/LibARBWin/DlgConfigAccel.cpp:298
-#: Libraries/LibARBWin/MenuHelper.cpp:707
+#: Libraries/LibARBWin/MenuHelper.cpp:706
 msgid "Ctrl+"
 msgstr "Ctrl+"
 
 #: Libraries/LibARBWin/DlgConfigAccel.cpp:300
-#: Libraries/LibARBWin/MenuHelper.cpp:709
+#: Libraries/LibARBWin/MenuHelper.cpp:708
 msgid "Alt+"
 msgstr "Alt+"
 
 #: Libraries/LibARBWin/DlgConfigAccel.cpp:302
-#: Libraries/LibARBWin/MenuHelper.cpp:711
+#: Libraries/LibARBWin/MenuHelper.cpp:710
 msgid "Shift+"
 msgstr "Majuscule+"
 
@@ -506,6 +506,15 @@ msgstr "Édition..."
 #, fuzzy
 msgid "Set Defaults"
 msgstr "Set Defaults"
+
+# DlgMessage
+#: Libraries/LibARBWin/DlgMessage.cpp:33
+msgid "IDD_MESSAGE"
+msgstr "Message"
+
+#: Libraries/LibARBWin/DlgMessage.cpp:46
+msgid "IDC_MESSAGE_CLOSE"
+msgstr "Quitter"
 
 # DlgProgress
 #: Libraries/LibARBWin/DlgProgress.cpp:122
@@ -561,7 +570,7 @@ msgstr "Please enter credentials for accessing:"
 msgid "Credentials"
 msgstr "Credentials"
 
-#: Libraries/LibARBWin/ReportListHeader.cpp:485
+#: Libraries/LibARBWin/ReportListHeader.cpp:487
 msgid "Restore"
 msgstr "restaurer"
 
@@ -578,10 +587,16 @@ msgstr "Lire {0} lignes and {1} colonnes"
 msgid "Reading {} rows"
 msgstr "Lire {} lignes"
 
-#: Libraries/LibARBWin/Validators.cpp:392 Libraries/LibARBWin/Validators.cpp:411
-#: Libraries/LibARBWin/Validators.cpp:426 Libraries/LibARBWin/Validators.cpp:437
+#: Libraries/LibARBWin/Validators.cpp:429 Libraries/LibARBWin/Validators.cpp:448
+#: Libraries/LibARBWin/Validators.cpp:463
 msgid "Please enter a valid number"
 msgstr "Merci d'enter un nombre valide."
+
+#: Libraries/LibARBWin/Validators.cpp:477
+#, fuzzy
+#| msgid "Please enter a valid number"
+msgid "Please enter a valid time"
+msgstr "Please enter a valid time"
 
 #: TestARB/Local.cpp:52 TestARB/TestMisc.cpp:163 Win/Localization.cpp:50
 msgid "IDS_ARB_UNKNOWN_VERSION"
@@ -3434,8 +3449,8 @@ msgstr "Calculer Fautes Temps sur TPS"
 msgid "IDS_CONFIGEVENT_TF_OVER"
 msgstr "Calculer Fautes Temps sous TPS"
 
-#: Win/DlgConfigEvent.cpp:743 Win/DlgRunPanelScore.cpp:1994 Win/TabView.cpp:242
-#: Win/TabView.cpp:289 Win/TabView.cpp:364
+#: Win/DlgConfigEvent.cpp:743 Win/DlgRunPanelScore.cpp:1994 Win/TabView.cpp:245
+#: Win/TabView.cpp:292 Win/TabView.cpp:367
 msgid "IDS_POINTS"
 msgstr "Points"
 
@@ -5020,7 +5035,7 @@ msgstr "Afficher ou cacher cet article dans des listes sélection."
 msgid "HIDC_INFONOTE_COMMENTS"
 msgstr "Notes sur le club, le juge ou lendroit."
 
-#: Win/DlgListCtrl.cpp:441 Win/TabView.cpp:248 Win/TabView.cpp:365
+#: Win/DlgListCtrl.cpp:441 Win/TabView.cpp:251 Win/TabView.cpp:368
 msgid "IDS_CALENDAR"
 msgstr "Calendrier"
 
@@ -5126,15 +5141,6 @@ msgstr "Copier les articles de la liste dans le presse-papier au format table."
 
 #: Win/DlgListViewer.cpp:1460
 msgid "IDC_LIST_CLOSE"
-msgstr "Quitter"
-
-# DlgMessage
-#: Win/DlgMessage.cpp:32
-msgid "IDD_MESSAGE"
-msgstr "Message"
-
-#: Win/DlgMessage.cpp:50
-msgid "IDC_MESSAGE_CLOSE"
 msgstr "Quitter"
 
 # DlgMessageBox
@@ -6709,7 +6715,7 @@ msgid "Canceling file download..."
 msgstr "Canceling file download..."
 
 #: Win/PointsData.cpp:254 Win/PointsData.cpp:1229 Win/Print.cpp:116
-#: Win/Print.cpp:1063 Win/TabView.cpp:237 Win/TabView.cpp:363
+#: Win/Print.cpp:1063 Win/TabView.cpp:240 Win/TabView.cpp:366
 msgid "IDS_RUNS"
 msgstr "Parcours"
 
@@ -6777,7 +6783,7 @@ msgstr "Autres points"
 msgid "IDS_COL_NAME_BREED_NOTE"
 msgstr "Nom/Race/Notes"
 
-#: Win/TabView.cpp:253 Win/TabView.cpp:366
+#: Win/TabView.cpp:256 Win/TabView.cpp:369
 msgid "IDS_TRAINING"
 msgstr "Log Entraînement"
 
