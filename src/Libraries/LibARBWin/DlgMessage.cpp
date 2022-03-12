@@ -28,6 +28,7 @@
 
 CDlgMessage::CDlgMessage(wxString const& msg, wxString caption, wxWindow* pParent, wxSize szDlgUnits)
 	: wxDialog()
+	, m_textCtrl(nullptr)
 {
 	if (caption.empty())
 		caption = _("IDD_MESSAGE");
@@ -35,7 +36,7 @@ CDlgMessage::CDlgMessage(wxString const& msg, wxString caption, wxWindow* pParen
 
 	// Controls (these are done first to control tab order)
 
-	CTextCtrl* textCtrl = new CTextCtrl(
+	m_textCtrl = new CTextCtrl(
 		this,
 		wxID_ANY,
 		msg,
@@ -49,7 +50,7 @@ CDlgMessage::CDlgMessage(wxString const& msg, wxString caption, wxWindow* pParen
 	// Sizers
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(textCtrl, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_textCtrl, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 	bSizer->Add(btnClose, 0, wxALIGN_RIGHT | wxALL, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);
@@ -59,4 +60,19 @@ CDlgMessage::CDlgMessage(wxString const& msg, wxString caption, wxWindow* pParen
 	CenterOnParent();
 
 	btnClose->SetFocus();
+}
+
+
+void CDlgMessage::SetMessage(wxString const& msg)
+{
+	m_textCtrl->SetLabel(msg);
+}
+
+
+bool CDlgMessage::LoadFile(wxString const& filename)
+{
+	if (!wxFileName::Exists(filename))
+		return false;
+
+	return m_textCtrl->LoadFile(filename);
 }

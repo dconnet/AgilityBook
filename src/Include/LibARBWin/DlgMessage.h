@@ -18,6 +18,8 @@
 
 #include "LibwxARBWin.h"
 
+class CTextCtrl;
+
 
 class ARBWIN_API CDlgMessage : public wxDialog
 {
@@ -28,4 +30,11 @@ public:
 		wxWindow* pParent = nullptr,
 		// This is the size of the text control in Dialog Units
 		wxSize szDlgUnits = wxSize(260, 160));
+
+	void SetMessage(wxString const& msg);
+
+	bool LoadFile(wxString const& filename);
+
+private:
+	CTextCtrl* m_textCtrl;
 };
