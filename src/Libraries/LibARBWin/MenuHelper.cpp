@@ -24,6 +24,7 @@
 
 #include "DlgConfigAccel.h"
 
+#include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ImageHelperBase.h"
 #include "LibARBWin/RegItemsBase.h"
@@ -291,14 +292,14 @@ void CMenuHelper::LoadAccelerators()
 		for (ItemAccel& item : m_accelData)
 			item.Clear();
 
-		wxConfigPathChanger config(wxConfig::Get(), CFG_KEY_ACCELERATORS);
+		CConfigPathHelper config(CFG_KEY_ACCELERATORS);
 		wxString entry;
 		long index = 0;
 		if (wxConfig::Get()->GetFirstGroup(entry, index))
 		{
 			do
 			{
-				wxConfigPathChanger configEntry(wxConfig::Get(), entry);
+				CConfigPathHelper configEntry(entry);
 				int key = 0;
 				key = wxConfig::Get()->Read(L"id", key);
 				if (key)
@@ -367,7 +368,7 @@ void CMenuHelper::SaveAccelerators()
 
 		if (m_accelDataDefaults != m_accelData)
 		{
-			wxConfigPathChanger config(wxConfig::Get(), CFG_KEY_ACCELERATORS);
+			CConfigPathHelper config(CFG_KEY_ACCELERATORS);
 
 			// Save
 			int nKey = 1;
@@ -376,7 +377,7 @@ void CMenuHelper::SaveAccelerators()
 				if (!iter->keyCode)
 					continue;
 				wxString key = wxString::Format(L"Item%d", nKey++);
-				wxConfigPathChanger configKey(wxConfig::Get(), key);
+				CConfigPathHelper configKey(key);
 				wxString special = CodeToSpecial(iter->keyCode, true);
 				assert(!special.empty());
 				wxConfig::Get()->Write(L"KeyCode", special);
@@ -387,7 +388,7 @@ void CMenuHelper::SaveAccelerators()
 			if (1 == nKey)
 			{
 				wxString key = wxString::Format(L"Item%d", nKey++);
-				wxConfigPathChanger configKey(wxConfig::Get(), key);
+				CConfigPathHelper configKey(key);
 				wxConfig::Get()->Write(L"id", 1);
 			}
 		}

@@ -24,6 +24,26 @@
 
 
 /**
+ * Helper to reset wxConfig path
+ */
+class ARBCOMMON_API CConfigPathHelper
+{
+	wxString m_path;
+
+public:
+	explicit CConfigPathHelper(wxString const& key);
+	~CConfigPathHelper();
+
+private:
+	CConfigPathHelper() = delete;
+	CConfigPathHelper(CConfigPathHelper const&) = delete;
+	CConfigPathHelper(CConfigPathHelper&&) = delete;
+	CConfigPathHelper& operator=(CConfigPathHelper const&) = delete;
+	CConfigPathHelper& operator=(CConfigPathHelper&&) = delete;
+};
+
+
+/**
  * Get directory for resources.
  * On Windows/Unix, they're located with the exe.
  * On Mac, they're in the resource bundle

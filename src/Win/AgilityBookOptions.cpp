@@ -226,7 +226,7 @@ static void ExportConfig(wxString const& key, ElementNodePtr const& inRoot)
 	ElementNodePtr tree = inRoot->AddElementNode(StringUtil::stringW(key));
 	tree->AddAttrib(L"type", L"g");
 
-	wxConfigPathChanger config(wxConfig::Get(), key);
+	CConfigPathHelper config(key);
 
 	wxString entry;
 	long index = 0;
@@ -290,7 +290,7 @@ static bool ImportColumnInfo(ElementNodePtr const& inTree)
 	// If there are no existing configs, just bail and clobber.
 	ElementNodePtr root(ElementNode::New(L"Top"));
 	{
-		wxConfigPathChanger config(wxConfig::Get(), L"/");
+		CConfigPathHelper config(L"/");
 		ExportConfig(CFG_KEY_COLUMNINFO, root);
 	}
 	if (1 != root->GetElementCount())
@@ -322,7 +322,7 @@ static bool ImportColumnInfo(ElementNodePtr const& inTree)
 				= FindElementName(existing, numExistingConfigs, name, CFG_KEY_CONFIG, L"name");
 			if (existingConfig)
 			{
-				wxConfigPathChanger config(wxConfig::Get(), StringUtil::stringWX(existingConfig->GetName()));
+				CConfigPathHelper config(StringUtil::stringWX(existingConfig->GetName()));
 				for (int iCfg = 0; iCfg < nodeConfig->GetElementCount(); ++iCfg)
 				{
 					ElementNodePtr node = nodeConfig->GetElementNode(iCfg);
@@ -375,7 +375,7 @@ static bool MergeFilters(ElementNodePtr const& inTree)
 	// If there are no existing configs, just bail and clobber.
 	ElementNodePtr root(ElementNode::New(L"Top"));
 	{
-		wxConfigPathChanger config(wxConfig::Get(), L"/");
+		CConfigPathHelper config(L"/");
 		for (int i = 0; i < numExistingFilters; ++i)
 		{
 			ExportConfig(CFG_KEY_FILTER_N(i, false), root);
@@ -399,7 +399,7 @@ static bool MergeFilters(ElementNodePtr const& inTree)
 			ElementNodePtr existingFilter = FindElementName(root, numExistingFilters, name, CFG_KEY_FILTER, L"Name");
 			if (existingFilter)
 			{
-				wxConfigPathChanger config(wxConfig::Get(), StringUtil::stringWX(existingFilter->GetName()));
+				CConfigPathHelper config(StringUtil::stringWX(existingFilter->GetName()));
 				for (int iCfg = 0; iCfg < nodeFilter->GetElementCount(); ++iCfg)
 				{
 					ElementNodePtr node = nodeFilter->GetElementNode(iCfg);
@@ -435,7 +435,7 @@ static void ImportConfig(ElementNodePtr const& inTree, bool bClobberFilters)
 		return;
 	if (L"g" == type)
 	{
-		wxConfigPathChanger config(wxConfig::Get(), StringUtil::stringWX(inTree->GetName()));
+		CConfigPathHelper config(StringUtil::stringWX(inTree->GetName()));
 		// When importing config info, treat ColumnInfo differently.
 		// We don't want to wipe out existing items. We want to add the new
 		// names. If we find an existing name, the specified format will
@@ -561,7 +561,7 @@ ElementNodePtr CAgilityBookOptions::ExportSettings()
 	ElementNodePtr settings = tree->AddElementNode(CFG_KEY_SETTINGS);
 	settings->AddAttrib(L"type", L"g");
 
-	wxConfigPathChanger config(wxConfig::Get(), CFG_KEY_SETTINGS);
+	CConfigPathHelper config(CFG_KEY_SETTINGS);
 	static wchar_t const* const items[] = {
 		L"autoCheck",
 		L"autoShowTitle",
@@ -1341,7 +1341,7 @@ void CAgilityBookOptions::CleanLastItems(std::wstring const& oldCallName, std::w
 
 	for (size_t i = 0; i < sc_KeysCount; ++i)
 	{
-		wxConfigPathChanger config(wxConfig::Get(), sc_Keys[i].key);
+		CConfigPathHelper config(sc_Keys[i].key);
 
 		if (sc_Keys[i].hasVenueKey)
 		{
@@ -1377,7 +1377,7 @@ void CAgilityBookOptions::CleanLastItems(ARBConfig const& inConfig)
 		wxString key(sc_Keys[i].key);
 		if (wxConfig::Get()->HasGroup(key))
 		{
-			wxConfigPathChanger config(wxConfig::Get(), key);
+			CConfigPathHelper config(key);
 
 			wxString strDog;
 			long idxDog;
@@ -1385,7 +1385,7 @@ void CAgilityBookOptions::CleanLastItems(ARBConfig const& inConfig)
 			{
 				do
 				{
-					wxConfigPathChanger configDog(wxConfig::Get(), strDog);
+					CConfigPathHelper configDog(strDog);
 
 					std::vector<wxString> deleteVenues;
 					wxString strVenue;

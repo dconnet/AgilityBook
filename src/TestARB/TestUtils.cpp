@@ -139,6 +139,28 @@ TEST_CASE("Utils")
 {
 	SetFiles files;
 
+	SECTION("ConfigPath")
+	{
+		if (!g_bMicroTest)
+		{
+			wxFileConfig config;
+			auto old = wxConfig::Set(&config);
+
+			config.SetPath(L"Test");
+			REQUIRE(config.GetPath() == L"/Test");
+			{
+				CConfigPathHelper path(L"Test2");
+				REQUIRE(config.GetPath() == L"/Test/Test2");
+				config.SetPath(L"Test3");
+				REQUIRE(config.GetPath() == L"/Test/Test2/Test3");
+			}
+			REQUIRE(config.GetPath() == L"/Test");
+
+			wxConfig::Set(old);
+		}
+	}
+
+
 	SECTION("ResourceDir")
 	{
 		if (!g_bMicroTest)

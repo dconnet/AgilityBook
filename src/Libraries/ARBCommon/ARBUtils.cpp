@@ -62,6 +62,22 @@ void CStackTracer::Tickle(wxString const& msg)
 #endif
 
 
+CConfigPathHelper::CConfigPathHelper(wxString const& key)
+	: m_path(wxConfig::Get()->GetPath())
+{
+	if (!key.empty())
+	{
+		wxConfig::Get()->SetPath(key);
+	}
+}
+
+
+CConfigPathHelper::~CConfigPathHelper()
+{
+	wxConfig::Get()->SetPath(m_path);
+}
+
+
 wxString GetARBResourceDir()
 {
 #if defined(__WXMAC__)
