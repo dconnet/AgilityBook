@@ -39,8 +39,8 @@
 
 enum class ARBLanguageCatalog
 {
-	None,      // Not using MO files.
-	Embedded,  // 'mo' files are embedded in dat file
+	None,     // Not using MO files.
+	Embedded, // 'mo' files are embedded in dat file
 };
 
 
