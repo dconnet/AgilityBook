@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2022-03-15 Add save flag to do registry clean up.
  * 2022-03-09 Changed ColumnInfo::name to a string to allow dynamically adding.
  * 2021-10-15 Add ability to disable sort headers.
  * 2021-01-23 Add ability to change what is saved.
@@ -425,6 +426,13 @@ void CReportListHeader::OnSave()
 			}
 			wxConfig::Get()->Write(CFG_SORTING_ORDER2(m_baseConfig), str);
 		}
+		else if (m_saveFlags & SaveFlags::ClearUnused)
+		{
+			if (wxConfig::Get()->HasEntry(CFG_SORTING_ORDER2(m_baseConfig)))
+			{
+				wxConfig::Get()->DeleteEntry(CFG_SORTING_ORDER2(m_baseConfig));
+			}
+		}
 
 		if (m_saveFlags & SaveFlags::ColumnVisible)
 		{
@@ -436,6 +444,13 @@ void CReportListHeader::OnSave()
 				str << (m_columnVisible[i] ? L"1" : L"0");
 			}
 			wxConfig::Get()->Write(CFG_SORTING_VISIBLE(m_baseConfig), str);
+		}
+		else if (m_saveFlags & SaveFlags::ClearUnused)
+		{
+			if (wxConfig::Get()->HasEntry(CFG_SORTING_VISIBLE(m_baseConfig)))
+			{
+				wxConfig::Get()->DeleteEntry(CFG_SORTING_VISIBLE(m_baseConfig));
+			}
 		}
 
 		if (m_saveFlags & SaveFlags::ColumnWidth)
@@ -454,9 +469,23 @@ void CReportListHeader::OnSave()
 			}
 			wxConfig::Get()->Write(CFG_COLUMN_WIDTHS(m_baseConfig), str);
 		}
+		else if (m_saveFlags & SaveFlags::ClearUnused)
+		{
+			if (wxConfig::Get()->HasEntry(CFG_COLUMN_WIDTHS(m_baseConfig)))
+			{
+				wxConfig::Get()->DeleteEntry(CFG_COLUMN_WIDTHS(m_baseConfig));
+			}
+		}
 
 		if (m_saveFlags & SaveFlags::CurrentSort)
 			wxConfig::Get()->Write(CFG_SORT_COLUMN(m_baseConfig), m_iSortCol);
+		else if (m_saveFlags & SaveFlags::ClearUnused)
+		{
+			if (wxConfig::Get()->HasEntry(CFG_SORT_COLUMN(m_baseConfig)))
+			{
+				wxConfig::Get()->DeleteEntry(CFG_SORT_COLUMN(m_baseConfig));
+			}
+		}
 	}
 }
 

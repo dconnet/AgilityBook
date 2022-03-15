@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2022-03-15 Add save flag to do registry clean up.
  * 2022-03-09 Changed ColumnInfo::name to a string to allow dynamically adding.
  * 2021-10-15 Add ability to disable sort headers.
  * 2021-01-23 Add ability to change what is saved.
@@ -41,10 +42,11 @@ public:
 
 	enum SaveFlags
 	{
-		ColumnOrder = 0x1,
-		ColumnVisible = 0x2,
-		ColumnWidth = 0x4,
-		CurrentSort = 0x8,
+		ColumnOrder = 0x01,
+		ColumnVisible = 0x02,
+		ColumnWidth = 0x04,
+		CurrentSort = 0x08,
+		ClearUnused = 0x10, // Note: Not default for back-compatibility
 		Default = (ColumnOrder | ColumnVisible | ColumnWidth | CurrentSort),
 	};
 	unsigned int SaveFlags() const
