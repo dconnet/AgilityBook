@@ -127,7 +127,7 @@ OtherPtInfo::OtherPtInfo(ARBDogExistingPointsPtr const& inExisting)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataTitle::CPointsDataTitle(CAgilityBookDoc* pDoc, ARBDogTitlePtr pTitle)
-	: m_refTag(fmt::format(s_refTitle, L"{}", pTitle->GetGenericName()))
+	: m_refTag(fmt::format(s_refTitle, pTitle->GetGenericName()))
 	, m_pDoc(pDoc)
 	, m_pTitle(pTitle)
 {
