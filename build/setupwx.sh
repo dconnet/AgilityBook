@@ -156,6 +156,18 @@ Darwin*)
 		TARGETARCH="--enable-macosx_arch=x86_64,arm64"
 		MIN_OS=$MAC_MIN_OS
 
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.2.sdk; then
+		echo "Using 12.2 SDK"
+		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.2.sdk
+		TARGETARCH="--enable-macosx_arch=x86_64,arm64"
+		MIN_OS=$MAC_MIN_OS
+
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk; then
+		echo "Using 12.3 SDK"
+		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
+		TARGETARCH="--enable-macosx_arch=x86_64,arm64"
+		MIN_OS=$MAC_MIN_OS
+
 	fi
 
 	if test "x$TARGETSDK" = "x"; then
