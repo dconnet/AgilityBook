@@ -2,16 +2,19 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:LibFmt/LibFmt.xcodeproj">
+      location = "group:../../../AgilityBookLibs/Projects/xcode10/TestARBLib/TestARBLib.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:LibARBWin/LibARBWin.xcodeproj">
+      location = "group:../../../AgilityBookLibs/Projects/xcode10/LibTidyHtml/LibTidyHtml.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:LibTidyHtml/LibTidyHtml.xcodeproj">
+      location = "group:../../../AgilityBookLibs/Projects/xcode10/LibFmt/LibFmt.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ARBCommon/ARBCommon.xcodeproj">
+      location = "group:../../../AgilityBookLibs/Projects/xcode10/LibARBWin/LibARBWin.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../../../AgilityBookLibs/Projects/xcode10/ARBCommon/ARBCommon.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:ARB/ARB.xcodeproj">

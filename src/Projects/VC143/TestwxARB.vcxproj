@@ -128,99 +128,111 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonDebugLibARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
-    <Import Project="$(SolutionDir)\..\props\wxWidgetsLibARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
-    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\CommonDebugLibARM64.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibFmtLib.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\wxWidgetsLibARM64.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\CommonARB.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonDebugLib32.props" />
-    <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
-    <Import Project="$(SolutionDir)\..\props\wxWidgetsLib32.props" />
-    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
-    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\CommonDebugLib32.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibFmtLib.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\wxWidgetsLib32.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\CommonARB.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonDebugLib64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
-    <Import Project="$(SolutionDir)\..\props\wxWidgetsLib64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
-    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\CommonDebugLib64.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibFmtLib.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\wxWidgetsLib64.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\CommonARB.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonDebugDllARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
-    <Import Project="$(SolutionDir)\..\props\wxWidgetsDllARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
-    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\CommonDebugDllARM64.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibFmtDll.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\wxWidgetsDllARM64.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\CommonARB.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonDebugDll32.props" />
-    <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
-    <Import Project="$(SolutionDir)\..\props\wxWidgetsDll32.props" />
-    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
-    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\CommonDebugDll32.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibFmtDll.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\wxWidgetsDll32.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\CommonARB.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonDebugDll64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
-    <Import Project="$(SolutionDir)\..\props\wxWidgetsDll64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
-    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\CommonDebugDll64.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibFmtDll.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\wxWidgetsDll64.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\CommonARB.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonReleaseLibARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
-    <Import Project="$(SolutionDir)\..\props\wxWidgetsLibARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
-    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\CommonReleaseLibARM64.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibFmtLib.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\wxWidgetsLibARM64.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\CommonARB.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonReleaseLib32.props" />
-    <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
-    <Import Project="$(SolutionDir)\..\props\wxWidgetsLib32.props" />
-    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
-    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\CommonReleaseLib32.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibFmtLib.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\wxWidgetsLib32.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\CommonARB.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonReleaseLib64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibFmtLib.props" />
-    <Import Project="$(SolutionDir)\..\props\wxWidgetsLib64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
-    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\CommonReleaseLib64.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibFmtLib.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\wxWidgetsLib64.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\CommonARB.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonReleaseDllARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
-    <Import Project="$(SolutionDir)\..\props\wxWidgetsDllARM64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
-    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\CommonReleaseDllARM64.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibFmtDll.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\wxWidgetsDllARM64.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\CommonARB.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonReleaseDll32.props" />
-    <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
-    <Import Project="$(SolutionDir)\..\props\wxWidgetsDll32.props" />
-    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
-    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\CommonReleaseDll32.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibFmtDll.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\wxWidgetsDll32.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\CommonARB.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)\..\props\CommonReleaseDll64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibFmtDll.props" />
-    <Import Project="$(SolutionDir)\..\props\wxWidgetsDll64.props" />
-    <Import Project="$(SolutionDir)\..\props\LibTidyHtml.props" />
-    <Import Project="$(SolutionDir)\..\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\CommonReleaseDll64.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibFmtDll.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\wxWidgetsDll64.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\UnitTest.props" />
+    <Import Project="$(SolutionDir)\..\..\..\AgilityBookLibs\Projects\props\LibTidyHtml.props" />
+    <Import Project="$(SolutionDir)\..\props\CommonARB.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -510,9 +522,6 @@
     </ClCompile>
     <ClCompile Include="..\..\TestARB\TestAgilityRecordBook.cpp" />
     <ClCompile Include="..\..\TestARB\TestARB.cpp" />
-    <ClCompile Include="..\..\TestARB\TestArchive.cpp" />
-    <ClCompile Include="..\..\TestARB\TestBinaryData.cpp" />
-    <ClCompile Include="..\..\TestARB\TestBreakLine.cpp" />
     <ClCompile Include="..\..\TestARB\TestCalcPoints.cpp" />
     <ClCompile Include="..\..\TestARB\TestCalendar.cpp" />
     <ClCompile Include="..\..\TestARB\TestConfig.cpp" />
@@ -530,7 +539,6 @@
     <ClCompile Include="..\..\TestARB\TestConfigTitle.cpp" />
     <ClCompile Include="..\..\TestARB\TestConfigTitlePoints.cpp" />
     <ClCompile Include="..\..\TestARB\TestConfigVenue.cpp" />
-    <ClCompile Include="..\..\TestARB\TestDate.cpp" />
     <ClCompile Include="..\..\TestARB\TestDog.cpp" />
     <ClCompile Include="..\..\TestARB\TestDogClub.cpp" />
     <ClCompile Include="..\..\TestARB\TestDogExistingPoints.cpp" />
@@ -543,20 +551,13 @@
     <ClCompile Include="..\..\TestARB\TestDogRunScoring.cpp" />
     <ClCompile Include="..\..\TestARB\TestDogTitle.cpp" />
     <ClCompile Include="..\..\TestARB\TestDogTrial.cpp" />
-    <ClCompile Include="..\..\TestARB\TestDouble.cpp" />
     <ClCompile Include="..\..\TestARB\TestElement.cpp" />
     <ClCompile Include="..\..\TestARB\TestErrorCallback.cpp" />
     <ClCompile Include="..\..\TestARB\TestInfoItem.cpp" />
     <ClCompile Include="..\..\TestARB\TestLib.cpp" />
-    <ClCompile Include="..\..\TestARB\TestMailto.cpp" />
-    <ClCompile Include="..\..\TestARB\TestMD5.cpp" />
     <ClCompile Include="..\..\TestARB\TestMisc.cpp" />
     <ClCompile Include="..\..\TestARB\TestQ.cpp" />
-    <ClCompile Include="..\..\TestARB\TestString.cpp" />
-    <ClCompile Include="..\..\TestARB\TestTidy.cpp" />
     <ClCompile Include="..\..\TestARB\TestTraining.cpp" />
-    <ClCompile Include="..\..\TestARB\TestUtils.cpp" />
-    <ClCompile Include="..\..\TestARB\TestVersion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />
@@ -650,20 +651,20 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="LibFmt.vcxproj">
+    <ProjectReference Include="..\..\..\AgilityBookLibs\Projects\VC143\LibFmt.vcxproj">
       <Project>{c28fcb5f-b8a7-4214-9b3f-9d1d9fb6976e}</Project>
     </ProjectReference>
-    <ProjectReference Include="LibTidyHtml.vcxproj">
+    <ProjectReference Include="..\..\..\AgilityBookLibs\Projects\VC143\LibTidyHtml.vcxproj">
       <Project>{05967875-9726-4f06-8ec8-db6170c00bf3}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\AgilityBookLibs\Projects\VC143\LibwxARBCommon.vcxproj">
+      <Project>{b8e4cee7-cd97-4355-b998-c5c37fa2f285}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\AgilityBookLibs\Projects\VC143\LibwxARBWin.vcxproj">
+      <Project>{73c15f6d-530f-4b95-9a2c-81ad1958573f}</Project>
     </ProjectReference>
     <ProjectReference Include="LibwxARB.vcxproj">
       <Project>{09c48f16-0c9d-4a44-925d-7c02e33341dd}</Project>
-    </ProjectReference>
-    <ProjectReference Include="LibwxARBCommon.vcxproj">
-      <Project>{b8e4cee7-cd97-4355-b998-c5c37fa2f285}</Project>
-    </ProjectReference>
-    <ProjectReference Include="LibwxARBWin.vcxproj">
-      <Project>{73c15f6d-530f-4b95-9a2c-81ad1958573f}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

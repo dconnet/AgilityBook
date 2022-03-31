@@ -20,6 +20,7 @@
 		E10D89F625D5AB6100D1D8F8 /* DlgRunPanelScore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10D89DD25D5A5FF00D1D8F8 /* DlgRunPanelScore.cpp */; };
 		E13371821D173D4800E7344D /* DlgConfigLifetimeName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E13371801D173D4800E7344D /* DlgConfigLifetimeName.cpp */; };
 		E14A806026F7DB8A00CBD1D9 /* DlgInfoNoteEdit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E14A805E26F7DB8900CBD1D9 /* DlgInfoNoteEdit.cpp */; };
+		E164BD6C27F62A5800759A3F /* ColumnOrder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E164BD6A27F6299F00759A3F /* ColumnOrder.cpp */; };
 		E165930917ED2E1D00B86062 /* AgilityBookRunsView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E165930717ED2E1D00B86062 /* AgilityBookRunsView.cpp */; };
 		E19851CD2170E6AD003E7B92 /* libLibARBWin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E19851CC2170E6AD003E7B92 /* libLibARBWin.a */; };
 		E19B63C0166C096E004DEDA4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19B63BF166C096E004DEDA4 /* Cocoa.framework */; };
@@ -62,7 +63,6 @@
 		E19B651D166C09B9004DEDA4 /* DlgInfoNote.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B643A166C09B9004DEDA4 /* DlgInfoNote.cpp */; };
 		E19B651E166C09B9004DEDA4 /* DlgListCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B643C166C09B9004DEDA4 /* DlgListCtrl.cpp */; };
 		E19B651F166C09B9004DEDA4 /* DlgListViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B643E166C09B9004DEDA4 /* DlgListViewer.cpp */; };
-		E19B6520166C09B9004DEDA4 /* DlgMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6440166C09B9004DEDA4 /* DlgMessage.cpp */; };
 		E19B6521166C09B9004DEDA4 /* DlgMessageBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6442166C09B9004DEDA4 /* DlgMessageBox.cpp */; };
 		E19B6522166C09B9004DEDA4 /* DlgName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6444166C09B9004DEDA4 /* DlgName.cpp */; };
 		E19B6523166C09B9004DEDA4 /* DlgOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6446166C09B9004DEDA4 /* DlgOptions.cpp */; };
@@ -134,6 +134,8 @@
 		E14A805E26F7DB8900CBD1D9 /* DlgInfoNoteEdit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgInfoNoteEdit.cpp; sourceTree = "<group>"; };
 		E14A805F26F7DB8A00CBD1D9 /* DlgInfoNoteEdit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgInfoNoteEdit.h; sourceTree = "<group>"; };
 		E164622917BFF255004F12AF /* SetupAppARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupAppARB.h; sourceTree = "<group>"; };
+		E164BD6A27F6299F00759A3F /* ColumnOrder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ColumnOrder.cpp; sourceTree = "<group>"; };
+		E164BD6B27F6299F00759A3F /* ColumnOrder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColumnOrder.h; sourceTree = "<group>"; };
 		E165930717ED2E1D00B86062 /* AgilityBookRunsView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookRunsView.cpp; sourceTree = "<group>"; };
 		E165930817ED2E1D00B86062 /* AgilityBookRunsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBookRunsView.h; sourceTree = "<group>"; };
 		E1748DF525266D27003A196C /* venue_valor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = venue_valor.png; sourceTree = "<group>"; };
@@ -360,8 +362,6 @@
 		E19B643D166C09B9004DEDA4 /* DlgListCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgListCtrl.h; sourceTree = "<group>"; };
 		E19B643E166C09B9004DEDA4 /* DlgListViewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgListViewer.cpp; sourceTree = "<group>"; };
 		E19B643F166C09B9004DEDA4 /* DlgListViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgListViewer.h; sourceTree = "<group>"; };
-		E19B6440166C09B9004DEDA4 /* DlgMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgMessage.cpp; sourceTree = "<group>"; };
-		E19B6441166C09B9004DEDA4 /* DlgMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgMessage.h; sourceTree = "<group>"; };
 		E19B6442166C09B9004DEDA4 /* DlgMessageBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgMessageBox.cpp; sourceTree = "<group>"; };
 		E19B6443166C09B9004DEDA4 /* DlgMessageBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgMessageBox.h; sourceTree = "<group>"; };
 		E19B6444166C09B9004DEDA4 /* DlgName.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgName.cpp; sourceTree = "<group>"; };
@@ -723,6 +723,8 @@
 				E19B63F7166C09B9004DEDA4 /* AgilityBookTreeView.h */,
 				E19B6400166C09B9004DEDA4 /* ClipBoard.cpp */,
 				E19B6401166C09B9004DEDA4 /* ClipBoard.h */,
+				E164BD6A27F6299F00759A3F /* ColumnOrder.cpp */,
+				E164BD6B27F6299F00759A3F /* ColumnOrder.h */,
 				E1E1D05117234DEF00D7D1E4 /* ComboBoxQ.cpp */,
 				E1E1D05217234DEF00D7D1E4 /* ComboBoxQ.h */,
 				E1E1D05317234DEF00D7D1E4 /* ComboBoxVenue.cpp */,
@@ -795,8 +797,6 @@
 				E19B643D166C09B9004DEDA4 /* DlgListCtrl.h */,
 				E19B643E166C09B9004DEDA4 /* DlgListViewer.cpp */,
 				E19B643F166C09B9004DEDA4 /* DlgListViewer.h */,
-				E19B6440166C09B9004DEDA4 /* DlgMessage.cpp */,
-				E19B6441166C09B9004DEDA4 /* DlgMessage.h */,
 				E19B6442166C09B9004DEDA4 /* DlgMessageBox.cpp */,
 				E19B6443166C09B9004DEDA4 /* DlgMessageBox.h */,
 				E19B6444166C09B9004DEDA4 /* DlgName.cpp */,
@@ -907,7 +907,8 @@
 				E1CAE57316B5BF6E00B33FE5 /* SetupARBPre.h */,
 				E1CAE57516B5BF6E00B33FE5 /* SetupWX.h */,
 			);
-			path = Platform;
+			name = Platform;
+			path = ../../AgilityBookLibs/Include/Platform;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -989,7 +990,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "OUTPUTDIR=${CODESIGNING_FOLDER_PATH}/Contents/Resources\nSCRIPTDIR=${SOURCE_ROOT}/../../../Projects\nLANGDIR=${SOURCE_ROOT}/../../../lang\nRESDIR=${SOURCE_ROOT}/../../../Win/res\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\nif ! test -d \"${OUTPUTDIR}\"\nthen\n    mkdir \"${OUTPUTDIR}\"\nfi\n\npython3 \"${SCRIPTDIR}/CompileLang.py\" -s \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" ${TARGET_NAME}\n\npython3 \"${SCRIPTDIR}/CompileDataFile.py\" -x -l \"${OUTPUTDIR}/lang\" \"${RESDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" ${TARGET_NAME}\n";
+			shellScript = "OUTPUTDIR=${CODESIGNING_FOLDER_PATH}/Contents/Resources\nSCRIPTDIR=${SOURCE_ROOT}/../../../../AgilityBookLibs/Projects\nLANGDIR=${SOURCE_ROOT}/../../../lang\nRESDIR=${SOURCE_ROOT}/../../../Win/res\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\nif ! test -d \"${OUTPUTDIR}\"\nthen\n    mkdir \"${OUTPUTDIR}\"\nfi\n\npython3 \"${SCRIPTDIR}/CompileLang.py\" -s \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" ${TARGET_NAME}\n\npython3 \"${SCRIPTDIR}/CompileDataFile.py\" -x -l \"${OUTPUTDIR}/lang\" \"${RESDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" ${TARGET_NAME}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1025,6 +1026,7 @@
 				E19B650E166C09B9004DEDA4 /* DlgConfigOtherPoints.cpp in Sources */,
 				E10D89EE25D5AB4400D1D8F8 /* DlgDogPanelTitles.cpp in Sources */,
 				E19B650F166C09B9004DEDA4 /* DlgConfigPlaceInfo.cpp in Sources */,
+				E164BD6C27F62A5800759A3F /* ColumnOrder.cpp in Sources */,
 				E19B6510166C09B9004DEDA4 /* DlgConfigTitle.cpp in Sources */,
 				E19B6511166C09B9004DEDA4 /* DlgConfigTitlePoints.cpp in Sources */,
 				E10D89F225D5AB5600D1D8F8 /* DlgRunPanelCRCD.cpp in Sources */,
@@ -1045,7 +1047,6 @@
 				E19B651E166C09B9004DEDA4 /* DlgListCtrl.cpp in Sources */,
 				E10D89E825D5AB3800D1D8F8 /* DlgDogPanelPoints.cpp in Sources */,
 				E19B651F166C09B9004DEDA4 /* DlgListViewer.cpp in Sources */,
-				E19B6520166C09B9004DEDA4 /* DlgMessage.cpp in Sources */,
 				E19B6521166C09B9004DEDA4 /* DlgMessageBox.cpp in Sources */,
 				E19B6522166C09B9004DEDA4 /* DlgName.cpp in Sources */,
 				E10D89F425D5AB5D00D1D8F8 /* DlgRunPanelRefRuns.cpp in Sources */,
@@ -1309,6 +1310,19 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AgilityBook/AgilityBook-Prefix.pch";
 				INFOPLIST_FILE = "AgilityBook/AgilityBook-Info.plist";
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../../AgilityBookLibs/Include",
+					"-I$SRCROOT/../../../../AgilityBookLibs/3rdParty/LibFmt/include",
+					"-I$SRCROOT/../../../../AgilityBookLibs/3rdParty/LibTidyHtml/include",
+					"-I$SRCROOT/../../../Include",
+					"-I$WXWIN/build-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
+					"-I$WXWIN/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agilityrecordbook.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -1326,6 +1340,20 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AgilityBook/AgilityBook-Prefix.pch";
 				INFOPLIST_FILE = "AgilityBook/AgilityBook-Info.plist";
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../../AgilityBookLibs/Include",
+					"-I$SRCROOT/../../../../AgilityBookLibs/3rdParty/LibFmt/include",
+					"-I$SRCROOT/../../../../AgilityBookLibs/3rdParty/LibTidyHtml/include",
+					"-I$SRCROOT/../../../Include",
+					"-I$WXWIN/build-release/lib/wx/include/osx_cocoa-unicode-static-3.1",
+					"-I$WXWIN/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-DwxDEBUG_LEVEL=0",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agilityrecordbook.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

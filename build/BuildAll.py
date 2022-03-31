@@ -137,10 +137,13 @@ def main():
 
 	# Add the official build props. Note: Do not use Directory.Build.props
 	# for automatic inclusion. Building directly in devenv will pick that up.
-	msbuildOpts = msbuildOpts + ' /p:ForceImportBeforeCppTargets=' + os.path.abspath(curDir + '\\..\\src\\Projects\\props\\' + msbuildOfficial)
+	msbuildOpts = msbuildOpts + ' /p:ForceImportBeforeCppTargets=' + os.path.abspath(curDir + '\\..\\AgilityBookLibs\\Projects\\props\\' + msbuildOfficial)
 
 	if updateBuildNumber:
 		cmds = [
+			r'cd ' + curDir + '\\..\\AgilityBookLibs\\Include',
+			r'python SetBuildNumber.py --official',
+			r'cd ' + curDir,
 			r'cd ' + curDir + '\\..\\src\\Include',
 			r'python SetBuildNumber.py --official',
 			r'cd ' + curDir]
@@ -163,9 +166,9 @@ def main():
 			r'msbuild AgilityBook.sln ' + msbuildOpts + ' /t:Build /p:Configuration=' + configuration + ';Platform=' + platform]
 
 		if clean:
-			pyDcon.RmMinusRF.RmMinusRF(curDir + '/../bin/' + platformDir + platform)
+			pyDcon.RmMinusRF.RmMinusRF(curDir + '/../src/bin/' + platformDir + platform)
 		pyDcon.Run.RunCmds(cmds32, onlyTest)
-		if not onlyTest and not os.access(curDir + '/../bin/' + platformDir + platform + '/' + configuration + '/AgilityBook.exe', os.F_OK):
+		if not onlyTest and not os.access(curDir + '/../src/bin/' + platformDir + platform + '/' + configuration + '/AgilityBook.exe', os.F_OK):
 			print('ERROR: Compile failed, bailing out')
 			return 1
 
@@ -178,9 +181,9 @@ def main():
 			r'msbuild AgilityBook.sln ' + msbuildOpts + ' /t:Build /p:Configuration=' + configuration + ';Platform=' + platform]
 
 		if clean:
-			pyDcon.RmMinusRF.RmMinusRF(curDir + '/../bin/' + platformDir + platform)
+			pyDcon.RmMinusRF.RmMinusRF(curDir + '/../src/bin/' + platformDir + platform)
 		pyDcon.Run.RunCmds(cmds64, onlyTest)
-		if not onlyTest and not os.access(curDir + '/../bin/' + platformDir + platform + '/' + configuration + '/AgilityBook.exe', os.F_OK):
+		if not onlyTest and not os.access(curDir + '/../src/bin/' + platformDir + platform + '/' + configuration + '/AgilityBook.exe', os.F_OK):
 			print('ERROR: Compile failed, bailing out')
 			return 1
 

@@ -1,0 +1,3 @@
+[submodule "AgilityBookLibs"]
+	path = AgilityBookLibs
+	url = https://github.com/dconnet/AgilityBookLibs

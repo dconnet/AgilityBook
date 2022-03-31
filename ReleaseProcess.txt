@@ -5,7 +5,9 @@ root. (Mine is "d:\dcon\www\agilityrecordbook\") This only works in debug builds
 
 On new year, update copyright year in:
 - License.txt
-- src/configure.in
+- AgilityBookLibs/configure.in
+- AgilityBookLibs/Include/VersionInfoLibsARB.h
+- configure.in
 - src/Include/VersionInfoARB.h
 - src/Projects/xcode*/AgilityBook/AgilityBook/AgilityBook-Info.plist
 - src/Projects/xcode*/ARBHelp/ARBHelp/ARBHelp-Info.plist
@@ -23,11 +25,7 @@ Files to change before marking files for release:
   - lsl: LightScribe Template Labeler
 - History.txt
   Update program version and date, along with any comments.
-  - Reflect these changes into help/html/HistoryData.html
-  - Run "src\UpdateHistory.py -w"
-    (note: while a help file is no longer actually generated, continue doing
-    this as the website pulls it's data from this too. And at some point, I
-    may reinstate the help file [-h: arbhelp, -w: website])
+  - Reflect these changes into www/agilityrecordbook/history.php
 - Todo.txt
   Any necessary changes...
 
@@ -47,7 +45,9 @@ Switch to build machine, do a full rebuild and verify it.
       -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
       -t:       Testing, just print commands to run
       compiler: vc141,vc142,vc143 (default: vc142)
-    (note: If this needs to be re-run, revert .../configure.in, .../src/Include/VersionNumber.h)
+    (note: If this needs to be re-run, revert
+    .../AgilityBookLibs/configure.in, .../AgilityBookLibs/Include/VersionNumberLibs.h,
+    .../configure.in, .../src/Include/VersionNumber.h)
 - cd ...\src\Projects\Installer
 - Run 'GenMSI.py -b all' to create w32/x64 installers (and sign them),
   auto-update Misc\Installations\InstallGUIDs.csv, and create distribution dir.
@@ -81,14 +81,16 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
 
 Commit all changes to GitHub (should just be the xcode project).
 
+Create a release tag on AgilityBookLibs (see form below), sync AgilityBook submodule
+to this tag and commit that change too.
+
 Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
 - Generate zip file (github's zip has unix EOLs):
   - git archive master --prefix="AgilityBook/" --format=zip > AgilityBook-n_n_n_n-src.zip
+  - Also do this on AgilityBookLibs and combine the zips.
 
 Create a release on GitHub tagged as: 'release/vn.n.n'
- (note, this is a change from prior SVN style. If a rebuild is required because
- of a muckup, we will create a branch from the tag at that point)
   - Create tag "release/vn.n.n"
   - Use History to create release notes, these will be the same as the announcement below.
   - AgilityBook-n_n_n_n-src.zip
@@ -126,7 +128,7 @@ Backup:
 Prepare for next release:
 - Switch back to master
 - Update version number
-  - This is done by editing .../include/VersionNumber.h
+  - This is done by editing .../AgilityBookLibs/Include/VersionNumber.h and .../src/Include/VersionNumber.h
 - Update History.txt
 - Update CFBundleShortVersionString in xcode plist files
   (so it doesn't have to be done as part of the release process, except for

@@ -1,3 +1,9 @@
+../../../AgilityBookLibs/Include/images/checked.png
+../../../AgilityBookLibs/Include/images/checked.svg
+../../../AgilityBookLibs/Include/images/checked@2x.png
+../../../AgilityBookLibs/Include/images/unchecked.png
+../../../AgilityBookLibs/Include/images/unchecked.svg
+../../../AgilityBookLibs/Include/images/unchecked@2x.png
 ../../Include/images/AgilityBook16.png
 ../../Include/images/AgilityBook16@2x.png
 ../../Include/images/AgilityBook256.png
@@ -5,11 +11,5 @@
 ../../Include/images/AgilityBook32@2x.png
 ../../Include/images/AgilityBook48.png
 ../../Include/images/AgilityBook48@2x.png
-../../Include/images/checked.png
-../../Include/images/checked.svg
-../../Include/images/checked@2x.png
-../../Include/images/unchecked.png
-../../Include/images/unchecked.svg
-../../Include/images/unchecked@2x.png
 ../../Win/res/AgilityRecordBook.dtd
 ../../Win/res/DefaultConfig.xml

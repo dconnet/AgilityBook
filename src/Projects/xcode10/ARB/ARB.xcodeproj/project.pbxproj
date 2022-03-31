@@ -546,8 +546,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
-					"-I$SRCROOT/../../../Include",
-					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
+					"-I$SRCROOT/../../../../AgilityBookLibs/Include",
+					"-I$SRCROOT/../../../../AgilityBookLibs/3rdParty/LibFmt/include",
 					"-I$WXWIN/build-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
 					"-I$WXWIN/include",
 					"-D_FILE_OFFSET_BITS=64",
@@ -601,8 +601,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_CFLAGS = (
-					"-I$SRCROOT/../../../Include",
-					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
+					"-I$SRCROOT/../../../../AgilityBookLibs/Include",
+					"-I$SRCROOT/../../../../AgilityBookLibs/3rdParty/LibFmt/include",
 					"-I$WXWIN/build-release/lib/wx/include/osx_cocoa-unicode-static-3.1",
 					"-I$WXWIN/include",
 					"-D_FILE_OFFSET_BITS=64",

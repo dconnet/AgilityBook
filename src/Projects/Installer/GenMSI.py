@@ -197,11 +197,11 @@ def getoutputvars(code, version, platformTools):
 	baseDir = ''
 	if code32 == code:
 		outputFile = 'AgilityBook-' + version + '-x86'
-		baseDir = AgilityBookDir + r'\bin\vc' + platformTools + 'x86\Release'
+		baseDir = AgilityBookDir + r'\src\bin\vc' + platformTools + 'x86\Release'
 		distDir = 'vc' + platformTools
 	elif code64 == code:
 		outputFile = 'AgilityBook-' + version + '-x64'
-		baseDir = AgilityBookDir + r'\bin\vc' + platformTools + 'x64\Release'
+		baseDir = AgilityBookDir + r'\src\bin\vc' + platformTools + 'x64\Release'
 		distDir = 'vc' + platformTools + 'x64'
 	else:
 		raise Exception('Invalid code')
@@ -375,7 +375,7 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver, plat
 		RmMinusRF(cabcache)
 	if not testing:
 		WriteCode(baseMsi, ver4Dot, code, vcver)
-	runcmd(r'python ..\SignStuff.py ' + baseMsi)
+	runcmd(r'python ..\..\..\AgilityBookLibs\Projects\SignStuff.py ' + baseMsi)
 
 	zip = zipfile.ZipFile(baseMsiZip, 'w')
 	zip.write(baseMsi, outputFile + '.msi')

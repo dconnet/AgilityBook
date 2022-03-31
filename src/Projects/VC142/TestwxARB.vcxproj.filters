@@ -36,9 +36,6 @@
     <ClCompile Include="..\..\TestARB\TestARB.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\TestARB\TestBinaryData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\TestARB\TestCalendar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -87,9 +84,6 @@
     <ClCompile Include="..\..\TestARB\TestConfigVenue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\TestARB\TestDate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\TestARB\TestDog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -126,12 +120,6 @@
     <ClCompile Include="..\..\TestARB\TestDogTrial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\TestARB\TestDouble.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\TestARB\TestElement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\TestARB\TestErrorCallback.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -141,40 +129,19 @@
     <ClCompile Include="..\..\TestARB\TestLib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\TestARB\TestMD5.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\TestARB\TestMisc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\TestARB\TestQ.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\TestARB\TestString.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\TestARB\TestTraining.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\TestARB\TestVersion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\TestARB\TestBreakLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\TestARB\TestCalcPoints.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\TestARB\TestArchive.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\TestARB\TestUtils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\TestARB\TestTidy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\TestARB\TestMailto.cpp">
+    <ClCompile Include="..\..\TestARB\TestElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

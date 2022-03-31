@@ -104,6 +104,16 @@ size_t gc_NumConfigs = sizeof(gc_Configs) / sizeof(gc_Configs[0]);
 
 TEST_CASE("Config")
 {
+	 SECTION("Load")
+	{
+		ElementNodePtr tree = LoadXMLData();
+		REQUIRE(L"DefaultConfig" == tree->GetName());
+		REQUIRE(1 == tree->GetAttribCount());
+		int config = tree->FindElement(TREE_CONFIG);
+		REQUIRE(0 <= config);
+	}
+
+
 	SECTION("Equality")
 	{
 		if (!g_bMicroTest)

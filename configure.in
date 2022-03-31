@@ -1,0 +1,209 @@
+################################################################################
+# The minimum version of autoconf required to regenerate the configure script. #
+################################################################################
+#AC_PREREQ(2.59)
+
+################################################################################
+# Initialise autoconf, set package name, version number and contact details.   #
+################################################################################
+AC_INIT(Agility Record Book, 3.6.0.116, [help@agilityrecordbook.com])
+
+# Allows linking when AgilityBookLibs is a submodule or built directly
+AC_SUBST(ARBLIBS_DIR, "AgilityBookLibs/")
+
+AC_SUBST(PACKAGE_ARB_SHORTNAME, "AgilityBook")
+AC_SUBST(PACKAGE_HLP_SHORTNAME, "ARBHelp")
+AC_SUBST(PACKAGE_CAL_SHORTNAME, "CalSites")
+AC_SUBST(PACKAGE_TEST_SHORTNAME, "testarb")
+AC_SUBST(PACKAGE_TESTLIB_SHORTNAME, "testarblib")
+AC_SUBST(PACKAGE_COPYRIGHT, "Copyright (c) 2002-2022 David Connet. All Rights Reserved.")
+################################################################################
+# Check for programs used to build my_prg                                      #
+################################################################################
+##########
+# Check whether make sets the MAKE variable.
+# Check which C++ compiler we have (sets CXX and CXXFLAGS)
+# Check which RANLIB program we have
+# Set the language for all further tests to C++
+##########
+AC_PROG_MAKE_SET
+AC_PROG_CXX
+AC_PROG_RANLIB
+AC_PROG_INSTALL
+AC_LANG(C++)
+AC_ARG_PROGRAM
+
+# Add macros to check for other programs here
+
+################################################################################
+# Checks for header files.                                                     #
+################################################################################
+# Add macros to check for header files here
+
+################################################################################
+# Checks for typedefs, structures, and compiler characteristics.               #
+################################################################################
+# Add macros to check for these characteristics here
+
+################################################################################
+# Checks for library functions.                                                #
+################################################################################
+# Add macros to check for library functions here
+# We get these libs from our own src/ directories
+# AC_CHECK_LIB([unittest], [RunAllTests])
+
+AC_SUBST(CC, "`wx-config --cc`")
+AC_SUBST(CXX, "`wx-config --cxx`")
+AC_SUBST(LD, "`wx-config --ld`")
+AC_SUBST(CFLAGS, "`wx-config --cflags`")
+AC_SUBST(CXXFLAGS, "`wx-config --cxxflags`")
+AC_SUBST(LDFLAGS, "`wx-config --libs`")
+
+AC_SUBST(CXXFLAGS,"$CXXFLAGS -DUSE_WXWIDGETS")
+
+case `uname` in
+Darwin*)
+	AC_SUBST(ARFLAGS, 'cru')
+	AC_SUBST(SHAREDLIBEXT, 'dylib')
+
+	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk
+	then
+		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
+		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -stdlib=libc++"])
+
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk
+	then
+		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
+		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -stdlib=libc++"])
+
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk
+	then
+		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
+		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -stdlib=libc++"])
+
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk
+	then
+		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
+		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -stdlib=libc++"])
+
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk
+	then
+		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
+		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -stdlib=libc++"])
+
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk
+	then
+		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
+		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -stdlib=libc++"])
+
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.0.sdk
+	then
+		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64 -arch arm64")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -arch arm64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
+		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -arch arm64 -stdlib=libc++"])
+
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk
+	then
+		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64 -arch arm64")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -arch arm64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
+		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -arch arm64 -stdlib=libc++"])
+
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.2.sdk
+	then
+		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64 -arch arm64")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -arch arm64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
+		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -arch arm64 -stdlib=libc++"])
+
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
+	then
+		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64 -arch arm64")
+		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -arch arm64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
+		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -arch arm64 -stdlib=libc++"])
+
+	else
+		AC_MSG_ERROR(Cannot determine SDK)
+	fi
+
+	# dependency generation not supported for g++ for universal binaries
+	# For some reason ./configure --disable-dependency-generation is not supported by autoconf 2.63
+	# so put dependencies checking under non-Darwin builds
+	# Also no precompiled header support for universal binaries
+	AC_SUBST(NOPRECOMP,1)
+	#AC_SUBST(SHAREDLDFLAGS, "-prebind -bundle")
+	;;
+
+Linux)
+	# Ubuntu
+	AC_SUBST(ARFLAGS, 'Ucru')
+	AC_SUBST(CFLAGS, "$CFLAGS -g")
+	#AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64")
+	AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -g -std=c++17")
+	AC_SUBST(CXXFLAGS, "$CXXFLAGS -g -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17")
+	AC_SUBST(LDFLAGS, ["$LDFLAGS -no-pie"])
+	AC_SUBST(NOPRECOMP,1)
+	;;
+
+*)
+	##########
+	# Check how dependencies are created for the C++ compiler on this system
+	##########
+	AS_IF(g++ -v -MP 2> /dev/null,
+		[AC_SUBST(CPPDEPFLAGS, "-MMD -MP -MF \"\`dirname \$@\`/.deps/\`basename \$*\`.d\"")] [AC_SUBST(DEPDIR, ".deps")],
+		[AC_SUBST(CPPDEPFLAGS, "-MMD")] [AC_SUBST(DEPDIR, ".")])
+	AC_SUBST(SHAREDLIBEXT, 'so')
+#	AC_SUBST(SHAREDLDFLAGS, "-shared -W1,-soname,$(.TARGET)")
+	;;
+esac
+
+################################################################################
+# Allow insertion of the global rules from NAM_rules.mk(.in) into any file     #
+# that requests it using @NAM_RULES@.  Note that for this to work properly,    #
+# NAM_rules.mk must be listed BEFORE any Makefiles that use this feature in    #
+# the AC_CONFIG_FILES() macro below.                                           #
+################################################################################
+NAM_RULES=NAM_rules.mk
+AC_SUBST_FILE(NAM_RULES)
+
+################################################################################
+# List of files to generate from the corresponding (*.in) files and the        #
+# subsequent command to generate those files.                                  #
+################################################################################
+AC_CONFIG_FILES([NAM_rules.mk Makefile \
+	AgilityBookLibs/Makefile \
+	AgilityBookLibs/3rdParty/Makefile \
+	AgilityBookLibs/3rdParty/LibFmt/Makefile \
+	AgilityBookLibs/3rdParty/LibTidyHtml/Makefile \
+	AgilityBookLibs/ARBCommon/Makefile \
+	AgilityBookLibs/LibARBWin/Makefile \
+	AgilityBookLibs/TestARBLib/Makefile \
+	src/Makefile \
+	src/Libraries/Makefile \
+	src/Libraries/ARB/Makefile \
+	src/ARBHelp/Makefile \
+	src/CalSites/Makefile \
+	src/TestARB/Makefile \
+	src/Win/Makefile \
+	src/ARBHelp/Info.plist \
+	src/ARBHelp/version.plist \
+	src/CalSites/Info.plist \
+	src/CalSites/version.plist \
+	src/Win/Info.plist \
+	src/Win/version.plist])
+
+AC_OUTPUT

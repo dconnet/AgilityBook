@@ -282,7 +282,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "OUTPUTDIR=${CODESIGNING_FOLDER_PATH}/Contents/Resources\nSCRIPTDIR=${SOURCE_ROOT}/../../../Projects\nLANGDIR=${SOURCE_ROOT}/../../../lang\nRESDIR=${SOURCE_ROOT}/../../../ARBHelp/res\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\nif ! test -d \"${OUTPUTDIR}\"\nthen\n    mkdir \"${OUTPUTDIR}\"\nfi\n\n#python3 \"${SCRIPTDIR}/CompileLang.py\" -s \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" ${TARGET_NAME}\n\npython3 \"${SCRIPTDIR}/CompileDataFile.py\" -x \"${RESDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" ${TARGET_NAME}\n";
+			shellScript = "OUTPUTDIR=${CODESIGNING_FOLDER_PATH}/Contents/Resources\nSCRIPTDIR=${SOURCE_ROOT}/../../../../AgilityBookLibs/Projects\nLANGDIR=${SOURCE_ROOT}/../../../lang\nRESDIR=${SOURCE_ROOT}/../../../ARBHelp/res\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\nif ! test -d \"${OUTPUTDIR}\"\nthen\n    mkdir \"${OUTPUTDIR}\"\nfi\n\n#python3 \"${SCRIPTDIR}/CompileLang.py\" -s \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" ${TARGET_NAME}\n\npython3 \"${SCRIPTDIR}/CompileDataFile.py\" -x \"${RESDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" ${TARGET_NAME}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -517,6 +517,18 @@
 				GCC_PREFIX_HEADER = "ARBHelp/ARBHelp-Prefix.pch";
 				INFOPLIST_FILE = "ARBHelp/ARBHelp-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../../AgilityBookLibs/Include",
+					"-I$SRCROOT/../../../../AgilityBookLibs/3rdParty/LibFmt/include",
+					"-I$SRCROOT/../../../Include",
+					"-I$WXWIN/build-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
+					"-I$WXWIN/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agilityrecordbook.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -535,6 +547,19 @@
 				GCC_PREFIX_HEADER = "ARBHelp/ARBHelp-Prefix.pch";
 				INFOPLIST_FILE = "ARBHelp/ARBHelp-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../../AgilityBookLibs/Include",
+					"-I$SRCROOT/../../../../AgilityBookLibs/3rdParty/LibFmt/include",
+					"-I$SRCROOT/../../../Include",
+					"-I$WXWIN/build-release/lib/wx/include/osx_cocoa-unicode-static-3.1",
+					"-I$WXWIN/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-DwxDEBUG_LEVEL=0",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agilityrecordbook.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

@@ -19,6 +19,9 @@ Once the above software is unpacked, the directory structure should look like:
     - src/
     - Readme.txt
     - ...
+Note: If cloning from github, use the '--recurse-submodules' option with the
+initial 'git clone'. If you had already cloned the repository without this
+option, run 'git submodule update --init' to also get all dependent code.
 
 --------------------
 

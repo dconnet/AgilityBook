@@ -27,6 +27,11 @@ import time
 # Was '\t\t\t\t\t' - changed after updating header with clang-format
 verBuildPadding = ' '
 
+verInfo = 'VersionInfoARB.h'
+verNum = 'VersionNumber.h'
+configure = '../../configure.in'
+baseDefine = 'ARB_'
+
 
 class LockFile:
 	def __init__(self, filename):
@@ -40,7 +45,7 @@ class LockFile:
 	def acquire(self):
 		try:
 			self.m_fd = os.open(self.m_filename, os.O_CREAT|os.O_EXCL|os.O_RDWR)
-			os.write(self.m_fd, b"%d" % self.m_pid)
+			os.write(self.m_fd, b'%d' % self.m_pid)
 			return 1
 		except OSError:
 			try:
@@ -52,7 +57,7 @@ class LockFile:
 				if now - st.st_ctime > 300:
 					os.remove(self.m_filename)
 					self.m_fd = os.open(self.m_filename, os.O_CREAT|os.O_EXCL|os.O_RDWR)
-					os.write(self.m_fd, b"%d" % self.m_pid)
+					os.write(self.m_fd, b'%d' % self.m_pid)
 					return 1
 			except OSError:
 				self.m_fd = None
@@ -81,29 +86,29 @@ def doWork():
 	vDotARB = '0'
 	vBldARB = '0'
 
-	ver = open('VersionInfoARB.h', 'r')
+	ver = open(verInfo, 'r')
 	while True:
 		line = ver.readline()
 		if not line:
 			break
 		line = str.rstrip(line)
-		defineCopy = '#define ARB_VERSION_LegalCopyright'
+		defineCopy = '#define ' + baseDefine + 'VERSION_LegalCopyright'
 		pos = line.find(defineCopy)
 		if 0 == pos:
 			copyRight = str.strip(line[pos+len(defineCopy):])
 	ver.close()
 
-	ver = open('VersionNumber.h', 'r')
-	verOut = open('VersionNumber.h.new', 'w')
+	ver = open(verNum, 'r')
+	verOut = open(verNum + '.new', 'w')
 	while True:
 		line = ver.readline()
 		if not line:
 			break
 		line = str.rstrip(line)
-		defineMaj = '#define ARB_VER_MAJOR'
-		defineMin = '#define ARB_VER_MINOR'
-		defineDot = '#define ARB_VER_DOT'
-		defineBld = '#define ARB_VER_BUILD'
+		defineMaj = '#define ' + baseDefine + 'VER_MAJOR'
+		defineMin = '#define ' + baseDefine + 'VER_MINOR'
+		defineDot = '#define ' + baseDefine + 'VER_DOT'
+		defineBld = '#define ' + baseDefine + 'VER_BUILD'
 		pos = line.find(defineMaj)
 		if 0 == pos:
 			vMajARB = str.strip(line[pos+len(defineMaj):])
@@ -132,16 +137,16 @@ def doWork():
 	verOut.close()
 
 	if update:
-		print("VersionNumber.h updated to " + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB)
-		os.remove('VersionNumber.h')
-		os.rename('VersionNumber.h.new', 'VersionNumber.h')
+		print(verNum + ' updated to ' + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB)
+		os.remove(verNum)
+		os.rename(verNum + '.new', verNum)
 	else:
-		print("VersionNumber.h is up-to-date")
-		os.remove('VersionNumber.h.new')
+		print(verNum + ' is up-to-date')
+		os.remove(verNum + '.new')
 
 	update = False
-	conf = open('../configure.in', 'r')
-	confOut = open('../configure.in.new', 'w', newline='\n')
+	conf = open(configure, 'r')
+	confOut = open(configure + '.new', 'w', newline='\n')
 	while 1:
 		line = conf.readline()
 		if not line:
@@ -167,19 +172,19 @@ def doWork():
 	confOut.close()
 
 	if update:
-		print("../configure.in updated to " + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB)
-		os.remove('../configure.in')
-		os.rename('../configure.in.new', '../configure.in')
+		print(configure + ' updated to ' + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB)
+		os.remove(configure)
+		os.rename(configure + '.new', configure)
 	else:
-		print("../configure.in is up-to-date")
-		os.remove('../configure.in.new')
+		print(configure + ' is up-to-date')
+		os.remove(configure + '.new')
 
 	return 0
 
 
 if __name__ == '__main__':
-	if 2 == len(sys.argv) and sys.argv[1] == "--official":
-		lockfile = LockFile("SetBuildNumber.lck")
+	if 2 == len(sys.argv) and sys.argv[1] == '--official':
+		lockfile = LockFile('SetBuildNumber.lck')
 		if lockfile.acquire():
 			try:
 				doWork()
@@ -188,7 +193,7 @@ if __name__ == '__main__':
 				raise
 			lockfile.release()
 		else:
-			print("SetBuildNumber is locked")
+			print('SetBuildNumber is locked')
 	else:
-		print("SetBuildNumber skipped")
+		print('SetBuildNumber skipped')
 	sys.exit(0)

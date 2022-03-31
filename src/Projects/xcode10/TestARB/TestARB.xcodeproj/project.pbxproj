@@ -7,16 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E10F3A9B25264A3600E83AB0 /* TestUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A9925264A3600E83AB0 /* TestUtils.cpp */; };
-		E10F3A9C25264A3600E83AB0 /* TestTidy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E10F3A9A25264A3600E83AB0 /* TestTidy.cpp */; };
 		E15106B218089179002AC401 /* ConfigHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151065A18089179002AC401 /* ConfigHandler.cpp */; };
 		E15106B318089179002AC401 /* Local.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151065C18089179002AC401 /* Local.cpp */; };
 		E15106B418089179002AC401 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068018089179002AC401 /* stdafx.cpp */; };
 		E15106B518089179002AC401 /* TestAgilityRecordBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068218089179002AC401 /* TestAgilityRecordBook.cpp */; };
 		E15106B618089179002AC401 /* TestARB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068318089179002AC401 /* TestARB.cpp */; };
-		E15106B718089179002AC401 /* TestArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068618089179002AC401 /* TestArchive.cpp */; };
-		E15106B818089179002AC401 /* TestBinaryData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068718089179002AC401 /* TestBinaryData.cpp */; };
-		E15106B918089179002AC401 /* TestBreakLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068818089179002AC401 /* TestBreakLine.cpp */; };
 		E15106BA18089179002AC401 /* TestCalcPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068918089179002AC401 /* TestCalcPoints.cpp */; };
 		E15106BB18089179002AC401 /* TestCalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068A18089179002AC401 /* TestCalendar.cpp */; };
 		E15106BC18089179002AC401 /* TestConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151068B18089179002AC401 /* TestConfig.cpp */; };
@@ -34,7 +29,6 @@
 		E15106C918089179002AC401 /* TestConfigTitle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069818089179002AC401 /* TestConfigTitle.cpp */; };
 		E15106CA18089179002AC401 /* TestConfigTitlePoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069918089179002AC401 /* TestConfigTitlePoints.cpp */; };
 		E15106CB18089179002AC401 /* TestConfigVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069A18089179002AC401 /* TestConfigVenue.cpp */; };
-		E15106CC18089179002AC401 /* TestDate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069B18089179002AC401 /* TestDate.cpp */; };
 		E15106CD18089179002AC401 /* TestDog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069C18089179002AC401 /* TestDog.cpp */; };
 		E15106CE18089179002AC401 /* TestDogClub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069D18089179002AC401 /* TestDogClub.cpp */; };
 		E15106CF18089179002AC401 /* TestDogExistingPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E151069E18089179002AC401 /* TestDogExistingPoints.cpp */; };
@@ -47,20 +41,15 @@
 		E15106D618089179002AC401 /* TestDogRunScoring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106A518089179002AC401 /* TestDogRunScoring.cpp */; };
 		E15106D718089179002AC401 /* TestDogTitle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106A618089179002AC401 /* TestDogTitle.cpp */; };
 		E15106D818089179002AC401 /* TestDogTrial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106A718089179002AC401 /* TestDogTrial.cpp */; };
-		E15106D918089179002AC401 /* TestDouble.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106A818089179002AC401 /* TestDouble.cpp */; };
 		E15106DA18089179002AC401 /* TestElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106A918089179002AC401 /* TestElement.cpp */; };
 		E15106DB18089179002AC401 /* TestErrorCallback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106AA18089179002AC401 /* TestErrorCallback.cpp */; };
 		E15106DC18089179002AC401 /* TestInfoItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106AB18089179002AC401 /* TestInfoItem.cpp */; };
-		E15106DD18089179002AC401 /* TestMD5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106AC18089179002AC401 /* TestMD5.cpp */; };
 		E15106DE18089179002AC401 /* TestMisc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106AD18089179002AC401 /* TestMisc.cpp */; };
 		E15106DF18089179002AC401 /* TestQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106AE18089179002AC401 /* TestQ.cpp */; };
-		E15106E018089179002AC401 /* TestString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106AF18089179002AC401 /* TestString.cpp */; };
 		E15106E118089179002AC401 /* TestTraining.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106B018089179002AC401 /* TestTraining.cpp */; };
-		E15106E218089179002AC401 /* TestVersion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15106B118089179002AC401 /* TestVersion.cpp */; };
 		E193AC671809B399008C6257 /* libARBCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E193AC661809B399008C6257 /* libARBCommon.a */; };
 		E193AC691809B39E008C6257 /* libARB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E193AC681809B39E008C6257 /* libARB.a */; };
 		E19851D22170E6FD003E7B92 /* libLibARBWin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E19851D12170E6FD003E7B92 /* libLibARBWin.a */; };
-		E1A4DBDB2616491200FCD08D /* TestMailto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1A4DBDA2616491200FCD08D /* TestMailto.cpp */; };
 		E1D7D1822354B53D00C2CDAD /* TestLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D7D1802354B53C00C2CDAD /* TestLib.cpp */; };
 		E1E2517F21CC5F13004A1D6A /* libLibFmt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E2517E21CC5F13004A1D6A /* libLibFmt.a */; };
 		E1EE26B71809B3EA002E7A5F /* libLibTidyHtml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1EE26B51809B3EA002E7A5F /* libLibTidyHtml.a */; };
@@ -79,8 +68,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		E10F3A9925264A3600E83AB0 /* TestUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestUtils.cpp; sourceTree = "<group>"; };
-		E10F3A9A25264A3600E83AB0 /* TestTidy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestTidy.cpp; sourceTree = "<group>"; };
 		E151064C1808913A002AC401 /* TestARB */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestARB; sourceTree = BUILT_PRODUCTS_DIR; };
 		E151065A18089179002AC401 /* ConfigHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigHandler.cpp; sourceTree = "<group>"; };
 		E151065B18089179002AC401 /* ConfigHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigHandler.h; sourceTree = "<group>"; };
@@ -91,9 +78,6 @@
 		E151068218089179002AC401 /* TestAgilityRecordBook.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestAgilityRecordBook.cpp; sourceTree = "<group>"; };
 		E151068318089179002AC401 /* TestARB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestARB.cpp; sourceTree = "<group>"; };
 		E151068418089179002AC401 /* TestARB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestARB.h; sourceTree = "<group>"; };
-		E151068618089179002AC401 /* TestArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestArchive.cpp; sourceTree = "<group>"; };
-		E151068718089179002AC401 /* TestBinaryData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestBinaryData.cpp; sourceTree = "<group>"; };
-		E151068818089179002AC401 /* TestBreakLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestBreakLine.cpp; sourceTree = "<group>"; };
 		E151068918089179002AC401 /* TestCalcPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCalcPoints.cpp; sourceTree = "<group>"; };
 		E151068A18089179002AC401 /* TestCalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCalendar.cpp; sourceTree = "<group>"; };
 		E151068B18089179002AC401 /* TestConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfig.cpp; sourceTree = "<group>"; };
@@ -111,7 +95,6 @@
 		E151069818089179002AC401 /* TestConfigTitle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigTitle.cpp; sourceTree = "<group>"; };
 		E151069918089179002AC401 /* TestConfigTitlePoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigTitlePoints.cpp; sourceTree = "<group>"; };
 		E151069A18089179002AC401 /* TestConfigVenue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestConfigVenue.cpp; sourceTree = "<group>"; };
-		E151069B18089179002AC401 /* TestDate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDate.cpp; sourceTree = "<group>"; };
 		E151069C18089179002AC401 /* TestDog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDog.cpp; sourceTree = "<group>"; };
 		E151069D18089179002AC401 /* TestDogClub.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDogClub.cpp; sourceTree = "<group>"; };
 		E151069E18089179002AC401 /* TestDogExistingPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDogExistingPoints.cpp; sourceTree = "<group>"; };
@@ -124,20 +107,15 @@
 		E15106A518089179002AC401 /* TestDogRunScoring.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDogRunScoring.cpp; sourceTree = "<group>"; };
 		E15106A618089179002AC401 /* TestDogTitle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDogTitle.cpp; sourceTree = "<group>"; };
 		E15106A718089179002AC401 /* TestDogTrial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDogTrial.cpp; sourceTree = "<group>"; };
-		E15106A818089179002AC401 /* TestDouble.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDouble.cpp; sourceTree = "<group>"; };
 		E15106A918089179002AC401 /* TestElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestElement.cpp; sourceTree = "<group>"; };
 		E15106AA18089179002AC401 /* TestErrorCallback.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestErrorCallback.cpp; sourceTree = "<group>"; };
 		E15106AB18089179002AC401 /* TestInfoItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestInfoItem.cpp; sourceTree = "<group>"; };
-		E15106AC18089179002AC401 /* TestMD5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestMD5.cpp; sourceTree = "<group>"; };
 		E15106AD18089179002AC401 /* TestMisc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestMisc.cpp; sourceTree = "<group>"; };
 		E15106AE18089179002AC401 /* TestQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestQ.cpp; sourceTree = "<group>"; };
-		E15106AF18089179002AC401 /* TestString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestString.cpp; sourceTree = "<group>"; };
 		E15106B018089179002AC401 /* TestTraining.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestTraining.cpp; sourceTree = "<group>"; };
-		E15106B118089179002AC401 /* TestVersion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestVersion.cpp; sourceTree = "<group>"; };
 		E193AC661809B399008C6257 /* libARBCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARBCommon.a; path = ../build/AgilityBook/Build/Products/Debug/libARBCommon.a; sourceTree = "<group>"; };
 		E193AC681809B39E008C6257 /* libARB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARB.a; path = ../build/AgilityBook/Build/Products/Debug/libARB.a; sourceTree = "<group>"; };
 		E19851D12170E6FD003E7B92 /* libLibARBWin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libLibARBWin.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		E1A4DBDA2616491200FCD08D /* TestMailto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestMailto.cpp; sourceTree = "<group>"; };
 		E1D7D1802354B53C00C2CDAD /* TestLib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestLib.cpp; sourceTree = "<group>"; };
 		E1D7D1812354B53C00C2CDAD /* TestLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLib.h; sourceTree = "<group>"; };
 		E1E2517E21CC5F13004A1D6A /* libLibFmt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libLibFmt.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -201,9 +179,6 @@
 				E151068218089179002AC401 /* TestAgilityRecordBook.cpp */,
 				E151068318089179002AC401 /* TestARB.cpp */,
 				E151068418089179002AC401 /* TestARB.h */,
-				E151068618089179002AC401 /* TestArchive.cpp */,
-				E151068718089179002AC401 /* TestBinaryData.cpp */,
-				E151068818089179002AC401 /* TestBreakLine.cpp */,
 				E151068918089179002AC401 /* TestCalcPoints.cpp */,
 				E151068A18089179002AC401 /* TestCalendar.cpp */,
 				E151068B18089179002AC401 /* TestConfig.cpp */,
@@ -221,7 +196,6 @@
 				E151069818089179002AC401 /* TestConfigTitle.cpp */,
 				E151069918089179002AC401 /* TestConfigTitlePoints.cpp */,
 				E151069A18089179002AC401 /* TestConfigVenue.cpp */,
-				E151069B18089179002AC401 /* TestDate.cpp */,
 				E151069C18089179002AC401 /* TestDog.cpp */,
 				E151069D18089179002AC401 /* TestDogClub.cpp */,
 				E151069E18089179002AC401 /* TestDogExistingPoints.cpp */,
@@ -234,21 +208,14 @@
 				E15106A518089179002AC401 /* TestDogRunScoring.cpp */,
 				E15106A618089179002AC401 /* TestDogTitle.cpp */,
 				E15106A718089179002AC401 /* TestDogTrial.cpp */,
-				E15106A818089179002AC401 /* TestDouble.cpp */,
 				E15106A918089179002AC401 /* TestElement.cpp */,
 				E15106AA18089179002AC401 /* TestErrorCallback.cpp */,
 				E15106AB18089179002AC401 /* TestInfoItem.cpp */,
 				E1D7D1802354B53C00C2CDAD /* TestLib.cpp */,
 				E1D7D1812354B53C00C2CDAD /* TestLib.h */,
-				E15106AC18089179002AC401 /* TestMD5.cpp */,
-				E1A4DBDA2616491200FCD08D /* TestMailto.cpp */,
 				E15106AD18089179002AC401 /* TestMisc.cpp */,
 				E15106AE18089179002AC401 /* TestQ.cpp */,
-				E15106AF18089179002AC401 /* TestString.cpp */,
-				E10F3A9A25264A3600E83AB0 /* TestTidy.cpp */,
 				E15106B018089179002AC401 /* TestTraining.cpp */,
-				E10F3A9925264A3600E83AB0 /* TestUtils.cpp */,
-				E15106B118089179002AC401 /* TestVersion.cpp */,
 			);
 			name = TestARB;
 			path = ../../../TestARB;
@@ -328,7 +295,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "OUTPUTDIR=${CONFIGURATION_BUILD_DIR}\nSCRIPTDIR=${SOURCE_ROOT}/../../../Projects\nLANGDIR=${SOURCE_ROOT}/../../../lang\nRESDIR=${SOURCE_ROOT}/../../../TestARB/res\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\npython3 \"${SCRIPTDIR}/CompileLang.py\" -s \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" testarb\n\npython3 \"${SCRIPTDIR}/CompileDataFile.py\" -x -l \"${OUTPUTDIR}/lang\" \"${RESDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" testarb\n\npython3 ${SOURCE_ROOT}/../../../Projects/RunARBTests.py ${SOURCE_ROOT}/../../../ \"${OUTPUTDIR}\" testarb Mac\n";
+			shellScript = "OUTPUTDIR=${CONFIGURATION_BUILD_DIR}\nSCRIPTDIR=${SOURCE_ROOT}/../../../../AgilityBookLibs/Projects\nLANGDIR=${SOURCE_ROOT}/../../../lang\nRESDIR=${SOURCE_ROOT}/../../../TestARB/res\n# msgcat/etc\nPATH=${PATH}:/opt/local/bin\n\npython3 \"${SCRIPTDIR}/CompileLang.py\" -s \"${LANGDIR}\" arb.po \"${OUTPUTDIR}\" testarb\n\npython3 \"${SCRIPTDIR}/CompileDataFile.py\" -x -l \"${OUTPUTDIR}/lang\" \"${RESDIR}/CompileDatList.txt\" \"${OUTPUTDIR}\" testarb\n\npython3 ${SCRIPTDIR}/RunARBTests.py ${SOURCE_ROOT}/../../../ \"${OUTPUTDIR}\" testarb Mac\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -343,10 +310,6 @@
 				E15106B518089179002AC401 /* TestAgilityRecordBook.cpp in Sources */,
 				E15106B618089179002AC401 /* TestARB.cpp in Sources */,
 				E1D7D1822354B53D00C2CDAD /* TestLib.cpp in Sources */,
-				E15106B718089179002AC401 /* TestArchive.cpp in Sources */,
-				E15106B818089179002AC401 /* TestBinaryData.cpp in Sources */,
-				E15106B918089179002AC401 /* TestBreakLine.cpp in Sources */,
-				E1A4DBDB2616491200FCD08D /* TestMailto.cpp in Sources */,
 				E15106BA18089179002AC401 /* TestCalcPoints.cpp in Sources */,
 				E15106BB18089179002AC401 /* TestCalendar.cpp in Sources */,
 				E15106BC18089179002AC401 /* TestConfig.cpp in Sources */,
@@ -364,7 +327,6 @@
 				E15106C918089179002AC401 /* TestConfigTitle.cpp in Sources */,
 				E15106CA18089179002AC401 /* TestConfigTitlePoints.cpp in Sources */,
 				E15106CB18089179002AC401 /* TestConfigVenue.cpp in Sources */,
-				E15106CC18089179002AC401 /* TestDate.cpp in Sources */,
 				E15106CD18089179002AC401 /* TestDog.cpp in Sources */,
 				E15106CE18089179002AC401 /* TestDogClub.cpp in Sources */,
 				E15106CF18089179002AC401 /* TestDogExistingPoints.cpp in Sources */,
@@ -377,18 +339,12 @@
 				E15106D618089179002AC401 /* TestDogRunScoring.cpp in Sources */,
 				E15106D718089179002AC401 /* TestDogTitle.cpp in Sources */,
 				E15106D818089179002AC401 /* TestDogTrial.cpp in Sources */,
-				E10F3A9B25264A3600E83AB0 /* TestUtils.cpp in Sources */,
-				E15106D918089179002AC401 /* TestDouble.cpp in Sources */,
 				E15106DA18089179002AC401 /* TestElement.cpp in Sources */,
 				E15106DB18089179002AC401 /* TestErrorCallback.cpp in Sources */,
 				E15106DC18089179002AC401 /* TestInfoItem.cpp in Sources */,
-				E10F3A9C25264A3600E83AB0 /* TestTidy.cpp in Sources */,
-				E15106DD18089179002AC401 /* TestMD5.cpp in Sources */,
 				E15106DE18089179002AC401 /* TestMisc.cpp in Sources */,
 				E15106DF18089179002AC401 /* TestQ.cpp in Sources */,
-				E15106E018089179002AC401 /* TestString.cpp in Sources */,
 				E15106E118089179002AC401 /* TestTraining.cpp in Sources */,
-				E15106E218089179002AC401 /* TestVersion.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,6 +565,21 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				DEVELOPMENT_TEAM = Q54PT9JQ7G;
 				ENABLE_HARDENED_RUNTIME = YES;
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../../AgilityBookLibs/Include",
+					"-I$SRCROOT/../../../../AgilityBookLibs/3rdParty/LibFmt/include",
+					"-I$SRCROOT/../../../../AgilityBookLibs/3rdParty/LibTidyHtml/include",
+					"-I$SRCROOT/../../../../AgilityBookLibs/3rdParty/catch",
+					"-I$SRCROOT/../../../Include",
+					"-I$WXWIN/build-debug/lib/wx/include/osx_cocoa-unicode-static-3.1",
+					"-I$WXWIN/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+					"-DUSING_CATCH2",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -620,6 +591,22 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				DEVELOPMENT_TEAM = Q54PT9JQ7G;
 				ENABLE_HARDENED_RUNTIME = YES;
+				OTHER_CFLAGS = (
+					"-I$SRCROOT/../../../../AgilityBookLibs/Include",
+					"-I$SRCROOT/../../../../AgilityBookLibs/3rdParty/LibFmt/include",
+					"-I$SRCROOT/../../../../AgilityBookLibs/3rdParty/LibTidyHtml/include",
+					"-I$SRCROOT/../../../../AgilityBookLibs/3rdParty/catch",
+					"-I$SRCROOT/../../../Include",
+					"-I$WXWIN/build-release/lib/wx/include/osx_cocoa-unicode-static-3.1",
+					"-I$WXWIN/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-DwxDEBUG_LEVEL=0",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__",
+					"-DUSE_WXWIDGETS",
+					"-DUSING_CATCH2",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

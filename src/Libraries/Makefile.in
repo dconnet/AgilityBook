@@ -15,73 +15,37 @@ VPATH       = @srcdir@
 TOPBUILDDIR = ./@top_builddir@
 
 ##########
+# Recursively make in these subdirectories
+##########
+SUBDIRS = ARB
+
+##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/AgilityBookLibs/Include -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/AgilityBookLibs/3rdParty/LibFmt/include
+INCLUDES =
 
 ##########
 # List of programs and archives to link
 ##########
-ARCHIVES = libarb
+#PROGRAMS = arb testarb
+#ARCHIVES = arblib
 
 ##########
 # Source files for each target
 ##########
-libarb_SRCS = \
-	ARBAgilityRecordBook.cpp \
-	ARB_Q.cpp \
-	ARBBase.cpp \
-	ARBCalcPoints.cpp \
-	ARBCalendar.cpp \
-	ARBConfig.cpp \
-	ARBConfigAction.cpp \
-	ARBConfigDivision.cpp \
-	ARBConfigEvent.cpp \
-	ARBConfigFault.cpp \
-	ARBConfigLevel.cpp \
-	ARBConfigLifetimeName.cpp \
-	ARBConfigLifetimePoints.cpp \
-	ARBConfigMultiQ.cpp \
-	ARBConfigOtherPoints.cpp \
-	ARBConfigPlaceInfo.cpp \
-	ARBConfigScoring.cpp \
-	ARBConfigSubLevel.cpp \
-	ARBConfigTitle.cpp \
-	ARBConfigTitlePoints.cpp \
-	ARBConfigVenue.cpp \
-	ARBDog.cpp \
-	ARBDogClub.cpp \
-	ARBDogExistingPoints.cpp \
-	ARBDogNotes.cpp \
-	ARBDogReferenceRun.cpp \
-	ARBDogRegNum.cpp \
-	ARBDogRun.cpp \
-	ARBDogRunOtherPoints.cpp \
-	ARBDogRunPartner.cpp \
-	ARBDogRunScoring.cpp \
-	ARBDogTitle.cpp \
-	ARBDogTrial.cpp \
-	ARBInfo.cpp \
-	ARBInfoItem.cpp \
-	ARBLocalization.cpp \
-	ARBTraining.cpp
+
 
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-#arb_LIBS =
+# prog1_LIBS = -lextralib
 # prog1_LDFLAGS = -L/path/to/extralib
-
-##########
-# Precompiled headers
-##########
-PRECOMP_HEADER = $(SRCDIR)/stdafx.h
-
 
 ##########
 # Stuff to install
 ##########
-#INSTALL_BIN = libarb
+#INSTALL_BIN = arb
+#INSTALL_SBIN = prog2
 #INSTALL_MAN = prog1.5
 
 @NAM_RULES@

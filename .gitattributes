@@ -10,6 +10,8 @@
 *.sh   eol=lf
 *.svg  eol=lf
 *.xml  eol=lf
+*.pbxproj eol=lf
+*.xcworkspacedata eol=lf
 
 # Avery label files
 *.avery binary

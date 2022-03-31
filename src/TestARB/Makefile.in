@@ -17,7 +17,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/Include -I$(TOPSRCDIR)/3rdParty/LibFmt/include -I$(TOPSRCDIR)/3rdParty/LibTidyHtml/include -I$(TOPSRCDIR)/3rdParty/catch -DUSING_CATCH2
+INCLUDES += -I$(TOPSRCDIR)/AgilityBookLibs/Include -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/AgilityBookLibs/3rdParty/LibFmt/include -I$(TOPSRCDIR)/AgilityBookLibs/3rdParty/LibTidyHtml/include -I$(TOPSRCDIR)/AgilityBookLibs/3rdParty/catch -DUSING_CATCH2
 
 ##########
 # List of programs and archives to link
@@ -32,9 +32,6 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 	Local.cpp \
 	TestAgilityRecordBook.cpp \
 	TestARB.cpp \
-	TestArchive.cpp \
-	TestBinaryData.cpp \
-	TestBreakLine.cpp \
 	TestCalcPoints.cpp \
 	TestCalendar.cpp \
 	TestConfig.cpp \
@@ -52,7 +49,6 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 	TestConfigTitle.cpp \
 	TestConfigTitlePoints.cpp \
 	TestConfigVenue.cpp \
-	TestDate.cpp \
 	TestDog.cpp \
 	TestDogClub.cpp \
 	TestDogExistingPoints.cpp \
@@ -65,30 +61,23 @@ PROGRAMS = @PACKAGE_TEST_SHORTNAME@
 	TestDogRunScoring.cpp \
 	TestDogTitle.cpp \
 	TestDogTrial.cpp \
-	TestDouble.cpp \
 	TestElement.cpp \
 	TestErrorCallback.cpp \
 	TestInfoItem.cpp \
 	TestLib.cpp \
-	TestMailto.cpp \
-	TestMD5.cpp \
 	TestMisc.cpp \
 	TestQ.cpp \
-	TestString.cpp \
-	TestTidy.cpp \
-	TestTraining.cpp \
-	TestUtils.cpp \
-	TestVersion.cpp
+	TestTraining.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-@PACKAGE_TEST_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/Libraries/LibARBWin -larbwin -L$(TOPBUILDDIR)/Libraries/ARB -larb -L$(TOPBUILDDIR)/Libraries/ARBCommon -larbcommon -L$(TOPBUILDDIR)/3rdParty/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/3rdParty/LibFmt -lfmt
+@PACKAGE_TEST_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/Libraries/ARB -larb -L$(TOPBUILDDIR)/AgilityBookLibs/LibARBWin -larbwin -L$(TOPBUILDDIR)/AgilityBookLibs/ARBCommon -larbcommon -L$(TOPBUILDDIR)/AgilityBookLibs/3rdParty/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/AgilityBookLibs/3rdParty/LibFmt -lfmt
 
 ##########
 # Precompiled headers
 ##########
-PRECOMP_HEADER = $(TOPSRCDIR)/TestARB/stdafx.h
+PRECOMP_HEADER = $(SRCDIR)/stdafx.h
 
 ##########
 # Stuff to install
@@ -99,11 +88,11 @@ INSTALL_BIN = @PACKAGE_TEST_SHORTNAME@
 
 @PACKAGE_TEST_SHORTNAME@.dat: res/CompileDatList.txt
 	echo "LANGDIR $(CURDIR)"
-	python3 $(TOPSRCDIR)/Projects/CompileLang.py -w $(WXWIN) -s $(TOPSRCDIR)/lang arb.po $(CURDIR) @PACKAGE_TEST_SHORTNAME@
-	python3 $(TOPSRCDIR)/Projects/CompileDatafile.py -x -l $(CURDIR)/lang "$(TOPSRCDIR)/TestARB/res/CompileDatList.txt" $(CURDIR) @PACKAGE_TEST_SHORTNAME@
+	python3 $(SRCDIR)/../../AgilityBookLibs/Projects/CompileLang.py -w $(WXWIN) -s $(SRCDIR)/../lang arb.po $(CURDIR) @PACKAGE_TEST_SHORTNAME@
+	python3 $(SRCDIR)/../../AgilityBookLibs/Projects/CompileDatafile.py -x -l $(CURDIR)/lang "$(SRCDIR)/res/CompileDatList.txt" $(CURDIR) @PACKAGE_TEST_SHORTNAME@
 
 all: @PACKAGE_TEST_SHORTNAME@.dat @PACKAGE_TEST_SHORTNAME@
-	python3 $(TOPSRCDIR)/Projects/RunARBTests.py $(TOPSRCDIR) $(CURDIR) @PACKAGE_TEST_SHORTNAME@ Mac
+	python3 $(SRCDIR)/../../AgilityBookLibs/Projects/RunARBTests.py $(SRCDIR) $(CURDIR) @PACKAGE_TEST_SHORTNAME@ Mac
 
 dist:: all $(PHONY)
 

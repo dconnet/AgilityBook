@@ -17,7 +17,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/Include -I$(TOPSRCDIR)/3rdParty/LibFmt/include
+INCLUDES += -I$(TOPSRCDIR)/AgilityBookLibs/Include -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/AgilityBookLibs/3rdParty/LibFmt/include
 
 ##########
 # List of programs and archives to link
@@ -38,12 +38,12 @@ PROGRAMS = @PACKAGE_HLP_SHORTNAME@
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-@PACKAGE_HLP_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/Libraries/LibARBWin -larbwin -L$(TOPBUILDDIR)/Libraries/ARB -larb -L$(TOPBUILDDIR)/Libraries/ARBCommon -larbcommon -L$(TOPBUILDDIR)/3rdParty/LibFmt -lfmt
+@PACKAGE_HLP_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/Libraries/ARB -larb -L$(TOPBUILDDIR)/AgilityBookLibs/LibARBWin -larbwin -L$(TOPBUILDDIR)/AgilityBookLibs/ARBCommon -larbcommon -L$(TOPBUILDDIR)/AgilityBookLibs/3rdParty/LibFmt -lfmt
 
 ##########
 # Precompiled headers
 ##########
-PRECOMP_HEADER = $(TOPSRCDIR)/ARBHelp/stdafx.h
+PRECOMP_HEADER = $(SRCDIR)/stdafx.h
 
 ##########
 # Stuff to install
@@ -53,7 +53,7 @@ PRECOMP_HEADER = $(TOPSRCDIR)/ARBHelp/stdafx.h
 @NAM_RULES@
 
 @PACKAGE_HLP_SHORTNAME@.dat: res/CompileDatList.txt
-	python3 $(TOPSRCDIR)/Projects/CompileDatafile.py -x $(TOPSRCDIR)/ARBHelp/res/CompileDatList.txt $(CURDIR) @PACKAGE_HLP_SHORTNAME@
+	python3 $(SRCDIR)/../../AgilityBookLibs/Projects/CompileDatafile.py -x $(SRCDIR)/res/CompileDatList.txt $(CURDIR) @PACKAGE_HLP_SHORTNAME@
 
 all: @PACKAGE_HLP_SHORTNAME@.dat @PACKAGE_HLP_SHORTNAME@
 
@@ -65,7 +65,7 @@ dist:: all $(PHONY)
 	echo 'APPL????\c' > $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/PkgInfo
 	cp @PACKAGE_HLP_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/MacOS/@PACKAGE_HLP_SHORTNAME@
 	mkdir -p $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources
-	cp $(TOPSRCDIR)/Win/res/AgilityBook.icns $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/
+	cp $(SRCDIR)/../Win/res/AgilityBook.icns $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/
 	cp @PACKAGE_HLP_SHORTNAME@.dat $(TOPBUILDDIR)/@PACKAGE_HLP_SHORTNAME@.app/Contents/Resources/
 
 ################################################################################

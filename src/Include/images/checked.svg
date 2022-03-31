@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="16" height="16" version="1.1" xmlns="http://www.w3.org/2000/svg">
- <path id="canvas" fill-opacity="0" fill="#F6F6F6" d="m16 16h-16v-16h16v16z"/>
- <path id="outline" fill="#F6F6F6" d="m16 16h-16v-16h16v16z"/>
- <path id="iconBg" fill="#424242" d="m1 1v14h14v-14h-14zm13 13h-12v-12h12v12zm-8-2-2-4h2l1 2 3-6h2l-4 8h-2z"/>
- <path id="iconFg" fill="#F0EFF1" d="m2 14h12v-12h-12v12zm4-6 1 2 3-6h2l-4 8h-2l-2-4h2z"/>
-</svg>

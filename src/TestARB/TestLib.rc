@@ -64,8 +64,6 @@ IDR_MAINFRAME           ICON                    "../Win/res/AgilityBook.ico"
 
 TESTWXARB_DAT           DATAFILE                "TestwxARB.dat"
 
-TESTARCHIVE_ZIP         DATAFILE                "res/TestArchive.zip"
-
 
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////

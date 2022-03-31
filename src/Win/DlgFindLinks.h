@@ -20,7 +20,9 @@
  */
 
 #include "ARB/ARBTypes2.h"
-#include "LibARBWin/ColumnOrder.h"
+
+#include "ColumnOrder.h"
+
 #include <vector>
 class CReportListCtrl;
 class wxListEvent;

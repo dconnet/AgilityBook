@@ -1,5 +1,5 @@
 # Ignore MSW build directory
-/bin/*
+/src/bin/*
 
 /build/**/*.pyc
 
@@ -14,14 +14,12 @@
 .vscode
 
 # Ignore (recommended and things I do) Mac build directory (and generated files)
-/src/build-cocoa/*
-/src/build-cocoa-debug/*
-/src/build-rel/*
-/src/build-debug/*
+/build-rel/*
+/build-debug/*
 
-/src/autom4te.cache/*
-/src/configure
-/src/configure~
+/autom4te.cache/*
+/configure
+/configure~
 
 xcuserdata/
 /src/Projects/xcode*/build/*

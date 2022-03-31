@@ -160,7 +160,7 @@ private:
 		return false;
 	}
 };
-static CCallbackManager* g_LangMgr = nullptr;
+static CCallbackManager* g_callbackMgr = nullptr;
 
 
 bool CCallbackManager::SetLang(wxLanguage langId)
@@ -179,8 +179,8 @@ bool CCallbackManager::SetLang(wxLanguage langId)
 
 void SetLang(wxLanguage langId)
 {
-	if (g_LangMgr)
-		g_LangMgr->SetLang(langId);
+	if (g_callbackMgr)
+		g_callbackMgr->SetLang(langId);
 }
 
 
@@ -260,7 +260,7 @@ int main(int argc, char** argv)
 
 	bool bRunTests = true;
 #if defined(__WXWINDOWS__)
-	g_LangMgr = new CCallbackManager(m_Localization);
+	g_callbackMgr = new CCallbackManager(m_Localization);
 	try
 	{
 		SetLang(wxLANGUAGE_ENGLISH_US);
@@ -278,8 +278,8 @@ int main(int argc, char** argv)
 	}
 
 	Element::Terminate();
-	delete g_LangMgr;
-	g_LangMgr = nullptr;
+	delete g_callbackMgr;
+	g_callbackMgr = nullptr;
 
 	if (bClean)
 		delete[] av;
