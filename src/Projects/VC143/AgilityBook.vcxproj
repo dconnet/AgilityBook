@@ -232,7 +232,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\..\AgilityBookLibs\lang -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -246,7 +246,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\..\AgilityBookLibs\lang -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -260,7 +260,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\..\AgilityBookLibs\lang -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -274,7 +274,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\..\AgilityBookLibs\lang -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -288,7 +288,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\..\AgilityBookLibs\lang -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -302,7 +302,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\..\AgilityBookLibs\lang -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -316,7 +316,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\..\AgilityBookLibs\lang -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -333,7 +333,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\..\AgilityBookLibs\lang -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -350,7 +350,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\..\AgilityBookLibs\lang -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -367,7 +367,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\..\AgilityBookLibs\lang -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -384,7 +384,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\..\AgilityBookLibs\lang -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
@@ -401,7 +401,7 @@
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
+      <Command>python "$(BuildScriptDir)CompileLang.py" -w $(wxWin) -s $(ProjectDir)..\..\..\AgilityBookLibs\lang -s $(ProjectDir)..\..\lang arb.po "$(IntDir)." "$(TargetName)"</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Command>python "$(BuildScriptDir)CompileDatafile.py" -l "$(IntDir)lang" "$(ProjectDir)..\..\Win\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>

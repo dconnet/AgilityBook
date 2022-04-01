@@ -1,5 +1,5 @@
 # Ignore MSW build directory
-/src/bin/*
+/bin/*
 
 /build/**/*.pyc
 
