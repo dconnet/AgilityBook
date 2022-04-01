@@ -1,12 +1,12 @@
 {
 	"folders": [
 		{
-			"path": ".."
+			"path": "../.."
 		}
 	],
 	"settings": {
 		"files.watcherExclude": {
-			"../build-*/**": true,
+			"../../build-*/**": true,
 		}
 	},
 	"launch": {
