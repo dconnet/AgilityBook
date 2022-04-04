@@ -201,21 +201,18 @@ List of venues we can select from.
 
 bool CCalSitesApp::GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg) const
 {
-	outSvg = false;
+	outSvg = true;
 
 	bool found = true;
 	if (id == ImageMgrApp)
 	{
 		// No SVG for the icon yet
-		//#if wxCHECK_VERSION(3, 1, 6)
 		// outName = L"AgilityBook";
-		// outSvg = true;
-		//#else
+		outSvg = false;
 		if (client == wxART_MESSAGE_BOX)
 			outName = L"AgilityBook32";
 		else
 			outName = L"AgilityBook16";
-		//#endif
 	}
 
 	else if (id == ImageMgrChecked)

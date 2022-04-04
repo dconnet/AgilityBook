@@ -99,15 +99,12 @@ bool CARBHelpApp::GetResImageName(wxArtID const& id, wxArtClient const& client, 
 	if (id == ImageMgrApp)
 	{
 		// No SVG for the icon yet
-		//#if wxCHECK_VERSION(3, 1, 6)
 		// outName = L"AgilityBook";
 		// outSvg = true;
-		//#else
 		if (client == wxART_MESSAGE_BOX)
 			outName = L"AgilityBook32";
 		else
 			outName = L"AgilityBook16";
-		//#endif
 	}
 
 	else

@@ -8,6 +8,7 @@
 # Note: Found old OSX SDKs at https://github.com/phracker/MacOSX-SDKs/releases
 #
 # History
+# 2022-04-04 Upgraded 3.1.5 to 3.1.6
 # 2022-01-22 Changed to C++17. Min OSX10.12
 # 2021-12-20 Added SDK12.1
 # 2021-11-30 Added SDK12.0, arm64.
@@ -38,31 +39,18 @@ export TARGETSDK=
 export VERSION=
 export WXWIN=
 
-USAGE="Usage $0 trunk|3.1.5|3.1.4|3.1.3|3.1.2 [debug|release] [test]"
+USAGE="Usage $0 trunk|3.1.6 [debug|release] [test]"
 
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/devtools/wx/trunk
 	VERSION="--disable-compat28 --disable-compat30"
 	MAC_CONFIG_PARAMS=" --disable-nativedvc"
 	MAC_MIN_OS=10.12
-elif test "x$1" = "x3.1.5"; then
-	WXWIN=~/devtools/wx/wxWidgets-3.1.5
+elif test "x$1" = "x3.1.6"; then
+	WXWIN=~/devtools/wx/wxWidgets-3.1.6
 	VERSION="--disable-compat28 --disable-compat30"
 	MAC_CONFIG_PARAMS=" --disable-nativedvc"
 	MAC_MIN_OS=10.12
-elif test "x$1" = "x3.1.4"; then
-	WXWIN=~/devtools/wx/wxWidgets-3.1.4
-	VERSION="--disable-compat28 --disable-compat30"
-	MAC_CONFIG_PARAMS=" --disable-nativedvc"
-	MAC_MIN_OS=10.10
-elif test "x$1" = "x3.1.3"; then
-	WXWIN=~/devtools/wx/wxWidgets-3.1.3
-	VERSION="--disable-compat28 --disable-compat30"
-	MAC_MIN_OS=10.7
-elif test "x$1" = "x3.1.2"; then
-	WXWIN=~/devtools/wx/wxWidgets-3.1.2
-	VERSION="--disable-compat28 --disable-compat30"
-	MAC_MIN_OS=10.7
 else
 	echo $USAGE
 	exit

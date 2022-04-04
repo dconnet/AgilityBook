@@ -1,9 +1,5 @@
-../../../AgilityBookLibs/Include/images/checked.png
 ../../../AgilityBookLibs/Include/images/checked.svg
-../../../AgilityBookLibs/Include/images/checked@2x.png
-../../../AgilityBookLibs/Include/images/unchecked.png
 ../../../AgilityBookLibs/Include/images/unchecked.svg
-../../../AgilityBookLibs/Include/images/unchecked@2x.png
 ../../Include/images/AgilityBook16.png
 ../../Include/images/AgilityBook16@2x.png
 ../../Include/images/AgilityBook256.png

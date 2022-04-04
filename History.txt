@@ -1,9 +1,10 @@
-9/29/2021: v3.6.1.<development>
+4/4/2022: v3.6.1.<development>
 - Notes:
   - pre Mac-10.12 support dropped.
 - Bumped Configuration v66:
   - NADAC. Removed Extreme, Hoopers, Barrelers, added Grounders.
 - New features / Enhancements:
+  - Updated to wxWidgets 3.1.6
   - Add gamble closing time to run printout.
   - Condense notes (club/judge/location) when saving.
     (Previously only done on import or 'OK' from the InfoNote dialog.)

@@ -542,427 +542,280 @@ bool CAgilityBookApp::InitLanguage()
 bool CAgilityBookApp::GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg)
 	const
 {
-	outSvg = false;
+	outSvg = true;
 
 	bool found = true;
 	if (id == ImageMgrApp)
 	{
 		// No SVG for the icon yet
-		//#if wxCHECK_VERSION(3, 1, 6)
 		// outName = L"AgilityBook";
-		// outSvg = true;
-		//#else
+		outSvg = false;
 		if (client == wxART_MESSAGE_BOX)
 			outName = L"AgilityBook32";
 		else
 			outName = L"AgilityBook16";
-		//#endif
 	}
 
 	else if (id == ImageMgrRuns)
 	{
-#if wxCHECK_VERSION(3, 1, 6)
 		outName = L"run";
-		outSvg = true;
-#else
-		if (client == wxART_TOOLBAR)
-			outName = L"toolbarRun";
-		else
-			outName = L"run";
-#endif
 	}
 
 	else if (id == ImageMgrPoints)
 	{
-#if wxCHECK_VERSION(3, 1, 6)
 		outName = L"title_visible";
-		outSvg = true;
-#else
-		outName = L"points";
-#endif
 	}
 
 	else if (id == ImageMgrCalendar)
 	{
-#if wxCHECK_VERSION(3, 1, 6)
 		outName = L"toolbarCalendar";
-		outSvg = true;
-#else
-		if (client == wxART_TOOLBAR)
-			outName = L"toolbarCalendar";
-		else
-			outName = L"calendar";
-#endif
 	}
 
 	else if (id == ImageMgrTraining)
 	{
-#if wxCHECK_VERSION(3, 1, 6)
 		outName = L"training";
-		outSvg = true;
-#else
-		if (client == wxART_TOOLBAR)
-			outName = L"toolbarTraining";
-		else
-			outName = L"training";
-#endif
 	}
 
 	else if (id == ImageMgrDog)
 	{
-#if wxCHECK_VERSION(3, 1, 6)
 		outName = L"dog";
-		outSvg = true;
-#else
-		if (client == wxART_TOOLBAR)
-			outName = L"toolbarDog";
-		else
-			outName = L"dog";
-#endif
 	}
 
 	else if (id == ImageMgrTrial)
 	{
-#if wxCHECK_VERSION(3, 1, 6)
 		outName = L"trial";
-		outSvg = true;
-#else
-		if (client == wxART_TOOLBAR)
-			outName = L"toolbarTrial";
-		else
-			outName = L"trial";
-#endif
 	}
 
 	else if (id == ImageMgrVenueAAC)
 	{
 		outName = L"venue_aac";
+		outSvg = false;
 	}
 	else if (id == ImageMgrVenueAKC)
 	{
 		outName = L"venue_akc";
+		outSvg = false;
 	}
 	else if (id == ImageMgrVenueASCA)
 	{
 		outName = L"venue_asca";
+		outSvg = false;
 	}
 	else if (id == ImageMgrVenueBHA)
 	{
 		outName = L"venue_bha";
+		outSvg = false;
 	}
 	else if (id == ImageMgrVenueCKC)
 	{
 		outName = L"venue_ckc";
+		outSvg = false;
 	}
 	else if (id == ImageMgrVenueCKCSC)
 	{
 		outName = L"venue_ckcsc";
+		outSvg = false;
 	}
 	else if (id == ImageMgrVenueCPE)
 	{
 		outName = L"venue_cpe";
+		outSvg = false;
 	}
 	else if (id == ImageMgrVenueDOCNA)
 	{
 		outName = L"venue_docna";
+		outSvg = false;
 	}
 	else if (id == ImageMgrVenueFCI)
 	{
 		outName = L"venue_fci";
+		outSvg = false;
 	}
 	else if (id == ImageMgrVenueNADAC)
 	{
 		outName = L"venue_nadac";
+		outSvg = false;
 	}
 	else if (id == ImageMgrVenueSCC)
 	{
 		outName = L"venue_scc";
+		outSvg = false;
 	}
 	else if (id == ImageMgrVenueSweepstakes)
 	{
 		outName = L"venue_sweep";
+		outSvg = false;
 	}
 	else if (id == ImageMgrVenueTDAA)
 	{
 		outName = L"venue_tdaa";
+		outSvg = false;
 	}
 	else if (id == ImageMgrVenueUKC)
 	{
 		outName = L"venue_ukc";
+		outSvg = false;
 	}
 	else if (id == ImageMgrVenueUKI)
 	{
 		outName = L"venue_uki";
+		outSvg = false;
 	}
 	else if (id == ImageMgrVenueUSDAA)
 	{
 		outName = L"venue_usdaa";
+		outSvg = false;
 	}
 	else if (id == ImageMgrVenueVALOR)
 	{
 		outName = L"venue_valor";
+		outSvg = false;
 	}
 
 	else if (id == ImageMgrCRCD)
 	{
 		outName = L"crcd";
+		outSvg = false;
 	}
 	else if (id == ImageMgrChecked)
 	{
 		outName = L"checked";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrUnChecked)
 	{
 		outName = L"unchecked";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrAccomConfirm)
 	{
 		outName = L"AccConfirm";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrAccomNone)
 	{
 		outName = L"AccNone";
-#if wxCHECK_VERSION(3, 1, 6)
 		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrAccomTodo)
 	{
 		outName = L"AccTodo";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrCalEntered)
 	{
 		outName = L"CalEntered";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrCalEnteredTentative)
 	{
 		outName = L"CalEnteredTentative";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrCalPending)
 	{
 		outName = L"CalPending";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrCalPendingTentative)
 	{
 		outName = L"CalPendingTentative";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrCheck)
 	{
 		outName = L"check";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrCalPlanTentative)
 	{
 		outName = L"CalPlanTentative";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrQuestion)
 	{
 		outName = L"question";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
-#if !wxCHECK_VERSION(3, 1, 6)
-	else if (id == ImageMgrHeaderDown)
-	{
-		outName = L"HdrDown";
-	}
-	else if (id == ImageMgrHeaderUp)
-	{
-		outName = L"HdrUp";
-	}
-#endif
-
 	else if (id == ImageMgrTitle)
 	{
-#if wxCHECK_VERSION(3, 1, 6)
 		outName = L"title_visible";
-		outSvg = true;
-#else
-		outName = L"toolbarTitle";
-#endif
 	}
 	else if (id == ImageMgrTitleHidden)
 	{
 		outName = L"hidden";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrTitleTitledHidden)
 	{
 		outName = L"title_hidden";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrTitleTitledHiddenHave)
 	{
 		outName = L"title_hidden_have";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrTitleTitled)
 	{
-#if wxCHECK_VERSION(3, 1, 6)
 		outName = L"title_visible";
-		outSvg = true;
-#else
-		outName = L"title_visible";
-#endif
 	}
 	else if (id == ImageMgrTitleTitledHave)
 	{
 		outName = L"title_visible_have";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 
 	else if (id == ImageMgrNoteButton)
 	{
 		outName = L"Note";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrInfoNote)
 	{
-#if wxCHECK_VERSION(3, 1, 6)
 		outName = L"Note";
 		outSvg = true;
-#else
-		outName = L"NoteNote";
-#endif
 	}
 	else if (id == ImageMgrInfoNoteAdded)
 	{
 		outName = L"NoteAdded";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrInfoNoteNoteAdded)
 	{
 		outName = L"NoteNoteAdded";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 
 	else if (id == ImageMgrAbout)
 	{
 		outName = L"toolbarAbout";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrCopy)
 	{
 		outName = L"toolbarCopy";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrCut)
 	{
 		outName = L"toolbarCut";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrDelete)
 	{
 		outName = L"toolbarDelete";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrFind)
 	{
 		outName = L"toolbarFind";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrNew)
 	{
 		outName = L"toolbarNew";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrOpen)
 	{
 		outName = L"toolbarOpen";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrPaste)
 	{
 		outName = L"toolbarPaste";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrPreview)
 	{
 		outName = L"toolbarPreview";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrPrint)
 	{
 		outName = L"toolbarPrint";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrSave)
 	{
 		outName = L"toolbarSave";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 	else if (id == ImageMgrSettings)
 	{
 		outName = L"toolbarSettings";
-#if wxCHECK_VERSION(3, 1, 6)
-		outSvg = true;
-#endif
 	}
 
 	else

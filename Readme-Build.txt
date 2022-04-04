@@ -30,7 +30,7 @@ Currently using version 3.10.0.
 - Note, also install pyWin32 from https://github.com/mhammond/pywin32
 
 wxWidgets: http://www.wxwidgets.org/
-Currently using version 3.1.5. Min supported is 3.1.5.
+Currently using version 3.1.6. Min supported is 3.1.6.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR) IMPORTANT: This means the directory name in fr_FR
@@ -38,7 +38,7 @@ Make sure WXWIN is set to wxWidgets root directory.
 - Mac/Unix: Use .../build/setupwx.sh to setup WX build. And ". setwxpath.sh" to
   set the ARB compile environment.
 
-=== Changes to 3.1.5:
+=== Changes to 3.1.6:
   (include/wx/msw/setup.h)
   - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
   - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
@@ -46,42 +46,6 @@ Make sure WXWIN is set to wxWidgets root directory.
     the library is compiled one way and the users do something different.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
----
-diff --git a/src/common/prntbase.cpp b/src/common/prntbase.cpp
-index af5a731807..fd0651f164 100644
---- a/src/common/prntbase.cpp
-+++ b/src/common/prntbase.cpp
-@@ -1058,7 +1058,7 @@ void wxPreviewCanvas::OnMouseWheel(wxMouseEvent& event)
-             else
-                 delta = 50;
-
--            if ( event.GetWheelRotation() > 0 )
-+            if ( event.GetWheelRotation() < 0 )
-                 delta = -delta;
-
-             int newZoom = currentZoom + delta;
----
->diff ...\wxWidgets-3.1.5\include\msvc\wx\setup.h ...\newone\setup.h
-79c79
-<             #elif _MSC_VER >= 1920 && _MSC_VER < 2000
----
->             #elif _MSC_VER >= 1920 && _MSC_VER < 1930
-80a81,82
->             #elif _MSC_VER >= 1930 && _MSC_VER < 2000
->                 #define wxCOMPILER_PREFIX vc143
----
->diff -c toolbkg.cpp.orig toolbkg.cpp
-*** toolbkg.cpp.orig    Mon Apr 12 14:23:58 2021
---- toolbkg.cpp Fri Mar 04 09:58:50 2022
-***************
-*** 403,408 ****
---- 403,409 ----
-      if (page == wxNOT_FOUND)
-      {
-          // this happens only of page id has changed afterwards
-+         event.Skip();
-          return;
-      }
 
 
 To build for VC, see ./build/CompileWX.py
