@@ -4,6 +4,7 @@
 # Must be run from the directory this file is in.
 #
 # Revision History
+# 2022-04-05 Make vc143 default.
 # 2021-11-11 Moved from Projects/Installer to build, pyDcon usage
 # 2021-11-09 Add vc143 support
 # 2020-01-26 Change default compiler to vc142, default wx to WXWIN
@@ -31,11 +32,11 @@
 # 2010-06-11 Support building on x64 OS
 # 2010-05-30 Converted .bat to .py (keeps environment clean!)
 """BuildAll.py -w wxwin [-b type] compiler*
-   -w wxwin: Root of wx tree (default: %WXWIN%)'
-   -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
-   -c config: 'release' or 'debug' (default, release)
-   -t:       Testing, just print commands to run
-   compiler: vc141, vc142, vc143 (default: vc142)
+   -w wxwin:    Root of wx tree (default: %WXWIN%)'
+   -b type:     type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
+   -c config:   'release' or 'debug' (default, release)
+   -t:          Testing, just print commands to run
+   compiler:    vc142, vc143 (default: vc143)
 """
 
 import getopt
@@ -45,15 +46,16 @@ import sys
 
 import pyDcon
 
-onlyTest = False
+defCompiler = 'vc143'
+solution = 'AgilityBook.sln'
 
 # Verbosity:detailed, multiprocessors
 # Verbosity:q/m/n/d/diag
-msbuildOfficial = 'official.props'
 msbuildOpts = '/v:n /m'
+msbuildOfficial = r'..\..\AgilityBookLibs\Projects\props\official.props'
 
 # Relative to this directory, used as: curDir + buildBin + ...
-buildBin = '/../bin/' 
+buildBin = '\\..\\bin\\' 
 
 
 def AddCompilers(compilers, c):
@@ -73,13 +75,27 @@ def AddCompiler(compilers, c):
 	return True
 
 
-def main():
-	global onlyTest, msbuildOfficial, msbuildOpts
+def DoCompile(projectDir, compiler, config, clean, onlyTest):
+	vcBaseDir, vcvarsall, platformDir, platform = pyDcon.VSPaths.GetCompilerPaths(compiler)
+	curDir = os.getcwd()
 
-	bit64on64 = False
-	# 64bit on 64bit
-	if 'PROCESSOR_ARCHITECTURE' in os.environ and os.environ['PROCESSOR_ARCHITECTURE'] == 'AMD64':
-		bit64on64 = True
+	cmds = [
+		'title ' + compiler + ' ' + config + ' ' + platform,
+		'cd ' + curDir + '\\..\\src\\Projects\\' + projectDir,
+		'set "VSCMD_START_DIR=%CD%"',
+		'call ' + vcvarsall,
+		'msbuild ' + solution + ' ' + msbuildOpts + ' /t:Build /p:Configuration=' + config + ';Platform=' + platform]
+
+	if clean:
+		pyDcon.RmMinusRF.RmMinusRF(curDir + buildBin + platformDir + platform)
+	pyDcon.Run.RunCmds(cmds, onlyTest)
+	if not onlyTest and not os.access(curDir + buildBin + platformDir + platform + '/' + config + '/AgilityBook.exe', os.F_OK):
+		print('ERROR: Compile failed, bailing out')
+		return 1
+
+
+def main():
+	global solution, msbuildOfficial, msbuildOpts
 
 	wxwin = ''
 	if 'WXWIN' in os.environ:
@@ -87,8 +103,10 @@ def main():
 
 	compilers = set()
 	updateBuildNumber = False
-	configuration = 'Release'
+	config = 'Release'
 	clean = False
+	onlyTest = False
+
 	try:
 		opts, args = getopt.getopt(sys.argv[1:], 'w:b:c:t')
 	except getopt.error as msg:
@@ -113,14 +131,22 @@ def main():
 				return 1
 		elif '-c' == o:
 			if 'release' == a:
-				configuration = 'Release'
+				config = 'Release'
 			elif 'debug' == a:
-				configuration = 'Debug'
+				config = 'Debug'
 			else:
 				print('Usage:', __doc__)
 				return 1
 		elif '-t' == o:
 			onlyTest = True
+
+	if not os.access(msbuildOfficial, os.F_OK):
+		print('ERROR: File "' + msbuildOfficial+ '" does not exist')
+		return 1
+
+	# Add the official build props. Note: Do not use Directory.Build.props
+	# for automatic inclusion. Building directly in devenv will pick that up.
+	msbuildOpts = msbuildOpts + ' /p:ForceImportBeforeCppTargets=' + msbuildOfficial
 
 	for c in args:
 		if not AddCompilers(compilers, c):
@@ -128,7 +154,7 @@ def main():
 			return 1
 
 	if 0 == len(compilers):
-		AddCompilers(compilers, 'vc142')
+		AddCompilers(compilers, defCompiler)
 
 	if 0 == len(compilers) or len(wxwin) == 0:
 		print('Usage:', __doc__)
@@ -136,13 +162,8 @@ def main():
 
 	os.environ['WXWIN'] = wxwin
 
-	curDir = os.getcwd()
-
-	# Add the official build props. Note: Do not use Directory.Build.props
-	# for automatic inclusion. Building directly in devenv will pick that up.
-	msbuildOpts = msbuildOpts + ' /p:ForceImportBeforeCppTargets=' + os.path.abspath(curDir + '\\..\\AgilityBookLibs\\Projects\\props\\' + msbuildOfficial)
-
 	if updateBuildNumber:
+		curDir = os.getcwd()
 		cmds = [
 			r'cd ' + curDir + '\\..\\AgilityBookLibs\\Include',
 			r'python SetBuildNumber.py --official',
@@ -159,37 +180,8 @@ def main():
 	#  Targets: AgilityBook, ARBHelp, ARBUpdater, LibARB, LibTidy, TestARB
 
 	for compiler in compilers:
-		vcBaseDir, vcvarsall, platformDir, platform = pyDcon.VSPaths.GetCompilerPaths(compiler)
-
-		cmds32 = [
-			r'title ' + compiler + ' ' + configuration + ' ' + platform,
-			r'cd ' + curDir + '\\..\\src\\Projects\\' + compiler,
-			r'set "VSCMD_START_DIR=%CD%"',
-			r'call ' + vcvarsall,
-			r'msbuild AgilityBook.sln ' + msbuildOpts + ' /t:Build /p:Configuration=' + configuration + ';Platform=' + platform]
-
-		if clean:
-			pyDcon.RmMinusRF.RmMinusRF(curDir + buildBin + platformDir + platform)
-		pyDcon.Run.RunCmds(cmds32, onlyTest)
-		if not onlyTest and not os.access(curDir + buildBin + platformDir + platform + '/' + configuration + '/AgilityBook.exe', os.F_OK):
-			print('ERROR: Compile failed, bailing out')
-			return 1
-
-		vcBaseDir, vcvarsall, platformDir, platform = pyDcon.VSPaths.GetCompilerPaths(compiler + 'x64')
-		cmds64 = [
-			r'title ' + compiler + ' ' + configuration + ' ' + platform,
-			r'cd ' + curDir + '\\..\\src\\Projects\\' + compiler,
-			r'set "VSCMD_START_DIR=%CD%"',
-			r'call ' + vcvarsall,
-			r'msbuild AgilityBook.sln ' + msbuildOpts + ' /t:Build /p:Configuration=' + configuration + ';Platform=' + platform]
-
-		if clean:
-			pyDcon.RmMinusRF.RmMinusRF(curDir + buildBin + platformDir + platform)
-		pyDcon.Run.RunCmds(cmds64, onlyTest)
-		if not onlyTest and not os.access(curDir + buildBin + platformDir + platform + '/' + configuration + '/AgilityBook.exe', os.F_OK):
-			print('ERROR: Compile failed, bailing out')
-			return 1
-
+		DoCompile(compiler, compiler, config, clean, onlyTest)
+		DoCompile(compiler, compiler + 'x64', config, clean, onlyTest)
 	return 0
 
 
