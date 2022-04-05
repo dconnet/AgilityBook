@@ -52,6 +52,9 @@ onlyTest = False
 msbuildOfficial = 'official.props'
 msbuildOpts = '/v:n /m'
 
+# Relative to this directory, used as: curDir + buildBin + ...
+buildBin = '/../bin/' 
+
 
 def AddCompilers(compilers, c):
 	if not AddCompiler(compilers, c):
@@ -166,9 +169,9 @@ def main():
 			r'msbuild AgilityBook.sln ' + msbuildOpts + ' /t:Build /p:Configuration=' + configuration + ';Platform=' + platform]
 
 		if clean:
-			pyDcon.RmMinusRF.RmMinusRF(curDir + '/../src/bin/' + platformDir + platform)
+			pyDcon.RmMinusRF.RmMinusRF(curDir + buildBin + platformDir + platform)
 		pyDcon.Run.RunCmds(cmds32, onlyTest)
-		if not onlyTest and not os.access(curDir + '/../src/bin/' + platformDir + platform + '/' + configuration + '/AgilityBook.exe', os.F_OK):
+		if not onlyTest and not os.access(curDir + buildBin + platformDir + platform + '/' + configuration + '/AgilityBook.exe', os.F_OK):
 			print('ERROR: Compile failed, bailing out')
 			return 1
 
@@ -181,9 +184,9 @@ def main():
 			r'msbuild AgilityBook.sln ' + msbuildOpts + ' /t:Build /p:Configuration=' + configuration + ';Platform=' + platform]
 
 		if clean:
-			pyDcon.RmMinusRF.RmMinusRF(curDir + '/../src/bin/' + platformDir + platform)
+			pyDcon.RmMinusRF.RmMinusRF(curDir + buildBin + platformDir + platform)
 		pyDcon.Run.RunCmds(cmds64, onlyTest)
-		if not onlyTest and not os.access(curDir + '/../src/bin/' + platformDir + platform + '/' + configuration + '/AgilityBook.exe', os.F_OK):
+		if not onlyTest and not os.access(curDir + buildBin + platformDir + platform + '/' + configuration + '/AgilityBook.exe', os.F_OK):
 			print('ERROR: Compile failed, bailing out')
 			return 1
 
