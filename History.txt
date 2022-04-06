@@ -13,6 +13,7 @@
 - Bug fixes:
   - Fix deletion of multiple selected titles in dog properties.
   - Printing a trial's runs ignored filtering.
+  - Fix validation in Existing Points dialog to prevent saving bad data.
 
 6/18/2021: v3.6.0.116
 - New features / Enhancements:

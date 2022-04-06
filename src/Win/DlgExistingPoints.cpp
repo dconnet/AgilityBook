@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2022-04-06 Add validation.
  * 2016-04-29 Separate lifetime points from title (run) points.
  * 2014-12-31 Changed pixels to dialog units.
  * 2012-05-07 Fixed some comboboxes that should have been readonly.
@@ -541,14 +542,14 @@ ARBConfigScoringPtr CDlgExistingPoints::GetConfigScoring() const
 }
 
 
-void CDlgExistingPoints::SetEnableLists(
+void CDlgExistingPoints::GetEnableLists(
+	ARBExistingPointType type,
 	bool& outVenue,
 	bool& outDivMQ,
 	bool& outLevel,
 	bool& outEvent,
 	bool& outSubName,
-	bool& outTypeName,
-	bool bSet)
+	bool& outTypeName)
 {
 	outVenue = false;
 	outDivMQ = false;
@@ -557,7 +558,7 @@ void CDlgExistingPoints::SetEnableLists(
 	outSubName = false;
 	outTypeName = false;
 
-	switch (GetCurrentType())
+	switch (type)
 	{
 	case ARBExistingPointType::Unknown:
 		break;
@@ -608,16 +609,25 @@ void CDlgExistingPoints::SetEnableLists(
 		outEvent = true;
 		break;
 	}
+}
 
-	if (bSet)
-	{
-		m_ctrlVenues->Enable(outVenue);
-		m_ctrlDivMultiQs->Enable(outDivMQ);
-		m_ctrlLevels->Enable(outLevel);
-		m_ctrlEvents->Enable(outEvent);
-		m_ctrlSubNames->Enable(outSubName);
-		m_ctrlTypeNames->Enable(outTypeName);
-	}
+
+void CDlgExistingPoints::SetEnableLists(
+	bool& outVenue,
+	bool& outDivMQ,
+	bool& outLevel,
+	bool& outEvent,
+	bool& outSubName,
+	bool& outTypeName)
+{
+	GetEnableLists(GetCurrentType(), outVenue, outDivMQ, outLevel, outEvent, outSubName, outTypeName);
+
+	m_ctrlVenues->Enable(outVenue);
+	m_ctrlDivMultiQs->Enable(outDivMQ);
+	m_ctrlLevels->Enable(outLevel);
+	m_ctrlEvents->Enable(outEvent);
+	m_ctrlSubNames->Enable(outSubName);
+	m_ctrlTypeNames->Enable(outTypeName);
 }
 
 
@@ -629,7 +639,7 @@ void CDlgExistingPoints::UpdateControls()
 	bool outEvent;
 	bool outSubName;
 	bool outTypeName;
-	SetEnableLists(outVenue, outDivMQ, outLevel, outEvent, outSubName, outTypeName, true);
+	SetEnableLists(outVenue, outDivMQ, outLevel, outEvent, outSubName, outTypeName);
 	ARBExistingPointType type = GetCurrentType();
 	if (ARBExistingPointType::MQ == type)
 	{
@@ -964,6 +974,9 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 	std::wstring eventName;
 	std::wstring subName;
 	std::wstring multiQ;
+	bool outVenue, outDivMQ, outLevel, outEvent, outSubName, outTypeName;
+	GetEnableLists(type, outVenue, outDivMQ, outLevel, outEvent, outSubName, outTypeName);
+
 	switch (type)
 	{
 	case ARBExistingPointType::Unknown:
@@ -1010,6 +1023,58 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 		venue = m_TextVenue;
 		multiQ = m_TextDivMultiQ;
 		break;
+	}
+	std::wstring strMust = StringUtil::stringW(_("You must select a '{}' name."));
+	if (outVenue && venue.empty())
+	{
+		wxMessageBox(fmt::format(strMust, wxStripMenuCodes(_("IDC_EXISTING_VENUES")).wc_str()), _("Warning"));
+		m_ctrlVenues->SetFocus();
+		return;
+	}
+	if (outDivMQ)
+	{
+		if (ARBExistingPointType::MQ == type)
+		{
+			if (multiQ.empty())
+			{
+				wxMessageBox(fmt::format(strMust, wxStripMenuCodes(_("IDC_EXISTING_MULTIQ")).wc_str()), _("Warning"));
+				m_ctrlDivMultiQs->SetFocus();
+				return;
+			}
+		}
+		else
+		{
+			if (div.empty())
+			{
+				wxMessageBox(fmt::format(strMust, wxStripMenuCodes(_("IDC_EXISTING_DIVISION")).wc_str()), _("Warning"));
+				m_ctrlDivMultiQs->SetFocus();
+				return;
+			}
+		}
+	}
+	if (outLevel && level.empty())
+	{
+		wxMessageBox(fmt::format(strMust, wxStripMenuCodes(_("IDC_EXISTING_LEVEL")).wc_str()), _("Warning"));
+		m_ctrlLevels->SetFocus();
+		return;
+	}
+	if (outEvent && eventName.empty())
+	{
+		wxMessageBox(fmt::format(strMust, wxStripMenuCodes(_("IDC_EXISTING_EVENT")).wc_str()), _("Warning"));
+		m_ctrlEvents->SetFocus();
+		return;
+	}
+	if (outSubName && subName.empty())
+	{
+		wxMessageBox(fmt::format(strMust, wxStripMenuCodes(_("IDC_EXISTING_SUBNAME")).wc_str()), _("Warning"));
+		m_ctrlSubNames->SetFocus();
+		return;
+	}
+	if (outTypeName && typeName.empty())
+	{
+		wxMessageBox(fmt::format(strMust, wxStripMenuCodes(_("IDC_EXISTING_TYPENAME")).wc_str()), _("Warning"));
+		m_ctrlTypeNames->SetFocus();
+		return;
 	}
 
 	if (m_pExistingPoints)

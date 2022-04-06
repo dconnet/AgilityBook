@@ -49,14 +49,21 @@ private:
 	CDlgPointsTypeNameData* GetTypeNameData(int index) const;
 	CDlgPointsMultiQData* GetMultiQData(int index) const;
 	ARBConfigScoringPtr GetConfigScoring() const;
+	void GetEnableLists(
+		ARBExistingPointType type,
+		bool& outVenue,
+		bool& outDivMQ,
+		bool& outLevel,
+		bool& outEvent,
+		bool& outSubName,
+		bool& outTypeName);
 	void SetEnableLists(
 		bool& outVenue,
 		bool& outDivMQ,
 		bool& outLevel,
 		bool& outEvent,
 		bool& outSubName,
-		bool& outTypeName,
-		bool bSet);
+		bool& outTypeName);
 	void UpdateControls();
 	void FillVenues();
 	void FillDivMultiQ();
