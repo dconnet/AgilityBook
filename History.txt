@@ -1,4 +1,4 @@
-4/4/2022: v3.6.1.<development>
+4/6/2022: v3.7.0.<development>
 - Notes:
   - pre Mac-10.12 support dropped.
 - Bumped Configuration v66:
