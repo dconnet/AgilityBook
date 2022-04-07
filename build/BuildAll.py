@@ -52,7 +52,7 @@ solution = 'AgilityBook.sln'
 # Verbosity:detailed, multiprocessors
 # Verbosity:q/m/n/d/diag
 msbuildOpts = '/v:n /m'
-msbuildOfficial = r'..\..\AgilityBookLibs\Projects\props\official.props'
+msbuildOfficial = r'..\AgilityBookLibs\Projects\props\official.props'
 
 # Relative to this directory, used as: curDir + buildBin + ...
 buildBin = '\\..\\bin\\' 
