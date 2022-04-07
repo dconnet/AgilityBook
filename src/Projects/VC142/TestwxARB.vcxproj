@@ -560,12 +560,12 @@
     <ClCompile Include="..\..\TestARB\TestTraining.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />
-    <ClInclude Include="..\..\Include\Platform\arbWarningPush.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupMessages.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\arbWarningPop.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\arbWarningPush.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupARBPost.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupARBPre.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupMessages.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupWX.h" />
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
     <ClInclude Include="..\..\Include\VersionInfoARB.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />
@@ -635,20 +635,7 @@
     <Xml Include="..\..\TestARB\res\Config65_v15_2.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\TestARB\res\CompileDatListTest.txt">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">true</ExcludedFromBuild>
-    </Text>
+    <Text Include="..\..\TestARB\res\CompileDatList.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\AgilityBookLibs\Projects\VC142\LibFmt.vcxproj">

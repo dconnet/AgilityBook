@@ -444,6 +444,12 @@
     <ResourceCompile Include="..\..\CalSites\CalSites.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\arbWarningPop.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\arbWarningPush.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupARBPost.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupARBPre.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupMessages.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupWX.h" />
     <ClInclude Include="..\..\CalSites\ARBConfigCalSite.h" />
     <ClInclude Include="..\..\CalSites\CalendarSites.h" />
     <ClInclude Include="..\..\CalSites\CalendarSiteUSDAA.h" />
@@ -453,12 +459,6 @@
     <ClInclude Include="..\..\CalSites\DlgPluginDetails.h" />
     <ClInclude Include="..\..\CalSites\DlgQueryDetail.h" />
     <ClInclude Include="..\..\CalSites\ICalendarSite.h" />
-    <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />
-    <ClInclude Include="..\..\Include\Platform\arbWarningPush.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupMessages.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
     <ClInclude Include="..\..\Include\VersionInfoARB.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />

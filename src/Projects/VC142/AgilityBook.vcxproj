@@ -532,12 +532,12 @@
     <ClCompile Include="..\..\Win\WizardStart.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />
-    <ClInclude Include="..\..\Include\Platform\arbWarningPush.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupMessages.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\arbWarningPop.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\arbWarningPush.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupARBPost.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupARBPre.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupMessages.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupWX.h" />
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
     <ClInclude Include="..\..\Include\VersionInfoARB.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />
@@ -636,169 +636,89 @@
     <ClInclude Include="..\..\Win\WizardStart.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\Include\images\AccConfirm%402.png" />
-    <Image Include="..\..\Include\images\AccConfirm.png" />
-    <Image Include="..\..\Include\images\AccNone%402.png" />
-    <Image Include="..\..\Include\images\AccNone.png" />
-    <Image Include="..\..\Include\images\AccTodo%402.png" />
-    <Image Include="..\..\Include\images\AccTodo.png" />
-    <Image Include="..\..\Include\images\AgilityBook16%402.png" />
+    <Image Include="..\..\Include\images\AgilityBook16%402x.png" />
     <Image Include="..\..\Include\images\AgilityBook16.png" />
     <Image Include="..\..\Include\images\AgilityBook256.png" />
-    <Image Include="..\..\Include\images\AgilityBook32%402.png" />
+    <Image Include="..\..\Include\images\AgilityBook32%402x.png" />
     <Image Include="..\..\Include\images\AgilityBook32.png" />
-    <Image Include="..\..\Include\images\AgilityBook48%402.png" />
+    <Image Include="..\..\Include\images\AgilityBook48%402x.png" />
     <Image Include="..\..\Include\images\AgilityBook48.png" />
-    <Image Include="..\..\Include\images\calendar%402.png" />
-    <Image Include="..\..\Include\images\calendar.png" />
-    <Image Include="..\..\Include\images\CalEntered%402.png" />
-    <Image Include="..\..\Include\images\CalEntered.png" />
-    <Image Include="..\..\Include\images\CalEnteredTentative%402.png" />
-    <Image Include="..\..\Include\images\CalEnteredTentative.png" />
-    <Image Include="..\..\Include\images\CalPending%402.png" />
-    <Image Include="..\..\Include\images\CalPending.png" />
-    <Image Include="..\..\Include\images\CalPendingTentative%402.png" />
-    <Image Include="..\..\Include\images\CalPendingTentative.png" />
-    <Image Include="..\..\Include\images\CalPlanTentative%402.png" />
-    <Image Include="..\..\Include\images\CalPlanTentative.png" />
-    <Image Include="..\..\Include\images\check%402.png" />
-    <Image Include="..\..\Include\images\check.png" />
-    <Image Include="..\..\Include\images\checked%402.png" />
-    <Image Include="..\..\Include\images\checked.png" />
-    <Image Include="..\..\Include\images\crcd%402.png" />
+    <Image Include="..\..\Include\images\crcd%402x.png" />
     <Image Include="..\..\Include\images\crcd.png" />
-    <Image Include="..\..\Include\images\dog%402.png" />
-    <Image Include="..\..\Include\images\dog.png" />
-    <Image Include="..\..\Include\images\HdrDown%402.png" />
-    <Image Include="..\..\Include\images\HdrDown.png" />
-    <Image Include="..\..\Include\images\HdrUp%402.png" />
-    <Image Include="..\..\Include\images\HdrUp.png" />
-    <Image Include="..\..\Include\images\hidden%402.png" />
-    <Image Include="..\..\Include\images\hidden.png" />
-    <Image Include="..\..\Include\images\Note%402.png" />
-    <Image Include="..\..\Include\images\Note.png" />
-    <Image Include="..\..\Include\images\NoteAdded%402.png" />
-    <Image Include="..\..\Include\images\NoteAdded.png" />
-    <Image Include="..\..\Include\images\NoteNote%402.png" />
-    <Image Include="..\..\Include\images\NoteNote.png" />
-    <Image Include="..\..\Include\images\NoteNoteAdded%402.png" />
-    <Image Include="..\..\Include\images\NoteNoteAdded.png" />
-    <Image Include="..\..\Include\images\points%402.png" />
-    <Image Include="..\..\Include\images\points.png" />
-    <Image Include="..\..\Include\images\question%402.png" />
-    <Image Include="..\..\Include\images\question.png" />
-    <Image Include="..\..\Include\images\run%402.png" />
-    <Image Include="..\..\Include\images\run.png" />
     <Image Include="..\..\Include\images\Splash.png" />
-    <Image Include="..\..\Include\images\title_hidden%402.png" />
-    <Image Include="..\..\Include\images\title_hidden.png" />
-    <Image Include="..\..\Include\images\title_hidden_have%402.png" />
-    <Image Include="..\..\Include\images\title_hidden_have.png" />
-    <Image Include="..\..\Include\images\title_visible%402.png" />
-    <Image Include="..\..\Include\images\title_visible.png" />
-    <Image Include="..\..\Include\images\title_visible_have%402.png" />
-    <Image Include="..\..\Include\images\title_visible_have.png" />
-    <Image Include="..\..\Include\images\toolbarAbout%402.png" />
-    <Image Include="..\..\Include\images\toolbarAbout.png" />
-    <Image Include="..\..\Include\images\toolbarCalendar%402.png" />
-    <Image Include="..\..\Include\images\toolbarCalendar.png" />
-    <Image Include="..\..\Include\images\toolbarCopy%402.png" />
-    <Image Include="..\..\Include\images\toolbarCopy.png" />
-    <Image Include="..\..\Include\images\toolbarCut%402.png" />
-    <Image Include="..\..\Include\images\toolbarCut.png" />
-    <Image Include="..\..\Include\images\toolbarDelete%402.png" />
-    <Image Include="..\..\Include\images\toolbarDelete.png" />
-    <Image Include="..\..\Include\images\toolbarDog%402.png" />
-    <Image Include="..\..\Include\images\toolbarDog.png" />
-    <Image Include="..\..\Include\images\toolbarNew%402.png" />
-    <Image Include="..\..\Include\images\toolbarNew.png" />
-    <Image Include="..\..\Include\images\toolbarOpen%402.png" />
-    <Image Include="..\..\Include\images\toolbarOpen.png" />
-    <Image Include="..\..\Include\images\toolbarPaste%402.png" />
-    <Image Include="..\..\Include\images\toolbarPaste.png" />
-    <Image Include="..\..\Include\images\toolbarPreview%402.png" />
-    <Image Include="..\..\Include\images\toolbarPreview.png" />
-    <Image Include="..\..\Include\images\toolbarPrint%402.png" />
-    <Image Include="..\..\Include\images\toolbarPrint.png" />
-    <Image Include="..\..\Include\images\toolbarRun%402.png" />
-    <Image Include="..\..\Include\images\toolbarRun.png" />
-    <Image Include="..\..\Include\images\toolbarSave%402.png" />
-    <Image Include="..\..\Include\images\toolbarSave.png" />
-    <Image Include="..\..\Include\images\toolbarTitle%402.png" />
-    <Image Include="..\..\Include\images\toolbarTitle.png" />
-    <Image Include="..\..\Include\images\toolbarTraining%402.png" />
-    <Image Include="..\..\Include\images\toolbarTraining.png" />
-    <Image Include="..\..\Include\images\toolbarTrial%402.png" />
-    <Image Include="..\..\Include\images\toolbarTrial.png" />
-    <Image Include="..\..\Include\images\training%402.png" />
-    <Image Include="..\..\Include\images\training.png" />
-    <Image Include="..\..\Include\images\trial%402.png" />
-    <Image Include="..\..\Include\images\trial.png" />
-    <Image Include="..\..\Include\images\unchecked%402.png" />
-    <Image Include="..\..\Include\images\unchecked.png" />
-    <Image Include="..\..\Include\images\venue_aac%402.png" />
+    <Image Include="..\..\Include\images\venue_aac%402x.png" />
     <Image Include="..\..\Include\images\venue_aac.png" />
-    <Image Include="..\..\Include\images\venue_akc%402.png" />
+    <Image Include="..\..\Include\images\venue_akc%402x.png" />
     <Image Include="..\..\Include\images\venue_akc.png" />
-    <Image Include="..\..\Include\images\venue_asca%402.png" />
+    <Image Include="..\..\Include\images\venue_asca%402x.png" />
     <Image Include="..\..\Include\images\venue_asca.png" />
-    <Image Include="..\..\Include\images\venue_bha%402.png" />
+    <Image Include="..\..\Include\images\venue_bha%402x.png" />
     <Image Include="..\..\Include\images\venue_bha.png" />
-    <Image Include="..\..\Include\images\venue_ckc%402.png" />
+    <Image Include="..\..\Include\images\venue_ckc%402x.png" />
     <Image Include="..\..\Include\images\venue_ckc.png" />
-    <Image Include="..\..\Include\images\venue_ckcsc%402.png" />
+    <Image Include="..\..\Include\images\venue_ckcsc%402x.png" />
     <Image Include="..\..\Include\images\venue_ckcsc.png" />
-    <Image Include="..\..\Include\images\venue_cpe%402.png" />
+    <Image Include="..\..\Include\images\venue_cpe%402x.png" />
     <Image Include="..\..\Include\images\venue_cpe.png" />
-    <Image Include="..\..\Include\images\venue_docna%402.png" />
+    <Image Include="..\..\Include\images\venue_docna%402x.png" />
     <Image Include="..\..\Include\images\venue_docna.png" />
-    <Image Include="..\..\Include\images\venue_fci%402.png" />
+    <Image Include="..\..\Include\images\venue_fci%402x.png" />
     <Image Include="..\..\Include\images\venue_fci.png" />
-    <Image Include="..\..\Include\images\venue_nadac%402.png" />
+    <Image Include="..\..\Include\images\venue_nadac%402x.png" />
     <Image Include="..\..\Include\images\venue_nadac.png" />
-    <Image Include="..\..\Include\images\venue_scc%402.png" />
+    <Image Include="..\..\Include\images\venue_scc%402x.png" />
     <Image Include="..\..\Include\images\venue_scc.png" />
-    <Image Include="..\..\Include\images\venue_sweep%402.png" />
+    <Image Include="..\..\Include\images\venue_sweep%402x.png" />
     <Image Include="..\..\Include\images\venue_sweep.png" />
-    <Image Include="..\..\Include\images\venue_tdaa%402.png" />
+    <Image Include="..\..\Include\images\venue_tdaa%402x.png" />
     <Image Include="..\..\Include\images\venue_tdaa.png" />
-    <Image Include="..\..\Include\images\venue_ukc%402.png" />
+    <Image Include="..\..\Include\images\venue_ukc%402x.png" />
     <Image Include="..\..\Include\images\venue_ukc.png" />
-    <Image Include="..\..\Include\images\venue_uki%402.png" />
+    <Image Include="..\..\Include\images\venue_uki%402x.png" />
     <Image Include="..\..\Include\images\venue_uki.png" />
-    <Image Include="..\..\Include\images\venue_usdaa%402.png" />
+    <Image Include="..\..\Include\images\venue_usdaa%402x.png" />
     <Image Include="..\..\Include\images\venue_usdaa.png" />
-    <Image Include="..\..\Include\images\venue_valor%402.png" />
+    <Image Include="..\..\Include\images\venue_valor%402x.png" />
     <Image Include="..\..\Include\images\venue_valor.png" />
     <Image Include="..\..\Win\res\AgilityBook.ico" />
-    <None Include="..\..\lang\CompileDatafile.py">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">true</ExcludedFromBuild>
-    </None>
-    <None Include="..\..\lang\CompileLang.py">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">true</ExcludedFromBuild>
-    </None>
+    <None Include="..\..\..\AgilityBookLibs\Include\images\check.svg" />
+    <None Include="..\..\..\AgilityBookLibs\Include\images\checked.svg" />
+    <None Include="..\..\..\AgilityBookLibs\Include\images\question.svg" />
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarAbout.svg" />
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarCalendar.svg" />
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarCopy.svg" />
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarCut.svg" />
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarDelete.svg" />
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarFind.svg" />
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarNew.svg" />
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarOpen.svg" />
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarPaste.svg" />
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarPreview.svg" />
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarPrint.svg" />
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarSave.svg" />
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarSettings.svg" />
+    <None Include="..\..\..\AgilityBookLibs\Include\images\unchecked.svg" />
+    <None Include="..\..\Include\images\AccConfirm.svg" />
+    <None Include="..\..\Include\images\AccNone.svg" />
+    <None Include="..\..\Include\images\AccTodo.svg" />
+    <None Include="..\..\Include\images\CalEntered.svg" />
+    <None Include="..\..\Include\images\CalEnteredTentative.svg" />
+    <None Include="..\..\Include\images\CalPending.svg" />
+    <None Include="..\..\Include\images\CalPendingTentative.svg" />
+    <None Include="..\..\Include\images\CalPlanTentative.svg" />
+    <None Include="..\..\Include\images\dog.svg" />
+    <None Include="..\..\Include\images\have.svg" />
+    <None Include="..\..\Include\images\hidden.svg" />
+    <None Include="..\..\Include\images\Note.svg" />
+    <None Include="..\..\Include\images\NoteAdded.svg" />
+    <None Include="..\..\Include\images\NoteNoteAdded.svg" />
+    <None Include="..\..\Include\images\run.svg" />
+    <None Include="..\..\Include\images\title_hidden.svg" />
+    <None Include="..\..\Include\images\title_hidden_have.svg" />
+    <None Include="..\..\Include\images\title_visible.svg" />
+    <None Include="..\..\Include\images\title_visible_have.svg" />
+    <None Include="..\..\Include\images\training.svg" />
+    <None Include="..\..\Include\images\trial.svg" />
     <None Include="..\..\lang\en_US\arb.po">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -840,20 +760,7 @@
     <Text Include="..\..\..\Readme-Build.txt" />
     <Text Include="..\..\..\ReleaseProcess.txt" />
     <Text Include="..\..\..\Todo.txt" />
-    <Text Include="..\..\lang\CompileDatList.txt">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">true</ExcludedFromBuild>
-    </Text>
+    <Text Include="..\..\Win\res\CompileDatList.txt" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\Win\AgilityBook.rc" />

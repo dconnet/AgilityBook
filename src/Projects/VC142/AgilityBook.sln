@@ -33,6 +33,18 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibwxARBWin", "..\..\..\Agi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestARBLib", "..\..\..\AgilityBookLibs\Projects\VC142\TestARBLib.vcxproj", "{E1B661F3-F1C6-4A8C-9F37-F951D5EF8CFE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lang", "lang", "{42EA80BE-E591-4198-A812-1F34FE196E80}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en_US", "en_US", "{1C97A1DE-5A22-4AB9-9154-79BBCBFAB8BD}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\AgilityBookLibs\lang\en_US\arblib.po = ..\..\..\AgilityBookLibs\lang\en_US\arblib.po
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fr_FR", "fr_FR", "{68B72B3D-F4B1-453E-A141-4C9F7CF7B442}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\AgilityBookLibs\lang\fr_FR\arblib.po = ..\..\..\AgilityBookLibs\lang\fr_FR\arblib.po
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -343,6 +355,9 @@ Global
 		{B8E4CEE7-CD97-4355-B998-C5C37FA2F285} = {E839E6C0-C724-47E3-8019-30AE660ED24E}
 		{73C15F6D-530F-4B95-9A2C-81AD1958573F} = {E839E6C0-C724-47E3-8019-30AE660ED24E}
 		{E1B661F3-F1C6-4A8C-9F37-F951D5EF8CFE} = {E839E6C0-C724-47E3-8019-30AE660ED24E}
+		{42EA80BE-E591-4198-A812-1F34FE196E80} = {E839E6C0-C724-47E3-8019-30AE660ED24E}
+		{1C97A1DE-5A22-4AB9-9154-79BBCBFAB8BD} = {42EA80BE-E591-4198-A812-1F34FE196E80}
+		{68B72B3D-F4B1-453E-A141-4C9F7CF7B442} = {42EA80BE-E591-4198-A812-1F34FE196E80}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FC6AD878-D29B-413C-BDDF-B2F7B5AE9E6F}

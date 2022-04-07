@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
-    <Filter Include="Resource Files\PNG">
-      <UniqueIdentifier>{80d8a0cb-525f-490f-b1be-63e6c7aedd37}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\Lang">
       <UniqueIdentifier>{316b896f-cac0-4af6-913d-6904803f66ae}</UniqueIdentifier>
     </Filter>
@@ -30,6 +27,9 @@
     </Filter>
     <Filter Include="Include\Platform">
       <UniqueIdentifier>{ae2b4116-22a7-4fb6-bffd-ce5d205e38bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Images">
+      <UniqueIdentifier>{80d8a0cb-525f-490f-b1be-63e6c7aedd37}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -590,6 +590,24 @@
     <ClInclude Include="..\..\Win\ColumnOrder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\arbWarningPop.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\arbWarningPush.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupARBPost.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupARBPre.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupMessages.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupWX.h">
+      <Filter>Include\Platform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\IProgressMeter.h">
@@ -600,430 +618,140 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Include\Platform\arbWarningPop.h">
-      <Filter>Include\Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\Platform\arbWarningPush.h">
-      <Filter>Include\Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\Platform\SetupARBPost.h">
-      <Filter>Include\Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\Platform\SetupARBPre.h">
-      <Filter>Include\Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\Platform\SetupMessages.h">
-      <Filter>Include\Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\Platform\SetupWX.h">
-      <Filter>Include\Platform</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="..\..\Win\res\AgilityBook.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\Include\images\AccConfirm.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\AccConfirm%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\AccNone.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\AccNone%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\AccTodo.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\AccTodo%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
     <Image Include="..\..\Include\images\AgilityBook16.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\AgilityBook16%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\AgilityBook16%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\AgilityBook32.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\AgilityBook32%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\AgilityBook32%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\AgilityBook48.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\AgilityBook48%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\AgilityBook48%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\AgilityBook256.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\calendar.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\calendar%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\CalEntered.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\CalEntered%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\CalEnteredTentative.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\CalEnteredTentative%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\CalPending.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\CalPending%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\CalPendingTentative.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\CalPendingTentative%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\CalPlanTentative.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\CalPlanTentative%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\check.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\check%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\checked.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\checked%402.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\crcd.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\crcd%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\dog.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\dog%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\HdrDown.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\HdrDown%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\HdrUp.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\HdrUp%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\hidden.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\hidden%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\Note.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\Note%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\NoteAdded.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\NoteAdded%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\NoteNote.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\NoteNote%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\NoteNoteAdded.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\NoteNoteAdded%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\points.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\points%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\question.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\question%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\run.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\run%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\crcd%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\Splash.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\title_hidden.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\title_hidden%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\title_hidden_have.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\title_hidden_have%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\title_visible.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\title_visible%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\title_visible_have.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\title_visible_have%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarAbout.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarAbout%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarCalendar.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarCalendar%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarCopy.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarCopy%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarCut.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarCut%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarDelete.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarDelete%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarDog.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarDog%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarNew.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarNew%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarOpen.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarOpen%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarPaste.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarPaste%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarPreview.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarPreview%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarPrint.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarPrint%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarRun.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarRun%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarSave.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarSave%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarTitle.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarTitle%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarTraining.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarTraining%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarTrial.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\toolbarTrial%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\training.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\training%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\trial.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\trial%402.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\unchecked.png">
-      <Filter>Resource Files\PNG</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\unchecked%402.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\venue_aac.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\venue_aac%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\venue_aac%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\venue_akc.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\venue_akc%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\venue_akc%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\venue_asca.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\venue_asca%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\venue_asca%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\venue_bha.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\venue_bha%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\venue_bha%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\venue_ckc.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\venue_ckc%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\venue_ckc%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\venue_ckcsc.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\venue_ckcsc%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\venue_ckcsc%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\venue_cpe.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\venue_cpe%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\venue_cpe%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\venue_docna.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\venue_docna%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\venue_docna%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\venue_fci.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\venue_fci%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\venue_fci%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\venue_nadac.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\venue_nadac%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\venue_nadac%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\venue_scc.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\venue_scc%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\venue_scc%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\venue_sweep.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\venue_sweep%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\venue_sweep%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\venue_tdaa.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\venue_tdaa%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\venue_tdaa%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\venue_ukc.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\venue_ukc%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\venue_ukc%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\venue_uki.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\venue_uki%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\venue_uki%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\venue_usdaa.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\venue_usdaa%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\venue_usdaa%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="..\..\Include\images\venue_valor.png">
-      <Filter>Resource Files\PNG</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\venue_valor%402.png">
-      <Filter>Resource Files\PNG</Filter>
+    <Image Include="..\..\Include\images\venue_valor%402x.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -1042,11 +770,119 @@
     <None Include="..\..\lang\fr_FR\arb.po">
       <Filter>Resource Files\Lang\fr_FR</Filter>
     </None>
-    <None Include="..\..\lang\CompileDatafile.py">
-      <Filter>Resource Files\Lang</Filter>
+    <None Include="..\..\..\AgilityBookLibs\Include\images\check.svg">
+      <Filter>Resource Files\Images</Filter>
     </None>
-    <None Include="..\..\lang\CompileLang.py">
-      <Filter>Resource Files\Lang</Filter>
+    <None Include="..\..\..\AgilityBookLibs\Include\images\checked.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\..\AgilityBookLibs\Include\images\question.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarAbout.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarCalendar.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarCopy.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarCut.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarDelete.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarFind.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarNew.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarOpen.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarPaste.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarPreview.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarPrint.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarSave.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\..\AgilityBookLibs\Include\images\toolbarSettings.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\..\AgilityBookLibs\Include\images\unchecked.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\AccConfirm.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\AccNone.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\AccTodo.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\CalEntered.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\CalEnteredTentative.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\CalPending.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\CalPendingTentative.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\CalPlanTentative.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\dog.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\have.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\hidden.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\Note.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\NoteAdded.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\NoteNoteAdded.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\run.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\title_hidden.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\title_hidden_have.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\title_visible.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\title_visible_have.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\training.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
+    <None Include="..\..\Include\images\trial.svg">
+      <Filter>Resource Files\Images</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1061,8 +897,8 @@
     <Text Include="..\..\..\Readme-Build.txt" />
     <Text Include="..\..\..\ReleaseProcess.txt" />
     <Text Include="..\..\..\Todo.txt" />
-    <Text Include="..\..\lang\CompileDatList.txt">
-      <Filter>Resource Files\Lang</Filter>
+    <Text Include="..\..\Win\res\CompileDatList.txt">
+      <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
 </Project>

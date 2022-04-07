@@ -340,6 +340,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\arbWarningPop.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\arbWarningPush.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupARBPost.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupARBPre.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupMessages.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupWX.h" />
     <ClInclude Include="..\..\Include\ARB\ARBAgilityRecordBook.h" />
     <ClInclude Include="..\..\Include\ARB\ARBBase.h" />
     <ClInclude Include="..\..\Include\ARB\ARBCalcPoints.h" />
@@ -380,12 +386,6 @@
     <ClInclude Include="..\..\Include\ARB\ARBTypes2.h" />
     <ClInclude Include="..\..\Include\ARB\ARB_Q.h" />
     <ClInclude Include="..\..\Include\ARB\LibwxARB.h" />
-    <ClInclude Include="..\..\Include\Platform\arbWarningPop.h" />
-    <ClInclude Include="..\..\Include\Platform\arbWarningPush.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupARBPost.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupARBPre.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupMessages.h" />
-    <ClInclude Include="..\..\Include\Platform\SetupWX.h" />
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
     <ClInclude Include="..\..\Include\VersionInfoARB.h" />
     <ClInclude Include="..\..\Include\VersionNumber.h" />
