@@ -133,7 +133,7 @@ Backup:
 Prepare for next release:
 - Switch back to master
 - Update version number
-  - This is done by editing .../AgilityBookLibs/Include/VersionNumber.h and .../src/Include/VersionNumber.h
+  - This is done by editing .../AgilityBookLibs/Include/VersionNumber.h
 - Update History.txt
 - Update CFBundleShortVersionString in xcode plist files
   (so it doesn't have to be done as part of the release process, except for

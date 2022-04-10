@@ -4,6 +4,7 @@
 # Must be run from the directory this file is in.
 #
 # Revision History
+# 2022-04-10 Fix path to 'official.props'
 # 2022-04-10 Only add 'official.props' on fullupdate build.
 # 2022-04-05 Make vc143 default.
 # 2021-11-11 Moved from Projects/Installer to build, pyDcon usage
@@ -149,7 +150,7 @@ def main():
 
 		# Add the official build props. Note: Do not use Directory.Build.props
 		# for automatic inclusion. Building directly in devenv will pick that up.
-		msbuildOpts = msbuildOpts + ' /p:ForceImportBeforeCppTargets=' + msbuildOfficial
+		msbuildOpts = msbuildOpts + ' /p:ForceImportBeforeCppTargets=' + os.getcwd() + '\\' + msbuildOfficial
 
 	for c in args:
 		if not AddCompilers(compilers, c):
