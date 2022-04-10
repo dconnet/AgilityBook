@@ -1,15 +1,15 @@
-4/6/2022: v3.7.0.<development>
+4/10/2022: v3.7.0.117
 - Notes:
   - pre Mac-10.12 support dropped.
 - Bumped Configuration v66:
-  - NADAC. Removed Extreme, Hoopers, Barrelers, added Grounders.
+  - NADAC: Removed Extreme, Hoopers, Barrelers, added Grounders.
 - New features / Enhancements:
-  - Updated to wxWidgets 3.1.6
   - Add gamble closing time to run printout.
   - Condense notes (club/judge/location) when saving.
     (Previously only done on import or 'OK' from the InfoNote dialog.)
   - Changed InfoNote dialog (Clubs/Judges/Locations), allow copying of data.
   - Natively support Mac M2.
+  - Updated to wxWidgets 3.1.6
 - Bug fixes:
   - Fix deletion of multiple selected titles in dog properties.
   - Printing a trial's runs ignored filtering.

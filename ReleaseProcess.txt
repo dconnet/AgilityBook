@@ -6,9 +6,8 @@ root. (Mine is "d:\dcon\www\agilityrecordbook\") This only works in debug builds
 On new year, update copyright year in:
 - License.txt
 - AgilityBookLibs/configure.in
-- AgilityBookLibs/Include/VersionInfoLibsARB.h
+- AgilityBookLibs/Include/VersionInfoARB.h
 - configure.in
-- src/Include/VersionInfoARB.h
 - src/Projects/xcode*/AgilityBook/AgilityBook/AgilityBook-Info.plist
 - src/Projects/xcode*/ARBHelp/ARBHelp/ARBHelp-Info.plist
 
@@ -46,8 +45,7 @@ Switch to build machine, do a full rebuild and verify it.
       -t:       Testing, just print commands to run
       compiler: vc142,vc143 (default: vc143)
     (note: If this needs to be re-run, revert
-    .../AgilityBookLibs/configure.in, .../AgilityBookLibs/Include/VersionNumberLibs.h,
-    .../configure.in, .../src/Include/VersionNumber.h)
+    .../AgilityBookLibs/configure.in, .../AgilityBookLibs/Include/VersionNumber.h, .../configure.in)
 - cd ...\src\Projects\Installer
 - Run 'GenMSI.py -b all' to create w32/x64 installers (and sign them),
   auto-update Misc\Installations\InstallGUIDs.csv, and create distribution dir.

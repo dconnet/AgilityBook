@@ -7,6 +7,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2022-04-10 Change default compiler to vc143
 # 2021-11-11 Add vc143 support, changed default (no args) to '-b all'
 # 2020-01-26 Change default compiler to vc142
 # 2019-09-21 Change to getopt
@@ -100,8 +101,6 @@ FilesToCopy = [
 # This is initially set to %WIX%/bin, if WiX is actually installed.
 WiXdir = r'c:\Tools\wix3'
 
-WinSrcDir = AgilityBookDir + r'\src'
-
 # Code:
 #  1: x86/Unicode
 #  2: x86/MBCS
@@ -154,7 +153,7 @@ def RmMinusRF(name):
 
 
 def getversion(numParts):
-	global WinSrcDir
+	global AgilityBookDir
 	ver = '0'
 	ver2 = '0'
 	for i in range(1, numParts):
@@ -168,7 +167,7 @@ def getversion(numParts):
 		]
 	found = 0;
 	version = ['0', '0', '0', '0']
-	res = open(WinSrcDir + r'\Include\VersionNumber.h', 'r')
+	res = open(AgilityBookDir + r'\AgilityBookLibs\Include\VersionNumber.h', 'r')
 	while (1):
 		line = res.readline()
 		if line:
@@ -197,11 +196,11 @@ def getoutputvars(code, version, platformTools):
 	baseDir = ''
 	if code32 == code:
 		outputFile = 'AgilityBook-' + version + '-x86'
-		baseDir = AgilityBookDir + r'\src\bin\vc' + platformTools + 'x86\Release'
+		baseDir = AgilityBookDir + r'\bin\vc' + platformTools + 'x86\Release'
 		distDir = 'vc' + platformTools
 	elif code64 == code:
 		outputFile = 'AgilityBook-' + version + '-x64'
-		baseDir = AgilityBookDir + r'\src\bin\vc' + platformTools + 'x64\Release'
+		baseDir = AgilityBookDir + r'\bin\vc' + platformTools + 'x64\Release'
 		distDir = 'vc' + platformTools + 'x64'
 	else:
 		raise Exception('Invalid code')
@@ -400,8 +399,8 @@ def main():
 	b64 = False
 	tidy = True
 	testing = False
-	vcver = '142'
-	platformTools = '142'
+	vcver = '143'
+	platformTools = '143'
 	distrib = DistribDir
 
 	try:
