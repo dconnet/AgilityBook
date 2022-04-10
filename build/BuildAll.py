@@ -4,6 +4,7 @@
 # Must be run from the directory this file is in.
 #
 # Revision History
+# 2022-04-10 Only add 'official.props' on fullupdate build.
 # 2022-04-05 Make vc143 default.
 # 2021-11-11 Moved from Projects/Installer to build, pyDcon usage
 # 2021-11-09 Add vc143 support
@@ -52,6 +53,7 @@ solution = 'AgilityBook.sln'
 # Verbosity:detailed, multiprocessors
 # Verbosity:q/m/n/d/diag
 msbuildOpts = '/v:n /m'
+# Only added on 'fullupdate' build
 msbuildOfficial = r'..\AgilityBookLibs\Projects\props\official.props'
 
 # Relative to this directory, used as: curDir + buildBin + ...
@@ -140,13 +142,14 @@ def main():
 		elif '-t' == o:
 			onlyTest = True
 
-	if not os.access(msbuildOfficial, os.F_OK):
-		print('ERROR: File "' + msbuildOfficial+ '" does not exist')
-		return 1
+	if updateBuildNumber:
+		if not os.access(msbuildOfficial, os.F_OK):
+			print('ERROR: File "' + msbuildOfficial+ '" does not exist')
+			return 1
 
-	# Add the official build props. Note: Do not use Directory.Build.props
-	# for automatic inclusion. Building directly in devenv will pick that up.
-	msbuildOpts = msbuildOpts + ' /p:ForceImportBeforeCppTargets=' + msbuildOfficial
+		# Add the official build props. Note: Do not use Directory.Build.props
+		# for automatic inclusion. Building directly in devenv will pick that up.
+		msbuildOpts = msbuildOpts + ' /p:ForceImportBeforeCppTargets=' + msbuildOfficial
 
 	for c in args:
 		if not AddCompilers(compilers, c):
