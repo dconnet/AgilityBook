@@ -38,13 +38,13 @@ Commit all changes to GitHub.
 
 Switch to build machine, do a full rebuild and verify it.
 - cd ...\build
-- 'BuildAll.py -w %WXBASE%\wxWidgets-3.1.5 -b fullupdate' [runs VC142 compile]
+- 'BuildAll.py -w %WXBASE%\wxWidgets-3.1.6 -b fullupdate' [runs VC143 compile]
   - BuildAll options: -w wxwin [-b fullupdate | clean] compiler*
-      -w wxwin: Root of wx tree, normally %WXBASE%\wxWidgets-3.1.5'
+      -w wxwin: Root of wx tree, normally %WXBASE%\wxWidgets-3.1.6'
                 Default is %WXWIN%
       -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
       -t:       Testing, just print commands to run
-      compiler: vc141,vc142,vc143 (default: vc142)
+      compiler: vc142,vc143 (default: vc143)
     (note: If this needs to be re-run, revert
     .../AgilityBookLibs/configure.in, .../AgilityBookLibs/Include/VersionNumberLibs.h,
     .../configure.in, .../src/Include/VersionNumber.h)

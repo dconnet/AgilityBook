@@ -47,7 +47,7 @@
 """CompileWX.py -w wxwin [-e] [-a] [-d] [-m] [-s name]* [-r config] compiler*
 	-w wxwin: Root of wx tree, normally %WXWIN%
 	-e:       Just show the environment, don't do it
-	-a:       Compile all (vc142, vc142x64)
+	-a:       Compile all (vc143, vc143x64)
 	-d:       Compile as DLLs (default: static)
 	-m:       Compile as MBCS (default: Unicode)
 	-s name:  Compile sample 'name'
@@ -117,8 +117,8 @@ def main():
 		elif '-w' == o:
 			wxwin = a
 		elif '-a' == o:
-			AddCompiler(compilers, 'vc142')
-			AddCompiler(compilers, 'vc142x64')
+			AddCompiler(compilers, 'vc143')
+			AddCompiler(compilers, 'vc143x64')
 		elif '-d' == o:
 			useStatic = False
 		elif '-m' == o:

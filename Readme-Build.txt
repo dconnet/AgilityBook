@@ -33,8 +33,8 @@ wxWidgets: http://www.wxwidgets.org/
 Currently using version 3.1.6. Min supported is 3.1.6.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
-   in src/Win/res/fr_FR) IMPORTANT: This means the directory name in fr_FR
-   must match the wx version number being used.
+   in AgilityBookLibs/lang/res/fr_FR) IMPORTANT: This means the directory name
+   in fr_FR must match the wx version number being used.
 - Mac/Unix: Use .../build/setupwx.sh to setup WX build. And ". setwxpath.sh" to
   set the ARB compile environment.
 
@@ -161,7 +161,7 @@ OSX 10.9:
   Must reboot after modifying.
 ===
 setenv WXBASE /Users/dconnet/devtools/wx
-setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.5
+setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.6
 ====
 OSX 10.10+:
 - launchd.conf has been deprecated.
@@ -182,7 +182,7 @@ OSX 10.10+:
     <string>-c</string>
     <string>
     launchctl setenv WXBASE /Users/dconnet/devtools/wx
-    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.5
+    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.1.6
     </string>
   </array>
   <key>RunAtLoad</key>
