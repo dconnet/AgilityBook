@@ -85,8 +85,15 @@ to this tag and commit that change too.
 Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
 - Generate zip file (github's zip has unix EOLs):
+  - cd .../AgilityBook
   - git archive master --prefix="AgilityBook/" --format=zip > AgilityBook-n_n_n_n-src.zip
-  - Also do this on AgilityBookLibs and combine the zips.
+  - cd AgilityBookLibs
+  - git archive master --prefix="AgilityBookLibs/" --format=zip > AgilityBookLibs.zip
+  - Combine the zips by:
+    - Expanding AgilityBookLibs.zip into a tmp dir
+	- Open AgilityBook-n_n_n_n-src.zip, change to AgilityBookLibs directory
+	- DnD files from tmp dir into the zip
+	- Clean up tmp dir, delete AgilityBookLibs.zip
 
 Create a release on GitHub tagged as: 'release/vn.n.n'
   - Create tag "release/vn.n.n"
