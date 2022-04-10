@@ -447,6 +447,8 @@
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupARBPre.h" />
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupMessages.h" />
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupWX.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\VersionInfoARB.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\VersionNumber.h" />
     <ClInclude Include="..\..\ARBHelp\ARBHelp.h" />
     <ClInclude Include="..\..\ARBHelp\DlgARBHelp.h" />
     <ClInclude Include="..\..\ARBHelp\DlgPageDecode.h" />
@@ -455,8 +457,6 @@
     <ClInclude Include="..\..\ARBHelp\DlgPageEncodeFinish.h" />
     <ClInclude Include="..\..\ARBHelp\stdafx.h" />
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
-    <ClInclude Include="..\..\Include\VersionInfoARB.h" />
-    <ClInclude Include="..\..\Include\VersionNumber.h" />
     <ClInclude Include="..\..\Win\SetupAppARB.h" />
   </ItemGroup>
   <ItemGroup>

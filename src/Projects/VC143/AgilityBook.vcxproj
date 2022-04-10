@@ -538,9 +538,9 @@
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupARBPre.h" />
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupMessages.h" />
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupWX.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\VersionInfoARB.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\VersionNumber.h" />
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
-    <ClInclude Include="..\..\Include\VersionInfoARB.h" />
-    <ClInclude Include="..\..\Include\VersionNumber.h" />
     <ClInclude Include="..\..\Win\AgilityBook.h" />
     <ClInclude Include="..\..\Win\AgilityBookCalendarListView.h" />
     <ClInclude Include="..\..\Win\AgilityBookCalendarView.h" />

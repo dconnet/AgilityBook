@@ -1,8 +1,7 @@
 # Update build number in VersionNumber.h
 # and ../configure.in
 #
-# This assumes the current directory is 'Include'
-#
+# 2022-04-10 Moved to 'build' directory.
 # 2020-11-12 Changed padding in ARB_VER_BUILD output.
 # 2020-08-21 Moved configure.in into src (moved top build directory down)
 # 2019-08-24 Fix writing configure.in
@@ -17,6 +16,8 @@
 # 2009-08-12 Make sure full version is the same in configure.in
 # 2009-04-12 Added CalVerNum.h to be autoincremented.
 #            Check to see if file actually changed before re-writing
+""" SetBuildNumber.py [--official]
+"""
 
 import datetime
 import os
@@ -27,9 +28,10 @@ import time
 # Was '\t\t\t\t\t' - changed after updating header with clang-format
 verBuildPadding = ' '
 
-verInfo = 'VersionInfoARB.h'
-verNum = 'VersionNumber.h'
-configure = '../../configure.in'
+verInfo = '../AgilityBookLibs/Include/VersionInfoARB.h'
+verNum = '../AgilityBookLibs/Include/VersionNumber.h'
+configureFiles = ['../AgilityBookLibs/configure.in',
+	'../configure.in']
 baseDefine = 'ARB_'
 
 
@@ -144,40 +146,41 @@ def doWork():
 		print(verNum + ' is up-to-date')
 		os.remove(verNum + '.new')
 
-	update = False
-	conf = open(configure, 'r')
-	confOut = open(configure + '.new', 'w', newline='\n')
-	while 1:
-		line = conf.readline()
-		if not line:
-			break
-		line = str.rstrip(line)
-		if 0 == line.find('AC_INIT('):
-			newLine = 'AC_INIT(Agility Record Book, ' + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB + ', [help@agilityrecordbook.com])'
-			if not line == newLine:
-				update = True
-				print(newLine, file=confOut)
+	for configure in configureFiles:
+		update = False
+		conf = open(configure, 'r')
+		confOut = open(configure + '.new', 'w', newline='\n')
+		while 1:
+			line = conf.readline()
+			if not line:
+				break
+			line = str.rstrip(line)
+			if 0 == line.find('AC_INIT('):
+				newLine = 'AC_INIT(Agility Record Book, ' + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB + ', [help@agilityrecordbook.com])'
+				if not line == newLine:
+					update = True
+					print(newLine, file=confOut)
+				else:
+					print(line, file=confOut)
+			elif 0 == line.find('AC_SUBST(PACKAGE_COPYRIGHT,'):
+				newLine = 'AC_SUBST(PACKAGE_COPYRIGHT, ' + copyRight + ')'
+				if not line == newLine:
+					update = True
+					print(newLine, file=confOut)
+				else:
+					print(line, file=confOut)
 			else:
 				print(line, file=confOut)
-		elif 0 == line.find('AC_SUBST(PACKAGE_COPYRIGHT,'):
-			newLine = 'AC_SUBST(PACKAGE_COPYRIGHT, ' + copyRight + ')'
-			if not line == newLine:
-				update = True
-				print(newLine, file=confOut)
-			else:
-				print(line, file=confOut)
-		else:
-			print(line, file=confOut)
-	conf.close()
-	confOut.close()
+		conf.close()
+		confOut.close()
 
-	if update:
-		print(configure + ' updated to ' + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB)
-		os.remove(configure)
-		os.rename(configure + '.new', configure)
-	else:
-		print(configure + ' is up-to-date')
-		os.remove(configure + '.new')
+		if update:
+			print(configure + ' updated to ' + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB)
+			os.remove(configure)
+			os.rename(configure + '.new', configure)
+		else:
+			print(configure + ' is up-to-date')
+			os.remove(configure + '.new')
 
 	return 0
 

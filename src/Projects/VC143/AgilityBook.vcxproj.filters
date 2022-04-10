@@ -548,9 +548,6 @@
     <ClInclude Include="..\..\Win\WizardStart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\VersionInfoARB.h">
-      <Filter>Include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Win\DlgDogPanelProp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -608,12 +605,15 @@
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupWX.h">
       <Filter>Include\Platform</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\VersionInfoARB.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\VersionNumber.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\IProgressMeter.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\VersionNumber.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>

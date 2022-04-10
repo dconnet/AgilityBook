@@ -346,6 +346,8 @@
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupARBPre.h" />
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupMessages.h" />
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupWX.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\VersionInfoARB.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\VersionNumber.h" />
     <ClInclude Include="..\..\Include\ARB\ARBAgilityRecordBook.h" />
     <ClInclude Include="..\..\Include\ARB\ARBBase.h" />
     <ClInclude Include="..\..\Include\ARB\ARBCalcPoints.h" />
@@ -387,8 +389,6 @@
     <ClInclude Include="..\..\Include\ARB\ARB_Q.h" />
     <ClInclude Include="..\..\Include\ARB\LibwxARB.h" />
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
-    <ClInclude Include="..\..\Include\VersionInfoARB.h" />
-    <ClInclude Include="..\..\Include\VersionNumber.h" />
     <ClInclude Include="..\..\Libraries\ARB\stdafx.h" />
   </ItemGroup>
   <ItemGroup>

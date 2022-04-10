@@ -166,14 +166,7 @@ def main():
 	os.environ['WXWIN'] = wxwin
 
 	if updateBuildNumber:
-		curDir = os.getcwd()
-		cmds = [
-			r'cd ' + curDir + '\\..\\AgilityBookLibs\\Include',
-			r'python SetBuildNumber.py --official',
-			r'cd ' + curDir,
-			r'cd ' + curDir + '\\..\\src\\Include',
-			r'python SetBuildNumber.py --official',
-			r'cd ' + curDir]
+		cmds = [r'python SetBuildNumber.py --official']
 		pyDcon.Run.RunCmds(cmds, onlyTest)
 
 	# Targets:

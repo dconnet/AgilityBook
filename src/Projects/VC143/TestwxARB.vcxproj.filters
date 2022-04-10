@@ -164,12 +164,6 @@
     <ClInclude Include="..\..\Include\IProgressMeter.h">
       <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\VersionNumber.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\VersionInfoARB.h">
-      <Filter>Include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\arbWarningPop.h">
       <Filter>Include\Platform</Filter>
     </ClInclude>
@@ -187,6 +181,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupWX.h">
       <Filter>Include\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\VersionInfoARB.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\VersionNumber.h">
+      <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

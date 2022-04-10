@@ -450,6 +450,8 @@
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupARBPre.h" />
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupMessages.h" />
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupWX.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\VersionInfoARB.h" />
+    <ClInclude Include="..\..\..\AgilityBookLibs\Include\VersionNumber.h" />
     <ClInclude Include="..\..\CalSites\ARBConfigCalSite.h" />
     <ClInclude Include="..\..\CalSites\CalendarSites.h" />
     <ClInclude Include="..\..\CalSites\CalendarSiteUSDAA.h" />
@@ -460,8 +462,6 @@
     <ClInclude Include="..\..\CalSites\DlgQueryDetail.h" />
     <ClInclude Include="..\..\CalSites\ICalendarSite.h" />
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
-    <ClInclude Include="..\..\Include\VersionInfoARB.h" />
-    <ClInclude Include="..\..\Include\VersionNumber.h" />
     <ClInclude Include="..\..\CalSites\stdafx.h" />
     <ClInclude Include="..\..\Win\AgilityBookOptions.h" />
     <ClInclude Include="..\..\Win\ComboBoxVenue.h" />
