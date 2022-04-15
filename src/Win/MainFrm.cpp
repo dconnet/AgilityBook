@@ -47,7 +47,6 @@
 #include "ARBCommon/ARBMisc.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBDebug.h"
-#include "LibARBWin/DPI.h"
 #include "LibARBWin/DlgMessage.h"
 #include <wx/config.h>
 #include <wx/dnd.h>

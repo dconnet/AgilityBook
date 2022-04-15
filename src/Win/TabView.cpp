@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2022-04-15 Use wx DPI support.
  * 2012-01-07 Fix tab type/orientation persistence.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-08-03 Fix tab setting so view is properly activated.
@@ -30,7 +31,6 @@
 #include "MainFrm.h"
 #include "RegItems.h"
 
-#include "LibARBWin/DPI.h"
 #include <wx/choicebk.h>
 #include <wx/config.h>
 #include <wx/listbook.h>
@@ -333,7 +333,7 @@ bool CTabView::OnCreate(wxDocument* doc, long flags)
 	SetFrame(m_frame);
 	assert(m_frame);
 
-	m_imageList.Create(DPI::Scale(m_frame, 16), DPI::Scale(m_frame, 16));
+	m_imageList.Create(m_frame->FromDIP(16), m_frame->FromDIP(16));
 	m_imageList.Add(CResourceManager::Get()->GetIcon(ImageMgrRuns));
 	m_imageList.Add(CResourceManager::Get()->GetIcon(ImageMgrPoints));
 	m_imageList.Add(CResourceManager::Get()->GetIcon(ImageMgrCalendar));

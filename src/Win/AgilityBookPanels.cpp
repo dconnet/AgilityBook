@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2022-04-15 Use wx DPI support.
  * 2015-05-05 Set minimum size on splitters so views can't be "lost".
  * 2012-09-29 Strip the Runs View.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -32,7 +33,6 @@
 #include "RegItems.h"
 
 #include "ARBCommon/StringUtil.h"
-#include "LibARBWin/DPI.h"
 #include <wx/config.h>
 #include <wx/object.h>
 #include <wx/splitter.h>
@@ -130,7 +130,7 @@ CAgilityBookPanelRuns::CAgilityBookPanelRuns(
 	bool bAttachViews = m_views.empty();
 
 	m_splitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D);
-	m_splitter->SetMinimumPaneSize(DPI::Scale(this, MIN_RUN_WIDTH));
+	m_splitter->SetMinimumPaneSize(FromDIP(MIN_RUN_WIDTH));
 	m_splitter->Bind(wxEVT_IDLE, &CAgilityBookPanelRuns::SplitterOnIdle, this);
 
 	wxPanel* panel1 = new wxPanel(m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
@@ -173,7 +173,7 @@ CAgilityBookPanelRuns::~CAgilityBookPanelRuns()
 {
 	if (m_bInit)
 	{
-		wxConfig::Get()->Write(CFG_SETTINGS_SPLITCX, DPI::UnScale(this, m_splitter->GetSashPosition()));
+		wxConfig::Get()->Write(CFG_SETTINGS_SPLITCX, ToDIP(m_splitter->GetSashPosition()));
 	}
 }
 
@@ -185,7 +185,7 @@ void CAgilityBookPanelRuns::SplitterOnIdle(wxIdleEvent&)
 	long cx = wxConfig::Get()->Read(CFG_SETTINGS_SPLITCX, DEFAULT_RUN_WIDTH);
 	if (cx < MIN_RUN_WIDTH)
 		cx = MIN_RUN_WIDTH;
-	cx = DPI::Scale(this, cx);
+	cx = FromDIP(cx);
 	m_splitter->SetSashPosition(cx);
 	m_bInit = true;
 #if !defined(__WXGTK__)
@@ -234,7 +234,7 @@ CAgilityBookPanelCalendar::CAgilityBookPanelCalendar(
 	bool bAttachViews = m_views.empty();
 
 	m_splitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D);
-	m_splitter->SetMinimumPaneSize(DPI::Scale(this, MIN_CAL_WIDTH));
+	m_splitter->SetMinimumPaneSize(FromDIP(MIN_CAL_WIDTH));
 	m_splitter->Bind(wxEVT_IDLE, &CAgilityBookPanelCalendar::SplitterOnIdle, this);
 
 	wxPanel* panel1 = new wxPanel(m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
@@ -275,7 +275,7 @@ CAgilityBookPanelCalendar::~CAgilityBookPanelCalendar()
 {
 	if (m_bInit)
 	{
-		wxConfig::Get()->Write(CFG_SETTINGS_SPLITCX2, DPI::UnScale(this, m_splitter->GetSashPosition()));
+		wxConfig::Get()->Write(CFG_SETTINGS_SPLITCX2, ToDIP(m_splitter->GetSashPosition()));
 	}
 }
 
@@ -287,7 +287,7 @@ void CAgilityBookPanelCalendar::SplitterOnIdle(wxIdleEvent&)
 	long cx = wxConfig::Get()->Read(CFG_SETTINGS_SPLITCX2, DEFAULT_CAL_WIDTH);
 	if (cx < MIN_CAL_WIDTH)
 		cx = MIN_CAL_WIDTH;
-	cx = DPI::Scale(this, cx);
+	cx = FromDIP(cx);
 	m_splitter->SetSashPosition(cx);
 	m_bInit = true;
 #if !defined(__WXGTK__)

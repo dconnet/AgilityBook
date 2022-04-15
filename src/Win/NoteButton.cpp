@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2022-04-15 Use wx DPI support.
  * 2015-01-01 Changed pixels to dialog units.
  * 2009-02-11 Ported to wxWidgets.
  * 2005-12-12 Created
@@ -20,7 +21,6 @@
 
 #include "ImageHelper.h"
 
-#include "LibARBWin/DPI.h"
 #include "LibARBWin/ResourceManager.h"
 
 #ifdef __WXMSW__
@@ -33,7 +33,6 @@ CNoteButton::CNoteButton(wxWindow* parent)
 {
 	wxBitmap image = CResourceManager::Get()->GetBitmap(ImageMgrNoteButton);
 	wxSize size = image.GetSize();
-	size.x += DPI::Scale(parent, 4);
-	size.y += DPI::Scale(parent, 4);
+	size += parent->FromDIP(wxSize(4, 4));
 	wxBitmapButton::Create(parent, wxID_ANY, image, wxDefaultPosition, size);
 }

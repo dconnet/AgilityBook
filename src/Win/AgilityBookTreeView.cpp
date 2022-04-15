@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2022-04-15 Use wx DPI support.
  * 2019-01-01 Fix selection on initial load.
  * 2018-12-16 Convert to fmt.
  * 2018-09-15 Refactored how tree/list handle common actions.
@@ -67,7 +68,6 @@
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
-#include "LibARBWin/DPI.h"
 #include <wx/config.h>
 
 #ifdef __WXMSW__
@@ -313,7 +313,7 @@ bool CAgilityBookTreeView::Create(
 	m_ImageList.Create(m_Ctrl);
 	m_Ctrl->SetImageList(&m_ImageList);
 #ifdef WX_TREE_HAS_STATE
-	m_ImageListStates.Create(DPI::Scale(m_Ctrl, 16), DPI::Scale(m_Ctrl, 16));
+	m_ImageListStates.Create(m_Ctrl->FromDIP(16), m_Ctrl->FromDIP(16));
 	// Note: Position 0 cannot be used.
 	m_ImageListStates.Add(CResourceManager::Get()->GetIcon(ImageMgrBlank));
 	m_idxEmpty = m_ImageListStates.Add(CResourceManager::Get()->GetIcon(ImageMgrBlank));

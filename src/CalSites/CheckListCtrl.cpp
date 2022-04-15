@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2022-04-15 Use wx DPI support.
  * 2020-12-11 Reorganized classes
  * 2020-12-07 Add a generic way to handle sorting/moving columns.
  * 2020-12-05 In SetColumnSort, always set the icon.
@@ -39,7 +40,6 @@
 #include "CheckListCtrl.h"
 
 #include "LibARBWin/ARBWinUtilities.h"
-#include "LibARBWin/DPI.h"
 #include "LibARBWin/ImageHelperBase.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/ResourceManager.h"
@@ -68,7 +68,7 @@ CCheckListCtrl::CCheckListCtrl(wxWindow* parent, const wxPoint& pos, const wxSiz
 	{
 		Bind(wxEVT_LEFT_DOWN, &CCheckListCtrl::OnClick, this);
 		Bind(wxEVT_KEY_DOWN, &CCheckListCtrl::OnKeyDown, this);
-		m_ImageList.Create(DPI::Scale(this, 16), DPI::Scale(this, 16));
+		m_ImageList.Create(FromDIP(16), FromDIP(16));
 		m_imgEmpty = m_ImageList.Add(CResourceManager::Get()->GetIcon(ImageMgrBlank));
 		m_imgNoCheck = m_ImageList.Add(CResourceManager::Get()->GetIcon(ImageMgrUnChecked));
 		m_imgChecked = m_ImageList.Add(CResourceManager::Get()->GetIcon(ImageMgrChecked));

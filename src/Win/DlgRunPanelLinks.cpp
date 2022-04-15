@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2022-04-15 Use wx DPI support.
  * 2021-01-07 Separated into multiple files.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  * 2004-06-02 Moved ShellExecute code to AgilityBook.cpp, added icons.
@@ -26,7 +27,6 @@
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/CheckLink.h"
-#include "LibARBWin/DPI.h"
 #include "LibARBWin/ResourceManager.h"
 #include "LibARBWin/Widgets.h"
 #include <wx/dnd.h>
@@ -84,7 +84,7 @@ CDlgRunPanelLinks::CDlgRunPanelLinks(
 	, m_ctrlLinkDelete(nullptr)
 	, m_ctrlLinkOpen(nullptr)
 {
-	m_ImageList.Create(DPI::Scale(this, 16), DPI::Scale(this, 16));
+	m_ImageList.Create(FromDIP(16), FromDIP(16));
 
 	m_ctrlLinks = new CListCtrl(
 		this,

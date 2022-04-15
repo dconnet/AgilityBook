@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2022-04-15 Use wx DPI support.
  * 2016-06-19 Add a blank icon to fix issue on Mac.
  * 2012-12-29 Move icon management to global list.
  * 2009-01-27 Ported to wxWidgets.
@@ -24,7 +25,6 @@
 
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBDogTrial.h"
-#include "LibARBWin/DPI.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -60,7 +60,7 @@ CIconList::CIconList()
 
 bool CIconList::Create(wxWindow const* pWindow)
 {
-	if (!wxImageList::Create(DPI::Scale(pWindow, 16), DPI::Scale(pWindow, 16)))
+	if (!wxImageList::Create(pWindow->FromDIP(16), pWindow->FromDIP(16)))
 		return false;
 
 	m_idxDog = Add(CResourceManager::Get()->GetIcon(ImageMgrDog));
