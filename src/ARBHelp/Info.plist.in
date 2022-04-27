@@ -10,8 +10,6 @@
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-	<key>CSResourcesFileMapped</key>
-	<true/>
 	<key>CFBundleVersion</key>
 	<string>@PACKAGE_VERSION@</string>
 	<key>CFBundleShortVersionString</key>
@@ -26,11 +24,11 @@
 	<string>com.agilityrecordbook.@PACKAGE_HLP_SHORTNAME@</string>
 	<key>CFBundleLongVersionString</key>
 	<string>@PACKAGE_VERSION@, @PACKAGE_COPYRIGHT@</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>LSRequiresCarbon</key>
-	<true/>
 	<key>NSHumanReadableCopyright</key>
 	<string>@PACKAGE_COPYRIGHT@</string>
+	<key>ATSApplicationFontsPath</key>
+	<string>Fonts</string>
+	<key>NSPrincipalClass</key>
+	<string>wxNSApplication</string>
 </dict>
 </plist>
