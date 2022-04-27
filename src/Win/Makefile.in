@@ -148,7 +148,7 @@ PRECOMP_HEADER = $(SRCDIR)/stdafx.h
 
 @PACKAGE_ARB_SHORTNAME@.dat: res/CompileDatList.txt
 	echo "LANGDIR $(CURDIR)"
-	python3 $(SRCDIR)/../../AgilityBookLibs/Projects/CompileLang.py -w $(WXWIN) -s $(SRCDIR)/../lang arb.po $(CURDIR) @PACKAGE_ARB_SHORTNAME@
+	python3 $(SRCDIR)/../../AgilityBookLibs/Projects/CompileLang.py -w $(WXWIN) -s $(SRCDIR)/../../AgilityBookLibs/lang -s $(SRCDIR)/../lang arb.po $(CURDIR) @PACKAGE_ARB_SHORTNAME@
 	python3 $(SRCDIR)/../../AgilityBookLibs/Projects/CompileDatafile.py -x -l $(CURDIR)/lang $(SRCDIR)/res/CompileDatList.txt $(CURDIR) @PACKAGE_ARB_SHORTNAME@
 
 all: @PACKAGE_ARB_SHORTNAME@.dat @PACKAGE_ARB_SHORTNAME@

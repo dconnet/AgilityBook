@@ -88,7 +88,7 @@ INSTALL_BIN = @PACKAGE_TEST_SHORTNAME@
 
 @PACKAGE_TEST_SHORTNAME@.dat: res/CompileDatList.txt
 	echo "LANGDIR $(CURDIR)"
-	python3 $(SRCDIR)/../../AgilityBookLibs/Projects/CompileLang.py -w $(WXWIN) -s $(SRCDIR)/../lang arb.po $(CURDIR) @PACKAGE_TEST_SHORTNAME@
+	python3 $(SRCDIR)/../../AgilityBookLibs/Projects/CompileLang.py -w $(WXWIN) -s $(SRCDIR)/../../AgilityBookLibs/lang -s $(SRCDIR)/../lang arb.po $(CURDIR) @PACKAGE_TEST_SHORTNAME@
 	python3 $(SRCDIR)/../../AgilityBookLibs/Projects/CompileDatafile.py -x -l $(CURDIR)/lang "$(SRCDIR)/res/CompileDatList.txt" $(CURDIR) @PACKAGE_TEST_SHORTNAME@
 
 all: @PACKAGE_TEST_SHORTNAME@.dat @PACKAGE_TEST_SHORTNAME@
