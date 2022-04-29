@@ -492,9 +492,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties RESOURCE_FILE="CalSites.rc" />
-    </VisualStudio>
-  </ProjectExtensions>
+  <PropertyGroup Condition="'$(Language)'=='C++'">
+    <CAExcludePath>$(wxWin)\include;..\..\..\AgilityBookLibs\3rdParty;$(CAExcludePath)</CAExcludePath>
+  </PropertyGroup>
 </Project>
