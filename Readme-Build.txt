@@ -47,6 +47,11 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
 
+Apply dc2ff0d
+https://github.com/wxWidgets/wxWidgets/commit/dc2ff0d6b42b93dc84b886571bc6008393721f1e
+This is a patch from trunk (3.1.7) that fixes a layout issue when changing a
+font in a text control on OSX.
+
 
 To build for VC, see ./build/CompileWX.py
 To build for Mac/Unix, see ./build/setupwx.sh
