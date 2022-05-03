@@ -194,8 +194,19 @@ static ElementNodePtr ReadData(
 			raw.Write(data.c_str(), data.length());
 		}
 #endif
+		fmt::memory_buffer errTidy;
+		auto treeData = TidyHtmlData(data, errTidy, &debug);
+
 		fmt::wmemory_buffer err;
-		tree = TidyHtmlData(data, err, &debug);
+		auto msgTidy = StringUtil::stringW(fmt::to_string(errTidy));
+		if (!msgTidy.empty())
+			fmt::format_to(std::back_inserter(err), L"{}", msgTidy);
+
+		tree = ElementNode::New();
+		if (!tree->LoadXML(treeData.data(), treeData.length(), err))
+		{
+			tree.reset();
+		}
 		if (!tree)
 		{
 			std::wstring msg = fmt::to_string(err);

@@ -107,4 +107,10 @@ protected:
 	wxString LastCX() const override;
 	wxString LastCY() const override;
 	wxString LastState() const override;
+	wxString LastXold() const override;
+	wxString LastYold() const override;
+	bool PreserveOldValue() const override
+	{
+		return true;
+	}
 };

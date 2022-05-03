@@ -87,6 +87,18 @@ wxString CConfigProgram::SectionName() const
 }
 
 
+wxString CConfigProgram::LastXold() const
+{
+	return CFG_SETTINGS_LASTXPOS_OLD;
+}
+
+
+wxString CConfigProgram::LastYold() const
+{
+	return CFG_SETTINGS_LASTYPOS_OLD;
+}
+
+
 wxString CConfigProgram::LastX() const
 {
 	return CFG_SETTINGS_LASTXPOS;

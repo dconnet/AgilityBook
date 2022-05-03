@@ -336,9 +336,11 @@ inline wxString CFG_SELECTION_DOG(int n)
 //	ST lastVerCheck (AgilityBook.cpp/UpdateInfo.cpp)
 #define CFG_SETTINGS_LASTVERCHECK		CFG_KEY_SETTINGS L"/lastVerCheck"
 //	DW lastXpos (AgilityBook.cpp/MainFrm.cpp)
-#define CFG_SETTINGS_LASTXPOS			CFG_KEY_SETTINGS L"/lastXpos"
+#define CFG_SETTINGS_LASTXPOS_OLD		CFG_KEY_SETTINGS L"/lastXpos"
+#define CFG_SETTINGS_LASTXPOS			CFG_KEY_SETTINGS L"/lastXpos2"
 //	DW lastYpos (AgilityBook.cpp/MainFrm.cpp)
-#define CFG_SETTINGS_LASTYPOS			CFG_KEY_SETTINGS L"/lastYpos"
+#define CFG_SETTINGS_LASTYPOS_OLD		CFG_KEY_SETTINGS L"/lastYpos"
+#define CFG_SETTINGS_LASTYPOS			CFG_KEY_SETTINGS L"/lastYpos2"
 //  DW MRUsize (AgilityBookOptions.cpp)
 #define CFG_SETTINGS_MRU				CFG_KEY_SETTINGS L"/MRUsize"
 //	DW printLand (AgilityBook.cpp)
