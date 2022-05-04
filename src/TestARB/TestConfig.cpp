@@ -105,7 +105,7 @@ size_t gc_NumConfigs = sizeof(gc_Configs) / sizeof(gc_Configs[0]);
 
 TEST_CASE("Config")
 {
-	 SECTION("Load")
+	SECTION("Load")
 	{
 		ElementNodePtr tree = LoadXMLData();
 		REQUIRE(L"DefaultConfig" == tree->GetName());
