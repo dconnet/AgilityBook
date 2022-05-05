@@ -36,7 +36,7 @@
 #include "LibARBWin/CheckLink.h"
 #include "fmt/printf.h"
 #include "fmt/xchar.h"
-
+#include <wx/uilocale.h>
 #include <stdarg.h>
 
 #ifdef __WXMSW__
@@ -90,7 +90,7 @@ TEST_CASE("Misc")
 				SetLang(langs[i].langid);
 				for (size_t j = 0; j < MAX_LANGS; ++j)
 				{
-					wxLanguageInfo const* info = wxLocale::FindLanguageInfo(langs[j].lang);
+					wxLanguageInfo const* info = wxUILocale::FindLanguageInfo(langs[j].lang);
 					REQUIRE(info);
 					if (info)
 					{

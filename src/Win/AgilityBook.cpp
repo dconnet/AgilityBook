@@ -65,6 +65,7 @@
 #include <wx/settings.h>
 #include <wx/stdpaths.h>
 #include <wx/sysopt.h>
+#include <wx/uilocale.h>
 #include <wx/url.h>
 #include <wx/utils.h>
 #include <stdexcept>
@@ -498,7 +499,7 @@ wxLanguage CAgilityBookApp::OnGetLanguage() const
 	}
 	if (!langStr.empty())
 	{
-		const wxLanguageInfo* langInfo = wxLocale::FindLanguageInfo(langStr);
+		const wxLanguageInfo* langInfo = wxUILocale::FindLanguageInfo(langStr);
 		if (langInfo)
 			lang = static_cast<wxLanguage>(langInfo->Language);
 	}
@@ -506,8 +507,8 @@ wxLanguage CAgilityBookApp::OnGetLanguage() const
 	// If we haven't saved a lang, and we're running on EN, don't prompt (by returning default)
 	if (wxLANGUAGE_DEFAULT == lang)
 	{
-		wxLocale tmp(wxLANGUAGE_DEFAULT);
-		if (wxLANGUAGE_ENGLISH_US == static_cast<wxLanguage>(tmp.GetLanguage()))
+		auto id = wxUILocale::GetCurrent().GetLocaleId();
+		if (id.GetLanguage() == L"en" && id.GetRegion() == L"US")
 			lang = wxLANGUAGE_ENGLISH_US;
 	}
 
