@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2022-05-05 Removed localized language names since WX now supplies them.
  * 2019-10-13 Move config test to TestARB
  * 2019-08-15 Fix tests on unix.
  * 2019-06-28 Moved ConfigPath to TestUtils
@@ -43,8 +44,6 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-#define MAX_LANGS 2
-
 
 TEST_CASE("Misc")
 {
@@ -61,78 +60,4 @@ TEST_CASE("Misc")
 #endif
 		}
 	}
-
-
-#if defined(__WXWINDOWS__)
-	SECTION("LocalizationDesc")
-	{
-		if (!g_bMicroTest)
-		{
-			// Update as more languages are added.
-			static struct
-			{
-				wxChar const* lang;
-				wxLanguage langid;
-			} langs[MAX_LANGS] = {
-				// clang-format off
-				{L"en_US", wxLANGUAGE_FRENCH},
-				{L"fr_FR", wxLANGUAGE_ENGLISH_US}
-				// clang-format on
-			};
-			struct
-			{
-				std::wstring Desc[MAX_LANGS];
-				std::wstring ArbDesc[MAX_LANGS];
-			} langdata[MAX_LANGS];
-			fmt::wmemory_buffer out;
-			for (size_t i = 0; i < MAX_LANGS; ++i)
-			{
-				SetLang(langs[i].langid);
-				for (size_t j = 0; j < MAX_LANGS; ++j)
-				{
-					wxLanguageInfo const* info = wxUILocale::FindLanguageInfo(langs[j].lang);
-					REQUIRE(info);
-					if (info)
-					{
-						langdata[i].Desc[j] = info->Description;
-						langdata[i].ArbDesc[j] = wxGetTranslation(info->Description);
-						fmt::format_to(
-							std::back_inserter(out),
-							L"{} {} {} {}\n",
-							i,
-							j,
-							langdata[i].Desc[j],
-							langdata[i].ArbDesc[j]);
-					}
-				}
-			}
-			SetLang(wxLANGUAGE_ENGLISH_US); // Reset
-			// Sanity check that wx is still returning the same (english) value
-			// Check that we have the same value for a language in all languages
-			for (size_t i = 0; i < MAX_LANGS; ++i)
-			{
-				for (size_t j = 1; j < MAX_LANGS; ++j)
-				{
-					REQUIRE(langdata[0].Desc[i] == langdata[j].Desc[i]);
-					REQUIRE(langdata[0].ArbDesc[i] == langdata[j].ArbDesc[i]);
-				}
-			}
-			// Check that our value is different than wx (this test may need
-			// to change in the future, depending on things like changing
-			// "English" back to "English (U.S.)"
-			for (size_t i = 0; i < MAX_LANGS; ++i)
-			{
-				for (size_t j = 0; j < MAX_LANGS; ++j)
-				{
-					// A failure here means the string in wx changed.
-					// Edit LibARBWin/LanguageManager.cpp, around line 183.
-					// Add the new strings so poedit can capture them.
-					REQUIRE(langdata[i].Desc[j] != langdata[i].ArbDesc[j]);
-				}
-			}
-		}
-	}
-#else
-#pragma PRAGMA_TODO(Write localization test)
-#endif
 }
