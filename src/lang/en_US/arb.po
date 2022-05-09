@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-01 10:44-0700\n"
-"PO-Revision-Date: 2022-04-01 10:44-0700\n"
+"POT-Creation-Date: 2022-05-09 09:25-0700\n"
+"PO-Revision-Date: 2022-05-09 09:25-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -32,7 +32,7 @@ msgid ""
 msgstr ""
 "Get all the events from USDAA. This will parse the HTML returned from {}"
 
-#: CalSites/CalendarSiteUSDAA.cpp:203 CalSites/CalendarSites.cpp:1057
+#: CalSites/CalendarSiteUSDAA.cpp:214 CalSites/CalendarSites.cpp:1057
 msgid "IDS_ERR_PARSING_DATA"
 msgstr "Error parsing {} data"
 
@@ -382,7 +382,7 @@ msgstr "DNR"
 msgid "IDS_QTYPE_NA"
 msgstr "NA"
 
-#: TestARB/Local.cpp:52 TestARB/TestMisc.cpp:57 Win/Localization.cpp:50
+#: TestARB/Local.cpp:52 TestARB/TestMisc.cpp:56 Win/Localization.cpp:50
 msgid "IDS_ARB_UNKNOWN_VERSION"
 msgstr "Unknown document version"
 
@@ -603,9 +603,9 @@ msgid "IDS_UPDATE_IDENTICAL"
 msgstr "{} identical"
 
 #: TestARB/Local.cpp:131 Win/DlgConfigure.cpp:238 Win/DlgDogPanelPoints.cpp:56
-#: Win/DlgListCtrl.cpp:551 Win/Localization.cpp:127 Win/PointsData.cpp:1351
-#: Win/PointsData.cpp:1392 Win/PointsData.cpp:1433 Win/PointsData.cpp:1477
-#: Win/PointsData.cpp:1734
+#: Win/DlgListCtrl.cpp:551 Win/Localization.cpp:127 Win/PointsData.cpp:1360
+#: Win/PointsData.cpp:1401 Win/PointsData.cpp:1442 Win/PointsData.cpp:1486
+#: Win/PointsData.cpp:1743
 msgid "IDS_OTHERPOINTS"
 msgstr "Other Points"
 
@@ -659,7 +659,7 @@ msgid "IDS_COL_LEVELS"
 msgstr "Levels"
 
 #: TestARB/Local.cpp:243 TestARB/Local.cpp:254 Win/Localization.cpp:227
-#: Win/Localization.cpp:236 Win/PointsData.cpp:1218
+#: Win/Localization.cpp:236 Win/PointsData.cpp:1227
 msgid "IDS_TITLES"
 msgstr "Titles"
 
@@ -2052,7 +2052,7 @@ msgstr ""
 "\n"
 "Please send any bug reports or suggestions to:"
 
-#: Win/DlgAbout.cpp:83 Win/DlgMessageBox.cpp:54 Win/MainFrm.cpp:154
+#: Win/DlgAbout.cpp:83 Win/DlgMessageBox.cpp:54 Win/MainFrm.cpp:165
 msgid "Agility Record Book"
 msgstr "Agility Record Book"
 
@@ -4386,103 +4386,114 @@ msgid "HIDC_EVENT_SELECT_EVENT"
 msgstr "Event of this multiple-Q item."
 
 # DlgExistingPoints
-#: Win/DlgExistingPoints.cpp:175
+#: Win/DlgExistingPoints.cpp:176
 msgid "IDD_EXISTING_POINTS"
 msgstr "Existing Points"
 
-#: Win/DlgExistingPoints.cpp:191
+#: Win/DlgExistingPoints.cpp:192
 msgid "IDC_EXISTING_TYPE"
 msgstr "&Type"
 
-#: Win/DlgExistingPoints.cpp:204 Win/DlgExistingPoints.cpp:205
+#: Win/DlgExistingPoints.cpp:205 Win/DlgExistingPoints.cpp:206
 msgid "HIDC_EXISTING_TYPE"
 msgstr ""
 "Type of existing points. Note, if entering a Snooker run and you have SuperQ "
 "points, you should create two separate entries for the points."
 
-#: Win/DlgExistingPoints.cpp:228
+#: Win/DlgExistingPoints.cpp:229
 msgid "IDC_EXISTING_DATE"
 msgstr "&Points Earned by:"
 
-#: Win/DlgExistingPoints.cpp:241 Win/DlgExistingPoints.cpp:242
+#: Win/DlgExistingPoints.cpp:242 Win/DlgExistingPoints.cpp:243
 msgid "HIDC_EXISTING_DATE"
 msgstr "Date these points were earned by."
 
-#: Win/DlgExistingPoints.cpp:245
+#: Win/DlgExistingPoints.cpp:246
 msgid "IDC_EXISTING_POINTS"
 msgstr "Po&ints"
 
-#: Win/DlgExistingPoints.cpp:256 Win/DlgExistingPoints.cpp:257
+#: Win/DlgExistingPoints.cpp:257 Win/DlgExistingPoints.cpp:258
 msgid "HIDC_EXISTING_POINTS"
 msgstr "Number of points earned."
 
-#: Win/DlgExistingPoints.cpp:259
+#: Win/DlgExistingPoints.cpp:260
 msgid "IDC_EXISTING_POINTS_WHERE"
 msgstr "Where Points were earned"
 
-#: Win/DlgExistingPoints.cpp:262
+#: Win/DlgExistingPoints.cpp:263 Win/DlgExistingPoints.cpp:1030
 msgid "IDC_EXISTING_VENUES"
 msgstr "&Venue"
 
-#: Win/DlgExistingPoints.cpp:276 Win/DlgExistingPoints.cpp:277
+#: Win/DlgExistingPoints.cpp:277 Win/DlgExistingPoints.cpp:278
 msgid "HIDC_EXISTING_VENUES"
 msgstr "Venue these points were earned in."
 
-#: Win/DlgExistingPoints.cpp:295
+#: Win/DlgExistingPoints.cpp:296 Win/DlgExistingPoints.cpp:1057
 msgid "IDC_EXISTING_LEVEL"
 msgstr "&Level"
 
-#: Win/DlgExistingPoints.cpp:309 Win/DlgExistingPoints.cpp:310
+#: Win/DlgExistingPoints.cpp:310 Win/DlgExistingPoints.cpp:311
 msgid "HIDC_EXISTING_LEVEL"
 msgstr "Level these points were earned in."
 
-#: Win/DlgExistingPoints.cpp:313
+#: Win/DlgExistingPoints.cpp:314 Win/DlgExistingPoints.cpp:1063
 msgid "IDC_EXISTING_EVENT"
 msgstr "&Event"
 
-#: Win/DlgExistingPoints.cpp:327 Win/DlgExistingPoints.cpp:328
+#: Win/DlgExistingPoints.cpp:328 Win/DlgExistingPoints.cpp:329
 msgid "HIDC_EXISTING_EVENT"
 msgstr "Event these points were earned in."
 
-#: Win/DlgExistingPoints.cpp:331
+#: Win/DlgExistingPoints.cpp:332 Win/DlgExistingPoints.cpp:1069
 msgid "IDC_EXISTING_SUBNAME"
 msgstr "&Sub-Name"
 
-#: Win/DlgExistingPoints.cpp:344 Win/DlgExistingPoints.cpp:345
+#: Win/DlgExistingPoints.cpp:345 Win/DlgExistingPoints.cpp:346
 msgid "HIDC_EXISTING_SUBNAME"
 msgstr "Extra naming information used to organize events."
 
-#: Win/DlgExistingPoints.cpp:348
+#: Win/DlgExistingPoints.cpp:349 Win/DlgExistingPoints.cpp:1075
 msgid "IDC_EXISTING_TYPENAME"
 msgstr "Type &Name"
 
-#: Win/DlgExistingPoints.cpp:361 Win/DlgExistingPoints.cpp:362
+#: Win/DlgExistingPoints.cpp:362 Win/DlgExistingPoints.cpp:363
 msgid "HIDC_EXISTING_TYPENAME"
 msgstr "Type Name these points were earned in."
 
-#: Win/DlgExistingPoints.cpp:364
+#: Win/DlgExistingPoints.cpp:365
 msgid "IDC_EXISTING_COMMENTS"
 msgstr "&Comment"
 
-#: Win/DlgExistingPoints.cpp:374 Win/DlgExistingPoints.cpp:375
+#: Win/DlgExistingPoints.cpp:375 Win/DlgExistingPoints.cpp:376
 msgid "HIDC_EXISTING_COMMENTS"
 msgstr "Comments about these existing points."
 
-#: Win/DlgExistingPoints.cpp:636
+#: Win/DlgExistingPoints.cpp:646 Win/DlgExistingPoints.cpp:1040
 msgid "IDC_EXISTING_MULTIQ"
 msgstr "&Multiple Q"
 
-#: Win/DlgExistingPoints.cpp:637 Win/DlgExistingPoints.cpp:638
+#: Win/DlgExistingPoints.cpp:647 Win/DlgExistingPoints.cpp:648
 msgid "HIDC_EXISTING_MULTIQ"
 msgstr "Multiple Q that was earned."
 
-#: Win/DlgExistingPoints.cpp:642
+#: Win/DlgExistingPoints.cpp:652 Win/DlgExistingPoints.cpp:1049
 msgid "IDC_EXISTING_DIVISION"
 msgstr "&Division"
 
-#: Win/DlgExistingPoints.cpp:643 Win/DlgExistingPoints.cpp:644
+#: Win/DlgExistingPoints.cpp:653 Win/DlgExistingPoints.cpp:654
 msgid "HIDC_EXISTING_DIVISION"
 msgstr "Division these points were earned in."
+
+#: Win/DlgExistingPoints.cpp:1027
+msgid "You must select a '{}' name."
+msgstr "You must select a '{}' name."
+
+#: Win/DlgExistingPoints.cpp:1030 Win/DlgExistingPoints.cpp:1040
+#: Win/DlgExistingPoints.cpp:1049 Win/DlgExistingPoints.cpp:1057
+#: Win/DlgExistingPoints.cpp:1063 Win/DlgExistingPoints.cpp:1069
+#: Win/DlgExistingPoints.cpp:1075
+msgid "Warning"
+msgstr "Warning"
 
 # DlgFault
 #: Win/DlgFault.cpp:43
@@ -6372,23 +6383,23 @@ msgstr ""
 "Are you sure you want to continue?"
 
 # This is 11 spaces
-#: Win/MainFrm.cpp:187
+#: Win/MainFrm.cpp:198
 msgid "ID_INDICATOR_DOG"
 msgstr "          "
 
-#: Win/MainFrm.cpp:190
+#: Win/MainFrm.cpp:201
 msgid "ID_INDICATOR_STATUS"
 msgstr "status"
 
-#: Win/MainFrm.cpp:193 Win/MainFrm.cpp:228
+#: Win/MainFrm.cpp:204 Win/MainFrm.cpp:239
 msgid "ID_INDICATOR_FILTERED"
 msgstr "Filtered"
 
-#: Win/MainFrm.cpp:349
+#: Win/MainFrm.cpp:360
 msgid "Canceling file download..."
 msgstr "Canceling file download..."
 
-#: Win/PointsData.cpp:254 Win/PointsData.cpp:1229 Win/Print.cpp:116
+#: Win/PointsData.cpp:254 Win/PointsData.cpp:1238 Win/Print.cpp:116
 #: Win/Print.cpp:1063 Win/TabView.cpp:240 Win/TabView.cpp:366
 msgid "IDS_RUNS"
 msgstr "Runs"
@@ -6409,35 +6420,39 @@ msgstr "Placement Points"
 msgid "IDS_TOTAL"
 msgstr "Total"
 
-#: Win/PointsData.cpp:833
+#: Win/PointsData.cpp:837
 msgid "IDS_POINTS_RUNS_JUDGES"
 msgstr "{0} runs, {1} judges"
 
-#: Win/PointsData.cpp:840 Win/PointsData.cpp:869
+#: Win/PointsData.cpp:843
+msgid "IDS_POINTS_RUNS"
+msgstr "{0} runs"
+
+#: Win/PointsData.cpp:849 Win/PointsData.cpp:878
 msgid "IDS_POINTS_PARTNERS"
 msgstr ", {} partners"
 
-#: Win/PointsData.cpp:851
+#: Win/PointsData.cpp:860
 msgid "IDS_POINTS_QS"
 msgstr "{0} Qs ({1}%)"
 
-#: Win/PointsData.cpp:856
+#: Win/PointsData.cpp:865
 msgid "IDS_POINTS_CLEAN"
 msgstr ", ({} clean)"
 
-#: Win/PointsData.cpp:862
+#: Win/PointsData.cpp:871
 msgid "IDS_POINTS_JUDGES"
 msgstr ", {} judges"
 
-#: Win/PointsData.cpp:877
+#: Win/PointsData.cpp:886
 msgid "IDS_POINTS_SQS"
 msgstr "[{} SQ]"
 
-#: Win/PointsData.cpp:882
+#: Win/PointsData.cpp:891
 msgid "IDS_POINTS_SPEED_SUBTOTAL"
 msgstr "[{} speed]"
 
-#: Win/PointsData.cpp:1702 Win/PointsData.cpp:1710
+#: Win/PointsData.cpp:1711 Win/PointsData.cpp:1719
 msgid "IDS_TITLING_POINTS"
 msgstr "Titling Points"
 

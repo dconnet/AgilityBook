@@ -703,9 +703,12 @@ CPointsDataVenue::CPointsDataVenue(
 									if (!pRun->GetQ().AllowTally())
 										continue;
 									matching.push_back(RunInfo(inDog, pTrial, pRun));
-									judges.insert(pRun->GetJudge());
-									if (pRun->GetQ().Qualified())
-										judgesQ.insert(pRun->GetJudge());
+									if (!pRun->GetJudge().empty())
+									{
+										judges.insert(pRun->GetJudge());
+										if (pRun->GetQ().Qualified())
+											judgesQ.insert(pRun->GetJudge());
+									}
 									if (pScoringMethod->HasSuperQ() && Q::SuperQ == pRun->GetQ())
 										++SQs;
 									if (pScoringMethod->HasSpeedPts())
@@ -828,11 +831,17 @@ CPointsDataVenue::CPointsDataVenue(
 					if (0 < points || 0 < allmatching.size())
 					{
 						fmt::wmemory_buffer strRunCount;
-						fmt::format_to(
-							std::back_inserter(strRunCount),
-							_("IDS_POINTS_RUNS_JUDGES").wx_str(),
-							allmatching.size(),
-							judges.size());
+						if (0 < judges.size())
+							fmt::format_to(
+								std::back_inserter(strRunCount),
+								_("IDS_POINTS_RUNS_JUDGES").wx_str(),
+								allmatching.size(),
+								judges.size());
+						else
+							fmt::format_to(
+								std::back_inserter(strRunCount),
+								_("IDS_POINTS_RUNS").wx_str(),
+								allmatching.size());
 						if (pEvent->HasPartner() && 0 < partners.size())
 						{
 							fmt::format_to(
