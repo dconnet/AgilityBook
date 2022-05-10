@@ -47,7 +47,7 @@ unsigned short GetFilterMask(ARBFilterType type)
 /////////////////////////////////////////////////////////////////////////////
 
 ARBBase::ARBBase()
-	: m_bFiltered({false, false})
+	: m_bFiltered({{false, false}})
 {
 }
 
