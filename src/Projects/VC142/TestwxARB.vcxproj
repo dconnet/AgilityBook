@@ -635,6 +635,9 @@
     <ProjectReference Include="..\..\..\AgilityBookLibs\Projects\VC142\LibwxARBWin.vcxproj">
       <Project>{73c15f6d-530f-4b95-9a2c-81ad1958573f}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\AgilityBookLibs\Projects\VC142\UTcatch3.vcxproj">
+      <Project>{98390979-9e94-4a4f-80e6-d686270cbb98}</Project>
+    </ProjectReference>
     <ProjectReference Include="LibwxARB.vcxproj">
       <Project>{09c48f16-0c9d-4a44-925d-7c02e33341dd}</Project>
     </ProjectReference>
