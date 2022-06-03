@@ -832,7 +832,7 @@ INPUT                  = . \
                          AgilityBookLibs/ARBCommon \
                          AgilityBookLibs/LibARBWin \
                          src/Include \
-                         src/Libraries/ARB \
+                         src/Libraries \
                          src/Win
 
 # This tag can be used to specify the character encoding of the source files
@@ -875,8 +875,7 @@ RECURSIVE              = YES
 # Note that relative paths are relative to the directory from which doxygen is
 # run.
 
-EXCLUDE                = AgilityBookLibs/3rdParty/catch2 \
-                         AgilityBookLibs/3rdParty/LibArchive/zlib \
+EXCLUDE                = AgilityBookLibs/3rdParty/catch \
                          AgilityBookLibs/3rdParty/LibFmt \
                          AgilityBookLibs/3rdParty/LibTidyHtml/tidy
 
