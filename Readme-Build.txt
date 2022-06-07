@@ -38,7 +38,19 @@ Make sure WXWIN is set to wxWidgets root directory.
 - Mac/Unix: Use .../build/setupwx.sh to setup WX build. And ". setwxpath.sh" to
   set the ARB compile environment.
 
-=== Changes to 3.1.6 and 3.1.7:
+=== Changes to 3.1.7:
+  (include/wx/msw/setup.h)
+  - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
+  - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
+  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
+    the library is compiled one way and the users do something different.
+  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
+  - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
+Apply dec11e7
+https://github.com/dconnet/wxWidgets/commit/dec11e76427b1811133d67af8ac5c1371a59f420
+This is a patch from trunk that fixes an OSW text ctrl size issue.
+
+=== Changes to 3.1.6:
   (include/wx/msw/setup.h)
   - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
   - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
