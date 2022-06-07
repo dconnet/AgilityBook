@@ -39,7 +39,7 @@ export TARGETSDK=
 export VERSION=
 export WXWIN=
 
-USAGE="Usage $0 trunk|3.1.6 [debug|release] [test]"
+USAGE="Usage $0 trunk|3.1.6|3.1.7 [debug|release] [test]"
 
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/devtools/wx/trunk
@@ -48,6 +48,11 @@ if test "x$1" = "xtrunk"; then
 	MAC_MIN_OS=10.12
 elif test "x$1" = "x3.1.6"; then
 	WXWIN=~/devtools/wx/wxWidgets-3.1.6
+	VERSION="--disable-compat28 --disable-compat30"
+	MAC_CONFIG_PARAMS=" --disable-nativedvc"
+	MAC_MIN_OS=10.12
+elif test "x$1" = "x3.1.7"; then
+	WXWIN=~/devtools/wx/wxWidgets-3.1.7
 	VERSION="--disable-compat28 --disable-compat30"
 	MAC_CONFIG_PARAMS=" --disable-nativedvc"
 	MAC_MIN_OS=10.12

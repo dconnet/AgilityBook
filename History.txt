@@ -1,7 +1,8 @@
-5/9/2022: v3.7.1.<dev>
+6/9/2022: v3.7.1.<dev>
 - New features / Enhancements:
   - Make buttons the same size in Faults/CalList/etc (DlgListCtrl)
   - Don't count empty judges, hide "0 judges" in Points view.
+  - Updated to wxWidgets 3.1.7
 
 4/10/2022: v3.7.0.117
 - Notes:
