@@ -4,6 +4,7 @@
 # Must be run from the directory this file is in.
 #
 # Revision History
+# 2022-06-08 Remove msbuild /m, add /p (see comment below)
 # 2022-04-10 Fix path to 'official.props'
 # 2022-04-10 Only add 'official.props' on fullupdate build.
 # 2022-04-05 Make vc143 default.
@@ -51,9 +52,12 @@ import pyDcon
 defCompiler = 'vc143'
 solution = 'AgilityBook.sln'
 
-# Verbosity:detailed, multiprocessors
+# Verbosity:detailed, multiprocessors(/m:parallel_project_count)
 # Verbosity:q/m/n/d/diag
-msbuildOpts = '/v:n /m'
+# I'm running into dependency build issues (with catch3) running at m>1.
+# So just set the parallel file count
+#msbuildOpts = '/v:n /m'
+msbuildOpts = '/v:n /p:CL_MPCount=%NUMBER_OF_PROCESSORS%'
 # Only added on 'fullupdate' build
 msbuildOfficial = r'..\AgilityBookLibs\Projects\props\official.props'
 
