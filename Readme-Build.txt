@@ -46,9 +46,39 @@ Make sure WXWIN is set to wxWidgets root directory.
     the library is compiled one way and the users do something different.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
+---The following changes are patches to trunk following the 3.1.7 release
 Apply dec11e7
 https://github.com/dconnet/wxWidgets/commit/dec11e76427b1811133d67af8ac5c1371a59f420
 This is a patch from trunk that fixes an OSW text ctrl size issue.
+--
+diff --git a/src/msw/dc.cpp b/src/msw/dc.cpp
+index 9c7dde05ab..412c5e081c 100644
+--- a/src/msw/dc.cpp
++++ b/src/msw/dc.cpp
+@@ -1231,7 +1231,7 @@ void wxMSWDCImpl::DoDrawRoundedRectangle(wxCoord x, wxCoord y, wxCoord width, wx
+     }
+
+     (void)RoundRect(GetHdc(), XLOG2DEV(x), YLOG2DEV(y), XLOG2DEV(x2),
+-        YLOG2DEV(y2), (int) (2*XLOG2DEV(radius)), (int)( 2*YLOG2DEV(radius)));
++        YLOG2DEV(y2), (int) (2*radius), (int)( 2*radius));
+
+     CalcBoundingBox(x, y, x2, y2);
+ }
+--
+diff --git a/src/generic/listctrl.cpp b/src/generic/listctrl.cpp
+index d8434a6960..894db14b2d 100644
+--- a/src/generic/listctrl.cpp
++++ b/src/generic/listctrl.cpp
+@@ -4906,6 +4906,10 @@ void wxGenericListCtrl::Init()
+
+ wxGenericListCtrl::~wxGenericListCtrl()
+ {
++    // Don't wait until the base class does it because our subwindows expect
++    // their parent window to be a wxListCtrl, but this won't be the case any
++    // more when we get to the base class dtor (it will be only a wxWindow).
++    DestroyChildren();
+ }
+--
 
 === Changes to 3.1.6:
   (include/wx/msw/setup.h)
