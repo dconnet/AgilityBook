@@ -53,7 +53,7 @@ CNamedColumns::CNamedColumns(CAgilityBookOptions::ColumnOrder eOrder)
 			CDlgAssignColumns::GetColumnOrder(
 				m_eOrder,
 				i,
-				fmt::format(L"{}{}", name, data.configName),
+				fmt::format(L"{}{}", name.wc_str(), data.configName),
 				data.m_Columns[i]);
 		}
 		m_Configs.push_back(data);
@@ -106,7 +106,7 @@ void CNamedColumns::Save()
 			CDlgAssignColumns::SetColumnOrder(
 				m_eOrder,
 				i,
-				fmt::format(L"{}{}", name, (*iConfig).configName),
+				fmt::format(L"{}{}", name.wc_str(), (*iConfig).configName),
 				(*iConfig).m_Columns[i]);
 		}
 	}

@@ -59,9 +59,9 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, CMainFrame* pParent)
 	auto subject = _("LinkHelpUrlSubject");
 	subject.Replace(L"%VERSION%", ver.GetVersionString(VER_PARTS));
 
-	m_mailto.AddTo(_("LinkHelpAddress").wx_str());
-	m_mailto.SetSubject(subject.wx_str());
-	m_mailto.SetBody(_("LinkHelpUrlBody").wx_str());
+	m_mailto.AddTo(_("LinkHelpAddress").wc_str());
+	m_mailto.SetSubject(subject.wc_str());
+	m_mailto.SetBody(_("LinkHelpUrlBody").wc_str());
 
 	// Controls (these are done first to control tab order)
 
@@ -77,10 +77,10 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, CMainFrame* pParent)
 		this,
 		wxID_ANY,
 		fmt::format(
-			_("AboutVersion").wx_str(),
+			_("AboutVersion").wc_str(),
 			ver.GetVersionString(4),
-			ver.GetCompiledOn(ARBDebug::GetCompileDate(), ARBDebug::GetCompileTime()),
-			_("Agility Record Book").wx_str()),
+			ver.GetCompiledOn(ARBDebug::GetCompileDate(), ARBDebug::GetCompileTime()).wc_str(),
+			_("Agility Record Book").wc_str()),
 		wxDefaultPosition,
 		wxDefaultSize,
 		0);
