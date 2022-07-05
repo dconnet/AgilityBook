@@ -6,7 +6,7 @@
 export BUILDDIR
 export WXWIN
 
-USAGE=$'Usage setwxpath.sh <directory>|wxWidgets-<version> [release|debug]\nex: setwxpath.sh trunk release\nex: setwxpath.sh 3.1.5 release'
+USAGE="Usage setwxpath.sh <directory>|wxWidgets-<version> [release|debug]\nex: setwxpath.sh trunk release\nex: setwxpath.sh 3.1.5 release"
 
 if [[ "x$1" = "x" ]]
 then

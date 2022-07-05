@@ -8,6 +8,7 @@
 # Note: Found old OSX SDKs at https://github.com/phracker/MacOSX-SDKs/releases
 #
 # History
+# 2022-07-05 Change arg parsing to allow passing any wx version
 # 2022-04-04 Upgraded 3.1.5 to 3.1.6
 # 2022-01-22 Changed to C++17. Min OSX10.12
 # 2021-12-20 Added SDK12.1
@@ -39,27 +40,31 @@ export TARGETSDK=
 export VERSION=
 export WXWIN=
 
-USAGE="Usage $0 trunk|3.1.6|3.1.7 [debug|release] [test]"
+USAGE="Usage $0 <directory>|wxWidgets-<version> [debug|release] [test]\nex: setupwx.sh trunk debug\nex: setupwx.sh 3.1.7 release"
 
-if test "x$1" = "xtrunk"; then
-	WXWIN=~/devtools/wx/trunk
-	VERSION="--disable-compat28 --disable-compat30"
-	MAC_CONFIG_PARAMS=" --disable-nativedvc"
-	MAC_MIN_OS=10.12
-elif test "x$1" = "x3.1.6"; then
-	WXWIN=~/devtools/wx/wxWidgets-3.1.6
-	VERSION="--disable-compat28 --disable-compat30"
-	MAC_CONFIG_PARAMS=" --disable-nativedvc"
-	MAC_MIN_OS=10.12
-elif test "x$1" = "x3.1.7"; then
-	WXWIN=~/devtools/wx/wxWidgets-3.1.7
-	VERSION="--disable-compat28 --disable-compat30"
-	MAC_CONFIG_PARAMS=" --disable-nativedvc"
-	MAC_MIN_OS=10.12
-else
-	echo $USAGE
+if [[ "x$1" = "x" ]]
+then
+	echo "$USAGE"
 	exit
 fi
+
+WXWIN=~/devtools/wx/$1
+if [[ ! -d "$WXWIN" ]]
+then
+	OLD=$WXWIN
+	WXWIN=~/devtools/wx/wxWidgets-$1
+	if [[ ! -d "$WXWIN" ]]
+	then
+		echo Neither $OLD or $WXWIN exist!
+		exit
+	fi
+fi
+
+# Assume we're targetting 3.1.6 or newer.
+VERSION="--disable-compat28 --disable-compat30"
+MAC_CONFIG_PARAMS=" --disable-nativedvc"
+MAC_MIN_OS=10.12
+
 BUILDDIR="$WXWIN/build"
 
 CONFIG_PARAMS=" --disable-mediactrl --disable-shared --enable-unicode"
