@@ -169,10 +169,10 @@ void CUpdateInfo::CleanupUpdate()
 			// If we get here really quick, the updater may not have finished
 			// yet. Go to the Win API now.
 			Sleep(3000);
-			if (!DeleteFile(updateFile.wx_str()))
+			if (!DeleteFile(updateFile.wc_str()))
 			{
 				// Ok, delete failed after 3 seconds. Punt (quietly).
-				MoveFileEx(updateFile.wx_str(), nullptr, MOVEFILE_DELAY_UNTIL_REBOOT);
+				MoveFileEx(updateFile.wc_str(), nullptr, MOVEFILE_DELAY_UNTIL_REBOOT);
 			}
 		}
 	}
@@ -440,7 +440,7 @@ bool CUpdateInfo::ReadVersionFile(std::string const& data, bool bVerbose)
 			if (bVerbose)
 			{
 				fmt::wmemory_buffer msg;
-				fmt::format_to(std::back_inserter(msg), _("IDS_LOAD_FAILED").wx_str(), k_versionFile);
+				fmt::format_to(std::back_inserter(msg), _("IDS_LOAD_FAILED").wc_str(), k_versionFile);
 				if (0 < errMsg2.size())
 				{
 					fmt::format_to(std::back_inserter(msg), L"\n\n{}", fmt::to_string(errMsg2));
@@ -590,7 +590,7 @@ bool CUpdateInfo::CheckProgram(
 			return bNeedsUpdating;
 		}
 		wxConfig::Get()->Write(CFG_SETTINGS_LASTVERCHECK, today.GetString(ARBDateFormat::ISO).c_str());
-		std::wstring msg = fmt::format(_("IDS_VERSION_AVAILABLE").wx_str(), m_VersionNum.GetVersionString());
+		std::wstring msg = fmt::format(_("IDS_VERSION_AVAILABLE").wc_str(), m_VersionNum.GetVersionString());
 		if (wxYES == wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_QUESTION))
 		{
 			bool bGotoWeb = false;
@@ -717,7 +717,7 @@ bool CUpdateInfo::CheckConfig(CAgilityBookDoc* pDoc, wxString url, std::string c
 		if (!tree->LoadXML(strConfig.c_str(), strConfig.length(), errMsg2))
 		{
 			fmt::wmemory_buffer msg2;
-			fmt::format_to(std::back_inserter(msg2), _("IDS_LOAD_FAILED").wx_str(), url.wx_str());
+			fmt::format_to(std::back_inserter(msg2), _("IDS_LOAD_FAILED").wc_str(), url.wc_str());
 			if (0 < errMsg2.size())
 			{
 				fmt::format_to(std::back_inserter(msg2), L"\n\n{}", fmt::to_string(errMsg2));
@@ -765,7 +765,7 @@ bool CUpdateInfo::DownloadFile(wxString const& filename)
 	{
 		delete output;
 		fmt::wmemory_buffer errMsg;
-		fmt::format_to(std::back_inserter(errMsg), _("IDS_CANNOT_OPEN").wx_str(), filename.wx_str());
+		fmt::format_to(std::back_inserter(errMsg), _("IDS_CANNOT_OPEN").wc_str(), filename.wc_str());
 		wxMessageBox(fmt::to_string(errMsg));
 		return false;
 	}
@@ -796,7 +796,7 @@ bool CUpdateInfo::DownloadFile(wxString const& filename)
 				{
 #if defined(__WXMAC__)
 					deleteFile = false;
-					wxMessageBox(fmt::format(_("IDS_DOWNLOAD_AND_RESTART").wx_str(), filename));
+					wxMessageBox(fmt::format(_("IDS_DOWNLOAD_AND_RESTART").wc_str(), filename.wc_str()));
 #elif defined(__WXMSW__)
 					progress->SetCaption(StringUtil::stringW(_("IDS_VALIDATING")));
 					wxFileInputStream file(filename);
@@ -872,12 +872,12 @@ bool CUpdateInfo::DownloadFile(wxString const& filename)
 							}
 							if (!gotoWeb)
 							{
-								std::wstring args = fmt::format(L"-f \"{}\"", msiFilename.wx_str());
+								std::wstring args = fmt::format(L"-f \"{}\"", msiFilename.wc_str());
 								SHELLEXECUTEINFO info;
 								ZeroMemory(&info, sizeof(info));
 								info.cbSize = sizeof(info);
 								info.lpVerb = L"open";
-								info.lpFile = updater.wx_str();
+								info.lpFile = updater.wc_str();
 								info.lpParameters = args.c_str();
 								info.nShow = SW_SHOWNORMAL;
 								if (ShellExecuteEx(&info))
