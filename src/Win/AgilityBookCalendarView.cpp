@@ -245,7 +245,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 		// Figure out which month we're on.
 		ARBDate curMonth = FirstDayOfVisibleMonth();
 		curMonth = LastDayOfWeek(curMonth);
-		std::wstring str = fmt::format(L"{} {}", m_Months[curMonth.GetMonth() - 1].c_str(), curMonth.GetYear());
+		std::wstring str = fmt::format(L"{} {}", m_Months[curMonth.GetMonth() - 1].wc_str(), curMonth.GetYear());
 
 		wxRect rHeader;
 		wxRect rWeekDays;
@@ -742,7 +742,7 @@ void CAgilityBookCalendar::OnCopy()
 		assert(col1.length() == tentative.length());
 		std::wstring str = fmt::format(
 			fmtspec,
-			tentative.c_str(),
+			tentative.wc_str(),
 			items[COL_START_DATE],
 			maxLen[COL_START_DATE],
 			items[COL_END_DATE],
