@@ -30,13 +30,22 @@ Currently using version 3.10.0.
 - Note, also install pyWin32 from https://github.com/mhammond/pywin32
 
 wxWidgets: http://www.wxwidgets.org/
-Currently using version 3.1.7. Min supported is 3.1.6.
+Currently using version 3.2.0. Min supported is 3.1.6.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in AgilityBookLibs/lang/res/fr_FR) IMPORTANT: This means the directory name
    in fr_FR must match the wx version number being used.
 - Mac/Unix: Use .../build/setupwx.sh to setup WX build. And ". setwxpath.sh" to
   set the ARB compile environment.
+
+=== Changes to 3.2.0:
+  (include/wx/msw/setup.h)
+  - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
+  - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
+  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
+    the library is compiled one way and the users do something different.
+  - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
+  - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
 
 === Changes to 3.1.7:
   (include/wx/msw/setup.h)
