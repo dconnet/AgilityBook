@@ -54,11 +54,14 @@
 #error "Choose one!"
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+using namespace dconSoft;
 
-static wchar_t const* k_eventURL = L"https://usdaa.com/events/event-calendar.cfm";
 
-static std::wstring mdy2ymd(std::wstring const& inDate)
+namespace
+{
+constexpr wchar_t k_eventURL[] = L"https://usdaa.com/events/event-calendar.cfm";
+
+std::wstring mdy2ymd(std::wstring const& inDate)
 {
 	std::wstring date;
 	std::wstring::size_type pos = 0;
@@ -79,7 +82,7 @@ static std::wstring mdy2ymd(std::wstring const& inDate)
 }
 
 
-static void StripNewlines(std::wstring& inStr)
+void StripNewlines(std::wstring& inStr)
 {
 	std::wstring::size_type pos = inStr.find_first_of(L"\n");
 	while (std::wstring::npos != pos)
@@ -88,6 +91,7 @@ static void StripNewlines(std::wstring& inStr)
 		pos = inStr.find_first_of(L"\n");
 	}
 }
+} // namespace
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -195,7 +199,7 @@ static ElementNodePtr ReadData(
 		}
 #endif
 		fmt::memory_buffer errTidy;
-		auto treeData = TidyHtmlData(data, errTidy, &debug);
+		auto treeData = TidyHtml::TidyHtmlData(data, errTidy, &debug);
 
 		fmt::wmemory_buffer err;
 		auto msgTidy = StringUtil::stringW(fmt::to_string(errTidy));
