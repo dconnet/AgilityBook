@@ -38,16 +38,23 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
 
-#define ACTION_VERB_DELETE_CALPLUGIN L"DeleteCalPlugin" // Obsolete
-#define ACTION_VERB_DELETE_TITLE     L"DeleteTitle"
-#define ACTION_VERB_RENAME_TITLE     L"RenameTitle"
-#define ACTION_VERB_DELETE_EVENT     L"DeleteEvent"
-#define ACTION_VERB_RENAME_EVENT     L"RenameEvent"
-#define ACTION_VERB_RENAME_LEVEL     L"RenameLevel"
-#define ACTION_VERB_RENAME_DIV       L"RenameDivision"
-#define ACTION_VERB_RENAME_VENUE     L"RenameVenue"
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
+namespace
+{
+constexpr wchar_t ACTION_VERB_DELETE_CALPLUGIN[] = L"DeleteCalPlugin"; // Obsolete
+constexpr wchar_t ACTION_VERB_DELETE_TITLE[] = L"DeleteTitle";
+constexpr wchar_t ACTION_VERB_RENAME_TITLE[] = L"RenameTitle";
+constexpr wchar_t ACTION_VERB_DELETE_EVENT[] = L"DeleteEvent";
+constexpr wchar_t ACTION_VERB_RENAME_EVENT[] = L"RenameEvent";
+constexpr wchar_t ACTION_VERB_RENAME_LEVEL[] = L"RenameLevel";
+constexpr wchar_t ACTION_VERB_RENAME_DIV[] = L"RenameDivision";
+constexpr wchar_t ACTION_VERB_RENAME_VENUE[] = L"RenameVenue";
+} // namespace
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -1855,3 +1862,6 @@ bool ARBConfigActionList::Update(
 	}
 	return inVenue != ioVenue || inDivision != ioDivision || inSubLevel != ioSubLevel;
 }
+
+} // namespace ARB
+} // namespace dconSoft

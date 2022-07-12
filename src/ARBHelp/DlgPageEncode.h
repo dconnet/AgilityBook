@@ -18,6 +18,10 @@
 
 #include "ARBCommon/ARBTypes.h"
 #include <wx/wizard.h>
+
+
+namespace dconSoft
+{
 class CDlgARBHelp;
 
 
@@ -32,3 +36,5 @@ private:
 	CDlgARBHelp* m_Parent;
 	wxRadioBox* m_DiskChoices;
 };
+
+} // namespace dconSoft

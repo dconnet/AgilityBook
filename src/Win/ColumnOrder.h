@@ -21,6 +21,10 @@
 #include <string>
 
 
+namespace dconSoft
+{
+
+
 class CColumnOrder
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CColumnOrder)
@@ -53,3 +57,5 @@ private:
 	std::unique_ptr<int[]> m_order;
 	std::unique_ptr<bool[]> m_bDescending;
 };
+
+} // namespace dconSoft

@@ -36,7 +36,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 ARBConfig::ARBConfig()
 	: m_bUpdate(true)
@@ -393,3 +398,6 @@ bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, fmt::wmemory_bu
 	}
 	return bChanges;
 }
+
+} // namespace ARB
+} // namespace dconSoft

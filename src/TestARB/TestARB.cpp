@@ -38,6 +38,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 TEST_CASE("ARB")
 {
 	SECTION("ARBConfigFiles")
@@ -94,7 +100,7 @@ bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config)
 
 ElementNodePtr CreateActionList()
 {
-	static char const* const configData = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<RootNode>\n\
+	constexpr char const* const configData = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<RootNode>\n\
 <Action NewName=\"SSA\" OldName=\"Sweepstakes\" Verb=\"RenameVenue\" />\n\
 <Action NewName=\"MXF\" OldName=\"MF\" Venue=\"AKC\" Verb=\"RenameTitle\" />\n\
 <Action NewName=\"ATCH\" OldName=\"V-ATCH\" Venue=\"ASCA\" Verb=\"DeleteTitle\" />\n\
@@ -187,3 +193,5 @@ ElementNodePtr CreateActionList()
 	assert(bParse);
 	return actions;
 }
+
+} // namespace dconSoft

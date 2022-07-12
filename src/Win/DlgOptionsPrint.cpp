@@ -32,6 +32,28 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
+namespace
+{
+double ConvertInchesMM(double val, bool bToMM)
+{
+	if (bToMM)
+		val *= 25.4;
+	else
+		val /= 25.4;
+	// Now round in MMs, where we have no decimals.
+	if (bToMM)
+		val = floor(val + 0.5);
+	return val;
+}
+} // namespace
+
+
 CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL)
 	, m_fontPrintInfo()
@@ -327,19 +349,6 @@ void CDlgOptionsPrint::OnFontPrint(wxCommandEvent& evt)
 }
 
 
-static double ConvertInchesMM(double val, bool bToMM)
-{
-	if (bToMM)
-		val *= 25.4;
-	else
-		val /= 25.4;
-	// Now round in MMs, where we have no decimals.
-	if (bToMM)
-		val = floor(val + 0.5);
-	return val;
-}
-
-
 void CDlgOptionsPrint::OnUnitsChange(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
@@ -358,3 +367,5 @@ void CDlgOptionsPrint::OnUnitsChange(wxCommandEvent& evt)
 		TransferDataToWindow();
 	}
 }
+
+} // namespace dconSoft

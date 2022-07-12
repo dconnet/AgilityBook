@@ -22,12 +22,19 @@
  */
 
 #include "ARB/ARBConfigScoring.h"
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
+class CSpellCheckCtrl;
+class CTextCtrl;
+} // namespace ARBWin
 class CConfigEventDataLifetimePoints;
 class CConfigEventDataPlaceInfo;
 class CConfigEventDataScoring;
 class CConfigEventDataTitlePoints;
-class CSpellCheckCtrl;
-class CTextCtrl;
 
 
 class CDlgConfigEvent : public wxDialog
@@ -36,12 +43,12 @@ class CDlgConfigEvent : public wxDialog
 public:
 	CDlgConfigEvent(
 		bool bNewEntry,
-		ARBConfigVenuePtr const& inVenue,
-		ARBConfigEventPtr const& inEvent,
+		ARB::ARBConfigVenuePtr const& inVenue,
+		ARB::ARBConfigEventPtr const& inEvent,
 		wxWindow* pParent = nullptr);
 	~CDlgConfigEvent();
 
-	void GetFixups(std::vector<ARBConfigActionPtr>& ioFixups);
+	void GetFixups(std::vector<ARB::ARBConfigActionPtr>& ioFixups);
 
 private:
 	void ClearFixups();
@@ -49,7 +56,7 @@ private:
 	CConfigEventDataTitlePoints* GetTitleData(int index) const;
 	CConfigEventDataLifetimePoints* GetLifetimeData(int index) const;
 	CConfigEventDataPlaceInfo* GetPlacementData(int index) const;
-	wxString GetListName(ARBConfigScoringPtr const& inScoring) const;
+	wxString GetListName(ARB::ARBConfigScoringPtr const& inScoring) const;
 	void EnableSubnameControls();
 	void EditSubname();
 	void UpdateSubnames();
@@ -57,20 +64,20 @@ private:
 	void ShowSubNames(bool bShow);
 	void FillControls();
 	void FillMethodList();
-	void FillTitlePoints(ARBConfigScoringPtr const& inScoring);
+	void FillTitlePoints(ARB::ARBConfigScoringPtr const& inScoring);
 	bool SaveControls();
 	void EditMethod();
 	void EditPoints();
 
 	bool m_bNewEntry;
-	ARBConfigVenuePtr m_pVenue;
-	ARBConfigEventPtr m_pEvent;
-	std::vector<ARBConfigActionPtr> m_DlgFixup;
-	ARBConfigScoringList m_Scorings;
+	ARB::ARBConfigVenuePtr m_pVenue;
+	ARB::ARBConfigEventPtr m_pEvent;
+	std::vector<ARB::ARBConfigActionPtr> m_DlgFixup;
+	ARB::ARBConfigScoringList m_Scorings;
 	wxString m_Name;
 	bool m_bHasPartners;
 	wxString m_Desc;
-	CTextCtrl* m_ctrlName;
+	ARBWin::CTextCtrl* m_ctrlName;
 	wxCheckBox* m_ctrlTable;
 	wxCheckBox* m_ctrlHasSubnames;
 	wxListBox* m_ctrlSubNames;
@@ -90,7 +97,7 @@ private:
 	wxButton* m_ctrlPointsNew;
 	wxButton* m_ctrlPointsEdit;
 	wxButton* m_ctrlPointsDelete;
-	CSpellCheckCtrl* m_ctrlNote;
+	ARBWin::CSpellCheckCtrl* m_ctrlNote;
 	int m_idxMethod;
 
 	DECLARE_EVENT_TABLE()
@@ -117,3 +124,5 @@ private:
 	void OnPointsDelete(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

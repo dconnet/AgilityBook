@@ -46,6 +46,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 CDlgOptionsFilter::CDlgOptionsFilter(wxWindow* parent, CAgilityBookDoc* pDoc)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL)
 	, m_pDoc(pDoc)
@@ -774,3 +780,5 @@ void CDlgOptionsFilter::OnFilterVenueCheck(wxEvent& evt)
 	FillFilter(m_ctrlVenue->GetRootItem(), L"", venues);
 	m_FilterOptions.SetFilterVenue(venues);
 }
+
+} // namespace dconSoft

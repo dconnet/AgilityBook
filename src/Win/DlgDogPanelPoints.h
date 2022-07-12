@@ -21,11 +21,18 @@
 #include "DlgDogPanelBase.h"
 
 #include "ARB/ARBDog.h"
-#include "ARBCommon/ARBDate.h"
-class CAgilityBookDoc;
-class CReportListCtrl;
 class wxDateEvent;
 class wxDatePickerCtrl;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
+class CReportListCtrl;
+} // namespace ARBWin
+class CAgilityBookDoc;
+
 
 ARB_TYPEDEF(CDlgDogDataPoint)
 
@@ -33,7 +40,7 @@ class CDlgDogPanelPoints : public CDlgDogPanelReportBase
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgDogPanelPoints)
 public:
-	CDlgDogPanelPoints(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog, wxWindow* parent);
+	CDlgDogPanelPoints(CAgilityBookDoc* pDoc, ARB::ARBDogPtr const& inDog, wxWindow* parent);
 
 	bool Save(unsigned int& hint) override;
 
@@ -53,5 +60,7 @@ private:
 	void EditPoints();
 
 	wxStaticText* m_ctrlSelectedPts;
-	ARBDogExistingPointsList m_ExistingPoints;
+	ARB::ARBDogExistingPointsList m_ExistingPoints;
 };
+
+} // namespace dconSoft

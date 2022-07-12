@@ -25,6 +25,11 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+
 wxIMPLEMENT_CLASS(CQualifyingValidator, wxValidator)
 
 
@@ -105,3 +110,5 @@ bool CQualifyingValidator::Validate(wxWindow* parent)
 	}
 	return true;
 }
+
+} // namespace dconSoft

@@ -27,6 +27,9 @@
 #endif
 
 
+namespace dconSoft
+{
+
 TEST_CASE("ConfigPlaceInfo")
 {
 	SECTION("New")
@@ -166,3 +169,5 @@ TEST_CASE("ConfigPlaceInfoList")
 		}
 	}
 }
+
+} // namespace dconSoft

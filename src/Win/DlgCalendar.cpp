@@ -51,6 +51,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 wxBEGIN_EVENT_TABLE(CDlgCalendar, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgCalendar::OnOk)
 wxEND_EVENT_TABLE()
@@ -958,3 +964,5 @@ void CDlgCalendar::OnOk(wxCommandEvent& evt)
 
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

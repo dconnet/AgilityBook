@@ -28,6 +28,11 @@
  * Defines that are indented are the valid values for the attribute that
  * was just defined.
  */
+
+namespace dconSoft
+{
+namespace ARB
+{
 // clang-format off
 #define TREE_BOOK							L"AgilityBook"
 #define TREE_CALENDAR						L"Calendar"
@@ -278,3 +283,6 @@
  */
 #define WILDCARD_DIVISION L"*"
 #define WILDCARD_LEVEL    L"*"
+
+} // namespace ARB
+} // namespace dconSoft

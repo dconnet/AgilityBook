@@ -38,7 +38,15 @@
 #endif
 
 
-static const std::vector<CMenuHelper::ItemData> sc_items = {
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
+namespace
+{
+const std::vector<CMenuHelper::ItemData> sc_items = {
 	// clang-format off
 	{IdMenuNone, MENU_ITEM, 0,                        wxITEM_NORMAL, 0, nullptr, arbT("MenuFile"), nullptr, nullptr},
 	{IdMenuNone, MENU_ITEM, wxID_NEW,                 wxITEM_NORMAL, 1, arbT("MenuFileNew"), arbT("MenuFileNew"), arbT("DescFileNew"), ImageMgrNew},
@@ -285,7 +293,7 @@ static const std::vector<CMenuHelper::ItemData> sc_items = {
 // Note: The first number cannot change. It is stored to the registry.
 // Future changes all have to add new numbers. If old entries go away,
 // just comment them out (as a reserved spot).
-static const std::vector<CMenuHelper::ItemAccel> sc_accels = {
+const std::vector<CMenuHelper::ItemAccel> sc_accels = {
 	// clang-format off
 	{1,  wxID_NEW,                    true, false, false, 'N'},
 	{2,  wxID_OPEN,                   true, false, false, 'O'},
@@ -385,7 +393,7 @@ static const std::vector<CMenuHelper::ItemAccel> sc_accels = {
 	// clang-format on
 };
 
-static const std::vector<int> sc_toolbarItems = {
+const std::vector<int> sc_toolbarItems = {
 	// clang-format off
 	wxID_NEW,
 	wxID_OPEN,
@@ -409,6 +417,7 @@ static const std::vector<int> sc_toolbarItems = {
 	wxID_ABOUT
 	// clang-format on
 };
+} // namespace
 
 
 std::unique_ptr<CMenuHelper> CAgilityBookApp::CreateMenus()
@@ -423,3 +432,5 @@ std::unique_ptr<CMenuHelper> CAgilityBookApp::CreateMenus()
 	menuIds[IdMenuTraining] = wxGetTranslation(arbT("IDS_MENU_TRAINING"));
 	return std::make_unique<CMenuHelper>(sc_items, sc_accels, sc_toolbarItems, menuIds, true);
 }
+
+} // namespace dconSoft

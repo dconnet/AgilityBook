@@ -23,9 +23,18 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
 
-static IARBLocalization const* s_Localization = nullptr;
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
+
+namespace
+{
+IARBLocalization const* s_Localization = nullptr;
+} // namespace
+
 
 void IARBLocalization::Init(IARBLocalization const* pLocalization)
 {
@@ -38,3 +47,6 @@ IARBLocalization const* Localization()
 	assert(!!s_Localization);
 	return s_Localization;
 }
+
+} // namespace ARB
+} // namespace dconSoft

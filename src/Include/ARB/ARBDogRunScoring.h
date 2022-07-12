@@ -27,6 +27,11 @@
 #include "LibwxARB.h"
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 /**
  * Types of scoring
  */
@@ -76,8 +81,8 @@ public:
 		short inConfigVersion,
 		ARBConfigEventPtr const& inEvent,
 		ARBConfigScoringPtr const& inEventScoring,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -86,7 +91,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogRunScoring element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Get the minimum YPS for the run (yards/sct).
@@ -260,3 +265,6 @@ private:
 	short m_ClosePts;
 	double m_BonusTitlePts;
 };
+
+} // namespace ARB
+} // namespace dconSoft

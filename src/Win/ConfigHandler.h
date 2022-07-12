@@ -19,13 +19,19 @@
 #include "ARB/ARBConfig.h"
 
 
-class CConfigHandler : public IARBConfigHandler
+namespace dconSoft
+{
+
+
+class CConfigHandler : public ARB::IARBConfigHandler
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CConfigHandler)
 public:
 	CConfigHandler();
 	virtual ~CConfigHandler();
 
-	ElementNodePtr LoadDefaultConfig() const override;
+	ARBCommon::ElementNodePtr LoadDefaultConfig() const override;
 	std::string LoadDTD() const override;
 };
+
+} // namespace dconSoft

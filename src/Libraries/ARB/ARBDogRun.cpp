@@ -58,7 +58,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 namespace
 {
@@ -1127,3 +1132,6 @@ bool ARBDogRunList::DeleteRun(ARBDogRunPtr const& inRun)
 	}
 	return false;
 }
+
+} // namespace ARB
+} // namespace dconSoft

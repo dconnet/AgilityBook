@@ -18,8 +18,15 @@
  */
 
 #include "ARB/ARBTypes2.h"
-class ARBConfigCalSiteList;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
 class CTextCtrl;
+} // namespace ARBWin
+class ARBConfigCalSiteList;
 class CVenueComboBox;
 
 
@@ -40,7 +47,7 @@ private:
 	bool m_ReadOnly;
 	ARBConfigCalSiteList const* m_sites;
 	wxString m_strCode;
-	CTextCtrl* m_ctrlCode;
+	ARBWin::CTextCtrl* m_ctrlCode;
 	wxString m_strName;
 	CVenueComboBox* m_ctrlVenues;
 	wxString m_Code;
@@ -50,3 +57,5 @@ private:
 	void OnSelchangeVenues(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

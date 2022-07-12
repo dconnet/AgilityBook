@@ -19,12 +19,16 @@
 #include "CommonView.h"
 #include <wx/docview.h>
 #include <wx/imaglist.h>
+
+
+namespace dconSoft
+{
 class CMainFrame;
 
-#define IDX_PANE_RUNS     0
-#define IDX_PANE_POINTS   1
-#define IDX_PANE_CALENDAR 2
-#define IDX_PANE_LOG      3
+constexpr int IDX_PANE_RUNS = 0;
+constexpr int IDX_PANE_POINTS = 1;
+constexpr int IDX_PANE_CALENDAR = 2;
+constexpr int IDX_PANE_LOG = 3;
 
 
 class CTabView : public CAgilityBookBaseView
@@ -99,3 +103,5 @@ private:
 	}
 #endif
 };
+
+} // namespace dconSoft

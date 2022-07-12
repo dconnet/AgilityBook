@@ -30,7 +30,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 namespace
 {
@@ -317,3 +322,6 @@ bool ARBDogReferenceRunList::DeleteReferenceRun(ARBDogReferenceRunPtr const& inR
 	}
 	return false;
 }
+
+} // namespace ARB
+} // namespace dconSoft

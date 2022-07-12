@@ -33,6 +33,11 @@
 #include "ARBCommon/ARBDate.h"
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 /**
  * Titles a dog has earned.
  */
@@ -83,8 +88,8 @@ public:
 	 */
 	bool Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -93,12 +98,12 @@ public:
 	 * @return Success
 	 * @post The ARBDogTitle element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/*
 	 * Getters/setters.
 	 */
-	ARBDate const& GetDate() const
+	ARBCommon::ARBDate const& GetDate() const
 	{
 		return m_Date;
 	}
@@ -106,7 +111,7 @@ public:
 	 * @post Setting the date also affects the hidden value. An invalid date
 	 *       will hide the entry, a valid date will unhide.
 	 */
-	void SetDate(ARBDate const& inDate)
+	void SetDate(ARBCommon::ARBDate const& inDate)
 	{
 		m_Date = inDate;
 		if (!m_Date.IsValid())
@@ -170,7 +175,7 @@ public:
 	}
 
 private:
-	ARBDate m_Date;
+	ARBCommon::ARBDate m_Date;
 	std::wstring m_Venue;
 	std::wstring m_Name;
 	short m_Instance;
@@ -202,8 +207,8 @@ public:
 	 */
 	bool Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -286,3 +291,6 @@ public:
 	 */
 	bool DeleteTitle(ARBConfigVenuePtr const& inVenue, ARBDogTitlePtr const& inTitle);
 };
+
+} // namespace ARB
+} // namespace dconSoft

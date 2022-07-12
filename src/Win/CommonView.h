@@ -17,11 +17,18 @@
 
 #include "AgilityBookDoc.h"
 #include <wx/docview.h>
-class CBasePanel;
-class CListCtrl;
-class CTreeCtrl;
 class wxListEvent;
 class wxTreeEvent;
+
+
+namespace dconSoft
+{
+class CBasePanel;
+namespace ARBWin
+{
+class CListCtrl;
+class CTreeCtrl;
+} // namespace ARBWin
 
 
 /// All views derive from this. We specifically do not want them calling
@@ -125,13 +132,15 @@ public:
 
 protected:
 	// Returns points in client coordinates
-	bool GetMenuPosition(wxPoint& outPos, CListCtrl& ctrl, wxContextMenuEvent const& evt);
-	bool GetMenuPosition(wxPoint& outPos, CListCtrl& ctrl, wxListEvent const& evt);
-	bool GetMenuPosition(wxPoint& outPos, CTreeCtrl& ctrl, wxContextMenuEvent const& evt);
-	bool GetMenuPosition(wxPoint& outPos, CTreeCtrl& ctrl, wxTreeEvent const& evt);
+	bool GetMenuPosition(wxPoint& outPos, ARBWin::CListCtrl& ctrl, wxContextMenuEvent const& evt);
+	bool GetMenuPosition(wxPoint& outPos, ARBWin::CListCtrl& ctrl, wxListEvent const& evt);
+	bool GetMenuPosition(wxPoint& outPos, ARBWin::CTreeCtrl& ctrl, wxContextMenuEvent const& evt);
+	bool GetMenuPosition(wxPoint& outPos, ARBWin::CTreeCtrl& ctrl, wxTreeEvent const& evt);
 	bool GetMenuPosition(wxPoint& outPos, wxWindow const* ctrl, wxContextMenuEvent const& evt);
 
 	CTabView* m_pTabView;
 	CBasePanel* m_parentPanel;
 	bool m_bIgnore;
 };
+
+} // namespace dconSoft

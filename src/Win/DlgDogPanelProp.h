@@ -21,17 +21,25 @@
 
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/ARBDate.h"
-class CAgilityBookDoc;
-class CReportListCtrl;
-class CTextCtrl;
 class wxDateEvent;
 class wxDatePickerCtrl;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
+class CReportListCtrl;
+class CTextCtrl;
+} // namespace ARBWin
+class CAgilityBookDoc;
+
 
 class CDlgDogPanelProp : public CDlgDogPanelBase
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgDogPanelProp)
 public:
-	CDlgDogPanelProp(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog, wxWindow* parent);
+	CDlgDogPanelProp(CAgilityBookDoc* pDoc, ARB::ARBDogPtr const& inDog, wxWindow* parent);
 
 	wxWindow* GetInitialControl() override;
 
@@ -44,14 +52,16 @@ private:
 	wxString m_CallName;
 	wxString m_Breed;
 	wxString m_RegName;
-	ARBDate m_DOB;
+	ARBCommon::ARBDate m_DOB;
 	bool m_IsDeceased;
-	ARBDate m_Deceased;
+	ARBCommon::ARBDate m_Deceased;
 	wxString m_Notes;
-	CTextCtrl* m_ctrlName;
+	ARBWin::CTextCtrl* m_ctrlName;
 	wxStaticText* m_ctrlAge;
 	wxDatePickerCtrl* m_ctrlDDay;
 
 	void OnDateChanged(wxDateEvent& evt);
 	void OnDeceased(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

@@ -27,6 +27,9 @@
 #endif
 
 
+namespace dconSoft
+{
+
 TEST_CASE("AgilityRecordBook")
 {
 	// TODO: Setup
@@ -264,3 +267,5 @@ TEST_CASE("HttpRead")
 	}
 }
 #endif
+
+} // namespace dconSoft

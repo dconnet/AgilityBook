@@ -18,6 +18,9 @@
 #include "ICalendarSite.h"
 
 
+namespace dconSoft
+{
+
 class CCalendarSiteUSDAA : public ICalendarSite
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CCalendarSiteUSDAA)
@@ -27,7 +30,7 @@ public:
 	virtual ~CCalendarSiteUSDAA();
 
 	std::wstring GetID() const override;
-	bool GetVersion(CVersionNum& outVer) const override;
+	bool GetVersion(ARBCommon::CVersionNum& outVer) const override;
 	std::wstring GetName() const override;
 	std::wstring GetDescription() const override;
 	size_t GetLocationCodes(std::map<std::wstring, std::wstring>& locCodes) const override;
@@ -37,3 +40,5 @@ public:
 		std::vector<std::wstring> const& inVenueCodes,
 		IProgressMeter* progress) const override;
 };
+
+} // namespace dconSoft

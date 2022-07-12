@@ -123,6 +123,13 @@
 #endif
 #endif
 
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
+
 /////////////////////////////////////////////////////////////////////////////
 
 ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
@@ -1065,3 +1072,6 @@ ARBDogList& ARBAgilityRecordBook::GetDogs()
 {
 	return m_Dogs;
 }
+
+} // namespace ARB
+} // namespace dconSoft

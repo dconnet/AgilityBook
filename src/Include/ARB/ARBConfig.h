@@ -33,6 +33,11 @@
 #include "fmt/xchar.h"
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 /**
  * Move platform specific code out of ARBConfig.
  * On Windows, these files are stored in the resources.
@@ -43,7 +48,7 @@ class ARB_API IARBConfigHandler
 public:
 	virtual ~IARBConfigHandler() = default;
 	/// Load the default configuration
-	virtual ElementNodePtr LoadDefaultConfig() const = 0;
+	virtual ARBCommon::ElementNodePtr LoadDefaultConfig() const = 0;
 	/// Load the DTD
 	virtual std::string LoadDTD() const = 0;
 };
@@ -85,7 +90,10 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool LoadFault(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
+	bool LoadFault(
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Load an OtherPoint object.
@@ -97,7 +105,10 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool LoadOtherPoints(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
+	bool LoadOtherPoints(
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Load the configuration.
@@ -107,7 +118,10 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
+	bool Load(
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -115,14 +129,14 @@ public:
 	 * @return Success
 	 * @post The ARBConfig element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Set the configuration to the default (DefaultConfig.xml)
 	 * @param inHandler Interface to deal with platform specific resource issues
 	 * @param pVersion Version number of default config.
 	 */
-	void Default(IARBConfigHandler const* inHandler, ARBVersion* pVersion = nullptr);
+	void Default(IARBConfigHandler const* inHandler, ARBCommon::ARBVersion* pVersion = nullptr);
 
 	/**
 	 * Get the DTD (AgilityRecordBook.dtd)
@@ -211,3 +225,6 @@ private:
 	ARBConfigFaultList m_FaultTypes;
 	ARBConfigOtherPointsList m_OtherPoints;
 };
+
+} // namespace ARB
+} // namespace dconSoft

@@ -105,9 +105,15 @@ Training Log:
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
 
-static struct
+namespace dconSoft
+{
+using namespace ARBCommon;
+using namespace ARBWin;
+
+namespace
+{
+constexpr struct
 {
 	unsigned int valid;
 	int index;
@@ -188,7 +194,7 @@ static struct
 // NOTE: Currently, the fields must be in index order - so any new fields must
 //       be added at the bottom. The physical ordering is not controlled by the
 //       order in this structure.
-static struct
+constexpr struct
 {
 	unsigned int valid;
 	int index;
@@ -558,6 +564,7 @@ static struct
 		false, 0, arbT("IDS_COL_SUBNAME")},
 	// clang-format on
 };
+} // namespace
 
 
 int CDlgAssignColumns::GetFormatFromColumnID(long column)
@@ -630,7 +637,7 @@ bool CDlgAssignColumns::SetColumnOrder(
 
 
 // clang-format off
-static int const idxRunsFaultsTime[] = {
+constexpr int idxRunsFaultsTime[] = {
 	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
 	IO_RUNS_VENUE,			IO_RUNS_CLUB,			IO_RUNS_LOCATION,
 	IO_RUNS_TRIAL_NOTES,	IO_RUNS_DIVISION,		IO_RUNS_LEVEL,
@@ -644,7 +651,7 @@ static int const idxRunsFaultsTime[] = {
 	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_COMMENTS,
 	IO_RUNS_FAULTS,			IO_RUNS_SPEED,
 -1};
-static int const idxRunsTimeFaults[] = {
+constexpr int idxRunsTimeFaults[] = {
 	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
 	IO_RUNS_VENUE,			IO_RUNS_CLUB,			IO_RUNS_LOCATION,
 	IO_RUNS_TRIAL_NOTES,	IO_RUNS_DIVISION,		IO_RUNS_LEVEL,
@@ -658,7 +665,7 @@ static int const idxRunsTimeFaults[] = {
 	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_COMMENTS,
 	IO_RUNS_FAULTS,
 -1};
-static int const idxRunsOpenClose[] = {
+constexpr int idxRunsOpenClose[] = {
 	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
 	IO_RUNS_VENUE,			IO_RUNS_CLUB,			IO_RUNS_LOCATION,
 	IO_RUNS_TRIAL_NOTES,	IO_RUNS_DIVISION,		IO_RUNS_LEVEL,
@@ -671,7 +678,7 @@ static int const idxRunsOpenClose[] = {
 	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_COMMENTS,
 	IO_RUNS_FAULTS,
 -1};
-static int const idxRunsPoints[] = {
+constexpr int idxRunsPoints[] = {
 	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
 	IO_RUNS_VENUE,			IO_RUNS_CLUB,			IO_RUNS_LOCATION,
 	IO_RUNS_TRIAL_NOTES,	IO_RUNS_DIVISION,		IO_RUNS_LEVEL,
@@ -683,30 +690,30 @@ static int const idxRunsPoints[] = {
 	IO_RUNS_Q,				IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,
 	IO_RUNS_COMMENTS,		IO_RUNS_FAULTS,
 -1};
-static int const idxCalendar[] = {
+constexpr int idxCalendar[] = {
 	IO_CAL_START_DATE,		IO_CAL_END_DATE,		IO_CAL_TENTATIVE,
 	IO_CAL_ENTERED,			IO_CAL_LOCATION,		IO_CAL_CLUB,
 	IO_CAL_VENUE,			IO_CAL_OPENS,			IO_CAL_DRAWS,
 	IO_CAL_CLOSES,			IO_CAL_NOTES,
 -1};
-static int const idxTraining[] = {
+constexpr int idxTraining[] = {
 	IO_LOG_DATE,			IO_LOG_NAME,			IO_LOG_SUBNAME,
 	IO_LOG_NOTES,
 -1};
-static int const idxViewTreeDog[] = {
+constexpr int idxViewTreeDog[] = {
 	IO_TREE_DOG_CALLNAME,	IO_TREE_DOG_CALLNAME,	IO_TREE_DOG_BREED,
 	IO_TREE_DOG_DOB,		IO_TREE_DOG_AGE,
 -1};
-static int const idxViewTreeTrial[] = {
+constexpr int idxViewTreeTrial[] = {
 	IO_TREE_TRIAL_VERIFIED,	IO_TREE_TRIAL_START,	IO_TREE_TRIAL_END,
 	IO_TREE_TRIAL_CLUB,		IO_TREE_TRIAL_VENUE,	IO_TREE_TRIAL_LOCATION,
 	IO_TREE_TRIAL_NOTES,
 -1};
-static int const idxViewTreeRun[] = {
+constexpr int idxViewTreeRun[] = {
 	IO_TREE_RUN_DATE,		IO_TREE_RUN_Q,			IO_TREE_RUN_EVENT,
 	IO_TREE_RUN_DIVISION,	IO_TREE_RUN_LEVEL,		IO_TREE_RUN_HEIGHT,
 -1};
-static int const idxViewRunsList[] = {
+constexpr int idxViewRunsList[] = {
 	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
 	IO_RUNS_VENUE,			IO_RUNS_CLUB,			IO_RUNS_LOCATION,
 	IO_RUNS_TRIAL_NOTES,	IO_RUNS_DIVISION,		IO_RUNS_LEVEL,
@@ -722,16 +729,16 @@ static int const idxViewRunsList[] = {
 	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_SPEED,
 	IO_RUNS_COMMENTS,		IO_RUNS_FAULTS,
 -1};
-static int const idxViewCalendarList[] = {
+constexpr int idxViewCalendarList[] = {
 	IO_CAL_START_DATE,		IO_CAL_END_DATE,		IO_CAL_LOCATION,
 	IO_CAL_CLUB,			IO_CAL_VENUE,			IO_CAL_OPENS,
 	IO_CAL_DRAWS,			IO_CAL_CLOSES,			IO_CAL_NOTES,
 -1};
-static int const idxViewTrainingList[] = {
+constexpr int idxViewTrainingList[] = {
 	IO_LOG_DATE,			IO_LOG_NAME,			IO_LOG_SUBNAME,
 	IO_LOG_NOTES,
 -1};
-static int const idxCalendarAppt[] = {
+constexpr int idxCalendarAppt[] = {
 	IO_CAL_APPT_SUBJECT,	IO_CAL_APPT_START_DATE,	IO_CAL_APPT_START_TIME,
 	IO_CAL_APPT_END_DATE,	IO_CAL_APPT_END_TIME,	IO_CAL_APPT_ALLDAY,
 	IO_CAL_APPT_REMINDER,	IO_CAL_APPT_REMINDER_DATE, IO_CAL_APPT_REMINDER_TIME,
@@ -741,7 +748,7 @@ static int const idxCalendarAppt[] = {
 	IO_CAL_APPT_PRIORITY,	IO_CAL_APPT_PRIVATE,	IO_CAL_APPT_SENSITIVITY,
 	IO_CAL_APPT_SHOW_TIME_AS,
 -1};
-static int const idxCalendarTask[] = {
+constexpr int idxCalendarTask[] = {
 	IO_CAL_TASK_SUBJECT,	IO_CAL_TASK_START_DATE,		IO_CAL_TASK_DUE_DATE,
 	IO_CAL_TASK_REMINDER,	IO_CAL_TASK_REMINDER_DATE,	IO_CAL_TASK_REMINDER_TIME,
 	IO_CAL_TASK_COMPLETED_DATE, IO_CAL_TASK_COMPLETE,	IO_CAL_TASK_TOTAL_WORK,
@@ -751,7 +758,7 @@ static int const idxCalendarTask[] = {
 	IO_CAL_TASK_ROLE,		IO_CAL_TASK_SCH_PRIORITY,	IO_CAL_TASK_SENSITIVITY,
 	IO_CAL_TASK_STATUS,
 -1};
-static int const idxViewCalendar[] = {
+constexpr int idxViewCalendar[] = {
 	IO_CAL_LOCATION,	IO_CAL_CLUB,	IO_CAL_VENUE,	IO_CAL_NOTES,
 -1};
 
@@ -1370,3 +1377,5 @@ void CDlgAssignColumns::OnOk(wxCommandEvent& evt)
 	}
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

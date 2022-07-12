@@ -27,6 +27,9 @@
 #endif
 
 
+namespace dconSoft
+{
+
 TEST_CASE("DogExistingPoints")
 {
 	SECTION("New")
@@ -411,3 +414,5 @@ TEST_CASE("DogExistingPointsList")
 		}
 	}
 }
+
+} // namespace dconSoft

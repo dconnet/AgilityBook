@@ -18,6 +18,9 @@
 
 #include "DlgRunPanelBase.h"
 
+
+namespace dconSoft
+{
 class CAgilityBookDoc;
 
 
@@ -27,9 +30,9 @@ public:
 	CDlgRunPanelComments(
 		CDlgRun* pDlg,
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr const& inDog,
-		ARBDogTrialPtr const& inTrial,
-		ARBDogRunPtr const& inRun,
+		ARB::ARBDogPtr const& inDog,
+		ARB::ARBDogTrialPtr const& inTrial,
+		ARB::ARBDogRunPtr const& inRun,
 		wxWindow* parent);
 
 	wxWindow* GetInitialControl() override;
@@ -48,3 +51,5 @@ private:
 
 	void OnCommentsFaults(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

@@ -22,6 +22,10 @@
 #include <wx/imaglist.h>
 
 
+namespace dconSoft
+{
+
+
 class CIconList : public wxImageList
 {
 public:
@@ -117,7 +121,7 @@ public:
 		return m_idxVenueVALOR;
 	}
 
-	int Trial(ARBConfig& config, ARBDogTrialPtr const& inTrial) const;
+	int Trial(ARB::ARBConfig& config, ARB::ARBDogTrialPtr const& inTrial) const;
 
 protected:
 	int m_idxEmpty;
@@ -143,3 +147,5 @@ protected:
 	int m_idxVenueUSDAA;
 	int m_idxVenueVALOR;
 };
+
+} // namespace dconSoft

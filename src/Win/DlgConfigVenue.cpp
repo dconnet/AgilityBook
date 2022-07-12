@@ -57,7 +57,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 class CDlgConfigVenueDataRoot : public CDlgConfigureDataBase
 {
@@ -704,3 +709,5 @@ void CDlgConfigVenue::OnOk(wxCommandEvent& evt)
 
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

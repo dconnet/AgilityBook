@@ -27,6 +27,9 @@
 #endif
 
 
+namespace dconSoft
+{
+
 TEST_CASE("ConfigEvent")
 {
 	SECTION("New")
@@ -277,3 +280,5 @@ TEST_CASE("ConfigEventList")
 		}
 	}
 }
+
+} // namespace dconSoft

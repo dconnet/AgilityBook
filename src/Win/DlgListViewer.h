@@ -23,9 +23,15 @@
 #include "ARB/ARBInfo.h"
 #include "PointsData.h"
 #include <set>
-class ARBDate;
-class CAgilityBookDoc;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
 class CReportListCtrl;
+} // namespace ARBWin
+class CAgilityBookDoc;
 
 class CDlgListViewerData;
 typedef std::shared_ptr<CDlgListViewerData> CDlgListViewerDataPtr;
@@ -48,9 +54,9 @@ public:
 	{
 	}
 	ScoringRunInfo(
-		ARBDogPtr const& inDog,
-		ARBDogTrialPtr const& inTrial,
-		ARBDogRunPtr const& inRun,
+		ARB::ARBDogPtr const& inDog,
+		ARB::ARBDogTrialPtr const& inTrial,
+		ARB::ARBDogRunPtr const& inRun,
 		ScoringDetail inScoringDetail)
 		: m_Dog(inDog)
 		, m_Trial(inTrial)
@@ -58,9 +64,9 @@ public:
 		, m_ScoringDetail(inScoringDetail)
 	{
 	}
-	ARBDogPtr m_Dog;
-	ARBDogTrialPtr m_Trial;
-	ARBDogRunPtr m_Run;
+	ARB::ARBDogPtr m_Dog;
+	ARB::ARBDogTrialPtr m_Trial;
+	ARB::ARBDogRunPtr m_Run;
 	ScoringDetail m_ScoringDetail;
 };
 
@@ -71,11 +77,11 @@ class RunInfoData
 
 public:
 	RunInfoData(
-		ARBDogPtr const& inDog,
-		ARBConfigVenuePtr const& inVenue,
-		ARBConfigDivisionPtr const& inDiv,
-		ARBConfigLevelPtr const& inLevel,
-		ARBConfigEventPtr const& inEvent)
+		ARB::ARBDogPtr const& inDog,
+		ARB::ARBConfigVenuePtr const& inVenue,
+		ARB::ARBConfigDivisionPtr const& inDiv,
+		ARB::ARBConfigLevelPtr const& inLevel,
+		ARB::ARBConfigEventPtr const& inEvent)
 		: m_Dog(inDog)
 		, m_Venue(inVenue)
 		, m_Div(inDiv)
@@ -83,11 +89,11 @@ public:
 		, m_Event(inEvent)
 	{
 	}
-	ARBDogPtr m_Dog;
-	ARBConfigVenuePtr m_Venue;
-	ARBConfigDivisionPtr m_Div;
-	ARBConfigLevelPtr m_Level;
-	ARBConfigEventPtr m_Event;
+	ARB::ARBDogPtr m_Dog;
+	ARB::ARBConfigVenuePtr m_Venue;
+	ARB::ARBConfigDivisionPtr m_Div;
+	ARB::ARBConfigLevelPtr m_Level;
+	ARB::ARBConfigEventPtr m_Event;
 };
 
 
@@ -96,25 +102,28 @@ class MultiQInfoData
 	friend class CDlgListViewer;
 
 public:
-	MultiQInfoData(ARBDogPtr const& inDog, ARBConfigVenuePtr const& inVenue, ARBConfigMultiQPtr const& inMultiQ)
+	MultiQInfoData(
+		ARB::ARBDogPtr const& inDog,
+		ARB::ARBConfigVenuePtr const& inVenue,
+		ARB::ARBConfigMultiQPtr const& inMultiQ)
 		: m_Dog(inDog)
 		, m_Venue(inVenue)
 		, m_MultiQ(inMultiQ)
 	{
 	}
-	ARBDogPtr m_Dog;
-	ARBConfigVenuePtr m_Venue;
-	ARBConfigMultiQPtr m_MultiQ;
+	ARB::ARBDogPtr m_Dog;
+	ARB::ARBConfigVenuePtr m_Venue;
+	ARB::ARBConfigMultiQPtr m_MultiQ;
 };
 
 
 struct CFindItemInfo
 {
-	ARBInfoType type;
+	ARB::ARBInfoType type;
 	std::wstring name;
-	ARBInfoItemPtr pItem;
+	ARB::ARBInfoItemPtr pItem;
 	CFindItemInfo()
-		: type(ARBInfoType::Club)
+		: type(ARB::ARBInfoType::Club)
 		, name()
 		, pItem()
 	{
@@ -169,7 +178,7 @@ private:
 	void FinishCreate();
 	void UpdateControls();
 
-	CReportListCtrl* m_ctrlList;
+	ARBWin::CReportListCtrl* m_ctrlList;
 	wxButton* m_ctrlCopy;
 
 	CAgilityBookDoc* m_pDoc;
@@ -180,3 +189,5 @@ private:
 	void OnColumnClick(wxListEvent& evt);
 	void OnCopy(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

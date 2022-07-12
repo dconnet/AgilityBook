@@ -45,6 +45,10 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARBCommon;
+
 TEST_CASE("Misc")
 {
 	SECTION("Localization")
@@ -61,3 +65,5 @@ TEST_CASE("Misc")
 		}
 	}
 }
+
+} // namespace dconSoft

@@ -20,17 +20,24 @@
  */
 
 #include "ARB/ARBTypes2.h"
-class CTextCtrl;
 class wxDatePickerCtrl;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
+class CTextCtrl;
+} // namespace ARBWin
 
 
 class CDlgConfigTitle : public wxDialog
 {
 public:
-	CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pParent = nullptr);
+	CDlgConfigTitle(ARB::ARBConfigTitlePtr const& inTitle, wxWindow* pParent = nullptr);
 
 private:
-	ARBConfigTitlePtr m_Title;
+	ARB::ARBConfigTitlePtr m_Title;
 	wxString m_Name;
 	bool m_Prefix;
 	wxString m_LongName;
@@ -42,8 +49,8 @@ private:
 	bool m_DateFrom;
 	bool m_DateTo;
 	wxCheckBox* m_ctrlShowFirst;
-	CTextCtrl* m_ctrlMultipleStartAt;
-	CTextCtrl* m_ctrlMultipleInc;
+	ARBWin::CTextCtrl* m_ctrlMultipleStartAt;
+	ARBWin::CTextCtrl* m_ctrlMultipleInc;
 	wxDatePickerCtrl* m_ctrlDateFrom;
 	wxDatePickerCtrl* m_ctrlDateTo;
 	wxComboBox* m_ctrlStyle;
@@ -57,3 +64,5 @@ protected:
 	void OnCheck(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

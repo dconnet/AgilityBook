@@ -52,11 +52,18 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
 
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
+
+namespace
+{
 #if !defined(_WIN32) && !defined(__WXWINDOWS__)
 #include <iostream>
-static void OutputDebugString(wchar_t const* msg)
+void OutputDebugString(wchar_t const* msg)
 {
 	if (msg)
 		fmt::print(std::wcout, L"{}", msg);
@@ -66,13 +73,15 @@ static void OutputDebugString(wchar_t const* msg)
 /////////////////////////////////////////////////////////////////////////////
 // static
 
-#define SCORING_TYPE_FT    L"FaultsThenTime"
-#define SCORING_TYPE_FT100 L"Faults100ThenTime"
-#define SCORING_TYPE_FT200 L"Faults200ThenTime"
-#define SCORING_TYPE_OCT   L"OCScoreThenTime"
-#define SCORING_TYPE_ST    L"ScoreThenTime"
-#define SCORING_TYPE_TF    L"TimePlusFaults"
-#define SCORING_TYPE_NP    L"TimeNoPlaces"
+constexpr wchar_t SCORING_TYPE_FT[] = L"FaultsThenTime";
+constexpr wchar_t SCORING_TYPE_FT100[] = L"Faults100ThenTime";
+constexpr wchar_t SCORING_TYPE_FT200[] = L"Faults200ThenTime";
+constexpr wchar_t SCORING_TYPE_OCT[] = L"OCScoreThenTime";
+constexpr wchar_t SCORING_TYPE_ST[] = L"ScoreThenTime";
+constexpr wchar_t SCORING_TYPE_TF[] = L"TimePlusFaults";
+constexpr wchar_t SCORING_TYPE_NP[] = L"TimeNoPlaces";
+} // namespace
+
 
 std::wstring ARBConfigScoring::GetScoringStyleStr(ARBScoringStyle inStyle)
 {
@@ -961,3 +970,6 @@ ARBConfigScoringPtr ARBConfigScoringList::AddScoring()
 	push_back(pScoring);
 	return pScoring;
 }
+
+} // namespace ARB
+} // namespace dconSoft

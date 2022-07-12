@@ -38,6 +38,11 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+
 // When adding a new config:
 //  - Add entry here.
 //  - Add entry in res/CompileDatListTest.txt
@@ -291,7 +296,7 @@ TEST_CASE("Config")
 			CConfigHandler handler;
 			config.Default(&handler);
 
-			static struct
+			constexpr struct
 			{
 				wchar_t const* pVenue;
 				wchar_t const* pTitle;
@@ -353,7 +358,7 @@ TEST_CASE("Config")
 			CConfigHandler handler;
 			config.Default(&handler);
 
-			static struct
+			constexpr struct
 			{
 				wchar_t const* pVenue;
 				wchar_t const* pTitle;
@@ -408,3 +413,5 @@ TEST_CASE("Config")
 		}
 	}
 }
+
+} // namespace dconSoft

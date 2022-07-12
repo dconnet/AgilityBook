@@ -51,7 +51,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 namespace
 {
@@ -945,3 +950,6 @@ bool ARBDogTrialList::DeleteTrial(ARBDogTrialPtr const& inTrial)
 	}
 	return false;
 }
+
+} // namespace ARB
+} // namespace dconSoft

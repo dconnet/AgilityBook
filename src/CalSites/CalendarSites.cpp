@@ -56,21 +56,28 @@
 #include <map>
 #include <vector>
 
-// CalSites
-#define CFG_KEY_CALSITES L"CalSites"
-//	DW (DLL names in EXE directory)
-
-// CalSites2 - used for permanently disabling a version
-#define CFG_KEY_CALSITES2 L"CalSites2"
-//	ST (DLL names in EXE directory)
-
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 namespace
 {
+
+// CalSites
+constexpr wchar_t CFG_KEY_CALSITES[] = L"CalSites";
+//	DW (DLL names in EXE directory)
+
+// CalSites2 - used for permanently disabling a version
+constexpr wchar_t CFG_KEY_CALSITES2[] = L"CalSites2";
+//	ST (DLL names in EXE directory)
+
 CVersionNum GetCalSitePermanentStatus(std::wstring const& filename)
 {
 	CVersionNum ver;
@@ -1248,3 +1255,5 @@ bool CCalendarSites::FindEntries(ARBConfigCalSiteList& sites, wxWindow* pParent)
 		return false;
 	return true;
 }
+
+} // namespace dconSoft

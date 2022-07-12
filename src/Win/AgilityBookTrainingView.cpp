@@ -56,6 +56,13 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 /////////////////////////////////////////////////////////////////////////////
 // CAgilityBookTrainingViewData
 
@@ -910,3 +917,5 @@ void CAgilityBookTrainingView::OnPreview(wxCommandEvent& evt)
 {
 	wxGetApp().GetHtmlPrinter()->PreviewText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
 }
+
+} // namespace dconSoft

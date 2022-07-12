@@ -40,7 +40,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 namespace
 {
@@ -53,7 +58,7 @@ constexpr int k_colName = 5;
 constexpr int k_colHeight = 6;
 constexpr int k_colBreed = 7;
 constexpr int k_colNote = 8;
-static const std::vector<CReportListHeader::ColumnInfo> k_columns{
+const std::vector<CReportListHeader::ColumnInfo> k_columns{
 	{k_colQ, wxLIST_FORMAT_CENTRE, arbT("IDS_COL_Q")},
 	{k_colPlace, wxLIST_FORMAT_CENTRE, arbT("IDS_COL_PLACE")},
 	{k_colScore, wxLIST_FORMAT_CENTRE, arbT("IDS_COL_SCORE")},
@@ -633,3 +638,5 @@ void CDlgRunPanelRefRuns::OnRefRunDelete(wxCommandEvent& evt)
 		UpdateRefRunButtons();
 	}
 }
+
+} // namespace dconSoft

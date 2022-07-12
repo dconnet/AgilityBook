@@ -21,6 +21,10 @@
 
 #include "ARBCommon/MailTo.h"
 #include <wx/hyperlink.h>
+
+
+namespace dconSoft
+{
 class CAgilityBookDoc;
 class CMainFrame;
 
@@ -36,5 +40,7 @@ private:
 
 	CAgilityBookDoc* m_pDoc;
 	CMainFrame* m_pFrame;
-	CMailTo m_mailto;
+	ARBCommon::CMailTo m_mailto;
 };
+
+} // namespace dconSoft

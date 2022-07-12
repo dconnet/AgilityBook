@@ -60,9 +60,19 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-#define WEEKS_PER_PAGE 6
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
+namespace
+{
+constexpr int WEEKS_PER_PAGE = 6;
 // In dlgunits
-#define DAY_TEXT_INSET 1
+constexpr int DAY_TEXT_INSET = 1;
+} // namespace
 
 
 class CAgilityBookCalendar : public wxWindow
@@ -636,7 +646,7 @@ void CAgilityBookCalendar::OnCopy()
 	if (!clpData.isOkay())
 		return;
 
-	static const wchar_t* scColumns[] = {
+	constexpr wchar_t* scColumns[] = {
 		arbT("IDS_COL_START_DATE"),
 		arbT("IDS_COL_END_DATE"),
 		arbT("IDS_COL_VENUE"),
@@ -647,14 +657,14 @@ void CAgilityBookCalendar::OnCopy()
 		arbT("IDS_COL_NOTES"),
 	};
 	constexpr int scNumColumns = sizeof(scColumns) / sizeof(scColumns[0]);
-#define COL_START_DATE 0
-#define COL_END_DATE   1
-#define COL_VENUE      2
-#define COL_LOCATION   3
-#define COL_CLUB       4
-#define COL_OPENS      5
-#define COL_CLOSES     6
-#define COL_NOTES      7
+	constexpr size_t COL_START_DATE = 0;
+	constexpr size_t COL_END_DATE = 1;
+	constexpr size_t COL_VENUE = 2;
+	constexpr size_t COL_LOCATION = 3;
+	constexpr size_t COL_CLUB = 4;
+	constexpr size_t COL_OPENS = 5;
+	constexpr size_t COL_CLOSES = 6;
+	constexpr size_t COL_NOTES = 7;
 
 	int index = 0;
 	size_t maxLen[scNumColumns] = {0};
@@ -1687,3 +1697,5 @@ void CAgilityBookCalendarView::OnViewCmd(wxCommandEvent& evt)
 	break;
 	}
 }
+
+} // namespace dconSoft

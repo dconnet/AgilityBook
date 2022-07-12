@@ -34,7 +34,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 namespace
 {
@@ -299,3 +304,6 @@ bool ARBTrainingList::DeleteTraining(ARBTrainingPtr const& inTraining)
 	}
 	return false;
 }
+
+} // namespace ARB
+} // namespace dconSoft

@@ -59,7 +59,11 @@
 #endif
 
 
-/////////////////////////////////////////////////////////////////////////////
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 #if wxUSE_DRAG_AND_DROP
 
@@ -537,3 +541,5 @@ void CMainFrame::OnHelpAbout(wxCommandEvent& evt)
 	CDlgAbout dlg(pDoc, this);
 	dlg.ShowModal();
 }
+
+} // namespace dconSoft

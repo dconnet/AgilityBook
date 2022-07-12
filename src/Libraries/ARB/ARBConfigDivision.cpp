@@ -37,7 +37,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 class ARBConfigDivision_concrete : public ARBConfigDivision
 {
@@ -373,3 +378,6 @@ int ARBConfigDivisionList::DeleteDivision(std::wstring const& inDiv, ARBConfigEv
 	}
 	return 0;
 }
+
+} // namespace ARB
+} // namespace dconSoft

@@ -25,13 +25,17 @@
 
 #include "ARBCommon/ARBUtils.h"
 #include "LibARBWin/SetupApp.h"
-class CAgilityBookDoc;
-class CAgilityBookDocManager;
-class CHtmlEasyPrinting;
 class wxPrintDialogData;
 
 
-class CAgilityBookApp : public CBaseApp
+namespace dconSoft
+{
+class CAgilityBookDoc;
+class CAgilityBookDocManager;
+class CHtmlEasyPrinting;
+
+
+class CAgilityBookApp : public ARBWin::CBaseApp
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookApp)
 public:
@@ -43,10 +47,10 @@ public:
 	wxPrintDialogData* GetPrintData();
 	void SavePrintData(wxPrintDialogData const& data);
 	CHtmlEasyPrinting* GetHtmlPrinter();
-	CMenuHelper& GetMenus();
+	ARBWin::CMenuHelper& GetMenus();
 
 protected:
-	static std::unique_ptr<CMenuHelper> CreateMenus();
+	static std::unique_ptr<ARBWin::CMenuHelper> CreateMenus();
 	wxString GetReportName() const override
 	{
 		return L"AgilityBook";
@@ -79,7 +83,9 @@ protected:
 	std::unique_ptr<CAgilityBookDocManager> m_manager;
 	wxPrintDialogData* m_printDialogData;
 	CHtmlEasyPrinting* m_Prn;
-	std::unique_ptr<CMenuHelper> m_menus;
+	std::unique_ptr<ARBWin::CMenuHelper> m_menus;
 };
 
 wxDECLARE_APP(CAgilityBookApp);
+
+} // namespace dconSoft

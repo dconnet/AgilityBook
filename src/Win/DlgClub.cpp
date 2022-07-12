@@ -37,6 +37,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 class CDlgClubData : public wxClientData
 {
 public:
@@ -303,3 +309,5 @@ void CDlgClub::OnOk(wxCommandEvent& evt)
 	}
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

@@ -33,7 +33,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 class CNameValidator : public CTrimValidator
 {
@@ -75,7 +80,7 @@ bool CNameValidator::Validate(wxWindow* parent)
 
 namespace
 {
-static struct
+constexpr struct
 {
 	wchar_t const* idDesc;
 	ARBOtherPointsTally tally;
@@ -261,3 +266,5 @@ void CDlgConfigOtherPoints::OnOk(wxCommandEvent& evt)
 	m_pOther->SetDescription(StringUtil::stringW(m_Desc));
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

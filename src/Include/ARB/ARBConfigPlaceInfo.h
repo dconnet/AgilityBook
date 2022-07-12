@@ -21,6 +21,11 @@
 #include "LibwxARB.h"
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 /**
  * This class is used for 2 purposes:
  * - Speed point multiplier (AKC MACH)
@@ -74,7 +79,10 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
+	bool Load(
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -82,7 +90,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigPlaceInfo element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/*
 	 * Setters/getters.
@@ -131,7 +139,10 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
+	bool Load(
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Sort the point objects by place.
@@ -171,3 +182,6 @@ public:
 	 */
 	bool DeletePlaceInfo(short inPlace);
 };
+
+} // namespace ARB
+} // namespace dconSoft

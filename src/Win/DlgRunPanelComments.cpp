@@ -29,6 +29,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 CDlgRunPanelComments::CDlgRunPanelComments(
 	CDlgRun* pDlg,
 	CAgilityBookDoc* pDoc,
@@ -115,3 +121,5 @@ bool CDlgRunPanelComments::Save()
 	m_Run->SetNote(StringUtil::stringW(m_Comments));
 	return true;
 }
+
+} // namespace dconSoft

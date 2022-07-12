@@ -21,41 +21,49 @@
 #include "LibARBWin/SpreadSheet.h"
 #include <wx/wizard.h>
 #include <vector>
+
+
+namespace dconSoft
+{
 class CAgilityBookDoc;
 class CWizardExport;
 class CWizardImport;
 class CWizardStart;
 
+
 // These must agree with the order of items in sc_Items in WizardStart.cpp.
 // They are simply for ease-of-coding.
-#define WIZ_IMPORT_RUNS          0
-#define WIZ_EXPORT_RUNS          1
-#define WIZ_IMPORT_CALENDAR      2
-#define WIZ_EXPORT_CALENDAR      3
-#define WIZ_EXPORT_CALENDAR_VCAL 4
-#define WIZ_EXPORT_CALENDAR_ICAL 5
-#define WIZ_EXPORT_CALENDAR_APPT 6
-#define WIZ_EXPORT_CALENDAR_TASK 7
-#define WIZ_IMPORT_LOG           8
-#define WIZ_EXPORT_LOG           9
-#define WIZ_IMPORT_CONFIGURATION 10
-#define WIZ_EXPORT_CONFIGURATION 11
-#define WIZ_EXPORT_DTD           12
-#define WIZ_EXPORT_XML           13
-#define WIZ_IMPORT_SETTINGS      14
-#define WIZ_EXPORT_SETTINGS      15
+constexpr int WIZ_IMPORT_RUNS = 0;
+constexpr int WIZ_EXPORT_RUNS = 1;
+constexpr int WIZ_IMPORT_CALENDAR = 2;
+constexpr int WIZ_EXPORT_CALENDAR = 3;
+constexpr int WIZ_EXPORT_CALENDAR_VCAL = 4;
+constexpr int WIZ_EXPORT_CALENDAR_ICAL = 5;
+constexpr int WIZ_EXPORT_CALENDAR_APPT = 6;
+constexpr int WIZ_EXPORT_CALENDAR_TASK = 7;
+constexpr int WIZ_IMPORT_LOG = 8;
+constexpr int WIZ_EXPORT_LOG = 9;
+constexpr int WIZ_IMPORT_CONFIGURATION = 10;
+constexpr int WIZ_EXPORT_CONFIGURATION = 11;
+constexpr int WIZ_EXPORT_DTD = 12;
+constexpr int WIZ_EXPORT_XML = 13;
+constexpr int WIZ_IMPORT_SETTINGS = 14;
+constexpr int WIZ_EXPORT_SETTINGS = 15;
 
 // Note: These numbers should not be changed - they are stored in the registry
-#define WIZARD_RADIO_EXCEL       0L
-#define WIZARD_RADIO_CALC        3L
-#define WIZARD_RADIO_SPREADSHEET 1L
-#define WIZARD_RADIO_ARB         2L
+constexpr long WIZARD_RADIO_EXCEL = 0L;
+constexpr long WIZARD_RADIO_CALC = 3L;
+constexpr long WIZARD_RADIO_SPREADSHEET = 1L;
+constexpr long WIZARD_RADIO_ARB = 2L;
 
 
 class CWizard : public wxWizard
 {
 public:
-	CWizard(CAgilityBookDoc* pDoc, std::vector<ARBCalendarPtr>* pCalEntries = nullptr, wxWindow* pParent = nullptr);
+	CWizard(
+		CAgilityBookDoc* pDoc,
+		std::vector<ARB::ARBCalendarPtr>* pCalEntries = nullptr,
+		wxWindow* pParent = nullptr);
 
 	wxWizardPage* GetImportPage() const;
 	wxWizardPage* GetExportPage() const;
@@ -63,12 +71,12 @@ public:
 	// Attributes
 private:
 	CAgilityBookDoc* m_pDoc;
-	std::vector<ARBCalendarPtr>* m_CalEntries;
+	std::vector<ARB::ARBCalendarPtr>* m_CalEntries;
 	CWizardStart* m_pageStart;
 	CWizardImport* m_pageImport;
 	CWizardExport* m_pageExport;
-	ISpreadSheetPtr m_Excel;
-	ISpreadSheetPtr m_Calc;
+	ARBWin::ISpreadSheetPtr m_Excel;
+	ARBWin::ISpreadSheetPtr m_Calc;
 	int m_ImportExportItem;
 	int m_ImportExportStyle;
 	wxButton* m_Finish;
@@ -78,21 +86,21 @@ public:
 	/**
 	 * Get selected entries for export. If NULL, we're exporting everything.
 	 */
-	std::vector<ARBCalendarPtr>* GetCalendarEntries() const
+	std::vector<ARB::ARBCalendarPtr>* GetCalendarEntries() const
 	{
 		return m_CalEntries;
 	}
 	/**
 	 * Get the Excel wrapper.
 	 */
-	ISpreadSheetPtr ExcelHelper()
+	ARBWin::ISpreadSheetPtr ExcelHelper()
 	{
 		return m_Excel;
 	}
 	/**
 	 * Get the Excel wrapper.
 	 */
-	ISpreadSheetPtr CalcHelper()
+	ARBWin::ISpreadSheetPtr CalcHelper()
 	{
 		return m_Calc;
 	}
@@ -122,3 +130,5 @@ public:
 
 	void UpdateButtons(bool enableNextOrFinish);
 };
+
+} // namespace dconSoft

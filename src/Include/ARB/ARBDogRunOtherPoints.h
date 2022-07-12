@@ -25,6 +25,11 @@
 #include "LibwxARB.h"
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 /**
  * Other points are accumulated on a per-run basis.
  */
@@ -76,8 +81,8 @@ public:
 	 */
 	bool Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -86,7 +91,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogOtherPoints element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/*
 	 * Getters/setters.
@@ -132,8 +137,8 @@ public:
 	 */
 	bool Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -143,3 +148,6 @@ public:
 	 */
 	bool AddOtherPoints(ARBDogRunOtherPointsPtr const& inOther);
 };
+
+} // namespace ARB
+} // namespace dconSoft

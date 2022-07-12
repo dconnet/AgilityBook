@@ -43,7 +43,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 namespace
 {
@@ -762,3 +767,6 @@ bool ARBDogList::DeleteDog(ARBDogPtr const& inDog)
 	}
 	return false;
 }
+
+} // namespace ARB
+} // namespace dconSoft

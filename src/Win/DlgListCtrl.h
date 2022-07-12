@@ -21,10 +21,17 @@
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/ARBDate.h"
 #include <vector>
-class CAgilityBookDoc;
-class CReportListCtrl;
-class CTabView;
 class wxListEvent;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
+class CReportListCtrl;
+} // namespace ARBWin
+class CAgilityBookDoc;
+class CTabView;
 
 class CDlgListCtrlData;
 typedef std::shared_ptr<CDlgListCtrlData> CDlgListCtrlDataPtr;
@@ -47,14 +54,18 @@ public:
 	// Calendar
 	CDlgListCtrl(
 		CAgilityBookDoc* pDoc,
-		ARBDate const& date,
-		std::vector<ARBCalendarPtr> const* entries,
+		ARBCommon::ARBDate const& date,
+		std::vector<ARB::ARBCalendarPtr> const* entries,
 		CTabView* pTabView,
 		wxWindow* pParent = nullptr);
 	// Faults, Partners
-	CDlgListCtrl(ARBWhatToList inType, CAgilityBookDoc* pDoc, ARBDogRunPtr const& inRun, wxWindow* pParent = nullptr);
+	CDlgListCtrl(
+		ARBWhatToList inType,
+		CAgilityBookDoc* pDoc,
+		ARB::ARBDogRunPtr const& inRun,
+		wxWindow* pParent = nullptr);
 	// OtherPoints
-	CDlgListCtrl(ARBConfig& pConfig, ARBDogRunPtr const& inRun, wxWindow* pParent = nullptr);
+	CDlgListCtrl(ARB::ARBConfig& pConfig, ARB::ARBDogRunPtr const& inRun, wxWindow* pParent = nullptr);
 
 	void GetAllPartners(std::set<std::wstring>& ioPartners, std::set<std::wstring>& ioDogs) const;
 
@@ -67,7 +78,7 @@ private:
 	// Only PocketPC calls this directly. We're making use of it internally.
 	virtual bool DoOK();
 
-	CReportListCtrl* m_ctrlList;
+	ARBWin::CReportListCtrl* m_ctrlList;
 	wxButton* m_ctrlNew;
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlDelete;
@@ -76,11 +87,11 @@ private:
 	wxButton* m_ctrlCreateTrial;
 	ARBWhatToList m_What;
 	CAgilityBookDoc* m_pDoc;
-	ARBDate m_Date;
-	std::vector<ARBCalendarPtr> const* m_CalEntries;
+	ARBCommon::ARBDate m_Date;
+	std::vector<ARB::ARBCalendarPtr> const* m_CalEntries;
 	CTabView* m_pTabView;
-	ARBConfig* m_pConfig;
-	ARBDogRunPtr m_pRun;
+	ARB::ARBConfig* m_pConfig;
+	ARB::ARBDogRunPtr m_pRun;
 	int m_imgTentative;
 	int m_imgPlan;
 	int m_imgPlanTentative;
@@ -101,3 +112,5 @@ private:
 	void OnCreateTrial(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

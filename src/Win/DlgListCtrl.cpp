@@ -53,6 +53,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 class CDlgListCtrlData : public CListData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgListCtrlData)
@@ -1023,3 +1029,5 @@ void CDlgListCtrl::OnOk(wxCommandEvent& evt)
 		EndDialog(wxID_OK);
 	}
 }
+
+} // namespace dconSoft

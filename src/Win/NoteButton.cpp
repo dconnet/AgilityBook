@@ -28,6 +28,10 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARBWin;
+
 CNoteButton::CNoteButton(wxWindow* parent)
 	: wxBitmapButton()
 {
@@ -36,3 +40,5 @@ CNoteButton::CNoteButton(wxWindow* parent)
 	size += parent->FromDIP(wxSize(4, 4));
 	wxBitmapButton::Create(parent, wxID_ANY, image, wxDefaultPosition, size);
 }
+
+} // namespace dconSoft

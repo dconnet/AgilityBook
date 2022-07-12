@@ -20,7 +20,14 @@
  */
 
 #include "AgilityBookOptions.h"
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
 class CTextCtrl;
+} // namespace ARBWin
 
 
 class CDlgOptionsCalendar : public wxPanel
@@ -52,16 +59,16 @@ private:
 	bool m_bHideOverlapping;
 	bool m_bOpening;
 	bool m_bClosing;
-	CTextCtrl* m_ctrlOpeningNear;
+	ARBWin::CTextCtrl* m_ctrlOpeningNear;
 	wxStaticText* m_ctrlOpeningNearColor;
 	wxButton* m_ctrlOpeningNearSet;
-	CTextCtrl* m_ctrlClosingNear;
+	ARBWin::CTextCtrl* m_ctrlClosingNear;
 	wxStaticText* m_ctrlClosingNearColor;
 	wxButton* m_ctrlClosingNearSet;
 	wxChoice* m_ctrlDayOfWeek;
 	wxChoice* m_ctrlCalEntries;
 	wxStaticText* m_ctrlColor;
-	CTextCtrl* m_ctrlCalView;
+	ARBWin::CTextCtrl* m_ctrlCalView;
 
 	void OnSelchangeCalEntries(wxCommandEvent& evt);
 	void OnCalNear(wxCommandEvent& evt);
@@ -70,3 +77,5 @@ private:
 	void OnCalColors(wxCommandEvent& evt);
 	void OnFontCalView(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

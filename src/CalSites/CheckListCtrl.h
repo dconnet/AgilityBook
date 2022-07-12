@@ -27,9 +27,12 @@
 #include "ARBCommon/ARBTypes.h"
 
 
+namespace dconSoft
+{
+
 // Right now, this is specifically used in DlgCalendarQueryDetail. We could
 // make it more generic (sort headers, etc), but that can wait until needed.
-class CCheckListCtrl : public CListCtrl
+class CCheckListCtrl : public ARBWin::CListCtrl
 {
 	DECLARE_CLASS(CCheckListCtrl)
 public:
@@ -84,3 +87,5 @@ private:
 	void OnClick(wxMouseEvent& evt);
 	void OnKeyDown(wxKeyEvent& evt);
 };
+
+} // namespace dconSoft

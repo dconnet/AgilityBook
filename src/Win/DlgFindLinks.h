@@ -24,8 +24,15 @@
 #include "ColumnOrder.h"
 
 #include <vector>
-class CReportListCtrl;
 class wxListEvent;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
+class CReportListCtrl;
+} // namespace ARBWin
 
 class CDlgFindLinksData;
 typedef std::shared_ptr<CDlgFindLinksData> CDlgFindLinksDataPtr;
@@ -34,7 +41,7 @@ typedef std::shared_ptr<CDlgFindLinksData> CDlgFindLinksDataPtr;
 class CDlgFindLinks : public wxDialog
 {
 public:
-	CDlgFindLinks(ARBDogList& inDogs, wxWindow* pParent = nullptr);
+	CDlgFindLinks(ARB::ARBDogList& inDogs, wxWindow* pParent = nullptr);
 
 	size_t GetNumLinks() const
 	{
@@ -48,7 +55,7 @@ private:
 	void UpdateButtons();
 	void Edit();
 
-	CReportListCtrl* m_ctrlLinks;
+	ARBWin::CReportListCtrl* m_ctrlLinks;
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlOpen;
 
@@ -67,3 +74,5 @@ private:
 	void OnOpen(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

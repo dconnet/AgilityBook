@@ -25,8 +25,15 @@
 #include "LibARBWin/ReportListHeader.h"
 #include <set>
 #include <vector>
-class CAgilityBookDoc;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
 class CReportListCtrl;
+} // namespace ARBWin
+class CAgilityBookDoc;
 
 
 ARB_TYPEDEF(InfoNoteListData)
@@ -103,7 +110,11 @@ class CDlgInfoNote : public wxDialog
 	friend class InfoNoteListData;
 
 public:
-	CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstring const& inSelect, wxWindow* pParent = nullptr);
+	CDlgInfoNote(
+		CAgilityBookDoc* pDoc,
+		ARB::ARBInfoType inType,
+		std::wstring const& inSelect,
+		wxWindow* pParent = nullptr);
 
 	wxString GetCaption() const;
 	std::wstring CurrentSelection() const;
@@ -122,7 +133,7 @@ public:
 	{
 		return m_nAdded;
 	}
-	ARBInfoItemPtr FindName(std::wstring const& name) const;
+	ARB::ARBInfoItemPtr FindName(std::wstring const& name) const;
 
 	std::vector<NameInfo> const& GetNames() const
 	{
@@ -140,10 +151,10 @@ private:
 	void DoEdit(long index);
 
 	CAgilityBookDoc* m_pDoc;
-	ARBInfoType m_type;
+	ARB::ARBInfoType m_type;
 	std::set<std::wstring> m_NamesInUse;
-	ARBInfoItemList const& m_InfoOrig;
-	ARBInfoItemList m_Info;
+	ARB::ARBInfoItemList const& m_InfoOrig;
+	ARB::ARBInfoItemList m_Info;
 	std::vector<NameInfo> m_Names;
 	size_t m_nAdded;
 	std::wstring m_CurSel;
@@ -165,8 +176,8 @@ private:
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlDelete;
 	wxButton* m_ctrlCopy;
-	CReportListCtrl* m_ctrlList;
-	CReportListHeader m_reportColumn;
+	ARBWin::CReportListCtrl* m_ctrlList;
+	ARBWin::CReportListHeader m_reportColumn;
 	int m_imgNone;
 	int m_imgNote;
 	int m_imgAdded;
@@ -179,3 +190,5 @@ private:
 	void OnCopyItems(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

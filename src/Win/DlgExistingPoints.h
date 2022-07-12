@@ -20,6 +20,12 @@
 
 #include "ARB/ARBDogExistingPoints.h"
 #include "ARBCommon/ARBDate.h"
+class wxDateEvent;
+class wxDatePickerCtrl;
+
+
+namespace dconSoft
+{
 class CAgilityBookDoc;
 class CDlgPointsDivisionData;
 class CDlgPointsEventData;
@@ -27,8 +33,6 @@ class CDlgPointsLevelData;
 class CDlgPointsMultiQData;
 class CDlgPointsTypeNameData;
 class CDlgPointsVenueData;
-class wxDateEvent;
-class wxDatePickerCtrl;
 
 
 class CDlgExistingPoints : public wxDialog
@@ -36,21 +40,21 @@ class CDlgExistingPoints : public wxDialog
 public:
 	CDlgExistingPoints(
 		CAgilityBookDoc* pDoc,
-		ARBDogExistingPointsList& points,
-		ARBDogExistingPointsPtr const& inExistingPoints,
+		ARB::ARBDogExistingPointsList& points,
+		ARB::ARBDogExistingPointsPtr const& inExistingPoints,
 		wxWindow* pParent = nullptr);
 
 private:
-	ARBExistingPointType GetCurrentType() const;
+	ARB::ARBExistingPointType GetCurrentType() const;
 	CDlgPointsVenueData* GetVenueData(int index) const;
 	CDlgPointsDivisionData* GetDivisionData(int index) const;
 	CDlgPointsLevelData* GetLevelData(int index) const;
 	CDlgPointsEventData* GetEventData(int index) const;
 	CDlgPointsTypeNameData* GetTypeNameData(int index) const;
 	CDlgPointsMultiQData* GetMultiQData(int index) const;
-	ARBConfigScoringPtr GetConfigScoring() const;
+	ARB::ARBConfigScoringPtr GetConfigScoring() const;
 	void GetEnableLists(
-		ARBExistingPointType type,
+		ARB::ARBExistingPointType type,
 		bool& outVenue,
 		bool& outDivMQ,
 		bool& outLevel,
@@ -73,9 +77,9 @@ private:
 	void FillTypeNames();
 
 	CAgilityBookDoc* m_pDoc;
-	ARBDogExistingPointsList& m_PointsList;
-	ARBDogExistingPointsPtr m_pExistingPoints;
-	ARBDate m_Date;
+	ARB::ARBDogExistingPointsList& m_PointsList;
+	ARB::ARBDogExistingPointsPtr m_pExistingPoints;
+	ARBCommon::ARBDate m_Date;
 	double m_Points;
 	wxString m_Comments;
 	wxDatePickerCtrl* m_ctrlDate;
@@ -104,3 +108,5 @@ private:
 	void OnSelchangeEvent(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

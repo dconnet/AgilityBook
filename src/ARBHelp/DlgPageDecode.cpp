@@ -40,6 +40,11 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARBCommon;
+using namespace ARBWin;
+
 wxBEGIN_EVENT_TABLE(CDlgPageDecode, wxDialog)
 	EVT_BUTTON(wxID_CANCEL, CDlgPageDecode::OnCancel)
 wxEND_EVENT_TABLE()
@@ -229,14 +234,10 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 }
 
 
-static void ClearFile(wxString const& inFile)
-{
-	wxRemoveFile(inFile);
-}
-
-
 void CDlgPageDecode::OnCancel(wxCommandEvent& evt)
 {
-	std::for_each(m_TmpFiles.begin(), m_TmpFiles.end(), ClearFile);
+	std::for_each(m_TmpFiles.begin(), m_TmpFiles.end(), wxRemoveFile);
 	Destroy();
 }
+
+} // namespace dconSoft

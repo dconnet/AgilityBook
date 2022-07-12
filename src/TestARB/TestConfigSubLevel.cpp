@@ -27,6 +27,9 @@
 #endif
 
 
+namespace dconSoft
+{
+
 TEST_CASE("ConfigSubLevel")
 {
 	SECTION("New")
@@ -141,3 +144,5 @@ TEST_CASE("ConfigSubLevelList")
 		}
 	}
 }
+
+} // namespace dconSoft

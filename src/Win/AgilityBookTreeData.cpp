@@ -76,7 +76,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 std::vector<long> const& CAgilityBookTreeData::GetDogColumns() const
 {
@@ -670,3 +675,5 @@ bool CAgilityBookTreeDataRun::DoDelete(bool bSilent)
 		return false;
 	return m_pTree->GetDocument()->DeleteRuns({GetRun()}, bSilent);
 }
+
+} // namespace dconSoft

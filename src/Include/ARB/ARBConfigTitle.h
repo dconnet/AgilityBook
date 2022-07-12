@@ -34,6 +34,11 @@
 #include "ARBCommon/Element.h"
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 enum class ARBTitleStyle
 {
 	None,   ///< "Title"
@@ -48,21 +53,24 @@ enum class ARBTitleSeparator
 };
 
 
-ARB_API ARBAttribLookup LoadTitleStyle(
-	ElementNodePtr const& inTree,
+ARB_API ARBCommon::ARBAttribLookup LoadTitleStyle(
+	ARBCommon::ElementNodePtr const& inTree,
 	wchar_t const* inAttrib,
-	ARBVersion const& inVersion,
+	ARBCommon::ARBVersion const& inVersion,
 	ARBTitleStyle& ioStyle);
-ARB_API void SaveTitleStyle(ElementNodePtr const& ioTree, wchar_t const* inAttrib, ARBTitleStyle inStyle);
+ARB_API void SaveTitleStyle(ARBCommon::ElementNodePtr const& ioTree, wchar_t const* inAttrib, ARBTitleStyle inStyle);
 
 
-ARB_API ARBAttribLookup LoadTitleSeparator(
-	ElementNodePtr const& inTree,
+ARB_API ARBCommon::ARBAttribLookup LoadTitleSeparator(
+	ARBCommon::ElementNodePtr const& inTree,
 	wchar_t const* inAttrib,
-	ARBVersion const& inVersion,
+	ARBCommon::ARBVersion const& inVersion,
 	ARBTitleStyle inStyle,
 	ARBTitleSeparator& ioSep);
-ARB_API void SaveTitleSeparator(ElementNodePtr const& ioTree, wchar_t const* inAttrib, ARBTitleSeparator inSep);
+ARB_API void SaveTitleSeparator(
+	ARBCommon::ElementNodePtr const& ioTree,
+	wchar_t const* inAttrib,
+	ARBTitleSeparator inSep);
 
 
 class ARB_API ARBTitleInstance
@@ -137,7 +145,10 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
+	bool Load(
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -145,13 +156,13 @@ public:
 	 * @return Success
 	 * @post The ARBConfigTitle element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Determine if this method is valid on the given date.
 	 * @param inDate Date to check, if not valid, this method is valid.
 	 */
-	bool IsValidOn(ARBDate inDate) const
+	bool IsValidOn(ARBCommon::ARBDate inDate) const
 	{
 		if (inDate.IsValid()
 			&& ((m_ValidFrom.IsValid() && inDate < m_ValidFrom) || (m_ValidTo.IsValid() && inDate > m_ValidTo)))
@@ -224,19 +235,19 @@ public:
 	{
 		m_Prefix = inPrefix;
 	}
-	ARBDate const& GetValidFrom() const
+	ARBCommon::ARBDate const& GetValidFrom() const
 	{
 		return m_ValidFrom;
 	}
-	void SetValidFrom(ARBDate const& inDate)
+	void SetValidFrom(ARBCommon::ARBDate const& inDate)
 	{
 		m_ValidFrom = inDate;
 	}
-	ARBDate const& GetValidTo() const
+	ARBCommon::ARBDate const& GetValidTo() const
 	{
 		return m_ValidTo;
 	}
-	void SetValidTo(ARBDate const& inDate)
+	void SetValidTo(ARBCommon::ARBDate const& inDate)
 	{
 		m_ValidTo = inDate;
 	}
@@ -288,8 +299,8 @@ private:
 	std::wstring m_LongName;
 	std::wstring m_Desc;
 	bool m_Prefix;
-	ARBDate m_ValidFrom;
-	ARBDate m_ValidTo;
+	ARBCommon::ARBDate m_ValidFrom;
+	ARBCommon::ARBDate m_ValidTo;
 	// Recurring properties
 	short m_MultipleStartAt;
 	unsigned short m_MultipleIncrement;
@@ -316,8 +327,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback,
 		bool inCheckDups = false);
 
@@ -372,3 +383,6 @@ public:
 	 */
 	bool DeleteTitle(std::wstring const& inName);
 };
+
+} // namespace ARB
+} // namespace dconSoft

@@ -29,6 +29,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 CDlgName::CDlgName(std::wstring const& name, wxWindow* pParent)
 	: m_Name(StringUtil::stringWX(name))
 {
@@ -94,3 +100,5 @@ std::wstring CDlgName::Name() const
 {
 	return StringUtil::stringW(m_Name);
 }
+
+} // namespace dconSoft

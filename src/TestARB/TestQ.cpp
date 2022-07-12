@@ -31,6 +31,11 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+
 TEST_CASE("ARBQ")
 {
 	SECTION("ctor")
@@ -190,3 +195,5 @@ TEST_CASE("ARBQ")
 		}
 	}
 }
+
+} // namespace dconSoft

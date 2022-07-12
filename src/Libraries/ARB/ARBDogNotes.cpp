@@ -34,7 +34,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 namespace
 {
@@ -267,3 +272,6 @@ void ARBDogNotes::SetCRCDMetaData(std::vector<unsigned char> const& inCRCDMeta)
 {
 	BinaryData::Encode(inCRCDMeta, m_CRCDMeta);
 }
+
+} // namespace ARB
+} // namespace dconSoft

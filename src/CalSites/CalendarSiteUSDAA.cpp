@@ -54,8 +54,10 @@
 #error "Choose one!"
 #endif
 
-using namespace dconSoft;
-
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
 
 namespace
 {
@@ -560,3 +562,5 @@ std::string CCalendarSiteUSDAA::Process(
 	}
 	return std::string();
 }
+
+} // namespace dconSoft

@@ -67,6 +67,48 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
+namespace
+{
+ARBDate DateEndPoints(ARBDate from1, ARBDate to1, ARBDate from2, ARBDate to2, bool bFirst)
+{
+	std::vector<ARBDate> dates;
+	if (from1.IsValid())
+		dates.push_back(from1);
+	if (to1.IsValid())
+		dates.push_back(to1);
+	if (from2.IsValid())
+		dates.push_back(from2);
+	if (to2.IsValid())
+		dates.push_back(to2);
+	ARBDate date;
+	if (1 <= dates.size())
+	{
+		date = dates[0];
+		for (size_t n = 1; n < dates.size(); ++n)
+		{
+			if (bFirst)
+			{
+				if (dates[n] < date)
+					date = dates[n];
+			}
+			else
+			{
+				if (dates[n] > date)
+					date = dates[n];
+			}
+		}
+	}
+	return date;
+}
+} // namespace
+
+
 class CConfigEventDataLifetimePoints : public wxClientData
 {
 public:
@@ -1492,39 +1534,6 @@ void CDlgConfigEvent::OnPointsDelete(wxCommandEvent& evt)
 }
 
 
-static ARBDate DateEndPoints(ARBDate from1, ARBDate to1, ARBDate from2, ARBDate to2, bool bFirst)
-{
-	std::vector<ARBDate> dates;
-	if (from1.IsValid())
-		dates.push_back(from1);
-	if (to1.IsValid())
-		dates.push_back(to1);
-	if (from2.IsValid())
-		dates.push_back(from2);
-	if (to2.IsValid())
-		dates.push_back(to2);
-	ARBDate date;
-	if (1 <= dates.size())
-	{
-		date = dates[0];
-		for (size_t n = 1; n < dates.size(); ++n)
-		{
-			if (bFirst)
-			{
-				if (dates[n] < date)
-					date = dates[n];
-			}
-			else
-			{
-				if (dates[n] > date)
-					date = dates[n];
-			}
-		}
-	}
-	return date;
-}
-
-
 void CDlgConfigEvent::OnOk(wxCommandEvent& evt)
 {
 	if (!Validate() || !TransferDataFromWindow())
@@ -1651,3 +1660,5 @@ void CDlgConfigEvent::OnOk(wxCommandEvent& evt)
 	m_pEvent->GetScorings() = m_Scorings;
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

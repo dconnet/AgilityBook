@@ -27,6 +27,9 @@
 #endif
 
 
+namespace dconSoft
+{
+
 TEST_CASE("ConfigDivision")
 {
 	SECTION("New")
@@ -194,3 +197,5 @@ TEST_CASE("ConfigDivisionList")
 		}
 	}
 }
+
+} // namespace dconSoft

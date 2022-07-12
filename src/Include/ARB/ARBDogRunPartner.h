@@ -26,6 +26,11 @@
 #include "LibwxARB.h"
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 /**
  * Keeps track of partners in pairs runs.
  */
@@ -77,8 +82,8 @@ public:
 	 */
 	bool Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -87,7 +92,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogRun element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/*
 	 * Getters/setters.
@@ -142,8 +147,8 @@ public:
 	 */
 	bool Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -153,3 +158,6 @@ public:
 	 */
 	bool AddPartner(ARBDogRunPartnerPtr const& inPartner);
 };
+
+} // namespace ARB
+} // namespace dconSoft

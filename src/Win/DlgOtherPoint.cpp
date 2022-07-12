@@ -38,7 +38,11 @@
 #endif
 
 
-/////////////////////////////////////////////////////////////////////////////
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 class COtherPointData : public wxClientData
 {
@@ -212,3 +216,5 @@ void CDlgOtherPoint::OnOk(wxCommandEvent& evt)
 	m_pRunOther->SetPoints(m_Points);
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

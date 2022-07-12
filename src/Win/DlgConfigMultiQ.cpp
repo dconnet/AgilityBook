@@ -42,6 +42,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 wxBEGIN_EVENT_TABLE(CDlgConfigMultiQ, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgConfigMultiQ::OnOk)
 wxEND_EVENT_TABLE()
@@ -416,3 +422,5 @@ void CDlgConfigMultiQ::OnOk(wxCommandEvent& evt)
 
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

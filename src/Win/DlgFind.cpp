@@ -30,6 +30,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 CDlgFind::CDlgFind(IFindCallback& callback, wxWindow* pParent)
 	: wxDialog()
 	, m_Callback(callback)
@@ -164,3 +170,5 @@ void CDlgFind::OnFind(wxCommandEvent& evt)
 	m_Callback.SearchDown(m_radioBoxDir->GetSelection() == 1);
 	m_Callback.Search(this);
 }
+
+} // namespace dconSoft

@@ -19,28 +19,35 @@
 
 #include "ARB/ARBBase.h"
 #include <vector>
-class CAgilityBookDoc;
-class CTreeCtrl;
 class wxTreeEvent;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
+class CTreeCtrl;
+} // namespace ARBWin
+class CAgilityBookDoc;
 
 
 class CDlgReorder : public wxDialog
 {
 public:
-	CDlgReorder(CAgilityBookDoc* pDoc, ARBDogList* dogs, wxWindow* pParent = nullptr);
+	CDlgReorder(CAgilityBookDoc* pDoc, ARB::ARBDogList* dogs, wxWindow* pParent = nullptr);
 	CDlgReorder(
 		CAgilityBookDoc* pDoc,
-		ARBDogTrialPtr const& inTrial,
-		ARBDogRunPtr const& inRun,
+		ARB::ARBDogTrialPtr const& inTrial,
+		ARB::ARBDogRunPtr const& inRun,
 		wxWindow* pParent = nullptr);
 
 private:
 	CAgilityBookDoc* m_pDoc;
-	ARBDogList* m_Dogs;
-	ARBDogTrialPtr m_Trial;
-	ARBDogRunPtr m_Run;
+	ARB::ARBDogList* m_Dogs;
+	ARB::ARBDogTrialPtr m_Trial;
+	ARB::ARBDogRunPtr m_Run;
 	wxListBox* m_ctrlList;
-	CTreeCtrl* m_ctrlTree;
+	ARBWin::CTreeCtrl* m_ctrlTree;
 	wxButton* m_ctrlUp;
 	wxButton* m_ctrlDown;
 
@@ -55,3 +62,5 @@ protected:
 	void OnMoveDown(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

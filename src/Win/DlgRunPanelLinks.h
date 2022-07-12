@@ -22,8 +22,16 @@
 
 #include "ARB/ARBTypes2.h"
 #include <wx/listctrl.h>
-class CAgilityBookDoc;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
 class CListCtrl;
+} // namespace ARBWin
+class CAgilityBookDoc;
+
 
 class CDlgRunPanelLinks : public CDlgRunPanelBase
 {
@@ -33,9 +41,9 @@ public:
 	CDlgRunPanelLinks(
 		CDlgRun* pDlg,
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr const& inDog,
-		ARBDogTrialPtr const& inTrial,
-		ARBDogRunPtr const& inRun,
+		ARB::ARBDogPtr const& inDog,
+		ARB::ARBDogTrialPtr const& inTrial,
+		ARB::ARBDogRunPtr const& inRun,
 		wxWindow* parent);
 
 	wxWindow* GetInitialControl() override;
@@ -51,7 +59,7 @@ private:
 	int GetImageIndex(std::wstring const& inLink);
 	void EditLink();
 
-	CListCtrl* m_ctrlLinks;
+	ARBWin::CListCtrl* m_ctrlLinks;
 	wxImageList m_ImageList;
 	int m_imgEmpty;
 	int m_imgOk;
@@ -68,3 +76,5 @@ private:
 	void OnLinksDelete(wxCommandEvent& evt);
 	void OnLinksOpen(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

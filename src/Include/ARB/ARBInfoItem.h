@@ -28,6 +28,11 @@
 #include <set>
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 /**
  * Comments about items
  */
@@ -86,8 +91,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback,
 		std::wstring const& inItemName);
 
@@ -96,7 +101,7 @@ public:
 	 * @param ioTree Parent element.
 	 * @param inItemName Name of collection being saved.
 	 */
-	bool Save(ElementNodePtr const& ioTree, std::wstring const& inItemName) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree, std::wstring const& inItemName) const;
 
 	/**
 	 * Item has data. No data will be removed in CondenseContent.
@@ -173,13 +178,16 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
+	bool Load(
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a items entry
 	 * @param ioTree Parent element.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Sort the list by name.
@@ -233,3 +241,6 @@ public:
 private:
 	std::wstring m_ItemName;
 };
+
+} // namespace ARB
+} // namespace dconSoft

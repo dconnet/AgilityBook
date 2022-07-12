@@ -16,7 +16,14 @@
  */
 
 #include "ARB/ARBAgilityRecordBook.h"
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
 class CTextCtrl;
+} // namespace ARBWin
 
 
 class CDlgConfigUpdate : public wxDialog
@@ -24,7 +31,7 @@ class CDlgConfigUpdate : public wxDialog
 public:
 	CDlgConfigUpdate(wxWindow* parent = nullptr);
 
-	ARBConfig& GetConfig()
+	ARB::ARBConfig& GetConfig()
 	{
 		return m_Book.GetConfig();
 	}
@@ -40,11 +47,11 @@ private:
 	wxRadioButton* m_radioDefault;
 	wxRadioButton* m_radioExisting;
 	wxButton* m_btnPick;
-	CTextCtrl* m_FileName;
+	ARBWin::CTextCtrl* m_FileName;
 	// CEdit	m_ctrlFileNameEdit;
 	// CString	m_FileName;
 	// CButton	m_ctrlFileName;
-	ARBAgilityRecordBook m_Book;
+	ARB::ARBAgilityRecordBook m_Book;
 
 	DECLARE_EVENT_TABLE()
 	void OnUpdateDefault(wxCommandEvent& evt);
@@ -52,3 +59,5 @@ private:
 	void OnName(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

@@ -27,6 +27,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+using namespace ARBWin;
+
 /////////////////////////////////////////////////////////////////////////////
 // CColumnOrder
 //  m_order is a list of the column numbers in the order of importance
@@ -142,3 +148,5 @@ bool CColumnOrder::SetColumnOrder(int nNewFirstColumn)
 	}
 	return true;
 }
+
+} // namespace dconSoft

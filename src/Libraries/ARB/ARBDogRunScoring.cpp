@@ -39,11 +39,22 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+
+namespace
+{
 // Magic / time == MPH
 // This number is from the AKC rule book.
 // Note: My computed MPH is often lower than the official one. WTF Excel?
 // (not excel: putting in "=204.545 / A1" results in the numbers I have.
 constexpr double sc_magicMPH = 204.545;
+} // namespace
+
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 /////////////////////////////////////////////////////////////////////////////
 // static
@@ -520,3 +531,6 @@ double ARBDogRunScoring::GetTimeFaults(ARBConfigScoringPtr const& inScoring) con
 	}
 	return timeFaults * inScoring->TimeFaultMultiplier();
 }
+
+} // namespace ARB
+} // namespace dconSoft

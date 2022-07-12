@@ -19,6 +19,10 @@
 
 #include "ARB/ARBTypes2.h"
 #include <vector>
+
+
+namespace dconSoft
+{
 class CAgilityBookDoc;
 
 
@@ -27,7 +31,7 @@ class CDlgSelectDog : public wxDialog
 public:
 	CDlgSelectDog(
 		CAgilityBookDoc* pDoc,
-		std::vector<ARBDogPtr>& outDogs,
+		std::vector<ARB::ARBDogPtr>& outDogs,
 		wxWindow* pParent = nullptr,
 		bool onlyLiving = true);
 
@@ -35,10 +39,12 @@ public:
 
 private:
 	CAgilityBookDoc* m_pDoc;
-	std::vector<ARBDogPtr>& m_outDogs;
-	std::vector<ARBDogPtr> m_Dogs;
+	std::vector<ARB::ARBDogPtr>& m_outDogs;
+	std::vector<ARB::ARBDogPtr> m_Dogs;
 	wxCheckListBox* m_checkList;
 
 	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

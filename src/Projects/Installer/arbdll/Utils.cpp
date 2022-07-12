@@ -17,7 +17,10 @@
 #include "Utils.h"
 
 
-static const int cchGUID = 38;
+namespace
+{
+constexpr int cchGUID = 38;
+} // namespace
 
 //////////////////////////////////////////////////////////////////////////////
 

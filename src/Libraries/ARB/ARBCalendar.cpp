@@ -42,16 +42,24 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
 
-#define ENTRY_NOT      L"N"
-#define ENTRY_ENTERED  L"E"
-#define ENTRY_PENDING  L"O"
-#define ENTRY_PLANNING L"P"
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
-#define ACCOM_NONE      L"N"
-#define ACCOM_TODO      L"T"
-#define ACCOM_CONFIRMED L"C"
+namespace
+{
+constexpr wchar_t ENTRY_NOT[] = L"N";
+constexpr wchar_t ENTRY_ENTERED[] = L"E";
+constexpr wchar_t ENTRY_PENDING[] = L"O";
+constexpr wchar_t ENTRY_PLANNING[] = L"P";
+
+constexpr wchar_t ACCOM_NONE[] = L"N";
+constexpr wchar_t ACCOM_TODO[] = L"T";
+constexpr wchar_t ACCOM_CONFIRMED[] = L"C";
+} // namespace
 
 /////////////////////////////////////////////////////////////////////////////
 // Static functions (for iCalendar/vCalender)
@@ -1047,3 +1055,6 @@ bool ARBCalendarList::DeleteCalendar(ARBCalendarPtr const& inCal)
 	}
 	return false;
 }
+
+} // namespace ARB
+} // namespace dconSoft

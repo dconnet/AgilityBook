@@ -34,16 +34,26 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
+
+namespace
+{
+constexpr wchar_t EXISTING_PTS_TYPE_OTHER[] = L"Other";
+constexpr wchar_t EXISTING_PTS_TYPE_LIFETIME[] = L"Lifetime";
+constexpr wchar_t EXISTING_PTS_TYPE_TITLE[] = L"Run";
+constexpr wchar_t EXISTING_PTS_TYPE_SPEED[] = L"Speed";
+constexpr wchar_t EXISTING_PTS_TYPE_MQ[] = L"MQ";
+constexpr wchar_t EXISTING_PTS_TYPE_SQ[] = L"SQ";
+} // namespace
+
+
 /////////////////////////////////////////////////////////////////////////////
 // static
-
-#define EXISTING_PTS_TYPE_OTHER    L"Other"
-#define EXISTING_PTS_TYPE_LIFETIME L"Lifetime"
-#define EXISTING_PTS_TYPE_TITLE    L"Run"
-#define EXISTING_PTS_TYPE_SPEED    L"Speed"
-#define EXISTING_PTS_TYPE_MQ       L"MQ"
-#define EXISTING_PTS_TYPE_SQ       L"SQ"
-
 std::wstring ARBDogExistingPoints::GetPointTypeName(ARBExistingPointType inType)
 {
 	std::wstring str;
@@ -1102,3 +1112,6 @@ bool ARBDogExistingPointsList::DeleteExistingPoints(ARBDogExistingPointsPtr cons
 	}
 	return false;
 }
+
+} // namespace ARB
+} // namespace dconSoft

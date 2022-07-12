@@ -36,10 +36,19 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 /////////////////////////////////////////////////////////////////////////////
 // Special clipboard formats
 
-static wxDataFormat GetClipboardFormat(ARBClipFormat fmt)
+namespace
+{
+wxDataFormat GetClipboardFormat(ARBClipFormat fmt)
 {
 	switch (fmt)
 	{
@@ -65,8 +74,8 @@ static wxDataFormat GetClipboardFormat(ARBClipFormat fmt)
 	// 'enum class' handles all cases via the switch above
 	return wxDataFormat(wxDF_INVALID);
 }
+} // namespace
 
-////////////////////////////////////////////////////////////////////////////
 
 CClipboardData::CClipboardData(bool bAutoOpen)
 	: m_bOkay(false)
@@ -342,3 +351,5 @@ bool CClipboardDataWriter::CommitData()
 	m_Object = nullptr;
 	return bOk;
 }
+
+} // namespace dconSoft

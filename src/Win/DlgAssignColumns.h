@@ -26,10 +26,17 @@
 #include "AgilityBookOptions.h"
 #include "NamedColumns.h"
 #include <vector>
-class CAgilityBookDoc;
-class CListCtrl;
-class ColumnData;
 class wxListEvent;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
+class CListCtrl;
+} // namespace ARBWin
+class CAgilityBookDoc;
+class ColumnData;
 
 
 class CDlgAssignColumns : public wxDialog
@@ -68,7 +75,7 @@ private:
 	bool m_bIncludeBlank;
 	wxString m_ConfigName;
 	wxComboBox* m_ctrlConfig;
-	CListCtrl* m_ctrlType;
+	ARBWin::CListCtrl* m_ctrlType;
 	wxListBox* m_ctrlAvailable;
 	wxListBox* m_ctrlColumns;
 	wxButton* m_btnAdd;
@@ -98,3 +105,5 @@ protected:
 	void OnReset(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

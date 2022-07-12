@@ -34,11 +34,16 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+
 // The combobox for the Q on a Mac is just too small.
 #ifdef __WXMAC__
-#define DEF_Q_WIDTH 50
+constexpr int DEF_Q_WIDTH = 50;
 #else
-#define DEF_Q_WIDTH 30
+constexpr int DEF_Q_WIDTH = 30;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -157,3 +162,5 @@ ARB_Q CQualifyingComboBox::GetQ(int index) const
 		return dynamic_cast<CQualifyingComboData*>(pData)->m_Q;
 	return Q::UNK;
 }
+
+} // namespace dconSoft

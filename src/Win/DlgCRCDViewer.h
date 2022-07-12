@@ -19,11 +19,17 @@
 
 #ifdef __WXMSW__
 
+namespace dconSoft
+{
+
+
 // Metafiles are only available on Windows
 class CDlgCRCDViewer : public wxDialog
 {
 public:
 	CDlgCRCDViewer(HENHMETAFILE inMetaFile, wxWindow* pParent = nullptr);
 };
+
+} // namespace dconSoft
 
 #endif

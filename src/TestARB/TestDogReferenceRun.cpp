@@ -27,6 +27,9 @@
 #endif
 
 
+namespace dconSoft
+{
+
 TEST_CASE("DogReferenceRun")
 {
 	SECTION("New")
@@ -131,3 +134,5 @@ TEST_CASE("DogReferenceRunList")
 		}
 	}
 }
+
+} // namespace dconSoft

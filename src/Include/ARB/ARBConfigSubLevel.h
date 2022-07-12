@@ -26,6 +26,11 @@
 #include "LibwxARB.h"
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 /**
  * Sublevel, allows a level to be split into A/B groupings.
  */
@@ -77,7 +82,10 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
+	bool Load(
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -85,7 +93,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigSubLevel element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Update this configuration from inLevelNew.
@@ -137,7 +145,10 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
+	bool Load(
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Reorder the list based on 'inList'
@@ -168,3 +179,6 @@ public:
 	 */
 	bool DeleteSubLevel(std::wstring const& inName);
 };
+
+} // namespace ARB
+} // namespace dconSoft

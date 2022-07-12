@@ -36,6 +36,11 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARBCommon;
+using namespace ARBWin;
+
 wxBEGIN_EVENT_TABLE(CDlgPluginDetails, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgPluginDetails::OnOk)
 wxEND_EVENT_TABLE()
@@ -237,3 +242,5 @@ void CDlgPluginDetails::OnOk(wxCommandEvent& evt)
 		m_sites.AddSite(m_CalSite);
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

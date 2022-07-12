@@ -31,6 +31,10 @@
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/ReportListCtrl.h"
 #include <wx/docview.h>
+
+
+namespace dconSoft
+{
 class CAgilityBookCalendarListView;
 class CAgilityBookCalendarListViewData;
 class CTabView;
@@ -54,8 +58,10 @@ private:
 
 class CAgilityBookCalendarListView : public CAgilityBookBaseExtraView
 {
-	friend int wxCALLBACK
-	CompareCalendar(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo);
+	friend int wxCALLBACK CompareCalendar(
+		ARBWin::CListDataPtr const& item1,
+		ARBWin::CListDataPtr const& item2,
+		ARBWin::SortInfo const* pSortInfo);
 	friend class CAgilityBookCalendarListViewData;
 	friend class CFindCalendar;
 	DECLARE_CLASS(CAgilityBookCalendarListView)
@@ -112,7 +118,7 @@ private:
 	void LoadData();
 	bool OnCmd(int id);
 
-	CReportListCtrl* m_Ctrl;
+	ARBWin::CReportListCtrl* m_Ctrl;
 	int m_imgTentative;
 	int m_imgPlan;
 	int m_imgPlanTentative;
@@ -157,3 +163,5 @@ private:
 	void OnPrintView(wxCommandEvent& evt);
 	void OnPreview(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

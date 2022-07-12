@@ -18,7 +18,12 @@
  * 2004-04-08 Created
  */
 
+namespace dconSoft
+{
+namespace ARBWin
+{
 class CTextCtrl;
+} // namespace ARBWin
 
 
 class CDlgOptionsProgram : public wxPanel
@@ -35,7 +40,9 @@ private:
 	bool m_bShowCosanction;
 	bool m_UseProxy;
 	wxString m_Proxy;
-	CTextCtrl* m_ctrlProxy;
+	ARBWin::CTextCtrl* m_ctrlProxy;
 
 	void OnUseProxy(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

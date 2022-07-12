@@ -47,7 +47,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 class CTitleTitleData : public wxClientData
 {
@@ -451,3 +456,5 @@ void CDlgTitle::OnOk(wxCommandEvent& evt)
 	m_newTitle = title;
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

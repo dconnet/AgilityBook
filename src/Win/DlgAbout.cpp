@@ -44,6 +44,11 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARBCommon;
+using namespace ARBWin;
+
 CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, CMainFrame* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
@@ -215,3 +220,5 @@ void CDlgAbout::OnCheckForUpdates(wxCommandEvent& evt)
 		// App will be close by downloader
 	}
 }
+
+} // namespace dconSoft

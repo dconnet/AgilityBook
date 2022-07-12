@@ -46,7 +46,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 namespace
 {
@@ -891,3 +896,6 @@ bool ARBConfigVenueList::FindEvent(
 	}
 	return bFound;
 }
+
+} // namespace ARB
+} // namespace dconSoft

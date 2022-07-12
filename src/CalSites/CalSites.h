@@ -20,7 +20,10 @@
 #include "LibARBWin/SetupApp.h"
 
 
-class CCalSitesApp : public CBaseApp
+namespace dconSoft
+{
+
+class CCalSitesApp : public ARBWin::CBaseApp
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CCalSitesApp)
 public:
@@ -40,10 +43,12 @@ private:
 wxDECLARE_APP(CCalSitesApp);
 
 
-class CErrorCallback : public ARBErrorCallback
+class CErrorCallback : public ARB::ARBErrorCallback
 {
 public:
 	CErrorCallback();
 	bool OnError(wchar_t const* const pMsg) override;
 	fmt::wmemory_buffer m_ErrMsg;
 };
+
+} // namespace dconSoft

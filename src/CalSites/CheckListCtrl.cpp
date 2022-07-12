@@ -50,6 +50,10 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARBWin;
+
 wxIMPLEMENT_CLASS(CCheckListCtrl, CListCtrl)
 
 
@@ -199,3 +203,5 @@ void CCheckListCtrl::OnKeyDown(wxKeyEvent& evt)
 	}
 	evt.Skip();
 }
+
+} // namespace dconSoft

@@ -70,6 +70,13 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 namespace
 {
 // Calendar Defaults
@@ -79,42 +86,43 @@ constexpr bool sc_ViewAllCalOpening = true;
 constexpr bool sc_ViewAllCalClosing = true;
 constexpr long sc_DaysTillEntryIsPast = 5;
 constexpr bool sc_HideOverlapping = false;
+
 // xcode5 dies on any static wx objects
-static const wxColour sc_CalColorPast()
+const wxColour sc_CalColorPast()
 {
 	return wxColour(128, 128, 128);
 } // gray
-static const wxColour sc_CalColorNotEntered()
+const wxColour sc_CalColorNotEntered()
 {
 	return wxColour(0, 0, 0);
 } // Black
-static const wxColour sc_CalColorPlanning()
+const wxColour sc_CalColorPlanning()
 {
 	return wxColour(255, 128, 0);
 } // Orange
-static const wxColour sc_CalColorPending()
+const wxColour sc_CalColorPending()
 {
 	return wxColour(128, 0, 255);
 } // Blue-ish
-static const wxColour sc_CalColorEntered()
+const wxColour sc_CalColorEntered()
 {
 	return wxColour(0, 0, 255);
 } // Blue
-static const wxColour sc_CalColorOpening()
+const wxColour sc_CalColorOpening()
 {
 	return wxColour(0, 128, 0);
 } // Dk Green
-static const wxColour sc_CalColorClosing()
+const wxColour sc_CalColorClosing()
 {
 	return wxColour(255, 0, 0);
 } // Red
 constexpr long sc_CalOpeningNear = 4;
 constexpr long sc_CalClosingNear = 10;
-static const wxColour sc_CalColorOpeningNear()
+const wxColour sc_CalColorOpeningNear()
 {
 	return wxColour(0, 0, 255);
 }
-static const wxColour sc_CalColorClosingNear()
+const wxColour sc_CalColorClosingNear()
 {
 	return wxColour(255, 0, 0);
 }
@@ -170,10 +178,9 @@ constexpr long sc_NumBackup = 3;
 constexpr bool sc_ShowPropOnNewTitle = false;
 constexpr bool sc_UseProxy = false;
 constexpr bool sc_UseAltRowColor = true;
-}; // namespace
 
 
-static void ExportConfigItem(wxString const& entry, ElementNodePtr const& inTree)
+void ExportConfigItem(wxString const& entry, ElementNodePtr const& inTree)
 {
 	switch (wxConfig::Get()->GetEntryType(entry))
 	{
@@ -218,7 +225,7 @@ static void ExportConfigItem(wxString const& entry, ElementNodePtr const& inTree
 }
 
 
-static void ExportConfig(wxString const& key, ElementNodePtr const& inRoot)
+void ExportConfig(wxString const& key, ElementNodePtr const& inRoot)
 {
 	if (!wxConfig::Get()->HasGroup(key))
 		return;
@@ -247,7 +254,7 @@ static void ExportConfig(wxString const& key, ElementNodePtr const& inRoot)
 }
 
 
-static ElementNodePtr FindElementName(
+ElementNodePtr FindElementName(
 	ElementNodePtr const& inTree,
 	long numConfigs,
 	std::wstring const& name,
@@ -272,11 +279,11 @@ static ElementNodePtr FindElementName(
 }
 
 
-static void ImportConfig(ElementNodePtr const& inTree, bool bClobberFilters);
+void ImportConfig(ElementNodePtr const& inTree, bool bClobberFilters);
 
 
 // Return true to invoke clobber code below.
-static bool ImportColumnInfo(ElementNodePtr const& inTree)
+bool ImportColumnInfo(ElementNodePtr const& inTree)
 {
 	// Only "Config#" are merged (unless we clobber).
 	int idxNum = inTree->FindElement(L"numConfigs");
@@ -352,7 +359,7 @@ static bool ImportColumnInfo(ElementNodePtr const& inTree)
 
 
 // We will not merge the current named filter selection
-static bool MergeFilters(ElementNodePtr const& inTree)
+bool MergeFilters(ElementNodePtr const& inTree)
 {
 	int idx = inTree->FindElement(CFG_KEY_COMMON);
 	if (0 > idx)
@@ -428,7 +435,7 @@ static bool MergeFilters(ElementNodePtr const& inTree)
 }
 
 
-static void ImportConfig(ElementNodePtr const& inTree, bool bClobberFilters)
+void ImportConfig(ElementNodePtr const& inTree, bool bClobberFilters)
 {
 	std::wstring type;
 	if (ARBAttribLookup::Found != inTree->GetAttrib(L"type", type))
@@ -493,6 +500,7 @@ static void ImportConfig(ElementNodePtr const& inTree, bool bClobberFilters)
 		wxConfig::Get()->Write(StringUtil::stringWX(inTree->GetName()), val);
 	}
 }
+}; // namespace
 
 
 bool CAgilityBookOptions::ImportSettings(ElementNodePtr const& inree)
@@ -528,7 +536,7 @@ ElementNodePtr CAgilityBookOptions::ExportSettings()
 	tree->AddAttrib(ATTRIB_BOOK_PGM_VERSION, verstr);
 
 	// These sections are copied complete.
-	static wchar_t const* const sections[] = {
+	constexpr wchar_t const* const sections[] = {
 		CFG_KEY_CALENDAR,
 		CFG_KEY_COLUMNS,
 		CFG_KEY_COLUMNINFO,
@@ -562,7 +570,7 @@ ElementNodePtr CAgilityBookOptions::ExportSettings()
 	settings->AddAttrib(L"type", L"g");
 
 	CConfigPathHelper config(CFG_KEY_SETTINGS);
-	static wchar_t const* const items[] = {
+	constexpr wchar_t const* const items[] = {
 		L"autoCheck",
 		L"autoShowTitle",
 		L"printLand",
@@ -698,7 +706,9 @@ void CAgilityBookOptions::SetHideOverlappingCalendarEntries(bool bHide)
 }
 
 
-static wchar_t const* CalItemName(ARBCalColorItem inItem)
+namespace
+{
+wchar_t const* CalItemName(ARBCalColorItem inItem)
 {
 	switch (inItem)
 	{
@@ -722,7 +732,7 @@ static wchar_t const* CalItemName(ARBCalColorItem inItem)
 }
 
 
-static wxColour CalItemColor(ARBCalColorItem inItem)
+wxColour CalItemColor(ARBCalColorItem inItem)
 {
 	switch (inItem)
 	{
@@ -749,7 +759,7 @@ static wxColour CalItemColor(ARBCalColorItem inItem)
 // Reading/writing is abstracted since a WXCOLORREF is vastly different
 // on a Mac (uchar[6] vs ulong). Which means trying to use it directly
 // with wxConfig makes for a very unhappy compiler.
-static wxColour ReadColor(wxString const& key, wxColour const& defColor)
+wxColour ReadColor(wxString const& key, wxColour const& defColor)
 {
 	unsigned long val = defColor.Red();
 	val |= (defColor.Green() << 8);
@@ -759,13 +769,14 @@ static wxColour ReadColor(wxString const& key, wxColour const& defColor)
 }
 
 
-static void WriteColor(wxString const& key, wxColour const& inColor)
+void WriteColor(wxString const& key, wxColour const& inColor)
 {
 	unsigned long val = inColor.Red();
 	val |= (inColor.Green() << 8);
 	val |= (inColor.Blue() << 16);
 	wxConfig::Get()->Write(key, static_cast<long>(val));
 }
+} // namespace
 
 
 wxColour CAgilityBookOptions::CalendarColor(ARBCalColorItem inItem)
@@ -1031,13 +1042,16 @@ void CAgilityBookOptions::SetUnitsAsMM(bool bAsMM)
 }
 
 
-static long ConvertMetric(long val, bool bToMM)
+namespace
+{
+long ConvertMetric(long val, bool bToMM)
 {
 	if (bToMM)
 		return static_cast<long>(static_cast<double>(val) * 0.254);
 	else
 		return static_cast<long>(static_cast<double>(val) / 0.254);
 }
+} // namespace
 
 
 void CAgilityBookOptions::GetPrinterMargins(
@@ -1163,7 +1177,9 @@ void CAgilityBookOptions::SetCalendarFontInfo(CFontInfo const& info)
 /////////////////////////////////////////////////////////////////////////////
 // Last entered options
 
-static std::wstring GetLastKey(
+namespace
+{
+std::wstring GetLastKey(
 	ARBDogPtr const& inDog,
 	ARBConfigVenuePtr const& inVenue,
 	wchar_t const* keyGroup,
@@ -1191,7 +1207,7 @@ static std::wstring GetLastKey(
 }
 
 
-static std::wstring GetLastValue(
+std::wstring GetLastValue(
 	ARBDogPtr const& inDog,
 	ARBConfigVenuePtr const& inVenue,
 	wchar_t const* keyDog,
@@ -1202,7 +1218,7 @@ static std::wstring GetLastValue(
 }
 
 
-static void WriteLastValue(
+void WriteLastValue(
 	ARBDogPtr const& inDog,
 	ARBConfigVenuePtr const& inVenue,
 	wchar_t const* keyDog,
@@ -1219,6 +1235,7 @@ static void WriteLastValue(
 	else
 		wxConfig::Get()->DeleteEntry(key);
 }
+} // namespace
 
 
 std::wstring CAgilityBookOptions::GetLastEnteredDivision(ARBDogPtr const& inDog, ARBConfigVenuePtr const& inVenue)
@@ -1313,7 +1330,7 @@ void CAgilityBookOptions::SetLastEnteredHandler(ARBDogPtr const& inDog, wchar_t 
 
 namespace
 {
-static const struct
+constexpr struct
 {
 	wchar_t const* key;
 	wchar_t const* def;
@@ -1472,7 +1489,9 @@ void CAgilityBookOptions::SetImportExportDateFormat(bool bImport, ARBDateFormat 
 }
 
 
-static wchar_t const* const GetColumnName(CAgilityBookOptions::ColumnOrder eOrder)
+namespace
+{
+wchar_t const* const GetColumnName(CAgilityBookOptions::ColumnOrder eOrder)
 {
 	switch (eOrder)
 	{
@@ -1501,6 +1520,7 @@ static wchar_t const* const GetColumnName(CAgilityBookOptions::ColumnOrder eOrde
 	// 'enum class' handles all cases via the switch above
 	return CFG_KEY_UNKNOWN;
 }
+} // namespace
 
 
 void CAgilityBookOptions::GetColumnOrder(
@@ -1956,3 +1976,5 @@ std::wstring CAgilityBookOptions::GetProxy()
 		return CAgilityBookOptions::GetProxyServer();
 	return std::wstring();
 }
+
+} // namespace dconSoft

@@ -43,7 +43,20 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
+namespace
+{
+constexpr long COL_LINK = 0;
+constexpr long COL_DOG = 1;
+constexpr long COL_TRIAL = 2;
+constexpr long COL_RUN = 3;
+} // namespace
 
 class CDlgFindLinksData : public CListData
 {
@@ -73,10 +86,6 @@ public:
 	int m_Image;
 };
 
-#define COL_LINK  0
-#define COL_DOG   1
-#define COL_TRIAL 2
-#define COL_RUN   3
 
 std::wstring CDlgFindLinksData::OnNeedText(long iCol) const
 {
@@ -111,7 +120,7 @@ void CDlgFindLinksData::OnNeedListItem(long iCol, wxListItem& info) const
 
 namespace
 {
-static struct
+constexpr struct
 {
 	int col;
 	wchar_t const* info;
@@ -461,3 +470,5 @@ void CDlgFindLinks::OnOk(wxCommandEvent& evt)
 	}
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

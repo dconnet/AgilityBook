@@ -28,6 +28,10 @@
 
 #include "LibARBWin/ReportListCtrl.h"
 #include <wx/docview.h>
+
+
+namespace dconSoft
+{
 class CAgilityBookTrainingView;
 class CAgilityBookTrainingViewData;
 
@@ -52,8 +56,10 @@ class CAgilityBookTrainingView : public CAgilityBookBaseExtraView
 {
 	friend class CAgilityBookTrainingViewData;
 	friend class CFindTraining;
-	friend int wxCALLBACK
-	CompareTraining(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo);
+	friend int wxCALLBACK CompareTraining(
+		ARBWin::CListDataPtr const& item1,
+		ARBWin::CListDataPtr const& item2,
+		ARBWin::SortInfo const* pSortInfo);
 	DECLARE_CLASS(CAgilityBookTrainingView)
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookTrainingView)
 
@@ -76,7 +82,7 @@ public:
 	}
 	void DetachView() override;
 
-	void SetCurrentDate(ARBDate const& inDate);
+	void SetCurrentDate(ARBCommon::ARBDate const& inDate);
 
 	bool IsFiltered() const override;
 	bool GetMessage(std::wstring& msg) const override;
@@ -96,7 +102,7 @@ private:
 	void LoadData();
 	bool OnCmd(int id);
 
-	CReportListCtrl* m_Ctrl;
+	ARBWin::CReportListCtrl* m_Ctrl;
 	std::vector<long> m_Columns;
 	CFindTraining m_Callback;
 
@@ -129,3 +135,5 @@ private:
 	void OnPrintView(wxCommandEvent& evt);
 	void OnPreview(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

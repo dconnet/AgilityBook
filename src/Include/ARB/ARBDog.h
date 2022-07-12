@@ -37,6 +37,11 @@
 #include "ARBCommon/ARBDate.h"
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 /**
  * Information about a dog, titles, runs, etc.
  */
@@ -88,8 +93,8 @@ public:
 	 */
 	bool Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -99,7 +104,7 @@ public:
 	 * @return Success
 	 * @post The ARBDog element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree, ARBConfig const& inConfig) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree, ARBConfig const& inConfig) const;
 
 	/**
 	 * Rename a venue.
@@ -145,19 +150,19 @@ public:
 	{
 		m_CallName = inName;
 	}
-	ARBDate const& GetDOB() const
+	ARBCommon::ARBDate const& GetDOB() const
 	{
 		return m_DOB;
 	}
-	void SetDOB(ARBDate const& inDOB)
+	void SetDOB(ARBCommon::ARBDate const& inDOB)
 	{
 		m_DOB = inDOB;
 	}
-	ARBDate const& GetDeceased() const
+	ARBCommon::ARBDate const& GetDeceased() const
 	{
 		return m_Deceased;
 	}
-	void SetDeceased(ARBDate const& inDeceased)
+	void SetDeceased(ARBCommon::ARBDate const& inDeceased)
 	{
 		m_Deceased = inDeceased;
 	}
@@ -220,8 +225,8 @@ public:
 
 private:
 	std::wstring m_CallName;
-	ARBDate m_DOB;
-	ARBDate m_Deceased;
+	ARBCommon::ARBDate m_DOB;
+	ARBCommon::ARBDate m_Deceased;
 	std::wstring m_RegName;
 	std::wstring m_Breed;
 	std::wstring m_Note;
@@ -250,8 +255,8 @@ public:
 	 */
 	bool Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -524,3 +529,6 @@ public:
 	 */
 	bool DeleteDog(ARBDogPtr const& inDog);
 };
+
+} // namespace ARB
+} // namespace dconSoft

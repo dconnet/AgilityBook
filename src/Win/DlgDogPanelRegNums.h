@@ -20,11 +20,18 @@
 #include "DlgDogPanelBase.h"
 
 #include "ARB/ARBDog.h"
-#include "ARBCommon/ARBDate.h"
-class CAgilityBookDoc;
-class CReportListCtrl;
 class wxDateEvent;
 class wxDatePickerCtrl;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
+class CReportListCtrl;
+} // namespace ARBWin
+class CAgilityBookDoc;
+
 
 ARB_TYPEDEF(CDlgDogDataRegNum)
 
@@ -32,7 +39,7 @@ class CDlgDogPanelRegNums : public CDlgDogPanelReportBase
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgDogPanelRegNums)
 public:
-	CDlgDogPanelRegNums(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog, wxWindow* parent);
+	CDlgDogPanelRegNums(CAgilityBookDoc* pDoc, ARB::ARBDogPtr const& inDog, wxWindow* parent);
 
 	bool Save(unsigned int& hint) override;
 
@@ -46,5 +53,7 @@ private:
 	CDlgDogDataRegNumPtr GetRegNumData(long index) const;
 	void ListRegNums();
 
-	ARBDogRegNumList m_RegNums;
+	ARB::ARBDogRegNumList m_RegNums;
 };
+
+} // namespace dconSoft

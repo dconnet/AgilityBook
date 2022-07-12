@@ -19,6 +19,10 @@
  */
 
 #include "ARB/ARBTypes2.h"
+
+
+namespace dconSoft
+{
 class CAgilityBookDoc;
 class CDlgClubData;
 class CVenueComboBox;
@@ -29,19 +33,19 @@ class CDlgClub : public wxDialog
 public:
 	CDlgClub(
 		CAgilityBookDoc* pDoc,
-		ARBDogClubList& inClubs,
-		ARBDogClubPtr const& inClub,
+		ARB::ARBDogClubList& inClubs,
+		ARB::ARBDogClubPtr const& inClub,
 		bool bShowCoSanction,
 		wxWindow* pParent = nullptr);
 
-	ARBDogClubPtr AddClub(ARBDogClubList& clubs) const;
+	ARB::ARBDogClubPtr AddClub(ARB::ARBDogClubList& clubs) const;
 
 private:
 	CDlgClubData* GetClubData(int index) const;
-	void SetPrimaryClub(ARBDogClubPtr pClub) const;
+	void SetPrimaryClub(ARB::ARBDogClubPtr pClub) const;
 
 	CAgilityBookDoc* m_pDoc;
-	ARBDogClubPtr m_pClub;
+	ARB::ARBDogClubPtr m_pClub;
 	wxComboBox* m_ctrlClubs;
 	CVenueComboBox* m_ctrlVenues;
 	wxComboBox* m_ctrlPrimary;
@@ -53,3 +57,5 @@ private:
 	void OnClickedPrimary(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

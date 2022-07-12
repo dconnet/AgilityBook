@@ -41,8 +41,15 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARBCommon;
+using namespace ARBWin;
+
+namespace
+{
 // Recurse directory
-static void SearchFor(CDlgARBHelp* pParent, wxString const& inFullPath)
+void SearchFor(CDlgARBHelp* pParent, wxString const& inFullPath)
 {
 	wxArrayString files;
 	if (wxDir::Exists(inFullPath))
@@ -52,8 +59,8 @@ static void SearchFor(CDlgARBHelp* pParent, wxString const& inFullPath)
 			pParent->SetARBFileStatus(StringUtil::stringW(files[n]));
 	}
 }
+} // namespace
 
-/////////////////////////////////////////////////////////////////////////////
 
 CDlgPageEncode::CDlgPageEncode(CDlgARBHelp* pParent)
 	: wxWizardPageSimple(pParent)
@@ -141,3 +148,5 @@ bool CDlgPageEncode::TransferDataFromWindow()
 
 	return true;
 }
+
+} // namespace dconSoft

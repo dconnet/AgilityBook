@@ -30,6 +30,10 @@
 
 #include "LibARBWin/ReportListCtrl.h"
 #include <wx/docview.h>
+
+
+namespace dconSoft
+{
 class CAgilityBookRunsView;
 class CAgilityBookRunsViewData;
 
@@ -52,7 +56,10 @@ private:
 
 class CAgilityBookRunsView : public CAgilityBookBaseExtraView
 {
-	friend int wxCALLBACK CompareRuns(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo);
+	friend int wxCALLBACK CompareRuns(
+		ARBWin::CListDataPtr const& item1,
+		ARBWin::CListDataPtr const& item2,
+		ARBWin::SortInfo const* pSortInfo);
 	friend class CAgilityBookRunsViewData;
 	friend class CFindRuns;
 	DECLARE_CLASS(CAgilityBookRunsView)
@@ -97,7 +104,7 @@ public:
 	void OnDraw(wxDC* dc) override;
 	void OnUpdate(wxView* sender, wxObject* inHint = nullptr) override;
 
-	bool IsTrial(ARBDogTrialPtr const& inTrial) const;
+	bool IsTrial(ARB::ARBDogTrialPtr const& inTrial) const;
 
 	void SuppressSelect(bool bSuppress)
 	{
@@ -107,13 +114,13 @@ public:
 
 private:
 	CAgilityBookRunsViewDataPtr GetItemRunData(long index) const;
-	bool GetUnifiedTrial(ARBDogPtr& pDog, ARBDogTrialPtr& pTrial, bool bSelectionOnly = true) const;
+	bool GetUnifiedTrial(ARB::ARBDogPtr& pDog, ARB::ARBDogTrialPtr& pTrial, bool bSelectionOnly = true) const;
 	void SetupColumns();
 	void LoadData();
-	void SetSelectedRun(ARBDogRunPtr pRun);
+	void SetSelectedRun(ARB::ARBDogRunPtr pRun);
 	bool OnCmd(int id, bool bSilent = false);
 
-	CReportListCtrl* m_Ctrl;
+	ARBWin::CReportListCtrl* m_Ctrl;
 	int m_imgCourse;
 	int m_imgMap;
 	bool m_bSuppressSelect;
@@ -156,3 +163,5 @@ private:
 	void OnPrintView(wxCommandEvent& evt);
 	void OnPreview(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

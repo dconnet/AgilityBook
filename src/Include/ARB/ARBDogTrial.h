@@ -29,6 +29,11 @@
 #include "LibwxARB.h"
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 /**
  * All the information about a trial.
  */
@@ -79,8 +84,8 @@ public:
 	 */
 	bool Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -90,7 +95,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogTrial element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree, ARBConfig const& inConfig) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree, ARBConfig const& inConfig) const;
 
 	/**
 	 * Set the MultiQ settings on individual runs. See ARBDogRun::GetMultiQ.
@@ -119,13 +124,13 @@ public:
 	 * Get the first date of the trial. This is defined by the runs or the default date.
 	 * @return First date, may be invalid.
 	 */
-	ARBDate GetStartDate() const;
+	ARBCommon::ARBDate GetStartDate() const;
 
 	/**
 	 * Get the last date of the trial. This is defined by the runs or the default date.
 	 * @return Last date, may be invalid.
 	 */
-	ARBDate GetEndDate() const;
+	ARBCommon::ARBDate GetEndDate() const;
 
 	/*
 	 * Getters/setters.
@@ -146,11 +151,11 @@ public:
 	{
 		m_Note = inNote;
 	}
-	ARBDate GetDefaultDate() const
+	ARBCommon::ARBDate GetDefaultDate() const
 	{
 		return m_DefaultDate;
 	}
-	void SetDefaultDate(ARBDate date)
+	void SetDefaultDate(ARBCommon::ARBDate date)
 	{
 		m_DefaultDate = date;
 	}
@@ -182,7 +187,7 @@ public:
 private:
 	std::wstring m_Location;
 	std::wstring m_Note;
-	ARBDate m_DefaultDate;
+	ARBCommon::ARBDate m_DefaultDate;
 	bool m_Verified;
 	ARBDogClubList m_Clubs;
 	ARBDogRunList m_Runs;
@@ -207,8 +212,8 @@ public:
 	 */
 	bool Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -385,3 +390,6 @@ public:
 	 */
 	bool DeleteTrial(ARBDogTrialPtr const& inTrial);
 };
+
+} // namespace ARB
+} // namespace dconSoft

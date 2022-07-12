@@ -21,12 +21,16 @@
 #include "ARBCommon/ARBDate.h"
 
 
+namespace dconSoft
+{
+
+
 class CDlgEventSelect : public wxDialog
 {
 public:
 	CDlgEventSelect(
-		ARBConfigVenuePtr const& inVenue,
-		ARBDate const& inDate,
+		ARB::ARBConfigVenuePtr const& inVenue,
+		ARBCommon::ARBDate const& inDate,
 		std::wstring const& inDivision,
 		std::wstring const& inLevel,
 		std::wstring const& inEvent,
@@ -50,8 +54,8 @@ private:
 	wxString m_Event;
 	wxString m_inLevel;
 	wxString m_inEvent;
-	ARBConfigVenuePtr m_pVenue;
-	ARBDate m_Date;
+	ARB::ARBConfigVenuePtr m_pVenue;
+	ARBCommon::ARBDate m_Date;
 
 	DECLARE_EVENT_TABLE()
 	void OnSelchangeDivision(wxCommandEvent& evt);
@@ -59,3 +63,5 @@ private:
 	void OnSelchangeEvent(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

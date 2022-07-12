@@ -114,11 +114,15 @@
 #endif
 
 
-IMPLEMENT_DYNAMIC_CLASS(CAgilityBookDoc, wxDocument)
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
-/////////////////////////////////////////////////////////////////////////////
-
-static short GetCurrentConfigVersion()
+namespace
+{
+short GetCurrentConfigVersion()
 {
 	static short ver = 0;
 	static bool bLoaded = false;
@@ -135,7 +139,7 @@ static short GetCurrentConfigVersion()
 }
 
 
-static void UpdateFutureTrials(ARBConfig const& config, ARBDogPtr const& inDog, ARBDogTitlePtr const& inTitle)
+void UpdateFutureTrials(ARBConfig const& config, ARBDogPtr const& inDog, ARBDogTitlePtr const& inTitle)
 {
 	// Find all trials in the future in the same venue.
 	std::vector<ARBDogTrialPtr> trials;
@@ -169,6 +173,7 @@ static void UpdateFutureTrials(ARBConfig const& config, ARBDogPtr const& inDog, 
 		*/
 	}
 }
+} // namespace
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -184,6 +189,8 @@ bool CErrorCallback::OnError(wchar_t const* const pMsg)
 }
 
 /////////////////////////////////////////////////////////////////////////////
+
+IMPLEMENT_DYNAMIC_CLASS(CAgilityBookDoc, wxDocument)
 
 wxBEGIN_EVENT_TABLE(CAgilityBookDoc, wxDocument)
 	EVT_UPDATE_UI(ID_FILE_EXPORT_WIZARD, CAgilityBookDoc::OnUpdateCmdTrue)
@@ -2392,3 +2399,5 @@ void CAgilityBookDoc::OnHelpDebug(wxCommandEvent& evt)
 	//	dlg.ShowModal();
 }
 #endif
+
+} // namespace dconSoft

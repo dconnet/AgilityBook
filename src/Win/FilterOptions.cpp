@@ -40,7 +40,12 @@
 #endif
 
 
-static void FilterVenue(wxString inVenue, std::vector<CVenueFilter>& venues)
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+
+void FilterVenue(wxString inVenue, std::vector<CVenueFilter>& venues)
 {
 	if (!inVenue.IsEmpty())
 	{
@@ -84,7 +89,7 @@ static void FilterVenue(wxString inVenue, std::vector<CVenueFilter>& venues)
 }
 
 
-static wxString FilterVenue(std::vector<CVenueFilter> const& venues)
+wxString FilterVenue(std::vector<CVenueFilter> const& venues)
 {
 	wxString venue;
 	for (std::vector<CVenueFilter>::const_iterator iter = venues.begin(); iter != venues.end(); ++iter)
@@ -101,7 +106,7 @@ static wxString FilterVenue(std::vector<CVenueFilter> const& venues)
 }
 
 
-static void TrainingNames(std::wstring inNames, std::set<std::wstring>& outNames)
+void TrainingNames(std::wstring inNames, std::set<std::wstring>& outNames)
 {
 	if (!inNames.empty())
 	{
@@ -116,7 +121,7 @@ static void TrainingNames(std::wstring inNames, std::set<std::wstring>& outNames
 }
 
 
-static wxString TrainingNames(std::set<std::wstring> const& inNames)
+wxString TrainingNames(std::set<std::wstring> const& inNames)
 {
 	fmt::wmemory_buffer names;
 	for (std::set<std::wstring>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
@@ -932,3 +937,5 @@ bool CFilterOptions::CFilterOptionData::Save(int index)
 	wxConfig::Get()->Write(section + CFG_FILTER_ITEM_FILTERNAMES, name);
 	return true;
 }
+
+} // namespace dconSoft

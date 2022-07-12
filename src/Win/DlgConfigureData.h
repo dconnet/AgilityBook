@@ -20,10 +20,14 @@
 
 #include "ARB/ARBTypes2.h"
 #include "LibARBWin/ListData.h"
+
+
+namespace dconSoft
+{
 class CDlgConfigVenue;
 
 
-class CDlgConfigureDataBase : public CTreeData
+class CDlgConfigureDataBase : public ARBWin::CTreeData
 {
 public:
 	CDlgConfigureDataBase(CDlgConfigVenue* pDlg);
@@ -94,8 +98,8 @@ protected:
 class CDlgConfigureDataVenue : public CDlgConfigureDataBase
 {
 public:
-	CDlgConfigureDataVenue(ARBConfigVenuePtr const& inVenue);
-	ARBConfigVenuePtr GetVenue() const
+	CDlgConfigureDataVenue(ARB::ARBConfigVenuePtr const& inVenue);
+	ARB::ARBConfigVenuePtr GetVenue() const
 	{
 		return m_Venue;
 	}
@@ -115,7 +119,7 @@ public:
 	std::wstring OnNeedText(int iColumn) const override;
 
 protected:
-	ARBConfigVenuePtr m_Venue;
+	ARB::ARBConfigVenuePtr m_Venue;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -123,8 +127,8 @@ protected:
 class CDlgConfigureDataFault : public CDlgConfigureDataBase
 {
 public:
-	CDlgConfigureDataFault(ARBConfigFaultPtr const& inFault);
-	ARBConfigFaultPtr GetFault() const
+	CDlgConfigureDataFault(ARB::ARBConfigFaultPtr const& inFault);
+	ARB::ARBConfigFaultPtr GetFault() const
 	{
 		return m_Fault;
 	}
@@ -144,7 +148,7 @@ public:
 	std::wstring OnNeedText(int iColumn) const override;
 
 protected:
-	ARBConfigFaultPtr m_Fault;
+	ARB::ARBConfigFaultPtr m_Fault;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -152,8 +156,8 @@ protected:
 class CDlgConfigureDataOtherPoints : public CDlgConfigureDataBase
 {
 public:
-	CDlgConfigureDataOtherPoints(ARBConfigOtherPointsPtr const& inOtherPoints);
-	ARBConfigOtherPointsPtr GetOtherPoints() const
+	CDlgConfigureDataOtherPoints(ARB::ARBConfigOtherPointsPtr const& inOtherPoints);
+	ARB::ARBConfigOtherPointsPtr GetOtherPoints() const
 	{
 		return m_OtherPoints;
 	}
@@ -173,7 +177,7 @@ public:
 	std::wstring OnNeedText(int iColumn) const override;
 
 protected:
-	ARBConfigOtherPointsPtr m_OtherPoints;
+	ARB::ARBConfigOtherPointsPtr m_OtherPoints;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -181,8 +185,8 @@ protected:
 class CDlgConfigureDataDivision : public CDlgConfigureDataBase
 {
 public:
-	CDlgConfigureDataDivision(CDlgConfigVenue* pDlg, ARBConfigDivisionPtr const& inDiv);
-	ARBConfigDivisionPtr GetDivision() const
+	CDlgConfigureDataDivision(CDlgConfigVenue* pDlg, ARB::ARBConfigDivisionPtr const& inDiv);
+	ARB::ARBConfigDivisionPtr GetDivision() const
 	{
 		return m_Div;
 	}
@@ -211,7 +215,7 @@ public:
 	CDlgConfigureDataBase* DoMove(bool bUp) override;
 
 protected:
-	ARBConfigDivisionPtr m_Div;
+	ARB::ARBConfigDivisionPtr m_Div;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -219,12 +223,15 @@ protected:
 class CDlgConfigureDataLevel : public CDlgConfigureDataBase
 {
 public:
-	CDlgConfigureDataLevel(CDlgConfigVenue* pDlg, ARBConfigDivisionPtr const& inDiv, ARBConfigLevelPtr const& inLevel);
-	ARBConfigDivisionPtr GetDivision() const
+	CDlgConfigureDataLevel(
+		CDlgConfigVenue* pDlg,
+		ARB::ARBConfigDivisionPtr const& inDiv,
+		ARB::ARBConfigLevelPtr const& inLevel);
+	ARB::ARBConfigDivisionPtr GetDivision() const
 	{
 		return m_Division;
 	}
-	ARBConfigLevelPtr GetLevel() const
+	ARB::ARBConfigLevelPtr GetLevel() const
 	{
 		return m_Level;
 	}
@@ -253,8 +260,8 @@ public:
 	CDlgConfigureDataBase* DoMove(bool bUp) override;
 
 protected:
-	ARBConfigDivisionPtr m_Division;
-	ARBConfigLevelPtr m_Level;
+	ARB::ARBConfigDivisionPtr m_Division;
+	ARB::ARBConfigLevelPtr m_Level;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -264,18 +271,18 @@ class CDlgConfigureDataSubLevel : public CDlgConfigureDataBase
 public:
 	CDlgConfigureDataSubLevel(
 		CDlgConfigVenue* pDlg,
-		ARBConfigDivisionPtr const& inDiv,
-		ARBConfigLevelPtr const& inLevel,
-		ARBConfigSubLevelPtr const& inSubLevel);
-	ARBConfigDivisionPtr GetDivision() const
+		ARB::ARBConfigDivisionPtr const& inDiv,
+		ARB::ARBConfigLevelPtr const& inLevel,
+		ARB::ARBConfigSubLevelPtr const& inSubLevel);
+	ARB::ARBConfigDivisionPtr GetDivision() const
 	{
 		return m_Division;
 	}
-	ARBConfigLevelPtr GetLevel() const
+	ARB::ARBConfigLevelPtr GetLevel() const
 	{
 		return m_Level;
 	}
-	ARBConfigSubLevelPtr GetSubLevel() const
+	ARB::ARBConfigSubLevelPtr GetSubLevel() const
 	{
 		return m_SubLevel;
 	}
@@ -298,9 +305,9 @@ public:
 	CDlgConfigureDataBase* DoMove(bool bUp) override;
 
 protected:
-	ARBConfigDivisionPtr m_Division;
-	ARBConfigLevelPtr m_Level;
-	ARBConfigSubLevelPtr m_SubLevel;
+	ARB::ARBConfigDivisionPtr m_Division;
+	ARB::ARBConfigLevelPtr m_Level;
+	ARB::ARBConfigSubLevelPtr m_SubLevel;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -308,8 +315,8 @@ protected:
 class CDlgConfigureDataTitle : public CDlgConfigureDataBase
 {
 public:
-	CDlgConfigureDataTitle(CDlgConfigVenue* pDlg, ARBConfigTitlePtr const& inTitle);
-	ARBConfigTitlePtr GetTitle() const
+	CDlgConfigureDataTitle(CDlgConfigVenue* pDlg, ARB::ARBConfigTitlePtr const& inTitle);
+	ARB::ARBConfigTitlePtr GetTitle() const
 	{
 		return m_Title;
 	}
@@ -337,7 +344,7 @@ public:
 	CDlgConfigureDataBase* DoMove(bool bUp) override;
 
 protected:
-	ARBConfigTitlePtr m_Title;
+	ARB::ARBConfigTitlePtr m_Title;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -345,8 +352,8 @@ protected:
 class CDlgConfigureDataEvent : public CDlgConfigureDataBase
 {
 public:
-	CDlgConfigureDataEvent(CDlgConfigVenue* pDlg, ARBConfigEventPtr const& inEvent);
-	ARBConfigEventPtr GetEvent() const
+	CDlgConfigureDataEvent(CDlgConfigVenue* pDlg, ARB::ARBConfigEventPtr const& inEvent);
+	ARB::ARBConfigEventPtr GetEvent() const
 	{
 		return m_Event;
 	}
@@ -374,7 +381,7 @@ public:
 	CDlgConfigureDataBase* DoMove(bool bUp) override;
 
 protected:
-	ARBConfigEventPtr m_Event;
+	ARB::ARBConfigEventPtr m_Event;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -382,8 +389,8 @@ protected:
 class CDlgConfigureDataLifetimeName : public CDlgConfigureDataBase
 {
 public:
-	CDlgConfigureDataLifetimeName(CDlgConfigVenue* pDlg, ARBConfigLifetimeNamePtr const& inName);
-	ARBConfigLifetimeNamePtr GetLifetimeName() const
+	CDlgConfigureDataLifetimeName(CDlgConfigVenue* pDlg, ARB::ARBConfigLifetimeNamePtr const& inName);
+	ARB::ARBConfigLifetimeNamePtr GetLifetimeName() const
 	{
 		return m_pName;
 	}
@@ -411,7 +418,7 @@ public:
 	CDlgConfigureDataBase* DoMove(bool bUp) override;
 
 protected:
-	ARBConfigLifetimeNamePtr m_pName;
+	ARB::ARBConfigLifetimeNamePtr m_pName;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -419,8 +426,8 @@ protected:
 class CDlgConfigureDataMultiQ : public CDlgConfigureDataBase
 {
 public:
-	CDlgConfigureDataMultiQ(CDlgConfigVenue* pDlg, ARBConfigMultiQPtr const& inMultiq);
-	ARBConfigMultiQPtr GetMultiQ() const
+	CDlgConfigureDataMultiQ(CDlgConfigVenue* pDlg, ARB::ARBConfigMultiQPtr const& inMultiq);
+	ARB::ARBConfigMultiQPtr GetMultiQ() const
 	{
 		return m_MultiQ;
 	}
@@ -448,5 +455,7 @@ public:
 	CDlgConfigureDataBase* DoMove(bool bUp) override;
 
 protected:
-	ARBConfigMultiQPtr m_MultiQ;
+	ARB::ARBConfigMultiQPtr m_MultiQ;
 };
+
+} // namespace dconSoft

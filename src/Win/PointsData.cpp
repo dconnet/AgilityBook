@@ -59,7 +59,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 namespace
 {
@@ -73,16 +78,15 @@ constexpr wchar_t s_refOther[] = L"refother{}";
 constexpr wchar_t s_refSpeedPts[] = L"refspeedpts{}";
 constexpr wchar_t s_refTitle[] = L"reftitle{}";
 constexpr wchar_t s_refVenue[] = L"refvenue{}";
-} // namespace
 
-
-static std::wstring Sanitize(std::wstring const& inRawData, bool nbsp = false)
+std::wstring Sanitize(std::wstring const& inRawData, bool nbsp = false)
 {
 	std::wstring data = SanitizeStringForHTML(inRawData);
 	if (nbsp && data.empty())
 		data = L"&nbsp;";
 	return data;
 }
+} // namespace
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -1787,3 +1791,5 @@ bool CPointsDataItems::Details(std::wstring const& link)
 	}
 	return false;
 }
+
+} // namespace dconSoft

@@ -28,7 +28,14 @@
 #endif
 
 
-static ElementNodePtr CreateNode()
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+
+namespace
+{
+ElementNodePtr CreateNode()
 {
 	ElementNodePtr data = ElementNode::New(TREE_CALENDAR);
 	data->SetValue(L"These are some notes");
@@ -48,6 +55,7 @@ struct CalData
 	ElementNodePtr CalData1a; // v1.0 with v2 data
 	CalData();
 };
+} // namespace
 
 
 CalData::CalData()
@@ -496,3 +504,5 @@ TEST_CASE("CalendarList")
 		}
 	}
 }
+
+} // namespace dconSoft

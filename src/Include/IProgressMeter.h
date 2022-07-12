@@ -15,6 +15,9 @@
  * 2007-08-19 Created
  */
 
+namespace dconSoft
+{
+
 class IProgressMeter
 {
 public:
@@ -58,3 +61,5 @@ public:
 	 */
 	virtual bool HasCanceled() const = 0;
 };
+
+} // namespace dconSoft

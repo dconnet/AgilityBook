@@ -28,12 +28,21 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
 
-#define OTHERPTS_COUNT_ALL          L"All"
-#define OTHERPTS_COUNT_ALLBYEVENT   L"AllByEvent"
-#define OTHERPTS_COUNT_LEVEL        L"Level"
-#define OTHERPTS_COUNT_LEVELBYEVENT L"LevelByEvent"
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
+
+namespace
+{
+constexpr wchar_t OTHERPTS_COUNT_ALL[] = L"All";
+constexpr wchar_t OTHERPTS_COUNT_ALLBYEVENT[] = L"AllByEvent";
+constexpr wchar_t OTHERPTS_COUNT_LEVEL[] = L"Level";
+constexpr wchar_t OTHERPTS_COUNT_LEVELBYEVENT[] = L"LevelByEvent";
+} // namespace
+
 
 void ARBConfigOtherPoints::GetTallyValidValues(std::vector<std::wstring>& outValues)
 {
@@ -293,3 +302,6 @@ bool ARBConfigOtherPointsList::DeleteOtherPoints(std::wstring const& inName)
 	}
 	return false;
 }
+
+} // namespace ARB
+} // namespace dconSoft

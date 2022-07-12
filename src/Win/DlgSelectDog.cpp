@@ -36,6 +36,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 wxBEGIN_EVENT_TABLE(CDlgSelectDog, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgSelectDog::OnOk)
 wxEND_EVENT_TABLE()
@@ -156,3 +162,5 @@ void CDlgSelectDog::OnOk(wxCommandEvent& evt)
 	wxConfig::Get()->Write(CFG_SELECTION_NDOGS, nDogs);
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

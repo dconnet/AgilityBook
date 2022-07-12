@@ -24,6 +24,10 @@
 #include "ARBCommon/ARBMsgDigest.h"
 #include "ARBCommon/VersionNum.h"
 #include "LibARBWin/ReadHttp.h"
+
+
+namespace dconSoft
+{
 class CAgilityBookDoc;
 
 
@@ -99,7 +103,7 @@ private:
 	using OnReadComplete = std::function<void()>;
 
 	void clear();
-	CReadHttp::ReturnCode ReadVersionFile(bool bVerbose, OnReadComplete callback = nullptr);
+	ARBWin::CReadHttp::ReturnCode ReadVersionFile(bool bVerbose, OnReadComplete callback = nullptr);
 	bool ReadVersionFile(std::string const& data, bool bVerbose);
 	bool CheckProgram(CAgilityBookDoc* pDoc, std::wstring const& lang, bool& outDownloadStarted, bool& canInstall);
 	void CheckConfig(CAgilityBookDoc* pDoc, bool bVerbose);
@@ -107,14 +111,16 @@ private:
 	bool DownloadFile(wxString const& filename);
 
 	wxWindow* m_parent;
-	CReadHttp m_reader;
+	ARBWin::CReadHttp m_reader;
 
-	CVersionNum m_VersionNum;
+	ARBCommon::CVersionNum m_VersionNum;
 	long m_size;
 	std::wstring m_hash;
-	ARBMsgDigest::ARBDigest m_hashType;
+	ARBCommon::ARBMsgDigest::ARBDigest m_hashType;
 	std::wstring m_SourceFile;
 	short m_VerConfig;
 	std::wstring m_ConfigFileName;
 	std::wstring m_UpdateDownload;
 };
+
+} // namespace dconSoft

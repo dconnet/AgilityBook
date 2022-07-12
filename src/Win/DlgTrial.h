@@ -24,19 +24,26 @@
 #include "ARB/ARBDogClub.h"
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/ARBDate.h"
-class CAgilityBookDoc;
-class CNoteButton;
-class CReportListCtrl;
-class CRichEditCtrl2;
 class wxDatePickerCtrl;
 class wxListEvent;
 class wxTextUrlEvent;
 
 
+namespace dconSoft
+{
+namespace ARBWin
+{
+class CReportListCtrl;
+class CRichEditCtrl2;
+} // namespace ARBWin
+class CAgilityBookDoc;
+class CNoteButton;
+
+
 class CDlgTrial : public wxDialog
 {
 public:
-	CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrialPtr const& inTrial, wxWindow* pParent = nullptr);
+	CDlgTrial(CAgilityBookDoc* pDoc, ARB::ARBDogTrialPtr const& inTrial, wxWindow* pParent = nullptr);
 
 	bool RunsWereDeleted() const
 	{
@@ -45,32 +52,32 @@ public:
 
 private:
 	wxDatePickerCtrl* m_ctrlStart;
-	ARBDate m_dateStart;
+	ARBCommon::ARBDate m_dateStart;
 	bool m_Verified;
 	wxString m_Location;
 	wxComboBox* m_ctrlLocation;
 	wxString m_Notes;
 	CNoteButton* m_ctrlLocationNotes;
-	CRichEditCtrl2* m_ctrlLocationInfo;
+	ARBWin::CRichEditCtrl2* m_ctrlLocationInfo;
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlDelete;
 	wxButton* m_ctrlUp;
 	wxButton* m_ctrlDn;
-	CReportListCtrl* m_ctrlClubs;
+	ARBWin::CReportListCtrl* m_ctrlClubs;
 	CNoteButton* m_ctrlClubNotes;
-	CRichEditCtrl2* m_ctrlClubInfo;
+	ARBWin::CRichEditCtrl2* m_ctrlClubInfo;
 	CAgilityBookDoc* m_pDoc;
-	ARBDogTrialPtr m_pTrial;
-	ARBDogClubList m_Clubs;
+	ARB::ARBDogTrialPtr m_pTrial;
+	ARB::ARBDogClubList m_Clubs;
 	bool m_bShowCoSanction;
 	bool m_bFixup;
 	bool m_bRunsDeleted;
 
 private:
-	ARBDogClubPtr GetClubData(long index) const;
+	ARB::ARBDogClubPtr GetClubData(long index) const;
 	void UpdateNotes(wxString const& location, bool bLocation, bool bClub);
 	void ListLocations();
-	void ListClubs(ARBDogClubPtr const* inClub = nullptr);
+	void ListClubs(ARB::ARBDogClubPtr const* inClub = nullptr);
 	void EditClub();
 
 	DECLARE_EVENT_TABLE()
@@ -89,3 +96,5 @@ private:
 	void OnOk(wxCommandEvent& evt);
 	void OnCancel(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

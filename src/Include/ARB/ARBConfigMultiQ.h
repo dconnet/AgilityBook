@@ -26,6 +26,11 @@
 #include <set>
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 /**
  * MultiQ configuration information.
  */
@@ -80,8 +85,8 @@ public:
 	 */
 	bool Load(
 		ARBConfigVenue const& inVenue,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -90,7 +95,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigMultiQ element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Does this multi-q configuration match the given set of runs?
@@ -188,19 +193,19 @@ public:
 	{
 		m_ShortName = inName;
 	}
-	ARBDate GetValidFrom() const
+	ARBCommon::ARBDate GetValidFrom() const
 	{
 		return m_ValidFrom;
 	}
-	void SetValidFrom(ARBDate const& inDate)
+	void SetValidFrom(ARBCommon::ARBDate const& inDate)
 	{
 		m_ValidFrom = inDate;
 	}
-	ARBDate GetValidTo() const
+	ARBCommon::ARBDate GetValidTo() const
 	{
 		return m_ValidTo;
 	}
-	void SetValidTo(ARBDate const& inDate)
+	void SetValidTo(ARBCommon::ARBDate const& inDate)
 	{
 		m_ValidTo = inDate;
 	}
@@ -232,8 +237,8 @@ private:
 
 	std::wstring m_Name;
 	std::wstring m_ShortName;
-	ARBDate m_ValidFrom;
-	ARBDate m_ValidTo;
+	ARBCommon::ARBDate m_ValidFrom;
+	ARBCommon::ARBDate m_ValidTo;
 	std::set<MultiQItem> m_Items;
 };
 
@@ -256,8 +261,8 @@ public:
 	 */
 	bool Load(
 		ARBConfigVenue const& inVenue,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -336,3 +341,6 @@ public:
 	 */
 	bool DeleteMultiQ(ARBConfigMultiQPtr const& inMultiQ);
 };
+
+} // namespace ARB
+} // namespace dconSoft

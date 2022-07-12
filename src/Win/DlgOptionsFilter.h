@@ -20,10 +20,19 @@
  */
 
 #include "FilterOptions.h"
-class CAgilityBookDoc;
-class CCheckTreeCtrl;
+
+#include "ARBCommon/ARBDate.h"
 class wxDatePickerCtrl;
 class wxTreeEvent;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
+class CCheckTreeCtrl;
+} // namespace ARBWin
+class CAgilityBookDoc;
 
 
 class CDlgOptionsFilter : public wxPanel
@@ -43,9 +52,9 @@ private:
 	CFilterOptions m_FilterOptions;
 	wxString m_FilterName;
 	bool m_bDateStart;
-	ARBDate m_timeStart;
+	ARBCommon::ARBDate m_timeStart;
 	bool m_bDateEnd;
-	ARBDate m_timeEnd;
+	ARBCommon::ARBDate m_timeEnd;
 	bool m_bNotEntered;
 	bool m_bPlanning;
 	bool m_bEntered;
@@ -65,7 +74,7 @@ private:
 	wxRadioButton* m_ctrlQsNonQs;
 	wxRadioButton* m_ctrlVenueAll;
 	wxRadioButton* m_ctrlVenueSome;
-	CCheckTreeCtrl* m_ctrlVenue;
+	ARBWin::CCheckTreeCtrl* m_ctrlVenue;
 
 	void OnSelchangeFilterNames(wxCommandEvent& evt);
 	void OnClickedOptFilterNamesSave(wxCommandEvent& evt);
@@ -77,3 +86,5 @@ private:
 	void OnFilterVenues(wxCommandEvent& evt);
 	void OnFilterVenueCheck(wxEvent& evt);
 };
+
+} // namespace dconSoft

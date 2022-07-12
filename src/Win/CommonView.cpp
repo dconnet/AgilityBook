@@ -26,6 +26,10 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARBWin;
+
 wxIMPLEMENT_CLASS(CAgilityBookBaseView, wxView)
 wxIMPLEMENT_CLASS(CAgilityBookBaseExtraView, CAgilityBookBaseView)
 
@@ -251,3 +255,5 @@ bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, wxWindow const*
 	}
 	return bOk;
 }
+
+} // namespace dconSoft

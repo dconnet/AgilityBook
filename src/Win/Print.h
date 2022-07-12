@@ -22,6 +22,10 @@
 #include <vector>
 
 
+namespace dconSoft
+{
+
+
 class CPrintPreview : public wxPrintPreview
 {
 public:
@@ -49,4 +53,6 @@ public:
  * @return Printed?
  * @note In Print.cpp
  */
-extern bool PrintRuns(ARBConfig const* inConfig, std::vector<RunInfo> const& inRuns);
+extern bool PrintRuns(ARB::ARBConfig const* inConfig, std::vector<RunInfo> const& inRuns);
+
+} // namespace dconSoft

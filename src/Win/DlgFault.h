@@ -21,6 +21,10 @@
 #include <set>
 
 
+namespace dconSoft
+{
+
+
 class CDlgFault : public wxDialog
 {
 public:
@@ -30,3 +34,5 @@ public:
 private:
 	wxString m_Fault;
 };
+
+} // namespace dconSoft

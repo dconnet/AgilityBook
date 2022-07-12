@@ -28,6 +28,13 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+
+namespace
+{
 struct TestTrainingData
 {
 	ElementNodePtr TrainingData;
@@ -35,17 +42,7 @@ struct TestTrainingData
 };
 
 
-TestTrainingData::TestTrainingData()
-{
-	TrainingData = ElementNode::New(TREE_TRAINING);
-	TrainingData->SetValue(L"These are some notes");
-	TrainingData->AddAttrib(ATTRIB_TRAINING_DATE, L"2006-3-4");
-	TrainingData->AddAttrib(ATTRIB_TRAINING_NAME, L"A Name");
-	TrainingData->AddAttrib(ATTRIB_TRAINING_SUBNAME, L"SubName1");
-}
-
-
-static void CreateTrainingList(ARBTrainingList& trainlist)
+void CreateTrainingList(ARBTrainingList& trainlist)
 {
 	ARBTrainingPtr train = ARBTraining::New();
 	train->SetDate(ARBDate(2006, 9, 4));
@@ -63,6 +60,17 @@ static void CreateTrainingList(ARBTrainingList& trainlist)
 	train->SetSubName(L"Sub2N");
 	trainlist.AddTraining(train);
 	trainlist.sort();
+}
+} // namespace
+
+
+TestTrainingData::TestTrainingData()
+{
+	TrainingData = ElementNode::New(TREE_TRAINING);
+	TrainingData->SetValue(L"These are some notes");
+	TrainingData->AddAttrib(ATTRIB_TRAINING_DATE, L"2006-3-4");
+	TrainingData->AddAttrib(ATTRIB_TRAINING_NAME, L"A Name");
+	TrainingData->AddAttrib(ATTRIB_TRAINING_SUBNAME, L"SubName1");
 }
 
 
@@ -315,3 +323,5 @@ TEST_CASE("TrainingList")
 		}
 	}
 }
+
+} // namespace dconSoft

@@ -16,8 +16,14 @@
  * 2003-12-27 Created
  */
 
-class CDlgFind;
+namespace dconSoft
+{
+namespace ARBWin
+{
 class CTextCtrl;
+}
+class CDlgFind;
+
 
 class IFindCallback
 {
@@ -102,7 +108,7 @@ public:
 
 private:
 	IFindCallback& m_Callback;
-	CTextCtrl* m_textCtrl;
+	ARBWin::CTextCtrl* m_textCtrl;
 	wxCheckBox* m_checkBox;
 	wxRadioBox* m_radioBoxSearch;
 	wxRadioBox* m_radioBoxDir;
@@ -111,3 +117,5 @@ private:
 	void OnChangeName(wxCommandEvent& evt);
 	void OnFind(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

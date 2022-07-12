@@ -28,6 +28,11 @@
 #include "ARBCommon/ARBDate.h"
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 /**
  * Type of points.
  */
@@ -102,8 +107,8 @@ public:
 	 */
 	bool Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -112,7 +117,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogExistingPoints element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Translate the enum to a string.
@@ -130,11 +135,11 @@ public:
 	{
 		m_Type = inType;
 	}
-	ARBDate const& GetDate() const
+	ARBCommon::ARBDate const& GetDate() const
 	{
 		return m_Date;
 	}
-	void SetDate(ARBDate const& inDate)
+	void SetDate(ARBCommon::ARBDate const& inDate)
 	{
 		m_Date = inDate;
 	}
@@ -212,7 +217,7 @@ public:
 	}
 
 private:
-	ARBDate m_Date;
+	ARBCommon::ARBDate m_Date;
 	std::wstring m_Comment;
 	ARBExistingPointType m_Type;
 	std::wstring m_TypeName; // Name of OtherPoints or Lifetime item
@@ -244,8 +249,8 @@ public:
 	 */
 	bool Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -276,8 +281,8 @@ public:
 		ARBConfigDivisionPtr const& inDiv,
 		ARBConfigLevelPtr const& inLevel,
 		ARBConfigEventPtr const& inEvent,
-		ARBDate inDateFrom,
-		ARBDate inDateTo,
+		ARBCommon::ARBDate inDateFrom,
+		ARBCommon::ARBDate inDateTo,
 		bool inHasLifetime) const;
 
 	/**
@@ -299,8 +304,8 @@ public:
 		ARBConfigDivisionPtr const& inDiv,
 		ARBConfigLevelPtr const& inLevel,
 		ARBConfigEventPtr const& inEvent,
-		ARBDate inDateFrom,
-		ARBDate inDateTo) const;
+		ARBCommon::ARBDate inDateFrom,
+		ARBCommon::ARBDate inDateTo) const;
 
 	/**
 	 * Get the number of existing points.
@@ -319,8 +324,8 @@ public:
 		ARBConfigDivisionPtr const& inDiv,
 		ARBConfigLevelPtr const& inLevel,
 		ARBConfigEventPtr const& inEvent,
-		ARBDate inDateFrom,
-		ARBDate inDateTo) const;
+		ARBCommon::ARBDate inDateFrom,
+		ARBCommon::ARBDate inDateTo) const;
 
 	/**
 	 * Get the number of existing point items in a venue.
@@ -518,3 +523,6 @@ public:
 	 */
 	bool DeleteExistingPoints(ARBDogExistingPointsPtr const& inExistingPoints);
 };
+
+} // namespace ARB
+} // namespace dconSoft

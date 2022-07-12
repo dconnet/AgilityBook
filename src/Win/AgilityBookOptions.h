@@ -39,7 +39,13 @@
 #include <wx/fontdlg.h>
 #include <set>
 #include <vector>
+
+namespace dconSoft
+{
+namespace ARBCommon
+{
 class CVersionNum;
+} // namespace ARBCommon
 
 
 enum class ARBCalColorItem
@@ -100,8 +106,8 @@ struct CFontInfo
 class CAgilityBookOptions
 {
 public:
-	static bool ImportSettings(ElementNodePtr const& inTree);
-	static ElementNodePtr ExportSettings();
+	static bool ImportSettings(ARBCommon::ElementNodePtr const& inTree);
+	static ARBCommon::ElementNodePtr ExportSettings();
 
 	// Calendar options
 	static bool AutoDeleteCalendarEntries();
@@ -129,8 +135,8 @@ public:
 	static wxColour CalendarClosingNearColor();
 	static void SetCalendarClosingNearColor(wxColour inColor);
 	// Common options
-	static ARBDayOfWeek GetFirstDayOfWeek();
-	static void SetFirstDayOfWeek(ARBDayOfWeek day);
+	static ARBCommon::ARBDayOfWeek GetFirstDayOfWeek();
+	static void SetFirstDayOfWeek(ARBCommon::ARBDayOfWeek day);
 	// Runs/points options
 	static ARBViewRuns GetViewRunsStyle();
 	static void SetViewRunsStyle(ARBViewRuns style);
@@ -187,28 +193,37 @@ public:
 	static void GetCalendarFontInfo(CFontInfo& info);
 	static void SetCalendarFontInfo(CFontInfo const& info);
 	// Last entered options
-	static std::wstring GetLastEnteredDivision(ARBDogPtr const& inDog, ARBConfigVenuePtr const& inVenue);
-	static void SetLastEnteredDivision(ARBDogPtr const& inDog, ARBConfigVenuePtr const& inVenue, wchar_t const* inLast);
-	static std::wstring GetLastEnteredLevel(ARBDogPtr const& inDog, ARBConfigVenuePtr const& inVenue);
-	static void SetLastEnteredLevel(ARBDogPtr const& inDog, ARBConfigVenuePtr const& inVenue, wchar_t const* inLast);
-	static std::wstring GetLastEnteredHeight(ARBDogPtr const& inDog, ARBConfigVenuePtr const& inVenue);
-	static void SetLastEnteredHeight(ARBDogPtr const& inDog, ARBConfigVenuePtr const& inVenue, wchar_t const* inLast);
+	static std::wstring GetLastEnteredDivision(ARB::ARBDogPtr const& inDog, ARB::ARBConfigVenuePtr const& inVenue);
+	static void SetLastEnteredDivision(
+		ARB::ARBDogPtr const& inDog,
+		ARB::ARBConfigVenuePtr const& inVenue,
+		wchar_t const* inLast);
+	static std::wstring GetLastEnteredLevel(ARB::ARBDogPtr const& inDog, ARB::ARBConfigVenuePtr const& inVenue);
+	static void SetLastEnteredLevel(
+		ARB::ARBDogPtr const& inDog,
+		ARB::ARBConfigVenuePtr const& inVenue,
+		wchar_t const* inLast);
+	static std::wstring GetLastEnteredHeight(ARB::ARBDogPtr const& inDog, ARB::ARBConfigVenuePtr const& inVenue);
+	static void SetLastEnteredHeight(
+		ARB::ARBDogPtr const& inDog,
+		ARB::ARBConfigVenuePtr const& inVenue,
+		wchar_t const* inLast);
 	static std::wstring GetLastEnteredRefHeight();
 	static void SetLastEnteredRefHeight(wchar_t const* inLast);
 	static std::wstring GetLastEnteredJudge();
 	static void SetLastEnteredJudge(wchar_t const* inLast);
-	static std::wstring GetLastEnteredHandler(ARBDogPtr const& inDog);
-	static void SetLastEnteredHandler(ARBDogPtr const& inDog, wchar_t const* inLast);
+	static std::wstring GetLastEnteredHandler(ARB::ARBDogPtr const& inDog);
+	static void SetLastEnteredHandler(ARB::ARBDogPtr const& inDog, wchar_t const* inLast);
 	static void CleanLastItems(std::wstring const& callName);
 	static void CleanLastItems(std::wstring const& oldCallName, std::wstring const& newCallName);
-	static void CleanLastItems(ARBConfig const& inConfig);
+	static void CleanLastItems(ARB::ARBConfig const& inConfig);
 	// Import/Export options
 	static long GetImportStartRow();
 	static void SetImportStartRow(long row);
 	static void GetImportExportDelimiters(bool bImport, ARBImportExportDelim& delim, std::wstring& delimiter);
 	static void SetImportExportDelimiters(bool bImport, ARBImportExportDelim delim, std::wstring const& delimiter);
-	static void GetImportExportDateFormat(bool bImport, ARBDateFormat& outFormat);
-	static void SetImportExportDateFormat(bool bImport, ARBDateFormat inFormat);
+	static void GetImportExportDateFormat(bool bImport, ARBCommon::ARBDateFormat& outFormat);
+	static void SetImportExportDateFormat(bool bImport, ARBCommon::ARBDateFormat inFormat);
 	enum ColumnOrder
 	{
 		// clang-format off
@@ -265,3 +280,5 @@ protected:
 		std::wstring const& namedColumn,
 		std::vector<long> const& inValues);
 };
+
+} // namespace dconSoft

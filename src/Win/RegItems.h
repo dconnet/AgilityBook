@@ -23,6 +23,9 @@
 #include "LibARBWin/RegItemsBase.h"
 
 
+namespace dconSoft
+{
+
 // clang-format off
 //Calendar
 #define CFG_KEY_CALENDAR				L"Calendar"
@@ -390,3 +393,5 @@ inline wxString CFG_SELECTION_DOG(int n)
 //	ST col[n] (CFG_COL_BASENAME)
 
 // clang-format on
+
+} // namespace dconSoft

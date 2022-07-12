@@ -47,7 +47,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 enum class RingBinder
 {
@@ -202,58 +207,58 @@ void CPrintRuns::GetPageInfo(int* minPage, int* maxPage, int* pageFrom, int* pag
 }
 
 
-#define CODE_DOG        0
-#define CODE_DATE       1
-#define CODE_VENUE      2
-#define CODE_CLUB       3
-#define CODE_DIV        4
-#define CODE_LOCATION   5
-#define CODE_HEIGHT     6
-#define CODE_JUDGE      7
-#define CODE_HANDLER    8
-#define CODE_CONDITIONS 9
-#define CODE_Q          10
-#define CODE_SCT        11
-#define CODE_YARDS      12
-#define CODE_OPEN       13
-#define CODE_TIME       14
-#define CODE_OBSTACLES  15
-#define CODE_FAULTS     16
-#define CODE_SCORE      17
-#define CODE_PLACE      18
-#define CODE_INCLASS    19
-#define CODE_QD         20
-#define CODE_OTHER      21
-#define CODE_COMMENTS   22
-#define CODE_REFPLACE1  23
-#define CODE_REFQ1      24
-#define CODE_REFTIME1   25
-#define CODE_REFSCORE1  26
-#define CODE_REFHT1     27
-#define CODE_REF1       28
-#define CODE_REFPLACE2  29
-#define CODE_REFQ2      30
-#define CODE_REFTIME2   31
-#define CODE_REFSCORE2  32
-#define CODE_REFHT2     33
-#define CODE_REF2       34
-#define CODE_REFPLACE3  35
-#define CODE_REFQ3      36
-#define CODE_REFTIME3   37
-#define CODE_REFSCORE3  38
-#define CODE_REFHT3     39
-#define CODE_REF3       40
-#define CODE_REFPLACE4  41
-#define CODE_REFQ4      42
-#define CODE_REFTIME4   43
-#define CODE_REFSCORE4  44
-#define CODE_REFHT4     45
-#define CODE_REF4       46
+constexpr int CODE_DOG = 0;
+constexpr int CODE_DATE = 1;
+constexpr int CODE_VENUE = 2;
+constexpr int CODE_CLUB = 3;
+constexpr int CODE_DIV = 4;
+constexpr int CODE_LOCATION = 5;
+constexpr int CODE_HEIGHT = 6;
+constexpr int CODE_JUDGE = 7;
+constexpr int CODE_HANDLER = 8;
+constexpr int CODE_CONDITIONS = 9;
+constexpr int CODE_Q = 10;
+constexpr int CODE_SCT = 11;
+constexpr int CODE_YARDS = 12;
+constexpr int CODE_OPEN = 13;
+constexpr int CODE_TIME = 14;
+constexpr int CODE_OBSTACLES = 15;
+constexpr int CODE_FAULTS = 16;
+constexpr int CODE_SCORE = 17;
+constexpr int CODE_PLACE = 18;
+constexpr int CODE_INCLASS = 19;
+constexpr int CODE_QD = 20;
+constexpr int CODE_OTHER = 21;
+constexpr int CODE_COMMENTS = 22;
+constexpr int CODE_REFPLACE1 = 23;
+constexpr int CODE_REFQ1 = 24;
+constexpr int CODE_REFTIME1 = 25;
+constexpr int CODE_REFSCORE1 = 26;
+constexpr int CODE_REFHT1 = 27;
+constexpr int CODE_REF1 = 28;
+constexpr int CODE_REFPLACE2 = 29;
+constexpr int CODE_REFQ2 = 30;
+constexpr int CODE_REFTIME2 = 31;
+constexpr int CODE_REFSCORE2 = 32;
+constexpr int CODE_REFHT2 = 33;
+constexpr int CODE_REF2 = 34;
+constexpr int CODE_REFPLACE3 = 35;
+constexpr int CODE_REFQ3 = 36;
+constexpr int CODE_REFTIME3 = 37;
+constexpr int CODE_REFSCORE3 = 38;
+constexpr int CODE_REFHT3 = 39;
+constexpr int CODE_REF3 = 40;
+constexpr int CODE_REFPLACE4 = 41;
+constexpr int CODE_REFQ4 = 42;
+constexpr int CODE_REFTIME4 = 43;
+constexpr int CODE_REFSCORE4 = 44;
+constexpr int CODE_REFHT4 = 45;
+constexpr int CODE_REF4 = 46;
 
 namespace
 {
 // Make sure these are ordered by the aboves codes
-static const wchar_t* sc_codes[] = {
+constexpr wchar_t* sc_codes[] = {
 	arbT("IDS_COL_DOG"),
 	arbT("IDS_COL_DATE"),
 	arbT("IDS_COL_VENUE"),
@@ -305,7 +310,7 @@ static const wchar_t* sc_codes[] = {
 #define FOR_TIME 0x1
 #define FOR_PTS  0x2
 #define FOR_BOTH 0x3
-static const struct
+constexpr struct
 {
 	unsigned char type;
 	int line;
@@ -373,9 +378,9 @@ static const struct
 	// clang-format on
 };
 constexpr int sc_nLines = sizeof(sc_lines) / sizeof(sc_lines[0]);
-} // namespace
 
-static void RefRunHelper(fmt::wmemory_buffer& text, ARBDogReferenceRunPtr const& inRef, int code)
+
+void RefRunHelper(fmt::wmemory_buffer& text, ARBDogReferenceRunPtr const& inRef, int code)
 {
 	switch (code)
 	{
@@ -427,6 +432,7 @@ static void RefRunHelper(fmt::wmemory_buffer& text, ARBDogReferenceRunPtr const&
 		break;
 	}
 }
+} // namespace
 
 
 std::wstring CPrintRuns::GetFieldText(
@@ -859,7 +865,9 @@ void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect
 }
 
 
-static void PrintMark(wxDC* pDC, wxCoord x, wxCoord y, double oneInch)
+namespace
+{
+void PrintMark(wxDC* pDC, wxCoord x, wxCoord y, double oneInch)
 {
 	wxCoord halfLine = static_cast<wxCoord>(oneInch / 10);
 	pDC->DrawLine(x - halfLine, y - halfLine, x + halfLine, y + halfLine);
@@ -871,7 +879,7 @@ static void PrintMark(wxDC* pDC, wxCoord x, wxCoord y, double oneInch)
 // sm 3ring: 2.75
 // lg 3ring: 4.25
 // lg 4ring: 1.375/4.25/1.375
-static void PrintBinderMarkings(RingBinder style, wxDC* pDC, wxRect rPrinted, int margin, double oneInch)
+void PrintBinderMarkings(RingBinder style, wxDC* pDC, wxRect rPrinted, int margin, double oneInch)
 {
 	pDC->SetPen(*wxGREY_PEN);
 	wxCoord x = static_cast<wxCoord>(rPrinted.x - margin + 0.375 * oneInch);
@@ -897,6 +905,7 @@ static void PrintBinderMarkings(RingBinder style, wxDC* pDC, wxRect rPrinted, in
 	}
 	pDC->SetPen(wxNullPen);
 }
+} // namespace
 
 
 bool CPrintRuns::OnPrintPage(int pageNum)
@@ -1068,3 +1077,5 @@ bool PrintRuns(ARBConfig const* inConfig, std::vector<RunInfo> const& inRuns)
 	frame->Show(true);
 	return true;
 }
+
+} // namespace dconSoft

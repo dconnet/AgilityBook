@@ -20,6 +20,10 @@
 #include "ARBCommon/VersionNum.h"
 
 #include "ICalendarSite.h"
+
+
+namespace dconSoft
+{
 class ARBConfigCalSiteList;
 
 
@@ -68,7 +72,7 @@ public:
 private:
 	ICalendarSitePtr m_pSite;
 	std::wstring m_id;
-	CVersionNum m_Version;
+	ARBCommon::CVersionNum m_Version;
 	std::map<std::wstring, std::wstring> m_LocCodes;
 	std::map<std::wstring, std::wstring> m_VenueCodes;
 };
@@ -93,3 +97,5 @@ public:
 private:
 	std::vector<CalSiteDataPtr> m_DirectAccess;
 };
+
+} // namespace dconSoft

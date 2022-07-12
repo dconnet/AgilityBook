@@ -38,7 +38,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 ARBAttribLookup LoadTitleStyle(
 	ElementNodePtr const& inTree,
@@ -670,3 +675,6 @@ bool ARBConfigTitleList::DeleteTitle(std::wstring const& inName)
 	}
 	return false;
 }
+
+} // namespace ARB
+} // namespace dconSoft

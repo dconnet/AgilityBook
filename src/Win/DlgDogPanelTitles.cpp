@@ -41,6 +41,13 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 namespace
 {
 constexpr int k_colReceived = 0;
@@ -55,7 +62,7 @@ static const std::vector<CReportListHeader::ColumnInfo> k_columnsTitleInfo{
 	{k_colTitle, wxLIST_FORMAT_LEFT, arbT("IDS_COL_TITLE")},
 	{k_colName, wxLIST_FORMAT_LEFT, arbT("IDS_COL_NAME")},
 };
-static const std::vector<int> k_columnsWidth{5, 25, 25, 25, 25};
+const std::vector<int> k_columnsWidth{5, 25, 25, 25, 25};
 } // namespace
 
 /////////////////////////////////////////////////////////////////////////////
@@ -382,3 +389,5 @@ void CDlgDogPanelTitles::OnTitleHidden(wxCommandEvent& evt)
 	CAgilityBookOptions::SetViewHiddenTitles(m_ViewHiddenTitles);
 	ListTitles();
 }
+
+} // namespace dconSoft

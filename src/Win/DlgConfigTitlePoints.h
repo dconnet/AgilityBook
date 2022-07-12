@@ -20,8 +20,14 @@
 
 #include "ARB/ARBCalcPoints.h"
 #include "ARB/ARBTypes2.h"
-class CTextCtrl;
 
+
+namespace dconSoft
+{
+namespace ARBWin
+{
+class CTextCtrl;
+} // namespace ARBWin
 
 enum class ARBTitlePointType
 {
@@ -39,16 +45,16 @@ class CDlgConfigTitlePoints : public wxDialog
 
 public:
 	CDlgConfigTitlePoints(
-		ARBConfigVenuePtr const& inVenue,
+		ARB::ARBConfigVenuePtr const& inVenue,
 		double inValue, // Faults or Place
 		double inPoints,
 		ARBTitlePointType inType,
-		ARBPointsType inTypeNormal,
+		ARB::ARBPointsType inTypeNormal,
 		wxWindow* pParent = nullptr);
 
 	CDlgConfigTitlePoints(
-		ARBConfigVenuePtr const& inVenue,
-		ARBConfigLifetimePointsPtr const& inLifetime,
+		ARB::ARBConfigVenuePtr const& inVenue,
+		ARB::ARBConfigLifetimePointsPtr const& inLifetime,
 		wxWindow* pParent = nullptr);
 
 	double Faults() const
@@ -75,20 +81,20 @@ public:
 	{
 		return m_Type;
 	}
-	ARBPointsType TypeNormal() const
+	ARB::ARBPointsType TypeNormal() const
 	{
 		return m_TypeNormal;
 	}
 
 private:
-	ARBConfigVenuePtr m_Venue;
+	ARB::ARBConfigVenuePtr m_Venue;
 	ARBTitlePointType m_Type;
-	ARBPointsType m_TypeNormal;
+	ARB::ARBPointsType m_TypeNormal;
 	wxStaticText* m_textValue;
-	CTextCtrl* m_ctrlValue;
+	ARBWin::CTextCtrl* m_ctrlValue;
 	wxCheckBox* m_ctrlSpeedPts;
 	wxStaticText* m_textPoints;
-	CTextCtrl* m_ctrlPoints;
+	ARBWin::CTextCtrl* m_ctrlPoints;
 	wxChoice* m_ctrlType;
 	wxChoice* m_ctrlTypeNormal;
 	wxStaticText* m_textLifetimeName;
@@ -106,3 +112,5 @@ private:
 	void OnSelchangeTitlePoints(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

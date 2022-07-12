@@ -54,7 +54,10 @@
 #endif
 
 
-bool g_bMicroTest = false;
+namespace dconSoft
+{
+using namespace ARBCommon;
+using namespace ARBWin;
 
 namespace
 {
@@ -79,6 +82,8 @@ wxString GetDataFile()
 	return datafile;
 }
 } // namespace
+
+bool g_bMicroTest = false;
 
 
 class CCallbackManager
@@ -108,6 +113,7 @@ public:
 	}
 	virtual ~CCallbackManager()
 	{
+		CResourceManager::Get()->Cleanup();
 	}
 
 	bool SetLang(wxLanguage langId);
@@ -160,7 +166,6 @@ private:
 		return false;
 	}
 };
-static CCallbackManager* g_callbackMgr = nullptr;
 
 
 bool CCallbackManager::SetLang(wxLanguage langId)
@@ -177,11 +182,15 @@ bool CCallbackManager::SetLang(wxLanguage langId)
 }
 
 
-void SetLang(wxLanguage langId)
+namespace
 {
-	if (g_callbackMgr)
-		g_callbackMgr->SetLang(langId);
-}
+CCallbackManager* g_callbackMgr = nullptr;
+} // namespace
+
+
+} // namespace dconSoft
+
+using namespace dconSoft;
 
 
 int main(int argc, char** argv)
@@ -256,18 +265,21 @@ int main(int argc, char** argv)
 
 	// Some names are 'funny' since it's cut/paste from ../Win/
 	static CLocalization m_Localization;
-	IARBLocalization::Init(&m_Localization);
+	ARB::IARBLocalization::Init(&m_Localization);
 
 	bool bRunTests = true;
 #if defined(__WXWINDOWS__)
 	g_callbackMgr = new CCallbackManager(m_Localization);
-	try
+	if (g_callbackMgr)
 	{
-		SetLang(wxLANGUAGE_ENGLISH_US);
-	}
-	catch (std::runtime_error const&)
-	{
-		bRunTests = false;
+		try
+		{
+			g_callbackMgr->SetLang(wxLANGUAGE_ENGLISH_US);
+		}
+		catch (std::runtime_error const&)
+		{
+			bRunTests = false;
+		}
 	}
 #endif
 

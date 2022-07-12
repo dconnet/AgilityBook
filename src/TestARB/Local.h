@@ -23,7 +23,10 @@
 #include "ARB/ARBLocalization.h"
 
 
-class CLocalization : public IARBLocalization
+namespace dconSoft
+{
+
+class CLocalization : public ARB::IARBLocalization
 {
 public:
 	CLocalization();
@@ -383,3 +386,5 @@ private:
 	std::wstring m_ExistingPointsMQ;
 	std::wstring m_ExistingPointsSQ;
 };
+
+} // namespace dconSoft

@@ -28,7 +28,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 namespace
 {
@@ -190,3 +195,6 @@ bool ARBConfigFaultList::DeleteFault(std::wstring const& inName)
 	}
 	return false;
 }
+
+} // namespace ARB
+} // namespace dconSoft

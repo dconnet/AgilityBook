@@ -18,6 +18,10 @@
  */
 
 #include "ARB/ARBTypes2.h"
+
+
+namespace dconSoft
+{
 class CVenueComboBox;
 
 
@@ -25,14 +29,14 @@ class CDlgRegNum : public wxDialog
 {
 public:
 	CDlgRegNum(
-		ARBConfig const& config,
-		ARBDogRegNumList& regnums,
-		ARBDogRegNumPtr const& inRegNum,
+		ARB::ARBConfig const& config,
+		ARB::ARBDogRegNumList& regnums,
+		ARB::ARBDogRegNumPtr const& inRegNum,
 		wxWindow* pParent = nullptr);
 
 private:
-	ARBDogRegNumList& m_RegNums;
-	ARBDogRegNumPtr m_pRegNum;
+	ARB::ARBDogRegNumList& m_RegNums;
+	ARB::ARBDogRegNumPtr m_pRegNum;
 	CVenueComboBox* m_ctrlVenues;
 	wxString m_Venue;
 	wxString m_RegNum;
@@ -43,3 +47,5 @@ private:
 	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

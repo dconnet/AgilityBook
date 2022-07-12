@@ -17,8 +17,15 @@
  */
 
 #include <wx/wizard.h>
+
+
+namespace dconSoft
+{
 class CDlgARBHelp;
+namespace ARBWin
+{
 class CTextCtrl;
+} // namespace ARBWin
 
 
 class CDlgPageEncodeFinish : public wxWizardPageSimple
@@ -30,5 +37,7 @@ public:
 
 private:
 	CDlgARBHelp* m_Parent;
-	CTextCtrl* m_ctrlText;
+	ARBWin::CTextCtrl* m_ctrlText;
 };
+
+} // namespace dconSoft

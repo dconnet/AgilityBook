@@ -22,6 +22,11 @@
 #include "LibwxARB.h"
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 enum class Q
 {
 	UNK,    ///< Unknown / not set. This must be first.
@@ -187,7 +192,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(std::wstring const& inAttrib, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
+	bool Load(std::wstring const& inAttrib, ARBCommon::ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -196,8 +201,11 @@ public:
 	 * @return Success
 	 * @post The ARB_Q attribute will be added to ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree, wchar_t const* const inAttribName) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree, wchar_t const* const inAttribName) const;
 
 private:
 	Q m_Q;
 };
+
+} // namespace ARB
+} // namespace dconSoft

@@ -18,11 +18,21 @@
  */
 
 #include "ARB/ARBConfigScoring.h"
-class ARBAgilityRecordBook;
-class CDlgConfigureDataBase;
-class CTreeCtrl;
 class wxTreeEvent;
 class wxTreeItemId;
+
+
+namespace dconSoft
+{
+namespace ARB
+{
+class ARBAgilityRecordBook;
+} // namespace ARB
+namespace ARBWin
+{
+class CTreeCtrl;
+} // namespace ARBWin
+class CDlgConfigureDataBase;
 
 
 class CDlgConfigVenue : public wxDialog
@@ -39,13 +49,13 @@ class CDlgConfigVenue : public wxDialog
 
 public:
 	CDlgConfigVenue(
-		ARBAgilityRecordBook const& book,
-		ARBConfig const& config,
-		ARBConfigVenuePtr const& inVenue,
+		ARB::ARBAgilityRecordBook const& book,
+		ARB::ARBConfig const& config,
+		ARB::ARBConfigVenuePtr const& inVenue,
 		wxWindow* pParent = nullptr);
 	~CDlgConfigVenue();
 
-	void GetFixups(ARBConfigActionList& ioFixups);
+	void GetFixups(ARB::ARBConfigActionList& ioFixups);
 
 private:
 	enum class Action
@@ -82,16 +92,16 @@ private:
 			bool bSet);
 	*/
 
-	ARBAgilityRecordBook const& m_Book;
-	ARBConfig const& m_Config;
-	ARBConfigVenuePtr m_pVenueOrig;
-	ARBConfigVenuePtr m_pVenue;
-	std::vector<ARBConfigActionPtr> m_DlgFixup;
+	ARB::ARBAgilityRecordBook const& m_Book;
+	ARB::ARBConfig const& m_Config;
+	ARB::ARBConfigVenuePtr m_pVenueOrig;
+	ARB::ARBConfigVenuePtr m_pVenue;
+	std::vector<ARB::ARBConfigActionPtr> m_DlgFixup;
 	wxString m_Name;
 	wxString m_LongName;
 	wxString m_URL;
 	wxString m_Desc;
-	CTreeCtrl* m_ctrlItems;
+	ARBWin::CTreeCtrl* m_ctrlItems;
 	wxButton* m_ctrlNew;
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlDelete;
@@ -111,3 +121,5 @@ private:
 	void OnMoveDown(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

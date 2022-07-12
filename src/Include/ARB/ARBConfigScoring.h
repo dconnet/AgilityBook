@@ -37,6 +37,12 @@
 
 #include "ARBCommon/ARBDate.h"
 
+
+namespace dconSoft
+{
+namespace ARB
+{
+
 /**
  * Types of scoring methods.
  * Note: If a new style is added, update CDlgConfigEventMethod.
@@ -114,8 +120,8 @@ public:
 	 */
 	bool Load(
 		ARBConfigDivisionList const& inDivisions,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -124,13 +130,13 @@ public:
 	 * @return Success
 	 * @post The ARBConfigOtherPoints element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Determine if this method is valid on the given date.
 	 * @param inDate Date to check, if not valid, this method is valid.
 	 */
-	bool IsValidOn(ARBDate inDate) const
+	bool IsValidOn(ARBCommon::ARBDate inDate) const
 	{
 		if (inDate.IsValid()
 			&& ((m_ValidFrom.IsValid() && inDate < m_ValidFrom) || (m_ValidTo.IsValid() && inDate > m_ValidTo)))
@@ -143,19 +149,19 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBDate const& GetValidFrom() const
+	ARBCommon::ARBDate const& GetValidFrom() const
 	{
 		return m_ValidFrom;
 	}
-	void SetValidFrom(ARBDate const& inDate)
+	void SetValidFrom(ARBCommon::ARBDate const& inDate)
 	{
 		m_ValidFrom = inDate;
 	}
-	ARBDate const& GetValidTo() const
+	ARBCommon::ARBDate const& GetValidTo() const
 	{
 		return m_ValidTo;
 	}
-	void SetValidTo(ARBDate const& inDate)
+	void SetValidTo(ARBCommon::ARBDate const& inDate)
 	{
 		m_ValidTo = inDate;
 	}
@@ -356,8 +362,8 @@ public:
 	}
 
 private:
-	ARBDate m_ValidFrom;
-	ARBDate m_ValidTo;
+	ARBCommon::ARBDate m_ValidFrom;
+	ARBCommon::ARBDate m_ValidTo;
 	std::wstring m_Division;
 	std::wstring m_Level;
 	ARBScoringStyle m_Style;
@@ -403,8 +409,8 @@ public:
 	 */
 	bool Load(
 		ARBConfigDivisionList const& inDivisions,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -419,7 +425,7 @@ public:
 	size_t FindAllEvents(
 		std::wstring const& inDivision,
 		std::wstring const& inLevel,
-		ARBDate const& inDate,
+		ARBCommon::ARBDate const& inDate,
 		bool inTitlePoints,
 		ARBVector<ARBConfigScoringPtr>& outList) const;
 
@@ -434,7 +440,7 @@ public:
 	bool FindEvent(
 		std::wstring const& inDivision,
 		std::wstring const& inLevel,
-		ARBDate const& inDate,
+		ARBCommon::ARBDate const& inDate,
 		ARBConfigScoringPtr* outEvent = nullptr) const;
 
 	/**
@@ -444,7 +450,8 @@ public:
 	 * @param inDate Date for requested scoring.
 	 * @return true if FindAllEvents() > 0.
 	 */
-	bool VerifyEvent(std::wstring const& inDivision, std::wstring const& inLevel, ARBDate const& inDate) const;
+	bool VerifyEvent(std::wstring const& inDivision, std::wstring const& inLevel, ARBCommon::ARBDate const& inDate)
+		const;
 
 	/**
 	 * Create a new scoring method.
@@ -452,3 +459,6 @@ public:
 	 */
 	ARBConfigScoringPtr AddScoring();
 };
+
+} // namespace ARB
+} // namespace dconSoft

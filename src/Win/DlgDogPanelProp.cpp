@@ -34,7 +34,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 CDlgDogPanelProp::CDlgDogPanelProp(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog, wxWindow* parent)
 	: CDlgDogPanelBase(pDoc, inDog, parent)
@@ -283,3 +288,5 @@ void CDlgDogPanelProp::OnDeceased(wxCommandEvent& evt)
 	TransferDataFromWindow();
 	UpdateDeceased();
 }
+
+} // namespace dconSoft

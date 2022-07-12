@@ -17,7 +17,14 @@
  */
 
 #include <vector>
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
 class CTextCtrl;
+} // namespace ARBWin
 
 
 class CDlgPageDecode : public wxDialog
@@ -26,11 +33,13 @@ public:
 	CDlgPageDecode();
 
 private:
-	CTextCtrl* m_ctrlEncoded;
-	CTextCtrl* m_ctrlDecoded;
+	ARBWin::CTextCtrl* m_ctrlEncoded;
+	ARBWin::CTextCtrl* m_ctrlDecoded;
 	std::vector<wxString> m_TmpFiles;
 
 	DECLARE_EVENT_TABLE()
 	void OnDecode(wxCommandEvent& evt);
 	void OnCancel(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

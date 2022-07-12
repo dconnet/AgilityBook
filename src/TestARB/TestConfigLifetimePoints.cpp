@@ -27,6 +27,9 @@
 #endif
 
 
+namespace dconSoft
+{
+
 TEST_CASE("ConfigLifetimePoints")
 {
 	SECTION("New")
@@ -165,3 +168,5 @@ TEST_CASE("ConfigLifetimePointsList")
 		}
 	}
 }
+
+} // namespace dconSoft

@@ -14,6 +14,10 @@
 
 #include "ARB/ARBTypes2.h"
 #include <wx/panel.h>
+
+
+namespace dconSoft
+{
 class CAgilityBookDoc;
 class CDlgRun;
 
@@ -24,9 +28,9 @@ public:
 	CDlgRunPanelBase(
 		CDlgRun* pDlg,
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr const& inDog,
-		ARBDogTrialPtr const& inTrial,
-		ARBDogRunPtr const& inRun,
+		ARB::ARBDogPtr const& inDog,
+		ARB::ARBDogTrialPtr const& inTrial,
+		ARB::ARBDogRunPtr const& inRun,
 		wxWindow* parent);
 
 	virtual wxWindow* GetInitialControl() = 0;
@@ -37,7 +41,9 @@ public:
 protected:
 	CDlgRun* m_pDlg;
 	CAgilityBookDoc* m_pDoc;
-	ARBDogPtr m_pDog;
-	ARBDogTrialPtr m_pTrial;
-	ARBDogRunPtr m_Run;
+	ARB::ARBDogPtr m_pDog;
+	ARB::ARBDogTrialPtr m_pTrial;
+	ARB::ARBDogRunPtr m_Run;
 };
+
+} // namespace dconSoft

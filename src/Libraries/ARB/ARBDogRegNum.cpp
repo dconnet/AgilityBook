@@ -33,7 +33,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 namespace
 {
@@ -361,3 +366,6 @@ int ARBDogRegNumList::DeleteRegNum(std::wstring const& inVenue, std::wstring con
 	}
 	return count;
 }
+
+} // namespace ARB
+} // namespace dconSoft

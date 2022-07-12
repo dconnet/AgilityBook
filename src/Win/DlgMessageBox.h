@@ -16,6 +16,9 @@
  * 2004-09-11 Created
  */
 
+namespace dconSoft
+{
+
 /**
  * Callback to support the Details button.
  */
@@ -32,3 +35,5 @@ extern int AfxMessageBox2(
 	long inFlags = wxOK, // wxOK, wxCANCEL, wxYES, wxNO, wxHELP, wxNO_DEFAULT
 	IMessageBoxCallback* inCallback = nullptr,
 	wxWindow* inParent = nullptr);
+
+} // namespace dconSoft

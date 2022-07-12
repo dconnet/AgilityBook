@@ -33,6 +33,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL)
 	, m_bAutoCheck(CAgilityBookOptions::GetAutoUpdateCheck())
@@ -174,3 +180,5 @@ void CDlgOptionsProgram::Save()
 	if (newProxy != oldProxy)
 		wxURL::SetDefaultProxy(StringUtil::stringWX(newProxy));
 }
+
+} // namespace dconSoft

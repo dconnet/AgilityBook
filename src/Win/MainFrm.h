@@ -24,6 +24,9 @@
 #include <wx/dnd.h>
 #include <wx/docview.h>
 
+namespace dconSoft
+{
+
 #define STATUS_INFO       0
 #define STATUS_DOG        1
 #define STATUS_STATUS     2
@@ -69,7 +72,7 @@ private:
 	void SetMessage(std::wstring const& msg, int index, bool bResize);
 
 	wxDocManager* m_manager;
-	CStatusBarHelper m_statusBar;
+	ARBWin::CStatusBarHelper m_statusBar;
 	CUpdateInfo m_UpdateInfo;
 
 private:
@@ -95,7 +98,7 @@ private:
 };
 
 
-class CConfigProgram : public CConfigPosition
+class CConfigProgram : public ARBWin::CConfigPosition
 {
 public:
 	CConfigProgram();
@@ -114,3 +117,5 @@ protected:
 		return true;
 	}
 };
+
+} // namespace dconSoft

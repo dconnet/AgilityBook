@@ -28,6 +28,11 @@
 #include <set>
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 // Filtered state
 enum class ARBFilterType
 {
@@ -115,3 +120,6 @@ protected:
 	ARBBase& operator=(ARBBase&&) = delete;
 };
 typedef std::shared_ptr<ARBBase> ARBBasePtr;
+
+} // namespace ARB
+} // namespace dconSoft

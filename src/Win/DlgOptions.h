@@ -17,6 +17,8 @@
  * 2005-08-18 Separated options and filters into two dialogs.
  */
 
+namespace dconSoft
+{
 class CAgilityBookDoc;
 class CDlgOptionsCalendar;
 class CDlgOptionsFilter;
@@ -57,3 +59,5 @@ protected:
 	void OnPageChanging(wxBookCtrlEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

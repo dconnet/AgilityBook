@@ -19,6 +19,10 @@
 #include <vector>
 class wxDocument;
 class wxSplitterWindow;
+
+
+namespace dconSoft
+{
 class CAgilityBookBaseExtraView;
 class CTabView;
 
@@ -107,3 +111,5 @@ public:
 		long flags,
 		std::vector<CAgilityBookBaseExtraView*> const& inViews);
 };
+
+} // namespace dconSoft

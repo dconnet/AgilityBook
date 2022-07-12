@@ -22,6 +22,10 @@
  */
 
 #include "ARB/ARBTypes2.h"
+
+
+namespace dconSoft
+{
 class CAgilityBookDoc;
 class CDlgRunPanelBase;
 class CDlgRunPanelScore;
@@ -34,9 +38,9 @@ class CDlgRun : public wxDialog
 public:
 	CDlgRun(
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr const& inDog,
-		ARBDogTrialPtr const& inTrial,
-		ARBDogRunPtr const& inRun,
+		ARB::ARBDogPtr const& inDog,
+		ARB::ARBDogTrialPtr const& inTrial,
+		ARB::ARBDogRunPtr const& inRun,
 		wxWindow* pParent = nullptr,
 		int iSelectPage = 0);
 
@@ -44,9 +48,9 @@ public:
 
 private:
 	CAgilityBookDoc* m_pDoc;
-	ARBDogTrialPtr m_pTrial;
-	ARBDogRunPtr m_pRealRun;
-	ARBDogRunPtr m_Run;
+	ARB::ARBDogTrialPtr m_pTrial;
+	ARB::ARBDogRunPtr m_pRealRun;
+	ARB::ARBDogRunPtr m_Run;
 
 	CDlgRunPanelScore* m_panelScore;
 	std::vector<CDlgRunPanelBase*> m_panels;
@@ -56,3 +60,5 @@ private:
 	void OnPageChanged(wxBookCtrlEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

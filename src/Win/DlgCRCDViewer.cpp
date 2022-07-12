@@ -26,6 +26,9 @@
 #endif
 
 
+namespace dconSoft
+{
+
 #ifdef __WXMSW__
 
 class CMetaDataStatic : public wxStaticText
@@ -112,3 +115,5 @@ CDlgCRCDViewer::CDlgCRCDViewer(HENHMETAFILE inMetaFile, wxWindow* pParent)
 }
 
 #endif
+
+} // namespace dconSoft

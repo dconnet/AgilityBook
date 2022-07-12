@@ -31,6 +31,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 CDlgFault::CDlgFault(std::set<std::wstring>& inFaults, std::wstring const& fault, wxWindow* pParent)
 	: wxDialog()
 	, m_Fault(StringUtil::stringWX(fault))
@@ -90,3 +96,5 @@ std::wstring CDlgFault::GetFault() const
 {
 	return StringUtil::stringW(m_Fault);
 }
+
+} // namespace dconSoft

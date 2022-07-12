@@ -34,6 +34,11 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARBCommon;
+using namespace ARBWin;
+
 CDlgInfoNoteEdit::CDlgInfoNoteEdit(
 	std::wstring const& inName,
 	std::wstring const& inComment,
@@ -122,3 +127,5 @@ void CDlgInfoNoteEdit::OnOk(wxCommandEvent& evt)
 
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

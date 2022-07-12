@@ -42,6 +42,10 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARBCommon;
+
 CLocalization::CLocalization()
 {
 }
@@ -692,3 +696,5 @@ std::wstring CLocalization::ErrorInvalidAttributeValue(
 		fmt::format_to(std::back_inserter(buffer), L" {}\n", inMsg);
 	return fmt::to_string(buffer);
 }
+
+} // namespace dconSoft

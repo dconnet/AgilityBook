@@ -61,6 +61,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 wxIMPLEMENT_CLASS(CWizardExport, wxWizardPageSimple)
 
 
@@ -187,7 +193,7 @@ CWizardExport::CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 		0,
 		nullptr,
 		wxCB_DROPDOWN | wxCB_READONLY);
-	static struct
+	constexpr struct
 	{
 		wchar_t const* uFormat;
 		ARBDateFormat format;
@@ -1542,3 +1548,5 @@ bool CWizardExport::DoWizardFinish()
 		}
 	}
 }
+
+} // namespace dconSoft

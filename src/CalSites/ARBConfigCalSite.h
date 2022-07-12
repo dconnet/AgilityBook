@@ -23,12 +23,16 @@
 #include <map>
 #include <vector>
 
+
+namespace dconSoft
+{
+
 ARB_TYPEDEF_LIST(ARBConfigCalSite)
 
 /**
  * Configuration information for auto-loading calendar entries from the web.
  */
-class ARBConfigCalSite : public ARBBase
+class ARBConfigCalSite : public ARB::ARBBase
 {
 protected:
 	ARBConfigCalSite();
@@ -75,14 +79,17 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
+	bool Load(
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
+		ARB::ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
 	 * @param ioTree Parent element.
 	 * @return Success
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Get the formatted URL to use to request data.
@@ -158,7 +165,7 @@ private:
 /**
  * List of ARBConfigCalSite objects.
  */
-class ARBConfigCalSiteList : public ARBVector<ARBConfigCalSitePtr>
+class ARBConfigCalSiteList : public ARB::ARBVector<ARBConfigCalSitePtr>
 {
 public:
 	/**
@@ -169,7 +176,10 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
+	bool Load(
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
+		ARB::ARBErrorCallback& ioCallback);
 
 	/**
 	 * Sort the list by name.
@@ -206,3 +216,5 @@ public:
 	 */
 	int DeleteSite(std::wstring const& inSite);
 };
+
+} // namespace dconSoft

@@ -29,6 +29,11 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBWin;
+
 CWizard::CWizard(CAgilityBookDoc* pDoc, std::vector<ARBCalendarPtr>* pCalEntries, wxWindow* pParent)
 	: wxWizard()
 	, m_pDoc(pDoc)
@@ -100,3 +105,5 @@ void CWizard::UpdateButtons(bool enableNextOrFinish)
 	m_Finish->SetLabel(hasNext ? _("&Next >") : _("&Finish"));
 	m_Finish->Enable(enableNextOrFinish);
 }
+
+} // namespace dconSoft

@@ -27,6 +27,9 @@
 #endif
 
 
+namespace dconSoft
+{
+
 TEST_CASE("ConfigTitlePoints")
 {
 	SECTION("New")
@@ -167,3 +170,5 @@ TEST_CASE("ConfigTitlePointsList")
 		}
 	}
 }
+
+} // namespace dconSoft

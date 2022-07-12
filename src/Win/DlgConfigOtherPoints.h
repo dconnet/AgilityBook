@@ -19,16 +19,23 @@
 #include "ARB/ARBTypes2.h"
 
 
+namespace dconSoft
+{
+
+
 class CDlgConfigOtherPoints : public wxDialog
 {
 public:
-	CDlgConfigOtherPoints(ARBConfig& config, ARBConfigOtherPointsPtr const& inOther, wxWindow* pParent = nullptr);
+	CDlgConfigOtherPoints(
+		ARB::ARBConfig& config,
+		ARB::ARBConfigOtherPointsPtr const& inOther,
+		wxWindow* pParent = nullptr);
 
 	bool IsNameOkay(std::wstring const& name) const;
 
 private:
-	ARBConfig& m_Config;
-	ARBConfigOtherPointsPtr m_pOther;
+	ARB::ARBConfig& m_Config;
+	ARB::ARBConfigOtherPointsPtr m_pOther;
 	wxString m_Name;
 	wxComboBox* m_ctrlTally;
 	double m_Default;
@@ -37,3 +44,5 @@ private:
 	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

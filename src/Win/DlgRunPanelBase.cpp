@@ -18,6 +18,10 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+
 CDlgRunPanelBase::CDlgRunPanelBase(
 	CDlgRun* pDlg,
 	CAgilityBookDoc* pDoc,
@@ -33,3 +37,5 @@ CDlgRunPanelBase::CDlgRunPanelBase(
 	, m_Run(inRun)
 {
 }
+
+} // namespace dconSoft

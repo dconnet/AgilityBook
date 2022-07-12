@@ -57,12 +57,19 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 namespace
 {
 constexpr int k_colIcon = 0;
 constexpr int k_colName = 1;
 constexpr int k_colComment = 2;
-static const std::vector<CReportListHeader::ColumnInfo> k_columns{
+const std::vector<CReportListHeader::ColumnInfo> k_columns{
 	{k_colIcon, wxLIST_FORMAT_LEFT, L""},
 	{k_colName, wxLIST_FORMAT_LEFT, arbT("IDS_COL_NAME")},
 	{k_colComment, wxLIST_FORMAT_LEFT, arbT("IDS_COL_COMMENTS")},
@@ -252,7 +259,7 @@ int InfoNoteListData::GetIcon() const
 // TODO: not getting selected when selecting 2nd item via shift-click (wx bug)
 // Listen to focused because of https://trac.wxwidgets.org/ticket/4541
 // Use EventTable because Binding allows a focused event after destroy on mac
-#define LIST_CTRL 1000
+constexpr int LIST_CTRL = 1000;
 wxBEGIN_EVENT_TABLE(CDlgInfoNote, wxDialog)
 	EVT_LIST_ITEM_FOCUSED(LIST_CTRL, CDlgInfoNote::OnItemFocused)
 wxEND_EVENT_TABLE()
@@ -1051,3 +1058,5 @@ void CDlgInfoNote::OnOk(wxCommandEvent& evt)
 
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

@@ -19,6 +19,9 @@
 #include "ARBCommon/ARBTypes.h"
 #include <wx/wizard.h>
 #include <map>
+
+namespace dconSoft
+{
 class CDlgPageEncode;
 
 
@@ -50,3 +53,5 @@ protected:
 	FileMap m_IncFile;
 	wxWizardPageSimple* m_firstPage;
 };
+
+} // namespace dconSoft

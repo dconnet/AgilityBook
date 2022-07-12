@@ -34,6 +34,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 wxBEGIN_EVENT_TABLE(CDlgQueryDetail, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgQueryDetail::OnOk)
 wxEND_EVENT_TABLE()
@@ -225,3 +231,5 @@ void CDlgQueryDetail::OnOk(wxCommandEvent& evt)
 
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

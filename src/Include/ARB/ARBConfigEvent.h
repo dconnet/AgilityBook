@@ -33,8 +33,16 @@
 #include "LibwxARB.h"
 
 #include <set>
-class ARBDate;
 
+
+namespace dconSoft
+{
+namespace ARBCommon
+{
+class ARBDate;
+} // namespace ARBCommon
+namespace ARB
+{
 
 /**
  * Event configuration information.
@@ -90,8 +98,8 @@ public:
 	 */
 	bool Load(
 		ARBConfigDivisionList const& inDivisions,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -100,7 +108,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigEvent element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Update this configuration from inEventNew.
@@ -123,7 +131,7 @@ public:
 	size_t FindAllEvents(
 		std::wstring const& inDivision,
 		std::wstring const& inLevel,
-		ARBDate const& inDate,
+		ARBCommon::ARBDate const& inDate,
 		bool inTitlePoints,
 		ARBVector<ARBConfigScoringPtr>& outList) const
 	{
@@ -137,7 +145,8 @@ public:
 	 * @param inDate Date for matching methods.
 	 * @return true if FindAllEvents() > 0.
 	 */
-	bool VerifyEvent(std::wstring const& inDivision, std::wstring const& inLevel, ARBDate const& inDate) const
+	bool VerifyEvent(std::wstring const& inDivision, std::wstring const& inLevel, ARBCommon::ARBDate const& inDate)
+		const
 	{
 		return m_Scoring.VerifyEvent(inDivision, inLevel, inDate);
 	}
@@ -153,7 +162,7 @@ public:
 	bool FindEvent(
 		std::wstring const& inDivision,
 		std::wstring const& inLevel,
-		ARBDate const& inDate,
+		ARBCommon::ARBDate const& inDate,
 		ARBConfigScoringPtr* outScoring = nullptr) const
 	{
 		return m_Scoring.FindEvent(inDivision, inLevel, inDate, outScoring);
@@ -230,8 +239,8 @@ public:
 	 */
 	bool Load(
 		ARBConfigDivisionList const& inDivisions,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -252,7 +261,7 @@ public:
 		std::wstring const& inEvent,
 		std::wstring const& inDivision,
 		std::wstring const& inLevel,
-		ARBDate const& inDate) const;
+		ARBCommon::ARBDate const& inDate) const;
 
 	/**
 	 * Find an event.
@@ -268,7 +277,7 @@ public:
 		std::wstring const& inEvent,
 		std::wstring const& inDivision,
 		std::wstring const& inLevel,
-		ARBDate const& inDate,
+		ARBCommon::ARBDate const& inDate,
 		ARBConfigEventPtr* outEvent = nullptr,
 		ARBConfigScoringPtr* outScoring = nullptr) const;
 
@@ -341,3 +350,6 @@ public:
 	 */
 	bool DeleteEvent(std::wstring const& inEvent);
 };
+
+} // namespace ARB
+} // namespace dconSoft

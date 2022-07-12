@@ -25,8 +25,15 @@
 #include "ARB/ARBTypes2.h"
 #include "LibARBWin/ReportListHeader.h"
 #include <wx/listctrl.h>
-class CAgilityBookDoc;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
 class CReportListCtrl;
+} // namespace ARBWin
+class CAgilityBookDoc;
 
 class CDlgDogRefRunData;
 typedef std::shared_ptr<CDlgDogRefRunData> CDlgDogRefRunDataPtr;
@@ -38,9 +45,9 @@ public:
 	CDlgRunPanelRefRuns(
 		CDlgRun* pDlg,
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr const& inDog,
-		ARBDogTrialPtr const& inTrial,
-		ARBDogRunPtr const& inRun,
+		ARB::ARBDogPtr const& inDog,
+		ARB::ARBDogTrialPtr const& inTrial,
+		ARB::ARBDogRunPtr const& inRun,
 		wxWindow* parent);
 
 	wxWindow* GetInitialControl() override;
@@ -59,10 +66,10 @@ private:
 	void GetAllBreeds(std::set<std::wstring>& outNames);
 	void EditRefRun();
 
-	ARBDogReferenceRunPtr m_pRefRunMe;
+	ARB::ARBDogReferenceRunPtr m_pRefRunMe;
 
-	CReportListCtrl* m_ctrlRefRuns;
-	CReportListHeader m_reportColumn;
+	ARBWin::CReportListCtrl* m_ctrlRefRuns;
+	ARBWin::CReportListHeader m_reportColumn;
 	wxButton* m_ctrlRefAddMe;
 	wxButton* m_ctrlRefEdit;
 	wxButton* m_ctrlRefDelete;
@@ -75,3 +82,5 @@ private:
 	void OnRefRunEdit(wxCommandEvent& evt);
 	void OnRefRunDelete(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

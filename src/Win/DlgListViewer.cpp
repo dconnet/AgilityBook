@@ -50,40 +50,45 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 // Run/MQ are shared in the DataExisting class, hence they need to use
 // the same column values.
-#define COL_RUN_MQ_DATE      0
-#define COL_RUN_MQ_STATUS    1
-#define COL_RUN_MQ_DOG       2
-#define COL_RUN_MQ_Q         3
-#define COL_RUN_MQ_TITLE_PTS 4
-#define COL_RUN_MQ_VENUE     5
-#define COL_RUN_MQ_DIV       6
-#define COL_RUN_MQ_LEVEL     7
-#define COL_RUN_MQ_EVENT     8
-#define COL_RUN_MQ_SUBNAME   9
-#define COL_RUN_MQ_LOCATION  10
-#define COL_RUN_MQ_CLUB      11
-#define COL_RUN_MQ_JUDGE     12
-#define COL_RUN_MQ_PLACE     13
-#define COL_RUN_MQ_INCLASS   14
-#define COL_RUN_MQ_QD        15
-#define COL_RUN_MQ_SPEED     16
-#define COL_RUN_MQ_PARTNERS  17
-#define COL_OTHER_DATE       0
-#define COL_OTHER_NAME       1 // Trial, existing pt
-#define COL_OTHER_CLUB       2
-#define COL_OTHER_VENUE      3
-#define COL_OTHER_DIV        4
-#define COL_OTHER_LEVEL      5
-#define COL_OTHER_EVENT      6
-#define COL_OTHER_PTS        7
-#define COL_OTHER_SCORE      8 // Run score
-#define COL_ITEM_TYPE        0
-#define COL_ITEM_NAME        1
-#define COL_ITEM_COMMENT     2
+constexpr int COL_RUN_MQ_DATE = 0;
+constexpr int COL_RUN_MQ_STATUS = 1;
+constexpr int COL_RUN_MQ_DOG = 2;
+constexpr int COL_RUN_MQ_Q = 3;
+constexpr int COL_RUN_MQ_TITLE_PTS = 4;
+constexpr int COL_RUN_MQ_VENUE = 5;
+constexpr int COL_RUN_MQ_DIV = 6;
+constexpr int COL_RUN_MQ_LEVEL = 7;
+constexpr int COL_RUN_MQ_EVENT = 8;
+constexpr int COL_RUN_MQ_SUBNAME = 9;
+constexpr int COL_RUN_MQ_LOCATION = 10;
+constexpr int COL_RUN_MQ_CLUB = 11;
+constexpr int COL_RUN_MQ_JUDGE = 12;
+constexpr int COL_RUN_MQ_PLACE = 13;
+constexpr int COL_RUN_MQ_INCLASS = 14;
+constexpr int COL_RUN_MQ_QD = 15;
+constexpr int COL_RUN_MQ_SPEED = 16;
+constexpr int COL_RUN_MQ_PARTNERS = 17;
+constexpr int COL_OTHER_DATE = 0;
+constexpr int COL_OTHER_NAME = 1; // Trial, existing pt
+constexpr int COL_OTHER_CLUB = 2;
+constexpr int COL_OTHER_VENUE = 3;
+constexpr int COL_OTHER_DIV = 4;
+constexpr int COL_OTHER_LEVEL = 5;
+constexpr int COL_OTHER_EVENT = 6;
+constexpr int COL_OTHER_PTS = 7;
+constexpr int COL_OTHER_SCORE = 8; // Run score
+constexpr int COL_ITEM_TYPE = 0;
+constexpr int COL_ITEM_NAME = 1;
+constexpr int COL_ITEM_COMMENT = 2;
 
 
 class CDlgListViewerDataColumns
@@ -1081,7 +1086,9 @@ int wxCALLBACK CompareRows(CListDataPtr const& item1, CListDataPtr const& item2,
 
 /////////////////////////////////////////////////////////////////////////////
 
-static void InsertRun(
+namespace
+{
+void InsertRun(
 	CAgilityBookDoc* pDoc,
 	CReportListCtrl* ctrlList,
 	CDlgListViewerDataColumnsPtr const& pColData,
@@ -1113,6 +1120,7 @@ static void InsertRun(
 		std::make_shared<CDlgListViewerDataRun>(pColData, pDog, pTrial, pRun, pScoring, scoringDetail));
 	ctrlList->InsertItem(data);
 }
+} // namespace
 
 /////////////////////////////////////////////////////////////////////////////
 // Viewing runs
@@ -1120,7 +1128,7 @@ static void InsertRun(
 // TODO: not getting selected when selecting 2nd item via shift-click (wx bug)
 // Listen to focused because of https://trac.wxwidgets.org/ticket/4541
 // Use EventTable because Binding allows a focused event after destroy on mac
-#define LIST_CTRL 1000
+constexpr int LIST_CTRL = 1000;
 wxBEGIN_EVENT_TABLE(CDlgListViewer, wxDialog)
 	EVT_LIST_ITEM_FOCUSED(LIST_CTRL, CDlgListViewer::OnItemFocused)
 wxEND_EVENT_TABLE()
@@ -1570,3 +1578,5 @@ void CDlgListViewer::OnCopy(wxCommandEvent& evt)
 		clpData.CommitData();
 	}
 }
+
+} // namespace dconSoft

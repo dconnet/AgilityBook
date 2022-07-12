@@ -20,6 +20,13 @@
 #include "ARBCommon/ARBDate.h"
 #include "ARBTypes2.h"
 #include "LibwxARB.h"
+
+
+namespace dconSoft
+{
+namespace ARB
+{
+
 ARB_TYPEDEF(ARBCalcPoints)
 ARB_TYPEDEF(ARBCalcPointsNormal)
 ARB_TYPEDEF(ARBCalcPointsT2B)
@@ -77,8 +84,8 @@ public:
 		double inSCT,
 		short inPlace,
 		short inClass,
-		ARBDate date,  // For USDAA
-		bool isTourney // For USDAA
+		ARBCommon::ARBDate date, // For USDAA
+		bool isTourney           // For USDAA
 	) const = 0;
 };
 
@@ -106,7 +113,7 @@ public:
 		double inSCT,
 		short inPlace,
 		short inClass,
-		ARBDate date,
+		ARBCommon::ARBDate date,
 		bool isTourney) const override;
 };
 
@@ -130,7 +137,7 @@ public:
 		double inSCT,
 		short inPlace,
 		short inClass,
-		ARBDate date,
+		ARBCommon::ARBDate date,
 		bool isTourney) const override;
 };
 
@@ -154,7 +161,7 @@ public:
 		double inSCT,
 		short inPlace,
 		short inClass,
-		ARBDate date,
+		ARBCommon::ARBDate date,
 		bool isTourney) const override;
 };
 
@@ -178,6 +185,9 @@ public:
 		double inSCT,
 		short inPlace,
 		short inClass,
-		ARBDate date,
+		ARBCommon::ARBDate date,
 		bool isTourney) const override;
 };
+
+} // namespace ARB
+} // namespace dconSoft

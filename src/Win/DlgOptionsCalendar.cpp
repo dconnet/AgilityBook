@@ -41,6 +41,21 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
+namespace
+{
+std::wstring ForDisplay(std::wstring const& text)
+{
+	return fmt::format(_("IDS_CALENDAR_DISPLAY_COLOR").wx_str(), text);
+}
+} // namespace
+
+
 CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL)
 	, m_fontCalViewInfo()
@@ -452,12 +467,6 @@ void CDlgOptionsCalendar::Save()
 }
 
 
-static std::wstring ForDisplay(std::wstring const& text)
-{
-	return fmt::format(_("IDS_CALENDAR_DISPLAY_COLOR").wx_str(), text);
-}
-
-
 std::wstring CDlgOptionsCalendar::GetCalText(ARBCalColorItem type, bool bForDisplay) const
 {
 	std::wstring text;
@@ -629,3 +638,5 @@ void CDlgOptionsCalendar::OnFontCalView(wxCommandEvent& evt)
 		SetRichText();
 	}
 }
+
+} // namespace dconSoft

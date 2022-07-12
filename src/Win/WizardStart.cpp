@@ -56,17 +56,25 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
+namespace
+{
 // Registry settings in "Last"
-#define LAST_STYLE     L"Last/WizStyle"
-#define LAST_STYLEITEM L"Last/WizSubStyle" // A number will be appended
-// Note: LAST_STYLE is a fixed number, regardless of UI order.
+constexpr wchar_t LAST_STYLE[] = L"Last/WizStyle";
+constexpr wchar_t LAST_STYLEITEM[] = L"Last/WizSubStyle"; // A number will be appended
+														  // Note: LAST_STYLE is a fixed number, regardless of UI order.
 // LAST_STYLEITEM actually uses the UI order (as of v1.10). If items are
 // reordered, this _will_ cause a problem. As of v2.0, this will change to
 // the registry key to use the actual style, not the UI order. There will be
 // no backwards compatibility - this simply means that the wrong item may be
 // initially selected the first time this is run (if the user ran the wizard
 // in v1)
-
+} // namespace
 
 /////////////////////////////////////////////////////////////////////////////
 // CWizardStart property page
@@ -216,7 +224,7 @@ enum class WizardPage
 // In v2, it's id based.
 namespace
 {
-static struct
+constexpr struct
 {
 	// For integrity checking. See Wizard.h.
 	int index;
@@ -892,3 +900,5 @@ bool CWizardStart::DoWizardFinish()
 	}
 	return bOk;
 }
+
+} // namespace dconSoft

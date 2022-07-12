@@ -29,6 +29,11 @@
 #include "LibwxARB.h"
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 /**
  * Division configuration information.
  */
@@ -88,8 +93,8 @@ public:
 	 */
 	bool Load(
 		ARBConfigVenue& ioVenue,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -98,7 +103,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigDivision element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Update this configuration from inDivNew.
@@ -162,8 +167,8 @@ public:
 	 */
 	bool Load(
 		ARBConfigVenue& ioVenue,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -211,3 +216,6 @@ public:
 	 */
 	int DeleteDivision(std::wstring const& inDiv, ARBConfigEventList& ioEvents);
 };
+
+} // namespace ARB
+} // namespace dconSoft

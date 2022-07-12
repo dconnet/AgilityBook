@@ -21,19 +21,26 @@
 
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/ARBDate.h"
-class CAgilityBookDoc;
-class CNoteButton;
-class CRichEditCtrl2;
-class CTextCtrl;
-class CVenueComboBox;
 class wxDateEvent;
 class wxDatePickerCtrl;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
+class CRichEditCtrl2;
+class CTextCtrl;
+} // namespace ARBWin
+class CAgilityBookDoc;
+class CNoteButton;
+class CVenueComboBox;
 
 
 class CDlgCalendar : public wxDialog
 {
 public:
-	CDlgCalendar(ARBCalendarPtr const& inCal, CAgilityBookDoc* pDoc, wxWindow* pParent = nullptr);
+	CDlgCalendar(ARB::ARBCalendarPtr const& inCal, CAgilityBookDoc* pDoc, wxWindow* pParent = nullptr);
 
 private:
 	void UpdateLocationInfo(wxString const& location);
@@ -41,17 +48,17 @@ private:
 	void UpdateClubInfo(wxString const& club);
 	void ListClubs();
 
-	ARBCalendarPtr m_pCal;
+	ARB::ARBCalendarPtr m_pCal;
 	CAgilityBookDoc* m_pDoc;
 	int m_Span;
-	ARBDate m_dateStart;
-	ARBDate m_dateEnd;
+	ARBCommon::ARBDate m_dateStart;
+	ARBCommon::ARBDate m_dateEnd;
 	bool m_bTentative;
-	ARBDate m_dateOpens;
+	ARBCommon::ARBDate m_dateOpens;
 	bool m_bOpeningUnknown;
-	ARBDate m_dateDraws;
+	ARBCommon::ARBDate m_dateDraws;
 	bool m_bDrawingUnknown;
-	ARBDate m_dateCloses;
+	ARBCommon::ARBDate m_dateCloses;
 	bool m_bClosingUnknown;
 	wxString m_OnlineUrl;
 	wxString m_Confirmation;
@@ -70,22 +77,22 @@ private:
 	wxRadioButton* m_ctrlEntryPending;
 	wxRadioButton* m_ctrlEntryEntered;
 	wxButton* m_ctrlOnlineUrlEntry;
-	CTextCtrl* m_ctrlOnlineUrl;
+	ARBWin::CTextCtrl* m_ctrlOnlineUrl;
 	wxRadioButton* m_ctrlAccomNot;
 	wxRadioButton* m_ctrlAccomNeeded;
 	wxRadioButton* m_ctrlAccomMade;
-	CTextCtrl* m_ctrlConfirmation;
+	ARBWin::CTextCtrl* m_ctrlConfirmation;
 	wxButton* m_ctrlPremiumEntry;
-	CTextCtrl* m_ctrlPremiumUrl;
+	ARBWin::CTextCtrl* m_ctrlPremiumUrl;
 	wxButton* m_ctrlEMailSec;
 	wxComboBox* m_ctrlEMailSecAddr;
 	CVenueComboBox* m_ctrlVenue;
 	wxComboBox* m_ctrlClub;
 	CNoteButton* m_ctrlClubNotes;
-	CRichEditCtrl2* m_ctrlClubInfo;
+	ARBWin::CRichEditCtrl2* m_ctrlClubInfo;
 	wxComboBox* m_ctrlLocation;
 	CNoteButton* m_ctrlLocationNotes;
-	CRichEditCtrl2* m_ctrlLocationInfo;
+	ARBWin::CRichEditCtrl2* m_ctrlLocationInfo;
 
 	DECLARE_EVENT_TABLE()
 	void OnDatetimechangeStart(wxDateEvent& evt);
@@ -106,3 +113,5 @@ private:
 	void OnLocationNotes(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

@@ -34,6 +34,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 wxBEGIN_EVENT_TABLE(CDlgPartner, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgPartner::OnOk)
 wxEND_EVENT_TABLE()
@@ -166,3 +172,5 @@ void CDlgPartner::OnOk(wxCommandEvent& evt)
 	m_Partner->SetRegNum(StringUtil::stringW(m_RegNum));
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

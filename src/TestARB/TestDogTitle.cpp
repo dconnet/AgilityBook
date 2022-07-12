@@ -27,6 +27,9 @@
 #endif
 
 
+namespace dconSoft
+{
+
 TEST_CASE("DogTitle")
 {
 	SECTION("New")
@@ -241,3 +244,5 @@ TEST_CASE("DogTitleList")
 		}
 	}
 }
+
+} // namespace dconSoft

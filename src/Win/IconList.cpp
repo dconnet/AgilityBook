@@ -31,6 +31,11 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBWin;
+
 CIconList::CIconList()
 	: m_idxEmpty(-1)
 	, m_idxARB(-1)
@@ -152,3 +157,5 @@ int CIconList::Trial(ARBConfig& config, ARBDogTrialPtr const& inTrial) const
 	}
 	return idxIcon;
 }
+
+} // namespace dconSoft

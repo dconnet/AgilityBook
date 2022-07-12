@@ -22,9 +22,17 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
 
-static size_t FilterToIndex(ARBFilterType inFilterType)
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
+
+namespace
+{
+
+size_t FilterToIndex(ARBFilterType inFilterType)
 {
 	switch (inFilterType)
 	{
@@ -37,7 +45,8 @@ static size_t FilterToIndex(ARBFilterType inFilterType)
 	return 0;
 }
 
-/////////////////////////////////////////////////////////////////////////////
+} // namespace
+
 
 unsigned short GetFilterMask(ARBFilterType type)
 {
@@ -67,3 +76,6 @@ void ARBBase::SetFiltered(ARBFilterType inFilterType, bool bFiltered)
 {
 	m_bFiltered[FilterToIndex(inFilterType)] = bFiltered;
 }
+
+} // namespace ARB
+} // namespace dconSoft

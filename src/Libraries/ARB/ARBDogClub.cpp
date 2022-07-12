@@ -32,7 +32,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 namespace
 {
@@ -479,3 +484,6 @@ bool ARBDogClubList::DeleteClub(std::wstring const& inName, std::wstring const& 
 	}
 	return false;
 }
+
+} // namespace ARB
+} // namespace dconSoft

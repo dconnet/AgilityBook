@@ -19,34 +19,44 @@
 
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/ARBDate.h"
-class CListCtrl;
-class CTextCtrl;
 class wxDatePickerCtrl;
 class wxListEvent;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
+class CListCtrl;
+class CTextCtrl;
+} // namespace ARBWin
 
 
 class CDlgConfigMultiQ : public wxDialog
 {
 public:
-	CDlgConfigMultiQ(ARBConfigVenuePtr const& inVenue, ARBConfigMultiQPtr const& inMultiQ, wxWindow* pParent = nullptr);
+	CDlgConfigMultiQ(
+		ARB::ARBConfigVenuePtr const& inVenue,
+		ARB::ARBConfigMultiQPtr const& inMultiQ,
+		wxWindow* pParent = nullptr);
 
 private:
 	void UpdateControls();
 	void EditItem();
 
-	ARBConfigVenuePtr m_pVenue;
-	ARBConfigMultiQPtr m_pOrigMultiQ;
-	ARBConfigMultiQPtr m_pMultiQ;
+	ARB::ARBConfigVenuePtr m_pVenue;
+	ARB::ARBConfigMultiQPtr m_pOrigMultiQ;
+	ARB::ARBConfigMultiQPtr m_pMultiQ;
 	wxString m_Name;
 	wxString m_ShortName;
 	bool m_bFrom;
 	wxDatePickerCtrl* m_ctrlDateFrom;
-	ARBDate m_DateFrom;
+	ARBCommon::ARBDate m_DateFrom;
 	bool m_bTo;
 	wxDatePickerCtrl* m_ctrlDateTo;
-	ARBDate m_DateTo;
-	CTextCtrl* m_ctrlName;
-	CListCtrl* m_ctrlItems;
+	ARBCommon::ARBDate m_DateTo;
+	ARBWin::CTextCtrl* m_ctrlName;
+	ARBWin::CListCtrl* m_ctrlItems;
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlRemove;
 
@@ -61,3 +71,5 @@ private:
 	void OnRemove(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

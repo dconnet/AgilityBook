@@ -34,11 +34,16 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 namespace
 {
-static struct PointsEnum
+constexpr struct PointsEnum
 {
 	wchar_t const* pPoints; ///< Actual text in file
 	ARBPointsType type;     ///< Enum type
@@ -48,10 +53,9 @@ static struct PointsEnum
 	{ATTRIB_TITLE_POINTS_TYPE_UKI, ARBPointsType::UKI},
 };
 constexpr size_t sc_nPoints = sizeof(sc_Points) / sizeof(sc_Points[0]);
-} // namespace
 
 
-static ARBPointsType PointsToType(std::wstring const& str)
+ARBPointsType PointsToType(std::wstring const& str)
 {
 	for (size_t n = 0; n < sc_nPoints; ++n)
 	{
@@ -63,7 +67,7 @@ static ARBPointsType PointsToType(std::wstring const& str)
 }
 
 
-static std::wstring TypeToPoints(ARBPointsType type)
+std::wstring TypeToPoints(ARBPointsType type)
 {
 	for (size_t n = 0; n < sc_nPoints; ++n)
 	{
@@ -73,6 +77,7 @@ static std::wstring TypeToPoints(ARBPointsType type)
 	assert(0);
 	return std::wstring();
 }
+} // namespace
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -408,3 +413,6 @@ bool ARBConfigTitlePointsList::DeleteTitlePoints(ARBPointsType inType, double in
 	}
 	return false;
 }
+
+} // namespace ARB
+} // namespace dconSoft

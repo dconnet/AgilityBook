@@ -30,6 +30,11 @@
 #include <set>
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 /**
  * The training logbook
  */
@@ -61,11 +66,11 @@ public:
 	{
 		return m_Date > rhs.GetDate();
 	}
-	bool operator<(ARBDate const& rhs) const
+	bool operator<(ARBCommon::ARBDate const& rhs) const
 	{
 		return m_Date < rhs;
 	}
-	bool operator>(ARBDate const& rhs) const
+	bool operator>(ARBCommon::ARBDate const& rhs) const
 	{
 		return m_Date > rhs;
 	}
@@ -76,7 +81,7 @@ public:
 	 */
 	std::wstring GetGenericName() const override
 	{
-		return m_Date.GetString(ARBDateFormat::SlashMDY);
+		return m_Date.GetString(ARBCommon::ARBDateFormat::SlashMDY);
 	}
 
 	/**
@@ -94,7 +99,10 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
+	bool Load(
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -102,16 +110,16 @@ public:
 	 * @return Success
 	 * @post The ARBTraining element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/*
 	 * Getters/setters.
 	 */
-	ARBDate const& GetDate() const
+	ARBCommon::ARBDate const& GetDate() const
 	{
 		return m_Date;
 	}
-	void SetDate(ARBDate const& inDate)
+	void SetDate(ARBCommon::ARBDate const& inDate)
 	{
 		m_Date = inDate;
 	}
@@ -141,7 +149,7 @@ public:
 	}
 
 private:
-	ARBDate m_Date;
+	ARBCommon::ARBDate m_Date;
 	std::wstring m_Name;
 	std::wstring m_SubName;
 	std::wstring m_Note;
@@ -163,7 +171,10 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
+	bool Load(
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Sort the list by date.
@@ -207,3 +218,6 @@ public:
 	 */
 	bool DeleteTraining(ARBTrainingPtr const& inTraining);
 };
+
+} // namespace ARB
+} // namespace dconSoft

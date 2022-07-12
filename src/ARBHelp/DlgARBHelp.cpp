@@ -42,6 +42,11 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARBCommon;
+using namespace ARBWin;
+
 CDlgARBHelp::CDlgARBHelp()
 	: wxWizard(
 		nullptr,
@@ -151,3 +156,5 @@ std::wstring CDlgARBHelp::GetEncodedData()
 
 	return fmt::format(L"\n{}\n{}\n{}\n", STREAM_DATA_BEGIN, data, STREAM_DATA_END);
 }
+
+} // namespace dconSoft

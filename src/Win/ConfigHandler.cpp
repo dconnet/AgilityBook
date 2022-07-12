@@ -31,6 +31,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARBCommon;
+using namespace ARB;
+using namespace ARBWin;
+
 CConfigHandler::CConfigHandler()
 {
 }
@@ -66,3 +72,5 @@ std::string CConfigHandler::LoadDTD() const
 	resMgr->LoadFile(L"AgilityRecordBook.dtd", data);
 	return data.str();
 }
+
+} // namespace dconSoft

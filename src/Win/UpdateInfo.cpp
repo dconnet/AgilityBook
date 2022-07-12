@@ -86,7 +86,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 namespace
 {
@@ -922,3 +927,5 @@ bool CUpdateInfo::DownloadFile(wxString const& filename)
 	}
 	return true;
 }
+
+} // namespace dconSoft

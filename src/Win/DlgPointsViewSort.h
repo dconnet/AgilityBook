@@ -19,6 +19,10 @@
 #include "AgilityBookOptions.h"
 
 
+namespace dconSoft
+{
+
+
 class CDlgPointsViewSort : public wxDialog
 {
 public:
@@ -46,3 +50,5 @@ protected:
 	void OnSelchangeTertiary(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

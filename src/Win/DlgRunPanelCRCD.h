@@ -19,9 +19,13 @@
 #include "DlgRunPanelBase.h"
 
 #include "ARB/ARBTypes2.h"
+class wxCheckBox;
+
+
+namespace dconSoft
+{
 class CAgilityBookDoc;
 class CMetaDataDisplay;
-class wxCheckBox;
 
 class CDlgRunPanelCRCD : public CDlgRunPanelBase
 {
@@ -29,9 +33,9 @@ public:
 	CDlgRunPanelCRCD(
 		CDlgRun* pDlg,
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr const& inDog,
-		ARBDogTrialPtr const& inTrial,
-		ARBDogRunPtr const& inRun,
+		ARB::ARBDogPtr const& inDog,
+		ARB::ARBDogTrialPtr const& inTrial,
+		ARB::ARBDogRunPtr const& inRun,
 		wxWindow* parent);
 
 	wxWindow* GetInitialControl() override;
@@ -55,3 +59,5 @@ private:
 	void OnCRCDCopy(wxCommandEvent& evt);
 	void OnCRCDImage(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

@@ -31,7 +31,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 namespace
 {
@@ -212,3 +217,6 @@ bool ARBDogRunPartnerList::AddPartner(ARBDogRunPartnerPtr const& inPartner)
 	}
 	return bAdded;
 }
+
+} // namespace ARB
+} // namespace dconSoft

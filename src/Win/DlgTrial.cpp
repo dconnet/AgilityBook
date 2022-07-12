@@ -55,12 +55,21 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-#define DEF_TRIAL_NOTES_HEIGHT 35
-#define DEF_CLUB_WIDTH         180
-#define DEF_CLUB_HEIGHT        50
-#define DEF_NOTE_WIDTH         95
 
-/////////////////////////////////////////////////////////////////////////////
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
+namespace
+{
+constexpr int DEF_TRIAL_NOTES_HEIGHT = 35;
+constexpr int DEF_CLUB_WIDTH = 180;
+constexpr int DEF_CLUB_HEIGHT = 50;
+constexpr int DEF_NOTE_WIDTH = 95;
+} // namespace
+
 
 class CListTrialData : public CListData
 {
@@ -816,3 +825,5 @@ void CDlgTrial::OnCancel(wxCommandEvent& evt)
 	}
 	EndDialog(wxID_CANCEL);
 }
+
+} // namespace dconSoft

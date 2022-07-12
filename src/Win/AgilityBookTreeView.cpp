@@ -74,6 +74,13 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 /////////////////////////////////////////////////////////////////////////////
 // Find
 
@@ -1641,3 +1648,5 @@ void CAgilityBookTreeView::OnPreview(wxCommandEvent& evt)
 {
 	wxGetApp().GetHtmlPrinter()->PreviewText(StringUtil::stringWX(GetPrintDataAsHtmlTable()));
 }
+
+} // namespace dconSoft

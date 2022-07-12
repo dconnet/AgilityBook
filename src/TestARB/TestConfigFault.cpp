@@ -28,12 +28,20 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+
+namespace
+{
 struct ConfigFaultData
 {
 	ElementNodePtr ConfigFault1; // v1.0
 	ElementNodePtr ConfigFault2; // v2+
 	ConfigFaultData();
 };
+} // namespace
 
 
 ConfigFaultData::ConfigFaultData()
@@ -211,3 +219,5 @@ TEST_CASE("ConfigFaultList")
 		}
 	}
 }
+
+} // namespace dconSoft

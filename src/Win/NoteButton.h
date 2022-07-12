@@ -17,8 +17,15 @@
  */
 #include <wx/imaglist.h>
 
+
+namespace dconSoft
+{
+
+
 class CNoteButton : public wxBitmapButton
 {
 public:
 	CNoteButton(wxWindow* parent);
 };
+
+} // namespace dconSoft

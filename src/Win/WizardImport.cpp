@@ -61,6 +61,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 wxIMPLEMENT_CLASS(CWizardImport, wxWizardPageSimple)
 
 
@@ -126,7 +132,7 @@ CWizardImport::CWizardImport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 		0,
 		nullptr,
 		wxCB_DROPDOWN | wxCB_READONLY);
-	static struct
+	constexpr struct
 	{
 		wchar_t const* uFormat;
 		ARBDateFormat format;
@@ -577,7 +583,9 @@ void CWizardImport::UpdatePreview()
 }
 
 
-static ARBDogRunPtr CreateRun(ARBDogRunPtr const& inRun, ARBConfigScoringPtr const& inScoring)
+namespace
+{
+ARBDogRunPtr CreateRun(ARBDogRunPtr const& inRun, ARBConfigScoringPtr const& inScoring)
 {
 	if (inRun)
 		return inRun;
@@ -589,7 +597,7 @@ static ARBDogRunPtr CreateRun(ARBDogRunPtr const& inRun, ARBConfigScoringPtr con
 }
 
 
-static std::wstring GetPrimaryVenue(std::wstring const& venues)
+std::wstring GetPrimaryVenue(std::wstring const& venues)
 {
 	std::wstring venue;
 	std::wstring::size_type pos = venues.find('/');
@@ -601,7 +609,7 @@ static std::wstring GetPrimaryVenue(std::wstring const& venues)
 }
 
 
-static ARBCalendarPtr CreateCal(ARBCalendarPtr const& inCal)
+ARBCalendarPtr CreateCal(ARBCalendarPtr const& inCal)
 {
 	if (inCal)
 		return inCal;
@@ -609,7 +617,7 @@ static ARBCalendarPtr CreateCal(ARBCalendarPtr const& inCal)
 }
 
 
-static ARBTrainingPtr CreateLog(ARBTrainingPtr const& inLog)
+ARBTrainingPtr CreateLog(ARBTrainingPtr const& inLog)
 {
 	if (inLog)
 		return inLog;
@@ -617,6 +625,7 @@ static ARBTrainingPtr CreateLog(ARBTrainingPtr const& inLog)
 	log->SetDate(ARBDate::Today());
 	return log;
 }
+} // namespace
 
 
 void CWizardImport::OnDeltaposImportRowSpin(wxSpinEvent& evt)
@@ -1475,3 +1484,5 @@ bool CWizardImport::DoWizardFinish()
 	}
 	return true;
 }
+
+} // namespace dconSoft

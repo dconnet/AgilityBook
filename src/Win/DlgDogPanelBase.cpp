@@ -20,7 +20,11 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBWin;
 
 CDlgDogPanelBase::CDlgDogPanelBase(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog, wxWindow* parent)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL)
@@ -34,7 +38,7 @@ CDlgDogPanelBase::CDlgDogPanelBase(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog
 // TODO: not getting selected when selecting 2nd item via shift-click (wx bug)
 // Listen to focused because of https://trac.wxwidgets.org/ticket/4541
 // Use EventTable because Binding allows a focused event after destroy on mac
-#define LIST_CTRL 1000
+constexpr int LIST_CTRL = 1000;
 wxBEGIN_EVENT_TABLE(CDlgDogPanelReportBase, CDlgDogPanelBase)
 	EVT_LIST_ITEM_FOCUSED(LIST_CTRL, CDlgDogPanelReportBase::OnItemFocused)
 wxEND_EVENT_TABLE()
@@ -170,3 +174,5 @@ void CDlgDogPanelReportBase::OnDelete(wxCommandEvent& evt)
 {
 	DoDelete();
 }
+
+} // namespace dconSoft

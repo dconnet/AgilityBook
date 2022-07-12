@@ -30,6 +30,11 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARBCommon;
+using namespace ARBWin;
+
 class CARBUpdaterApp : public CBaseApp
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CARBUpdaterApp)
@@ -60,7 +65,7 @@ bool CARBUpdaterApp::OnInit()
 	if (!CBaseApp::OnInit())
 		return false;
 
-	static const wxCmdLineEntryDesc cmdLineDesc[] = {
+	constexpr wxCmdLineEntryDesc cmdLineDesc[] = {
 		{wxCMD_LINE_SWITCH, "g", "generate", "Ignore all other options and display a dialog allowing MD5 generation"},
 		{wxCMD_LINE_OPTION, "f", "file", "Downloaded file"},
 		{wxCMD_LINE_NONE},
@@ -142,3 +147,5 @@ bool CARBUpdaterApp::GetResImageName(wxArtID const& id, wxArtClient const& clien
 		found = false;
 	return found;
 }
+
+} // namespace dconSoft

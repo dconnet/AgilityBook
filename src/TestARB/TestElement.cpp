@@ -35,6 +35,10 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARBCommon;
+
 TEST_CASE("Element")
 {
 	SECTION("Save")
@@ -64,3 +68,5 @@ TEST_CASE("Element")
 		REQUIRE(tmp1data == tmp2data);
 	}
 }
+
+} // namespace dconSoft

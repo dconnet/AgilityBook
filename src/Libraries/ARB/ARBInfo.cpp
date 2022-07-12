@@ -26,7 +26,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 ARBInfo::ARBInfo()
 	: m_ClubInfo(TREE_CLUBINFO)
@@ -144,3 +149,6 @@ bool ARBInfo::Save(ElementNodePtr const& ioTree) const
 		return false;
 	return true;
 }
+
+} // namespace ARB
+} // namespace dconSoft

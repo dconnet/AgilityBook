@@ -21,25 +21,32 @@
  */
 
 #include "ARB/ARBTypes2.h"
+class wxDateEvent;
+class wxDatePickerCtrl;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
+class CReportListCtrl;
+} // namespace ARBWin
 class CAgilityBookDoc;
 class CDlgDogPanelPoints;
 class CDlgDogPanelProp;
 class CDlgDogPanelRegNums;
 class CDlgDogPanelTitles;
-class CReportListCtrl;
-class wxDateEvent;
-class wxDatePickerCtrl;
 
 
 class CDlgDog : public wxDialog
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgDog)
 public:
-	CDlgDog(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog, wxWindow* pParent = nullptr, int iSelectPage = 0);
+	CDlgDog(CAgilityBookDoc* pDoc, ARB::ARBDogPtr const& inDog, wxWindow* pParent = nullptr, int iSelectPage = 0);
 
 private:
 	CAgilityBookDoc* m_pDoc;
-	ARBDogPtr m_pDog;
+	ARB::ARBDogPtr m_pDog;
 	bool m_viewHidden;
 
 	CDlgDogPanelProp* m_panelProps;
@@ -51,3 +58,5 @@ private:
 	void OnPageChanging(wxBookCtrlEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

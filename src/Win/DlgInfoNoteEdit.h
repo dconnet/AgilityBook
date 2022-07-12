@@ -17,8 +17,15 @@
 
 #include "ARB/ARBTypes2.h"
 #include <set>
-class CDlgInfoNote;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
 class CSpellCheckCtrl;
+} // namespace ARBWin
+class CDlgInfoNote;
 
 
 class CDlgInfoNoteEdit : public wxDialog
@@ -45,7 +52,9 @@ private:
 	wxString m_Name;
 	wxString m_Comment;
 	bool m_isVisible;
-	CSpellCheckCtrl* m_ctrlNotes;
+	ARBWin::CSpellCheckCtrl* m_ctrlNotes;
 
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

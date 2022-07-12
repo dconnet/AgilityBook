@@ -23,17 +23,21 @@
 #include "ARBCommon/StringUtil.h"
 #include <algorithm>
 
-#define TREE_CALSITE          L"CalSite"
-#define TREE_CALSITE_DESC     L"Desc"
-#define ATTRIB_CALSITE_NAME   L"name"
-#define ATTRIB_CALSITE_SEARCH L"search"
-#define ATTRIB_CALSITE_HELP   L"help"
+constexpr wchar_t TREE_CALSITE[] = L"CalSite";
+constexpr wchar_t TREE_CALSITE_DESC[] = L"Desc";
+constexpr wchar_t ATTRIB_CALSITE_NAME[] = L"name";
+constexpr wchar_t ATTRIB_CALSITE_SEARCH[] = L"search";
+constexpr wchar_t ATTRIB_CALSITE_HELP[] = L"help";
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
 
 class ARBConfigCalSite_concrete : public ARBConfigCalSite
 {
@@ -140,7 +144,10 @@ bool ARBConfigCalSite::operator==(ARBConfigCalSite const& rhs) const
 }
 
 
-bool ARBConfigCalSite::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
+bool ARBConfigCalSite::Load(
+	ElementNodePtr const& inTree,
+	ARBVersion const& inVersion,
+	ARB::ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_CALSITE)
@@ -427,3 +434,5 @@ int ARBConfigCalSiteList::DeleteSite(std::wstring const& inSite)
 	}
 	return 0;
 }
+
+} // namespace dconSoft

@@ -36,6 +36,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 class CReorderListData : public wxClientData
 {
 public:
@@ -417,3 +423,5 @@ void CDlgReorder::OnOk(wxCommandEvent& evt)
 
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

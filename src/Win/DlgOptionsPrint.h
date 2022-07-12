@@ -20,6 +20,10 @@
 #include <wx/cmndata.h>
 
 
+namespace dconSoft
+{
+
+
 class CDlgOptionsPrint : public wxPanel
 {
 public:
@@ -47,3 +51,5 @@ private:
 	void OnFontPrint(wxCommandEvent& evt);
 	void OnUnitsChange(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

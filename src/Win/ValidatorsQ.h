@@ -20,6 +20,10 @@
 #include <wx/validate.h>
 
 
+namespace dconSoft
+{
+
+
 /// For use with CQualifyingComboBox
 class CQualifyingValidator : public wxValidator
 {
@@ -28,7 +32,7 @@ class CQualifyingValidator : public wxValidator
 	CQualifyingValidator(CQualifyingValidator&& rhs) = delete;
 
 public:
-	CQualifyingValidator(ARB_Q* valPtr = nullptr, bool bAllowNoSel = false);
+	CQualifyingValidator(ARB::ARB_Q* valPtr = nullptr, bool bAllowNoSel = false);
 	CQualifyingValidator(CQualifyingValidator const& rhs);
 	~CQualifyingValidator()
 	{
@@ -45,6 +49,8 @@ public:
 	bool Validate(wxWindow* parent) override;
 
 private:
-	ARB_Q* m_pQ;
+	ARB::ARB_Q* m_pQ;
 	bool m_bAllowNoSel;
 };
+
+} // namespace dconSoft

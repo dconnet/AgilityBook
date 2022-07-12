@@ -49,7 +49,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 class CDlgConfigureMethodDataDivision : public wxClientData
 {
@@ -325,7 +330,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlType->SetToolTip(_("HIDC_CONFIG_EVENT_TYPE"));
 	// If any additional types are added in ARBConfigScoring,
 	// they'll have to be manually added here...
-	static ARBScoringStyle const Styles[] = {
+	constexpr ARBScoringStyle Styles[] = {
 		ARBScoringStyle::FaultsThenTime,
 		ARBScoringStyle::Faults100ThenTime,
 		ARBScoringStyle::Faults200ThenTime,
@@ -1141,3 +1146,5 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

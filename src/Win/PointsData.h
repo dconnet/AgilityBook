@@ -36,17 +36,22 @@
 #include <list>
 #include <set>
 #include <vector>
+
+
+namespace dconSoft
+{
 class CAgilityBookDoc;
 struct CVenueFilter;
+
 
 // See SetupARBPost.h
 using std::get;
 using std::tuple;
 
-#define TUPLE_DOG   0
-#define TUPLE_TRIAL 1
-#define TUPLE_RUN   2
-typedef tuple<ARBDogPtr, ARBDogTrialPtr, ARBDogRunPtr> RunInfo;
+constexpr int TUPLE_DOG = 0;
+constexpr int TUPLE_TRIAL = 1;
+constexpr int TUPLE_RUN = 2;
+typedef tuple<ARB::ARBDogPtr, ARB::ARBDogTrialPtr, ARB::ARBDogRunPtr> RunInfo;
 
 // Special HTML tag for href's
 #define ARB_PROTOCOL L"arb:"
@@ -61,7 +66,7 @@ private:
 	MultiQdata() = delete;
 
 public:
-	MultiQdata(ARBDate inDate, ARBDogTrialPtr inTrial, std::wstring const& inClub)
+	MultiQdata(ARBCommon::ARBDate inDate, ARB::ARBDogTrialPtr inTrial, std::wstring const& inClub)
 		: date(inDate)
 		, trial(inTrial)
 		, club(inClub)
@@ -85,8 +90,8 @@ public:
 		return date < rhs.date;
 	}
 
-	ARBDate date;
-	ARBDogTrialPtr trial;
+	ARBCommon::ARBDate date;
+	ARB::ARBDogTrialPtr trial;
 	std::wstring club;
 };
 
@@ -131,12 +136,12 @@ private:
 
 public:
 	OtherPtInfo(
-		ARBDogTrialPtr const& inTrial,
-		ARBDogRunPtr const& inRun,
+		ARB::ARBDogTrialPtr const& inTrial,
+		ARB::ARBDogRunPtr const& inRun,
 		double points,
 		bool bScore, // m_Score is valid
 		double score);
-	OtherPtInfo(ARBDogExistingPointsPtr const& inExisting);
+	OtherPtInfo(ARB::ARBDogExistingPointsPtr const& inExisting);
 	OtherPtInfo(OtherPtInfo const&) = default;
 	OtherPtInfo(OtherPtInfo&&) = default;
 	~OtherPtInfo()
@@ -144,9 +149,9 @@ public:
 	}
 	OtherPtInfo& operator=(OtherPtInfo const&) = default;
 	OtherPtInfo& operator=(OtherPtInfo&&) = default;
-	ARBDogTrialPtr m_pTrial;
-	ARBDogRunPtr m_pRun;
-	ARBDogExistingPointsPtr m_pExisting;
+	ARB::ARBDogTrialPtr m_pTrial;
+	ARB::ARBDogRunPtr m_pRun;
+	ARB::ARBDogExistingPointsPtr m_pExisting;
 	std::wstring m_Venue;
 	std::wstring m_Div;
 	std::wstring m_Level;
@@ -165,14 +170,14 @@ class CPointsDataTitle
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataTitle)
 public:
-	CPointsDataTitle(CAgilityBookDoc* pDoc, ARBDogTitlePtr pTitle);
+	CPointsDataTitle(CAgilityBookDoc* pDoc, ARB::ARBDogTitlePtr pTitle);
 	void GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks);
-	bool Details(std::wstring const& link, ARBDogPtr pDog);
+	bool Details(std::wstring const& link, ARB::ARBDogPtr pDog);
 
 private:
 	std::wstring m_refTag;
 	CAgilityBookDoc* m_pDoc;
-	ARBDogTitlePtr m_pTitle;
+	ARB::ARBDogTitlePtr m_pTitle;
 };
 typedef std::shared_ptr<CPointsDataTitle> CPointsDataTitlePtr;
 
@@ -209,14 +214,14 @@ class CPointsDataEvent
 public:
 	CPointsDataEvent(
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr const& inDog,
+		ARB::ARBDogPtr const& inDog,
 		std::list<RunInfo>& inMatching,
-		ARBConfigVenuePtr const& inVenue,
-		ARBConfigDivisionPtr const& inDiv,
+		ARB::ARBConfigVenuePtr const& inVenue,
+		ARB::ARBConfigDivisionPtr const& inDiv,
 		int inDivIdx,
-		ARBConfigLevelPtr const& inLevel,
+		ARB::ARBConfigLevelPtr const& inLevel,
 		int inLevelIdx,
-		ARBConfigEventPtr const& inEvent,
+		ARB::ARBConfigEventPtr const& inEvent,
 		int inEventIdx,
 		std::wstring const& inRunCount,
 		std::wstring const& inQcount,
@@ -231,14 +236,14 @@ public:
 protected:
 	std::wstring m_refTag;
 	CAgilityBookDoc* m_pDoc;
-	ARBDogPtr m_Dog;
+	ARB::ARBDogPtr m_Dog;
 	std::list<RunInfo> m_Matching;
-	ARBConfigVenuePtr m_Venue;
-	ARBConfigDivisionPtr m_Div;
+	ARB::ARBConfigVenuePtr m_Venue;
+	ARB::ARBConfigDivisionPtr m_Div;
 	int m_DivIdx;
-	ARBConfigLevelPtr m_Level;
+	ARB::ARBConfigLevelPtr m_Level;
 	int m_LevelIdx;
-	ARBConfigEventPtr m_Event;
+	ARB::ARBConfigEventPtr m_Event;
 	int m_EventIdx;
 	std::wstring m_RunCount;
 	std::wstring m_Qcount;
@@ -259,8 +264,8 @@ class CPointsDataSpeedPts
 public:
 	CPointsDataSpeedPts(
 		CAgilityBookDoc* pDoc,
-		ARBConfigVenuePtr const& inVenue,
-		ARBConfigDivisionPtr const& inDiv,
+		ARB::ARBConfigVenuePtr const& inVenue,
+		ARB::ARBConfigDivisionPtr const& inDiv,
 		int inPts,
 		CRefTag& id);
 
@@ -270,8 +275,8 @@ public:
 protected:
 	std::wstring m_refTag;
 	CAgilityBookDoc* m_pDoc;
-	ARBConfigVenuePtr m_Venue;
-	ARBConfigDivisionPtr m_Div;
+	ARB::ARBConfigVenuePtr m_Venue;
+	ARB::ARBConfigDivisionPtr m_Div;
 	int m_Pts;
 };
 typedef std::shared_ptr<CPointsDataSpeedPts> CPointsDataSpeedPtsPtr;
@@ -287,9 +292,9 @@ class CPointsDataMultiQs
 public:
 	CPointsDataMultiQs(
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr const& inDog,
-		ARBConfigVenuePtr const& inVenue,
-		ARBConfigMultiQPtr const& inMultiQ,
+		ARB::ARBDogPtr const& inDog,
+		ARB::ARBConfigVenuePtr const& inVenue,
+		ARB::ARBConfigMultiQPtr const& inMultiQ,
 		std::set<MultiQdata> const& inMQs,
 		CRefTag& id);
 
@@ -299,9 +304,9 @@ public:
 protected:
 	std::wstring m_refTag;
 	CAgilityBookDoc* m_pDoc;
-	ARBDogPtr m_Dog;
-	ARBConfigVenuePtr m_Venue;
-	ARBConfigMultiQPtr m_MultiQ;
+	ARB::ARBDogPtr m_Dog;
+	ARB::ARBConfigVenuePtr m_Venue;
+	ARB::ARBConfigMultiQPtr m_MultiQ;
 	std::set<MultiQdata> m_MQs;
 	double m_ExistingDblQs;
 };
@@ -316,11 +321,11 @@ class CPointsDataLifetime
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataLifetime)
 public:
-	CPointsDataLifetime(CAgilityBookDoc* pDoc, ARBConfigVenuePtr const& inVenue, CRefTag& id);
+	CPointsDataLifetime(CAgilityBookDoc* pDoc, ARB::ARBConfigVenuePtr const& inVenue, CRefTag& id);
 	CPointsDataLifetime(
 		CAgilityBookDoc* pDoc,
-		ARBConfigLifetimeNamePtr const& inLifetimeName,
-		ARBConfigVenuePtr const& inVenue,
+		ARB::ARBConfigLifetimeNamePtr const& inLifetimeName,
+		ARB::ARBConfigVenuePtr const& inVenue,
 		CRefTag& id);
 	virtual ~CPointsDataLifetime()
 	{
@@ -337,8 +342,8 @@ public:
 protected:
 	std::wstring m_refTag;
 	CAgilityBookDoc* m_pDoc;
-	ARBConfigLifetimeNamePtr m_LifetimeName; ///< null implies Placement
-	ARBConfigVenuePtr m_Venue;
+	ARB::ARBConfigLifetimeNamePtr m_LifetimeName; ///< null implies Placement
+	ARB::ARBConfigVenuePtr m_Venue;
 	std::list<LifeTimePointInfoPtr> m_Data;
 	double m_Lifetime; ///< Total lifetime points.
 	double m_Filtered; ///< Points that are filtered out.
@@ -354,13 +359,13 @@ class CPointsDataLifetimeByName : public CPointsDataLifetime
 public:
 	CPointsDataLifetimeByName(
 		CAgilityBookDoc* pDoc,
-		ARBConfigVenuePtr const& inVenue,
+		ARB::ARBConfigVenuePtr const& inVenue,
 		std::wstring const& inName,
 		CRefTag& id);
 	CPointsDataLifetimeByName(
 		CAgilityBookDoc* pDoc,
-		ARBConfigLifetimeNamePtr const& inLifetimeName,
-		ARBConfigVenuePtr const& inVenue,
+		ARB::ARBConfigLifetimeNamePtr const& inLifetimeName,
+		ARB::ARBConfigVenuePtr const& inVenue,
 		std::wstring const& inName,
 		CRefTag& id);
 
@@ -387,8 +392,8 @@ public:
 	CPointsDataVenue(
 		std::vector<CVenueFilter> const& venues,
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr const& inDog,
-		ARBConfigVenuePtr const inVenue,
+		ARB::ARBDogPtr const& inDog,
+		ARB::ARBConfigVenuePtr const inVenue,
 		CRefTag& id);
 
 	bool HasData() const;
@@ -417,23 +422,23 @@ private:
 	typedef std::list<LifeTimePoint> LifeTimePointList;
 	struct LifeTimePoints
 	{
-		ARBConfigDivisionPtr pDiv;
-		ARBConfigLevelPtr pLevel;
-		std::map<ARBConfigLifetimeNamePtr, LifeTimePointList> ptLifetime;
+		ARB::ARBConfigDivisionPtr pDiv;
+		ARB::ARBConfigLevelPtr pLevel;
+		std::map<ARB::ARBConfigLifetimeNamePtr, LifeTimePointList> ptLifetime;
 	};
 	typedef std::list<LifeTimePoints> LifeTimePointsList;
 	struct PlacementPoints
 	{
-		ARBConfigDivisionPtr pDiv;
-		ARBConfigLevelPtr pLevel;
+		ARB::ARBConfigDivisionPtr pDiv;
+		ARB::ARBConfigLevelPtr pLevel;
 		LifeTimePointList ptPlacement;
 	};
 	typedef std::list<PlacementPoints> PlacementPointsList;
 
 	std::wstring m_refTag;
 	CAgilityBookDoc* m_pDoc;
-	ARBDogPtr m_pDog;
-	ARBConfigVenuePtr m_pVenue;
+	ARB::ARBDogPtr m_pDog;
+	ARB::ARBConfigVenuePtr m_pVenue;
 	std::vector<CPointsDataTitlePtr> m_titles;
 	std::vector<CPointsDataEventPtr> m_events;
 	std::vector<CPointsDataSpeedPtsPtr> m_speedPts;
@@ -453,7 +458,7 @@ class CPointsDataOtherPoints
 public:
 	CPointsDataOtherPoints(
 		CAgilityBookDoc* pDoc,
-		ARBConfigOtherPointsPtr pOther,
+		ARB::ARBConfigOtherPointsPtr pOther,
 		std::list<OtherPtInfo> const& inRunList,
 		CRefTag& id);
 	virtual ~CPointsDataOtherPoints()
@@ -461,7 +466,7 @@ public:
 	}
 	virtual void GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks) = 0;
 	virtual bool Details(std::wstring const& link) = 0;
-	ARBConfigOtherPointsPtr GetOther() const
+	ARB::ARBConfigOtherPointsPtr GetOther() const
 	{
 		return m_pOther;
 	}
@@ -469,7 +474,7 @@ public:
 protected:
 	std::wstring m_refTag;
 	CAgilityBookDoc* m_pDoc;
-	ARBConfigOtherPointsPtr m_pOther;
+	ARB::ARBConfigOtherPointsPtr m_pOther;
 	std::list<OtherPtInfo> m_RunList;
 	double m_Points;
 };
@@ -481,7 +486,7 @@ class CPointsDataOtherPointsTallyAll : public CPointsDataOtherPoints
 public:
 	CPointsDataOtherPointsTallyAll(
 		CAgilityBookDoc* pDoc,
-		ARBConfigOtherPointsPtr pOther,
+		ARB::ARBConfigOtherPointsPtr pOther,
 		std::list<OtherPtInfo> const& inRunList,
 		CRefTag& id);
 
@@ -496,7 +501,7 @@ class CPointsDataOtherPointsTallyAllByEvent : public CPointsDataOtherPoints
 public:
 	CPointsDataOtherPointsTallyAllByEvent(
 		CAgilityBookDoc* pDoc,
-		ARBConfigOtherPointsPtr pOther,
+		ARB::ARBConfigOtherPointsPtr pOther,
 		std::wstring const& inEvent,
 		std::list<OtherPtInfo> const& inRunList,
 		CRefTag& id);
@@ -515,7 +520,7 @@ class CPointsDataOtherPointsTallyLevel : public CPointsDataOtherPoints
 public:
 	CPointsDataOtherPointsTallyLevel(
 		CAgilityBookDoc* pDoc,
-		ARBConfigOtherPointsPtr pOther,
+		ARB::ARBConfigOtherPointsPtr pOther,
 		std::wstring const& inLevel,
 		std::list<OtherPtInfo> const& inRunList,
 		CRefTag& id);
@@ -534,7 +539,7 @@ class CPointsDataOtherPointsTallyLevelByEvent : public CPointsDataOtherPoints
 public:
 	CPointsDataOtherPointsTallyLevelByEvent(
 		CAgilityBookDoc* pDoc,
-		ARBConfigOtherPointsPtr pOther,
+		ARB::ARBConfigOtherPointsPtr pOther,
 		std::wstring const& inLevel,
 		std::wstring const& inEvent,
 		std::list<OtherPtInfo> const& inRunList,
@@ -559,14 +564,16 @@ public:
 
 	void clear();
 
-	void LoadData(ARBDogPtr const& inDog);
+	void LoadData(ARB::ARBDogPtr const& inDog);
 
 	wxString GetHtml(bool bFragment, bool bNoInternalLinks);
 	bool Details(std::wstring const& link);
 
 private:
 	CAgilityBookDoc* m_pDoc;
-	ARBDogPtr m_pDog;
+	ARB::ARBDogPtr m_pDog;
 	std::vector<CPointsDataVenuePtr> m_venues;
 	std::vector<CPointsDataOtherPointsPtr> m_otherPts;
 };
+
+} // namespace dconSoft

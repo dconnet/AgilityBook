@@ -27,6 +27,9 @@
 #endif
 
 
+namespace dconSoft
+{
+
 TEST_CASE("ConfigOtherPoints")
 {
 	SECTION("GetTallyValidValues")
@@ -171,3 +174,5 @@ TEST_CASE("ConfigOtherPointsList")
 		}
 	}
 }
+
+} // namespace dconSoft

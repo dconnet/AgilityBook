@@ -21,6 +21,10 @@
 #include <wx/listctrl.h>
 #include <map>
 #include <vector>
+
+
+namespace dconSoft
+{
 class ARBConfigCalSiteList;
 class CCheckListCtrl;
 
@@ -94,3 +98,5 @@ private:
 	void OnDeleteVenueCode(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

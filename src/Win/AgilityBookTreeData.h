@@ -23,6 +23,10 @@
 #include "AgilityBookMenu.h"
 #include "LibARBWin/ListData.h"
 #include <vector>
+
+
+namespace dconSoft
+{
 class CAgilityBookTreeView;
 class CAgilityBookTreeDataDog;
 class CAgilityBookTreeDataTrial;
@@ -37,7 +41,7 @@ enum class ARBTreeDataType
 };
 
 
-class CAgilityBookTreeData : public CTreeData
+class CAgilityBookTreeData : public ARBWin::CTreeData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookTreeData)
 public:
@@ -50,33 +54,33 @@ public:
 	virtual ARBTreeDataType GetType() const = 0;
 
 	virtual CAgilityBookTreeData const* GetParent() const = 0;
-	virtual ARBBasePtr GetARBBase() const
+	virtual ARB::ARBBasePtr GetARBBase() const
 	{
-		return ARBBasePtr();
+		return ARB::ARBBasePtr();
 	}
-	virtual ARBDogPtr GetDog() const
+	virtual ARB::ARBDogPtr GetDog() const
 	{
-		return ARBDogPtr();
+		return ARB::ARBDogPtr();
 	}
-	virtual ARBDogTrialPtr GetTrial() const
+	virtual ARB::ARBDogTrialPtr GetTrial() const
 	{
-		return ARBDogTrialPtr();
+		return ARB::ARBDogTrialPtr();
 	}
-	virtual ARBDogRunPtr GetRun() const
+	virtual ARB::ARBDogRunPtr GetRun() const
 	{
-		return ARBDogRunPtr();
+		return ARB::ARBDogRunPtr();
 	}
-	virtual ARBDogPtr GetDog()
+	virtual ARB::ARBDogPtr GetDog()
 	{
-		return ARBDogPtr();
+		return ARB::ARBDogPtr();
 	}
-	virtual ARBDogTrialPtr GetTrial()
+	virtual ARB::ARBDogTrialPtr GetTrial()
 	{
-		return ARBDogTrialPtr();
+		return ARB::ARBDogTrialPtr();
 	}
-	virtual ARBDogRunPtr GetRun()
+	virtual ARB::ARBDogRunPtr GetRun()
 	{
-		return ARBDogRunPtr();
+		return ARB::ARBDogRunPtr();
 	}
 	virtual CAgilityBookTreeDataDog const* GetDataDog() const
 	{
@@ -125,7 +129,7 @@ class CAgilityBookTreeDataDog : public CAgilityBookTreeData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookTreeDataDog)
 public:
-	CAgilityBookTreeDataDog(CAgilityBookTreeView* pTree, ARBDogPtr const& inDog);
+	CAgilityBookTreeDataDog(CAgilityBookTreeView* pTree, ARB::ARBDogPtr const& inDog);
 	~CAgilityBookTreeDataDog();
 
 	ARBTreeDataType GetType() const override
@@ -137,15 +141,15 @@ public:
 	{
 		return nullptr;
 	}
-	ARBBasePtr GetARBBase() const override
+	ARB::ARBBasePtr GetARBBase() const override
 	{
 		return m_pDog;
 	}
-	ARBDogPtr GetDog() const override
+	ARB::ARBDogPtr GetDog() const override
 	{
 		return m_pDog;
 	}
-	ARBDogPtr GetDog() override
+	ARB::ARBDogPtr GetDog() override
 	{
 		return m_pDog;
 	}
@@ -171,7 +175,7 @@ public:
 	bool DoDelete(bool bSilent) override;
 
 private:
-	ARBDogPtr m_pDog;
+	ARB::ARBDogPtr m_pDog;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -180,7 +184,7 @@ class CAgilityBookTreeDataTrial : public CAgilityBookTreeData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookTreeDataTrial)
 public:
-	CAgilityBookTreeDataTrial(CAgilityBookTreeView* pTree, ARBDogTrialPtr const& inTrial);
+	CAgilityBookTreeDataTrial(CAgilityBookTreeView* pTree, ARB::ARBDogTrialPtr const& inTrial);
 
 	ARBTreeDataType GetType() const override
 	{
@@ -191,17 +195,17 @@ public:
 	{
 		return GetDataDog();
 	}
-	ARBBasePtr GetARBBase() const override
+	ARB::ARBBasePtr GetARBBase() const override
 	{
 		return m_pTrial;
 	}
-	ARBDogPtr GetDog() const override;
-	ARBDogTrialPtr GetTrial() const override
+	ARB::ARBDogPtr GetDog() const override;
+	ARB::ARBDogTrialPtr GetTrial() const override
 	{
 		return m_pTrial;
 	}
-	ARBDogPtr GetDog() override;
-	ARBDogTrialPtr GetTrial() override
+	ARB::ARBDogPtr GetDog() override;
+	ARB::ARBDogTrialPtr GetTrial() override
 	{
 		return m_pTrial;
 	}
@@ -229,7 +233,7 @@ public:
 	bool DoDelete(bool bSilent) override;
 
 private:
-	ARBDogTrialPtr m_pTrial;
+	ARB::ARBDogTrialPtr m_pTrial;
 	int m_idxIcon;
 };
 
@@ -239,7 +243,7 @@ class CAgilityBookTreeDataRun : public CAgilityBookTreeData
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookTreeDataRun)
 public:
-	CAgilityBookTreeDataRun(CAgilityBookTreeView* pTree, ARBDogRunPtr const& inRun);
+	CAgilityBookTreeDataRun(CAgilityBookTreeView* pTree, ARB::ARBDogRunPtr const& inRun);
 	~CAgilityBookTreeDataRun();
 
 	ARBTreeDataType GetType() const override
@@ -251,19 +255,19 @@ public:
 	{
 		return GetDataTrial();
 	}
-	ARBBasePtr GetARBBase() const override
+	ARB::ARBBasePtr GetARBBase() const override
 	{
 		return m_pRun;
 	}
-	ARBDogPtr GetDog() const override;
-	ARBDogTrialPtr GetTrial() const override;
-	ARBDogRunPtr GetRun() const override
+	ARB::ARBDogPtr GetDog() const override;
+	ARB::ARBDogTrialPtr GetTrial() const override;
+	ARB::ARBDogRunPtr GetRun() const override
 	{
 		return m_pRun;
 	}
-	ARBDogPtr GetDog() override;
-	ARBDogTrialPtr GetTrial() override;
-	ARBDogRunPtr GetRun() override
+	ARB::ARBDogPtr GetDog() override;
+	ARB::ARBDogTrialPtr GetTrial() override;
+	ARB::ARBDogRunPtr GetRun() override
 	{
 		return m_pRun;
 	}
@@ -293,5 +297,7 @@ public:
 	bool DoDelete(bool bSilent) override;
 
 private:
-	ARBDogRunPtr m_pRun;
+	ARB::ARBDogRunPtr m_pRun;
 };
+
+} // namespace dconSoft

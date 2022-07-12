@@ -29,6 +29,9 @@
 #endif
 
 
+namespace dconSoft
+{
+
 CNamedColumns::CNamedColumns(CAgilityBookOptions::ColumnOrder eOrder)
 	: m_eOrder(eOrder)
 	, m_Columns()
@@ -200,3 +203,5 @@ void CNamedColumns::SetColumn(int idxType, std::vector<long> const& columns)
 	m_Columns[idxType].clear();
 	m_Columns[idxType] = columns;
 }
+
+} // namespace dconSoft

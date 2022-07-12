@@ -17,21 +17,28 @@
  */
 
 #include "ARB/ARBTypes2.h"
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
 class CRichEditCtrl2;
+} // namespace ARBWin
 
 
 class CDlgOtherPoint : public wxDialog
 {
 public:
-	CDlgOtherPoint(ARBConfig& config, ARBDogRunOtherPointsPtr const& inRunOther, wxWindow* pParent = nullptr);
+	CDlgOtherPoint(ARB::ARBConfig& config, ARB::ARBDogRunOtherPointsPtr const& inRunOther, wxWindow* pParent = nullptr);
 
 private:
-	void LoadPoints(ARBConfigOtherPointsPtr const& inOther);
+	void LoadPoints(ARB::ARBConfigOtherPointsPtr const& inOther);
 
-	ARBConfig& m_Config;
-	ARBDogRunOtherPointsPtr m_pRunOther;
+	ARB::ARBConfig& m_Config;
+	ARB::ARBDogRunOtherPointsPtr m_pRunOther;
 	wxComboBox* m_ctrlOtherPoints;
-	CRichEditCtrl2* m_ctrlDesc;
+	ARBWin::CRichEditCtrl2* m_ctrlDesc;
 	double m_Points;
 
 	DECLARE_EVENT_TABLE()
@@ -39,3 +46,5 @@ private:
 	void OnOtherNew(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

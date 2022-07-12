@@ -20,8 +20,12 @@
 #include "ARB/ARBTypes2.h"
 #include <wx/clipbrd.h>
 
+
+namespace dconSoft
+{
+
 // Name of root element when writing Elements.
-#define CLIPDATA L"ClipData"
+constexpr wchar_t CLIPDATA[] = L"ClipData";
 
 // Special clipboard formats
 enum class ARBClipFormat
@@ -71,7 +75,7 @@ public:
 
 	static bool IsFormatAvailable(ARBClipFormat clpFmt);
 
-	bool GetData(ARBClipFormat clpFmt, ElementNodePtr const& outTree);
+	bool GetData(ARBClipFormat clpFmt, ARBCommon::ElementNodePtr const& outTree);
 
 	bool GetData(std::wstring& outData);
 };
@@ -109,7 +113,7 @@ public:
 	CClipboardDataWriter();
 	~CClipboardDataWriter();
 
-	bool AddData(ARBClipFormat clpFmt, ElementNodePtr const& inTree);
+	bool AddData(ARBClipFormat clpFmt, ARBCommon::ElementNodePtr const& inTree);
 
 	// Used to write special data.
 	bool AddData(ARBClipFormat clpFmt, std::wstring const& inData);
@@ -123,3 +127,5 @@ public:
 private:
 	wxDataObjectComposite* m_Object;
 };
+
+} // namespace dconSoft

@@ -20,11 +20,18 @@
 #include "DlgDogPanelBase.h"
 
 #include "ARB/ARBDog.h"
-#include "ARBCommon/ARBDate.h"
-class CAgilityBookDoc;
-class CReportListCtrl;
 class wxDateEvent;
 class wxDatePickerCtrl;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
+class CReportListCtrl;
+} // namespace ARBWin
+class CAgilityBookDoc;
+
 
 ARB_TYPEDEF(CDlgDogDataTitle)
 
@@ -33,7 +40,7 @@ class CDlgDogPanelTitles : public CDlgDogPanelReportBase
 	friend class CDlgDogDataTitle;
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgDogPanelTitles)
 public:
-	CDlgDogPanelTitles(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog, wxWindow* parent);
+	CDlgDogPanelTitles(CAgilityBookDoc* pDoc, ARB::ARBDogPtr const& inDog, wxWindow* parent);
 
 	bool Save(unsigned int& hint) override;
 
@@ -54,9 +61,11 @@ private:
 	int m_imgTitlesTitledHidden;
 	int m_imgTitlesTitledHiddenReceived;
 
-	ARBDogTitleList m_Titles;
+	ARB::ARBDogTitleList m_Titles;
 	// CColumnOrder m_sortTitles;
 	bool m_ViewHiddenTitles;
 
 	void OnTitleHidden(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

@@ -26,6 +26,12 @@
 #include <set>
 #include <vector>
 
+
+namespace dconSoft
+{
+namespace ARB
+{
+
 typedef std::vector<std::wstring> ARBDogFaultList;
 
 
@@ -90,8 +96,8 @@ public:
 	 */
 	bool Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -100,7 +106,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogNotes element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/*
 	 * Getters/setters.
@@ -142,3 +148,6 @@ private:
 	std::wstring m_CRCDMeta;
 	std::wstring m_Note;
 };
+
+} // namespace ARB
+} // namespace dconSoft

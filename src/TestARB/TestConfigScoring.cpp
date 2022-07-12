@@ -27,6 +27,9 @@
 #endif
 
 
+namespace dconSoft
+{
+
 TEST_CASE("ConfigScoring")
 {
 	SECTION("GetScoringStyleStr")
@@ -192,3 +195,5 @@ TEST_CASE("ConfigScoringList")
 		}
 	}
 }
+
+} // namespace dconSoft

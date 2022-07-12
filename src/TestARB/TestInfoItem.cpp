@@ -29,12 +29,20 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+
+namespace
+{
 struct TestInfoItemData
 {
 	ElementNodePtr tree;
 	ElementNodePtr data; // clubinfo
 	TestInfoItemData();
 };
+} // namespace
 
 
 TestInfoItemData::TestInfoItemData()
@@ -323,3 +331,5 @@ TEST_CASE("Info")
 		}
 	}
 }
+
+} // namespace dconSoft

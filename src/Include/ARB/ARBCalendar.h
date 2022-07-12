@@ -29,6 +29,11 @@
 #include "ARBCommon/ARBDate.h"
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 /**
  * Various states an entry may be in.
  */
@@ -119,11 +124,11 @@ public:
 	{
 		return m_DateEnd > rhs.GetEndDate();
 	}
-	bool operator<(ARBDate const& rhs) const
+	bool operator<(ARBCommon::ARBDate const& rhs) const
 	{
 		return m_DateStart < rhs;
 	}
-	bool operator>(ARBDate const& rhs) const
+	bool operator>(ARBCommon::ARBDate const& rhs) const
 	{
 		return m_DateEnd > rhs;
 	}
@@ -158,7 +163,10 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
+	bool Load(
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -166,7 +174,7 @@ public:
 	 * @return Success
 	 * @post The ARBCalendar element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Generate vEvent/vTask entries for iCalendar.
@@ -197,7 +205,7 @@ public:
 	 * @retval true inDate is before both entry start and end dates.
 	 * @retval false inDate is after one or both the start and end dates.
 	 */
-	bool IsBefore(ARBDate const& inDate) const
+	bool IsBefore(ARBCommon::ARBDate const& inDate) const
 	{
 		return (m_DateStart < inDate && m_DateEnd < inDate);
 	}
@@ -208,7 +216,7 @@ public:
 	 * @retval true inDate is on one of the dates in the entry range.
 	 * @retval false inDate is outside the calendar entry range.
 	 */
-	bool InRange(ARBDate const& inDate) const
+	bool InRange(ARBCommon::ARBDate const& inDate) const
 	{
 		return inDate.isBetween(m_DateStart, m_DateEnd);
 	}
@@ -220,7 +228,7 @@ public:
 	 * @retval true There is an overlap between the entry and the given range.
 	 * @retval false There is no overlap
 	 */
-	bool IsRangeOverlapped(ARBDate const& inDate1, ARBDate const& inDate2) const
+	bool IsRangeOverlapped(ARBCommon::ARBDate const& inDate1, ARBCommon::ARBDate const& inDate2) const
 	{
 		if (m_DateStart.isBetween(inDate1, inDate2) || m_DateEnd.isBetween(inDate1, inDate2))
 			return true;
@@ -231,43 +239,43 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBDate const& GetStartDate() const
+	ARBCommon::ARBDate const& GetStartDate() const
 	{
 		return m_DateStart;
 	}
-	void SetStartDate(ARBDate const& inDate)
+	void SetStartDate(ARBCommon::ARBDate const& inDate)
 	{
 		m_DateStart = inDate;
 	}
-	ARBDate const& GetEndDate() const
+	ARBCommon::ARBDate const& GetEndDate() const
 	{
 		return m_DateEnd;
 	}
-	void SetEndDate(ARBDate const& inDate)
+	void SetEndDate(ARBCommon::ARBDate const& inDate)
 	{
 		m_DateEnd = inDate;
 	}
-	ARBDate const& GetOpeningDate() const
+	ARBCommon::ARBDate const& GetOpeningDate() const
 	{
 		return m_DateOpening;
 	}
-	void SetOpeningDate(ARBDate const& inDate)
+	void SetOpeningDate(ARBCommon::ARBDate const& inDate)
 	{
 		m_DateOpening = inDate;
 	}
-	ARBDate const& GetDrawDate() const
+	ARBCommon::ARBDate const& GetDrawDate() const
 	{
 		return m_DateDraw;
 	}
-	void SetDrawDate(ARBDate const& inDate)
+	void SetDrawDate(ARBCommon::ARBDate const& inDate)
 	{
 		m_DateDraw = inDate;
 	}
-	ARBDate const& GetClosingDate() const
+	ARBCommon::ARBDate const& GetClosingDate() const
 	{
 		return m_DateClosing;
 	}
-	void SetClosingDate(ARBDate const& inDate)
+	void SetClosingDate(ARBCommon::ARBDate const& inDate)
 	{
 		m_DateClosing = inDate;
 	}
@@ -361,11 +369,11 @@ public:
 	}
 
 private:
-	ARBDate m_DateStart;
-	ARBDate m_DateEnd;
-	ARBDate m_DateOpening;
-	ARBDate m_DateDraw;
-	ARBDate m_DateClosing;
+	ARBCommon::ARBDate m_DateStart;
+	ARBCommon::ARBDate m_DateEnd;
+	ARBCommon::ARBDate m_DateOpening;
+	ARBCommon::ARBDate m_DateDraw;
+	ARBCommon::ARBDate m_DateClosing;
 	bool m_bTentative;
 	std::wstring m_Location;
 	std::wstring m_Club;
@@ -395,7 +403,10 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
+	bool Load(
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Sort the list by date.
@@ -415,7 +426,7 @@ public:
 	 * @return Number of entries that were trimmed.
 	 * @note No dates are trimmed if inData is not valid.
 	 */
-	int TrimEntries(ARBDate const& inDate);
+	int TrimEntries(ARBCommon::ARBDate const& inDate);
 
 	/**
 	 * Find a calendar entry.
@@ -442,3 +453,6 @@ public:
 	 */
 	bool DeleteCalendar(ARBCalendarPtr const& inCal);
 };
+
+} // namespace ARB
+} // namespace dconSoft

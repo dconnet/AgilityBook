@@ -18,6 +18,9 @@
 #include "../Win/Localization.h"
 
 
+namespace dconSoft
+{
+
 class CDlgDigest : public wxDialog
 {
 public:
@@ -44,3 +47,5 @@ private:
 	void OnBrowse(wxCommandEvent& evt);
 	void OnCopy(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

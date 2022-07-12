@@ -19,6 +19,10 @@
 #include "ARB/ARB_Q.h"
 
 
+namespace dconSoft
+{
+
+
 /// Combobox for Qs
 class CQualifyingComboBox : public wxChoice
 {
@@ -26,19 +30,24 @@ class CQualifyingComboBox : public wxChoice
 public:
 	CQualifyingComboBox(
 		wxWindow* parent,
-		ARBDogReferenceRunPtr const& inRefRun,
+		ARB::ARBDogReferenceRunPtr const& inRefRun,
 		wxValidator const& validator = wxDefaultValidator);
-	CQualifyingComboBox(wxWindow* parent, ARBDogRunPtr const& inRun, wxValidator const& validator = wxDefaultValidator);
 	CQualifyingComboBox(
 		wxWindow* parent,
-		ARBDogRunPtr const& inRun,
-		ARBConfigScoringPtr const& inScoring,
+		ARB::ARBDogRunPtr const& inRun,
+		wxValidator const& validator = wxDefaultValidator);
+	CQualifyingComboBox(
+		wxWindow* parent,
+		ARB::ARBDogRunPtr const& inRun,
+		ARB::ARBConfigScoringPtr const& inScoring,
 		wxValidator const& validator = wxDefaultValidator);
 
-	void ResetContent(ARBConfigScoringPtr const& inScoring);
-	ARB_Q GetQ(int index) const;
+	void ResetContent(ARB::ARBConfigScoringPtr const& inScoring);
+	ARB::ARB_Q GetQ(int index) const;
 
 private:
-	ARBDogReferenceRunPtr m_refRun;
-	ARBDogRunPtr m_Run;
+	ARB::ARBDogReferenceRunPtr m_refRun;
+	ARB::ARBDogRunPtr m_Run;
 };
+
+} // namespace dconSoft

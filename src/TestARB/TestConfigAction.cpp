@@ -30,6 +30,11 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+
 class ActionCallbackStop : public IConfigActionCallback
 {
 public:
@@ -619,3 +624,5 @@ TEST_CASE("ConfigAction")
 		}
 	}
 }
+
+} // namespace dconSoft

@@ -41,6 +41,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 CDlgDigest::CDlgDigest(wxString const& inFile)
 	: m_Localization()
 	, m_ctrlInit(nullptr)
@@ -376,3 +382,5 @@ void CDlgDigest::OnCopy(wxCommandEvent& evt)
 	else
 		wxBell();
 }
+
+} // namespace dconSoft

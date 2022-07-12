@@ -17,8 +17,18 @@
  */
 
 #include "ARBConfigCalSite.h"
+
+
+namespace dconSoft
+{
+namespace ARB
+{
 class ARBConfig;
+} // namespace ARB
+namespace ARBWin
+{
 class CTextCtrl;
+} // namespace ARBWin
 
 
 class CDlgPluginDetails : public wxDialog
@@ -32,7 +42,7 @@ private:
 	ARBConfigCalSiteList& m_sites;
 	ARBConfigCalSitePtr m_OrigCalSite;
 	ARBConfigCalSitePtr m_CalSite;
-	CTextCtrl* m_ctrlName;
+	ARBWin::CTextCtrl* m_ctrlName;
 	wxString m_strName;
 	wxString m_strDesc;
 	wxString m_strSearch;
@@ -43,3 +53,5 @@ private:
 	void OnPluginDetailCodes(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

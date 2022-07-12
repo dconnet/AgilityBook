@@ -23,9 +23,16 @@
 
 #include "AgilityBookOptions.h"
 #include <wx/wizard.h>
-class CAgilityBookDoc;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
 class CListCtrl;
 class CTextCtrl;
+} // namespace ARBWin
+class CAgilityBookDoc;
 class CWizard;
 
 
@@ -54,10 +61,10 @@ private:
 	wxRadioButton* m_ctrlSpace;
 	wxRadioButton* m_ctrlSemicolon;
 	wxRadioButton* m_ctrlOther;
-	CTextCtrl* m_ctrlOtherChar;
+	ARBWin::CTextCtrl* m_ctrlOtherChar;
 	wxButton* m_ctrlAssign;
 	wxComboBox* m_ctrlDateFormat;
-	CListCtrl* m_ctrlPreview;
+	ARBWin::CListCtrl* m_ctrlPreview;
 
 	void OnDelimTab(wxCommandEvent& evt);
 	void OnDelimSpace(wxCommandEvent& evt);
@@ -71,3 +78,5 @@ private:
 	void OnWizardChanging(wxWizardEvent& evt);
 	void OnWizardChanged(wxWizardEvent& evt);
 };
+
+} // namespace dconSoft

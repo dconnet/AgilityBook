@@ -17,12 +17,23 @@
  */
 
 #include "ARB/ARBConfigScoring.h"
-class ARBAgilityRecordBook;
-class CDlgFixup;
-class CReportListCtrl;
-class CTextCtrl;
+#include "ARBCommon/ARBDate.h"
 class wxDatePickerCtrl;
 class wxListEvent;
+
+
+namespace dconSoft
+{
+namespace ARB
+{
+class ARBAgilityRecordBook;
+} // namespace ARB
+namespace ARBWin
+{
+class CReportListCtrl;
+class CTextCtrl;
+} // namespace ARBWin
+class CDlgFixup;
 
 class CDlgConfigureDataPlacement;
 typedef std::shared_ptr<CDlgConfigureDataPlacement> CDlgConfigureDataPlacementPtr;
@@ -32,21 +43,21 @@ class CDlgConfigEventMethod : public wxDialog
 {
 public:
 	CDlgConfigEventMethod(
-		ARBConfigVenuePtr const& inVenue,
-		ARBConfigScoringPtr const& inScoring,
+		ARB::ARBConfigVenuePtr const& inVenue,
+		ARB::ARBConfigScoringPtr const& inScoring,
 		wxWindow* pParent = nullptr);
 
 private:
-	ARBScoringStyle GetType(int index) const;
+	ARB::ARBScoringStyle GetType(int index) const;
 	CDlgConfigureDataPlacementPtr GetPlacementData(int index) const;
 	void UpdateButtons();
 	void UpdateControls();
 	void FillLevelList();
 	void DoPlacementEdit();
 
-	ARBConfigVenuePtr m_pVenue;
-	ARBConfigScoringPtr m_pScoring;
-	ARBConfigPlaceInfoList m_PlaceInfo;
+	ARB::ARBConfigVenuePtr m_pVenue;
+	ARB::ARBConfigScoringPtr m_pScoring;
+	ARB::ARBConfigPlaceInfoList m_PlaceInfo;
 	wxComboBox* m_ctrlDivision;
 	wxComboBox* m_ctrlLevel;
 	wxCheckBox* m_ctrlValidFrom;
@@ -59,9 +70,9 @@ private:
 	wxCheckBox* m_ctrlSuperQ;
 	wxCheckBox* m_ctrlSpeedPts;
 	wxStaticText* m_ctrlMultiplyText;
-	CTextCtrl* m_ctrlMultiply;
+	ARBWin::CTextCtrl* m_ctrlMultiply;
 	wxStaticText* m_ctrlPlacementText;
-	CReportListCtrl* m_ctrlPlacement;
+	ARBWin::CReportListCtrl* m_ctrlPlacement;
 	wxButton* m_ctrlPlacementNew;
 	wxButton* m_ctrlPlacementEdit;
 	wxButton* m_ctrlPlacementDelete;
@@ -71,11 +82,11 @@ private:
 	wxCheckBox* m_ctrlTimeFaultsOver;
 	wxCheckBox* m_ctrlTimeFaultsTitlingPts;
 	wxStaticText* m_ctrlPointsOpeningText;
-	CTextCtrl* m_ctrlPointsOpening;
+	ARBWin::CTextCtrl* m_ctrlPointsOpening;
 	wxStaticText* m_ctrlPointsClosingText;
-	CTextCtrl* m_ctrlPointsClosing;
-	ARBDate m_dateFrom;
-	ARBDate m_dateTo;
+	ARBWin::CTextCtrl* m_ctrlPointsClosing;
+	ARBCommon::ARBDate m_dateFrom;
+	ARBCommon::ARBDate m_dateTo;
 	bool m_DropFractions;
 	bool m_Bonus;
 	bool m_SuperQ;
@@ -104,3 +115,5 @@ private:
 	void OnPlacementDelete(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

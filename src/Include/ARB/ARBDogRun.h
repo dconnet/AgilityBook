@@ -41,6 +41,11 @@
 #include <set>
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 class ARB_API ARBDogRun : public ARBBase
 {
 protected:
@@ -95,8 +100,8 @@ public:
 	bool Load(
 		ARBConfig const& inConfig,
 		ARBDogClubList const& inClubs,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -107,7 +112,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogRun element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree, ARBDogTrial const* pTrial, ARBConfig const& inConfig) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree, ARBDogTrial const* pTrial, ARBConfig const& inConfig) const;
 
 	/**
 	 * Number of OtherPoint objects in use.
@@ -175,11 +180,11 @@ public:
 	size_t GetMultiQs(std::vector<ARBConfigMultiQPtr>& outMultiQs) const;
 	void ClearMultiQs();
 	void AddMultiQ(ARBConfigMultiQPtr const& inMultiQ);
-	ARBDate const& GetDate() const
+	ARBCommon::ARBDate const& GetDate() const
 	{
 		return m_Date;
 	}
-	void SetDate(ARBDate const& inDate)
+	void SetDate(ARBCommon::ARBDate const& inDate)
 	{
 		m_Date = inDate;
 	}
@@ -366,7 +371,7 @@ public:
 
 private:
 	std::set<ARBConfigMultiQPtr> m_pMultiQs; //< Not persisted.
-	ARBDate m_Date;
+	ARBCommon::ARBDate m_Date;
 	ARBDogClubPtr m_Club;
 	std::wstring m_Division;
 	std::wstring m_Level;
@@ -410,8 +415,8 @@ public:
 	bool Load(
 		ARBConfig const& inConfig,
 		ARBDogClubList const& inClubs,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -422,7 +427,7 @@ public:
 	 * @return Success
 	 * @post The T element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree, ARBDogTrial const* pTrial, ARBConfig const& inConfig) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree, ARBDogTrial const* pTrial, ARBConfig const& inConfig) const;
 
 	/**
 	 * Sort the list by date in ascending order. The user interface handles
@@ -433,12 +438,12 @@ public:
 	/**
 	 * Get the earliest date in the list.
 	 */
-	ARBDate GetStartDate() const;
+	ARBCommon::ARBDate GetStartDate() const;
 
 	/**
 	 * Get the latest date in the list.
 	 */
-	ARBDate GetEndDate() const;
+	ARBCommon::ARBDate GetEndDate() const;
 
 	/**
 	 * Add a run.
@@ -455,3 +460,6 @@ public:
 	 */
 	bool DeleteRun(ARBDogRunPtr const& inRun);
 };
+
+} // namespace ARB
+} // namespace dconSoft

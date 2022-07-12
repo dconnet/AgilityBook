@@ -37,6 +37,9 @@
 #endif
 
 
+namespace dconSoft
+{
+
 wxBEGIN_EVENT_TABLE(CDlgOptions, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgOptions::OnOk)
 wxEND_EVENT_TABLE()
@@ -119,3 +122,5 @@ void CDlgOptions::OnOk(wxCommandEvent& evt)
 
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

@@ -26,6 +26,10 @@
 
 #include "ARBCommon/ARBDate.h"
 #include <wx/docview.h>
+
+
+namespace dconSoft
+{
 class CAgilityBookCalendar;
 
 
@@ -61,8 +65,8 @@ public:
 	bool NextPane() override;
 	void DetachView() override;
 
-	ARBDate GetCurrentDate() const;
-	bool SetCurrentDate(ARBDate const& date, bool bEnsureVisible);
+	ARBCommon::ARBDate GetCurrentDate() const;
+	bool SetCurrentDate(ARBCommon::ARBDate const& date, bool bEnsureVisible);
 
 	bool IsFiltered() const override;
 	bool GetMessage(std::wstring& msg) const override;
@@ -94,3 +98,5 @@ private:
 	void OnViewUpdateCmd(wxUpdateUIEvent& evt);
 	void OnViewCmd(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

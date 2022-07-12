@@ -43,10 +43,15 @@
 #endif
 
 
-IMPLEMENT_DYNAMIC_CLASS(CTabView, wxView)
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
-
-static long GetDefaultBook()
+namespace
+{
+long GetDefaultBook()
 {
 #if wxUSE_NOTEBOOK
 	return ID_BOOK_NOTEBOOK;
@@ -62,6 +67,10 @@ static long GetDefaultBook()
 #error "No books enabled in wxWidgets build!"
 #endif
 }
+} // namespace
+
+
+IMPLEMENT_DYNAMIC_CLASS(CTabView, wxView)
 
 
 CTabView::CTabView()
@@ -387,3 +396,5 @@ void CTabView::OnBookCtrlChanged(wxBookCtrlEvent& evt)
 	}
 	evt.Skip();
 }
+
+} // namespace dconSoft

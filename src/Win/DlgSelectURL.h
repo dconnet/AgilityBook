@@ -17,7 +17,12 @@
  * 2004-03-30 Created.
  */
 
+namespace dconSoft
+{
+namespace ARBWin
+{
 class CTextCtrl;
+} // namespace ARBWin
 
 
 class CDlgSelectURL : public wxDialog
@@ -30,9 +35,11 @@ public:
 
 private:
 	wxString m_Name;
-	CTextCtrl* m_textCtrl;
+	ARBWin::CTextCtrl* m_textCtrl;
 
 	void InitDlg(wxWindow* pParent, bool bAllowEmpty);
 
 	void OnFilename(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

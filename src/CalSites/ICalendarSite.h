@@ -28,7 +28,14 @@
 #include <map>
 #include <string>
 #include <vector>
-class CVersionNum;    // ARB/VersionNum.h
+
+
+namespace dconSoft
+{
+namespace ARBCommon
+{
+class CVersionNum; // ARB/VersionNum.h
+} // namespace ARBCommon
 class IProgressMeter; // Include/IProgressMeter.h
 
 
@@ -50,7 +57,7 @@ public:
 	 * We're not directly parsing VERSIONINFO as that is not platform portable.
 	 * @return Whether the version was returned.
 	 */
-	virtual bool GetVersion(CVersionNum& outVer) const = 0;
+	virtual bool GetVersion(ARBCommon::CVersionNum& outVer) const = 0;
 
 	/**
 	 * Get a short name of the site this parses.
@@ -98,3 +105,5 @@ public:
 		IProgressMeter* progress) const = 0;
 };
 typedef std::shared_ptr<ICalendarSite> ICalendarSitePtr;
+
+} // namespace dconSoft

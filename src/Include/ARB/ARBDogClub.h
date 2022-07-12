@@ -24,8 +24,16 @@
 #include "ARBBase.h"
 #include "ARBTypes2.h"
 #include "LibwxARB.h"
-class ARBDate;
 
+
+namespace dconSoft
+{
+namespace ARBCommon
+{
+class ARBDate;
+} // namespace ARBCommon
+namespace ARB
+{
 
 /**
  * Dog club.
@@ -78,8 +86,8 @@ public:
 	 */
 	bool Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -96,7 +104,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogClub element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/*
 	 * Getters/setters.
@@ -156,8 +164,8 @@ public:
 	 */
 	bool Load(
 		ARBConfig const& inConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -243,7 +251,7 @@ public:
 		std::wstring const& inEvent,
 		std::wstring const& inDivision,
 		std::wstring const& inLevel,
-		ARBDate const& inDate,
+		ARBCommon::ARBDate const& inDate,
 		ARBErrorCallback& ioCallback,
 		ARBConfigEventPtr* outEvent = nullptr,
 		ARBConfigScoringPtr* outScoring = nullptr) const;
@@ -273,3 +281,6 @@ public:
 	 */
 	bool DeleteClub(std::wstring const& inName, std::wstring const& inVenue);
 };
+
+} // namespace ARB
+} // namespace dconSoft

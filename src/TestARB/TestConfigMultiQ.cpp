@@ -27,6 +27,9 @@
 #endif
 
 
+namespace dconSoft
+{
+
 TEST_CASE("ConfigMultiQ")
 {
 	SECTION("New")
@@ -311,3 +314,5 @@ TEST_CASE("ConfigMultiQList")
 		}
 	}
 }
+
+} // namespace dconSoft

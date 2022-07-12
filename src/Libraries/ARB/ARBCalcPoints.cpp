@@ -27,7 +27,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 ARBCalcPointsPtr ARBCalcPoints::New(ARBPointsType type)
 {
@@ -279,3 +284,6 @@ double ARBCalcPointsTop10USDAA::GetPoints(
 	else
 		return (isTourney ? 5.0 : 10.0) + pts;
 }
+
+} // namespace ARB
+} // namespace dconSoft

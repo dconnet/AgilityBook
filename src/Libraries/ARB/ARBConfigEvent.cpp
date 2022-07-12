@@ -40,7 +40,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 class ARBConfigEvent_concrete : public ARBConfigEvent
 {
@@ -601,3 +606,6 @@ bool ARBConfigEventList::DeleteEvent(std::wstring const& inEvent)
 	}
 	return false;
 }
+
+} // namespace ARB
+} // namespace dconSoft

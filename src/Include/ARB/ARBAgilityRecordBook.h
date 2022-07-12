@@ -59,6 +59,11 @@
 #include <set>
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 enum class ARBFileInfo
 {
 	Book = 0,      // ARB document version
@@ -80,7 +85,7 @@ public:
 	 * Return the current document version. This helps make sure an older
 	 * version of the program doesn't read a newer version of the file.
 	 */
-	static ARBVersion const& GetCurrentDocVersion();
+	static ARBCommon::ARBVersion const& GetCurrentDocVersion();
 
 	ARBAgilityRecordBook();
 	~ARBAgilityRecordBook();
@@ -105,7 +110,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		ElementNodePtr const& inTree,
+		ARBCommon::ElementNodePtr const& inTree,
 		bool inCalendar,
 		bool inTraining,
 		bool inConfig,
@@ -119,7 +124,7 @@ public:
 	 * @param ioCallback Error processing callback
 	 * @return Success
 	 */
-	bool Load(ElementNodePtr const& inTree, ARBErrorCallback& ioCallback)
+	bool Load(ARBCommon::ElementNodePtr const& inTree, ARBErrorCallback& ioCallback)
 	{
 		return Load(inTree, true, true, true, true, true, ioCallback);
 	}
@@ -136,7 +141,7 @@ public:
 	 * @return Success
 	 */
 	bool Save(
-		ElementNodePtr const& outTree,
+		ARBCommon::ElementNodePtr const& outTree,
 		std::wstring const& inPgmVer,
 		bool inCalendar,
 		bool inTraining,
@@ -286,3 +291,6 @@ private:
 
 	DECLARE_NO_COPY_IMPLEMENTED(ARBAgilityRecordBook);
 };
+
+} // namespace ARB
+} // namespace dconSoft

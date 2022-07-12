@@ -40,7 +40,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 bool CHtmlWindow::SetPage(const wxString& source)
 {
@@ -351,3 +356,5 @@ void CAgilityBookPointsView::OnPreview(wxCommandEvent& evt)
 	wxString text(m_Items->GetHtml(false, true));
 	wxGetApp().GetHtmlPrinter()->PreviewText(text);
 }
+
+} // namespace dconSoft

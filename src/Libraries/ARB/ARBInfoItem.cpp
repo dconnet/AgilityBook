@@ -32,7 +32,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 namespace
 {
@@ -366,3 +371,6 @@ bool ARBInfoItemList::DeleteItem(ARBInfoItemPtr const& inItem)
 	}
 	return false;
 }
+
+} // namespace ARB
+} // namespace dconSoft

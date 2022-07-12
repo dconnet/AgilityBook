@@ -31,7 +31,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 class CPlaceValidator : public CGenericValidator
 {
@@ -189,3 +194,5 @@ CDlgConfigPlaceInfo::CDlgConfigPlaceInfo(
 
 	IMPLEMENT_ON_INIT(CDlgConfigPlaceInfo, ctrlPlace)
 }
+
+} // namespace dconSoft

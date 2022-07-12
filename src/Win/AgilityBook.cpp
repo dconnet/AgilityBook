@@ -76,6 +76,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 wxIMPLEMENT_APP(CAgilityBookApp);
 
 /////////////////////////////////////////////////////////////////////////////
@@ -860,3 +866,5 @@ void CAgilityBookApp::OnEndSession(wxCloseEvent& evt)
 	// Pass control to wx so it shuts things down normally.
 	evt.Skip();
 }
+
+} // namespace dconSoft

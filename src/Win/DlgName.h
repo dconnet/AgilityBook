@@ -16,6 +16,9 @@
  * 2009-02-11 Ported to wxWidgets.
  */
 
+namespace dconSoft
+{
+
 
 class CDlgName : public wxDialog
 {
@@ -30,3 +33,5 @@ private:
 
 	bool Create(wxString const& caption, wxWindow* pParent = nullptr);
 };
+
+} // namespace dconSoft

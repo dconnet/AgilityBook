@@ -27,6 +27,9 @@
 #endif
 
 
+namespace dconSoft
+{
+
 TEST_CASE("DogNotes")
 {
 	SECTION("MetaData")
@@ -96,3 +99,5 @@ TEST_CASE("DogNotes")
 		}
 	}
 }
+
+} // namespace dconSoft

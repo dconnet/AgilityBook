@@ -28,7 +28,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 class CPointViewData : public wxClientData
 {
@@ -169,7 +174,9 @@ void CDlgPointsViewSort::UpdateControls()
 }
 
 
-static int AddItem(wxComboBox* ctrl, ARBPointsViewSort item, ARBPointsViewSort inSelect)
+namespace
+{
+int AddItem(wxComboBox* ctrl, ARBPointsViewSort item, ARBPointsViewSort inSelect)
 {
 	int idx = -1;
 	wxString str;
@@ -197,6 +204,7 @@ static int AddItem(wxComboBox* ctrl, ARBPointsViewSort item, ARBPointsViewSort i
 		ctrl->SetSelection(idx);
 	return idx;
 }
+} // namespace
 
 
 void CDlgPointsViewSort::FillPrimary()
@@ -275,3 +283,5 @@ void CDlgPointsViewSort::OnOk(wxCommandEvent& evt)
 	CAgilityBookOptions::SetPointsViewSort(m_Primary, m_Secondary, m_Tertiary);
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

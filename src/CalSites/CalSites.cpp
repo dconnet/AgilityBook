@@ -34,6 +34,11 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBWin;
+
 wxIMPLEMENT_APP(CCalSitesApp);
 
 
@@ -237,3 +242,5 @@ bool CErrorCallback::OnError(wchar_t const* const pMsg)
 {
 	return wxYES == wxMessageBox(pMsg, wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_EXCLAMATION);
 }
+
+} // namespace dconSoft

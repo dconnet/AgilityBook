@@ -19,43 +19,50 @@
 
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/ARBDate.h"
-class CRichEditCtrl2;
-class CVenueComboBox;
 class wxDateEvent;
 class wxDatePickerCtrl;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
+class CRichEditCtrl2;
+} // namespace ARBWin
+class CVenueComboBox;
 
 
 class CDlgTitle : public wxDialog
 {
 public:
 	CDlgTitle(
-		ARBConfig const& config,
-		ARBDogTitleList& titles,
-		ARBDogTitlePtr const& inTitle,
+		ARB::ARBConfig const& config,
+		ARB::ARBDogTitleList& titles,
+		ARB::ARBDogTitlePtr const& inTitle,
 		wxWindow* pParent = nullptr);
 
 	// Returns existing title or the newly created one.
-	ARBDogTitlePtr GetNewTitle() const
+	ARB::ARBDogTitlePtr GetNewTitle() const
 	{
 		return m_newTitle;
 	}
 
 private:
-	ARBConfigTitlePtr GetTitleData(int index) const;
-	ARBDate GetDate();
+	ARB::ARBConfigTitlePtr GetTitleData(int index) const;
+	ARBCommon::ARBDate GetDate();
 	void FillTitles(bool bIniting = false);
 	void FillTitleInfo();
-	short GetInstance(ARBConfigTitlePtr const& inTitle, std::vector<short>* outMissing = nullptr) const;
+	short GetInstance(ARB::ARBConfigTitlePtr const& inTitle, std::vector<short>* outMissing = nullptr) const;
 
-	ARBDogTitleList& m_Titles;
-	ARBDogTitlePtr m_pTitle;
-	ARBDogTitlePtr m_newTitle;
+	ARB::ARBDogTitleList& m_Titles;
+	ARB::ARBDogTitlePtr m_pTitle;
+	ARB::ARBDogTitlePtr m_newTitle;
 	wxDatePickerCtrl* m_ctrlDate;
 	wxCheckBox* m_ctrlReceived;
 	CVenueComboBox* m_ctrlVenues;
 	wxCheckBox* m_ctrlHide;
 	wxComboBox* m_ctrlTitles;
-	CRichEditCtrl2* m_ctrlDesc;
+	ARBWin::CRichEditCtrl2* m_ctrlDesc;
 	wxString m_Venue;
 	bool m_bEarned;
 	bool m_bHidden;
@@ -68,3 +75,5 @@ private:
 	void OnSelchangeTitles(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

@@ -41,7 +41,12 @@
 #define HAS_ENHMETAFILE
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 class CMetaDataDisplay : public CTextCtrl
 {
@@ -478,3 +483,5 @@ void CDlgRunPanelCRCD::OnCRCDImage(wxCommandEvent& evt)
 	m_CRCDDisplay->OnCRCDImage(m_ctrlIncImage->GetValue());
 	UpdateCRCDButtons();
 }
+
+} // namespace dconSoft

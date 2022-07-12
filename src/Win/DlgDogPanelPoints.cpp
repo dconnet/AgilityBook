@@ -36,6 +36,13 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 namespace
 {
 constexpr int k_colDate = 0;
@@ -397,3 +404,5 @@ void CDlgDogPanelPoints::ListExistingPoints()
 	}
 	UpdateControls();
 }
+
+} // namespace dconSoft

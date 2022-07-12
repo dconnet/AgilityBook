@@ -29,7 +29,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 namespace
 {
@@ -182,3 +187,6 @@ bool ARBDogRunOtherPointsList::AddOtherPoints(ARBDogRunOtherPointsPtr const& inO
 	}
 	return bAdded;
 }
+
+} // namespace ARB
+} // namespace dconSoft

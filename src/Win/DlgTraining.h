@@ -18,17 +18,21 @@
  */
 
 #include "ARB/ARBTypes2.h"
-class CAgilityBookDoc;
 class wxDatePickerCtrl;
+
+
+namespace dconSoft
+{
+class CAgilityBookDoc;
 
 
 class CDlgTraining : public wxDialog
 {
 public:
-	CDlgTraining(ARBTrainingPtr const& inTraining, CAgilityBookDoc* pDoc, wxWindow* pParent = nullptr);
+	CDlgTraining(ARB::ARBTrainingPtr const& inTraining, CAgilityBookDoc* pDoc, wxWindow* pParent = nullptr);
 
 private:
-	ARBTrainingPtr m_pTraining;
+	ARB::ARBTrainingPtr m_pTraining;
 	CAgilityBookDoc* m_pDoc;
 	wxDatePickerCtrl* m_datePicker;
 	wxString m_Name;
@@ -38,3 +42,5 @@ private:
 	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

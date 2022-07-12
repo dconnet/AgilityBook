@@ -70,7 +70,22 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
+namespace
+{
+// This is just to get the text in a sunken static control to look better
+std::wstring Pad(std::wstring const& val)
+{
+	return fmt::format(L" {} ", val);
+}
+} // namespace
+
 
 class CDlgDogVenueData : public wxClientData
 {
@@ -112,14 +127,6 @@ public:
 	ARBConfigLevelPtr m_pLevel;
 	ARBConfigSubLevelPtr m_pSubLevel;
 };
-
-/////////////////////////////////////////////////////////////////////////////
-
-// This is just to get the text in a sunken static control to look better
-static std::wstring Pad(std::wstring const& val)
-{
-	return fmt::format(L" {} ", val);
-}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -2321,3 +2328,5 @@ void CDlgRunPanelScore::OnBonusChange(wxCommandEvent& evt)
 	m_Run->GetScoring().SetBonusTitlePts(m_BonusTitlePts);
 	SetTitlePoints();
 }
+
+} // namespace dconSoft

@@ -26,6 +26,10 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARBCommon;
+
 CDlgPageEncodeFiles::CDlgPageEncodeFiles(CDlgARBHelp* pParent)
 	: wxWizardPageSimple(pParent)
 	, m_Parent(pParent)
@@ -108,3 +112,5 @@ bool CDlgPageEncodeFiles::TransferDataFromWindow()
 	}
 	return true;
 }
+
+} // namespace dconSoft

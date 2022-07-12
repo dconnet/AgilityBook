@@ -29,6 +29,11 @@
 #include "LibwxARB.h"
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 /**
  * Number of title points that can be earned.
  */
@@ -81,8 +86,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback,
 		ARBConfigLifetimePointsList& ioLifetimePoints);
 
@@ -92,7 +97,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigTitlePoints element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/*
 	 * Setters/getters.
@@ -136,8 +141,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback,
 		ARBConfigLifetimePointsList& ioLifetimePoints);
 
@@ -180,7 +185,7 @@ public:
 		double inSCT,
 		short inPlace,
 		short inClass,
-		ARBDate inDate,
+		ARBCommon::ARBDate inDate,
 		bool isTourney) const;
 
 	/**
@@ -208,3 +213,6 @@ public:
 	 */
 	bool DeleteTitlePoints(ARBPointsType inType, double inFaults);
 };
+
+} // namespace ARB
+} // namespace dconSoft

@@ -14,6 +14,10 @@
  * 2013-08-17 Created
  */
 
+namespace dconSoft
+{
 
-#define ARB_CONFIG_ENTRY L"Agility Record Book"
-#define ARB_CONFIG_INFO  L"AgilityBook.info"
+constexpr wchar_t ARB_CONFIG_ENTRY[] = L"Agility Record Book";
+constexpr wchar_t ARB_CONFIG_INFO[] = L"AgilityBook.info";
+
+} // namespace dconSoft

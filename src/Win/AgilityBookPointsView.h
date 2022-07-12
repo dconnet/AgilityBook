@@ -20,6 +20,10 @@
 
 #include "CommonView.h"
 #include <wx/docview.h>
+
+
+namespace dconSoft
+{
 class CAgilityBookPointsView;
 class CHtmlWindow;
 class CPointsDataItems;
@@ -97,3 +101,5 @@ private:
 	void OnPrintView(wxCommandEvent& evt);
 	void OnPreview(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

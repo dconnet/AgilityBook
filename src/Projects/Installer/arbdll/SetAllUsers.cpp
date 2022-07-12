@@ -19,11 +19,11 @@
 #include <sstream>
 
 
-static const int cchGUID = 38;
+namespace
+{
+constexpr int cchGUID = 38;
 
-//////////////////////////////////////////////////////////////////////////////
-
-static void SetAllUserDefaults(MSIHANDLE hInstall, bool bAdmin, bool bSuppressDialog)
+void SetAllUserDefaults(MSIHANDLE hInstall, bool bAdmin, bool bSuppressDialog)
 {
 	if (bSuppressDialog)
 	{
@@ -62,6 +62,7 @@ static void SetAllUserDefaults(MSIHANDLE hInstall, bool bAdmin, bool bSuppressDi
 		}
 	}
 }
+} // namespace
 
 //////////////////////////////////////////////////////////////////////////////
 

@@ -30,6 +30,11 @@
 #include "fmt/xchar.h"
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 class ARB_API IConfigActionCallback
 {
 	DECLARE_NO_COPY_IMPLEMENTED(IConfigActionCallback)
@@ -683,7 +688,10 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
+	bool Load(
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
 
 	int Apply(ARBConfig& ioConfig, ARBDogList* ioDogs, fmt::wmemory_buffer& ioInfo, IConfigActionCallback& ioCallBack)
 		const;
@@ -704,3 +712,6 @@ public:
 		std::wstring& ioDivision,
 		std::wstring& ioSubLevel) const;
 };
+
+} // namespace ARB
+} // namespace dconSoft

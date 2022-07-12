@@ -18,6 +18,10 @@
 #include "ARB/ARBTypes2.h"
 
 
+namespace dconSoft
+{
+
+
 /// Combobox specifically for listing venues
 class CVenueComboBox : public wxComboBox
 {
@@ -25,11 +29,13 @@ class CVenueComboBox : public wxComboBox
 public:
 	CVenueComboBox(
 		wxWindow* parent,
-		ARBConfigVenueList const& inVenues,
+		ARB::ARBConfigVenueList const& inVenues,
 		wxString const& inSelectVenue,
 		bool useLongName = false,
 		wxValidator const& validator = wxDefaultValidator,
 		bool bEditable = false);
 
-	ARBConfigVenuePtr GetVenue(int index) const;
+	ARB::ARBConfigVenuePtr GetVenue(int index) const;
 };
+
+} // namespace dconSoft

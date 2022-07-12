@@ -19,6 +19,10 @@
  */
 
 #include <wx/wizard.h>
+
+
+namespace dconSoft
+{
 class CAgilityBookDoc;
 class CWizard;
 
@@ -58,3 +62,5 @@ private:
 	void OnWizardChanging(wxWizardEvent& evt);
 	void OnWizardChanged(wxWizardEvent& evt);
 };
+
+} // namespace dconSoft

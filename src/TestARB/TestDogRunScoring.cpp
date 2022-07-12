@@ -26,6 +26,9 @@
 #endif
 
 
+namespace dconSoft
+{
+
 TEST_CASE("DogRunScoring")
 {
 	SECTION("TranslateConfigScoring")
@@ -139,3 +142,5 @@ TEST_CASE("DogRunScoring")
 		}
 	}
 }
+
+} // namespace dconSoft

@@ -24,6 +24,9 @@
 #include <vector>
 
 
+namespace dconSoft
+{
+
 enum class ARBFilterViewRuns
 {
 	All = 0,
@@ -102,9 +105,9 @@ private:
 		CCalendarViewFilter calView;
 		bool bAllDates;
 		bool bStartDate;
-		ARBDate dateStartDate;
+		ARBCommon::ARBDate dateStartDate;
 		bool bEndDate;
-		ARBDate dateEndDate;
+		ARBCommon::ARBDate dateEndDate;
 		bool bViewAllVenues;
 		std::vector<CVenueFilter> venueFilter;
 		ARBFilterViewRuns eRuns;
@@ -115,9 +118,9 @@ private:
 	CCalendarViewFilter m_calView;
 	bool m_bAllDates;
 	bool m_bStartDate;
-	ARBDate m_dateStartDate;
+	ARBCommon::ARBDate m_dateStartDate;
 	bool m_bEndDate;
-	ARBDate m_dateEndDate;
+	ARBCommon::ARBDate m_dateEndDate;
 	bool m_bViewAllVenues;
 	std::vector<CVenueFilter> m_venueFilter;
 	ARBFilterViewRuns m_eRuns;
@@ -133,7 +136,7 @@ private:
 public:
 	static CFilterOptions& Options();
 	CFilterOptions(); ///< Should only be used in options dialog
-	bool Update(ARBConfig const& inConfigNew, short configVersionPreUpdate, ARBConfig const& inConfigCurrent);
+	bool Update(ARB::ARBConfig const& inConfigNew, short configVersionPreUpdate, ARB::ARBConfig const& inConfigCurrent);
 	void Load();
 	void Save();
 	std::wstring GetCurrentFilter() const
@@ -147,8 +150,8 @@ public:
 
 	// Helper functions
 	bool IsFilterEnabled() const;
-	bool IsDateVisible(ARBDate const& startDate, ARBDate const& endDate) const;
-	bool IsTitleVisible(std::vector<CVenueFilter> const& venues, ARBDogTitlePtr const& inTitle) const;
+	bool IsDateVisible(ARBCommon::ARBDate const& startDate, ARBCommon::ARBDate const& endDate) const;
+	bool IsTitleVisible(std::vector<CVenueFilter> const& venues, ARB::ARBDogTitlePtr const& inTitle) const;
 	bool IsVenueVisible(std::vector<CVenueFilter> const& venues, std::wstring const& venue) const;
 	bool IsVenueDivisionVisible(
 		std::vector<CVenueFilter> const& venues,
@@ -159,18 +162,18 @@ public:
 		std::wstring const& venue,
 		std::wstring const& div,
 		std::wstring const& level) const;
-	bool IsTrialVisible(std::vector<CVenueFilter> const& venues, ARBDogTrialPtr const& inTrial) const;
+	bool IsTrialVisible(std::vector<CVenueFilter> const& venues, ARB::ARBDogTrialPtr const& inTrial) const;
 	unsigned short IsRunVisible(
 		std::vector<CVenueFilter> const& venues,
-		ARBDogTrialPtr const& inTrial,
-		ARBDogRunPtr const& inRun) const;
+		ARB::ARBDogTrialPtr const& inTrial,
+		ARB::ARBDogRunPtr const& inRun) const;
 	bool IsRunVisible(
 		std::vector<CVenueFilter> const& venues,
-		ARBConfigVenuePtr const& inVenue,
-		ARBDogTrialPtr const& inTrial,
-		ARBDogRunPtr const& inRun) const;
-	bool IsCalendarVisible(std::vector<CVenueFilter> const& venues, ARBCalendarPtr const& inCal) const;
-	bool IsTrainingLogVisible(std::set<std::wstring> const& names, ARBTrainingPtr const& inTraining) const;
+		ARB::ARBConfigVenuePtr const& inVenue,
+		ARB::ARBDogTrialPtr const& inTrial,
+		ARB::ARBDogRunPtr const& inRun) const;
+	bool IsCalendarVisible(std::vector<CVenueFilter> const& venues, ARB::ARBCalendarPtr const& inCal) const;
+	bool IsTrainingLogVisible(std::set<std::wstring> const& names, ARB::ARBTrainingPtr const& inTraining) const;
 
 	// Filtering: Calendar
 	CCalendarViewFilter FilterCalendarView() const
@@ -191,11 +194,11 @@ public:
 	{
 		m_bAllDates = bViewAll;
 	}
-	ARBDate GetStartFilterDate() const
+	ARBCommon::ARBDate GetStartFilterDate() const
 	{
 		return m_dateStartDate;
 	}
-	void SetStartFilterDate(ARBDate const& date)
+	void SetStartFilterDate(ARBCommon::ARBDate const& date)
 	{
 		m_dateStartDate = date;
 	}
@@ -207,11 +210,11 @@ public:
 	{
 		m_bStartDate = bSet;
 	}
-	ARBDate GetEndFilterDate() const
+	ARBCommon::ARBDate GetEndFilterDate() const
 	{
 		return m_dateEndDate;
 	}
-	void SetEndFilterDate(ARBDate const& date)
+	void SetEndFilterDate(ARBCommon::ARBDate const& date)
 	{
 		m_dateEndDate = date;
 	}
@@ -270,3 +273,5 @@ public:
 		m_nameFilter = inNames;
 	}
 };
+
+} // namespace dconSoft

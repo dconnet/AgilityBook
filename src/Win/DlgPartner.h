@@ -21,11 +21,15 @@
 #include <set>
 
 
+namespace dconSoft
+{
+
+
 class CDlgPartner : public wxDialog
 {
 public:
 	CDlgPartner(
-		ARBDogRunPartnerPtr const& inPartner,
+		ARB::ARBDogRunPartnerPtr const& inPartner,
 		std::set<std::wstring> const& inHandlers,
 		std::set<std::wstring> const& inDogs,
 		wxWindow* pParent = nullptr);
@@ -34,8 +38,10 @@ private:
 	wxString m_Handler;
 	wxString m_Dog;
 	wxString m_RegNum;
-	ARBDogRunPartnerPtr m_Partner;
+	ARB::ARBDogRunPartnerPtr m_Partner;
 
 	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

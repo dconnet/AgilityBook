@@ -19,6 +19,10 @@
 #include <vector>
 
 
+namespace dconSoft
+{
+
+
 class CDlgConfigPlaceInfo : public wxDialog
 {
 public:
@@ -41,3 +45,5 @@ private:
 	short m_Place;
 	double m_Value;
 };
+
+} // namespace dconSoft

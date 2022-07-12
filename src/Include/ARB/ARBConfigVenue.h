@@ -33,8 +33,16 @@
 #include "ARBConfigTitle.h"
 #include "ARBTypes2.h"
 #include "LibwxARB.h"
-class ARBDate;
 
+
+namespace dconSoft
+{
+namespace ARBCommon
+{
+class ARBDate;
+} // namespace ARBCommon
+namespace ARB
+{
 
 /**
  * Venue configuration information.
@@ -95,8 +103,8 @@ public:
 	 */
 	bool Load(
 		ARBConfig& ioConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -105,7 +113,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigDivision element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const;
 
 	/**
 	 * Update this configuration from inVenueNew.
@@ -232,8 +240,8 @@ public:
 	 */
 	bool Load(
 		ARBConfig& ioConfig,
-		ElementNodePtr const& inTree,
-		ARBVersion const& inVersion,
+		ARBCommon::ElementNodePtr const& inTree,
+		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
 	/**
@@ -283,7 +291,7 @@ public:
 		std::wstring const& inDivision,
 		std::wstring const& inLevel,
 		std::wstring const& inEvent,
-		ARBDate const& inDate) const;
+		ARBCommon::ARBDate const& inDate) const;
 
 	/**
 	 * Find a title by the complete name.
@@ -363,7 +371,10 @@ public:
 		std::wstring const& inEvent,
 		std::wstring const& inDivision,
 		std::wstring const& inLevel,
-		ARBDate const& inDate,
+		ARBCommon::ARBDate const& inDate,
 		ARBConfigEventPtr* outEvent = nullptr,
 		ARBConfigScoringPtr* outScoring = nullptr) const;
 };
+
+} // namespace ARB
+} // namespace dconSoft

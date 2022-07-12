@@ -26,7 +26,10 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBWin;
 
 class CDlgMessageBox : public wxDialog
 {
@@ -124,3 +127,5 @@ int AfxMessageBox2(wxString const& inText, long inFlags, IMessageBoxCallback* in
 	CDlgMessageBox dlg(inText, inFlags, inCallback, inParent);
 	return dlg.ShowModal();
 }
+
+} // namespace dconSoft

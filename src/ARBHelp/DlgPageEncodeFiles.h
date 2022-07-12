@@ -17,6 +17,10 @@
  */
 
 #include <wx/wizard.h>
+
+
+namespace dconSoft
+{
 class CDlgARBHelp;
 
 
@@ -35,3 +39,5 @@ private:
 	void OnCheckAll(wxCommandEvent& evt);
 	void OnCheckNone(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

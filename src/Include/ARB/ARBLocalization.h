@@ -31,6 +31,11 @@
 #include "LibwxARB.h"
 
 
+namespace dconSoft
+{
+namespace ARB
+{
+
 /**
  * This class must be implemented by the user to define some strings ARB
  * requires. This allows ARB to remain platform-independent.
@@ -233,3 +238,6 @@ public:
 
 
 ARB_API IARBLocalization const* Localization();
+
+} // namespace ARB
+} // namespace dconSoft

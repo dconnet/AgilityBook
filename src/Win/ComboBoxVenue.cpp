@@ -32,16 +32,19 @@
 #endif
 
 
-/////////////////////////////////////////////////////////////////////////////
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
 
 class CVenueComboData : public wxClientData
 {
 public:
-	CVenueComboData(ARBConfigVenuePtr const& inVenue)
+	CVenueComboData(ARB::ARBConfigVenuePtr const& inVenue)
 		: m_Venue(inVenue)
 	{
 	}
-	ARBConfigVenuePtr m_Venue;
+	ARB::ARBConfigVenuePtr m_Venue;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -51,7 +54,7 @@ wxIMPLEMENT_CLASS(CVenueComboBox, wxComboBox)
 
 CVenueComboBox::CVenueComboBox(
 	wxWindow* parent,
-	ARBConfigVenueList const& inVenues,
+	ARB::ARBConfigVenueList const& inVenues,
 	wxString const& inSelectVenue,
 	bool useLongName,
 	wxValidator const& validator,
@@ -89,10 +92,12 @@ CVenueComboBox::CVenueComboBox(
 }
 
 
-ARBConfigVenuePtr CVenueComboBox::GetVenue(int index) const
+ARB::ARBConfigVenuePtr CVenueComboBox::GetVenue(int index) const
 {
 	CVenueComboData* pData = dynamic_cast<CVenueComboData*>(GetClientObject(index));
 	if (pData)
 		return pData->m_Venue;
-	return ARBConfigVenuePtr();
+	return ARB::ARBConfigVenuePtr();
 }
+
+} // namespace dconSoft

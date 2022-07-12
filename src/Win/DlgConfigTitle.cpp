@@ -41,6 +41,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 class CMultipleValidator : public CGenericValidator
 {
 public:
@@ -236,7 +242,7 @@ CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pPa
 		wxCB_DROPDOWN | wxCB_READONLY);
 	m_ctrlStyle->SetHelpText(_("HIDC_CONFIG_TITLE_STYLE"));
 	m_ctrlStyle->SetToolTip(_("HIDC_CONFIG_TITLE_STYLE"));
-	static struct
+	constexpr struct
 	{
 		wchar_t const* idRes;
 		ARBTitleStyle style;
@@ -245,7 +251,7 @@ CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pPa
 		{arbT("IDS_CONFIG_TITLE_NUMBER"), ARBTitleStyle::Number},
 		{arbT("IDS_CONFIG_TITLE_ROMAN"), ARBTitleStyle::Roman},
 	};
-	static int nStyles = sizeof(styles) / sizeof(styles[0]);
+	constexpr int nStyles = sizeof(styles) / sizeof(styles[0]);
 	for (int n = 0; n < nStyles; ++n)
 	{
 		wxString str = wxGetTranslation(styles[n].idRes);
@@ -272,7 +278,7 @@ CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pPa
 		wxCB_DROPDOWN | wxCB_READONLY);
 	m_ctrlSep->SetHelpText(_("HIDC_CONFIG_TITLE_SEP"));
 	m_ctrlSep->SetToolTip(_("HIDC_CONFIG_TITLE_SEP"));
-	static struct
+	constexpr struct
 	{
 		wchar_t const* idRes;
 		ARBTitleSeparator sep;
@@ -281,7 +287,7 @@ CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pPa
 		{arbT("IDS_CONFIG_TITLE_SEP_SPACE"), ARBTitleSeparator::Space},
 		{arbT("IDS_CONFIG_TITLE_SEP_HYPHEN"), ARBTitleSeparator::Hyphen},
 	};
-	static int nSeps = sizeof(seps) / sizeof(seps[0]);
+	constexpr int nSeps = sizeof(seps) / sizeof(seps[0]);
 	for (int n = 0; n < nSeps; ++n)
 	{
 		wxString str = wxGetTranslation(seps[n].idRes);
@@ -493,3 +499,5 @@ void CDlgConfigTitle::OnOk(wxCommandEvent& evt)
 
 	EndDialog(wxID_OK);
 }
+
+} // namespace dconSoft

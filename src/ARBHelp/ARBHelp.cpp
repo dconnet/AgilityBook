@@ -32,6 +32,11 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARBCommon;
+using namespace ARBWin;
+
 class CARBHelpApp : public CBaseApp
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CARBHelpApp)
@@ -62,7 +67,7 @@ bool CARBHelpApp::OnInit()
 	if (!CBaseApp::OnInit())
 		return false;
 
-	static const wxCmdLineEntryDesc cmdLineDesc[] = {
+	constexpr wxCmdLineEntryDesc cmdLineDesc[] = {
 		{wxCMD_LINE_SWITCH, "decode", nullptr, "Decode ARBHelp data from clipboard"},
 		{wxCMD_LINE_NONE},
 	};
@@ -111,3 +116,5 @@ bool CARBHelpApp::GetResImageName(wxArtID const& id, wxArtClient const& client, 
 		found = false;
 	return found;
 }
+
+} // namespace dconSoft

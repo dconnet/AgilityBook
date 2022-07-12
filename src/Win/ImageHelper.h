@@ -23,6 +23,10 @@
 #include "LibARBWin/ImageHelperBase.h"
 
 
+namespace dconSoft
+{
+
+
 #define ImageMgrRuns                wxART_MAKE_ART_ID(ImageMgrRuns)
 #define ImageMgrPoints              wxART_MAKE_ART_ID(ImageMgrPoints)
 #define ImageMgrCalendar            wxART_MAKE_ART_ID(ImageMgrCalendar)
@@ -85,3 +89,5 @@
 #define ImageMgrPrint    wxART_MAKE_ART_ID(ImageMgrPrint)
 #define ImageMgrSave     wxART_MAKE_ART_ID(ImageMgrSave)
 #define ImageMgrSettings wxART_MAKE_ART_ID(ImageMgrSettings)
+
+} // namespace dconSoft

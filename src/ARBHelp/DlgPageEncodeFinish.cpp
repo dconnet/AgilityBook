@@ -27,6 +27,11 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARBCommon;
+using namespace ARBWin;
+
 CDlgPageEncodeFinish::CDlgPageEncodeFinish(CDlgARBHelp* pParent)
 	: wxWizardPageSimple(pParent)
 	, m_Parent(pParent)
@@ -69,3 +74,5 @@ bool CDlgPageEncodeFinish::TransferDataToWindow()
 	m_ctrlText->SetValue(m_Parent->GetEncodedData().c_str());
 	return true;
 }
+
+} // namespace dconSoft

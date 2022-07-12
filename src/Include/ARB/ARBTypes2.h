@@ -23,6 +23,11 @@
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/Element.h"
 #include "fmt/xchar.h"
+
+namespace dconSoft
+{
+namespace ARB
+{
 class ARBConfig;
 
 
@@ -193,7 +198,7 @@ public:
 	 * @return Success
 	 * @post The T element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree) const
+	bool Save(ARBCommon::ElementNodePtr const& ioTree) const
 	{
 		for (typename ARBVector<T>::const_iterator iter = ARBVector<T>::begin(); iter != ARBVector<T>::end(); ++iter)
 		{
@@ -221,7 +226,7 @@ public:
 	 * @return Success
 	 * @post The T element will be created in ioTree.
 	 */
-	bool Save(ElementNodePtr const& ioTree, ARBConfig const& inConfig) const
+	bool Save(ARBCommon::ElementNodePtr const& ioTree, ARBConfig const& inConfig) const
 	{
 		for (typename ARBVectorSaveConfig<T>::const_iterator iter = ARBVectorSaveConfig<T>::begin();
 			 iter != ARBVectorSaveConfig<T>::end();
@@ -276,3 +281,6 @@ protected:
 
 	DECLARE_NO_COPY_IMPLEMENTED(ARBErrorCallback);
 };
+
+} // namespace ARB
+} // namespace dconSoft

@@ -28,11 +28,16 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 namespace
 {
-static struct Q2Enum
+constexpr struct Q2Enum
 {
 	wchar_t const* pQ;    ///< Actual text in file
 	Q q;                  ///< Enum type
@@ -153,3 +158,6 @@ bool ARB_Q::Save(ElementNodePtr const& ioTree, wchar_t const* const inAttribName
 		ioTree->AddAttrib(inAttribName, q);
 	return bOk;
 }
+
+} // namespace ARB
+} // namespace dconSoft

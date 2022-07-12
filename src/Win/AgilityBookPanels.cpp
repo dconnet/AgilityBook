@@ -41,12 +41,22 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 // Default splitter widths.
 // Note: These are in normalized pixels. So they work in hi-dpi.
-#define DEFAULT_RUN_WIDTH 200L
-#define MIN_RUN_WIDTH     100L
-#define DEFAULT_CAL_WIDTH 300L
-#define MIN_CAL_WIDTH     100L
+namespace
+{
+constexpr int DEFAULT_RUN_WIDTH = 200;
+constexpr int MIN_RUN_WIDTH = 100;
+constexpr int DEFAULT_CAL_WIDTH = 300;
+constexpr int MIN_CAL_WIDTH = 100;
+} // namespace
 
 
 CBasePanel::CBasePanel(wxWindow* parent, std::wstring const& helpText)
@@ -318,3 +328,5 @@ CAgilityBookPanelTraining::CAgilityBookPanelTraining(
 	m_views[0]->Create(this, this, doc, flags, sizerPanel, 1, wxEXPAND, 0);
 	SetSizer(sizerPanel);
 }
+
+} // namespace dconSoft

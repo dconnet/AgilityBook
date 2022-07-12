@@ -26,6 +26,10 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+
 class ErrorCallback : public ARBErrorCallback
 {
 public:
@@ -71,3 +75,5 @@ TEST_CASE("ErrorCallback")
 		}
 	}
 }
+
+} // namespace dconSoft

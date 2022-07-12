@@ -18,6 +18,10 @@
 
 #include "LibARBWin/MenuHelper.h"
 
+
+namespace dconSoft
+{
+
 enum MenuIdentityPopup
 {
 	IdMenuNone = 0,
@@ -130,3 +134,5 @@ enum
 	ID_ARB_LAST,
 	ID_HELP_DEBUG, // Outside LAST range so it doesn't get disabled
 };
+
+} // namespace dconSoft

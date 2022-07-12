@@ -33,7 +33,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARBCommon;
+namespace ARB
+{
 
 namespace
 {
@@ -436,3 +441,6 @@ bool ARBConfigLevelList::DeleteSubLevel(std::wstring const& inName, bool& outLev
 	}
 	return false;
 }
+
+} // namespace ARB
+} // namespace dconSoft

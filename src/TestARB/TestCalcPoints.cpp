@@ -26,6 +26,11 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+
 TEST_CASE("CalcPoints")
 {
 	SECTION("New")
@@ -91,7 +96,7 @@ TEST_CASE("CalcPoints")
 			ARBCalcPointsPtr p = ARBCalcPoints::New(ARBPointsType::UKI);
 			REQUIRE(p->GetType() == ARBPointsType::UKI);
 			REQUIRE(!p->AllowConfiguration());
-			static struct
+			constexpr struct
 			{
 				short place;
 				short inCls;
@@ -126,7 +131,7 @@ TEST_CASE("CalcPoints")
 				{9, 31, 4.0},
 				{10, 31, 4.0},
 			};
-			static size_t nPoints = sizeof(points) / sizeof(points[0]);
+			constexpr size_t nPoints = sizeof(points) / sizeof(points[0]);
 			for (size_t i = 0; i < nPoints; ++i)
 			{
 				// First 3 and last 2 fields ignored.
@@ -251,3 +256,5 @@ TEST_CASE("CalcPoints")
 		}
 	}
 }
+
+} // namespace dconSoft

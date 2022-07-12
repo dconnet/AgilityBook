@@ -36,6 +36,10 @@
 #include "LibARBWin/Widgets.h"
 #include <wx/docview.h>
 #include <vector>
+
+
+namespace dconSoft
+{
 class CAgilityBookTreeData;
 class CAgilityBookTreeView;
 
@@ -173,36 +177,36 @@ public:
 	}
 	CAgilityBookTreeData* GetCurrentTreeItem() const;
 	CAgilityBookTreeData* GetTreeItem(wxTreeItemId hItem) const;
-	bool SelectDog(ARBDogPtr const& inDog);
+	bool SelectDog(ARB::ARBDogPtr const& inDog);
 
-	CAgilityBookTreeData* FindData(ARBBasePtr const& inBase) const
+	CAgilityBookTreeData* FindData(ARB::ARBBasePtr const& inBase) const
 	{
 		return FindData(m_Ctrl->GetRootItem(), inBase);
 	}
-	CAgilityBookTreeData* FindData(wxTreeItemId hItem, ARBBasePtr const& inBase) const;
-	CAgilityBookTreeData* FindData(ARBDogPtr const& inDog) const
+	CAgilityBookTreeData* FindData(wxTreeItemId hItem, ARB::ARBBasePtr const& inBase) const;
+	CAgilityBookTreeData* FindData(ARB::ARBDogPtr const& inDog) const
 	{
 		return FindData(m_Ctrl->GetRootItem(), inDog);
 	}
-	CAgilityBookTreeData* FindData(wxTreeItemId hItem, ARBDogPtr const& inDog) const;
-	CAgilityBookTreeData* FindData(ARBDogTrialPtr const& inTrial) const
+	CAgilityBookTreeData* FindData(wxTreeItemId hItem, ARB::ARBDogPtr const& inDog) const;
+	CAgilityBookTreeData* FindData(ARB::ARBDogTrialPtr const& inTrial) const
 	{
 		return FindData(m_Ctrl->GetRootItem(), inTrial);
 	}
-	CAgilityBookTreeData* FindData(wxTreeItemId hItem, ARBDogTrialPtr const& inTrial) const;
-	CAgilityBookTreeData* FindData(ARBDogRunPtr const& inRun) const
+	CAgilityBookTreeData* FindData(wxTreeItemId hItem, ARB::ARBDogTrialPtr const& inTrial) const;
+	CAgilityBookTreeData* FindData(ARB::ARBDogRunPtr const& inRun) const
 	{
 		return FindData(m_Ctrl->GetRootItem(), inRun);
 	}
-	CAgilityBookTreeData* FindData(wxTreeItemId hItem, ARBDogRunPtr const& inRun) const;
+	CAgilityBookTreeData* FindData(wxTreeItemId hItem, ARB::ARBDogRunPtr const& inRun) const;
 
-	wxTreeItemId InsertDog(ARBDogPtr const& inDog, bool bSelect = false);
-	wxTreeItemId InsertTrial(ARBDogTrialPtr const& inTrial, wxTreeItemId hParent);
-	wxTreeItemId InsertRun(ARBDogTrialPtr const& inTrial, ARBDogRunPtr const& inRun, wxTreeItemId hParent);
+	wxTreeItemId InsertDog(ARB::ARBDogPtr const& inDog, bool bSelect = false);
+	wxTreeItemId InsertTrial(ARB::ARBDogTrialPtr const& inTrial, wxTreeItemId hParent);
+	wxTreeItemId InsertRun(ARB::ARBDogTrialPtr const& inTrial, ARB::ARBDogRunPtr const& inRun, wxTreeItemId hParent);
 	bool PasteDog(bool& bLoaded);
 	bool PasteRuns(
-		ARBDogPtr const& inDog,
-		ARBDogTrialPtr const& inTrial,
+		ARB::ARBDogPtr const& inDog,
+		ARB::ARBDogTrialPtr const& inTrial,
 		bool& bLoaded,
 		bool* bTreeSelectionSet = nullptr);
 	void SuppressSelect(bool bSuppress)
@@ -226,7 +230,7 @@ private:
 	//		wxTreeItemId hItem,
 	//		int indent) const;
 
-	CTreeCtrl* m_Ctrl;
+	ARBWin::CTreeCtrl* m_Ctrl;
 	CIconList m_ImageList;
 #ifdef WX_TREE_HAS_STATE
 	wxImageList m_ImageListStates;
@@ -254,3 +258,5 @@ private:
 	void OnPrintView(wxCommandEvent& evt);
 	void OnPreview(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

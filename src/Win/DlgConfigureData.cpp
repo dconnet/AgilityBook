@@ -47,7 +47,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 CDlgConfigureDataBase::CDlgConfigureDataBase(CDlgConfigVenue* pDlg)
 	: m_pDlg(pDlg)
@@ -964,3 +969,5 @@ CDlgConfigureDataBase* CDlgConfigureDataMultiQ::DoMove(bool bUp)
 		return new CDlgConfigureDataMultiQ(m_pDlg, m_MultiQ);
 	return nullptr;
 }
+
+} // namespace dconSoft

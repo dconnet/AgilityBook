@@ -35,7 +35,12 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
 
 #if wxUSE_DRAG_AND_DROP
 
@@ -303,3 +308,5 @@ void CDlgRunPanelLinks::OnLinksOpen(wxCommandEvent& evt)
 		wxLaunchDefaultBrowser(StringUtil::stringWX(name));
 	}
 }
+
+} // namespace dconSoft

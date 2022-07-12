@@ -20,10 +20,20 @@
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBTypes2.h"
 #include "IconList.h"
+
+
+namespace dconSoft
+{
+namespace ARB
+{
 class ARBAgilityRecordBook;
+} // namespace ARB
+namespace ARBWin
+{
+class CTreeCtrl;
+} // namespace ARBWin
 class CAgilityBookDoc;
 class CDlgConfigureDataBase;
-class CTreeCtrl;
 
 
 class CDlgConfigure : public wxDialog
@@ -31,7 +41,7 @@ class CDlgConfigure : public wxDialog
 	DECLARE_NO_COPY_IMPLEMENTED(CDlgConfigure)
 	friend class CDlgConfigureDataRoot; // For 'Action' access
 public:
-	CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book, wxWindow* pParent = nullptr);
+	CDlgConfigure(CAgilityBookDoc* pDoc, ARB::ARBAgilityRecordBook& book, wxWindow* pParent = nullptr);
 	~CDlgConfigure();
 
 private:
@@ -49,16 +59,16 @@ private:
 	void UpdateButtons();
 	void LoadData(Action dataToLoad);
 	void DoEdit();
-	wxTreeItemId FindCurrentVenue(ARBConfigVenuePtr const& inVenue, bool bSet);
-	wxTreeItemId FindCurrentFault(ARBConfigFaultPtr const& inFault, bool bSet);
-	wxTreeItemId FindCurrentOtherPoints(ARBConfigOtherPointsPtr const& inOther, bool bSet);
+	wxTreeItemId FindCurrentVenue(ARB::ARBConfigVenuePtr const& inVenue, bool bSet);
+	wxTreeItemId FindCurrentFault(ARB::ARBConfigFaultPtr const& inFault, bool bSet);
+	wxTreeItemId FindCurrentOtherPoints(ARB::ARBConfigOtherPointsPtr const& inOther, bool bSet);
 
 	CAgilityBookDoc* m_pDoc;
-	ARBAgilityRecordBook& m_Book;
-	ARBConfig m_Config;
+	ARB::ARBAgilityRecordBook& m_Book;
+	ARB::ARBConfig m_Config;
 	CIconList m_ImageList;
 	int m_idxFaults;
-	CTreeCtrl* m_ctrlItems;
+	ARBWin::CTreeCtrl* m_ctrlItems;
 	wxButton* m_ctrlNew;
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlDelete;
@@ -77,3 +87,5 @@ private:
 	void OnUpdate(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

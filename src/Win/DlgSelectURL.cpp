@@ -32,6 +32,12 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+using namespace ARBWin;
+
 CDlgSelectURL::CDlgSelectURL(std::wstring const& name, wxWindow* pParent)
 	: wxDialog()
 	, m_Name(StringUtil::stringWX(name))
@@ -127,3 +133,5 @@ void CDlgSelectURL::OnFilename(wxCommandEvent& evt)
 		m_textCtrl->SetValue(file.GetPath());
 	}
 }
+
+} // namespace dconSoft

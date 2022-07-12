@@ -28,18 +28,25 @@
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/ARBDate.h"
 #include <wx/listctrl.h>
+class wxCheckBox;
+class wxDateEvent;
+class wxDatePickerCtrl;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
+class CRichEditCtrl2;
+class CSpellCheckCtrl;
+class CTextCtrl;
+} // namespace ARBWin
 class CAgilityBookDoc;
 class CDlgDogDivData;
 class CDlgDogLevelData;
 class CDlgDogVenueData;
 class CNoteButton;
 class CQualifyingComboBox;
-class CRichEditCtrl2;
-class CSpellCheckCtrl;
-class CTextCtrl;
-class wxCheckBox;
-class wxDateEvent;
-class wxDatePickerCtrl;
 
 
 class CDlgRunPanelScore : public CDlgRunPanelBase
@@ -48,9 +55,9 @@ public:
 	CDlgRunPanelScore(
 		CDlgRun* pDlg,
 		CAgilityBookDoc* pDoc,
-		ARBDogPtr const& inDog,
-		ARBDogTrialPtr const& inTrial,
-		ARBDogRunPtr const& inRun,
+		ARB::ARBDogPtr const& inDog,
+		ARB::ARBDogTrialPtr const& inTrial,
+		ARB::ARBDogRunPtr const& inRun,
 		wxWindow* parent);
 
 	wxWindow* GetInitialControl() override;
@@ -66,29 +73,29 @@ private:
 	CDlgDogVenueData* GetVenueData(int index) const;
 	CDlgDogDivData* GetDivisionData(int index) const;
 	CDlgDogLevelData* GetLevelData(int index) const;
-	bool GetEvent(ARBConfigEventPtr* outEvent) const;
-	bool GetScoring(ARBConfigScoringPtr* outScoring) const;
+	bool GetEvent(ARB::ARBConfigEventPtr* outEvent) const;
+	bool GetScoring(ARB::ARBConfigScoringPtr* outScoring) const;
 	void UpdateVenue(bool bOnEventChange);
 	void FillDivisions(bool bOnEventChange);
 	void FillLevels(bool bOnEventChange);
 	void FillEvents(bool bOnEventChange);
 	void FillSubNames();
 	void FillJudges();
-	void SetEventDesc(ARBConfigEventPtr const& inEvent);
+	void SetEventDesc(ARB::ARBConfigEventPtr const& inEvent);
 	void SetPartnerText();
 	void SetMinYPS();
 	void SetYPS();
 	void SetObstacles();
 	void SetTotalFaults();
 	void SetTitlePoints();
-	void SetReadOnlyFlag(CTextCtrl* ctrl, bool bReadOnly);
+	void SetReadOnlyFlag(ARBWin::CTextCtrl* ctrl, bool bReadOnly);
 	void FixScoreLayout();
 	void UpdateControls(bool bOnEventChange);
 
 	wxColour m_clrBack;
 
 	wxDatePickerCtrl* m_ctrlDate;
-	ARBDate m_Date;
+	ARBCommon::ARBDate m_Date;
 	wxComboBox* m_ctrlVenues;
 	wxComboBox* m_ctrlDivisions;
 	wxComboBox* m_ctrlLevels;
@@ -108,16 +115,16 @@ private:
 	// CNoteButton m_ctrlJudgeNotes;
 	wxComboBox* m_ctrlHandler;
 	wxString m_Handler;
-	CSpellCheckCtrl* m_ctrlConditions;
+	ARBWin::CSpellCheckCtrl* m_ctrlConditions;
 	wxString m_Conditions;
-	CRichEditCtrl2* m_ctrlDesc;
+	ARBWin::CRichEditCtrl2* m_ctrlDesc;
 	wxButton* m_ctrlPartnerEdit;
-	CTextCtrl* m_ctrlPartner;
+	ARBWin::CTextCtrl* m_ctrlPartner;
 	wxStaticText* m_ctrlSCTText;
-	CTextCtrl* m_ctrlSCT;
+	ARBWin::CTextCtrl* m_ctrlSCT;
 	double m_SCT;
 	wxStaticText* m_textYardsReqOpeningPts;
-	CTextCtrl* m_ctrlYardsReqOpeningPts;
+	ARBWin::CTextCtrl* m_ctrlYardsReqOpeningPts;
 	// CStatic m_ctrlOpeningText;
 	// CEdit m_ctrlOpening;
 	short m_Opening;
@@ -125,55 +132,55 @@ private:
 	// CEdit m_ctrlYards;
 	double m_Yards;
 	wxStaticText* m_textMinYPSClosingTime;
-	CTextCtrl* m_ctrlMinYPSClosingTime;
+	ARBWin::CTextCtrl* m_ctrlMinYPSClosingTime;
 	// CStatic m_ctrlSCT2Text;
 	// CEdit m_ctrlSCT2;
 	double m_SCT2;
 	// CStatic m_ctrlMinYPSText;
 	wxStaticText* m_ctrlClosingText;
-	CTextCtrl* m_ctrlClosing;
+	ARBWin::CTextCtrl* m_ctrlClosing;
 	short m_Closing;
 	wxStaticText* m_ctrlObstaclesText;
-	CTextCtrl* m_ctrlObstacles;
+	ARBWin::CTextCtrl* m_ctrlObstacles;
 	short m_Obstacles;
 	wxStaticText* m_ctrlTimeText;
-	CTextCtrl* m_ctrlTime;
+	ARBWin::CTextCtrl* m_ctrlTime;
 	double m_Time;
 	wxStaticText* m_ctrlFaultsText;
-	CTextCtrl* m_ctrlFaults;
+	ARBWin::CTextCtrl* m_ctrlFaults;
 	short m_Faults;
 	wxStaticText* m_textYPSOpeningPts;
-	CTextCtrl* m_ctrlYPSOpeningPts;
+	ARBWin::CTextCtrl* m_ctrlYPSOpeningPts;
 	// CStatic m_ctrlOpenText;
 	// CEdit m_ctrlOpen;
 	short m_Open;
 	// CStatic m_ctrlYPSText;
 	wxStaticText* m_textClosingPtsTotalFaults;
-	CTextCtrl* m_ctrlClosingPtsTotalFaults;
+	ARBWin::CTextCtrl* m_ctrlClosingPtsTotalFaults;
 	// CStatic m_ctrlCloseText;
 	// CEdit m_ctrlClose;
 	short m_Close;
 	// CStatic m_ctrlTotalFaultsText;
 	wxStaticText* m_ctrlObstaclesPSText;
-	CTextCtrl* m_ctrlObstaclesPS;
+	ARBWin::CTextCtrl* m_ctrlObstaclesPS;
 	wxStaticText* m_textPlace;
-	CTextCtrl* m_ctrlPlace;
+	ARBWin::CTextCtrl* m_ctrlPlace;
 	wxStaticText* m_textPlaceOf;
 	short m_Place;
-	CTextCtrl* m_ctrlInClass;
+	ARBWin::CTextCtrl* m_ctrlInClass;
 	short m_InClass;
 	wxStaticText* m_textDogsQd;
-	CTextCtrl* m_ctrlDogsQd;
+	ARBWin::CTextCtrl* m_ctrlDogsQd;
 	short m_DogsQd;
 	CQualifyingComboBox* m_ctrlQ;
 	wxStaticText* m_ctrlBonusPtsText;
-	CTextCtrl* m_ctrlBonusTitlePts;
+	ARBWin::CTextCtrl* m_ctrlBonusTitlePts;
 	double m_BonusTitlePts;
 	wxStaticText* m_ctrlSpeedPtsText;
-	CTextCtrl* m_ctrlSpeedPts;
+	ARBWin::CTextCtrl* m_ctrlSpeedPts;
 	wxStaticText* m_ctrlTitlePointsText;
-	CTextCtrl* m_ctrlTitlePoints;
-	CTextCtrl* m_ctrlScore;
+	ARBWin::CTextCtrl* m_ctrlTitlePoints;
+	ARBWin::CTextCtrl* m_ctrlScore;
 
 	void OnScoreDateChanged(wxDateEvent& evt);
 	void OnSelchangeVenue(wxCommandEvent& evt);
@@ -198,3 +205,5 @@ private:
 	void OnInClassChange(wxCommandEvent& evt);
 	void OnBonusChange(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft

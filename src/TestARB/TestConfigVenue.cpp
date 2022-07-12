@@ -30,6 +30,11 @@
 #endif
 
 
+namespace dconSoft
+{
+using namespace ARB;
+using namespace ARBCommon;
+
 TEST_CASE("ConfigVenue")
 {
 	SECTION("New")
@@ -288,3 +293,5 @@ TEST_CASE("ConfigVenueList")
 		}
 	}
 }
+
+} // namespace dconSoft

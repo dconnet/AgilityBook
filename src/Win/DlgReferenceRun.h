@@ -21,8 +21,15 @@
 #include "ARB/ARBTypes2.h"
 #include "ARB/ARB_Q.h"
 #include <set>
-class CAgilityBookDoc;
+
+
+namespace dconSoft
+{
+namespace ARBWin
+{
 class CTextCtrl;
+} // namespace ARBWin
+class CAgilityBookDoc;
 
 
 class CDlgReferenceRun : public wxDialog
@@ -30,21 +37,21 @@ class CDlgReferenceRun : public wxDialog
 public:
 	CDlgReferenceRun(
 		CAgilityBookDoc* pDoc,
-		ARBDogRunPtr const& inRun,
+		ARB::ARBDogRunPtr const& inRun,
 		std::set<std::wstring> const& inHeights,
 		std::set<std::wstring> const& inNames,
 		std::set<std::wstring> const& inBreeds,
-		ARBDogReferenceRunPtr const& inRef,
+		ARB::ARBDogReferenceRunPtr const& inRef,
 		wxWindow* pParent = nullptr);
 
 private:
 	CAgilityBookDoc* m_pDoc;
-	ARBDogRunPtr m_Run;
-	ARBDogReferenceRunPtr m_Ref;
+	ARB::ARBDogRunPtr m_Run;
+	ARB::ARBDogReferenceRunPtr m_Ref;
 	short m_Place;
-	ARB_Q m_Q;
+	ARB::ARB_Q m_Q;
 	double m_Time;
-	CTextCtrl* m_ctrlTime;
+	ARBWin::CTextCtrl* m_ctrlTime;
 	wxStaticText* m_ctrlYPS;
 	wxString m_Points;
 	wxString m_Height;
@@ -56,3 +63,5 @@ private:
 	void OnEnChangeRefRunTime(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };
+
+} // namespace dconSoft
