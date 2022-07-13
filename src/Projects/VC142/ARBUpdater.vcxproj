@@ -446,6 +446,7 @@
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupWX.h" />
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\VersionInfoARB.h" />
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\VersionNumber.h" />
+    <ClInclude Include="..\..\ARBUpdater\ARBUpdater.h" />
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
     <ClInclude Include="..\..\ARBUpdater\DlgDigest.h" />
     <ClInclude Include="..\..\ARBUpdater\stdafx.h" />

@@ -17,6 +17,7 @@
  */
 
 #include "stdafx.h"
+#include "ARBUpdater.h"
 #include "DlgDigest.h"
 
 #include "../Win/SetupAppARB.h"
@@ -30,27 +31,13 @@
 #endif
 
 
+wxIMPLEMENT_APP(dconSoft::CARBUpdaterApp);
+
+
 namespace dconSoft
 {
 using namespace ARBCommon;
 using namespace ARBWin;
-
-class CARBUpdaterApp : public CBaseApp
-{
-	DECLARE_NO_COPY_IMPLEMENTED(CARBUpdaterApp)
-public:
-	CARBUpdaterApp();
-	bool InitLanguage() override
-	{
-		return true;
-	}
-	bool OnInit() override;
-
-	bool GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg) const override;
-};
-
-
-wxIMPLEMENT_APP(CARBUpdaterApp);
 
 
 CARBUpdaterApp::CARBUpdaterApp()

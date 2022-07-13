@@ -90,5 +90,8 @@
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\VersionNumber.h">
       <Filter>Include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ARBUpdater\ARBUpdater.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

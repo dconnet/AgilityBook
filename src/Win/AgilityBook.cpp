@@ -76,13 +76,14 @@
 #endif
 
 
+wxIMPLEMENT_APP(dconSoft::CAgilityBookApp);
+
+
 namespace dconSoft
 {
 using namespace ARB;
 using namespace ARBCommon;
 using namespace ARBWin;
-
-wxIMPLEMENT_APP(CAgilityBookApp);
 
 /////////////////////////////////////////////////////////////////////////////
 

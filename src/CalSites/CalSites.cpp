@@ -34,12 +34,13 @@
 #endif
 
 
+wxIMPLEMENT_APP(dconSoft::CCalSitesApp);
+
+
 namespace dconSoft
 {
 using namespace ARB;
 using namespace ARBWin;
-
-wxIMPLEMENT_APP(CCalSitesApp);
 
 
 CCalSitesApp::CCalSitesApp()

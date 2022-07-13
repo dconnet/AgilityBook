@@ -86,6 +86,6 @@ protected:
 	std::unique_ptr<ARBWin::CMenuHelper> m_menus;
 };
 
-wxDECLARE_APP(CAgilityBookApp);
-
 } // namespace dconSoft
+
+wxDECLARE_APP(dconSoft::CAgilityBookApp);

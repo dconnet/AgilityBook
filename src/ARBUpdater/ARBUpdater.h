@@ -15,40 +15,26 @@
  * 2020-09-12 Created
  */
 
-#include "../Win/Localization.h"
-#include "ARB/ARBTypes2.h"
 #include "LibARBWin/SetupApp.h"
 
 
 namespace dconSoft
 {
 
-class CCalSitesApp : public ARBWin::CBaseApp
+class CARBUpdaterApp : public ARBWin::CBaseApp
 {
-	DECLARE_NO_COPY_IMPLEMENTED(CCalSitesApp)
+	DECLARE_NO_COPY_IMPLEMENTED(CARBUpdaterApp)
 public:
-	CCalSitesApp();
-
+	CARBUpdaterApp();
+	bool InitLanguage() override
+	{
+		return true;
+	}
 	bool OnInit() override;
 
-	bool InitLanguage() override;
-
-	// IResourceManagerCallback
 	bool GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg) const override;
-
-private:
-	CLocalization m_Localization;
-};
-
-
-class CErrorCallback : public ARB::ARBErrorCallback
-{
-public:
-	CErrorCallback();
-	bool OnError(wchar_t const* const pMsg) override;
-	fmt::wmemory_buffer m_ErrMsg;
 };
 
 } // namespace dconSoft
 
-wxDECLARE_APP(dconSoft::CCalSitesApp);
+wxDECLARE_APP(dconSoft::CARBUpdaterApp);

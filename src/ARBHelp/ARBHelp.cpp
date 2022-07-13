@@ -17,6 +17,7 @@
  */
 
 #include "stdafx.h"
+#include "ARBHelp.h"
 #include "DlgARBHelp.h"
 
 #include "DlgPageDecode.h"
@@ -32,27 +33,13 @@
 #endif
 
 
+wxIMPLEMENT_APP(dconSoft::CARBHelpApp);
+
+
 namespace dconSoft
 {
 using namespace ARBCommon;
 using namespace ARBWin;
-
-class CARBHelpApp : public CBaseApp
-{
-	DECLARE_NO_COPY_IMPLEMENTED(CARBHelpApp)
-public:
-	CARBHelpApp();
-	bool InitLanguage() override
-	{
-		return true;
-	}
-	bool OnInit() override;
-
-	bool GetResImageName(wxArtID const& id, wxArtClient const& client, wxString& outName, bool& outSvg) const override;
-};
-
-
-wxIMPLEMENT_APP(CARBHelpApp);
 
 
 CARBHelpApp::CARBHelpApp()
