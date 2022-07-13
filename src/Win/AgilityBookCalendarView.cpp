@@ -646,7 +646,7 @@ void CAgilityBookCalendar::OnCopy()
 	if (!clpData.isOkay())
 		return;
 
-	constexpr wchar_t* scColumns[] = {
+	constexpr wchar_t const* scColumns[] = {
 		arbT("IDS_COL_START_DATE"),
 		arbT("IDS_COL_END_DATE"),
 		arbT("IDS_COL_VENUE"),
