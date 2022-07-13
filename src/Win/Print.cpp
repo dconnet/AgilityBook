@@ -258,7 +258,7 @@ constexpr int CODE_REF4 = 46;
 namespace
 {
 // Make sure these are ordered by the aboves codes
-constexpr wchar_t* sc_codes[] = {
+constexpr wchar_t const* sc_codes[] = {
 	arbT("IDS_COL_DOG"),
 	arbT("IDS_COL_DATE"),
 	arbT("IDS_COL_VENUE"),
