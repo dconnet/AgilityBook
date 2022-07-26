@@ -6,24 +6,24 @@
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>@PACKAGE_HLP_SHORTNAME@</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleVersion</key>
-	<string>@PACKAGE_VERSION@</string>
-	<key>CFBundleShortVersionString</key>
-	<string>@PACKAGE_VERSION@</string>
-	<key>CFBundleName</key>
-	<string>@PACKAGE_HLP_SHORTNAME@</string>
-	<key>CFBundleIconFile</key>
-	<string>AgilityBook.icns</string>
 	<key>CFBundleGetInfoString</key>
 	<string>@PACKAGE_HLP_SHORTNAME@ Version @PACKAGE_VERSION@, @PACKAGE_COPYRIGHT@</string>
+	<key>CFBundleIconFile</key>
+	<string>AgilityBook.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.agilityrecordbook.@PACKAGE_HLP_SHORTNAME@</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
 	<key>CFBundleLongVersionString</key>
 	<string>@PACKAGE_VERSION@, @PACKAGE_COPYRIGHT@</string>
+	<key>CFBundleName</key>
+	<string>@PACKAGE_HLP_SHORTNAME@</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>@PACKAGE_VERSION@</string>
+	<key>CFBundleVersion</key>
+	<string>@PACKAGE_VERSION@</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>@PACKAGE_COPYRIGHT@</string>
 	<key>ATSApplicationFontsPath</key>

@@ -6,18 +6,19 @@
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>@PACKAGE_ARB_SHORTNAME@</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleVersion</key>
-	<string>@PACKAGE_VERSION@</string>
-	<key>CFBundleShortVersionString</key>
-	<string>@PACKAGE_VERSION@</string>
-	<key>CFBundleName</key>
-	<string>@PACKAGE_ARB_SHORTNAME@</string>
+	<key>CFBundleGetInfoString</key>
+	<string>@PACKAGE_ARB_SHORTNAME@ Version @PACKAGE_VERSION@, @PACKAGE_COPYRIGHT@</string>
 	<key>CFBundleIconFile</key>
 	<string>AgilityBook.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.agilityrecordbook.@PACKAGE_ARB_SHORTNAME@</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>fr</string>
+	</array>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -37,12 +38,16 @@
 			<false/>
 		</dict>
 	</array>
-	<key>CFBundleGetInfoString</key>
-	<string>@PACKAGE_ARB_SHORTNAME@ Version @PACKAGE_VERSION@, @PACKAGE_COPYRIGHT@</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.agilityrecordbook.@PACKAGE_ARB_SHORTNAME@</string>
 	<key>CFBundleLongVersionString</key>
 	<string>@PACKAGE_VERSION@, @PACKAGE_COPYRIGHT@</string>
+	<key>CFBundleName</key>
+	<string>@PACKAGE_ARB_SHORTNAME@</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>@PACKAGE_VERSION@</string>
+	<key>CFBundleVersion</key>
+	<string>@PACKAGE_VERSION@</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>@PACKAGE_COPYRIGHT@</string>
 	<key>ATSApplicationFontsPath</key>

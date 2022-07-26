@@ -3,7 +3,22 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en_US</string>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleGetInfoString</key>
+	<string>${PRODUCT_NAME} version 3.7.1, (c) 2012-2022 David Connet</string>
+	<key>CFBundleIconFile</key>
+	<string>AgilityBook.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>fr</string>
+	</array>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -23,16 +38,6 @@
 			<false/>
 		</dict>
 	</array>
-	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleGetInfoString</key>
-	<string>${PRODUCT_NAME} version 3.7.1, (c) 2012-2022 David Connet</string>
-	<key>CFBundleIconFile</key>
-	<string>AgilityBook.icns</string>
-	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
 	<key>CFBundleLongVersionString</key>
 	<string>3.7.1, (c) 2012-2022 David Connet</string>
 	<key>CFBundleName</key>
@@ -41,18 +46,12 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>3.7.1</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>117</string>
-	<key>LSApplicationCategoryType</key>
-	<string>public.app-category.utilities</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
-	<key>LSRequiresCarbon</key>
-	<true/>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2002-2022 David Connet. All rights reserved.</string>
+	<key>ATSApplicationFontsPath</key>
+	<string>Fonts</string>
 	<key>NSPrincipalClass</key>
 	<string>wxNSApplication</string>
 </dict>
