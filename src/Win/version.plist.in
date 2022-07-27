@@ -9,6 +9,6 @@
 	<key>CFBundleVersion</key>
 	<string>@PACKAGE_VERSION@</string>
 	<key>ProjectName</key>
-	<string>@PACKAGE_NAME@</string>
+	<string>@PACKAGE_ARB_SHORTNAME@</string>
 </dict>
 </plist>
