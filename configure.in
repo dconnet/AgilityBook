@@ -200,12 +200,6 @@ AC_CONFIG_FILES([NAM_rules.mk Makefile \
 	src/ARBHelp/Makefile \
 	src/CalSites/Makefile \
 	src/TestARB/Makefile \
-	src/Win/Makefile \
-	src/ARBHelp/Info.plist \
-	src/ARBHelp/version.plist \
-	src/CalSites/Info.plist \
-	src/CalSites/version.plist \
-	src/Win/Info.plist \
-	src/Win/version.plist])
+	src/Win/Makefile])
 
 AC_OUTPUT

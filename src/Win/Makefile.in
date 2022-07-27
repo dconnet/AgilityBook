@@ -155,10 +155,7 @@ all: @PACKAGE_ARB_SHORTNAME@.dat @PACKAGE_ARB_SHORTNAME@
 
 dist:: all $(PHONY)
 	mkdir -p $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/MacOS
-	cp Info.plist $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/
-	cp version.plist $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/
-	# Note: "echo -n 'APPL????'" puts the '-n' in the file too (on Mac).
-	echo 'APPL????\c' > $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/PkgInfo
+	python3 $(SRCDIR)/../../AgilityBookLibs/Projects/GenContents.py -i AgilityBook.icns -l fr -e arb -d 'Agility Record Book files' -n @PACKAGE_ARB_SHORTNAME@ -v @PACKAGE_VERSION@ -c '@PACKAGE_COPYRIGHT@' $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents
 	cp @PACKAGE_ARB_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/MacOS/@PACKAGE_ARB_SHORTNAME@
 	mkdir -p $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 	cp $(SRCDIR)/res/@PACKAGE_ARB_SHORTNAME@.icns $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
