@@ -7207,12 +7207,6 @@ msgstr ""
 "Agility Record Book settings (*.arbsettings)|*.arbsettings|All Files (*.*)|*."
 "*||"
 
-#~ msgid "MenuHelpSysInfo"
-#~ msgstr "&System Information..."
-
-#~ msgid "DescHelpSysInfo"
-#~ msgstr "Display information about the system"
-
 #~ msgid "CheckForUpdates"
 #~ msgstr "Check for Updates..."
 
