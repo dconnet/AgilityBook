@@ -38,7 +38,6 @@
 		E19B6500166C09B9004DEDA4 /* ClipBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6400166C09B9004DEDA4 /* ClipBoard.cpp */; };
 		E19B6503166C09B9004DEDA4 /* CommonView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6406166C09B9004DEDA4 /* CommonView.cpp */; };
 		E19B6504166C09B9004DEDA4 /* ConfigHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6408166C09B9004DEDA4 /* ConfigHandler.cpp */; };
-		E19B6505166C09B9004DEDA4 /* DlgAbout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B640A166C09B9004DEDA4 /* DlgAbout.cpp */; };
 		E19B6506166C09B9004DEDA4 /* DlgAssignColumns.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B640C166C09B9004DEDA4 /* DlgAssignColumns.cpp */; };
 		E19B6508166C09B9004DEDA4 /* DlgCalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6410166C09B9004DEDA4 /* DlgCalendar.cpp */; };
 		E19B650A166C09B9004DEDA4 /* DlgClub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6414166C09B9004DEDA4 /* DlgClub.cpp */; };
@@ -312,8 +311,6 @@
 		E19B6407166C09B9004DEDA4 /* CommonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonView.h; sourceTree = "<group>"; };
 		E19B6408166C09B9004DEDA4 /* ConfigHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigHandler.cpp; sourceTree = "<group>"; };
 		E19B6409166C09B9004DEDA4 /* ConfigHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigHandler.h; sourceTree = "<group>"; };
-		E19B640A166C09B9004DEDA4 /* DlgAbout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgAbout.cpp; sourceTree = "<group>"; };
-		E19B640B166C09B9004DEDA4 /* DlgAbout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgAbout.h; sourceTree = "<group>"; };
 		E19B640C166C09B9004DEDA4 /* DlgAssignColumns.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgAssignColumns.cpp; sourceTree = "<group>"; };
 		E19B640D166C09B9004DEDA4 /* DlgAssignColumns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgAssignColumns.h; sourceTree = "<group>"; };
 		E19B6410166C09B9004DEDA4 /* DlgCalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgCalendar.cpp; sourceTree = "<group>"; };
@@ -733,8 +730,6 @@
 				E19B6407166C09B9004DEDA4 /* CommonView.h */,
 				E19B6408166C09B9004DEDA4 /* ConfigHandler.cpp */,
 				E19B6409166C09B9004DEDA4 /* ConfigHandler.h */,
-				E19B640A166C09B9004DEDA4 /* DlgAbout.cpp */,
-				E19B640B166C09B9004DEDA4 /* DlgAbout.h */,
 				E19B640C166C09B9004DEDA4 /* DlgAssignColumns.cpp */,
 				E19B640D166C09B9004DEDA4 /* DlgAssignColumns.h */,
 				E19B6410166C09B9004DEDA4 /* DlgCalendar.cpp */,
@@ -1016,7 +1011,6 @@
 				E19B6504166C09B9004DEDA4 /* ConfigHandler.cpp in Sources */,
 				E10D89F625D5AB6100D1D8F8 /* DlgRunPanelScore.cpp in Sources */,
 				E10D89F025D5AB4F00D1D8F8 /* DlgRunPanelBase.cpp in Sources */,
-				E19B6505166C09B9004DEDA4 /* DlgAbout.cpp in Sources */,
 				E19B6506166C09B9004DEDA4 /* DlgAssignColumns.cpp in Sources */,
 				E19B6508166C09B9004DEDA4 /* DlgCalendar.cpp in Sources */,
 				E19B650A166C09B9004DEDA4 /* DlgClub.cpp in Sources */,
