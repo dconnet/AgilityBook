@@ -35,19 +35,22 @@
 #include "AgilityBookMenu.h"
 #include "AgilityBookOptions.h"
 #include "CommonView.h"
-#include "DlgAbout.h"
 #include "ImageHelper.h"
 #include "PointsData.h"
 #include "Print.h"
 #include "RegItems.h"
 #include "TabView.h"
 #include "UpdateInfo.h"
+#include "VersionInfoARB.h"
 #include "VersionNumber.h"
 
 #include "ARBCommon/ARBMisc.h"
+#include "ARBCommon/MailTo.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBDebug.h"
+#include "LibARBWin/About.h"
 #include "LibARBWin/DlgMessage.h"
+#include "LibARBWin/ResourceManager.h"
 #include <wx/config.h>
 #include <wx/dnd.h>
 #include <wx/platinfo.h>
@@ -156,7 +159,6 @@ wxBEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
 	EVT_MENU(ID_PREV_PANE, CMainFrame::OnPrevPane)
 	EVT_MENU(ID_VIEW_CUSTOMIZE_ACCEL, CMainFrame::OnViewCustomizeAccel)
 	EVT_MENU(ID_HELP_UPDATE, CMainFrame::OnHelpCheckUpdates)
-	EVT_MENU(ID_HELP_SYSINFO, CMainFrame::OnHelpSysinfo)
 	EVT_MENU(wxID_ABOUT, CMainFrame::OnHelpAbout)
 wxEND_EVENT_TABLE()
 
@@ -258,7 +260,7 @@ void CMainFrame::AutoCheckConfiguration(CAgilityBookDoc* pDoc)
 }
 
 
-// Note: Called from OnHelpCheckUpdates and CDlgAbout::OnCheckForUpdates
+// Note: Called from OnHelpCheckUpdates
 void CMainFrame::UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outDownloadStarted)
 {
 	m_UpdateInfo.UpdateConfiguration(pDoc, outDownloadStarted);
@@ -419,7 +421,6 @@ void CMainFrame::OnUpdateCmd(wxUpdateUIEvent& evt)
 	}
 	break;
 	case ID_VIEW_CUSTOMIZE_ACCEL:
-	case ID_HELP_SYSINFO:
 		bEnable = true;
 		break;
 	case ID_HELP_UPDATE:
@@ -526,20 +527,37 @@ void CMainFrame::OnHelpCheckUpdates(wxCommandEvent& evt)
 }
 
 
-void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
-{
-	CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
-	std::wstring str = ARBDebug::GetSystemInfo(this, ver);
-	CDlgMessage dlg(str, wxString(), this);
-	dlg.ShowModal();
-}
-
-
 void CMainFrame::OnHelpAbout(wxCommandEvent& evt)
 {
-	CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
-	CDlgAbout dlg(pDoc, this);
-	dlg.ShowModal();
+	CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
+	auto subject = _("LinkHelpUrlSubject");
+	subject.Replace(L"%VERSION%", ver.GetVersionString(VER_PARTS));
+
+	ARBCommon::CMailTo mailto;
+	mailto.AddTo(_("LinkHelpAddress").wc_str());
+	mailto.SetSubject(subject.wc_str());
+	mailto.SetBody(_("LinkHelpUrlBody").wc_str());
+
+	auto caption = _("IDD_ABOUTBOX");
+	auto desc = fmt::format(_("AboutText").wc_str(), caption.wc_str());
+
+	AboutInfo info;
+	info.SetImage(this, CResourceManager::Get(), ImageMgrApp, 32);
+
+	info.productDesc = desc;
+	info.version = ARB_VERSION_STRING;
+	info.copyright = ARB_VERSION_LegalCopyright;
+
+	info.links.push_back(AboutInfo::LinkInfo{L"", L"", false});
+	info.links.push_back(AboutInfo::LinkInfo{_("AboutLinks"), L"", false});
+	info.links.push_back(AboutInfo::LinkInfo{_("LinkGroupText"), _("LinkGroupUrl"), true});
+	info.links.push_back(AboutInfo::LinkInfo{_("LinkHelpAddress"), mailto.Uri(), true});
+	info.links.push_back(AboutInfo::LinkInfo{L"", L"", false});
+	info.links.push_back(AboutInfo::LinkInfo{_("UsefulLinks"), L"", false});
+	info.links.push_back(AboutInfo::LinkInfo{_("LinkArbText"), _("LinkArbUrl"), true});
+	info.links.push_back(AboutInfo::LinkInfo{_("LinkArbDownloadText"), _("LinkArbDownloadUrl"), true});
+
+	About(info, this, &caption);
 }
 
 } // namespace dconSoft

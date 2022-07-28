@@ -50,7 +50,6 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	ComboBoxVenue.cpp \
 	CommonView.cpp \
 	ConfigHandler.cpp \
-	DlgAbout.cpp \
 	DlgAssignColumns.cpp \
 	DlgCalendar.cpp \
 	DlgClub.cpp \

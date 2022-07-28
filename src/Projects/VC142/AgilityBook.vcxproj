@@ -420,7 +420,6 @@
     <ClCompile Include="..\..\Win\ComboBoxVenue.cpp" />
     <ClCompile Include="..\..\Win\CommonView.cpp" />
     <ClCompile Include="..\..\Win\ConfigHandler.cpp" />
-    <ClCompile Include="..\..\Win\DlgAbout.cpp" />
     <ClCompile Include="..\..\Win\DlgAssignColumns.cpp" />
     <ClCompile Include="..\..\Win\DlgCalendar.cpp" />
     <ClCompile Include="..\..\Win\DlgClub.cpp" />
@@ -547,7 +546,6 @@
     <ClInclude Include="..\..\Win\ComboBoxVenue.h" />
     <ClInclude Include="..\..\Win\CommonView.h" />
     <ClInclude Include="..\..\Win\ConfigHandler.h" />
-    <ClInclude Include="..\..\Win\DlgAbout.h" />
     <ClInclude Include="..\..\Win\DlgAssignColumns.h" />
     <ClInclude Include="..\..\Win\DlgCalendar.h" />
     <ClInclude Include="..\..\Win\DlgClub.h" />

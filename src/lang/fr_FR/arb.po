@@ -2086,15 +2086,13 @@ msgstr ""
 "If une fichier particulé a causé cette problème; SVP attachez une copie au me."
 
 #: Win/DlgAbout.cpp:80
-msgid "AboutVersion"
+msgid "AboutText"
 msgstr ""
-"Version {0}\n"
-"{1}\n"
-"\n"
-"{2} est Open Source et gratuite a utiliser; nous demandons seulement que vous "
-"faites une donne de 10 euros ou plus a la SPA ou semblable organisation.\n"
-"\n"
-" SVP envoyez vos rapport d'erreur et suggestions a:"
+"{} est Open Source et gratuite a utiliser; nous demandons seulement que vous "
+"faites une donne de 10 euros ou plus a la SPA ou semblable organisation."
+
+msgid "AboutLinks"
+msgstr "SVP envoyez vos rapport d'erreur et suggestions a:"
 
 #: Win/DlgAbout.cpp:83 Win/DlgMessageBox.cpp:54 Win/MainFrm.cpp:165
 msgid "Agility Record Book"

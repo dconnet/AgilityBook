@@ -187,7 +187,6 @@ const std::vector<CMenuHelper::ItemData> sc_items = {
 	{IdMenuNone, MENU_ITEM, ID_HELP_DEBUG,            wxITEM_NORMAL, 1, nullptr, L"Debug: Test Feature", L"Debug Helper", nullptr},
 #endif
 	{IdMenuNone, MENU_ITEM, ID_HELP_UPDATE,           wxITEM_NORMAL, 1, nullptr, arbT("MenuHelpUpdates"), arbT("DescHelpUpdates"), nullptr},
-	{IdMenuNone, MENU_ITEM, ID_HELP_SYSINFO,          wxITEM_NORMAL, 1, nullptr, arbT("MenuHelpSysInfo"), arbT("DescHelpSysInfo"), nullptr},
 #ifndef __WXMAC__
 	{IdMenuNone, MENU_SEP,  0,                        wxITEM_NORMAL, 1, nullptr, nullptr, nullptr, nullptr},
 #endif
@@ -387,7 +386,7 @@ const std::vector<CMenuHelper::ItemAccel> sc_accels = {
 	{79, ID_HELP_DEBUG,              false, false, false, 0},
 #endif
 	{80, ID_HELP_UPDATE,             false, false, false, 0},
-	{81, ID_HELP_SYSINFO,            false, false, false, 0},
+	// {81, ID_HELP_SYSINFO,            false, false, false, 0}, Obsolete
 	{82, wxID_ABOUT,                 false, false, false, 0},
 	{83, ID_DETAILS,                 false, false, false, 0},
 	// clang-format on

@@ -93,7 +93,6 @@ private:
 	void OnPrevPane(wxCommandEvent& evt);
 	void OnViewCustomizeAccel(wxCommandEvent& evt);
 	void OnHelpCheckUpdates(wxCommandEvent& evt);
-	void OnHelpSysinfo(wxCommandEvent& evt);
 	void OnHelpAbout(wxCommandEvent& evt);
 };
 
