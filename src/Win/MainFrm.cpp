@@ -542,7 +542,7 @@ void CMainFrame::OnHelpAbout(wxCommandEvent& evt)
 	auto desc = fmt::format(_("AboutText").wc_str(), caption.wc_str());
 
 	AboutInfo info;
-	info.SetImage(this, CResourceManager::Get(), ImageMgrApp, 32);
+	info.SetImage(this, ImageMgrApp, 32);
 
 	info.productDesc = desc;
 	info.version = ARB_VERSION_STRING;
