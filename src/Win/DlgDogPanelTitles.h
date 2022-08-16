@@ -62,7 +62,6 @@ private:
 	int m_imgTitlesTitledHiddenReceived;
 
 	ARB::ARBDogTitleList m_Titles;
-	// CColumnOrder m_sortTitles;
 	bool m_ViewHiddenTitles;
 
 	void OnTitleHidden(wxCommandEvent& evt);

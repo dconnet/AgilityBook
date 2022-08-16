@@ -52,10 +52,17 @@ using namespace ARBWin;
 
 namespace
 {
-constexpr long COL_LINK = 0;
-constexpr long COL_DOG = 1;
-constexpr long COL_TRIAL = 2;
-constexpr long COL_RUN = 3;
+constexpr wchar_t k_regkeyBase[] = L"Links";
+constexpr long k_colLink = 0;
+constexpr long k_colDog = 1;
+constexpr long k_colTrial = 2;
+constexpr long k_colRun = 3;
+const std::vector<CReportListHeader::ColumnInfo> k_columns{
+	{k_colLink, wxLIST_FORMAT_LEFT, arbT("IDS_COL_NAME")},
+	{k_colDog, wxLIST_FORMAT_LEFT, arbT("IDS_COL_DOG")},
+	{k_colTrial, wxLIST_FORMAT_LEFT, arbT("IDS_COL_TRIAL")},
+	{k_colRun, wxLIST_FORMAT_LEFT, arbT("IDS_COL_EVENT")},
+};
 } // namespace
 
 class CDlgFindLinksData : public CListData
@@ -75,6 +82,7 @@ public:
 		, m_Image(image)
 	{
 	}
+	int OnCompare(CListDataPtr const& item, long iCol) const override;
 	std::wstring OnNeedText(long iCol) const override;
 	void OnNeedListItem(long iCol, wxListItem& info) const override;
 
@@ -87,19 +95,55 @@ public:
 };
 
 
+int CDlgFindLinksData::OnCompare(CListDataPtr const& item, long iCol) const
+{
+	CDlgFindLinksDataPtr pData2 = std::dynamic_pointer_cast<CDlgFindLinksData, CListData>(item);
+	if (!pData2)
+		return 1;
+
+	std::wstring str1, str2;
+	switch (iCol)
+	{
+	default:
+		assert(0);
+	case k_colLink:
+		str1 = m_Link;
+		str2 = pData2->m_Link;
+		break;
+	case k_colTrial:
+		str1 = m_pTrial->GetGenericName();
+		str2 = pData2->m_pTrial->GetGenericName();
+		break;
+	case k_colDog:
+		str1 = m_pDog->GetGenericName();
+		str2 = pData2->m_pDog->GetGenericName();
+		break;
+	case k_colRun:
+		str1 = m_pRun->GetGenericName();
+		str2 = pData2->m_pRun->GetGenericName();
+		break;
+	}
+	if (str1 < str2)
+		return -1;
+	else if (str1 > str2)
+		return 1;
+	return 0;
+}
+
+
 std::wstring CDlgFindLinksData::OnNeedText(long iCol) const
 {
 	switch (iCol)
 	{
 	default:
 		assert(0);
-	case COL_LINK:
+	case k_colLink:
 		return m_Link;
-	case COL_TRIAL:
+	case k_colTrial:
 		return m_pTrial->GetGenericName();
-	case COL_DOG:
+	case k_colDog:
 		return m_pDog->GetGenericName();
-	case COL_RUN:
+	case k_colRun:
 		return m_pRun->GetGenericName();
 	}
 }
@@ -117,61 +161,6 @@ void CDlgFindLinksData::OnNeedListItem(long iCol, wxListItem& info) const
 }
 
 /////////////////////////////////////////////////////////////////////////////
-
-namespace
-{
-constexpr struct
-{
-	int col;
-	wchar_t const* info;
-} colLinkInfo[] = {
-	{COL_LINK, arbT("IDS_COL_NAME")},
-	{COL_DOG, arbT("IDS_COL_DOG")},
-	{COL_TRIAL, arbT("IDS_COL_TRIAL")},
-	{COL_RUN, arbT("IDS_COL_EVENT")},
-};
-constexpr int nColLinkInfo = sizeof(colLinkInfo) / sizeof(colLinkInfo[0]);
-} // namespace
-
-struct FindSortInfo : public SortInfo
-{
-	CDlgFindLinks* pThis;
-	CColumnOrder* pCols;
-
-	FindSortInfo(CDlgFindLinks* This, CColumnOrder* cols)
-		: pThis(This)
-		, pCols(cols)
-	{
-	}
-};
-
-
-int wxCALLBACK CompareLinks(CListDataPtr const& item1, CListDataPtr const& item2, SortInfo const* pSortInfo)
-{
-	FindSortInfo const* pInfo = dynamic_cast<FindSortInfo const*>(pSortInfo);
-	assert(pInfo);
-
-	int rc = 0;
-	CDlgFindLinksDataPtr pData1 = std::dynamic_pointer_cast<CDlgFindLinksData, CListData>(item1);
-	CDlgFindLinksDataPtr pData2 = std::dynamic_pointer_cast<CDlgFindLinksData, CListData>(item2);
-
-	for (int i = 0; i < pInfo->pCols->GetSize(); ++i)
-	{
-		int col = pInfo->pCols->GetColumnAt(i);
-		std::wstring str1 = pData1->OnNeedText(col);
-		std::wstring str2 = pData2->OnNeedText(col);
-		rc = StringUtil::CompareNoCase(str1, str2);
-		if (rc)
-		{
-			if (pInfo->pCols->IsDescending(col))
-				rc *= -1;
-			break;
-		}
-	}
-	return rc;
-}
-
-/////////////////////////////////////////////////////////////////////////////
 // CDlgFindLinks dialog
 
 wxBEGIN_EVENT_TABLE(CDlgFindLinks, wxDialog)
@@ -182,9 +171,9 @@ wxEND_EVENT_TABLE()
 CDlgFindLinks::CDlgFindLinks(ARBDogList& inDogs, wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlLinks(nullptr)
+	, m_reportColumn()
 	, m_ctrlEdit(nullptr)
 	, m_ctrlOpen(nullptr)
-	, m_sortLinks(L"Links")
 	, m_imgOk(-1)
 	, m_imgMissing(-1)
 {
@@ -198,9 +187,6 @@ CDlgFindLinks::CDlgFindLinks(ARBDogList& inDogs, wxWindow* pParent)
 		wxDefaultSize,
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
-	wxBusyCursor wait;
-	m_sortLinks.Initialize(nColLinkInfo);
-
 	// Controls (these are done first to control tab order)
 
 	m_ctrlLinks = new CReportListCtrl(
@@ -210,14 +196,26 @@ CDlgFindLinks::CDlgFindLinks(ARBDogList& inDogs, wxWindow* pParent)
 		true,
 		CReportListCtrl::SortHeader::Sort,
 		true);
-	m_ctrlLinks->Bind(wxEVT_COMMAND_LIST_COL_CLICK, &CDlgFindLinks::OnColumnClick, this);
-	m_ctrlLinks->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, &CDlgFindLinks::OnItemSelected, this);
-	m_ctrlLinks->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, &CDlgFindLinks::OnItemActivated, this);
-	m_ctrlLinks->Bind(wxEVT_KEY_DOWN, &CDlgFindLinks::OnKeyDown, this);
 	m_imgOk = m_ctrlLinks->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrCheck));
 	m_imgMissing = m_ctrlLinks->AddIcon(CResourceManager::Get()->GetIcon(ImageMgrQuestion));
 	m_ctrlLinks->SetHelpText(_("HIDC_FINDLINKS_LIST"));
 	m_ctrlLinks->SetToolTip(_("HIDC_FINDLINKS_LIST"));
+	m_ctrlLinks->Bind(wxEVT_COMMAND_LIST_ITEM_SELECTED, [this](wxListEvent& evt) { UpdateButtons(); });
+	m_ctrlLinks->Bind(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, [this](wxListEvent& evt) { Edit(); });
+	m_ctrlLinks->Bind(wxEVT_KEY_DOWN, [this](wxKeyEvent& evt) {
+		switch (evt.GetKeyCode())
+		{
+		default:
+			evt.Skip();
+			break;
+		case WXK_SPACE:
+		case WXK_NUMPAD_SPACE:
+			Edit();
+			break;
+		}
+	});
+	m_reportColumn.Initialize(this, m_ctrlLinks);
+	m_reportColumn.CreateColumns(k_columns, -1, k_regkeyBase);
 
 	wxButton* btnOk = new wxButton(this, wxID_OK);
 
@@ -246,12 +244,12 @@ CDlgFindLinks::CDlgFindLinks(ARBDogList& inDogs, wxWindow* pParent)
 	bSizerList->Add(m_ctrlLinks, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* bSizerSide = new wxBoxSizer(wxVERTICAL);
-	bSizerSide->Add(btnOk, 0, 0, 0);
-	bSizerSide->Add(btnCancel, 0, wxTOP, wxDLG_UNIT_X(this, 2));
+	bSizerSide->Add(btnOk, 0, wxEXPAND, 0);
+	bSizerSide->Add(btnCancel, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
 	bSizerSide->Add(0, 0, 1, wxEXPAND, 0);
-	bSizerSide->Add(btnCopy, 0, wxTOP, wxDLG_UNIT_X(this, 2));
-	bSizerSide->Add(m_ctrlEdit, 0, wxTOP, wxDLG_UNIT_X(this, 2));
-	bSizerSide->Add(m_ctrlOpen, 0, wxTOP, wxDLG_UNIT_X(this, 2));
+	bSizerSide->Add(btnCopy, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
+	bSizerSide->Add(m_ctrlEdit, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
+	bSizerSide->Add(m_ctrlOpen, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
 
 	bSizerList->Add(bSizerSide, 0, wxEXPAND, 0);
 
@@ -264,12 +262,6 @@ CDlgFindLinks::CDlgFindLinks(ARBDogList& inDogs, wxWindow* pParent)
 	CenterOnParent();
 
 	m_ctrlLinks->SetFocus();
-
-	for (int i = 0; i < nColLinkInfo; ++i)
-	{
-		assert(i == colLinkInfo[i].col);
-		m_ctrlLinks->InsertColumn(i, wxGetTranslation(colLinkInfo[i].info));
-	}
 
 	for (ARBDogList::iterator iterDog = inDogs.begin(); iterDog != inDogs.end(); ++iterDog)
 	{
@@ -297,11 +289,8 @@ CDlgFindLinks::CDlgFindLinks(ARBDogList& inDogs, wxWindow* pParent)
 	{
 		m_ctrlLinks->InsertItem(m_Data[iData]);
 	}
-	for (int iCol = 0; iCol < nColLinkInfo; ++iCol)
-		m_ctrlLinks->SetColumnWidth(iCol, wxLIST_AUTOSIZE_USEHEADER);
-	FindSortInfo sortInfo(this, &m_sortLinks);
-	m_ctrlLinks->SortItems(CompareLinks, &sortInfo);
-	SetColumnHeaders();
+	m_reportColumn.SizeColumns();
+	m_reportColumn.Sort();
 
 	if (0 < m_Data.size())
 		m_ctrlLinks->Select(0);
@@ -332,23 +321,6 @@ int CDlgFindLinks::GetImageIndex(std::wstring const& inLink)
 }
 
 
-void CDlgFindLinks::SetColumnHeaders()
-{
-	for (int i = 0; i < nColLinkInfo; ++i)
-	{
-		std::wstring str = fmt::format(
-			L"{} ({})",
-			wxGetTranslation(colLinkInfo[i].info).wx_str(),
-			m_sortLinks.FindColumnOrder(i) + 1);
-		wxListItem item;
-		item.SetMask(wxLIST_MASK_TEXT);
-		item.SetText(str);
-		m_ctrlLinks->SetColumn(i, item);
-		m_ctrlLinks->SetColumnSort(i, m_sortLinks.IsDescending(i) ? -1 : 1);
-	}
-}
-
-
 void CDlgFindLinks::UpdateButtons()
 {
 	bool bEnable = false;
@@ -375,43 +347,6 @@ void CDlgFindLinks::Edit()
 				m_ctrlLinks->RefreshItem(nItem);
 			}
 		}
-	}
-}
-
-
-void CDlgFindLinks::OnColumnClick(wxListEvent& evt)
-{
-	m_sortLinks.SetColumnOrder(evt.GetColumn());
-	SetColumnHeaders();
-	FindSortInfo sortInfo(this, &m_sortLinks);
-	m_ctrlLinks->SortItems(CompareLinks, &sortInfo);
-	m_sortLinks.Save();
-}
-
-
-void CDlgFindLinks::OnItemSelected(wxListEvent& evt)
-{
-	UpdateButtons();
-}
-
-
-void CDlgFindLinks::OnItemActivated(wxListEvent& evt)
-{
-	Edit();
-}
-
-
-void CDlgFindLinks::OnKeyDown(wxKeyEvent& evt)
-{
-	switch (evt.GetKeyCode())
-	{
-	default:
-		evt.Skip();
-		break;
-	case WXK_SPACE:
-	case WXK_NUMPAD_SPACE:
-		Edit();
-		break;
 	}
 }
 

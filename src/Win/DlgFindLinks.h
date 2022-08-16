@@ -20,9 +20,7 @@
  */
 
 #include "ARB/ARBTypes2.h"
-
-#include "ColumnOrder.h"
-
+#include "LibARBWin/ReportListHeader.h"
 #include <vector>
 class wxListEvent;
 
@@ -51,24 +49,19 @@ public:
 private:
 	CDlgFindLinksDataPtr GetItemLinkData(long item);
 	int GetImageIndex(std::wstring const& inLink);
-	void SetColumnHeaders();
 	void UpdateButtons();
 	void Edit();
 
 	ARBWin::CReportListCtrl* m_ctrlLinks;
+	ARBWin::CReportListHeader m_reportColumn;
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlOpen;
 
-	CColumnOrder m_sortLinks;
 	int m_imgOk;
 	int m_imgMissing;
 	std::vector<CDlgFindLinksDataPtr> m_Data;
 
 	DECLARE_EVENT_TABLE()
-	void OnColumnClick(wxListEvent& evt);
-	void OnItemSelected(wxListEvent& evt);
-	void OnItemActivated(wxListEvent& evt);
-	void OnKeyDown(wxKeyEvent& evt);
 	void OnCopy(wxCommandEvent& evt);
 	void OnEdit(wxCommandEvent& evt);
 	void OnOpen(wxCommandEvent& evt);

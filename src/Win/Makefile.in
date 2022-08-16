@@ -45,7 +45,6 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	AgilityBookTreeData.cpp \
 	AgilityBookTreeView.cpp \
 	ClipBoard.cpp \
-	ColumnOrder.cpp \
 	ComboBoxQ.cpp \
 	ComboBoxVenue.cpp \
 	CommonView.cpp \

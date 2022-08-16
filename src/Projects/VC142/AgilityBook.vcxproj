@@ -415,7 +415,6 @@
     <ClCompile Include="..\..\Win\AgilityBookTreeData.cpp" />
     <ClCompile Include="..\..\Win\AgilityBookTreeView.cpp" />
     <ClCompile Include="..\..\Win\ClipBoard.cpp" />
-    <ClCompile Include="..\..\Win\ColumnOrder.cpp" />
     <ClCompile Include="..\..\Win\ComboBoxQ.cpp" />
     <ClCompile Include="..\..\Win\ComboBoxVenue.cpp" />
     <ClCompile Include="..\..\Win\CommonView.cpp" />
@@ -541,7 +540,6 @@
     <ClInclude Include="..\..\Win\AgilityBookTreeData.h" />
     <ClInclude Include="..\..\Win\AgilityBookTreeView.h" />
     <ClInclude Include="..\..\Win\ClipBoard.h" />
-    <ClInclude Include="..\..\Win\ColumnOrder.h" />
     <ClInclude Include="..\..\Win\ComboBoxQ.h" />
     <ClInclude Include="..\..\Win\ComboBoxVenue.h" />
     <ClInclude Include="..\..\Win\CommonView.h" />
