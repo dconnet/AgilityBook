@@ -16,6 +16,7 @@
 # Revision History
 # 2022-08-01 Add wx msbuild support (nmake support is going away).
 #            Only support vc142/vc143.
+#            Must use -n for wx3.2.0 and earlier.
 # 2022-01-22 Changed to C++17.
 # 2021-12-18 Add ability to compile utils
 # 2021-11-09 Add vc143 support
