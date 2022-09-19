@@ -60,7 +60,7 @@ CDlgPageEncodeFinish::CDlgPageEncodeFinish(CDlgARBHelp* pParent)
 	// Sizers
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(text1, 0, wxEXPAND, 0);
+	bSizer->Add(text1, 0, wxEXPAND);
 	bSizer->Add(m_ctrlText, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);

@@ -244,14 +244,14 @@ CDlgFindLinks::CDlgFindLinks(ARBDogList& inDogs, wxWindow* pParent)
 	bSizerList->Add(m_ctrlLinks, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* bSizerSide = new wxBoxSizer(wxVERTICAL);
-	bSizerSide->Add(btnOk, 0, wxEXPAND, 0);
-	bSizerSide->Add(btnCancel, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
-	bSizerSide->Add(0, 0, 1, wxEXPAND, 0);
-	bSizerSide->Add(btnCopy, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
-	bSizerSide->Add(m_ctrlEdit, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
-	bSizerSide->Add(m_ctrlOpen, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
+	bSizerSide->Add(btnOk, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizerSide->Add(btnCancel, 0, wxEXPAND);
+	bSizerSide->AddStretchSpacer();
+	bSizerSide->Add(btnCopy, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizerSide->Add(m_ctrlEdit, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizerSide->Add(m_ctrlOpen, 0, wxEXPAND);
 
-	bSizerList->Add(bSizerSide, 0, wxEXPAND, 0);
+	bSizerList->Add(bSizerSide, 0, wxEXPAND);
 
 	bSizer->Add(bSizerList, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 

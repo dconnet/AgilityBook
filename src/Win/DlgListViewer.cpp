@@ -1474,9 +1474,9 @@ bool CDlgListViewer::Create(std::wstring const& inCaption, wxWindow* pParent)
 	bSizer->Add(m_ctrlList, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerBtns->Add(0, 0, 1, wxEXPAND, 0);
+	sizerBtns->AddStretchSpacer();
 	sizerBtns->Add(m_ctrlCopy, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerBtns->Add(btnClose, 0, 0, 0);
+	sizerBtns->Add(btnClose);
 
 	bSizer->Add(sizerBtns, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 

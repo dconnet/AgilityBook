@@ -96,12 +96,12 @@ void CDlgSelectURL::InitDlg(wxWindow* pParent, bool bAllowEmpty)
 
 	wxBoxSizer* bTextSizer = new wxBoxSizer(wxHORIZONTAL);
 	bTextSizer->Add(m_textCtrl, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	bTextSizer->Add(btnSelect, 0, wxALIGN_CENTER_VERTICAL, 0);
+	bTextSizer->Add(btnSelect, 0, wxALIGN_CENTER_VERTICAL);
 
-	bSizer->Add(bTextSizer, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(bTextSizer, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sdbSizer, 1, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
 	SetSizer(bSizer);
 	Layout();

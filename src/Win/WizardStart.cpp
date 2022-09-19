@@ -186,23 +186,20 @@ CWizardStart::CWizardStart(CWizard* pSheet, CAgilityBookDoc* pDoc)
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticBoxSizer* sizerImportExport = new wxStaticBoxSizer(boxImportExport, wxVERTICAL);
-	wxBoxSizer* sizerRadio = new wxBoxSizer(wxVERTICAL);
 	if (radioExcel)
-		sizerRadio->Add(radioExcel, 0, 0, 0);
+		sizerImportExport->Add(radioExcel, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
 	if (radioCalc)
-		sizerRadio->Add(radioCalc, 0, 0, 0);
-	sizerRadio->Add(radioSpread, 0, wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerRadio->Add(radioArb, 0, wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerImportExport->Add(sizerRadio, 0, wxALL, wxDLG_UNIT_X(this, 3));
-	bSizer->Add(sizerImportExport, 0, 0, 0);
+		sizerImportExport->Add(radioCalc, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerImportExport->Add(radioSpread, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerImportExport->Add(radioArb, 0, wxALL, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sizerImportExport, 0, wxDLG_UNIT_X(this, 3));
+
+	wxStaticBoxSizer* sizerDesc = new wxStaticBoxSizer(boxDesc, wxVERTICAL);
+	sizerDesc->Add(m_ctrlDesc, 1, wxEXPAND);
 
 	wxBoxSizer* sizerAction = new wxBoxSizer(wxHORIZONTAL);
 	sizerAction->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
-
-	wxStaticBoxSizer* sizerDesc = new wxStaticBoxSizer(boxDesc, wxVERTICAL);
-	sizerDesc->Add(m_ctrlDesc, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
-
-	sizerAction->Add(sizerDesc, 1, wxEXPAND, 0);
+	sizerAction->Add(sizerDesc, 1, wxEXPAND);
 
 	bSizer->Add(sizerAction, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 

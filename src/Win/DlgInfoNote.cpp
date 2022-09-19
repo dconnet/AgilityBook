@@ -506,20 +506,21 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticBoxSizer* sizerVis = new wxStaticBoxSizer(boxVis, wxVERTICAL);
-	sizerVis->Add(ctrlVisAll, 0, 0, 0);
-	sizerVis->Add(ctrlVisVis, 0, wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerVis->Add(ctrlVisHidden, 0, wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerVis->Add(ctrlVisAll, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerVis->Add(ctrlVisVis, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerVis->Add(ctrlVisHidden, 0, wxALL, wxDLG_UNIT_X(this, 3));
 
 	wxStaticBoxSizer* sizerUse = new wxStaticBoxSizer(boxUse, wxVERTICAL);
-	sizerUse->Add(ctrlUsageAll, 0, 0, 0);
-	sizerUse->Add(ctrlUsageInUse, 0, wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerUse->Add(ctrlUsageNot, 0, wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerUse->Add(ctrlUsageAll, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerUse->Add(ctrlUsageInUse, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerUse->Add(ctrlUsageNot, 0, wxALL, wxDLG_UNIT_X(this, 3));
 
 	wxBoxSizer* sizerButtons = new wxBoxSizer(wxVERTICAL);
 	sizerButtons->Add(ctrlNew, 0, wxBOTTOM, wxDLG_UNIT_X(parent, 3));
 	sizerButtons->Add(m_ctrlEdit, 0, wxBOTTOM, wxDLG_UNIT_X(parent, 3));
 	sizerButtons->Add(m_ctrlDelete, 0, wxBOTTOM, wxDLG_UNIT_X(parent, 3));
 	sizerButtons->Add(m_ctrlCopy);
+	sizerButtons->AddStretchSpacer();
 	sizerButtons->Add(sizerVis, 0, wxTOP, wxDLG_UNIT_X(parent, 5));
 	sizerButtons->Add(sizerUse, 0, wxTOP, wxDLG_UNIT_X(parent, 5));
 
@@ -527,11 +528,11 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	sizerControls->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(parent, 5));
 	sizerControls->Add(sizerButtons);
 
-	bSizer->Add(sizerControls, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(parent, 5));
-	bSizer->Add(m_textCount, 0, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(parent, 5));
+	bSizer->Add(sizerControls, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(parent, 5));
+	bSizer->Add(m_textCount, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(parent, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgInfoNote::OnOk, this, wxID_OK);
 

@@ -342,98 +342,97 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 
 	// Sizers
 
-	wxBoxSizer* sizerCal = new wxBoxSizer(wxVERTICAL);
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticBoxSizer* sizerCalList = new wxStaticBoxSizer(boxCalList, wxVERTICAL);
 
-	wxFlexGridSizer* sizerCalListItems = new wxFlexGridSizer(2, 2, 0, 0);
+	wxFlexGridSizer* sizerCalListItems = new wxFlexGridSizer(2, 2, wxDLG_UNIT_X(this, 5), wxDLG_UNIT_X(this, 5));
 	sizerCalListItems->SetFlexibleDirection(wxBOTH);
 	sizerCalListItems->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 
 	wxBoxSizer* sizerOpen = new wxBoxSizer(wxVERTICAL);
-	sizerOpen->Add(ctrlWarnOpen, 0, 0, 0);
+	sizerOpen->Add(ctrlWarnOpen);
 
 	wxBoxSizer* sizerOpenDays = new wxBoxSizer(wxHORIZONTAL);
-	sizerOpenDays->Add(wxDLG_UNIT_X(this, 10), 0, 0, 0, 0);
+	sizerOpenDays->AddSpacer(wxDLG_UNIT_X(this, 10));
 	sizerOpenDays->Add(m_ctrlOpeningNear, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerOpenDays->Add(textOpen, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerOpenDays->Add(textOpen, 0, wxALIGN_CENTER_VERTICAL);
 
 	sizerOpen->Add(sizerOpenDays, 0, wxTOP, wxDLG_UNIT_X(this, 1));
 
-	sizerCalListItems->Add(sizerOpen, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerCalListItems->Add(sizerOpen);
 
 	wxBoxSizer* sizerOpenColor = new wxBoxSizer(wxHORIZONTAL);
 	sizerOpenColor->Add(m_ctrlOpeningNearColor, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerOpenColor->Add(m_ctrlOpeningNearSet, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerOpenColor->Add(m_ctrlOpeningNearSet, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizerCalListItems->Add(sizerOpenColor, 0, 0, 0);
+	sizerCalListItems->Add(sizerOpenColor);
 
 	wxBoxSizer* sizerClose = new wxBoxSizer(wxVERTICAL);
-	sizerClose->Add(ctrlWarnClose, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
+	sizerClose->Add(ctrlWarnClose);
 
 	wxBoxSizer* sizerCloseDays = new wxBoxSizer(wxHORIZONTAL);
-	sizerCloseDays->Add(wxDLG_UNIT_X(this, 10), 0, 0, 0, 0);
+	sizerCloseDays->AddSpacer(wxDLG_UNIT_X(this, 10));
 	sizerCloseDays->Add(m_ctrlClosingNear, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerCloseDays->Add(textClose, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerCloseDays->Add(textClose, 0, wxALIGN_CENTER_VERTICAL);
 
 	sizerClose->Add(sizerCloseDays, 0, wxTOP, wxDLG_UNIT_X(this, 1));
 
-	sizerCalListItems->Add(sizerClose, 0, wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerCalListItems->Add(sizerClose);
 
 	wxBoxSizer* sizerCloseColor = new wxBoxSizer(wxHORIZONTAL);
 	sizerCloseColor->Add(m_ctrlClosingNearColor, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerCloseColor->Add(m_ctrlClosingNearSet, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerCloseColor->Add(m_ctrlClosingNearSet, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizerCalListItems->Add(sizerCloseColor, 0, wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerCalListItems->Add(sizerCloseColor);
 
 	sizerCalList->Add(sizerCalListItems, 0, wxALL, wxDLG_UNIT_X(this, 3));
 
-	sizerCal->Add(sizerCalList, 0, wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerCalList, 0, wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxStaticBoxSizer* sizerCalView = new wxStaticBoxSizer(boxCalView, wxHORIZONTAL);
-
 	wxBoxSizer* sizerCalView2 = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerDOW = new wxBoxSizer(wxHORIZONTAL);
-	sizerDOW->Add(textDOW, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerDOW->Add(m_ctrlDayOfWeek, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerDOW->Add(textDOW, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerDOW->Add(m_ctrlDayOfWeek, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizerCalView2->Add(sizerDOW, 0, 0, 0);
-	sizerCalView2->Add(ctrlAutoDel, 0, wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerCalView2->Add(ctrlHide, 0, wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerCalView2->Add(sizerDOW, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerCalView2->Add(ctrlAutoDel, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerCalView2->Add(ctrlHide, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
 
 	wxBoxSizer* sizePast = new wxBoxSizer(wxHORIZONTAL);
-	sizePast->Add(wxDLG_UNIT_X(this, 10), 0, 0, 0, 0);
-	sizePast->Add(textPast1, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizePast->Add(ctrlPast, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizePast->Add(textPast2, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizePast->AddSpacer(wxDLG_UNIT_X(this, 10));
+	sizePast->Add(textPast1, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizePast->Add(ctrlPast, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizePast->Add(textPast2, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizerCalView2->Add(sizePast, 0, wxTOP, wxDLG_UNIT_X(this, 2));
-	sizerCalView2->Add(ctrlHideEntered, 0, wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerCalView2->Add(ctrlViewOpen, 0, wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerCalView2->Add(ctrlViewClose, 0, wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerCalView2->Add(sizePast, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerCalView2->Add(ctrlHideEntered, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerCalView2->Add(ctrlViewOpen, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerCalView2->Add(ctrlViewClose);
 
 	sizerCalView->Add(sizerCalView2, 0, wxALL, wxDLG_UNIT_X(this, 3));
 
 	wxBoxSizer* sizerCalEntries = new wxBoxSizer(wxVERTICAL);
-	sizerCalEntries->Add(textCalEntry, 0, 0, 0);
+	sizerCalEntries->Add(textCalEntry, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerEntryColor = new wxBoxSizer(wxHORIZONTAL);
 	sizerEntryColor->Add(m_ctrlCalEntries, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerEntryColor->Add(m_ctrlColor, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerEntryColor->Add(btnColor, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerEntryColor->Add(btnColor, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizerCalEntries->Add(sizerEntryColor, 0, wxTOP, wxDLG_UNIT_X(this, 2));
-	sizerCalEntries->Add(m_ctrlCalView, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
-	sizerCalEntries->Add(ctrlFont, 0, wxALIGN_CENTER_HORIZONTAL | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerCalEntries->Add(sizerEntryColor, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
+	sizerCalEntries->Add(m_ctrlCalView, 1, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerCalEntries->Add(ctrlFont, 0, wxALIGN_CENTER_HORIZONTAL);
 
-	sizerCalView->Add(sizerCalEntries, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
+	sizerCalView->Add(sizerCalEntries, 0, wxALL, wxDLG_UNIT_X(this, 3));
 
-	sizerCal->Add(sizerCalView, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerCalView, 0, wxALL, wxDLG_UNIT_X(this, 5));
 
-	SetSizer(sizerCal);
+	SetSizer(bSizer);
 	Layout();
-	sizerCal->Fit(this);
+	bSizer->Fit(this);
 
 	UpdateControls();
 }

@@ -91,12 +91,12 @@ CDlgInfoNoteEdit::CDlgInfoNoteEdit(
 	// Sizers
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(ctrlName, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(ctrlVisible, 0, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(m_ctrlNotes, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(ctrlName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(ctrlVisible, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_ctrlNotes, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgInfoNoteEdit::OnOk, this, wxID_OK);
 

@@ -238,20 +238,20 @@ CWizardExport::CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 
 	wxStaticBoxSizer* sizerDelimiters = new wxStaticBoxSizer(m_boxDelimiters, wxVERTICAL);
 
-	wxFlexGridSizer* sizerDelim2 = new wxFlexGridSizer(2, 3, 0, 0);
+	wxFlexGridSizer* sizerDelim2 = new wxFlexGridSizer(2, 3, wxDLG_UNIT_X(this, 3), wxDLG_UNIT_X(this, 3));
 	sizerDelim2->SetFlexibleDirection(wxBOTH);
 	sizerDelim2->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerDelim2->Add(m_ctrlTab, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerDelim2->Add(m_ctrlColon, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerDelim2->Add(m_ctrlComma, 0, 0, 0);
-	sizerDelim2->Add(m_ctrlSpace, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerDelim2->Add(m_ctrlSemicolon, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerDelim2->Add(m_ctrlTab);
+	sizerDelim2->Add(m_ctrlColon);
+	sizerDelim2->Add(m_ctrlComma);
+	sizerDelim2->Add(m_ctrlSpace, 0, wxALIGN_CENTER_VERTICAL);
+	sizerDelim2->Add(m_ctrlSemicolon, 0, wxALIGN_CENTER_VERTICAL);
 
 	wxBoxSizer* sizerOther = new wxBoxSizer(wxHORIZONTAL);
-	sizerOther->Add(m_ctrlOther, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerOther->Add(m_ctrlOtherChar, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerOther->Add(m_ctrlOther, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerOther->Add(m_ctrlOtherChar, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizerDelim2->Add(sizerOther, 1, wxEXPAND | wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerDelim2->Add(sizerOther, 1, wxEXPAND | wxALIGN_CENTER_VERTICAL);
 
 	sizerDelimiters->Add(sizerDelim2, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
 
@@ -261,17 +261,17 @@ CWizardExport::CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 	sizerAssign->Add(m_ctrlAssign, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerFormat = new wxBoxSizer(wxHORIZONTAL);
-	sizerFormat->Add(textFormat, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerFormat->Add(m_ctrlDateFormat, wxALIGN_CENTER_VERTICAL, 0);
+	sizerFormat->Add(textFormat, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerFormat->Add(m_ctrlDateFormat, wxALIGN_CENTER_VERTICAL);
 
-	sizerAssign->Add(sizerFormat, 0, wxALIGN_TOP, 0);
+	sizerAssign->Add(sizerFormat, 0, wxALIGN_TOP);
 
-	sizerOptions->Add(0, 0, 1, wxEXPAND, 0);
-	sizerOptions->Add(sizerAssign, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 4));
+	sizerOptions->AddStretchSpacer();
+	sizerOptions->Add(sizerAssign, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 3));
 
-	bSizer->Add(sizerOptions, 0, wxEXPAND, 0);
+	bSizer->Add(sizerOptions, 0, wxEXPAND);
 	bSizer->Add(textPreview, 0, wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(m_ctrlPreview, 1, wxEXPAND, 0);
+	bSizer->Add(m_ctrlPreview, 1, wxEXPAND);
 
 	SetSizer(bSizer);
 	bSizer->Fit(this);

@@ -254,47 +254,46 @@ CWizardImport::CWizardImport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerStart = new wxBoxSizer(wxHORIZONTAL);
-	sizerStart->Add(textRow, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerStart->Add(m_ctrlRow, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
-
-	sizerStart->Add(0, 0, 1, wxEXPAND, 0);
+	sizerStart->Add(textRow, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerStart->Add(m_ctrlRow);
+	sizerStart->AddStretchSpacer();
 	sizerStart->Add(m_ctrlAssign, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerStart->Add(textFormat, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerStart->Add(m_ctrlDateFormat, 0, 0, 0);
+	sizerStart->Add(textFormat, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerStart->Add(m_ctrlDateFormat, 0, wxALIGN_CENTER_VERTICAL);
 
-	bSizer->Add(sizerStart, 0, wxEXPAND, 0);
+	bSizer->Add(sizerStart, 0, wxEXPAND);
 
 	wxBoxSizer* sizerOptions = new wxBoxSizer(wxHORIZONTAL);
 
 	wxStaticBoxSizer* sizerDelimiters = new wxStaticBoxSizer(m_boxDelimiters, wxVERTICAL);
 
-	wxFlexGridSizer* sizerDelim2 = new wxFlexGridSizer(2, 3, 0, 0);
+	wxFlexGridSizer* sizerDelim2 = new wxFlexGridSizer(2, 3, wxDLG_UNIT_X(this, 3), wxDLG_UNIT_X(this, 3));
 	sizerDelim2->SetFlexibleDirection(wxBOTH);
 	sizerDelim2->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerDelim2->Add(m_ctrlTab, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerDelim2->Add(m_ctrlColon, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerDelim2->Add(m_ctrlComma, 0, 0, wxDLG_UNIT_X(this, 3));
-	sizerDelim2->Add(m_ctrlSpace, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerDelim2->Add(m_ctrlSemicolon, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerDelim2->Add(m_ctrlTab);
+	sizerDelim2->Add(m_ctrlColon);
+	sizerDelim2->Add(m_ctrlComma);
+	sizerDelim2->Add(m_ctrlSpace, 0, wxALIGN_CENTER_VERTICAL);
+	sizerDelim2->Add(m_ctrlSemicolon, 0, wxALIGN_CENTER_VERTICAL);
 
 	wxBoxSizer* sizerOther = new wxBoxSizer(wxHORIZONTAL);
-	sizerOther->Add(m_ctrlOther, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerOther->Add(m_ctrlOtherChar, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerOther->Add(m_ctrlOther, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerOther->Add(m_ctrlOtherChar, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizerDelim2->Add(sizerOther, 1, wxEXPAND | wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerDelim2->Add(sizerOther, 1, wxEXPAND | wxALIGN_CENTER_VERTICAL);
 
 	sizerDelimiters->Add(sizerDelim2, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
 
-	sizerOptions->Add(sizerDelimiters, 0, wxEXPAND, 0);
+	sizerOptions->Add(sizerDelimiters, 0, wxEXPAND);
 
 	bSizer->Add(sizerOptions, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	wxBoxSizer* sizeFile = new wxBoxSizer(wxHORIZONTAL);
-	sizeFile->Add(btnFile, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizeFile->Add(m_ctrlPreviewFile, 0, wxALIGN_CENTER_VERTICAL, 0);
+	wxBoxSizer* sizerFile = new wxBoxSizer(wxHORIZONTAL);
+	sizerFile->Add(btnFile, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerFile->Add(m_ctrlPreviewFile, 0, wxALIGN_CENTER_VERTICAL);
 
-	bSizer->Add(sizeFile, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(m_ctrlPreview, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerFile, 0, wxEXPAND | wxTOP | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_ctrlPreview, 1, wxEXPAND);
 
 	SetSizer(bSizer);
 	bSizer->Fit(this);

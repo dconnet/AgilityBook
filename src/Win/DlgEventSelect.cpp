@@ -165,25 +165,25 @@ CDlgEventSelect::CDlgEventSelect(
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerDiv = new wxBoxSizer(wxHORIZONTAL);
-	sizerDiv->Add(textDiv, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerDiv->Add(m_ctrlDivisions, 1, wxEXPAND, 0);
+	sizerDiv->Add(textDiv, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerDiv->Add(m_ctrlDivisions, 1, wxEXPAND);
 
 	bSizer->Add(sizerDiv, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerLevel = new wxBoxSizer(wxHORIZONTAL);
-	sizerLevel->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerLevel->Add(m_ctrlLevels, 1, wxEXPAND, 0);
+	sizerLevel->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerLevel->Add(m_ctrlLevels, 1, wxEXPAND);
 
 	bSizer->Add(sizerLevel, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerEvent = new wxBoxSizer(wxHORIZONTAL);
-	sizerEvent->Add(textEvent, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerEvent->Add(m_ctrlEvents, 1, wxEXPAND, 0);
+	sizerEvent->Add(textEvent, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerEvent->Add(m_ctrlEvents, 1, wxEXPAND);
 
-	bSizer->Add(sizerEvent, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerEvent, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 	m_ctrlOk = wxDynamicCast(FindWindowInSizer(bSizer, wxID_OK), wxButton);
 	assert(!!m_ctrlOk);
 

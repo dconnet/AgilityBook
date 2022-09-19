@@ -209,27 +209,25 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
-	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerName->Add(ctrlName, 1, wxALIGN_CENTER_VERTICAL, 0);
-
+	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerName->Add(ctrlName, 1, wxALIGN_CENTER_VERTICAL);
 	bSizer->Add(sizerName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerTally = new wxBoxSizer(wxHORIZONTAL);
-	sizerTally->Add(textTally, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerTally->Add(m_ctrlTally, 1, wxALIGN_CENTER_VERTICAL, 0);
-
+	sizerTally->Add(textTally, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerTally->Add(m_ctrlTally, 1, wxALIGN_CENTER_VERTICAL);
 	bSizer->Add(sizerTally, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerPoints = new wxBoxSizer(wxHORIZONTAL);
-	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerPoints->Add(ctrlPoints, 0, wxALIGN_CENTER_VERTICAL, 0);
-
+	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerPoints->Add(ctrlPoints, 0, wxALIGN_CENTER_VERTICAL);
 	bSizer->Add(sizerPoints, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+
 	bSizer->Add(textDesc, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(ctrlDesc, 1, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(ctrlDesc, 1, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
 	SetSizer(bSizer);
 	Layout();

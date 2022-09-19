@@ -144,10 +144,10 @@ CDlgQueryDetail::CDlgQueryDetail(
 	sizerVenue->Add(textLocation, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
 	sizerVenue->Add(ctrlLocationOrVenue, 1, wxALIGN_CENTER_VERTICAL, 0);
 
-	bSizer->Add(sizerVenue, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerVenue, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
 	SetSizer(bSizer);
 	Layout();

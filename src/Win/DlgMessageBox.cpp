@@ -95,15 +95,15 @@ CDlgMessageBox::CDlgMessageBox(
 	wxBoxSizer* sizerText = new wxBoxSizer(wxHORIZONTAL);
 	if (ctrlIcon)
 		sizerText->Add(ctrlIcon, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerText->Add(ctrlText, 1, wxEXPAND, 0);
+	sizerText->Add(ctrlText, 1, wxEXPAND);
 
-	bSizer->Add(sizerText, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerText, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	if (ctrlDetails)
-		bSizer->Add(ctrlDetails, 0, wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+		bSizer->Add(ctrlDetails, 0, wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(btnFlags);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
 	SetSizer(bSizer);
 	Layout();

@@ -354,9 +354,9 @@ CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pPa
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
-	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
 	sizerName->Add(ctrlName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerName->Add(ctrlPrefix, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerName->Add(ctrlPrefix, 0, wxALIGN_CENTER_VERTICAL);
 
 	bSizer->Add(sizerName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 	bSizer->Add(textLong, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
@@ -365,48 +365,47 @@ CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pPa
 	bSizer->Add(ctrlDesc, 1, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerMultiple = new wxBoxSizer(wxVERTICAL);
-	sizerMultiple->Add(ctrlAllowMany, 0, 0, 0);
+	sizerMultiple->Add(ctrlAllowMany, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
 
 	wxBoxSizer* sizerShowFirst = new wxBoxSizer(wxHORIZONTAL);
-	sizerShowFirst->Add(wxDLG_UNIT_X(this, 10), 0, 0, 0, 0);
-	sizerShowFirst->Add(m_ctrlShowFirst, 0, 0, 0);
-	sizerMultiple->Add(sizerShowFirst, 0, wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerShowFirst->AddSpacer(wxDLG_UNIT_X(this, 10));
 
-	wxFlexGridSizer* sizerMultiInfo = new wxFlexGridSizer(4, 3, 0, 0);
+	wxBoxSizer* sizerShowMulti = new wxBoxSizer(wxVERTICAL);
+	sizerShowMulti->Add(m_ctrlShowFirst, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
+
+	wxFlexGridSizer* sizerMultiInfo
+		= new wxFlexGridSizer(4, 2, wxDLG_UNIT_X(this, 2), wxDLG_UNIT_X(this, 3)); // rows/cols/vgap/hgap
 	sizerMultiInfo->SetFlexibleDirection(wxBOTH);
 	sizerMultiInfo->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerMultiInfo->Add(wxDLG_UNIT_X(this, 10), 0, 0, 0, 0);
-	sizerMultiInfo->Add(textStart, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerMultiInfo->Add(m_ctrlMultipleStartAt, 0, wxALIGN_CENTER_VERTICAL, 0);
-	sizerMultiInfo->Add(wxDLG_UNIT_X(this, 10), 0, 0, 0, 0);
-	sizerMultiInfo->Add(textInc, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerMultiInfo->Add(m_ctrlMultipleInc, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 1));
-	sizerMultiInfo->Add(wxDLG_UNIT_X(this, 10), 0, 0, 0, 0);
-	sizerMultiInfo->Add(textDisplay, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerMultiInfo->Add(m_ctrlStyle, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 1));
-	sizerMultiInfo->Add(wxDLG_UNIT_X(this, 10), 0, 0, 0, 0);
-	sizerMultiInfo->Add(textSep, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerMultiInfo->Add(m_ctrlSep, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 1));
-	sizerMultiple->Add(sizerMultiInfo, 0, wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerMultiInfo->Add(textStart, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
+	sizerMultiInfo->Add(m_ctrlMultipleStartAt, 0, wxALIGN_CENTER_VERTICAL);
+	sizerMultiInfo->Add(textInc, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
+	sizerMultiInfo->Add(m_ctrlMultipleInc, 0, wxALIGN_CENTER_VERTICAL);
+	sizerMultiInfo->Add(textDisplay, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
+	sizerMultiInfo->Add(m_ctrlStyle, 0, wxALIGN_CENTER_VERTICAL);
+	sizerMultiInfo->Add(textSep, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
+	sizerMultiInfo->Add(m_ctrlSep, 0, wxALIGN_CENTER_VERTICAL);
+	sizerShowMulti->Add(sizerMultiInfo);
+	sizerShowFirst->Add(sizerShowMulti);
+	sizerMultiple->Add(sizerShowFirst);
 
 	wxBoxSizer* sizerDetails = new wxBoxSizer(wxHORIZONTAL);
-	sizerDetails->Add(sizerMultiple, 0, 0, 0);
-	sizerDetails->Add(0, 0, 1, wxEXPAND, 0);
+	sizerDetails->Add(sizerMultiple);
+	sizerDetails->AddStretchSpacer();
 
-	wxFlexGridSizer* sizerDates = new wxFlexGridSizer(2, 2, 0, 0);
+	wxFlexGridSizer* sizerDates = new wxFlexGridSizer(2, 2, wxDLG_UNIT_X(this, 3), wxDLG_UNIT_X(this, 5));
 	sizerDates->SetFlexibleDirection(wxBOTH);
 	sizerDates->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerDates->Add(ctrlValidFrom, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerDates->Add(m_ctrlDateFrom, 0, wxALIGN_CENTER_VERTICAL, 0);
-	sizerDates->Add(ctrlValidTo, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerDates->Add(m_ctrlDateTo, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerDates->Add(ctrlValidFrom, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
+	sizerDates->Add(m_ctrlDateFrom, 0, wxALIGN_CENTER_VERTICAL);
+	sizerDates->Add(ctrlValidTo, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
+	sizerDates->Add(m_ctrlDateTo, 0, wxALIGN_CENTER_VERTICAL);
+	sizerDetails->Add(sizerDates);
 
-	sizerDetails->Add(sizerDates, 0, 0, 0);
-
-	bSizer->Add(sizerDetails, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerDetails, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
 	SetSizer(bSizer);
 	Layout();

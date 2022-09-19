@@ -201,23 +201,23 @@ CDlgConfigure::CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book, 
 	sizerConfig->Add(m_ctrlItems, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
-	sizerBtns->Add(m_ctrlNew, 0, 0, 0);
-	sizerBtns->Add(m_ctrlEdit, 0, wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerBtns->Add(m_ctrlDelete, 0, wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerBtns->Add(m_ctrlCopy, 0, wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlNew, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlEdit, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlDelete, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlCopy, 0, wxEXPAND);
 
-	sizerConfig->Add(sizerBtns, 0, wxEXPAND, 0);
+	sizerConfig->Add(sizerBtns, 0, wxEXPAND);
 
 	bSizer->Add(sizerConfig, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerUpdate = new wxBoxSizer(wxHORIZONTAL);
-	sizerUpdate->Add(0, 0, 1, wxEXPAND, 0);
-	sizerUpdate->Add(btnUpdate, 0, 0, 0);
+	sizerUpdate->AddStretchSpacer();
+	sizerUpdate->Add(btnUpdate);
 
-	bSizer->Add(sizerUpdate, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerUpdate, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
 	wxTreeItemId root = m_ctrlItems->AddRoot(L"Root");
 

@@ -81,14 +81,14 @@ CDlgPageEncode::CDlgPageEncode(CDlgARBHelp* pParent)
 		wxID_ANY,
 		L"In addition to any ARB files you select in the following dialog, basic system information from the registry will be included.",
 		wxDefaultPosition,
-		wxSize(-1, wxDLG_UNIT_Y(this, 120)),
+		wxSize(-1, wxDLG_UNIT_Y(this, 120)), // To set initial page size sufficiently.
 		0);
 	text2->Wrap(wxDLG_UNIT_X(this, 345));
 
 	// Sizers
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(text1, 0, wxEXPAND, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(text1, 0, wxEXPAND);
 	bSizer->Add(text2, 0, wxTOP, wxDLG_UNIT_X(this, 5));
 
 	SetSizer(bSizer);

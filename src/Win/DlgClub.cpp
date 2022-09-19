@@ -206,24 +206,29 @@ CDlgClub::CDlgClub(
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
-	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerName->Add(m_ctrlClubs, 1, wxEXPAND, 0);
+	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerName->Add(m_ctrlClubs, 1, wxEXPAND);
 
 	bSizer->Add(sizerName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
-	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerVenue->Add(m_ctrlVenues, 0, wxEXPAND, 0);
+	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerVenue->Add(m_ctrlVenues, 0, wxEXPAND);
 
-	bSizer->Add(sizerVenue, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerVenue, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
+	auto flags = wxLEFT | wxRIGHT | wxBOTTOM;
 	if (ctrl)
-		bSizer->Add(ctrl, 0, wxALL, wxDLG_UNIT_X(this, 5));
+		bSizer->Add(ctrl, 0, flags, wxDLG_UNIT_X(this, 5));
 	if (m_ctrlPrimary)
-		bSizer->Add(m_ctrlPrimary, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	{
+		if (ctrl)
+			flags |= wxTOP;
+		bSizer->Add(m_ctrlPrimary, 0, wxEXPAND | flags, wxDLG_UNIT_X(this, 5));
+	}
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
 	SetSizer(bSizer);
 	Layout();

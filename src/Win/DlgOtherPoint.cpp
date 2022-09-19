@@ -125,19 +125,19 @@ CDlgOtherPoint::CDlgOtherPoint(ARBConfig& config, ARBDogRunOtherPointsPtr const&
 
 	wxBoxSizer* sizerItems = new wxBoxSizer(wxHORIZONTAL);
 	sizerItems->Add(m_ctrlOtherPoints, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerItems->Add(ctrlNew, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerItems->Add(ctrlNew, 0, wxALIGN_CENTER_VERTICAL);
 
 	bSizer->Add(sizerItems, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 	bSizer->Add(m_ctrlDesc, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerPoints = new wxBoxSizer(wxHORIZONTAL);
 	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerPoints->Add(ctrlPoints, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerPoints->Add(ctrlPoints, 0, wxALIGN_CENTER_VERTICAL);
 
-	bSizer->Add(sizerPoints, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerPoints, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
 	SetSizer(bSizer);
 	Layout();

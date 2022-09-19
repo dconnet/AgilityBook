@@ -54,16 +54,15 @@ CDlgPageEncodeFiles::CDlgPageEncodeFiles(CDlgARBHelp* pParent)
 	// Sizers
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(text1, 0, wxEXPAND, 0);
+	bSizer->Add(text1, 0, wxEXPAND);
 
 	wxBoxSizer* sizerListBtns = new wxBoxSizer(wxHORIZONTAL);
 	sizerListBtns->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
-	sizerBtns->Add(btnAll, 0, 0, 0);
-	sizerBtns->Add(btnNone, 0, wxTOP, wxDLG_UNIT_X(this, 3));
-
-	sizerListBtns->Add(sizerBtns, 0, wxEXPAND, 0);
+	sizerBtns->Add(btnAll, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(btnNone, 0, wxEXPAND);
+	sizerListBtns->Add(sizerBtns);
 
 	bSizer->Add(sizerListBtns, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 

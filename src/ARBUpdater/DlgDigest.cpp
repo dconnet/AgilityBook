@@ -186,24 +186,24 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizeConfigData = new wxBoxSizer(wxVERTICAL);
-	sizeConfigData->Add(m_ctrlConfig, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
+	sizeConfigData->Add(m_ctrlConfig, 0, wxBOTTOM, wxDLG_UNIT_X(this, 1));
 
 	wxBoxSizer* sizeConfigVersion = new wxBoxSizer(wxHORIZONTAL);
-	sizeConfigVersion->Add(ctrlVersion, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizeConfigVersion->Add(m_ctrlConfigVersion, 0, 0, 0);
-	sizeConfigData->Add(sizeConfigVersion, 0, 0, 0);
+	sizeConfigVersion->Add(ctrlVersion, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizeConfigVersion->Add(m_ctrlConfigVersion);
+	sizeConfigData->Add(sizeConfigVersion);
 
 	wxBoxSizer* sizeConfig = new wxBoxSizer(wxHORIZONTAL);
 	sizeConfig->Add(m_ctrlInit, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizeConfig->Add(sizeConfigData, 0, wxEXPAND, 0);
-	bSizer->Add(sizeConfig, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	sizeConfig->Add(sizeConfigData, 0, wxEXPAND);
+	bSizer->Add(sizeConfig, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizeFile = new wxBoxSizer(wxHORIZONTAL);
 	sizeFile->Add(ctrlFile, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizeFile->Add(ctrlFind, 0, wxALIGN_CENTER_VERTICAL, 0);
-	bSizer->Add(sizeFile, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	sizeFile->Add(ctrlFind, 0, wxALIGN_CENTER_VERTICAL);
+	bSizer->Add(sizeFile, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	wxFlexGridSizer* sizerGrid = new wxFlexGridSizer(4, 2, wxDLG_UNIT_X(this, 5), wxDLG_UNIT_X(this, 5));
+	wxFlexGridSizer* sizerGrid = new wxFlexGridSizer(4, 2, wxDLG_UNIT_X(this, 3), wxDLG_UNIT_X(this, 3));
 	sizerGrid->AddGrowableCol(1);
 	sizerGrid->SetFlexibleDirection(wxBOTH);
 	sizerGrid->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
@@ -224,7 +224,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	m_ctrlCopy->Enable(false);
 	wxButton* cancel = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_CANCEL), wxButton);
 	cancel->SetLabel(L"Close");
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
 	SetSizer(bSizer);
 	Layout();

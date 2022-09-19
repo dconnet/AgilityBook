@@ -385,12 +385,12 @@ CDlgExistingPoints::CDlgExistingPoints(
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerPoints = new wxBoxSizer(wxHORIZONTAL);
-	sizerPoints->Add(textType, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPoints->Add(textType, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
 	sizerPoints->Add(m_ctrlType, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerPoints->Add(textEarned, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPoints->Add(textEarned, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
 	sizerPoints->Add(m_ctrlDate, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerPoints->Add(ctrlPoints, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerPoints->Add(ctrlPoints, 0, wxALIGN_CENTER_VERTICAL);
 
 	bSizer->Add(sizerPoints, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
@@ -398,27 +398,27 @@ CDlgExistingPoints::CDlgExistingPoints(
 
 	wxStaticBoxSizer* sizerWhere = new wxStaticBoxSizer(boxWhere, wxVERTICAL);
 
-	wxFlexGridSizer* sizerCombo = new wxFlexGridSizer(6, 2, 0, 0);
+	wxFlexGridSizer* sizerCombo = new wxFlexGridSizer(6, 2, wxDLG_UNIT_X(this, 3), wxDLG_UNIT_X(this, 3));
 	sizerCombo->SetFlexibleDirection(wxBOTH);
 	sizerCombo->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 
-	sizerCombo->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 2));
-	sizerCombo->Add(m_ctrlVenues, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerCombo->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL);
+	sizerCombo->Add(m_ctrlVenues, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizerCombo->Add(m_textDivMultiQs, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 2));
-	sizerCombo->Add(m_ctrlDivMultiQs, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerCombo->Add(m_textDivMultiQs, 0, wxALIGN_CENTER_VERTICAL);
+	sizerCombo->Add(m_ctrlDivMultiQs, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizerCombo->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 2));
-	sizerCombo->Add(m_ctrlLevels, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerCombo->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL);
+	sizerCombo->Add(m_ctrlLevels, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizerCombo->Add(textEvent, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 2));
-	sizerCombo->Add(m_ctrlEvents, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerCombo->Add(textEvent, 0, wxALIGN_CENTER_VERTICAL);
+	sizerCombo->Add(m_ctrlEvents, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizerCombo->Add(textSubName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 2));
-	sizerCombo->Add(m_ctrlSubNames, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerCombo->Add(textSubName, 0, wxALIGN_CENTER_VERTICAL);
+	sizerCombo->Add(m_ctrlSubNames, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizerCombo->Add(textOther, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 2));
-	sizerCombo->Add(m_ctrlTypeNames, 0, wxALIGN_CENTER_VERTICAL | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerCombo->Add(textOther, 0, wxALIGN_CENTER_VERTICAL);
+	sizerCombo->Add(m_ctrlTypeNames, 0, wxALIGN_CENTER_VERTICAL);
 
 	sizerWhere->Add(sizerCombo, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
 
@@ -426,14 +426,14 @@ CDlgExistingPoints::CDlgExistingPoints(
 
 	wxStaticBoxSizer* sizerComment = new wxStaticBoxSizer(boxComment, wxVERTICAL);
 	sizerComment->Add(ctrlNote, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
-	sizerContent->Add(sizerComment, 1, wxEXPAND, 0);
+	sizerContent->Add(sizerComment, 1, wxEXPAND);
 
-	bSizer->Add(sizerContent, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerContent, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	// Not a separated sizer like most other dialogs because of the groups
 	// boxes right above them.
 	m_sdbSizer = CreateButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(m_sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
 	// Add MultiQ to types if at least one venue supports it.
 	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->Book().GetConfig().GetVenues().begin();

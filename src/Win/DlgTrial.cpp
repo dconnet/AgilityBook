@@ -315,50 +315,46 @@ CDlgTrial::CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrialPtr const& inTrial, wxWin
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
-	wxFlexGridSizer* sizerGrid = new wxFlexGridSizer(5, 2, 0, 0);
-	sizerGrid->SetFlexibleDirection(wxBOTH);
-	sizerGrid->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_ALL);
-
 	wxBoxSizer* sizerDate = new wxBoxSizer(wxHORIZONTAL);
-	sizerDate->Add(textStart, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerDate->Add(m_ctrlStart, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerDate->Add(textStart, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerDate->Add(m_ctrlStart);
 
 	wxBoxSizer* sizerLocation = new wxBoxSizer(wxHORIZONTAL);
-	sizerLocation->Add(textLocation, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerLocation->Add(m_ctrlLocation, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerLocation->Add(textLocation, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerLocation->Add(m_ctrlLocation, 1, wxEXPAND);
 
 	wxBoxSizer* sizerLocationNotes = new wxBoxSizer(wxHORIZONTAL);
 	sizerLocationNotes->Add(m_ctrlLocationNotes, 0, wxALIGN_BOTTOM | wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerLocationNotes->Add(noteLocationNotes, 0, wxALIGN_BOTTOM, 0);
+	sizerLocationNotes->Add(noteLocationNotes, 0, wxALIGN_BOTTOM);
 
 	wxBoxSizer* sizerNote = new wxBoxSizer(wxHORIZONTAL);
-	sizerNote->Add(textNotes, 0, wxALIGN_TOP | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerNote->Add(ctrlTrialNotes, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerNote->Add(textNotes, 0, wxALIGN_TOP | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerNote->Add(ctrlTrialNotes, 1, wxEXPAND);
 
 	wxBoxSizer* sizerClubBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerClubBtns->Add(textClub, 0, wxALIGN_BOTTOM | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerClubBtns->Add(0, 0, 1, wxEXPAND, 0);
+	sizerClubBtns->Add(textClub, 0, wxALIGN_BOTTOM);
+	sizerClubBtns->AddStretchSpacer();
 	sizerClubBtns->Add(btnNew, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
 	sizerClubBtns->Add(m_ctrlEdit, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
 	sizerClubBtns->Add(m_ctrlDelete, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
 	sizerClubBtns->Add(m_ctrlUp, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerClubBtns->Add(m_ctrlDn, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerClubBtns->Add(m_ctrlDn);
 
 	wxBoxSizer* sizerClubNotes = new wxBoxSizer(wxHORIZONTAL);
 	sizerClubNotes->Add(m_ctrlClubNotes, 0, wxALIGN_BOTTOM | wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerClubNotes->Add(textClubNotes, 0, wxALIGN_BOTTOM | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerClubNotes->Add(textClubNotes);
 
-	wxBoxSizer* sizerClub = new wxBoxSizer(wxHORIZONTAL);
-	sizerClub->Add(m_ctrlClubs, 0, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
-
+	wxFlexGridSizer* sizerGrid = new wxFlexGridSizer(5, 2, 0, wxDLG_UNIT_X(this, 5)); // rows/cols/vgap/hgap
+	sizerGrid->SetFlexibleDirection(wxBOTH);
+	sizerGrid->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_ALL);
 	sizerGrid->AddGrowableCol(0, 3);
 	sizerGrid->AddGrowableCol(1, 2);
 	sizerGrid->AddGrowableRow(2);
 	sizerGrid->AddGrowableRow(4);
 
 	// row 0
-	sizerGrid->Add(sizerDate, 0, wxEXPAND, 0);
-	sizerGrid->Add(checkVerified, 0, wxEXPAND, 0);
+	sizerGrid->Add(sizerDate, 0, wxEXPAND);
+	sizerGrid->Add(checkVerified, 0, wxEXPAND);
 	// row 1
 	sizerGrid->Add(sizerLocation, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 	sizerGrid->Add(sizerLocationNotes, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
@@ -369,13 +365,13 @@ CDlgTrial::CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrialPtr const& inTrial, wxWin
 	sizerGrid->Add(sizerClubBtns, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 	sizerGrid->Add(sizerClubNotes, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 	// row 4
-	sizerGrid->Add(sizerClub, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerGrid->Add(m_ctrlClubs, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
 	sizerGrid->Add(m_ctrlClubInfo, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
 
-	bSizer->Add(sizerGrid, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerGrid, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
 	SetSizer(bSizer);
 	Layout();

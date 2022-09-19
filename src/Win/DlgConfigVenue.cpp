@@ -371,16 +371,16 @@ CDlgConfigVenue::CDlgConfigVenue(
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
-	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
 	sizerName->Add(ctrlName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerName->Add(textURL, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerName->Add(ctrlURL, 1, 0, 0);
+	sizerName->Add(textURL, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerName->Add(ctrlURL, 1);
 
 	bSizer->Add(sizerName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerLongName = new wxBoxSizer(wxHORIZONTAL);
-	sizerLongName->Add(textLongName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerLongName->Add(ctrlLongName, 1, 0, 0);
+	sizerLongName->Add(textLongName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerLongName->Add(ctrlLongName, 1);
 
 	bSizer->Add(sizerLongName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 	bSizer->Add(textDesc, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
@@ -390,19 +390,19 @@ CDlgConfigVenue::CDlgConfigVenue(
 	sizerTree->Add(m_ctrlItems, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
-	sizerBtns->Add(m_ctrlNew, 0, 0, 0);
-	sizerBtns->Add(m_ctrlEdit, 0, wxTOP, 3);
-	sizerBtns->Add(m_ctrlDelete, 0, wxTOP, 3);
-	sizerBtns->Add(m_ctrlCopy, 0, wxTOP, 3);
-	sizerBtns->Add(m_ctrlMoveUp, 0, wxTOP, 3);
-	sizerBtns->Add(m_ctrlMoveDown, 0, wxTOP, 3);
+	sizerBtns->Add(m_ctrlNew, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlEdit, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlDelete, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlCopy, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlMoveUp, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlMoveDown, 0, wxEXPAND);
 
-	sizerTree->Add(sizerBtns, 0, wxEXPAND, 0);
+	sizerTree->Add(sizerBtns, 0, wxEXPAND);
 
-	bSizer->Add(sizerTree, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerTree, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
 	wxTreeItemId root = m_ctrlItems->AddRoot(L"Root");
 

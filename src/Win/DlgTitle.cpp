@@ -207,37 +207,37 @@ CDlgTitle::CDlgTitle(ARBConfig const& config, ARBDogTitleList& titles, ARBDogTit
 	wxBoxSizer* sizerDateVenue = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerDate = new wxBoxSizer(wxHORIZONTAL);
-	sizerDate->Add(checkEarned, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerDate->Add(m_ctrlDate, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerDate->Add(checkEarned, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerDate->Add(m_ctrlDate, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizerDateVenue->Add(sizerDate, 0, wxEXPAND, 0);
+	sizerDateVenue->Add(sizerDate, 0, wxEXPAND);
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
-	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerVenue->Add(m_ctrlVenues, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerVenue->Add(m_ctrlVenues, 0, wxALIGN_CENTER_VERTICAL);
 
 	sizerDateVenue->Add(sizerVenue, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	sizerTop2Rows->Add(sizerDateVenue, 0, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerChecks = new wxBoxSizer(wxVERTICAL);
-	sizerChecks->Add(m_ctrlHide, 0, 0, 0);
-	sizerChecks->Add(m_ctrlReceived, 0, wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerChecks->Add(m_ctrlHide, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerChecks->Add(m_ctrlReceived);
 
-	sizerTop2Rows->Add(sizerChecks, 0, wxEXPAND, 0);
+	sizerTop2Rows->Add(sizerChecks, 0, wxEXPAND);
 
 	bSizer->Add(sizerTop2Rows, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerTitle = new wxBoxSizer(wxHORIZONTAL);
-	sizerTitle->Add(textTitle, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerTitle->Add(m_ctrlTitles, 1, wxALIGN_CENTER_VERTICAL, 0);
+	sizerTitle->Add(textTitle, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerTitle->Add(m_ctrlTitles, 1, wxALIGN_CENTER_VERTICAL);
 
 	bSizer->Add(sizerTitle, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
-	bSizer->Add(m_ctrlDesc, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_ctrlDesc, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
 
 	SetSizer(bSizer);
 	Layout();

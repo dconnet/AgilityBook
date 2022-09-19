@@ -133,28 +133,28 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 
 	// Sizers
 
-	wxBoxSizer* sizerPgm = new wxBoxSizer(wxVERTICAL);
-	sizerPgm->Add(ctrlUpdates, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerPgm->Add(textUpdates, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+	bSizer->Add(ctrlUpdates, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(textUpdates, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerBackups = new wxBoxSizer(wxHORIZONTAL);
-	sizerBackups->Add(textBackups, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerBackups->Add(textBackups, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
 	sizerBackups->Add(ctrlBackups, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerBackups->Add(textBackupHelp, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerBackups->Add(textBackupHelp, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizerPgm->Add(sizerBackups, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerPgm->Add(ctrlShowDog, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerPgm->Add(ctrlShowCoSanction, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerPgm->Add(ctrlUseProxy, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerBackups, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(ctrlShowDog, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(ctrlShowCoSanction, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(ctrlUseProxy, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizerProxy = new wxBoxSizer(wxHORIZONTAL);
-	sizerProxy->Add(wxDLG_UNIT_X(this, 10), 0, 0, 0, 0);
-	sizerProxy->Add(m_ctrlProxy, 1, wxEXPAND, 0);
-	sizerPgm->Add(sizerProxy, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	sizerProxy->AddSpacer(wxDLG_UNIT_X(this, 10));
+	sizerProxy->Add(m_ctrlProxy, 1, wxEXPAND);
+	bSizer->Add(sizerProxy, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
-	SetSizer(sizerPgm);
+	SetSizer(bSizer);
 	Layout();
-	sizerPgm->Fit(this);
+	bSizer->Fit(this);
 }
 
 
