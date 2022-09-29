@@ -102,7 +102,8 @@ public:
 	virtual std::string Process(
 		std::vector<std::wstring> const& inLocCodes,
 		std::vector<std::wstring> const& inVenueCodes,
-		IProgressMeter* progress) const = 0;
+		IProgressMeter* progress) const
+		= 0;
 };
 typedef std::shared_ptr<ICalendarSite> ICalendarSitePtr;
 

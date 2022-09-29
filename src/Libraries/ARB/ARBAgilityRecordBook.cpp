@@ -160,7 +160,7 @@ ARBAgilityRecordBook::~ARBAgilityRecordBook()
 // @todo: Relax strictness when reading data and handle errors better.
 //  - note, we actually have relaxed some things...
 bool ARBAgilityRecordBook::Load(
-	ElementNodePtr const& inTree,
+	ARBCommon::ElementNodePtr const& inTree,
 	bool inCalendar,
 	bool inTraining,
 	bool inConfig,

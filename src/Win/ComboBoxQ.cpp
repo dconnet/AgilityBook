@@ -84,7 +84,7 @@ CQualifyingComboBox::CQualifyingComboBox(
 }
 
 
-CQualifyingComboBox::CQualifyingComboBox(wxWindow* parent, ARBDogRunPtr const& inRun, wxValidator const& validator)
+CQualifyingComboBox::CQualifyingComboBox(wxWindow* parent, ARB::ARBDogRunPtr const& inRun, wxValidator const& validator)
 	: wxChoice()
 	, m_refRun()
 	, m_Run(inRun)
@@ -104,8 +104,8 @@ CQualifyingComboBox::CQualifyingComboBox(wxWindow* parent, ARBDogRunPtr const& i
 
 CQualifyingComboBox::CQualifyingComboBox(
 	wxWindow* parent,
-	ARBDogRunPtr const& inRun,
-	ARBConfigScoringPtr const& inScoring,
+	ARB::ARBDogRunPtr const& inRun,
+	ARB::ARBConfigScoringPtr const& inScoring,
 	wxValidator const& validator)
 	: wxChoice()
 	, m_refRun()

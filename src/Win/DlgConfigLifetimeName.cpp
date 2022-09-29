@@ -65,7 +65,7 @@ CDlgConfigLifetimeName::CDlgConfigLifetimeName(ARBConfigVenuePtr const& inVenue,
 
 
 CDlgConfigLifetimeName::CDlgConfigLifetimeName(
-	ARBConfigVenuePtr const& inVenue,
+	ARB::ARBConfigVenuePtr const& inVenue,
 	std::wstring const& inName,
 	wxWindow* pParent)
 	: wxDialog()

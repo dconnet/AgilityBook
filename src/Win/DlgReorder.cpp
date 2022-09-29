@@ -86,8 +86,8 @@ CDlgReorder::CDlgReorder(CAgilityBookDoc* pDoc, ARBDogList* dogs, wxWindow* pPar
 
 CDlgReorder::CDlgReorder(
 	CAgilityBookDoc* pDoc,
-	ARBDogTrialPtr const& inTrial,
-	ARBDogRunPtr const& inRun,
+	ARB::ARBDogTrialPtr const& inTrial,
+	ARB::ARBDogRunPtr const& inRun,
 	wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)

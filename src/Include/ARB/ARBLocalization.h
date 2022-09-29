@@ -116,62 +116,71 @@ public:
 
 	// Used in ARBConfigAction.cpp
 	virtual std::wstring ActionRenameOtherPoints(std::wstring const& oldName, std::wstring const& newName, int nChanges)
-		const = 0;
+		const
+		= 0;
 	virtual std::wstring ActionPreDeleteOtherPoints(std::wstring const& name, int nChanges) const = 0;
 	virtual std::wstring ActionDeleteOtherPoints(std::wstring const& name) const = 0;
-	virtual std::wstring ActionRenameVenue(std::wstring const& oldName, std::wstring const& newName, int nChanges)
-		const = 0;
+	virtual std::wstring ActionRenameVenue(std::wstring const& oldName, std::wstring const& newName, int nChanges) const
+		= 0;
 	virtual std::wstring ActionPreDeleteVenue(std::wstring const& name, int nChanges) const = 0;
 	virtual std::wstring ActionDeleteVenue(std::wstring const& name) const = 0;
 	virtual std::wstring ActionRenameMultiQ(
 		std::wstring const& venue,
 		std::wstring const& oldName,
 		std::wstring const& newName,
-		int nChanges) const = 0;
-	virtual std::wstring ActionPreDeleteMultiQ(std::wstring const& venue, std::wstring const& name, int nChanges)
-		const = 0;
+		int nChanges) const
+		= 0;
+	virtual std::wstring ActionPreDeleteMultiQ(std::wstring const& venue, std::wstring const& name, int nChanges) const
+		= 0;
 	virtual std::wstring ActionDeleteMultiQ(std::wstring const& venue, std::wstring const& name) const = 0;
 	virtual std::wstring ActionRenameDivision(
 		std::wstring const& venue,
 		std::wstring const& oldName,
 		std::wstring const& newName,
-		int nChanges) const = 0;
+		int nChanges) const
+		= 0;
 	virtual std::wstring ActionPreDeleteDivision(std::wstring const& venue, std::wstring const& name, int nChanges)
-		const = 0;
+		const
+		= 0;
 	virtual std::wstring ActionDeleteDivision(std::wstring const& venue, std::wstring const& name) const = 0;
 	virtual std::wstring ActionRenameLevel(
 		std::wstring const& venue,
 		std::wstring const& oldName,
 		std::wstring const& newName,
-		int nChanges) const = 0;
-	virtual std::wstring ActionPreDeleteLevel(std::wstring const& venue, std::wstring const& name, int nChanges)
-		const = 0;
+		int nChanges) const
+		= 0;
+	virtual std::wstring ActionPreDeleteLevel(std::wstring const& venue, std::wstring const& name, int nChanges) const
+		= 0;
 	virtual std::wstring ActionDeleteLevel(std::wstring const& venue, std::wstring const& name) const = 0;
 	virtual std::wstring ActionRenameTitle(
 		std::wstring const& venue,
 		std::wstring const& oldName,
 		std::wstring const& newName,
-		int nChanges) const = 0;
-	virtual std::wstring ActionPreDeleteTitle(std::wstring const& venue, std::wstring const& name, int nChanges)
-		const = 0;
+		int nChanges) const
+		= 0;
+	virtual std::wstring ActionPreDeleteTitle(std::wstring const& venue, std::wstring const& name, int nChanges) const
+		= 0;
 	virtual std::wstring ActionDeleteTitle(std::wstring const& venue, std::wstring const& name) const = 0;
 	virtual std::wstring ActionRenameEvent(
 		std::wstring const& venue,
 		std::wstring const& oldName,
 		std::wstring const& newName,
-		int nChanges) const = 0;
-	virtual std::wstring ActionPreDeleteEvent(std::wstring const& venue, std::wstring const& name, int nChanges)
-		const = 0;
+		int nChanges) const
+		= 0;
+	virtual std::wstring ActionPreDeleteEvent(std::wstring const& venue, std::wstring const& name, int nChanges) const
+		= 0;
 	virtual std::wstring ActionDeleteEvent(std::wstring const& venue, std::wstring const& name) const = 0;
 	virtual std::wstring ActionRenameLifetimeName(
 		std::wstring const& venue,
 		std::wstring const& oldName,
 		std::wstring const& newName,
-		int nEventChanges) const = 0;
+		int nEventChanges) const
+		= 0;
 	virtual std::wstring ActionDeleteLifetimeName(
 		std::wstring const& venue,
 		std::wstring const& name,
-		int nEventChanges) const = 0;
+		int nEventChanges) const
+		= 0;
 
 	// Used in ARBConfigTitlePoints.cpp
 	virtual std::wstring TitlePointsNameFormat(double points, double faults) const = 0;
@@ -220,7 +229,8 @@ public:
 	virtual std::wstring ErrorMissingAttribute(
 		wchar_t const* const inElement,
 		wchar_t const* const inAttrib,
-		wchar_t const* const inMsg = nullptr) const = 0;
+		wchar_t const* const inMsg = nullptr) const
+		= 0;
 
 	/**
 	 * Return an error message about an invalid value in an attribute.
@@ -233,7 +243,8 @@ public:
 	virtual std::wstring ErrorInvalidAttributeValue(
 		wchar_t const* const inElement,
 		wchar_t const* const inAttrib,
-		wchar_t const* const inMsg = nullptr) const = 0;
+		wchar_t const* const inMsg = nullptr) const
+		= 0;
 };
 
 

@@ -78,8 +78,8 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 
 
 CDlgConfigTitlePoints::CDlgConfigTitlePoints(
-	ARBConfigVenuePtr const& inVenue,
-	ARBConfigLifetimePointsPtr const& inLifetime,
+	ARB::ARBConfigVenuePtr const& inVenue,
+	ARB::ARBConfigLifetimePointsPtr const& inLifetime,
 	wxWindow* pParent)
 	: wxDialog()
 	, m_Venue(inVenue)

@@ -466,7 +466,11 @@ CDlgListCtrl::CDlgListCtrl(
 
 
 // Faults/Partners
-CDlgListCtrl::CDlgListCtrl(ARBWhatToList inType, CAgilityBookDoc* pDoc, ARBDogRunPtr const& inRun, wxWindow* pParent)
+CDlgListCtrl::CDlgListCtrl(
+	ARBWhatToList inType,
+	CAgilityBookDoc* pDoc,
+	ARB::ARBDogRunPtr const& inRun,
+	wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
 	, m_ctrlNew(nullptr)
@@ -530,7 +534,7 @@ CDlgListCtrl::CDlgListCtrl(ARBWhatToList inType, CAgilityBookDoc* pDoc, ARBDogRu
 
 
 // OtherPoints
-CDlgListCtrl::CDlgListCtrl(ARBConfig& pConfig, ARBDogRunPtr const& inRun, wxWindow* pParent)
+CDlgListCtrl::CDlgListCtrl(ARB::ARBConfig& pConfig, ARB::ARBDogRunPtr const& inRun, wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlList(nullptr)
 	, m_ctrlNew(nullptr)

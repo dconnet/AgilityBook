@@ -126,7 +126,7 @@ bool CClipboardDataReader::IsFormatAvailable(ARBClipFormat clpFmt)
 }
 
 
-bool CClipboardDataReader::GetData(ARBClipFormat clpFmt, ElementNodePtr const& outTree)
+bool CClipboardDataReader::GetData(ARBClipFormat clpFmt, ARBCommon::ElementNodePtr const& outTree)
 {
 	outTree->clear();
 	if (!wxTheClipboard->IsSupported(GetClipboardFormat(clpFmt)) || !Open())
@@ -244,7 +244,7 @@ CClipboardDataWriter::~CClipboardDataWriter()
 }
 
 
-bool CClipboardDataWriter::AddData(ARBClipFormat clpFmt, ElementNodePtr const& inTree)
+bool CClipboardDataWriter::AddData(ARBClipFormat clpFmt, ARBCommon::ElementNodePtr const& inTree)
 {
 	if (!m_bOkay)
 		return false;

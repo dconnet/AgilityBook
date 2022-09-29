@@ -615,8 +615,8 @@ bool CFilterOptions::IsTrialVisible(std::vector<CVenueFilter> const& venues, ARB
 // Return type should be the same as ARBBase::m_nFiltered
 unsigned short CFilterOptions::IsRunVisible(
 	std::vector<CVenueFilter> const& venues,
-	ARBDogTrialPtr const& inTrial,
-	ARBDogRunPtr const& inRun) const
+	ARB::ARBDogTrialPtr const& inTrial,
+	ARB::ARBDogRunPtr const& inRun) const
 {
 	unsigned short nVisible = 0;
 	if (!IsDateVisible(inRun->GetDate(), inRun->GetDate()))
@@ -672,9 +672,9 @@ unsigned short CFilterOptions::IsRunVisible(
 // the novice run to appear in the nadac points listing when it shouldn't.
 bool CFilterOptions::IsRunVisible(
 	std::vector<CVenueFilter> const& venues,
-	ARBConfigVenuePtr const& inVenue,
-	ARBDogTrialPtr const& inTrial,
-	ARBDogRunPtr const& inRun) const
+	ARB::ARBConfigVenuePtr const& inVenue,
+	ARB::ARBDogTrialPtr const& inTrial,
+	ARB::ARBDogRunPtr const& inRun) const
 {
 	if (1 >= inTrial->GetClubs().size())
 		return true;

@@ -86,7 +86,8 @@ public:
 		short inClass,
 		ARBCommon::ARBDate date, // For USDAA
 		bool isTourney           // For USDAA
-	) const = 0;
+	) const
+		= 0;
 };
 
 

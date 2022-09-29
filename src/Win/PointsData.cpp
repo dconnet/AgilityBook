@@ -91,8 +91,8 @@ std::wstring Sanitize(std::wstring const& inRawData, bool nbsp = false)
 /////////////////////////////////////////////////////////////////////////////
 
 OtherPtInfo::OtherPtInfo(
-	ARBDogTrialPtr const& inTrial,
-	ARBDogRunPtr const& inRun,
+	ARB::ARBDogTrialPtr const& inTrial,
+	ARB::ARBDogRunPtr const& inRun,
 	double points,
 	bool bScore,
 	double score)
@@ -114,7 +114,7 @@ OtherPtInfo::OtherPtInfo(
 }
 
 
-OtherPtInfo::OtherPtInfo(ARBDogExistingPointsPtr const& inExisting)
+OtherPtInfo::OtherPtInfo(ARB::ARBDogExistingPointsPtr const& inExisting)
 	: m_pTrial()
 	, m_pRun()
 	, m_pExisting(inExisting)
@@ -368,7 +368,7 @@ bool CPointsDataMultiQs::Details(std::wstring const& link)
 
 /////////////////////////////////////////////////////////////////////////////
 
-CPointsDataLifetime::CPointsDataLifetime(CAgilityBookDoc* pDoc, ARBConfigVenuePtr const& inVenue, CRefTag& id)
+CPointsDataLifetime::CPointsDataLifetime(CAgilityBookDoc* pDoc, ARB::ARBConfigVenuePtr const& inVenue, CRefTag& id)
 	: m_refTag(fmt::format(s_refLifetime, id.GetId()))
 	, m_pDoc(pDoc)
 	, m_LifetimeName()
@@ -381,8 +381,8 @@ CPointsDataLifetime::CPointsDataLifetime(CAgilityBookDoc* pDoc, ARBConfigVenuePt
 
 CPointsDataLifetime::CPointsDataLifetime(
 	CAgilityBookDoc* pDoc,
-	ARBConfigLifetimeNamePtr const& inLifetimeName,
-	ARBConfigVenuePtr const& inVenue,
+	ARB::ARBConfigLifetimeNamePtr const& inLifetimeName,
+	ARB::ARBConfigVenuePtr const& inVenue,
 	CRefTag& id)
 	: m_refTag(fmt::format(s_refLifetime, id.GetId()))
 	, m_pDoc(pDoc)
@@ -464,7 +464,7 @@ bool CPointsDataLifetime::Details(std::wstring const& link)
 
 CPointsDataLifetimeByName::CPointsDataLifetimeByName(
 	CAgilityBookDoc* pDoc,
-	ARBConfigVenuePtr const& inVenue,
+	ARB::ARBConfigVenuePtr const& inVenue,
 	std::wstring const& inName,
 	CRefTag& id)
 	: CPointsDataLifetime(pDoc, inVenue, id)
@@ -474,8 +474,8 @@ CPointsDataLifetimeByName::CPointsDataLifetimeByName(
 
 CPointsDataLifetimeByName::CPointsDataLifetimeByName(
 	CAgilityBookDoc* pDoc,
-	ARBConfigLifetimeNamePtr const& inLifetimeName,
-	ARBConfigVenuePtr const& inVenue,
+	ARB::ARBConfigLifetimeNamePtr const& inLifetimeName,
+	ARB::ARBConfigVenuePtr const& inVenue,
 	std::wstring const& inName,
 	CRefTag& id)
 	: CPointsDataLifetime(pDoc, inLifetimeName, inVenue, id)

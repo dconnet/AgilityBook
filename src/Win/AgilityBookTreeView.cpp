@@ -510,7 +510,7 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(wxTreeItemId hItem, ARBBase
 }
 
 
-CAgilityBookTreeData* CAgilityBookTreeView::FindData(wxTreeItemId hItem, ARBDogPtr const& inDog) const
+CAgilityBookTreeData* CAgilityBookTreeView::FindData(wxTreeItemId hItem, ARB::ARBDogPtr const& inDog) const
 {
 	if (!inDog || !m_Ctrl)
 		return nullptr;
@@ -537,7 +537,7 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(wxTreeItemId hItem, ARBDogP
 }
 
 
-CAgilityBookTreeData* CAgilityBookTreeView::FindData(wxTreeItemId hItem, ARBDogTrialPtr const& inTrial) const
+CAgilityBookTreeData* CAgilityBookTreeView::FindData(wxTreeItemId hItem, ARB::ARBDogTrialPtr const& inTrial) const
 {
 	if (!inTrial || !m_Ctrl)
 		return nullptr;
@@ -562,7 +562,7 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(wxTreeItemId hItem, ARBDogT
 }
 
 
-CAgilityBookTreeData* CAgilityBookTreeView::FindData(wxTreeItemId hItem, ARBDogRunPtr const& inRun) const
+CAgilityBookTreeData* CAgilityBookTreeView::FindData(wxTreeItemId hItem, ARB::ARBDogRunPtr const& inRun) const
 {
 	if (!inRun || !m_Ctrl)
 		return nullptr;

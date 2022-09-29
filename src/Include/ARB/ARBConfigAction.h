@@ -145,7 +145,8 @@ public:
 		ARBConfig& ioConfig,
 		ARBDogList* ioDogs,
 		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack) const = 0;
+		IConfigActionCallback& ioCallBack) const
+		= 0;
 
 	/**
 	 * Allow the UI to update filter contents.

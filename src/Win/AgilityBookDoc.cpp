@@ -1356,7 +1356,7 @@ bool CAgilityBookDoc::ResetVisibility()
 }
 
 
-bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogPtr const& inDog)
+bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARB::ARBDogPtr const& inDog)
 {
 	bool bChanged = false;
 	for (ARBDogTrialList::iterator iterTrial = inDog->GetTrials().begin(); iterTrial != inDog->GetTrials().end();
@@ -1370,7 +1370,7 @@ bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogP
 }
 
 
-bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrialPtr const& inTrial)
+bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARB::ARBDogTrialPtr const& inTrial)
 {
 	bool bChanged = false;
 	bool bVisTrial = CFilterOptions::Options().IsTrialVisible(venues, inTrial);
@@ -1396,8 +1396,8 @@ bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogT
 
 bool CAgilityBookDoc::ResetVisibility(
 	std::vector<CVenueFilter>& venues,
-	ARBDogTrialPtr const& inTrial,
-	ARBDogRunPtr const& inRun)
+	ARB::ARBDogTrialPtr const& inTrial,
+	ARB::ARBDogRunPtr const& inRun)
 {
 	bool bChanged = false;
 	unsigned short nVisRun = CFilterOptions::Options().IsRunVisible(venues, inTrial, inRun);
@@ -1417,7 +1417,7 @@ bool CAgilityBookDoc::ResetVisibility(
 }
 
 
-bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTitlePtr const& inTitle)
+bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARB::ARBDogTitlePtr const& inTitle)
 {
 	bool bChanged = false;
 	bool bVisTitle = CFilterOptions::Options().IsTitleVisible(venues, inTitle);
@@ -1430,7 +1430,7 @@ bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogT
 }
 
 
-bool CAgilityBookDoc::ResetVisibility(std::set<std::wstring>& names, ARBTrainingPtr const& inTraining)
+bool CAgilityBookDoc::ResetVisibility(std::set<std::wstring>& names, ARB::ARBTrainingPtr const& inTraining)
 {
 	bool bChanged = false;
 	bool bVisTraining = CFilterOptions::Options().IsTrainingLogVisible(names, inTraining);

@@ -177,10 +177,10 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	, m_UpdateInfo(this)
 {
 	SetIcons(CResourceManager::Get()->GetIconBundle(ImageMgrAppBundle));
-	//#if wxUSE_HELP
-	// Note: do not set help on the frame. Help will disable the min/max buttons.
+	// #if wxUSE_HELP
+	//  Note: do not set help on the frame. Help will disable the min/max buttons.
 	//	SetExtraStyle(wxFRAME_EX_CONTEXTHELP | GetExtraStyle());
-	//#endif
+	// #endif
 
 	wxMenu* menuRecent = new wxMenu;
 	manager->FileHistoryUseMenu(menuRecent);
