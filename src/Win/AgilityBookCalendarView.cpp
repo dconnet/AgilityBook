@@ -200,7 +200,7 @@ CAgilityBookCalendar::CAgilityBookCalendar(
 			wxDefaultSize,
 			wxNO_BORDER | wxWANTS_CHARS | wxFULL_REPAINT_ON_RESIZE))
 		return;
-	SetBackgroundStyle(wxBG_STYLE_CUSTOM);
+	SetBackgroundStyle(wxBG_STYLE_PAINT);
 	SetInitialSize(wxDefaultSize);
 }
 

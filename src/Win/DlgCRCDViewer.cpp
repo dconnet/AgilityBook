@@ -59,7 +59,7 @@ CMetaDataStatic::CMetaDataStatic(wxWindow* pParent, HENHMETAFILE inMetaFile)
 		wxDefaultPosition,
 		wxDLG_UNIT(pParent, wxSize(260, 220)),
 		wxSUNKEN_BORDER);
-	SetBackgroundStyle(wxBG_STYLE_CUSTOM);
+	SetBackgroundStyle(wxBG_STYLE_PAINT);
 }
 
 

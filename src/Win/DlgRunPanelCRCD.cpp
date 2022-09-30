@@ -122,7 +122,7 @@ CMetaDataDisplay::CMetaDataDisplay(wxWindow* parent, ARBDogRunPtr const& inRun)
 		wxDefaultPosition,
 		wxDefaultSize,
 		wxTE_MULTILINE | wxTE_READONLY);
-	SetBackgroundStyle(wxBG_STYLE_CUSTOM);
+	SetBackgroundStyle(wxBG_STYLE_PAINT);
 	AllowMultilineTabstop(true);
 
 #ifdef HAS_ENHMETAFILE
