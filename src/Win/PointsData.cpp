@@ -286,7 +286,7 @@ void CPointsDataSpeedPts::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLin
 {
 	fmt::format_to(
 		std::back_inserter(data),
-		L"<tr>\n<td colspan=\"3\">{}</td>\n<td colspan=\"3\"/>\n<td>{}</td>\n</tr>\n",
+		L"<tr>\n<td colspan=\"3\">{}</td>\n<td colspan=\"3\"></td>\n<td>{}</td>\n</tr>\n",
 		Sanitize(m_Div->GetName(), true),
 		Sanitize(fmt::format(_("IDS_POINTS_SPEED").wx_str(), m_Pts), true));
 }
@@ -338,7 +338,7 @@ void CPointsDataMultiQs::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLink
 {
 	fmt::format_to(
 		std::back_inserter(data),
-		L"<tr>\n<td colspan=\"3\">{}</td>\n<td colspan=\"3\"/>\n<td>",
+		L"<tr>\n<td colspan=\"3\">{}</td>\n<td colspan=\"3\"></td>\n<td>",
 		Sanitize(m_MultiQ->GetName(), true));
 	if (!bNoInternalLinks)
 	{
