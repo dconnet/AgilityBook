@@ -58,6 +58,7 @@
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ListData.h"
+#include "LibARBWin/Logger.h"
 #include <wx/config.h>
 #include <wx/mstream.h>
 #include <wx/settings.h>
@@ -893,6 +894,7 @@ void CAgilityBookCalendarListView::OnCtrlKeyDown(wxKeyEvent& evt)
 
 void CAgilityBookCalendarListView::OnViewContextMenu(wxContextMenuEvent& evt)
 {
+	CLogger::Log(L"MENU: CAgilityBookCalendarListView::OnViewContextMenu");
 	if (!m_Ctrl)
 		return;
 	wxPoint point;
@@ -1267,18 +1269,21 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 
 void CAgilityBookCalendarListView::OnViewCmd(wxCommandEvent& evt)
 {
+	CLogger::Log(wxString::Format(L"MENU: CAgilityBookCalendarListView::OnViewCmd %d", evt.GetId()));
 	OnCmd(evt.GetId());
 }
 
 
 void CAgilityBookCalendarListView::OnPrintView(wxCommandEvent& evt)
 {
+	CLogger::Log(L"MENU: CAgilityBookCalendarListView::OnPrintView");
 	wxGetApp().GetHtmlPrinter()->PrintText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
 }
 
 
 void CAgilityBookCalendarListView::OnPreview(wxCommandEvent& evt)
 {
+	CLogger::Log(L"MENU: CAgilityBookCalendarListView::OnPreview");
 	wxGetApp().GetHtmlPrinter()->PreviewText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
 }
 

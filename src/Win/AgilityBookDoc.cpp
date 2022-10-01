@@ -103,6 +103,7 @@
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
 #include "LibARBWin/DlgMessage.h"
+#include "LibARBWin/Logger.h"
 #include <wx/config.h>
 #include <wx/file.h>
 #include <wx/filefn.h>
@@ -267,6 +268,7 @@ constexpr int baseID = 100;
 
 void CAgilityBookDoc::OnStatusDog(wxCommandEvent& evt)
 {
+	CLogger::Log(wxString::Format(L"MENU: Doc::OnStatusDog%d", evt.GetId()));
 	if (m_StatusData && baseID <= evt.GetId() && evt.GetId() < static_cast<int>(m_StatusData->dogs.size()) + baseID
 		&& m_StatusData->dogs[evt.GetId() - baseID] != GetCurrentDog())
 	{
@@ -279,6 +281,7 @@ void CAgilityBookDoc::OnStatusDog(wxCommandEvent& evt)
 
 void CAgilityBookDoc::OnStatusFilter(wxCommandEvent& evt)
 {
+	CLogger::Log(wxString::Format(L"MENU: Doc::OnStatusFilter %d", evt.GetId()));
 	if (m_StatusData && baseID <= evt.GetId()
 		&& evt.GetId() < static_cast<int>(m_StatusData->filterNames.size()) + baseID
 		&& m_StatusData->filterNames[evt.GetId() - baseID] != m_StatusData->filterOptions.GetCurrentFilter())
@@ -2034,11 +2037,13 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 	switch (evt.GetId())
 	{
 	case ID_FILE_EXPORT_WIZARD:
+		CLogger::Log(L"MENU: Doc ID_FILE_EXPORT_WIZARD");
 		new CWizard(this); // There's magic here.
 		break;
 
 	case ID_FILE_LINKED:
 	{
+		CLogger::Log(L"MENU: Doc ID_FILE_LINKED");
 		CDlgFindLinks dlg(m_Records.GetDogs(), wxGetApp().GetTopWindow());
 		if (0 == dlg.GetNumLinks())
 			wxMessageBox(_("IDS_NO_LINKED_FILES"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
@@ -2049,6 +2054,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 
 	case ID_COPY_TITLES_LIST:
 	{
+		CLogger::Log(L"MENU: Doc ID_COPY_TITLES_LIST");
 		ARBDogPtr pDog = GetCurrentDog();
 		if (pDog)
 		{
@@ -2122,6 +2128,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 
 	case ID_EDIT_CONFIGURATION:
 	{
+		CLogger::Log(L"MENU: Doc ID_EDIT_CONFIGURATION");
 		CDlgConfigure config(this, m_Records, wxGetApp().GetTopWindow());
 		config.ShowModal();
 	}
@@ -2129,6 +2136,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 
 	case ID_AGILITY_NEW_DOG:
 	{
+		CLogger::Log(L"MENU: Doc ID_AGILITY_NEW_DOG");
 		ARBDogPtr dog(ARBDog::New());
 		CDlgDog dlg(this, dog, wxGetApp().GetTopWindow());
 		if (wxID_OK == dlg.ShowModal())
@@ -2148,6 +2156,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 
 	case ID_AGILITY_NEW_CALENDAR:
 	{
+		CLogger::Log(L"MENU: Doc ID_AGILITY_NEW_CALENDAR");
 		ARBCalendarPtr cal(ARBCalendar::New());
 		wxView* pView = GetDocumentManager()->GetCurrentView();
 		if (pView)
@@ -2183,6 +2192,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 
 	case ID_AGILITY_NEW_TRAINING:
 	{
+		CLogger::Log(L"MENU: Doc ID_AGILITY_NEW_TRAINING");
 		ARBTrainingPtr training(ARBTraining::New());
 		CDlgTraining dlg(training, this, wxGetApp().GetTopWindow());
 		if (wxID_OK == dlg.ShowModal())
@@ -2204,6 +2214,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 
 	case ID_NOTES_CLUBS:
 	{
+		CLogger::Log(L"MENU: Doc ID_NOTES_CLUBS");
 		std::wstring select;
 		ARBDogRunPtr pRun = GetCurrentRun();
 		if (pRun)
@@ -2215,6 +2226,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 
 	case ID_NOTES_JUDGES:
 	{
+		CLogger::Log(L"MENU: Doc ID_NOTES_JUDGES");
 		std::wstring select;
 		ARBDogRunPtr pRun = GetCurrentRun();
 		if (pRun)
@@ -2226,6 +2238,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 
 	case ID_NOTES_LOCATIONS:
 	{
+		CLogger::Log(L"MENU: Doc ID_NOTES_LOCATIONS");
 		std::wstring select;
 		ARBDogTrialPtr pTrial = GetCurrentTrial();
 		if (pTrial)
@@ -2237,6 +2250,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 
 	case ID_NOTES_SEARCH:
 	{
+		CLogger::Log(L"MENU: Doc ID_NOTES_SEARCH");
 		CFindInfo callback(this);
 		CDlgFind dlg(callback, wxGetApp().GetTopWindow());
 		if (wxID_OK == dlg.ShowModal())
@@ -2253,6 +2267,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 
 	case wxID_PREFERENCES:
 	{
+		CLogger::Log(L"MENU: Doc wxID_PREFERENCES");
 		int nPage = 0;
 		CTabView* pTab = GetTabView();
 		if (!pTab)

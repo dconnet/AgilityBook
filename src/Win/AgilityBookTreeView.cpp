@@ -68,6 +68,7 @@
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
+#include "LibARBWin/Logger.h"
 #include <wx/config.h>
 
 #ifdef __WXMSW__
@@ -1136,6 +1137,7 @@ void CAgilityBookTreeView::OnCtrlKeyDown(wxKeyEvent& evt)
 
 void CAgilityBookTreeView::OnViewContextMenu(wxContextMenuEvent& evt)
 {
+	CLogger::Log(L"MENU: CAgilityBookTreeView::OnViewContextMenu");
 #ifdef __WXMAC__
 	// Something is wrong on Mac. A right click generates the context menu
 	// in the control (above), but we get the message here also. When we
@@ -1634,18 +1636,21 @@ bool CAgilityBookTreeView::OnCmd(int id)
 
 void CAgilityBookTreeView::OnViewCmd(wxCommandEvent& evt)
 {
+	CLogger::Log(wxString::Format(L"MENU: CAgilityBookTreeView::OnViewCmd %d", evt.GetId()));
 	OnCmd(evt.GetId());
 }
 
 
 void CAgilityBookTreeView::OnPrintView(wxCommandEvent& evt)
 {
+	CLogger::Log(L"MENU: CAgilityBookTreeView::OnPrintView");
 	wxGetApp().GetHtmlPrinter()->PrintText(StringUtil::stringWX(GetPrintDataAsHtmlTable()));
 }
 
 
 void CAgilityBookTreeView::OnPreview(wxCommandEvent& evt)
 {
+	CLogger::Log(L"MENU: CAgilityBookTreeView::OnPreview");
 	wxGetApp().GetHtmlPrinter()->PreviewText(StringUtil::stringWX(GetPrintDataAsHtmlTable()));
 }
 

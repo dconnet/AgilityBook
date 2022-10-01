@@ -19,6 +19,7 @@
 
 #include "AgilityBookMenu.h"
 #include "LibARBWin/ConfigPosition.h"
+#include "LibARBWin/Logger.h"
 #include "LibARBWin/StatusBarHelper.h"
 #include "UpdateInfo.h"
 #include <wx/dnd.h>
@@ -59,6 +60,10 @@ public:
 	CMainFrame(wxDocManager* manager);
 	~CMainFrame();
 
+	bool IsLoggingEnabled() const;
+	wxString GetLoggingDirectory() const;
+	void EnableLogWindow();
+
 	bool DownloadInProgress();
 	bool CanClose();
 
@@ -72,6 +77,7 @@ private:
 	void SetMessage(std::wstring const& msg, int index, bool bResize);
 
 	wxDocManager* m_manager;
+	ARBWin::CLogger m_logger;
 	ARBWin::CStatusBarHelper m_statusBar;
 	CUpdateInfo m_UpdateInfo;
 

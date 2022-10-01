@@ -52,6 +52,7 @@
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/DlgProgress.h"
+#include "LibARBWin/Logger.h"
 #include "LibARBWin/ReportListCtrl.h"
 #include <wx/valgen.h>
 #include <wx/wfstream.h>
@@ -1424,6 +1425,7 @@ void CWizardExport::OnWizardChanged(wxWizardEvent& evt)
 {
 	if (evt.GetPage() == static_cast<wxWizardPage*>(this))
 	{
+		CLogger::Log(L"WIZARD: CWizardExport::OnWizardChanged");
 		m_pSheet->SetLabel(_("IDD_WIZARD_EXPORT"));
 
 		bool showDelims = true;
@@ -1472,6 +1474,7 @@ bool CWizardExport::DoWizardFinish()
 
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle() || WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 	{
+		CLogger::Log(L"WIZARD: CWizardExport (Excel/Calc)");
 		ISpreadSheetExporterPtr pExporter;
 		if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle() && m_pSheet->ExcelHelper())
 			pExporter = m_pSheet->ExcelHelper()->GetExporter();
@@ -1518,6 +1521,7 @@ bool CWizardExport::DoWizardFinish()
 	}
 	else
 	{
+		CLogger::Log(L"WIZARD: CWizardExport (text)");
 		wxFileDialog file(
 			this,
 			wxString(), // caption

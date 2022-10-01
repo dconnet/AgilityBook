@@ -31,6 +31,7 @@
 #include "MainFrm.h"
 #include "RegItems.h"
 
+#include "LibARBWin/Logger.h"
 #include <wx/choicebk.h>
 #include <wx/config.h>
 #include <wx/listbook.h>
@@ -384,6 +385,7 @@ void CTabView::OnBookCtrlChanged(wxBookCtrlEvent& evt)
 {
 	if (!m_bIgnoreEvents)
 	{
+		CLogger::Log(wxString::Format(L"TABVIEW: Switch to %d", evt.GetSelection()));
 		CBasePanel* panel = wxDynamicCast(m_ctrlBook->GetPage(evt.GetSelection()), CBasePanel);
 		if (panel)
 		{

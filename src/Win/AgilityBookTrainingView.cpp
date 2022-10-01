@@ -50,6 +50,7 @@
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ListData.h"
+#include "LibARBWin/Logger.h"
 #include <wx/config.h>
 
 #ifdef __WXMSW__
@@ -626,6 +627,7 @@ void CAgilityBookTrainingView::OnCtrlKeyDown(wxKeyEvent& evt)
 
 void CAgilityBookTrainingView::OnViewContextMenu(wxContextMenuEvent& evt)
 {
+	CLogger::Log(L"MENU: CAgilityBookTrainingView::OnViewContextMenu");
 	if (!m_Ctrl)
 		return;
 	wxPoint point;
@@ -903,18 +905,21 @@ bool CAgilityBookTrainingView::OnCmd(int id)
 
 void CAgilityBookTrainingView::OnViewCmd(wxCommandEvent& evt)
 {
+	CLogger::Log(wxString::Format(L"MENU: CAgilityBookTrainingView::OnViewCmd %d", evt.GetId()));
 	OnCmd(evt.GetId());
 }
 
 
 void CAgilityBookTrainingView::OnPrintView(wxCommandEvent& evt)
 {
+	CLogger::Log(L"MENU: CAgilityBookTrainingView::OnPrintView");
 	wxGetApp().GetHtmlPrinter()->PrintText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
 }
 
 
 void CAgilityBookTrainingView::OnPreview(wxCommandEvent& evt)
 {
+	CLogger::Log(L"MENU: CAgilityBookTrainingView::OnPreview");
 	wxGetApp().GetHtmlPrinter()->PreviewText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
 }
 

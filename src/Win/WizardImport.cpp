@@ -52,6 +52,7 @@
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/DlgMessage.h"
 #include "LibARBWin/DlgProgress.h"
+#include "LibARBWin/Logger.h"
 #include "LibARBWin/ReportListCtrl.h"
 #include <wx/spinctrl.h>
 #include <wx/textfile.h>
@@ -733,6 +734,7 @@ void CWizardImport::OnWizardChanged(wxWizardEvent& evt)
 {
 	if (evt.GetPage() == static_cast<wxWizardPage*>(this))
 	{
+		CLogger::Log(L"WIZARD: CWizardImport::OnWizardChanged");
 		m_pSheet->SetLabel(_("IDD_WIZARD_IMPORT"));
 
 		bool showDelims = true;
@@ -816,6 +818,7 @@ bool CWizardImport::DoWizardFinish()
 
 		case WIZ_IMPORT_RUNS:
 		{
+			CLogger::Log(L"WIZARD: CWizardImport WIZ_IMPORT_RUNS");
 			long const colIdx[4]
 				= {IO_TYPE_RUNS_FAULTS_TIME, IO_TYPE_RUNS_TIME_FAULTS, IO_TYPE_RUNS_OPEN_CLOSE, IO_TYPE_RUNS_POINTS};
 			long idxDate[4] = {0};
@@ -1255,6 +1258,7 @@ bool CWizardImport::DoWizardFinish()
 
 		case WIZ_IMPORT_CALENDAR:
 		{
+			CLogger::Log(L"WIZARD: CWizardImport WIZ_IMPORT_CALENDAR");
 			ARBCalendarPtr pCal;
 			for (iCol = 0; iCol < columns[IO_TYPE_CALENDAR].size(); ++iCol)
 			{
@@ -1406,6 +1410,7 @@ bool CWizardImport::DoWizardFinish()
 
 		case WIZ_IMPORT_LOG:
 		{
+			CLogger::Log(L"WIZARD: CWizardImport WIZ_IMPORT_LOG");
 			ARBTrainingPtr pLog;
 			for (iCol = 0; iCol < entry.size() && iCol < columns[IO_TYPE_TRAINING].size(); ++iCol)
 			{

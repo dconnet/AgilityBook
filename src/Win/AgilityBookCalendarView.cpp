@@ -54,6 +54,7 @@
 
 #include "ARB/ARBCalendar.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/Logger.h"
 #include <wx/dcbuffer.h>
 
 #ifdef __WXMSW__
@@ -1396,6 +1397,7 @@ void CAgilityBookCalendarView::LoadData()
 
 void CAgilityBookCalendarView::OnContextMenu(wxContextMenuEvent& evt)
 {
+	CLogger::Log(L"MENU: CAgilityBookCalendarView::OnContextMenu");
 	if (!m_Ctrl)
 		return;
 	wxPoint point;
@@ -1677,20 +1679,25 @@ void CAgilityBookCalendarView::OnViewCmd(wxCommandEvent& evt)
 	switch (evt.GetId())
 	{
 	case wxID_COPY:
+		CLogger::Log(L"MENU: CalView wxID_COPY");
 		m_Ctrl->OnCopy();
 		break;
 	case ID_AGILITY_EDIT_CALENDAR:
+		CLogger::Log(L"MENU: CalView ID_AGILITY_EDIT_CALENDAR");
 		m_Ctrl->OnEdit(GetDocument());
 		break;
 	case wxID_DELETE:
 	case ID_AGILITY_DELETE_CALENDAR:
+		CLogger::Log(L"MENU: CalView wxID_DELETE");
 		m_Ctrl->OnDelete(GetDocument());
 		break;
 	case ID_AGILITY_CREATEENTRY_CALENDAR:
+		CLogger::Log(L"MENU: CalView ID_AGILITY_CREATEENTRY_CALENDAR");
 		m_Ctrl->OnCreateEntry(GetDocument());
 		break;
 	case ID_VIEW_CUSTOMIZE:
 	{
+		CLogger::Log(L"MENU: CalView ID_VIEW_CUSTOMIZE");
 		CDlgAssignColumns dlg(CAgilityBookOptions::eView, m_Ctrl, GetDocument(), IO_TYPE_VIEW_CALENDAR);
 		dlg.ShowModal();
 	}

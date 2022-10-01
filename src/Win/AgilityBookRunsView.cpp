@@ -75,6 +75,7 @@
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ListData.h"
+#include "LibARBWin/Logger.h"
 #include <wx/config.h>
 #include <algorithm>
 
@@ -1732,6 +1733,7 @@ void CAgilityBookRunsView::OnCtrlKeyDown(wxKeyEvent& evt)
 
 void CAgilityBookRunsView::OnViewContextMenu(wxContextMenuEvent& evt)
 {
+	CLogger::Log(L"MENU: CAgilityBookRunsView::OnViewContextMenu");
 	if (!m_Ctrl)
 		return;
 	wxPoint point;
@@ -2136,18 +2138,21 @@ bool CAgilityBookRunsView::OnCmd(int id, bool bSilent)
 
 void CAgilityBookRunsView::OnViewCmd(wxCommandEvent& evt)
 {
+	CLogger::Log(wxString::Format(L"MENU: CAgilityBookRunsView::OnViewCmd %d", evt.GetId()));
 	OnCmd(evt.GetId());
 }
 
 
 void CAgilityBookRunsView::OnPrintView(wxCommandEvent& evt)
 {
+	CLogger::Log(L"MENU: CAgilityBookRunsView::OnPrintView");
 	wxGetApp().GetHtmlPrinter()->PrintText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
 }
 
 
 void CAgilityBookRunsView::OnPreview(wxCommandEvent& evt)
 {
+	CLogger::Log(L"MENU: CAgilityBookRunsView::OnPreview");
 	wxGetApp().GetHtmlPrinter()->PreviewText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
 }
 

@@ -48,6 +48,7 @@
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
 #include "LibARBWin/DlgMessage.h"
+#include "LibARBWin/Logger.h"
 #include <wx/config.h>
 #include <wx/wfstream.h>
 
@@ -512,6 +513,7 @@ void CWizardStart::OnWizardChanged(wxWizardEvent& evt)
 {
 	if (evt.GetPage() == static_cast<wxWizardPage*>(this))
 	{
+		CLogger::Log(L"WIZARD: CWizardStart::OnWizardChanged");
 		m_pSheet->SetLabel(_("IDD_WIZARD_START"));
 		UpdateList();
 	}
@@ -534,6 +536,7 @@ bool CWizardStart::DoWizardFinish()
 
 		case WIZ_IMPORT_RUNS:
 		{
+			CLogger::Log(L"WIZARD: CWizardStart WIZ_IMPORT_RUNS");
 			wxFileDialog file(
 				this,
 				wxEmptyString, // caption
@@ -566,6 +569,7 @@ bool CWizardStart::DoWizardFinish()
 
 		case WIZ_IMPORT_CALENDAR:
 		{
+			CLogger::Log(L"WIZARD: CWizardStart WIZ_IMPORT_CALENDAR");
 			wxFileDialog file(
 				this,
 				wxEmptyString, // caption
@@ -598,6 +602,7 @@ bool CWizardStart::DoWizardFinish()
 
 		case WIZ_EXPORT_CALENDAR:
 		{
+			CLogger::Log(L"WIZARD: CWizardStart WIZ_EXPORT_CALENDAR");
 			wxFileDialog file(
 				this,
 				wxEmptyString, // caption
@@ -626,11 +631,13 @@ bool CWizardStart::DoWizardFinish()
 			wxString fname, filter;
 			if (WIZ_EXPORT_CALENDAR_VCAL == data)
 			{
+				CLogger::Log(L"WIZARD: WIZ_EXPORT_CALENDAR_VCAL");
 				fname = _("IDS_FILEEXT_FNAME_VCS");
 				filter = _("IDS_FILEEXT_FILTER_VCS");
 			}
 			else
 			{
+				CLogger::Log(L"WIZARD: WIZ_EXPORT_CALENDAR_ICAL");
 				fname = _("IDS_FILEEXT_FNAME_ICS");
 				filter = _("IDS_FILEEXT_FILTER_ICS");
 			}
@@ -681,6 +688,8 @@ bool CWizardStart::DoWizardFinish()
 
 		case WIZ_IMPORT_LOG:
 		{
+			CLogger::Log(L"WIZARD: CWizardStart WIZ_IMPORT_LOG");
+			CLogger::Log(L"WIZARD: CWizardStart ");
 			wxFileDialog file(
 				this,
 				wxEmptyString, // caption
@@ -713,6 +722,7 @@ bool CWizardStart::DoWizardFinish()
 
 		case WIZ_EXPORT_LOG:
 		{
+			CLogger::Log(L"WIZARD: CWizardStart WIZ_EXPORT_LOG");
 			wxFileDialog file(
 				this,
 				wxEmptyString, // caption
@@ -736,6 +746,7 @@ bool CWizardStart::DoWizardFinish()
 		break;
 
 		case WIZ_IMPORT_CONFIGURATION:
+			CLogger::Log(L"WIZARD: CWizardStart WIZ_IMPORT_CONFIGURATION");
 			bOk = m_pDoc->ImportConfiguration(false);
 			if (bOk)
 				m_pDoc->Modify(true);
@@ -743,6 +754,7 @@ bool CWizardStart::DoWizardFinish()
 
 		case WIZ_EXPORT_CONFIGURATION:
 		{
+			CLogger::Log(L"WIZARD: CWizardStart WIZ_EXPORT_CONFIGURATION");
 			wxFileDialog file(
 				this,
 				wxEmptyString, // caption
@@ -767,6 +779,7 @@ bool CWizardStart::DoWizardFinish()
 
 		case WIZ_EXPORT_DTD:
 		{
+			CLogger::Log(L"WIZARD: CWizardStart WIZ_EXPORT_DTD");
 			wxFileDialog file(
 				this,
 				wxEmptyString, // caption
@@ -792,6 +805,7 @@ bool CWizardStart::DoWizardFinish()
 
 		case WIZ_EXPORT_XML:
 		{
+			CLogger::Log(L"WIZARD: CWizardStart WIZ_EXPORT_XML");
 			wxString name = m_pDoc->GetFilename();
 			if (name.empty())
 			{
@@ -834,6 +848,7 @@ bool CWizardStart::DoWizardFinish()
 
 		case WIZ_IMPORT_SETTINGS:
 		{
+			CLogger::Log(L"WIZARD: CWizardStart WIZ_IMPORT_SETTINGS");
 			wxString name = L"AgilityRecordBook.";
 			name += _("IDS_FILEEXT_DEF_SETTINGS");
 			wxFileDialog file(
@@ -870,6 +885,7 @@ bool CWizardStart::DoWizardFinish()
 
 		case WIZ_EXPORT_SETTINGS:
 		{
+			CLogger::Log(L"WIZARD: CWizardStart WIZ_EXPORT_SETTINGS");
 			wxString name = L"AgilityRecordBook.";
 			name += _("IDS_FILEEXT_DEF_SETTINGS");
 			wxFileDialog file(

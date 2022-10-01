@@ -39,6 +39,7 @@
 #include "PointsData.h"
 #include "Print.h"
 #include "RegItems.h"
+#include "SetupAppARB.h"
 #include "TabView.h"
 #include "UpdateInfo.h"
 #include "VersionInfoARB.h"
@@ -50,6 +51,7 @@
 #include "LibARBWin/ARBDebug.h"
 #include "LibARBWin/About.h"
 #include "LibARBWin/DlgMessage.h"
+#include "LibARBWin/Logger.h"
 #include "LibARBWin/ResourceManager.h"
 #include <wx/config.h>
 #include <wx/dnd.h>
@@ -173,6 +175,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 		wxDefaultSize,
 		wxDEFAULT_FRAME_STYLE)
 	, m_manager(manager)
+	, m_logger()
 	, m_statusBar(this, NUM_STATUS_FIELDS)
 	, m_UpdateInfo(this)
 {
@@ -181,6 +184,8 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	//  Note: do not set help on the frame. Help will disable the min/max buttons.
 	//	SetExtraStyle(wxFRAME_EX_CONTEXTHELP | GetExtraStyle());
 	// #endif
+
+	EnableLogWindow();
 
 	wxMenu* menuRecent = new wxMenu;
 	manager->FileHistoryUseMenu(menuRecent);
@@ -222,6 +227,32 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 
 CMainFrame::~CMainFrame()
 {
+}
+
+
+bool CMainFrame::IsLoggingEnabled() const
+{
+	return m_logger.IsEnabled();
+}
+
+
+wxString CMainFrame::GetLoggingDirectory() const
+{
+	return m_logger.GetCurrentLogDir();
+}
+
+
+void CMainFrame::EnableLogWindow()
+{
+	if (!m_logger.IsEnabled())
+	{
+#ifdef _DEBUG
+		bool show = true;
+#else
+		bool show = false;
+#endif
+		m_logger.EnableLogWindow(this, show, wxGetApp().GetUpdateInfoKey().c_str());
+	}
 }
 
 
@@ -282,6 +313,7 @@ void CMainFrame::SetMessage(std::wstring const& msg, int index, bool bResize)
 
 void CMainFrame::OnStatusBarContextMenu(wxContextMenuEvent& evt)
 {
+	CLogger::Log(L"MENU: MainFrm::OnStatusBarContextMenu");
 	CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
 	assert(pDoc);
 	wxStatusBar* statusbar = nullptr;
@@ -304,6 +336,7 @@ void CMainFrame::OnStatusBarContextMenu(wxContextMenuEvent& evt)
 
 void CMainFrame::OnStatusBarDblClick(wxMouseEvent& evt)
 {
+	CLogger::Log(L"MENU: MainFrm::OnStatusBarDblClick");
 	CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
 	assert(pDoc);
 	wxCommandEvent evtCmd(wxEVT_MENU, wxID_PREFERENCES);
@@ -349,7 +382,7 @@ void CMainFrame::OnDPIChanged(wxDPIChangedEvent& evt)
 	wxSize old = evt.GetOldDPI();
 	wxSize newsz = evt.GetNewDPI();
 	std::wstring str = fmt::format(L"DPI Old: {},{}  New: {},{}\n", old.x, old.y, newsz.x, newsz.y);
-	OutputDebugString(str.c_str());
+	CLogger::Log(str.c_str());
 #endif
 
 	evt.Skip();
@@ -433,6 +466,7 @@ void CMainFrame::OnUpdateCmd(wxUpdateUIEvent& evt)
 
 void CMainFrame::OnFileLanguageChoose(wxCommandEvent& evt)
 {
+	CLogger::Log(L"MENU: MainFrm::OnFileLanguageChoose");
 	if (wxGetApp().SelectLanguage(this))
 	{
 		if (GetDocumentManager()->GetCurrentDocument())
@@ -459,6 +493,7 @@ void CMainFrame::OnFileLanguageChoose(wxCommandEvent& evt)
 
 void CMainFrame::OnPrintBlankRuns(wxCommandEvent& evt)
 {
+	CLogger::Log(L"MENU: MainFrm::OnPrintBlankRuns");
 	std::vector<RunInfo> runs;
 	PrintRuns(nullptr, runs);
 }
@@ -472,6 +507,7 @@ void CMainFrame::OnQuit(wxCommandEvent& evt)
 
 void CMainFrame::OnType(wxCommandEvent& evt)
 {
+	CLogger::Log(wxString::Format(L"MENU: MainFrm::OnType: %d", evt.GetId()));
 	CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
 	assert(pDoc);
 	CTabView* pView = pDoc->GetTabView();
@@ -482,6 +518,7 @@ void CMainFrame::OnType(wxCommandEvent& evt)
 
 void CMainFrame::OnOrient(wxCommandEvent& evt)
 {
+	CLogger::Log(wxString::Format(L"MENU: MainFrm::OnOrient: %d", evt.GetId()));
 	CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
 	assert(pDoc);
 	CTabView* pView = pDoc->GetTabView();
@@ -492,6 +529,7 @@ void CMainFrame::OnOrient(wxCommandEvent& evt)
 
 void CMainFrame::OnNextPane(wxCommandEvent& evt)
 {
+	CLogger::Log(L"MENU: MainFrm::OnNextPane");
 	bool bHandled = false;
 	CAgilityBookBaseExtraView* pView = wxDynamicCast(GetDocumentManager()->GetCurrentView(), CAgilityBookBaseExtraView);
 	if (pView)
@@ -503,6 +541,7 @@ void CMainFrame::OnNextPane(wxCommandEvent& evt)
 
 void CMainFrame::OnPrevPane(wxCommandEvent& evt)
 {
+	CLogger::Log(L"MENU: MainFrm::OnPrevPane");
 	bool bHandled = false;
 	CAgilityBookBaseExtraView* pView = wxDynamicCast(GetDocumentManager()->GetCurrentView(), CAgilityBookBaseExtraView);
 	if (pView)
@@ -514,12 +553,14 @@ void CMainFrame::OnPrevPane(wxCommandEvent& evt)
 
 void CMainFrame::OnViewCustomizeAccel(wxCommandEvent& evt)
 {
+	CLogger::Log(L"MENU: MainFrm::OnViewCustomizeAccel");
 	wxGetApp().GetMenus().ConfigureAccelerators(this);
 }
 
 
 void CMainFrame::OnHelpCheckUpdates(wxCommandEvent& evt)
 {
+	CLogger::Log(L"MENU: MainFrm::OnHelpCheckUpdates");
 	bool close = false;
 	CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
 	UpdateConfiguration(pDoc, close);
@@ -529,6 +570,7 @@ void CMainFrame::OnHelpCheckUpdates(wxCommandEvent& evt)
 
 void CMainFrame::OnHelpAbout(wxCommandEvent& evt)
 {
+	CLogger::Log(L"MENU: MainFrm::OnHelpAbout");
 	CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
 	auto subject = _("LinkHelpUrlSubject");
 	subject.Replace(L"%VERSION%", ver.GetVersionString(VER_PARTS));
@@ -547,6 +589,8 @@ void CMainFrame::OnHelpAbout(wxCommandEvent& evt)
 	info.productDesc = desc;
 	info.version = ARB_VERSION_STRING;
 	info.copyright = ARB_VERSION_LegalCopyright;
+	if (m_logger.IsEnabled())
+		info.userDir = GetLoggingDirectory();
 
 	info.links.push_back(AboutInfo::LinkInfo{L"", L"", false});
 	info.links.push_back(AboutInfo::LinkInfo{_("AboutLinks"), L"", false});
