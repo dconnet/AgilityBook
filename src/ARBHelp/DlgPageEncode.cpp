@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2022-10-01 Add log files to gathered files.
  * 2018-01-28 Move sysinfo/registry dump to ARBDebug.
  * 2012-07-10 Fix serialization. Broken in 4/15 wxString checkin.
  * 2011-10-19 Wrap '/' with wxT() so it's not output as int.
@@ -26,9 +27,11 @@
 #include "DlgARBHelp.h"
 #include "VersionNumber.h"
 
+#include "../Win/RegItems.h"
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBDebug.h"
+#include "LibARBWin/Logger.h"
 #include <wx/config.h>
 #include <wx/dir.h>
 #include <wx/filename.h>
@@ -49,15 +52,14 @@ using namespace ARBWin;
 namespace
 {
 // Recurse directory
-void SearchFor(CDlgARBHelp* pParent, wxString const& inFullPath)
+void SearchFor(CDlgARBHelp* pParent, wxString const& inFullPath, wxString const& pattern)
 {
+	if (inFullPath.empty() || !wxDir::Exists(inFullPath))
+		return;
 	wxArrayString files;
-	if (wxDir::Exists(inFullPath))
-	{
-		wxDir::GetAllFiles(inFullPath, &files, L"*.arb*", wxDIR_DIRS | wxDIR_FILES);
-		for (size_t n = 0; n < files.GetCount(); ++n)
-			pParent->SetARBFileStatus(StringUtil::stringW(files[n]));
-	}
+	wxDir::GetAllFiles(inFullPath, &files, pattern, wxDIR_DIRS | wxDIR_FILES);
+	for (size_t n = 0; n < files.GetCount(); ++n)
+		pParent->SetARBFileStatus(StringUtil::stringW(files[n]));
 }
 } // namespace
 
@@ -108,16 +110,27 @@ bool CDlgPageEncode::TransferDataFromWindow()
 	m_Parent->AddRegistryInfo(ARBDebug::GetRegistryInfo().c_str());
 
 	std::set<wxString> directories;
+
+	// (comments are where files are on Windows 10)
+
 	// exe
 	directories.insert(wxStandardPaths::Get().GetDataDir());
-	// C:\Documents and Settings\username\Documents
+
+	// C:\Users\<username>\Documents
 	directories.insert(wxStandardPaths::Get().GetDocumentsDir());
-	// C:\Documents and Settings\All Users\Application Data
+
+	// C:\\ProgramData\\dcon Software\\Agility Record Book
 	directories.insert(wxStandardPaths::Get().GetConfigDir());
-	// C:\Documents and Settings\username\Application Data
+
+	// C:\Users\<username>\AppData\Roaming
 	directories.insert(wxStandardPaths::Get().GetUserConfigDir());
-	// C:\Documents and Settings\username\Local Settings\Application Data\appname
+
+	// C:\Users\<username>\AppData\Local\dcon Software\Agility Record Book
 	directories.insert(wxStandardPaths::Get().GetUserLocalDataDir());
+
+	// CAgilityBookOptions::GetBackupDirectory());
+	directories.insert(wxConfig::Get()->Read(CFG_SETTINGS_BACKUPDIR, wxString()));
+
 	std::vector<std::wstring> items;
 	ARBDebug::DumpRegistryGroup(L"Recent File List", nullptr, &items);
 	for (std::vector<std::wstring>::iterator iter = items.begin(); iter != items.end(); ++iter)
@@ -143,8 +156,14 @@ bool CDlgPageEncode::TransferDataFromWindow()
 	{
 		if ((*i).empty())
 			continue;
-		SearchFor(m_Parent, *i);
+		SearchFor(m_Parent, *i, L"*.arb*");
 	}
+
+	// Gather logging files
+	CLogger logger;
+	logger.Initialize(wxGetApp().GetUpdateInfoKey().c_str());
+	// Note: This is GetUserLocalDataDir(). 
+	SearchFor(m_Parent, logger.GetCurrentLogDir(), L"*.log");
 
 	return true;
 }

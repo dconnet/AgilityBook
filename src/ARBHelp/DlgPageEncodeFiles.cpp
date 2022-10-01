@@ -43,7 +43,7 @@ CDlgPageEncodeFiles::CDlgPageEncodeFiles(CDlgARBHelp* pParent)
 		wxDefaultSize,
 		0);
 
-	m_ctrlList = new wxCheckListBox(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, nullptr, 0);
+	m_ctrlList = new wxCheckListBox(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, nullptr, wxLB_HSCROLL);
 
 	wxButton* btnAll = new wxButton(this, wxID_ANY, L"Check All", wxDefaultPosition, wxDefaultSize, 0);
 	btnAll->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgPageEncodeFiles::OnCheckAll, this);
