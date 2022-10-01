@@ -796,6 +796,10 @@ bool CAgilityBookApp::GetResImageName(wxArtID const& id, wxArtClient const& clie
 	{
 		outName = L"toolbarFind";
 	}
+	else if (id == ImageMgrFolderOpened)
+	{
+		outName = L"toolbarFolderOpened";
+	}
 	else if (id == ImageMgrNew)
 	{
 		outName = L"toolbarNew";
