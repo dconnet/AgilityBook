@@ -4,6 +4,10 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2022-10-18 Configuration version 67.
+           Updated NADAC. Enable Gamblers titles. Title didn't exist between
+           1/1/2006 and 8/1/2019, but ARB does not currently handled multiple
+           date ranges.
 2022-02-21 Configuration version 66.
            Updated NADAC. Removed Extreme, Hoopers, Barrelers, added Grounders.
 2020-09-15 File version 15.3.
@@ -217,7 +221,7 @@ Reminder to self: Action/@Config: Only apply this action up to this config
 (non-inclusive, 0 == always) Basically, this is when the action was added.
 -->
 
-  <Configuration version="66">
+  <Configuration version="67">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -3235,7 +3239,8 @@ Extended title at 200 points (repeats every 100)</Titles>
 Extended title at 400 points (repeats every 200)</Titles>
       <Titles Inc="100" LongName="Novice Chances Certificate" Name="NCC" Sep="h" StartAt="100" ValidFrom="2004-1-1">30 points
 Extended title at 200 points (repeats every 100)</Titles>
-      <Titles LongName="Novice Gamblers Certificate" Name="NGC" ValidTo="2006-1-1">30 points (20 pts before 8/1/2005)</Titles>
+      <Titles LongName="Novice Gamblers Certificate" Name="NGC">30 points (20 pts before 8/1/2005)
+(Note: Title didn't exist between 1/1/2006 and 8/1/2019)</Titles>
       <Titles Inc="100" LongName="Novice Jumpers Certificate" Name="NJC" Sep="h" StartAt="100">30 points (20 pts before 8/1/2005)
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Novice Tunnelers Certificate" Name="TN-N" Sep="h" StartAt="100">30 points
@@ -3250,7 +3255,8 @@ Extended title at 200 points (repeats every 100)</Titles>
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Novice Agility Certificate Outstanding Performance" Name="O-NAC">100 points</Titles>
       <Titles LongName="Novice Chances Certificate Outstanding Performance" Name="O-NCC" ValidFrom="2004-1-1">60 points</Titles>
-      <Titles LongName="Novice Gamblers Certificate Outstanding Performance" Name="O-NGC" ValidTo="2006-1-1">60 points (50 pts before 8/1/2005)</Titles>
+      <Titles LongName="Novice Gamblers Certificate Outstanding Performance" Name="O-NGC">60 points (50 pts before 8/1/2005)
+(Note: Title didn't exist between 1/1/2006 and 8/1/2019)</Titles>
       <Titles LongName="Novice Jumpers Certificate Outstanding Performance" Name="O-NJC">60 points (50 pts before 8/1/2005)</Titles>
       <Titles LongName="Novice Tunnelers Certificate Outstanding Performance" Name="O-TN-N">60 points</Titles>
       <Titles LongName="Novice Touch N Go Certificate Outstanding Performance" Name="O-TG-N">60 points</Titles>
@@ -3259,7 +3265,8 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Novice Grounders Certificate Outstanding Performance" Name="O-GR-N" ValidFrom="2022-1-1">60 points</Titles>
       <Titles LongName="Novice Agility Certificate Superior Performance" Name="S-NAC">200 points</Titles>
       <Titles LongName="Novice Chances Certificate Superior Performance" Name="S-NCC" ValidFrom="2004-1-1">100 points</Titles>
-      <Titles LongName="Novice Gamblers Certificate Superior Performance" Name="S-NGC" ValidTo="2006-1-1">100 points</Titles>
+      <Titles LongName="Novice Gamblers Certificate Superior Performance" Name="S-NGC">100 points
+(Note: Title didn't exist between 1/1/2006 and 8/1/2019)</Titles>
       <Titles LongName="Novice Jumpers Certificate Superior Performance" Name="S-NJC">100 points</Titles>
       <Titles LongName="Novice Tunnelers Certificate Superior Performance" Name="S-TN-N">100 points</Titles>
       <Titles LongName="Novice Touch N Go Certificate Superior Performance" Name="S-TG-N">100 points</Titles>
@@ -3270,7 +3277,8 @@ Extended title at 200 points (repeats every 100)</Titles>
 Extended title at 400 points (repeats every 200)</Titles>
       <Titles Inc="100" LongName="Open Chances Certificate" Name="OCC" Sep="h" StartAt="100" ValidFrom="2004-1-1">30 points
 Extended title at 200 points (repeats every 100)</Titles>
-      <Titles LongName="Open Gamblers Certificate" Name="OGC" ValidTo="2006-1-1">30 points (20 pts before 8/1/2005)</Titles>
+      <Titles LongName="Open Gamblers Certificate" Name="OGC">30 points (20 pts before 8/1/2005)
+(Note: Title didn't exist between 1/1/2006 and 8/1/2019)</Titles>
       <Titles Inc="100" LongName="Open Jumpers Certificate" Name="OJC" Sep="h" StartAt="100">30 points (20 pts before 8/1/2005)
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Open Tunnelers Certificate" Name="TN-O" Sep="h" StartAt="100">30 points
@@ -3285,7 +3293,8 @@ Extended title at 200 points (repeats every 100)</Titles>
 Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Open Agility Certificate Outstanding Performance" Name="O-OAC">100 points</Titles>
       <Titles LongName="Open Chances Certificate Outstanding Performance" Name="O-OCC" ValidFrom="2004-1-1">60 points</Titles>
-      <Titles LongName="Open Gamblers Certificate Outstanding Performance" Name="O-OGC" ValidTo="2006-1-1">60 points (50 pts before 8/1/2005)</Titles>
+      <Titles LongName="Open Gamblers Certificate Outstanding Performance" Name="O-OGC">60 points (50 pts before 8/1/2005)
+(Note: Title didn't exist between 1/1/2006 and 8/1/2019)</Titles>
       <Titles LongName="Open Jumpers Certificate Outstanding Performance" Name="O-OJC">60 points (50 pts before 8/1/2005)</Titles>
       <Titles LongName="Open Tunnelers Certificate Outstanding Performance" Name="O-TN-O">60 points</Titles>
       <Titles LongName="Open Touch N Go Certificate Outstanding Performance" Name="O-TG-O">60 points</Titles>
@@ -3294,7 +3303,8 @@ Extended title at 200 points (repeats every 100)</Titles>
       <Titles LongName="Open Grounders Certificate Outstanding Performance" Name="O-GR-O" ValidFrom="2022-1-1">60 points</Titles>
       <Titles LongName="Open Agility Certificate Superior Performance" Name="S-OAC">200 points</Titles>
       <Titles LongName="Open Chances Certificate Superior Performance" Name="S-OCC" ValidFrom="2004-1-1">100 points</Titles>
-      <Titles LongName="Open Gamblers Certificate Superior Performance" Name="S-OGC" ValidTo="2006-1-1">100 points</Titles>
+      <Titles LongName="Open Gamblers Certificate Superior Performance" Name="S-OGC">100 points
+(Note: Title didn't exist between 1/1/2006 and 8/1/2019)</Titles>
       <Titles LongName="Open Jumpers Certificate Superior Performance" Name="S-OJC">100 points</Titles>
       <Titles LongName="Open Tunnelers Certificate Superior Performance" Name="S-TN-O">100 points</Titles>
       <Titles LongName="Open Touch N Go Certificate Superior Performance" Name="S-TG-O">100 points</Titles>
@@ -3305,7 +3315,8 @@ Extended title at 200 points (repeats every 100)</Titles>
 Extended title at 600 points (repeats every 200)</Titles>
       <Titles Inc="100" LongName="Elite Chances Certificate" Name="ECC" Sep="h" StartAt="200" ValidFrom="2004-1-1">30 points
 Extended title at 300 points (repeats every 100)</Titles>
-      <Titles LongName="Elite Gamblers Certificate" Name="EGC" ValidTo="2006-1-1">30 points (20 pts before 8/1/2005)</Titles>
+      <Titles LongName="Elite Gamblers Certificate" Name="EGC">30 points (20 pts before 8/1/2005)
+(Note: Title didn't exist between 1/1/2006 and 8/1/2019)</Titles>
       <Titles Inc="100" LongName="Elite Jumpers Certificate" Name="EJC" Sep="h" StartAt="200">30 points (20 pts before 8/1/2005)
 Extended title at 300 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Elite Tunnelers Certificate" Name="TN-E" Sep="h" StartAt="200">30 points
@@ -3320,7 +3331,8 @@ Extended title at 300 points (repeats every 100)</Titles>
 Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Agility Certificate Outstanding Performance" Name="O-EAC">200 points</Titles>
       <Titles LongName="Elite Chances Certificate Outstanding Performance" Name="O-ECC" ValidFrom="2004-1-1">100 points</Titles>
-      <Titles LongName="Elite Gamblers Certificate Outstanding Performance" Name="O-EGC" ValidTo="2006-1-1">100 points</Titles>
+      <Titles LongName="Elite Gamblers Certificate Outstanding Performance" Name="O-EGC">100 points
+(Note: Title didn't exist between 1/1/2006 and 8/1/2019)</Titles>
       <Titles LongName="Elite Jumpers Certificate Outstanding Performance" Name="O-EJC">100 points</Titles>
       <Titles LongName="Elite Tunnelers Certificate Outstanding Performance" Name="O-TN-E">100 points</Titles>
       <Titles LongName="Elite Touch N Go Certificate Outstanding Performance" Name="O-TG-E">100 points</Titles>
@@ -3329,7 +3341,8 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Grounders Certificate Outstanding Performance" Name="O-GR-E" ValidFrom="2022-1-1">100 points</Titles>
       <Titles LongName="Elite Agility Certificate Superior Performance" Name="S-EAC">400 points</Titles>
       <Titles LongName="Elite Chances Certificate Superior Performance" Name="S-ECC" ValidFrom="2004-1-1">200 points</Titles>
-      <Titles LongName="Elite Gamblers Certificate Superior Performance" Name="S-EGC" ValidTo="2006-1-1">200 points</Titles>
+      <Titles LongName="Elite Gamblers Certificate Superior Performance" Name="S-EGC">200 points
+(Note: Title didn't exist between 1/1/2006 and 8/1/2019)</Titles>
       <Titles LongName="Elite Jumpers Certificate Superior Performance" Name="S-EJC">200 points</Titles>
       <Titles LongName="Elite Tunnelers Certificate Superior Performance" Name="S-TN-E">200 points</Titles>
       <Titles LongName="Elite Touch N Go Certificate Superior Performance" Name="S-TG-E">200 points</Titles>
@@ -3340,7 +3353,8 @@ Extended title at 300 points (repeats every 100)</Titles>
 Extended title at 600 points (repeats every 200)</Titles>
       <Titles Inc="100" LongName="Elite Chances Skilled" Name="ECS" Sep="h" StartAt="200" ValidFrom="2004-1-1">30 points
 Extended title at 200 points (repeats every 100)</Titles>
-      <Titles LongName="Elite Gamblers Skilled" Name="EGS" ValidTo="2006-1-1">30 points</Titles>
+      <Titles LongName="Elite Gamblers Skilled" Name="EGS">30 points
+(Note: Title didn't exist between 1/1/2006 and 8/1/2019)</Titles>
       <Titles Inc="100" LongName="Elite Jumpers Skilled" Name="EJS" Sep="h" StartAt="200">30 points
 Extended title at 300 points (repeats every 100)</Titles>
       <Titles Inc="100" LongName="Elite Tunnelers Skilled" Name="TNS-E" Sep="h" StartAt="200">30 points
@@ -3355,7 +3369,8 @@ Extended title at 300 points (repeats every 100)</Titles>
 Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Agility Skilled Outstanding Performance" Name="O-EAS">200 points</Titles>
       <Titles LongName="Elite Chances Skilled Outstanding Performance" Name="O-ECS" ValidFrom="2004-1-1">100 points</Titles>
-      <Titles LongName="Elite Gamblers Skilled Outstanding Performance" Name="O-EGS" ValidTo="2006-1-1">100 points</Titles>
+      <Titles LongName="Elite Gamblers Skilled Outstanding Performance" Name="O-EGS">100 points
+(Note: Title didn't exist between 1/1/2006 and 8/1/2019)</Titles>
       <Titles LongName="Elite Jumpers Skilled Outstanding Performance" Name="O-EJS">100 points</Titles>
       <Titles LongName="Elite Tunnelers Skilled Outstanding Performance" Name="O-TNS-E">100 points</Titles>
       <Titles LongName="Elite Touch N Go Skilled Outstanding Performance" Name="O-TGS-E">100 points</Titles>
@@ -3364,7 +3379,8 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Grounders Skilled Outstanding Performance" Name="O-GRS-E" ValidFrom="2022-1-1">100 points</Titles>
       <Titles LongName="Elite Agility Skilled Superior Performance" Name="S-EAS">400 points</Titles>
       <Titles LongName="Elite Chances Skilled Superior Performance" Name="S-ECS" ValidFrom="2004-1-1">200 points</Titles>
-      <Titles LongName="Elite Gamblers Skilled Superior Performance" Name="S-EGS" ValidTo="2006-1-1">200 points</Titles>
+      <Titles LongName="Elite Gamblers Skilled Superior Performance" Name="S-EGS">200 points
+(Note: Title didn't exist between 1/1/2006 and 8/1/2019)</Titles>
       <Titles LongName="Elite Jumpers Skilled Superior Performance" Name="S-EJS">200 points</Titles>
       <Titles LongName="Elite Tunnelers Skilled Superior Performance" Name="S-TNS-E">200 points</Titles>
       <Titles LongName="Elite Touch N Go Skilled Superior Performance" Name="S-TGS-E">200 points</Titles>

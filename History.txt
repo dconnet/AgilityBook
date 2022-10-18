@@ -1,4 +1,8 @@
-9/9/2022: v3.7.1.<dev>
+10/18/2022: v3.7.1.<dev>
+- Bumped Configuration v67:
+  - Updated NADAC. Enable Gamblers titles. Title didn't exist between 1/1/2006
+    and 8/1/2019, but ARB does not currently handled multiple date ranges.
+
 - New features / Enhancements:
   - Make buttons the same size in Faults/CalList/etc (DlgListCtrl)
   - Don't count empty judges, hide "0 judges" in Points view.
