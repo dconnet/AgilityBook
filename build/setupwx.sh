@@ -8,6 +8,7 @@
 # Note: Found old OSX SDKs at https://github.com/phracker/MacOSX-SDKs/releases
 #
 # History
+# 2022-11-07 Min OSX10.13, Added SDK13.0
 # 2022-07-05 Change arg parsing to allow passing any wx version
 # 2022-04-04 Upgraded 3.1.5 to 3.1.6
 # 2022-01-22 Changed to C++17. Min OSX10.12
@@ -63,7 +64,7 @@ fi
 # Assume we're targetting 3.1.6 or newer.
 VERSION="--disable-compat28 --disable-compat30"
 MAC_CONFIG_PARAMS=" --disable-nativedvc"
-MAC_MIN_OS=10.12
+MAC_MIN_OS=10.13
 
 BUILDDIR="$WXWIN/build"
 
@@ -112,12 +113,7 @@ Darwin*)
 	export LIBS="-lc++"
 	TARGETARCH="--enable-macosx_arch=x86_64"
 
-	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk; then
-		echo "Using 10.12 SDK"
-		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk
-		MIN_OS=$MAC_MIN_OS
-
-	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk; then
+	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk; then
 		echo "Using 10.13 SDK"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk
 		MIN_OS=$MAC_MIN_OS
@@ -166,10 +162,16 @@ Darwin*)
 		TARGETARCH="--enable-macosx_arch=x86_64,arm64"
 		MIN_OS=$MAC_MIN_OS
 
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk; then
+		echo "Using 12.3 SDK"
+		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk
+		TARGETARCH="--enable-macosx_arch=x86_64,arm64"
+		MIN_OS=$MAC_MIN_OS
+
 	fi
 
 	if test "x$TARGETSDK" = "x"; then
-		echo "ERROR: Can't find an SDK - 10.12 or newer is required"
+		echo "ERROR: Can't find an SDK - 10.13 or newer is required"
 		echo ls -CF /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
 		ls -CF /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
 		exit
