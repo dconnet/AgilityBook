@@ -53,7 +53,7 @@ Platforms
 Agility Record Book currently supports:
 
 - Windows Windows 7 and higher (32/64 bit)
-- MacOS 10.12 and higher (64 bit)
+- MacOS 10.13 and higher (64 bit)
 
 The binaries for the platforms above can be found in
 [Releases](https://github.com/dconnet/AgilityBook/releases).
