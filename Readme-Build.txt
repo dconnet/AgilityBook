@@ -27,7 +27,8 @@ option, run 'git submodule update --init' to also get all dependent code.
 
 python: https://www.python.org
 Currently using version 3.10.8.
-- Note, also install pyWin32 from https://github.com/mhammond/pywin32
+- Include pip in install
+- "pip install pywin32"
 
 wxWidgets: http://www.wxwidgets.org/
 Currently using version 3.2.1. Min supported is 3.1.6.
