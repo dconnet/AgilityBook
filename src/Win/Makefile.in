@@ -146,14 +146,14 @@ PRECOMP_HEADER = $(SRCDIR)/stdafx.h
 
 @PACKAGE_ARB_SHORTNAME@.dat: res/CompileDatList.txt
 	echo "LANGDIR $(CURDIR)"
-	python3 $(SRCDIR)/../../AgilityBookLibs/Projects/CompileLang.py -w $(WXWIN) -s $(SRCDIR)/../../AgilityBookLibs/lang -s $(SRCDIR)/../lang arb.po $(CURDIR) @PACKAGE_ARB_SHORTNAME@
-	python3 $(SRCDIR)/../../AgilityBookLibs/Projects/CompileDatafile.py -x -l $(CURDIR)/lang $(SRCDIR)/res/CompileDatList.txt $(CURDIR) @PACKAGE_ARB_SHORTNAME@
+	$(PYTHON3) $(SRCDIR)/../../AgilityBookLibs/Projects/CompileLang.py -w $(WXWIN) -s $(SRCDIR)/../../AgilityBookLibs/lang -s $(SRCDIR)/../lang arb.po $(CURDIR) @PACKAGE_ARB_SHORTNAME@
+	$(PYTHON3) $(SRCDIR)/../../AgilityBookLibs/Projects/CompileDatafile.py -x -l $(CURDIR)/lang $(SRCDIR)/res/CompileDatList.txt $(CURDIR) @PACKAGE_ARB_SHORTNAME@
 
 all: @PACKAGE_ARB_SHORTNAME@.dat @PACKAGE_ARB_SHORTNAME@
 
 dist:: all $(PHONY)
 	mkdir -p $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/MacOS
-	python3 $(SRCDIR)/../../AgilityBookLibs/Projects/GenContents.py -i AgilityBook.icns -l fr -e arb -d 'Agility Record Book files' -n @PACKAGE_ARB_SHORTNAME@ -v @PACKAGE_VERSION@ -c '@PACKAGE_COPYRIGHT@' $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents
+	$(PYTHON3) $(SRCDIR)/../../AgilityBookLibs/Projects/GenContents.py -i AgilityBook.icns -l fr -e arb -d 'Agility Record Book files' -n @PACKAGE_ARB_SHORTNAME@ -v @PACKAGE_VERSION@ -c '@PACKAGE_COPYRIGHT@' $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents
 	cp @PACKAGE_ARB_SHORTNAME@ $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/MacOS/@PACKAGE_ARB_SHORTNAME@
 	mkdir -p $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/
 	cp $(SRCDIR)/res/@PACKAGE_ARB_SHORTNAME@.icns $(TOPBUILDDIR)/@PACKAGE_ARB_SHORTNAME@.app/Contents/Resources/

@@ -195,6 +195,8 @@ sudo apt install libcanberra-gtk-module
 - Not strictly needed, but unit tests will fail otherwise
 sudo dpkg-reconfigure locales
  - Pick fr_FR and en_GB at a minimum (I only picked the UTF8 variants)
+Ubuntu18: Install python3.8, do not do an update-alternatives (you will kill
+ubuntu).
 
 Xcode
 =====
