@@ -8,6 +8,7 @@
 # Note: Found old OSX SDKs at https://github.com/phracker/MacOSX-SDKs/releases
 #
 # History
+# 2022-12-15 Added SDK13.1
 # 2022-11-07 Min OSX10.13, Added SDK13.0
 # 2022-07-05 Change arg parsing to allow passing any wx version
 # 2022-04-04 Upgraded 3.1.5 to 3.1.6
@@ -165,6 +166,12 @@ Darwin*)
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk; then
 		echo "Using 12.3 SDK"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk
+		TARGETARCH="--enable-macosx_arch=x86_64,arm64"
+		MIN_OS=$MAC_MIN_OS
+
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk; then
+		echo "Using 12.3 SDK"
+		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk
 		TARGETARCH="--enable-macosx_arch=x86_64,arm64"
 		MIN_OS=$MAC_MIN_OS
 
