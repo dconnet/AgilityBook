@@ -89,6 +89,11 @@ def AddCompiler(compilersMSBuild, compilersNMake, c):
 	if len(vcBaseDir) == 0:
 		return False
 
+	# wx only supports ARM64, not ARM.
+	if platform == 'ARM':
+		print('ERROR: Unsupported compiler:', platform)
+		return False
+
 	# TODO: Test this on older compiler, if not installed, the above dies first
 	if platformDir != 'vc142' and platformDir != 'vc143':
 		print('ERROR: Unsupported compiler:', platformDir)
