@@ -14,6 +14,7 @@
 #  samples/utils not supported via msbuild (no vc16/17 slns yet)
 #
 # Revision History
+# 2022-12-19 Allow compiling ARM targets when using msbuild configuration.
 # 2022-08-01 Add wx msbuild support (nmake support is going away).
 #            Only support vc142/vc143.
 #            Must use -n for wx3.2.x and earlier.
@@ -82,7 +83,7 @@ common_cppflags = '/DwxMSVC_VERSION_AUTO=1 /Zc:__cplusplus'
 stdCpp = '/std:c++17'
 
 
-def AddCompiler(compilers, c):
+def AddCompiler(compilersMSBuild, compilersNMake, c):
 	vcBaseDir, vcvarsall, platformDir, platform = pyDcon.VSPaths.GetCompilerPaths(c)
 
 	if len(vcBaseDir) == 0:
@@ -93,7 +94,11 @@ def AddCompiler(compilers, c):
 		print('ERROR: Unsupported compiler:', platformDir)
 		return False
 
-	compilers.add(c)
+	# ARM compilers are not in the msbuild files.
+	if platform == 'ARM' or platform == 'ARM64':
+		compilersNMake.add(c)
+	else:
+		compilersMSBuild.add(c)
 	return True
 
 
@@ -330,7 +335,8 @@ def main():
 	useNmake = False
 	samples = set()
 	utils = set()
-	compilers = set()
+	compilersMSBuild = set()
+	compilersNMake = set()
 	debug = True
 	release = True
 	try:
@@ -347,8 +353,8 @@ def main():
 		elif '-n' == o:
 			useNmake = True
 		elif '-a' == o:
-			AddCompiler(compilers, 'vc143')
-			AddCompiler(compilers, 'vc143x64')
+			AddCompiler(compilersMSBuild, compilersNMake, 'vc143')
+			AddCompiler(compilersMSBuild, compilersNMake, 'vc143x64')
 		elif '-d' == o:
 			useStatic = False
 		elif '-s' == o:
@@ -383,11 +389,16 @@ def main():
 		return 1
 
 	for c in args:
-		if not AddCompiler(compilers, c):
+		if not AddCompiler(compilersMSBuild, compilersNMake, c):
 			print('Usage:', __doc__)
 			return 1
 
-	if 0 == len(compilers):
+	if useNmake:
+		for c in compilersMSBuild:
+			compilersNMake.add(c)
+		compilersMSBuild = set()
+
+	if 0 == len(compilersMSBuild) + len(compilersNMake):
 		print('Usage:', __doc__)
 		return 1
 
@@ -397,11 +408,11 @@ def main():
 	if 0 == len(samples) and 0 == len(utils):
 		os.chdir(os.environ['WXWIN'] + r'\build\msw')
 
-	if useNmake:
-		if not BuildNmake(compilers, samples, utils, release, debug):
+	if 0 < len(compilersMSBuild):
+		if not BuildMSBuild(compilersMSBuild, samples, utils, release, debug):
 			return 1
-	else:
-		if not BuildMSBuild(compilers, samples, utils, release, debug):
+	if 0 < len(compilersNMake):
+		if not BuildNmake(compilersNMake, samples, utils, release, debug):
 			return 1
 	return 0
 

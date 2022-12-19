@@ -6,6 +6,7 @@
 #  returns tuple (vcDir, vcvarsall cmd, platformDir, platform)
 #    baseDir, baseDir+r'\VC\vcvarsall.bat target', vcNNN, x64/x86
 #
+# 2022-12-19 Added vc143arm support.
 # 2021-11-09 Add vc143 support
 # 2020-11-28 Make target names case insensitive.
 # 2020-09-13 Changed Win32 target to x86
@@ -37,33 +38,36 @@ def GetTarget(vcBase, bIs64Bit, bIsARM):
 
 	target = ''
 
-	if bIs64Bit and bIsARM:
-		if b64On64:
-			target = 'amd64_arm64'
+	# Note: These targets could change 'amd64' to 'x64', but I forget which
+	# compiler added 'x64'. So use the old name for old compiler compatibility.
+	if bIs64Bit:
+		if bIsARM:
+			if b64On64:
+				target = 'amd64_arm64'
+			else:
+				target = 'x86_arm64'
 		else:
-			target = 'x86_arm64'
+			if b64On64:
+				target = 'amd64'
+			else:
+				target = 'x86_amd64'
 
-	elif bIs64Bit and not bIsARM:
-		if b64On64:
-			target = 'amd64'
+	elif not bIs64Bit:
+		if bIsARM:
+			if b64On64:
+				target = 'amd64_arm'
+			else:
+				target = 'x86_arm'
 		else:
-			target = 'x86_amd64'
-
-	elif not bIs64Bit and bIsARM:
-		if b64On64:
-			target = 'amd64_arm'
-		else:
-			target = 'x86_arm'
-
-	elif not bIs64Bit and not bIsARM:
-		if b64On64:
-			target = 'amd64_x86'
-		else:
-			target = 'x86'
+			if b64On64:
+				target = 'amd64_x86'
+			else:
+				target = 'x86'
 
 	return target
 
 
+# platform is one of: x86, x64, ARM, ARM64
 def GetCompilerPaths(c, verbose = True):
 	baseDir = ''
 	vcvarsall = ''
@@ -133,7 +137,20 @@ def GetCompilerPaths(c, verbose = True):
 		#vcvarsall [arch]
 		#vcvarsall [arch] [version]
 		#vcvarsall [arch] [platform_type] [version]
-		# [arch]: x86 | amd64 | x86_amd64 | x86_arm | x86_arm64 | amd64_x86 | amd64_arm | amd64_arm64
+		# [arch]      Compiler            Host       Output
+		# x86         x86 32-bit native   x86, x64   x86
+		# x86_amd64   x64 on x86 cross    x86, x64   x64
+		# x86_x64     x64 on x86 cross    x86, x64   x64
+		# x86_arm     ARM on x86 cross    x86, x64   ARM
+		# x86_arm64   ARM64 on x86 cross  x86, x64   ARM64
+		# amd64       x64 64-bit native   x64        x64
+		# x64         x64 64-bit native   x64        x64
+		# amd64_x86   x86 on x64 cross    x64        x86
+		# x64_x86     x86 on x64 cross    x64        x86
+		# amd64_arm   ARM on x64 cross    x64        ARM
+		# x64_arm     ARM on x64 cross    x64        ARM
+		# amd64_arm64 ARM64 on x64 cross  x64        ARM64
+		# x64_arm64   ARM64 on x64 cross  x64        ARM64
 		# [platform_type]: {empty} | store | uwp
 		# [version] : full Windows 10 SDK number (e.g. 10.0.10240.0) or "8.1" to use the Windows 8.1 SDK.
 		baseDir = GetVSDir("15.0")
@@ -192,6 +209,13 @@ def GetCompilerPaths(c, verbose = True):
 		target = GetTarget(baseDir, True, False)
 		platformDir = 'vc143'
 		platform = 'x64'
+
+	elif comp == 'vc143arm':
+		baseDir = GetVSDir("17.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = GetTarget(baseDir, False, True)
+		platformDir = 'vc143'
+		platform = 'ARM'
 
 	elif comp == 'vc143arm64':
 		baseDir = GetVSDir("17.0")
