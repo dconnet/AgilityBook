@@ -344,9 +344,8 @@ bool CClipboardDataWriter::CommitData()
 	bool bOk = false;
 	if (!m_Object)
 		return bOk;
-	if (wxTheClipboard->SetData(m_Object))
-		bOk = true;
-	else
+	bOk = wxTheClipboard->SetData(m_Object);
+	if (!bOk)
 		delete m_Object;
 	m_Object = nullptr;
 	return bOk;

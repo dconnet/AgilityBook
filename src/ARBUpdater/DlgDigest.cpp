@@ -375,7 +375,10 @@ void CDlgDigest::OnCopy(wxCommandEvent& evt)
 
 	if (wxTheClipboard->Open())
 	{
-		wxTheClipboard->SetData(new wxTextDataObject(fmt::to_string(str)));
+		auto* dataObj = new wxTextDataObject(fmt::to_string(str));
+		if (!wxTheClipboard->SetData(dataObj))
+			delete dataObj;
+		wxTheClipboard->Flush();
 		wxTheClipboard->Close();
 		wxMessageBox(L"Copied!", wxMessageBoxCaptionStr, wxOK, this);
 	}
