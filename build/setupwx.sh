@@ -8,6 +8,9 @@
 # Note: Found old OSX SDKs at https://github.com/phracker/MacOSX-SDKs/releases
 #
 # History
+# 2022-12-20 Simplied SDKs (assumes we have at least 12.0) so we no longer need
+#            to update this and all the configure.in files each time xcode
+#            updates the SDK.
 # 2022-12-15 Added SDK13.1
 # 2022-11-07 Min OSX10.13, Added SDK13.0
 # 2022-07-05 Change arg parsing to allow passing any wx version
@@ -114,64 +117,20 @@ Darwin*)
 	export LIBS="-lc++"
 	TARGETARCH="--enable-macosx_arch=x86_64"
 
+	# Leaving this in for a couple compilers for an example.
+	# Current min deployment is 10.13 (as set via wx-config, via setupwx.sh)
 	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk; then
 		echo "Using 10.13 SDK"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk
 		MIN_OS=$MAC_MIN_OS
 
-	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk; then
-		echo "Using 10.14 SDK"
-		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk
-		MIN_OS=$MAC_MIN_OS
+	# Note 12.0 added arm64 support
+	# That's where this originally changed to setting options as below.
 
-	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk; then
-		echo "Using 10.15 SDK"
-		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk
-		MIN_OS=$MAC_MIN_OS
-
-	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk; then
-		echo "Using 11.0 SDK"
-		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk
-		MIN_OS=$MAC_MIN_OS
-
-	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk; then
-		echo "Using 11.1 SDK"
-		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk
-		MIN_OS=$MAC_MIN_OS
-
-	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.0.sdk; then
-		echo "Using 12.0 SDK"
-		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.0.sdk
-		TARGETARCH="--enable-macosx_arch=x86_64,arm64"
-		MIN_OS=$MAC_MIN_OS
-
-	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk; then
-		echo "Using 12.1 SDK"
-		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk
-		TARGETARCH="--enable-macosx_arch=x86_64,arm64"
-		MIN_OS=$MAC_MIN_OS
-
-	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.2.sdk; then
-		echo "Using 12.2 SDK"
-		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.2.sdk
-		TARGETARCH="--enable-macosx_arch=x86_64,arm64"
-		MIN_OS=$MAC_MIN_OS
-
-	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk; then
-		echo "Using 12.3 SDK"
-		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
-		TARGETARCH="--enable-macosx_arch=x86_64,arm64"
-		MIN_OS=$MAC_MIN_OS
-
-	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk; then
-		echo "Using 12.3 SDK"
-		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk
-		TARGETARCH="--enable-macosx_arch=x86_64,arm64"
-		MIN_OS=$MAC_MIN_OS
-
-	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk; then
-		echo "Using 12.3 SDK"
-		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk
+	# Assume the current SDK is at least 12.0
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk; then
+		echo "Using Current SDK"
+		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
 		TARGETARCH="--enable-macosx_arch=x86_64,arm64"
 		MIN_OS=$MAC_MIN_OS
 
