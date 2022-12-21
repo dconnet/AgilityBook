@@ -1,4 +1,4 @@
-11/7/2022: v3.8.0.<dev>
+12/20/2022: v3.8.0.<dev>
 - Notes:
   - pre Mac-10.13 support dropped.
 - Bumped Configuration v67:
@@ -8,6 +8,8 @@
   - Make buttons the same size in Faults/CalList/etc (DlgListCtrl)
   - Don't count empty judges, hide "0 judges" in Points view.
   - Updated to wxWidgets 3.2.1
+- Bug fixes:
+  - Fixed copy/paste on Mac.
 
 4/10/2022: v3.7.0.117
 - Notes:

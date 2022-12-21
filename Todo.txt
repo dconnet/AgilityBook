@@ -1,4 +1,4 @@
-Last Updated: 2021-9-5
+Last Updated: 2022-12-20
 
 - New file format? https://en.wikipedia.org/wiki/Open_Packaging_Conventions
 
@@ -13,8 +13,6 @@ Last Updated: 2021-9-5
   - Ability to go directly to run with link (or at least the trial)
 
 - Add AKC Invitational point accumulation (QQs add 10pts)
-
-- Copy/paste of a trial does not work on Mac. Paste is never enabled.
 
 - Figure out how to remove/combine sublevels. Both USDAA and NADAC have gone
   to a single Novice level.
