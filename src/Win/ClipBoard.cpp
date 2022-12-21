@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2022-12-20 Simplified html generation by using wxHTMLDataObject.
  * 2018-12-16 Convert to fmt.
  * 2012-03-16 Renamed LoadXML functions, added stream version.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -264,7 +263,50 @@ bool CClipboardDataWriter::AddData(ARBClipFormat clpFmt, std::wstring const& inD
 {
 	if (ARBClipFormat::Html == clpFmt)
 	{
-		auto* dataObj = new wxHTMLDataObject(inData);
+		std::string data = StringUtil::stringA(inData);
+		{
+			std::string startHtml("<html><body>\r\n");
+			std::string endHtml("</body>\r\n</html>\r\n");
+			std::string startFragment("<!--StartFragment-->");
+			std::string endFragment("<!--EndFragment-->");
+#if _MSC_VER >= 1300 && _MSC_VER < 1400
+			// VC7 has issues streaming size_t: warnings about 'size_t' to 'unsigned int' conversion
+			int lenData = static_cast<int>(data.length());
+			int lenHeader = 97;
+			int lenStartHtml = static_cast<int>(startHtml.length());
+			int lenEndHtml = static_cast<int>(endHtml.length());
+			int lenStartFragment = static_cast<int>(startFragment.length());
+			int lenEndFragment = static_cast<int>(endFragment.length());
+#else
+			size_t lenData = data.length();
+			size_t lenHeader = 97;
+			size_t lenStartHtml = startHtml.length();
+			size_t lenEndHtml = endHtml.length();
+			size_t lenStartFragment = startFragment.length();
+			size_t lenEndFragment = endFragment.length();
+#endif
+			fmt::memory_buffer out;
+			fmt::format_to(std::back_inserter(out), "Version:0.9\r\nStartHTML:{:08d}\r\n", lenHeader);
+			fmt::format_to(
+				std::back_inserter(out),
+				"EndHTML:{:08d}\r\n",
+				lenHeader + lenStartHtml + lenStartFragment + lenData + lenEndFragment + lenEndHtml);
+			fmt::format_to(
+				std::back_inserter(out),
+				"StartFragment:{:08d}\r\n",
+				lenHeader + lenStartHtml + lenStartFragment);
+			fmt::format_to(
+				std::back_inserter(out),
+				"EndFragment:{:08d}\r\n",
+				lenHeader + lenStartHtml + lenStartFragment + lenData);
+#if defined(_DEBUG) || defined(__WXDEBUG__)
+			assert(out.size() == static_cast<std::string::size_type>(lenHeader));
+#endif
+			fmt::format_to(std::back_inserter(out), "{}{}{}{}{}", startHtml, startFragment, data, endFragment, endHtml);
+			data = fmt::to_string(out);
+		}
+		wxCustomDataObject* dataObj = new wxCustomDataObject(wxDataFormat(L"HTML Format"));
+		dataObj->SetData(data.length() + 1, data.c_str());
 		if (!m_Object)
 			m_Object = new wxDataObjectComposite();
 		m_Object->Add(dataObj);
@@ -272,7 +314,7 @@ bool CClipboardDataWriter::AddData(ARBClipFormat clpFmt, std::wstring const& inD
 	}
 	else
 	{
-		auto* dataObj = new wxTextDataObject(inData.c_str());
+		wxTextDataObject* dataObj = new wxTextDataObject(inData.c_str());
 		dataObj->SetFormat(GetClipboardFormat(clpFmt));
 		if (!m_Object)
 			m_Object = new wxDataObjectComposite();
