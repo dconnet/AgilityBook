@@ -10,6 +10,8 @@
  * @author David Connet
  *
  * Revision History
+ * 2022-12-20 Do not use TextDataObject with custom objects.
+ *            While it works on Windows, it does not work on Mac.
  * 2018-12-16 Convert to fmt.
  * 2012-03-16 Renamed LoadXML functions, added stream version.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -133,10 +135,12 @@ bool CClipboardDataReader::GetData(ARBClipFormat clpFmt, ARBCommon::ElementNodeP
 		return false;
 	std::string data;
 	{
-		wxTextDataObject txtData;
+		wxCustomDataObject txtData;
 		txtData.SetFormat(GetClipboardFormat(clpFmt));
 		wxTheClipboard->GetData(txtData);
-		data = txtData.GetText().ToUTF8();
+		// When we put the data on the clipboard, we include the null terminator.
+		// Don't include that when recreating the string.
+		data = std::string(static_cast<const char*>(txtData.GetData()), txtData.GetSize() - 1);
 	}
 	fmt::wmemory_buffer err;
 	bool bOk = false;
@@ -261,9 +265,9 @@ bool CClipboardDataWriter::AddData(ARBClipFormat clpFmt, ARBCommon::ElementNodeP
 
 bool CClipboardDataWriter::AddData(ARBClipFormat clpFmt, std::wstring const& inData)
 {
+	std::string data = StringUtil::stringA(inData);
 	if (ARBClipFormat::Html == clpFmt)
 	{
-		std::string data = StringUtil::stringA(inData);
 		{
 			std::string startHtml("<html><body>\r\n");
 			std::string endHtml("</body>\r\n</html>\r\n");
@@ -314,8 +318,8 @@ bool CClipboardDataWriter::AddData(ARBClipFormat clpFmt, std::wstring const& inD
 	}
 	else
 	{
-		wxTextDataObject* dataObj = new wxTextDataObject(inData.c_str());
-		dataObj->SetFormat(GetClipboardFormat(clpFmt));
+		wxCustomDataObject* dataObj = new wxCustomDataObject(GetClipboardFormat(clpFmt));
+		dataObj->SetData(data.length() + 1, data.c_str());
 		if (!m_Object)
 			m_Object = new wxDataObjectComposite();
 		m_Object->Add(dataObj);
