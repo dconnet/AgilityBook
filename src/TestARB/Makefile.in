@@ -95,7 +95,3 @@ all: @PACKAGE_TEST_SHORTNAME@.dat @PACKAGE_TEST_SHORTNAME@
 	$(PYTHON3) $(SRCDIR)/../../AgilityBookLibs/Projects/RunARBTests.py $(SRCDIR) $(CURDIR) @PACKAGE_TEST_SHORTNAME@ Mac
 
 dist:: all $(PHONY)
-
-################################################################################
-# End of File: Makefile                                                        #
-################################################################################
