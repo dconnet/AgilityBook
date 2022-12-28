@@ -29,6 +29,7 @@
 #include "ARBCommon/ARBBase64.h"
 #include "ARBCommon/BinaryData.h"
 #include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -188,12 +189,12 @@ bool ARBDogNotes::Load(
 		}
 		else if (element->GetName() == TREE_CRCD_META2)
 		{
-			m_CRCDMeta = element->GetValue();
+			m_CRCDMeta = StringUtil::stringA(element->GetValue());
 		}
 		else if (element->GetName() == TREE_CRCD_META)
 		{
 			// Replaced by TREE_CRCD_META2, this translates.
-			std::wstring tmp = element->GetValue();
+			std::string tmp = StringUtil::stringA(element->GetValue());
 			std::vector<unsigned char> data;
 			if (ARBBase64::Decode(tmp, data))
 			{

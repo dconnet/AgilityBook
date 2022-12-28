@@ -21,14 +21,14 @@
 
 namespace dconSoft
 {
-constexpr wchar_t STREAM_DATA_BEGIN[] = L"ARB Begin Data";
-constexpr wchar_t STREAM_DATA_END[] = L"ARB End Data";
-constexpr wchar_t STREAM_SYSTEM_BEGIN[] = L"ARB Begin SysInfo";
-constexpr wchar_t STREAM_SYSTEM_END[] = L"ARB End SysInfo";
-constexpr wchar_t STREAM_REGISTRY_BEGIN[] = L"ARB Begin Registry";
-constexpr wchar_t STREAM_REGISTRY_END[] = L"ARB End Registry";
-constexpr wchar_t STREAM_FILE_BEGIN[] = L"ARB Begin File";
-constexpr wchar_t STREAM_FILE_END[] = L"ARB End File";
+constexpr char STREAM_DATA_BEGIN[] = "ARB Begin Data";
+constexpr char STREAM_DATA_END[] = "ARB End Data";
+constexpr char STREAM_SYSTEM_BEGIN[] = "ARB Begin SysInfo";
+constexpr char STREAM_SYSTEM_END[] = "ARB End SysInfo";
+constexpr char STREAM_REGISTRY_BEGIN[] = "ARB Begin Registry";
+constexpr char STREAM_REGISTRY_END[] = "ARB End Registry";
+constexpr char STREAM_FILE_BEGIN[] = "ARB Begin File";
+constexpr char STREAM_FILE_END[] = "ARB End File";
 
 
 class CARBHelpApp : public ARBWin::CBaseApp

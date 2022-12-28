@@ -78,7 +78,7 @@ void CDlgARBHelp::AddSysInfo(std::wstring const& inData)
 {
 	m_SysInfo.clear();
 	if (!inData.empty())
-		m_SysInfo = inData;
+		m_SysInfo = StringUtil::stringA(inData);
 }
 
 
@@ -86,7 +86,7 @@ void CDlgARBHelp::AddRegistryInfo(wchar_t const* inData)
 {
 	m_RegInfo.clear();
 	if (inData)
-		m_RegInfo = inData;
+		m_RegInfo = StringUtil::stringA(inData, wcslen(inData));
 }
 
 
@@ -98,25 +98,25 @@ void CDlgARBHelp::SetARBFileStatus(std::wstring const& inFileName, bool bInclude
 
 // Make sure this is synchronized (order of encoding) with
 // DlgPageDecode (decoder)
-std::wstring CDlgARBHelp::GetEncodedData()
+std::string CDlgARBHelp::GetEncodedData()
 {
-	fmt::wmemory_buffer rawdata;
+	fmt::memory_buffer rawdata;
 	wxLogNull logSuppressor;
 
 	// System information.
 	{
-		std::wstring data;
+		std::string data;
 		BinaryData::EncodeString(m_SysInfo, data);
-		fmt::format_to(std::back_inserter(rawdata), L"\n{}\n{}\n{}\n", STREAM_SYSTEM_BEGIN, data, STREAM_SYSTEM_END);
+		fmt::format_to(std::back_inserter(rawdata), "\n{}\n{}\n{}\n", STREAM_SYSTEM_BEGIN, data, STREAM_SYSTEM_END);
 	}
 
 	// Registry information.
 	{
-		std::wstring data;
+		std::string data;
 		BinaryData::EncodeString(m_RegInfo, data);
 		fmt::format_to(
 			std::back_inserter(rawdata),
-			L"\n{}\n{}\n{}\n",
+			"\n{}\n{}\n{}\n",
 			STREAM_REGISTRY_BEGIN,
 			data,
 			STREAM_REGISTRY_END);
@@ -125,36 +125,36 @@ std::wstring CDlgARBHelp::GetEncodedData()
 	// Data files.
 	for (FileMap::iterator iFile = m_IncFile.begin(); iFile != m_IncFile.end(); ++iFile)
 	{
-		fmt::format_to(std::back_inserter(rawdata), L"\n{}", (*iFile).first);
+		fmt::format_to(std::back_inserter(rawdata), "\n{}", StringUtil::stringA((*iFile).first));
 		wxFileName fileName((*iFile).first.c_str());
 		wxDateTime dtMod, dtCreate;
 		if (!(*iFile).second)
-			fmt::format_to(std::back_inserter(rawdata), L"{}", L": Skipped");
-		fmt::format_to(std::back_inserter(rawdata), L"{}", L"\n");
+			fmt::format_to(std::back_inserter(rawdata), "{}", ": Skipped");
+		fmt::format_to(std::back_inserter(rawdata), "{}", "\n");
 		if (fileName.GetTimes(nullptr, &dtMod, &dtCreate))
 		{
-			fmt::format_to(std::back_inserter(rawdata), L"Created: {}\n", dtCreate.Format().wx_str());
-			fmt::format_to(std::back_inserter(rawdata), L"Modified: {}\n", dtMod.Format().wx_str());
+			fmt::format_to(std::back_inserter(rawdata), "Created: {}\n", dtCreate.Format().ToUTF8());
+			fmt::format_to(std::back_inserter(rawdata), "Modified: {}\n", dtMod.Format().ToUTF8());
 		}
 		wxULongLong size = fileName.GetSize();
 		if (wxInvalidSize != size)
-			fmt::format_to(std::back_inserter(rawdata), L"Size: {}\n", StringUtil::stringW(size.ToString()));
+			fmt::format_to(std::back_inserter(rawdata), "Size: {}\n", StringUtil::stringA(size.ToString()));
 		if ((*iFile).second)
 		{
-			std::wstring data;
+			std::string data;
 			if (BinaryData::EncodeFile((*iFile).first, data))
 			{
-				fmt::format_to(std::back_inserter(rawdata), L"{}\n{}\n{}\n", STREAM_FILE_BEGIN, data, STREAM_FILE_END);
+				fmt::format_to(std::back_inserter(rawdata), "{}\n{}\n{}\n", STREAM_FILE_BEGIN, data, STREAM_FILE_END);
 			}
 			else
-				fmt::format_to(std::back_inserter(rawdata), L"{}", L"Error: Cannot read file\n");
+				fmt::format_to(std::back_inserter(rawdata), "{}", "Error: Cannot read file\n");
 		}
 	}
 
-	std::wstring data;
+	std::string data;
 	BinaryData::EncodeString(fmt::to_string(rawdata), data);
 
-	return fmt::format(L"\n{}\n{}\n{}\n", STREAM_DATA_BEGIN, data, STREAM_DATA_END);
+	return fmt::format("\n{}\n{}\n{}\n", STREAM_DATA_BEGIN, data, STREAM_DATA_END);
 }
 
 } // namespace dconSoft

@@ -45,11 +45,11 @@ public:
 		return m_IncFile;
 	}
 
-	std::wstring GetEncodedData();
+	std::string GetEncodedData();
 
 protected:
-	std::wstring m_SysInfo;
-	std::wstring m_RegInfo;
+	std::string m_SysInfo;
+	std::string m_RegInfo;
 	FileMap m_IncFile;
 	wxWizardPageSimple* m_firstPage;
 };

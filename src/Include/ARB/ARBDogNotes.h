@@ -127,7 +127,7 @@ public:
 	{
 		m_CRCD = inCRCD;
 	}
-	std::wstring const& GetCRCDRawMetaData() const
+	std::string const& GetCRCDRawMetaData() const
 	{
 		return m_CRCDMeta;
 	}
@@ -145,7 +145,7 @@ public:
 private:
 	ARBDogFaultList m_Faults;
 	std::wstring m_CRCD;
-	std::wstring m_CRCDMeta;
+	std::string m_CRCDMeta;
 	std::wstring m_Note;
 };
 

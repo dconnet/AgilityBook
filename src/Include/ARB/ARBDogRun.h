@@ -324,7 +324,7 @@ public:
 	{
 		m_Notes.SetCRCD(inCRCD);
 	}
-	std::wstring const& GetCRCDRawMetaData() const
+	std::string const& GetCRCDRawMetaData() const
 	{
 		return m_Notes.GetCRCDRawMetaData();
 	}

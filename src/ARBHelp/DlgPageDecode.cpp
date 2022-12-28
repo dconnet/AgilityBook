@@ -116,21 +116,21 @@ CDlgPageDecode::CDlgPageDecode()
 void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 {
 	wxBusyCursor wait;
-	fmt::wmemory_buffer editData;
-	std::wstring data = StringUtil::stringW(m_ctrlEncoded->GetValue());
+	fmt::memory_buffer editData;
+	std::string data = StringUtil::stringA(m_ctrlEncoded->GetValue());
 
 	// Make sure this is synchronized (order of decoding) with
 	// DlgARBHelp (encoder)
-	std::wstring::size_type pos = data.find(STREAM_DATA_BEGIN);
-	if (std::wstring::npos != pos)
+	std::string::size_type pos = data.find(STREAM_DATA_BEGIN);
+	if (std::string::npos != pos)
 	{
-		data = data.substr(pos + wcslen(STREAM_DATA_BEGIN));
+		data = data.substr(pos + strlen(STREAM_DATA_BEGIN));
 		pos = data.find(STREAM_DATA_END);
-		if (std::wstring::npos != pos)
+		if (std::string::npos != pos)
 			data = data.substr(0, pos);
 		data = StringUtil::Trim(data);
 
-		std::wstring dataIn(data);
+		std::string dataIn(data);
 		data.clear();
 		BinaryData::DecodeString(dataIn, data);
 		dataIn.clear();
@@ -138,28 +138,28 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 
 		fmt::format_to(
 			std::back_inserter(editData),
-			L"Any temporary files created will be deleted upon closing this window.\n\n");
+			"Any temporary files created will be deleted upon closing this window.\n\n");
 
 		static const struct
 		{
-			std::wstring begin;
-			std::wstring end;
+			std::string begin;
+			std::string end;
 		} sc_sections[] = {
 			{STREAM_SYSTEM_BEGIN, STREAM_SYSTEM_END},
 			{STREAM_REGISTRY_BEGIN, STREAM_REGISTRY_END},
-			{L"", L""},
+			{"", ""},
 		};
 		for (int idx = 0; !sc_sections[idx].begin.empty(); ++idx)
 		{
 			pos = data.find(sc_sections[idx].begin);
-			if (std::wstring::npos != pos)
+			if (std::string::npos != pos)
 			{
-				std::wstring::size_type posEnd = data.find(sc_sections[idx].end);
+				std::string::size_type posEnd = data.find(sc_sections[idx].end);
 				if (pos < posEnd)
 				{
 					size_t posData = pos + sc_sections[idx].begin.length();
 					// Dump the preceding data.
-					fmt::format_to(std::back_inserter(editData), L"{}\n", data.substr(0, posData));
+					fmt::format_to(std::back_inserter(editData), "{}\n", data.substr(0, posData));
 					// Trim preceding
 					data = data.substr(posData);
 					data = StringUtil::TrimLeft(data);
@@ -170,23 +170,23 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 					data = data.substr(posEnd + sc_sections[idx].end.length());
 					data = StringUtil::TrimLeft(data);
 					// Now decode
-					std::wstring dataOut;
+					std::string dataOut;
 					BinaryData::DecodeString(dataIn, dataOut);
 					dataIn.clear();
-					fmt::format_to(std::back_inserter(editData), L"{}{}\n\n", dataOut, sc_sections[idx].end);
+					fmt::format_to(std::back_inserter(editData), "{}{}\n\n", dataOut, sc_sections[idx].end);
 					dataOut.clear();
 				}
 			}
 		}
 
-		while ((std::wstring::npos != (pos = data.find(STREAM_FILE_BEGIN))))
+		while ((std::string::npos != (pos = data.find(STREAM_FILE_BEGIN))))
 		{
-			std::wstring::size_type posEnd = data.find(STREAM_FILE_END);
+			std::string::size_type posEnd = data.find(STREAM_FILE_END);
 			if (0 < posEnd && posEnd > pos)
 			{
-				std::wstring::size_type posData = pos + wcslen(STREAM_FILE_BEGIN);
+				std::string::size_type posData = pos + strlen(STREAM_FILE_BEGIN);
 				// Dump the preceding data (but not identifier.
-				fmt::format_to(std::back_inserter(editData), L"{}", data.substr(0, pos)); // New line included
+				fmt::format_to(std::back_inserter(editData), "{}", data.substr(0, pos)); // New line included
 				// Trim preceding
 				data = data.substr(posData);
 				data = StringUtil::TrimLeft(data);
@@ -194,7 +194,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				posEnd = data.find(STREAM_FILE_END); // Recompute - we just changed the string
 				dataIn = data.substr(0, posEnd);
 				// Strip that from main data.
-				data = data.substr(posEnd + wcslen(STREAM_FILE_END));
+				data = data.substr(posEnd + strlen(STREAM_FILE_END));
 				data = StringUtil::TrimLeft(data);
 				// Now decode
 				std::vector<unsigned char> binData;
@@ -208,26 +208,26 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				{
 					output.Write(binData.data(), binData.size());
 					output.Close();
-					fmt::format_to(std::back_inserter(editData), L"File written to: {}\n\n", tempname.wx_str());
+					fmt::format_to(std::back_inserter(editData), "File written to: {}\n\n", StringUtil::stringA(tempname));
 				}
 				else
 				{
 					std::string tmp(binData.begin(), binData.end());
 					fmt::format_to(
 						std::back_inserter(editData),
-						L"{}\n{}{}\n\n",
+						"{}\n{}{}\n\n",
 						STREAM_FILE_BEGIN,
-						StringUtil::stringW(tmp),
+						tmp,
 						STREAM_FILE_END);
 				}
 			}
 		}
-		fmt::format_to(std::back_inserter(editData), L"{}", data);
+		fmt::format_to(std::back_inserter(editData), "{}", data);
 	}
 
 	else
 	{
-		fmt::format_to(std::back_inserter(editData), L"Error in data: Unable to find {}", STREAM_DATA_BEGIN);
+		fmt::format_to(std::back_inserter(editData), "Error in data: Unable to find {}", STREAM_DATA_BEGIN);
 	}
 
 	m_ctrlDecoded->SetValue(fmt::to_string(editData));
