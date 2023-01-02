@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>${PRODUCT_NAME} version 3.7.1, (c) 2012-2023 David Connet</string>
+	<string>${PRODUCT_NAME} version 3.8.0, (c) 2012-2023 David Connet</string>
 	<key>CFBundleIconFile</key>
 	<string>AgilityBook.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -39,15 +39,15 @@
 		</dict>
 	</array>
 	<key>CFBundleLongVersionString</key>
-	<string>3.7.1, (c) 2012-2023 David Connet</string>
+	<string>3.8.0, (c) 2012-2023 David Connet</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.7.1</string>
+	<string>3.8.0</string>
 	<key>CFBundleVersion</key>
-	<string>117</string>
+	<string>118</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2002-2023 David Connet. All rights reserved.</string>
 	<key>ATSApplicationFontsPath</key>

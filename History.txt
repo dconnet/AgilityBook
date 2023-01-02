@@ -1,4 +1,4 @@
-1/2/2023: v3.8.0.<dev>
+1/2/2023: v3.8.0.118
 - Notes:
   - pre Mac-10.13 support dropped.
 - Bumped Configuration v67:
