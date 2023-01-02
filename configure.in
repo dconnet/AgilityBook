@@ -16,7 +16,7 @@ AC_SUBST(PACKAGE_HLP_SHORTNAME, "ARBHelp")
 AC_SUBST(PACKAGE_CAL_SHORTNAME, "CalSites")
 AC_SUBST(PACKAGE_TEST_SHORTNAME, "testarb")
 AC_SUBST(PACKAGE_TESTLIB_SHORTNAME, "testarblib")
-AC_SUBST(PACKAGE_COPYRIGHT, "Copyright (c) 2002-2022 David Connet. All Rights Reserved.")
+AC_SUBST(PACKAGE_COPYRIGHT, "Copyright (c) 2002-2023 David Connet. All Rights Reserved.")
 
 ################################################################################
 # Check for programs used to build my_prg                                      #
