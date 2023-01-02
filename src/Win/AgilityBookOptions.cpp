@@ -191,7 +191,7 @@ void ExportConfigItem(wxString const& entry, ElementNodePtr const& inTree)
 	{
 		ElementNodePtr item = inTree->AddElementNode(StringUtil::stringW(entry));
 		item->AddAttrib(L"type", L"s");
-		item->SetValue(wxConfig::Get()->Read(entry, wxEmptyString));
+		item->SetValue(wxConfig::Get()->Read(entry, wxEmptyString).wx_str());
 	}
 	break;
 	case wxConfigBase::Type_Boolean:
