@@ -4,10 +4,10 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2022-10-18 Configuration version 67.
+2023-01-02 Configuration version 67.
            Updated NADAC. Enable Gamblers titles. Title didn't exist between
            1/1/2006 and 8/1/2019, but ARB does not currently handled multiple
-           date ranges.
+           date ranges. Enabled bonus title points on Gamblers.
 2022-02-21 Configuration version 66.
            Updated NADAC. Removed Extreme, Hoopers, Barrelers, added Grounders.
 2020-09-15 File version 15.3.
@@ -3818,19 +3818,19 @@ Extended title at 300 points (repeats every 100)</Titles>
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="*" Level="Elite" OpeningPts="50" ValidFrom="2019-8-1" dropFractions="y" overTF="y" subtractTF="y" timeFault="2" type="ScoreThenTime">
+        <Scoring Division="*" Level="Elite" OpeningPts="50" ValidFrom="2019-8-1" bonusPts="y" dropFractions="y" overTF="y" subtractTF="y" timeFault="2" type="ScoreThenTime">
           <Note>Enter time bonus as part of your earned points. Time faults are automatically computed.
 SCT: 20": 34, 16":38, 12":42, 8":46, 4":50</Note>
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="*" Level="Open" OpeningPts="40" ValidFrom="2019-8-1" dropFractions="y" overTF="y" subtractTF="y" timeFault="2" type="ScoreThenTime">
+        <Scoring Division="*" Level="Open" OpeningPts="40" ValidFrom="2019-8-1" bonusPts="y" dropFractions="y" overTF="y" subtractTF="y" timeFault="2" type="ScoreThenTime">
           <Note>Enter time bonus as part of your earned points. Time faults are automatically computed.
 SCT: 20": 34, 16":38, 12":42, 8":46, 4":50</Note>
           <TitlePoints Faults="0" Points="10"/>
           <LifetimePoints Faults="0" Points="10" SpeedPts="n"/>
         </Scoring>
-        <Scoring Division="*" Level="Novice" OpeningPts="30" ValidFrom="2019-8-1" dropFractions="y" overTF="y" subtractTF="y" timeFault="2" type="ScoreThenTime">
+        <Scoring Division="*" Level="Novice" OpeningPts="30" ValidFrom="2019-8-1" bonusPts="y" dropFractions="y" overTF="y" subtractTF="y" timeFault="2" type="ScoreThenTime">
           <Note>Enter time bonus as part of your earned points. Time faults are automatically computed.
 SCT: 20": 34, 16":38, 12":42, 8":46, 4":50</Note>
           <TitlePoints Faults="0" Points="10"/>
