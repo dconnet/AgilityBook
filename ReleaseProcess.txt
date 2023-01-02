@@ -62,7 +62,7 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
   - NOTE: xcode is no longer updating CFBundleGetInfoString or
     CFBundleLongVersionString. Edit the plist files directly.
 - export PATH=$WXWIN/build-release:$PATH
-- cd .../AgilityBook/src
+- cd .../AgilityBook
 - autoconf
 - rm -rf build-rel
 - mkdir build-rel
