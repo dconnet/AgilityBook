@@ -322,7 +322,7 @@ void CDlgReferenceRun::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	CAgilityBookOptions::SetLastEnteredRefHeight(m_Height);
+	CAgilityBookOptions::SetLastEnteredRefHeight(m_Height.wc_str());
 
 	m_Ref->SetQ(m_Q);
 	m_Ref->SetPlace(m_Place);

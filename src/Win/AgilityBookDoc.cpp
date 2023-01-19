@@ -1661,7 +1661,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		fmt::wmemory_buffer err;
 		ElementNodePtr tree(ElementNode::New());
 		// Translate the XML to a tree form.
-		if (!tree->LoadXML(filename, err))
+		if (!tree->LoadXML(filename.wc_str(), err))
 		{
 			wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
 			fmt::wmemory_buffer msg;

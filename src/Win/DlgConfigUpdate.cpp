@@ -221,7 +221,7 @@ void CDlgConfigUpdate::OnOk(wxCommandEvent& evt)
 		wchar_t const* pFile = nullptr;
 		wxString source(m_FileName->GetValue());
 		if (m_radioExisting->GetValue())
-			pFile = source;
+			pFile = source.wc_str();
 		if (!LoadConfig(pFile))
 			return;
 		EndDialog(wxID_OK);

@@ -550,7 +550,7 @@ bool CWizardStart::DoWizardFinish()
 				bool bLoadOk = false;
 				{
 					wxBusyCursor wait;
-					bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
+					bLoadOk = tree->LoadXML(file.GetPath().wc_str(), errMsg);
 				}
 				if (!bLoadOk)
 				{
@@ -583,7 +583,7 @@ bool CWizardStart::DoWizardFinish()
 				bool bLoadOk = false;
 				{
 					wxBusyCursor wait;
-					bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
+					bLoadOk = tree->LoadXML(file.GetPath().wc_str(), errMsg);
 				}
 				if (!bLoadOk)
 				{
@@ -703,7 +703,7 @@ bool CWizardStart::DoWizardFinish()
 				bool bLoadOk = false;
 				{
 					wxBusyCursor wait;
-					bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
+					bLoadOk = tree->LoadXML(file.GetPath().wc_str(), errMsg);
 				}
 				if (!bLoadOk)
 				{
@@ -864,7 +864,7 @@ bool CWizardStart::DoWizardFinish()
 				bool bLoadOk = false;
 				{
 					wxBusyCursor wait;
-					bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
+					bLoadOk = tree->LoadXML(file.GetPath().wc_str(), errMsg);
 				}
 				if (bLoadOk && CAgilityBookOptions::ImportSettings(tree))
 				{
