@@ -8,6 +8,8 @@
 # Note: Found old OSX SDKs at https://github.com/phracker/MacOSX-SDKs/releases
 #
 # History
+# 2023-01-20 Add ability to target different wx versions (configure options
+#            have changed from 3.2 to 3.3)
 # 2022-12-20 Simplied SDKs (assumes we have at least 12.0) so we no longer need
 #            to update this and all the configure.in files each time xcode
 #            updates the SDK.
@@ -65,14 +67,36 @@ then
 	fi
 fi
 
-# Assume we're targetting 3.1.6 or newer.
-VERSION="--disable-compat28 --disable-compat30"
+V_MAJ=`grep "#define wxMAJOR_VERSION" ${WXWIN}/include/wx/version.h | tr -s ' ' | cut -f3 -d' '`
+V_MIN=`grep "#define wxMINOR_VERSION" ${WXWIN}/include/wx/version.h | tr -s ' ' | cut -f3 -d' '`
+V_REL=`grep "#define wxRELEASE_NUMBER" ${WXWIN}/include/wx/version.h | tr -s ' ' | cut -f3 -d' '`
+
+if [[ "x$V_MAJ" = "x" || "x$V_MIN" = "x" || "x$V_REL" = "x" ]]
+then
+	echo "ERROR: Could not parse version number from ${WXWIN}/include/wx/version.h"
+	exit
+fi
+
+# Should put more checks in, but assume we're targetting a proper version
+if [[ $V_MAJ < 3 ]]
+then
+	echo "ERROR: wxWidgets is too old"
+	exit
+fi
+
+if [[ $V_MAJ = 3 && $V_MIN > 2 ]]
+then
+	VERSION="--disable-compat30 --disable-compat32"
+else
+	VERSION="--disable-compat28 --disable-compat30 --enable-unicode"
+fi
+
 MAC_CONFIG_PARAMS=" --disable-nativedvc"
 MAC_MIN_OS=10.13
 
 BUILDDIR="$WXWIN/build"
 
-CONFIG_PARAMS=" --disable-mediactrl --disable-shared --enable-unicode"
+CONFIG_PARAMS=" --disable-mediactrl --disable-shared"
 
 case `uname` in
 Darwin*)
