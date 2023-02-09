@@ -1,4 +1,6 @@
-1/2/2023: v3.8.1.<dev>
+2/9/2023: v3.8.1.<dev>
+- New features / Enhancements:
+  - Updated to wxWidgets 3.2.2
 
 1/2/2023: v3.8.0.118
 - Notes:
