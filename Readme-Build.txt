@@ -31,7 +31,7 @@ Currently using version 3.11.2.
 - "pip install pywin32"
 
 wxWidgets: http://www.wxwidgets.org/
-Currently using version 3.2.2. Min supported is 3.1.6.
+Currently using version 3.2.2.1. Min supported is 3.1.6.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in AgilityBookLibs/lang/res/fr_FR) IMPORTANT: This means the directory name
@@ -39,7 +39,7 @@ Make sure WXWIN is set to wxWidgets root directory.
 - Mac/Unix: Use .../build/setupwx.sh to setup WX build. And ". setwxpath.sh" to
   set the ARB compile environment.
 
-=== Changes to 3.2.0, Changes to 3.2.1, Changes to 3.2.2:
+=== Changes to 3.2.0, Changes to 3.2.1, Changes to 3.2.2.1:
   (include/wx/msw/setup.h)
   - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
   - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
