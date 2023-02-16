@@ -610,7 +610,7 @@ bool CUpdateInfo::CheckProgram(
 				wxFileDialog dlg(
 					wxGetApp().GetTopWindow(),
 					wxFileSelectorPromptStr,
-					wxStandardPaths::Get().GetDocumentsDir(),
+					wxStandardPaths::Get().GetUserDir(wxStandardPaths::Dir_Downloads),
 					name.GetFullName(),
 					wxFileSelectorDefaultWildcardStr,
 					wxFD_SAVE | wxFD_OVERWRITE_PROMPT);

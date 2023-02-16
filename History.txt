@@ -1,6 +1,7 @@
-2/13/2023: v3.8.1.<dev>
+2/16/2023: v3.8.1.<dev>
 - New features / Enhancements:
   - Updated to wxWidgets 3.2.2.1
+  - Change default download directory on Mac to Downloads (not Documents).
 
 1/2/2023: v3.8.0.118
 - Notes:
