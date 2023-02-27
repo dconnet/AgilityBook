@@ -1,4 +1,6 @@
-2/16/2023: v3.8.1.<dev>
+2/27/2023: v3.8.1.<dev>
+- Bumped Configuration v68:
+  - Renamed ISC/Master to ISC/Level3. Added Level 1 and 2.
 - New features / Enhancements:
   - Updated to wxWidgets 3.2.2.1
   - Change default download directory on Mac to Downloads (not Documents).

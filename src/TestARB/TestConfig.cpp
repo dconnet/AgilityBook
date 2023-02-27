@@ -104,6 +104,7 @@ const wchar_t* const gc_Configs[] = {
 	L"Config65_v15_2.xml",
 	L"Config66_v15_3.xml",
 	L"Config67_v15_3.xml",
+	L"Config68_v15_3.xml",
 	// clang-format on
 };
 size_t gc_NumConfigs = sizeof(gc_Configs) / sizeof(gc_Configs[0]);
@@ -237,7 +238,7 @@ TEST_CASE("Config")
 			REQUIRE(0u == config.GetVenues().size());
 			CConfigHandler handler;
 			config.Default(&handler);
-			REQUIRE(228u == config.GetActions().size());
+			REQUIRE(229u == config.GetActions().size());
 			REQUIRE(0u == config.GetFaults().size());
 			REQUIRE(5u == config.GetOtherPoints().size());
 			REQUIRE(17u == config.GetVenues().size());
