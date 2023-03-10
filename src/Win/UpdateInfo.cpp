@@ -62,6 +62,7 @@
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
 #include "LibARBWin/DlgProgress.h"
+#include "LibARBWin/Logger.h"
 #include "LibARBWin/ReadHttp.h"
 #include "LibARBWin/ResourceManager.h"
 #include <wx/config.h>
@@ -130,7 +131,7 @@ bool GetVersionsFilename(wxString const& filename, wxString& fullpath)
 	}
 #endif
 	if (!bUseLocal)
-		fullpath = L"http://www.agilityrecordbook.com/" + filename;
+		fullpath = L"https://www.agilityrecordbook.com/" + filename;
 
 	return bUseLocal;
 }
@@ -367,20 +368,26 @@ CReadHttp::ReturnCode CUpdateInfo::ReadVersionFile(bool bVerbose, OnReadComplete
 
 	wxMemoryOutputStream* out = new wxMemoryOutputStream();
 
+	CLogger::Log(wxString::Format(L"UpdateInfo: Reading: %s", fullpath));
 	auto rc = m_reader.DownloadFile(
 		m_parent,
 		fullpath,
 		nullptr,
 		out,
-		[this, out, callback, bVerbose](wxWebRequest::State state) {
+		[this, out, callback, bVerbose, fullpath](wxWebRequest::State state) {
 			if (wxWebRequest::State::State_Completed == state)
 			{
 				auto stream = out->GetOutputStreamBuffer();
 				std::string data(static_cast<const char*>(stream->GetBufferStart()), stream->GetBufferSize());
 				if (ReadVersionFile(data, bVerbose))
 				{
+					CLogger::Log(wxString::Format(L"UpdateInfo: Success: %s", fullpath));
 					if (callback)
 						callback();
+				}
+				else
+				{
+					CLogger::Log(wxString::Format(L"UpdateInfo: Failed: %s", fullpath));
 				}
 			}
 			delete out;
@@ -429,7 +436,7 @@ bool CUpdateInfo::ReadVersionFile(std::string const& data, bool bVerbose)
 		 *   <!ATTLIST Lang id2 CDATA #REQUIRED >
 		 *  <!--
 		 *  if Download is not set, defaults to 'LinkArbDownloadUrl',
-		 *  which is http://www.agilityrecordbook.com/download.php
+		 *  which is https://www.agilityrecordbook.com/download.php
 		 *  -->
 		 *  <!ELEMENT Download (#PCDATA) >
 		 */

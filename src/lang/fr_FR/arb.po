@@ -6190,7 +6190,7 @@ msgstr "Nom de fichier ou URL"
 
 #: Win/DlgSelectURL.cpp:84 Win/DlgSelectURL.cpp:85
 msgid "HIDC_SELECTURL_NAME"
-msgstr "Nom de fichier ou URL. Entrez des URL sous la forme \"http://\"."
+msgstr "Nom de fichier ou URL. Entrez des URL sous la forme \"https://\"."
 
 #: Win/DlgSelectURL.cpp:88
 msgid "IDC_SELECTURL_FILENAME"
@@ -6482,7 +6482,7 @@ msgstr "Forum"
 
 #: Win/MainFrm.cpp:553
 msgid "LinkGroupUrl"
-msgstr "http://groups.io/g/AgilityRecordBook"
+msgstr "https://groups.io/g/AgilityRecordBook"
 
 #: Win/MainFrm.cpp:556
 msgid "UsefulLinks"
@@ -6494,7 +6494,7 @@ msgstr "Site d'internet Agility Record Book"
 
 #: Win/MainFrm.cpp:557
 msgid "LinkArbUrl"
-msgstr "http://www.agilityrecordbook.com"
+msgstr "https://www.agilityrecordbook.com"
 
 #: Win/MainFrm.cpp:558
 msgid "LinkArbDownloadText"
@@ -6502,7 +6502,7 @@ msgstr "Telecharger Agility Record Book"
 
 #: Win/MainFrm.cpp:558 Win/UpdateInfo.cpp:214
 msgid "LinkArbDownloadUrl"
-msgstr "http://www.agilityrecordbook.com/download.php"
+msgstr "https://www.agilityrecordbook.com/download.php"
 
 #: Win/PointsData.cpp:258 Win/PointsData.cpp:1242 Win/Print.cpp:121
 #: Win/Print.cpp:1072 Win/TabView.cpp:249 Win/TabView.cpp:375

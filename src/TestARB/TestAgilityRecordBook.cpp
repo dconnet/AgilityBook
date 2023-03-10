@@ -253,7 +253,7 @@ TEST_CASE("HttpRead")
 #if CHECK_LEAK
 		wxURL::SetDefaultProxy(L"proxy.eng.vmware.com:3128");
 #endif
-		wxURL url(L"http://www.agilityrecordbook.com/version.txt");
+		wxURL url(L"https://www.agilityrecordbook.com/version.txt");
 #if !CHECK_LEAK
 		url.SetProxy(L"proxy.eng.vmware.com:3128");
 #endif

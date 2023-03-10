@@ -6070,7 +6070,7 @@ msgstr "File Name or URL"
 
 #: Win/DlgSelectURL.cpp:84 Win/DlgSelectURL.cpp:85
 msgid "HIDC_SELECTURL_NAME"
-msgstr "Filename or URL. Enter URLs using the \"http://\" notation."
+msgstr "Filename or URL. Enter URLs using the \"https://\" notation."
 
 #: Win/DlgSelectURL.cpp:88
 msgid "IDC_SELECTURL_FILENAME"
@@ -6369,7 +6369,7 @@ msgstr "Agility Record Book Home Page"
 
 #: Win/MainFrm.cpp:559
 msgid "LinkArbUrl"
-msgstr "http://www.agilityrecordbook.com"
+msgstr "https://www.agilityrecordbook.com"
 
 #: Win/MainFrm.cpp:560
 msgid "LinkArbDownloadText"
@@ -6377,7 +6377,7 @@ msgstr "Agility Record Book Downloads"
 
 #: Win/MainFrm.cpp:560 Win/UpdateInfo.cpp:214
 msgid "LinkArbDownloadUrl"
-msgstr "http://www.agilityrecordbook.com/download.php"
+msgstr "https://www.agilityrecordbook.com/download.php"
 
 #: Win/PointsData.cpp:258 Win/PointsData.cpp:1242 Win/Print.cpp:121
 #: Win/Print.cpp:1072 Win/TabView.cpp:249 Win/TabView.cpp:375
