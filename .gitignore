@@ -14,8 +14,8 @@
 .vscode
 
 # Ignore (recommended and things I do) Mac build directory (and generated files)
-/build-rel/*
-/build-debug/*
+/build-rel*/*
+/build-debug*/*
 
 /autom4te.cache/*
 /configure
