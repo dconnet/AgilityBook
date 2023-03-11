@@ -73,6 +73,9 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
   - codesign -s "David Connet" ARBHelp.app
   - codesign -s "David Connet" AgilityBook.app
 - Use the '/Application/Utilities/Disk Utility' to create a dmg file
+  - If dragging in app fails with "no space": hdiutil resize -size 200m ARB.dmg
+    (or just create in DU with 200M - also can name directly when creating
+	instead of below)
   - Name it AgilityBook-n_n_n_n-mac.dmg
   - After dragging in image, rename the mount point. (AgilityBook x.y.z)
   - Unmount and 'Convert' in DU (save as same name) to compress.
