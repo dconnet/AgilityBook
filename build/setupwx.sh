@@ -8,6 +8,7 @@
 # Note: Found old OSX SDKs at https://github.com/phracker/MacOSX-SDKs/releases
 #
 # History
+# 2023-03-11 Allow building non-fat binaries on Mac
 # 2023-01-20 Add ability to target different wx versions (configure options
 #            have changed from 3.2 to 3.3)
 # 2022-12-20 Simplied SDKs (assumes we have at least 12.0) so we no longer need
@@ -47,7 +48,7 @@ export TARGETSDK=
 export VERSION=
 export WXWIN=
 
-USAGE="Usage $0 <directory>|wxWidgets-<version> [debug|release] [test]\nex: setupwx.sh trunk debug\nex: setupwx.sh 3.1.7 release"
+USAGE="Usage $0 <directory>|wxWidgets-<version> [debug|release] [test] [x64|arm|fat] \nex: setupwx.sh trunk debug\nNote: x64/arm arguments are only used on MacOS\nex: setupwx.sh 3.1.7 release"
 
 if [[ "x$1" = "x" ]]
 then
@@ -55,6 +56,9 @@ then
 	exit
 fi
 
+# Parse arguments
+PROGRAM=$0
+WXVER=$1
 WXWIN=~/devtools/wx/$1
 if [[ ! -d "$WXWIN" ]]
 then
@@ -65,6 +69,78 @@ then
 		echo Neither $OLD or $WXWIN exist!
 		exit
 	fi
+fi
+shift
+
+CONFIG=""
+if [[ "x$1" = "xdebug" ]]
+then
+	CONFIG=debug
+	DEBUG="--enable-debug --enable-debug_info --enable-debug_gdb"
+	shift
+elif [[ "x$1" = "xrelease" ]]
+then
+	CONFIG=release
+	DEBUG="--disable-debug_flag"
+	shift
+fi
+
+TEST_ONLY=""
+if [[ "x$1" = "xtest" ]]
+then
+	TEST_ONLY=test
+	shift
+fi
+
+ARCH=""
+case `uname` in
+Darwin*)
+	case "$1" in
+	x64)
+		ARCH=x64
+		shift
+		;;
+	arm)
+		ARCH=arm
+		shift
+		;;
+	fat)
+		ARCH=fat
+		shift
+		;;
+	*)
+		if [[ "x$1" = "x" ]]
+		then
+			if [[ "x$CONFIG" = "x" ]]
+			then
+				$PROGRAM $WXVER debug $TEST_ONLY x64
+				$PROGRAM $WXVER release $TEST_ONLY x64
+				$PROGRAM $WXVER debug $TEST_ONLY arm
+				$PROGRAM $WXVER release $TEST_ONLY arm
+			else
+				$PROGRAM $WXVER $CONFIG $TEST_ONLY x64
+				$PROGRAM $WXVER $CONFIG $TEST_ONLY arm
+			fi
+		else
+			echo "$USAGE"
+		fi
+		exit
+		;;
+	esac
+	;;
+esac
+
+if [[ ! "x$1" = "x" ]]
+then
+	echo "$USAGE"
+	exit
+fi
+
+if [[ "x$CONFIG" = "x" ]]
+then
+	$PROGRAM $WXVER debug $TEST_ONLY $ARCH
+	$PROGRAM $WXVER release $TEST_ONLY $ARCH
+	exit
 fi
 
 V_MAJ=`grep "#define wxMAJOR_VERSION" ${WXWIN}/include/wx/version.h | tr -s ' ' | cut -f3 -d' '`
@@ -95,6 +171,8 @@ MAC_CONFIG_PARAMS=" --disable-nativedvc"
 MAC_MIN_OS=10.13
 
 BUILDDIR="$WXWIN/build"
+BUILDDIR+="-"
+BUILDDIR+=$CONFIG
 
 CONFIG_PARAMS=" --disable-mediactrl --disable-shared"
 
@@ -110,29 +188,6 @@ Linux)
 	;;
 esac
 
-if test "x$2" = "xdebug"; then
-	DEBUG="--enable-debug --enable-debug_info --enable-debug_gdb"
-	BUILDDIR+="-debug"
-elif test "x$2" = "xrelease"; then
-	DEBUG="--disable-debug_flag"
-	BUILDDIR+="-release"
-else
-	$0 $1 debug
-	$0 $1 release
-	exit
-fi
-
-TEST_ONLY=0
-if test "x$3" = "xtest"; then
-	TEST_ONLY=1
-fi
-
-if test $TEST_ONLY = 0; then
-	rm -rf $BUILDDIR
-	mkdir $BUILDDIR
-	cd $BUILDDIR
-fi
-
 case `uname` in
 Darwin*)
 	export CXXFLAGS="-std=c++17 -stdlib=libc++"
@@ -140,12 +195,19 @@ Darwin*)
 	export LDFLAGS="-stdlib=libc++"
 	export LIBS="-lc++"
 	TARGETARCH="--enable-macosx_arch=x86_64"
+	BUILDDIR_ARCH="-x64"
 
 	# Leaving this in for a couple compilers for an example.
 	# Current min deployment is 10.13 (as set via wx-config, via setupwx.sh)
 	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk; then
 		echo "Using 10.13 SDK"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk
+		MIN_OS=$MAC_MIN_OS
+
+	# This is the current SDK on my Catalina machine
+	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk; then
+		echo "Using 11.1 SDK"
+		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk
 		MIN_OS=$MAC_MIN_OS
 
 	# Note 12.0 added arm64 support
@@ -155,10 +217,24 @@ Darwin*)
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk; then
 		echo "Using Current SDK"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
-		TARGETARCH="--enable-macosx_arch=x86_64,arm64"
+		case "$ARCH" in
+		x64)
+			TARGETARCH="--enable-macosx_arch=x86_64"
+			BUILDDIR_ARCH="-x64"
+			;;
+		arm)
+			TARGETARCH="--enable-macosx_arch=arm64"
+			BUILDDIR_ARCH="-arm"
+			;;
+		fat)
+			TARGETARCH="--enable-macosx_arch=x86_64,arm64"
+			BUILDDIR_ARCH="-fat"
+			;;
+		esac
 		MIN_OS=$MAC_MIN_OS
 
 	fi
+	BUILDDIR+=$BUILDDIR_ARCH
 
 	if test "x$TARGETSDK" = "x"; then
 		echo "ERROR: Can't find an SDK - 10.13 or newer is required"
@@ -171,7 +247,7 @@ Darwin*)
 	;;
 
 Linux)
-	if test "x$2" = "xdebug"; then
+	if test "x$CONFIG" = "xdebug"; then
 		export CFLAGS="-g"
 		export CXXFLAGS="-g -std=c++17"
 		export OBJCXXFLAGS="-g -std=c++17"
@@ -189,12 +265,24 @@ Linux)
 	;;
 esac
 
+if [[ "x$TEST_ONLY" = "x" ]]
+then
+	rm -rf $BUILDDIR
+	mkdir $BUILDDIR
+	cd $BUILDDIR
+else
+	echo rm -rf $BUILDDIR
+	echo mkdir $BUILDDIR
+	echo cd $BUILDDIR
+fi
+
 CONFIG_PARAMS+=" $TARGETARCH"
 
 LIBRARIES+=" --with-cxx=17 --disable-sys-libs --without-libiconv --without-liblzma"
 
 echo "../configure $COMPILERS $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS"
 
-if test $TEST_ONLY = 0; then
+if [[ "x$TEST_ONLY" = "x" ]]
+then
 	../configure $COMPILERS $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS
 fi

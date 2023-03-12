@@ -86,10 +86,12 @@ Darwin*)
 	# Assume the current SDK is at least 12.0
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
 	then
-		AC_SUBST(CFLAGS, "$CFLAGS -arch x86_64 -arch arm64")
+		# WX_ARCH is a kludge to pass the arch type of the wx library.
+		# This is set in the setwxpath.sh script (see notes there).
+		AC_SUBST(CFLAGS, "$CFLAGS $WX_ARCH")
 		AC_SUBST(OBJCXXFLAGS, "$OBJCXXFLAGS -std=c++17 -stdlib=libc++")
-		AC_SUBST(CXXFLAGS, "$CXXFLAGS -arch x86_64 -arch arm64 -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
-		AC_SUBST(LDFLAGS, ["$LDFLAGS -arch x86_64 -arch arm64 -stdlib=libc++"])
+		AC_SUBST(CXXFLAGS, "$CXXFLAGS $WX_ARCH -D_GLIBCXX_EXTERN_TEMPLATE=0 -std=c++17 -stdlib=libc++")
+		AC_SUBST(LDFLAGS, ["$LDFLAGS $WX_ARCH -stdlib=libc++"])
 
 	else
 		AC_MSG_ERROR(Cannot determine SDK)
