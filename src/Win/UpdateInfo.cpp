@@ -419,7 +419,7 @@ bool CUpdateInfo::ReadVersionFile(std::string const& data, bool bVerbose)
 		 *   'minOS' is happening now).
 		 *   -->
 		 *   <!ATTLIST Platform
-		 *     arch CDATA (win32,win64,osx) [pre-v2.4.0: x86,x64,mac]
+		 *     arch CDATA #REQUIRED (win32,win64,osx,osx-x64,osx-arm64)
 		 *     minOS CDATA #IMPLIED (maj.min)
 		 *     ver CDATA #REQUIRED
 		 *     config CDATA #REQUIRED
@@ -462,6 +462,7 @@ bool CUpdateInfo::ReadVersionFile(std::string const& data, bool bVerbose)
 		}
 		else if (tree->GetName() == L"Data")
 		{
+			const auto arbArch = GetARBArch();
 			for (int nIndex = 0; nIndex < tree->GetElementCount(); ++nIndex)
 			{
 				ElementNodePtr node = tree->GetElementNode(nIndex);
@@ -473,7 +474,7 @@ bool CUpdateInfo::ReadVersionFile(std::string const& data, bool bVerbose)
 					std::wstring value;
 					if (ARBAttribLookup::Found == node->GetAttrib(L"arch", value))
 					{
-						if (GetARBArch() == value)
+						if (arbArch == value)
 						{
 							bSkip = false;
 							ARBVersion minOS;

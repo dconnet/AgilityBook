@@ -61,29 +61,33 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
   (preferable to edit files on build machine step above for single commit)
   - NOTE: xcode is no longer updating CFBundleGetInfoString or
     CFBundleLongVersionString. Edit the plist files directly.
-- export PATH=$WXWIN/build-release:$PATH
-- cd .../AgilityBook
-- autoconf
-- rm -rf build-rel
-- mkdir build-rel
-- cd build-rel
-- ../configure
-- make dist
-- On machine (Mac) where pfx has been imported:
-  - codesign -s "David Connet" ARBHelp.app
-  - codesign -s "David Connet" AgilityBook.app
-- Use the '/Application/Utilities/Disk Utility' to create a dmg file
-  - If dragging in app fails with "no space": hdiutil resize -size 200m ARB.dmg
-    (or just create in DU with 200M - also can name directly when creating
-	instead of below)
-  - Name it AgilityBook-n_n_n_n-mac.dmg
-  - After dragging in image, rename the mount point. (AgilityBook x.y.z)
-  - Unmount and 'Convert' in DU (save as same name) to compress.
+- Build:
+  - cd .../AgilityBook/build
+  - . ./setwxpath x.y.z release fat
+    - where x.y.z is the wxWidget version
+  - cd ..
+  - autoconf
+  - rm -rf build-rel-fat
+  - mkdir build-rel-fat
+  - cd build-rel-fat
+  - ../configure
+  - make dist
+  - On machine (Mac) where pfx has been imported:
+    - codesign -s "David Connet" ARBHelp.app
+    - codesign -s "David Connet" AgilityBook.app
+  - Use the '/Application/Utilities/Disk Utility' to create a dmg file
+    - If dragging in app fails with "no space":
+        hdiutil resize -size 200m ARB.dmg
+      (or just create in DU with 200M - also can name directly when creating
+      instead of below)
+    - Name it AgilityBook-n_n_n_n-mac.dmg
+    - After dragging in image, rename the mount point. (AgilityBook x.y.z)
+    - Unmount and 'Convert' in DU (save as same name) to compress.
 
 Commit all changes to GitHub (should just be the xcode project).
 
-Create a release tag on AgilityBookLibs (see form below), sync AgilityBook submodule
-to this tag and commit that change too.
+Create a release tag on AgilityBookLibs (see form below), sync AgilityBook
+submodule to this tag and commit that change too.
 
 Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
@@ -94,9 +98,9 @@ Create the files to be distributed (make sure you archive them too)
   - git archive master --prefix="AgilityBookLibs/" --format=zip > AgilityBookLibs.zip
   - Combine the zips by:
     - Expanding AgilityBookLibs.zip into a tmp dir
-	- Open AgilityBook-n_n_n_n-src.zip, change to AgilityBookLibs directory
-	- DnD files from tmp dir into the zip
-	- Clean up tmp dir, delete AgilityBookLibs.zip
+    - Open AgilityBook-n_n_n_n-src.zip, change to AgilityBookLibs directory
+    - DnD files from tmp dir into the zip
+    - Clean up tmp dir, delete AgilityBookLibs.zip
 
 Create a release on GitHub tagged as: 'release/vn.n.n'
   - Create tag "release/vn.n.n"
@@ -116,6 +120,8 @@ Web Site:
   - Run 'ARBUpdater /g' and generate new size and md5/sha1 tags for each file.
   - Update config file (ConfigN.txt) [if necessary]
   - (note: version.txt is no longer updated. It's only for 2.x support)
+  - Note: Duplicate 'osx' entry for 'osx-arm64' and 'osx-x64'. In the future
+    I may release non-fat binaries, for now, keep it simple and release one.
 - Make sure things are current (ongoing task!).
   - Update DTD
   - Update bugs.php, index.php
