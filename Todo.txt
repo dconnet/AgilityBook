@@ -1,4 +1,6 @@
-Last Updated: 2022-12-20
+Last Updated: 2023-3-13
+
+- FEO in UKI is called NFC. Add the ability to customize the name per-venue.
 
 - New file format? https://en.wikipedia.org/wiki/Open_Packaging_Conventions
 
