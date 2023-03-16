@@ -232,28 +232,7 @@ bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, CTreeCtrl& ctrl
 
 bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, wxWindow const* ctrl, wxContextMenuEvent const& evt)
 {
-	outPos = evt.GetPosition(); // in screen
-	if (!ctrl)
-		return false;
-	bool bOk = true;
-	if (wxDefaultPosition == outPos)
-	{
-		wxRect rect = ctrl->GetScreenRect();
-		outPos = ::wxGetMousePosition();
-		if (!rect.Contains(outPos))
-		{
-			outPos.x = rect.GetLeft() + rect.GetWidth() / 3;
-			outPos.y = rect.GetTop() + rect.GetHeight() / 2;
-		}
-		outPos = ctrl->ScreenToClient(outPos);
-	}
-	else
-	{
-		outPos = ctrl->ScreenToClient(outPos);
-		wxRect rect = ctrl->GetClientRect();
-		bOk = rect.Contains(outPos);
-	}
-	return bOk;
+	return CMenuHelper::GetMenuPosition(outPos, ctrl, evt);
 }
 
 } // namespace dconSoft
