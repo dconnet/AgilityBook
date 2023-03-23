@@ -18,7 +18,6 @@ Currently Supported Venues:
 - CKC [Canadian Kennel Club](http://www.ckc.ca)
 - CKCSC [Cavalier King Charles Spaniel Club](http://www.ckcsc.org)
 - CPE [Canine Performance Events](http://www.k9cpe.com)
-- DOCNA [Dogs On Course in North America](http://www.docna.com)
 - FCAT [AKC Fast CAT](https://www.akc.org/sports/coursing/fast-cat/)
 - FCI [Fédération Cynologique Internationale](http://www.fci.be)
 - NADAC [North American Dog Agility Council](http://www.nadac.com)

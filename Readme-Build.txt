@@ -153,13 +153,13 @@ Currently using version 1.9.3.
 
 GraphViz: http://www.graphviz.org
 Used to create source code documentation.
-Currently using version 7.0.0.
+Currently using version 7.1.0.
 Earlier versions may work. (I used 2.14.1 with no problems for a while)
 [Install to default location]
 
 --------------------
 LLVM: https://releases.llvm.org/download.html
-Currently using version 15.0.2 (ubuntu18: v10, ubuntu20: v12, ubuntu22: v14)
+Currently using version 16.0.0 (ubuntu18: v10, ubuntu20: v12, ubuntu22: v14)
 [Install to default location, ubuntu: apt install]
 - clang-format -i *.h *.cpp
   (ubuntu: clang-format-14 -i *.h *.cpp)
@@ -204,9 +204,9 @@ Install xcode command line tools
 Install MacPorts: http://www.macports.org
 sudo port -v selfupdate
 sudo port upgrade outdated
-initial: sudo port install autoconf gettext git python310 py310-readline
-         sudo port select --set python python310
-         sudo port select --set python3 python310
+initial: sudo port install autoconf gettext git python311 py311-readline
+         sudo port select --set python python311
+         sudo port select --set python3 python311
 Note: I'm now compiling on an M2 macOS Monterey.
 
 Note, to build using the xcode project, you need to enable xcode to use env vars
@@ -220,7 +220,7 @@ OSX 10.9:
   Must reboot after modifying.
 ===
 setenv WXBASE /Users/dconnet/devtools/wx
-setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.2.1
+setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.2.2
 ====
 OSX 10.10+:
 - launchd.conf has been deprecated.
@@ -241,7 +241,7 @@ OSX 10.10+:
     <string>-c</string>
     <string>
     launchctl setenv WXBASE /Users/dconnet/devtools/wx
-    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.2.1
+    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.2.2
     </string>
   </array>
   <key>RunAtLoad</key>

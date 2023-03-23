@@ -355,7 +355,7 @@
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
-					"-I$WXWIN/build-debug/lib/wx/include/osx_cocoa-unicode-static-3.2",
+					"-I$WXWIN/build-debug-fat/lib/wx/include/osx_cocoa-unicode-static-3.2",
 					"-I$WXWIN/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D__WXMAC__",
@@ -368,7 +368,7 @@
 					"-D_GLIBCXX_EXTERN_TEMPLATE=0",
 				);
 				OTHER_LDFLAGS = (
-					"-L$WXWIN/build-debug/lib",
+					"-L$WXWIN/build-debug-fat/lib",
 					"-framework",
 					IOKit,
 					"-framework",
@@ -451,7 +451,7 @@
 				OTHER_CFLAGS = (
 					"-I$SRCROOT/../../../Include",
 					"-I$SRCROOT/../../../3rdParty/LibFmt/include",
-					"-I$WXWIN/build-release/lib/wx/include/osx_cocoa-unicode-static-3.2",
+					"-I$WXWIN/build-release-fat/lib/wx/include/osx_cocoa-unicode-static-3.2",
 					"-I$WXWIN/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-DwxDEBUG_LEVEL=0",
@@ -465,7 +465,7 @@
 					"-D_GLIBCXX_EXTERN_TEMPLATE=0",
 				);
 				OTHER_LDFLAGS = (
-					"-L$WXWIN/build-release/lib",
+					"-L$WXWIN/build-release-fat/lib",
 					"-framework",
 					IOKit,
 					"-framework",
@@ -521,7 +521,7 @@
 					"-I$SRCROOT/../../../../AgilityBookLibs/Include",
 					"-I$SRCROOT/../../../../AgilityBookLibs/3rdParty/LibFmt/include",
 					"-I$SRCROOT/../../../Include",
-					"-I$WXWIN/build-debug/lib/wx/include/osx_cocoa-unicode-static-3.2",
+					"-I$WXWIN/build-debug-fat/lib/wx/include/osx_cocoa-unicode-static-3.2",
 					"-I$WXWIN/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D__WXMAC__",
@@ -551,7 +551,7 @@
 					"-I$SRCROOT/../../../../AgilityBookLibs/Include",
 					"-I$SRCROOT/../../../../AgilityBookLibs/3rdParty/LibFmt/include",
 					"-I$SRCROOT/../../../Include",
-					"-I$WXWIN/build-release/lib/wx/include/osx_cocoa-unicode-static-3.2",
+					"-I$WXWIN/build-release-fat/lib/wx/include/osx_cocoa-unicode-static-3.2",
 					"-I$WXWIN/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-DwxDEBUG_LEVEL=0",
