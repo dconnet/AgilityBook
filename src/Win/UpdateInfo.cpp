@@ -170,6 +170,7 @@ void CUpdateInfo::CleanupUpdate()
 	wxString updateFile = UpdateFile();
 	if (wxFileName::FileExists(updateFile))
 	{
+		wxLogNull log;
 		if (!::wxRemoveFile(updateFile))
 		{
 			// If we get here really quick, the updater may not have finished
