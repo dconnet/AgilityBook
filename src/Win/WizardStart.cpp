@@ -559,7 +559,7 @@ bool CWizardStart::DoWizardFinish()
 					{
 						msg << L"\n\n" << fmt::to_string(errMsg);
 					}
-					wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+					wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				}
 				else
 					bOk = m_pDoc->ImportARBRunData(tree, this);
@@ -592,7 +592,7 @@ bool CWizardStart::DoWizardFinish()
 					{
 						msg << L"\n\n" << fmt::to_string(errMsg);
 					}
-					wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+					wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				}
 				else
 					bOk = m_pDoc->ImportARBCalData(tree, this);
@@ -712,7 +712,7 @@ bool CWizardStart::DoWizardFinish()
 					{
 						msg << L"\n\n" << fmt::to_string(errMsg);
 					}
-					wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+					wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				}
 				else
 					bOk = m_pDoc->ImportARBLogData(tree, this);
@@ -877,7 +877,7 @@ bool CWizardStart::DoWizardFinish()
 					{
 						msg << L"\n\n" << fmt::to_string(errMsg);
 					}
-					wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+					wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				}
 			}
 		}

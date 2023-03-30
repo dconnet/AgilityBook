@@ -208,7 +208,10 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				{
 					output.Write(binData.data(), binData.size());
 					output.Close();
-					fmt::format_to(std::back_inserter(editData), "File written to: {}\n\n", StringUtil::stringA(tempname));
+					fmt::format_to(
+						std::back_inserter(editData),
+						"File written to: {}\n\n",
+						StringUtil::stringA(tempname));
 				}
 				else
 				{

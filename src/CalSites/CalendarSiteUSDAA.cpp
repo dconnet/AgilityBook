@@ -218,7 +218,7 @@ static ElementNodePtr ReadData(
 			std::wstring msg = fmt::to_string(err);
 			if (msg.empty())
 				msg = fmt::format(_("IDS_ERR_PARSING_DATA").wx_str(), inAddress);
-			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE);
+			wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE);
 		}
 	}
 	return tree;

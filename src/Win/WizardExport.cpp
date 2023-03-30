@@ -1458,7 +1458,7 @@ bool CWizardExport::DoWizardFinish()
 	long index = m_ctrlDateFormat->GetSelection();
 	if (wxNOT_FOUND == index)
 	{
-		wxMessageBox(_("IDS_SPECIFY_DATEFORMAT"), wxMessageBoxCaptionStr, wxOK | wxICON_WARNING);
+		wxMessageBox(_("IDS_SPECIFY_DATEFORMAT"), _("Agility Record Book"), wxOK | wxICON_WARNING);
 		m_ctrlDateFormat->SetFocus();
 		return false;
 	}
@@ -1515,7 +1515,7 @@ bool CWizardExport::DoWizardFinish()
 		}
 		else
 		{
-			wxMessageBox(_("IDS_EXPORT_FAILED"), wxMessageBoxCaptionStr, wxOK | wxICON_STOP);
+			wxMessageBox(_("IDS_EXPORT_FAILED"), _("Agility Record Book"), wxOK | wxICON_STOP);
 			return false;
 		}
 	}

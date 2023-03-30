@@ -599,7 +599,7 @@ void CDlgTrial::OnClubNew(wxCommandEvent& evt)
 		if (club)
 			ListClubs(&club);
 		else
-			wxMessageBox(_("IDS_ADD_CLUB_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+			wxMessageBox(_("IDS_ADD_CLUB_FAILED"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 	}
 }
 
@@ -736,7 +736,7 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 			{
 				std::wstring msg = fmt::format(_("IDS_CONFIG_DELETE_RUNS").wx_str(), m_pTrial->GetRuns().size());
 				if (wxYES
-					!= wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_WARNING))
+					!= wxMessageBox(msg, _("Agility Record Book"), wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_WARNING))
 					return;
 				m_pTrial->GetRuns().clear();
 				m_bRunsDeleted = true;

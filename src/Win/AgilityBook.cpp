@@ -534,7 +534,7 @@ void CAgilityBookApp::OnSetLanguage(wxLanguage langId)
 	if (!m_Localization.Load())
 	{
 		wxString str = wxString::Format(L"ERROR: Unable to load '%s.mo'.", OnGetCatalogName().c_str());
-		wxMessageBox(str, wxMessageBoxCaptionStr, wxICON_ERROR | wxOK);
+		wxMessageBox(str, _("Agility Record Book"), wxICON_ERROR | wxOK);
 		throw std::runtime_error(str.ToStdString());
 	}
 }

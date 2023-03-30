@@ -134,7 +134,7 @@ void CDlgConfigLifetimeName::OnOk(wxCommandEvent& evt)
 	{
 		if (m_Venue->GetLifetimeNames().FindLifetimeName(m_NewName))
 		{
-			wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+			wxMessageBox(_("IDS_NAME_IN_USE"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return;
 		}
 	}

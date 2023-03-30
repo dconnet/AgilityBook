@@ -148,7 +148,7 @@ bool CDlgConfigUpdate::LoadConfig(wchar_t const* pFile)
 			{
 				msg << L"\n\n" << fmt::to_string(errMsg);
 			}
-			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+			wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
 		}
 		CErrorCallback err;
@@ -157,14 +157,14 @@ bool CDlgConfigUpdate::LoadConfig(wchar_t const* pFile)
 			if (0 < err.m_ErrMsg.size())
 				wxMessageBox(
 					StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-					wxMessageBoxCaptionStr,
+					_("Agility Record Book"),
 					wxOK | wxCENTRE | wxICON_WARNING);
 			return false;
 		}
 		else if (0 < err.m_ErrMsg.size())
 			wxMessageBox(
 				StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-				wxMessageBoxCaptionStr,
+				_("Agility Record Book"),
 				wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	return true;

@@ -1130,7 +1130,7 @@ bool CDlgRunPanelScore::Validate()
 	int index = m_ctrlVenues->GetSelection();
 	if (wxNOT_FOUND == index)
 	{
-		wxMessageBox(_("IDS_SELECT_VENUE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+		wxMessageBox(_("IDS_SELECT_VENUE"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_STOP);
 		m_ctrlVenues->SetFocus();
 		return false;
 	}
@@ -1139,7 +1139,7 @@ bool CDlgRunPanelScore::Validate()
 	index = m_ctrlDivisions->GetSelection();
 	if (wxNOT_FOUND == index)
 	{
-		wxMessageBox(_("IDS_SELECT_DIVISION"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+		wxMessageBox(_("IDS_SELECT_DIVISION"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_STOP);
 		m_ctrlDivisions->SetFocus();
 		return false;
 	}
@@ -1148,7 +1148,7 @@ bool CDlgRunPanelScore::Validate()
 	index = m_ctrlLevels->GetSelection();
 	if (wxNOT_FOUND == index)
 	{
-		wxMessageBox(_("IDS_SELECT_LEVEL"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+		wxMessageBox(_("IDS_SELECT_LEVEL"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_STOP);
 		m_ctrlLevels->SetFocus();
 		return false;
 	}
@@ -1158,7 +1158,7 @@ bool CDlgRunPanelScore::Validate()
 	index = m_ctrlEvents->GetSelection();
 	if (wxNOT_FOUND == index)
 	{
-		wxMessageBox(_("IDS_SELECT_EVENT"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+		wxMessageBox(_("IDS_SELECT_EVENT"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_STOP);
 		m_ctrlEvents->SetFocus();
 		return false;
 	}
@@ -1168,21 +1168,21 @@ bool CDlgRunPanelScore::Validate()
 	pVenue->GetEvents().FindEvent(curEvent, &pEvent);
 	if (!pEvent)
 	{
-		wxMessageBox(_("IDS_BAD_EVENT"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+		wxMessageBox(_("IDS_BAD_EVENT"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_STOP);
 		m_ctrlEvents->SetFocus();
 		return false;
 	}
 
 	if (!pEvent->FindEvent(curDiv, pLevel->m_pLevel->GetName(), m_Run->GetDate()))
 	{
-		wxMessageBox(_("IDS_BAD_SCORINGMETHOD"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+		wxMessageBox(_("IDS_BAD_SCORINGMETHOD"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_STOP);
 		m_ctrlLevels->SetFocus();
 		return false;
 	}
 
 	if (wxNOT_FOUND == m_ctrlQ->GetSelection())
 	{
-		wxMessageBox(_("IDS_SELECT_Q"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+		wxMessageBox(_("IDS_SELECT_Q"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_STOP);
 		m_ctrlQ->SetFocus();
 		return false;
 	}
@@ -1238,7 +1238,7 @@ bool CDlgRunPanelScore::Save()
 		assert(!!scoring.get());
 		if (!scoring->HasTable())
 			if (m_Run->GetScoring().HasTable())
-				wxMessageBox(L"Poof!", wxMessageBoxCaptionStr, wxOK | wxCENTRE);
+				wxMessageBox(L"Poof!", _("Agility Record Book"), wxOK | wxCENTRE);
 	}
 #endif
 	// End TODO

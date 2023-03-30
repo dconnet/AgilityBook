@@ -186,7 +186,8 @@ CErrorCallback::CErrorCallback()
 
 bool CErrorCallback::OnError(wchar_t const* const pMsg)
 {
-	return wxYES == wxMessageBox(pMsg, wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_EXCLAMATION);
+	return wxYES
+		   == wxMessageBox(pMsg, _("Agility Record Book"), wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_EXCLAMATION);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -523,7 +524,7 @@ bool CAgilityBookDoc::EditTrial(ARBDogPtr const& inDog, ARBDogTrialPtr const& in
 			if (!inDog->GetTrials().AddTrial(pTrial, !CAgilityBookOptions::GetNewestDatesFirst()))
 			{
 				bOk = false;
-				wxMessageBox(_("IDS_CREATETRIAL_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+				wxMessageBox(_("IDS_CREATETRIAL_FAILED"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_STOP);
 			}
 			else
 			{
@@ -536,7 +537,10 @@ bool CAgilityBookDoc::EditTrial(ARBDogPtr const& inDog, ARBDogTrialPtr const& in
 				wxTreeItemId hItem = pTree->InsertTrial(pTrial, pDogData->GetId());
 				if (!hItem.IsOk())
 				{
-					wxMessageBox(_("IDS_CREATETRIAL_FILTERED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+					wxMessageBox(
+						_("IDS_CREATETRIAL_FILTERED"),
+						_("Agility Record Book"),
+						wxOK | wxCENTRE | wxICON_STOP);
 				}
 				else
 				{
@@ -581,7 +585,7 @@ bool CAgilityBookDoc::DeleteTrial(ARBDogPtr const& inDog, ARBDogTrialPtr const& 
 		|| wxYES
 			   == wxMessageBox(
 				   _("IDS_DELETE_TRIAL_DATA"),
-				   wxMessageBoxCaptionStr,
+				   _("Agility Record Book"),
 				   wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
 	{
 		if (inDog->GetTrials().DeleteTrial(inTrial))
@@ -609,7 +613,7 @@ bool CAgilityBookDoc::EditRun(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTr
 	{
 		if (0 == inTrial->GetClubs().size())
 		{
-			wxMessageBox(_("IDS_NEED_CLUB"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+			wxMessageBox(_("IDS_NEED_CLUB"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 			return false;
 		}
 		for (auto pClub : inTrial->GetClubs())
@@ -618,7 +622,7 @@ bool CAgilityBookDoc::EditRun(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTr
 			{
 				wxMessageBox(
 					fmt::format(_("IDS_VENUE_CONFIG_MISSING").wc_str(), pClub->GetVenue()),
-					wxMessageBoxCaptionStr,
+					_("Agility Record Book"),
 					wxOK | wxCENTRE | wxICON_STOP);
 				return false;
 			}
@@ -642,7 +646,7 @@ bool CAgilityBookDoc::EditRun(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTr
 			if (!inTrial->GetRuns().AddRun(pRun))
 			{
 				bOk = false;
-				wxMessageBox(_("IDS_CREATERUN_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+				wxMessageBox(_("IDS_CREATERUN_FAILED"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_STOP);
 			}
 			else
 			{
@@ -663,7 +667,7 @@ bool CAgilityBookDoc::EditRun(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTr
 					if (CFilterOptions::Options().IsFilterEnabled())
 						wxMessageBox(
 							_("IDS_CREATERUN_FILTERED"),
-							wxMessageBoxCaptionStr,
+							_("Agility Record Book"),
 							wxOK | wxCENTRE | wxICON_STOP);
 				}
 				else
@@ -713,7 +717,7 @@ bool CAgilityBookDoc::DeleteRuns(std::vector<ARBDogRunPtr> const& inRuns, bool b
 			|| wxYES
 				   == wxMessageBox(
 					   _("IDS_DELETE_EVENT_DATA"),
-					   wxMessageBoxCaptionStr,
+					   _("Agility Record Book"),
 					   wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
 		{
 			ARBDogTrialPtr pTrial = pData->GetTrial();
@@ -822,7 +826,7 @@ void CConfigActionCallback::PreDelete(std::wstring const& inMsg)
 	wxString msg(StringUtil::stringWX(inMsg));
 	msg += L"\n\n";
 	msg += _("IDS_ARE_YOU_SURE_CONTINUE");
-	if (wxNO == wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_WARNING))
+	if (wxNO == wxMessageBox(msg, _("Agility Record Book"), wxYES_NO | wxCENTRE | wxICON_WARNING))
 	{
 		m_bContinue = false;
 	}
@@ -831,7 +835,7 @@ void CConfigActionCallback::PreDelete(std::wstring const& inMsg)
 
 void CConfigActionCallback::PostDelete(std::wstring const& msg) const
 {
-	wxMessageBox(StringUtil::stringWX(msg), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+	wxMessageBox(StringUtil::stringWX(msg), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 }
 
 
@@ -865,7 +869,7 @@ bool CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 		UpdateAllViews(nullptr, &hint);
 	}
 	else if (callback.CanContinue())
-		wxMessageBox(_("IDS_CONFIG_NO_UPDATE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+		wxMessageBox(_("IDS_CONFIG_NO_UPDATE"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 	return bChanges;
 }
 
@@ -968,7 +972,7 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr const& inTree, wxWindow* p
 		if (0 < err.m_ErrMsg.size())
 			wxMessageBox(
 				StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-				wxMessageBoxCaptionStr,
+				_("Agility Record Book"),
 				wxOK | wxCENTRE | wxICON_INFORMATION);
 		int countDog = 0;
 		int countRegNumsAdded = 0;
@@ -1234,13 +1238,13 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr const& inTree, wxWindow* p
 			bAdded = true;
 			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_TITLES").wc_str(), countTitlesUpdated);
 		}
-		wxMessageBox(fmt::to_string(str), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+		wxMessageBox(fmt::to_string(str), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
 	else if (0 < err.m_ErrMsg.size())
 		wxMessageBox(
 			StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-			wxMessageBoxCaptionStr,
+			_("Agility Record Book"),
 			wxOK | wxCENTRE | wxICON_WARNING);
 	return bOk;
 }
@@ -1257,7 +1261,7 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr const& inTree, wxWindow* p
 		if (0 < err.m_ErrMsg.size())
 			wxMessageBox(
 				StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-				wxMessageBoxCaptionStr,
+				_("Agility Record Book"),
 				wxOK | wxCENTRE | wxICON_INFORMATION);
 
 		long nAdded = 0;
@@ -1273,13 +1277,13 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr const& inTree, wxWindow* p
 		}
 
 		std::wstring str = fmt::format(_("IDS_UPDATED_CAL_ITEMS").wc_str(), nAdded, nUpdated);
-		wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+		wxMessageBox(str, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
 	else if (0 < err.m_ErrMsg.size())
 		wxMessageBox(
 			StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-			wxMessageBoxCaptionStr,
+			_("Agility Record Book"),
 			wxOK | wxCENTRE | wxICON_WARNING);
 	return bOk;
 }
@@ -1296,7 +1300,7 @@ bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr const& inTree, wxWindow* p
 		if (0 < err.m_ErrMsg.size())
 			wxMessageBox(
 				StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-				wxMessageBoxCaptionStr,
+				_("Agility Record Book"),
 				wxOK | wxCENTRE | wxICON_INFORMATION);
 
 		long nAdded = 0;
@@ -1312,13 +1316,13 @@ bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr const& inTree, wxWindow* p
 		}
 
 		std::wstring str = fmt::format(_("IDS_UPDATED_TRAINING_ITEMS").wc_str(), nAdded, nUpdated);
-		wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+		wxMessageBox(str, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
 	else if (0 < err.m_ErrMsg.size())
 		wxMessageBox(
 			StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-			wxMessageBoxCaptionStr,
+			_("Agility Record Book"),
 			wxOK | wxCENTRE | wxICON_WARNING);
 	return bOk;
 }
@@ -1649,7 +1653,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
 		wxMessageBox(
 			_("Sorry, could not open this file."),
-			wxMessageBoxCaptionStr,
+			_("Agility Record Book"),
 			wxOK | wxCENTRE | wxICON_EXCLAMATION);
 		return false;
 	}
@@ -1670,7 +1674,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 			{
 				fmt::format_to(std::back_inserter(msg), L"\n\n{}", fmt::to_string(err));
 			}
-			wxMessageBox(fmt::to_string(msg), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+			wxMessageBox(fmt::to_string(msg), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
 		}
 		STACK_TICKLE(stack, L"PostLoadXML");
@@ -1686,14 +1690,14 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 			{
 				fmt::format_to(std::back_inserter(msg), L"\n\n{}", fmt::to_string(callback.m_ErrMsg));
 			}
-			wxMessageBox(fmt::to_string(msg), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+			wxMessageBox(fmt::to_string(msg), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
 		}
 		else if (0 < callback.m_ErrMsg.size())
 		{
 			std::wstring msg
 				= fmt::format(L"{}\n\n{}", _("IDS_NONFATAL_MSGS").wc_str(), fmt::to_string(callback.m_ErrMsg));
-			wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+			wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 		}
 		STACK_TICKLE(stack, L"PostLoad");
 
@@ -1795,7 +1799,7 @@ bool CAgilityBookDoc::Save()
 		std::wstring hash = GenerateHash(GetFilename());
 		if (!hash.empty() && hash != m_fileHash)
 		{
-			if (wxYES != wxMessageBox(_("IDS_WARN_FILE_UPDATED"), wxMessageBoxCaptionStr, wxICON_WARNING | wxYES_NO))
+			if (wxYES != wxMessageBox(_("IDS_WARN_FILE_UPDATED"), _("Agility Record Book"), wxICON_WARNING | wxYES_NO))
 				return false;
 		}
 	}
@@ -1841,12 +1845,12 @@ bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 		{
 			bAlreadyWarned = true;
 			std::wstring errMsg = fmt::format(_("IDS_CANNOT_OPEN").wc_str(), filename.wc_str());
-			wxMessageBox(errMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+			wxMessageBox(errMsg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 		}
 	}
 	if (!bOk && !bAlreadyWarned)
 	{
-		wxMessageBox(_("IDS_INTERNAL_ERROR"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+		wxMessageBox(_("IDS_INTERNAL_ERROR"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_STOP);
 	}
 
 	m_fileHash = GenerateHash(filename);
@@ -1915,7 +1919,7 @@ bool CFindInfo::Search(CDlgFind* pDlg) const
 	else
 	{
 		std::wstring msg = fmt::format(_("IDS_CANNOT_FIND").wc_str(), m_strSearch);
-		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+		wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 		return false;
 	}
 }
@@ -2046,7 +2050,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 		CLogger::Log(L"MENU: Doc ID_FILE_LINKED");
 		CDlgFindLinks dlg(m_Records.GetDogs(), wxGetApp().GetTopWindow());
 		if (0 == dlg.GetNumLinks())
-			wxMessageBox(_("IDS_NO_LINKED_FILES"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+			wxMessageBox(_("IDS_NO_LINKED_FILES"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 		else
 			dlg.ShowModal();
 	}

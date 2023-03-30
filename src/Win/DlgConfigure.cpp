@@ -435,7 +435,7 @@ void CDlgConfigure::DoEdit()
 						done = false;
 						wxMessageBox(
 							_("IDS_NAME_IN_USE"),
-							wxMessageBoxCaptionStr,
+							_("Agility Record Book"),
 							wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						continue;
 					}
@@ -831,7 +831,7 @@ void CDlgConfigure::OnUpdate(wxCommandEvent& evt)
 			LoadData(Action::OtherPoints);
 		}
 		else
-			wxMessageBox(_("IDS_CONFIG_NO_UPDATE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+			wxMessageBox(_("IDS_CONFIG_NO_UPDATE"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 }
 

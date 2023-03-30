@@ -1028,21 +1028,21 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 	int idxDiv = m_ctrlDivision->GetSelection();
 	if (wxNOT_FOUND == idxDiv)
 	{
-		wxMessageBox(_("IDS_SELECT_DIVISION"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+		wxMessageBox(_("IDS_SELECT_DIVISION"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 		m_ctrlDivision->SetFocus();
 		return;
 	}
 	int idxLevel = m_ctrlLevel->GetSelection();
 	if (wxNOT_FOUND == idxLevel)
 	{
-		wxMessageBox(_("IDS_SELECT_LEVEL"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+		wxMessageBox(_("IDS_SELECT_LEVEL"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 		m_ctrlLevel->SetFocus();
 		return;
 	}
 	int idxType = m_ctrlType->GetSelection();
 	if (wxNOT_FOUND == idxType)
 	{
-		wxMessageBox(_("IDS_SELECT_STYLE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+		wxMessageBox(_("IDS_SELECT_STYLE"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 		m_ctrlType->SetFocus();
 		return;
 	}
@@ -1055,7 +1055,7 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 	// Validate that from-to dates are okay.
 	if (m_dateFrom.IsValid() && m_dateTo.IsValid() && m_dateFrom > m_dateTo)
 	{
-		wxMessageBox(_("IDS_CONFIGEVENT_DATEORDER"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+		wxMessageBox(_("IDS_CONFIGEVENT_DATEORDER"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 		m_ctrlDateTo->SetFocus();
 		return;
 	}
@@ -1068,7 +1068,10 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 			CDlgConfigureDataPlacementPtr pData = GetPlacementData(0);
 			if (0 == pData->Place())
 			{
-				wxMessageBox(_("IDS_CONFIGEVENT_PLACEMENT0"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+				wxMessageBox(
+					_("IDS_CONFIGEVENT_PLACEMENT0"),
+					_("Agility Record Book"),
+					wxOK | wxCENTRE | wxICON_WARNING);
 				m_ctrlPlacementNew->SetFocus();
 				return;
 			}

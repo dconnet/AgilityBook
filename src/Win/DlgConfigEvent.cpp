@@ -1153,7 +1153,7 @@ void CDlgConfigEvent::EditPoints()
 						if (!bOk)
 							wxMessageBox(
 								_("IDS_TITLEPTS_EXISTS"),
-								wxMessageBoxCaptionStr,
+								_("Agility Record Book"),
 								wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						break;
 					case ARBTitlePointType::Lifetime:
@@ -1165,7 +1165,7 @@ void CDlgConfigEvent::EditPoints()
 						if (!bOk)
 							wxMessageBox(
 								_("IDS_TITLEPTS_EXISTS"),
-								wxMessageBoxCaptionStr,
+								_("Agility Record Book"),
 								wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						break;
 					case ARBTitlePointType::Placement:
@@ -1173,7 +1173,7 @@ void CDlgConfigEvent::EditPoints()
 						if (!bOk)
 							wxMessageBox(
 								_("IDS_TITLEPTS_EXISTS"),
-								wxMessageBoxCaptionStr,
+								_("Agility Record Book"),
 								wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						break;
 					case ARBTitlePointType::Max:
@@ -1456,7 +1456,7 @@ void CDlgConfigEvent::OnPointsNew(wxCommandEvent& evt)
 					if (!pScoring->GetTitlePoints().AddTitlePoints(dlg.Points(), dlg.Faults()))
 						wxMessageBox(
 							_("IDS_TITLEPTS_EXISTS"),
-							wxMessageBoxCaptionStr,
+							_("Agility Record Book"),
 							wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					break;
 				case ARBTitlePointType::Lifetime:
@@ -1467,14 +1467,14 @@ void CDlgConfigEvent::OnPointsNew(wxCommandEvent& evt)
 							dlg.Faults()))
 						wxMessageBox(
 							_("IDS_TITLEPTS_EXISTS"),
-							wxMessageBoxCaptionStr,
+							_("Agility Record Book"),
 							wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					break;
 				case ARBTitlePointType::Placement:
 					if (!pScoring->GetPlacements().AddPlaceInfo(dlg.Place(), dlg.Points(), true))
 						wxMessageBox(
 							_("IDS_TITLEPTS_EXISTS"),
-							wxMessageBoxCaptionStr,
+							_("Agility Record Book"),
 							wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					break;
 				case ARBTitlePointType::Max:
@@ -1617,7 +1617,7 @@ void CDlgConfigEvent::OnOk(wxCommandEvent& evt)
 		if (wxYES
 			!= wxMessageBox(
 				_("IDS_CONFIGEVENT_OVERLAPDATES"),
-				wxMessageBoxCaptionStr,
+				_("Agility Record Book"),
 				wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_WARNING))
 			return;
 	}
@@ -1628,7 +1628,7 @@ void CDlgConfigEvent::OnOk(wxCommandEvent& evt)
 	{
 		if (m_pVenue->GetEvents().FindEvent(name))
 		{
-			wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+			wxMessageBox(_("IDS_NAME_IN_USE"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 			m_ctrlName->SetFocus();
 			return;
 		}

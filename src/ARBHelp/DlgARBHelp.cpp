@@ -114,12 +114,7 @@ std::string CDlgARBHelp::GetEncodedData()
 	{
 		std::string data;
 		BinaryData::EncodeString(m_RegInfo, data);
-		fmt::format_to(
-			std::back_inserter(rawdata),
-			"\n{}\n{}\n{}\n",
-			STREAM_REGISTRY_BEGIN,
-			data,
-			STREAM_REGISTRY_END);
+		fmt::format_to(std::back_inserter(rawdata), "\n{}\n{}\n{}\n", STREAM_REGISTRY_BEGIN, data, STREAM_REGISTRY_END);
 	}
 
 	// Data files.

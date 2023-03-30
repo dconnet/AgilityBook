@@ -241,7 +241,8 @@ CErrorCallback::CErrorCallback()
 
 bool CErrorCallback::OnError(wchar_t const* const pMsg)
 {
-	return wxYES == wxMessageBox(pMsg, wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_EXCLAMATION);
+	return wxYES
+		   == wxMessageBox(pMsg, _("Agility Record Book"), wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_EXCLAMATION);
 }
 
 } // namespace dconSoft

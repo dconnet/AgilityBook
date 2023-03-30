@@ -211,7 +211,7 @@ bool CAgilityBookTreeDataDog::DoDelete(bool bSilent)
 		|| wxYES
 			   == wxMessageBox(
 				   _("IDS_DELETE_DOG_DATA"),
-				   wxMessageBoxCaptionStr,
+				   _("Agility Record Book"),
 				   wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
 	{
 		CAgilityBookDoc* pDoc = m_pTree->GetDocument();

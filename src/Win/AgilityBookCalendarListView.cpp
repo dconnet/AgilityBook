@@ -473,7 +473,7 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 	if (!bFound)
 	{
 		std::wstring msg = fmt::format(_("IDS_CANNOT_FIND").wx_str(), m_strSearch);
-		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+		wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	return bFound;
 }
@@ -1017,7 +1017,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 			if (0 < nNewIsNotVisible)
 			{
 				std::wstring msg = fmt::format(_("IDS_NOT_VISIBLE").wx_str(), nNewIsNotVisible);
-				wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+				wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 			}
 		}
 	}

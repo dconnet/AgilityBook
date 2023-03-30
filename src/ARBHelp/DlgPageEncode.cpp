@@ -162,7 +162,7 @@ bool CDlgPageEncode::TransferDataFromWindow()
 	// Gather logging files
 	CLogger logger;
 	logger.Initialize(wxGetApp().GetUpdateInfoKey().c_str());
-	// Note: This is GetUserLocalDataDir(). 
+	// Note: This is GetUserLocalDataDir().
 	SearchFor(m_Parent, logger.GetCurrentLogDir(), L"*.log");
 
 	return true;

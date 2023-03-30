@@ -152,7 +152,7 @@ bool CClipboardDataReader::GetData(ARBClipFormat clpFmt, ARBCommon::ElementNodeP
 	{
 		wxMessageBox(
 			StringUtil::stringWX(fmt::to_string(err)),
-			wxMessageBoxCaptionStr,
+			_("Agility Record Book"),
 			wxOK | wxCENTRE | wxICON_EXCLAMATION);
 	}
 	return bOk;

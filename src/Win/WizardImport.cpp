@@ -429,7 +429,7 @@ bool CWizardImport::DoImportFile()
 				pProgress->Dismiss();
 			}
 			else
-				wxMessageBox(_("IDS_IMPORT_FAILED"), wxMessageBoxCaptionStr, wxOK | wxICON_STOP);
+				wxMessageBox(_("IDS_IMPORT_FAILED"), _("Agility Record Book"), wxOK | wxICON_STOP);
 		}
 		else
 		{
@@ -771,7 +771,7 @@ bool CWizardImport::DoWizardFinish()
 	long index = m_ctrlDateFormat->GetSelection();
 	if (wxNOT_FOUND == index)
 	{
-		wxMessageBox(_("IDS_SPECIFY_DATEFORMAT"), wxMessageBoxCaptionStr, wxOK | wxICON_ERROR);
+		wxMessageBox(_("IDS_SPECIFY_DATEFORMAT"), _("Agility Record Book"), wxOK | wxICON_ERROR);
 		m_ctrlDateFormat->SetFocus();
 		return false;
 	}

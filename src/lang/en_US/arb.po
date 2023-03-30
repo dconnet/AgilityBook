@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-28 14:44-0700\n"
-"PO-Revision-Date: 2022-07-28 14:44-0700\n"
+"POT-Creation-Date: 2023-03-29 17:39-0700\n"
+"PO-Revision-Date: 2023-03-29 17:39-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: _;arbT\n"
 "X-Poedit-Basepath: ../..\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-SearchPath-0: Include\n"
 "X-Poedit-SearchPath-1: Libraries/ARB\n"
 "X-Poedit-SearchPath-2: ARBHelp\n"
@@ -25,6 +25,66 @@ msgstr ""
 "X-Poedit-SearchPath-4: CalSites\n"
 "X-Poedit-SearchPath-5: TestARB\n"
 "X-Poedit-SearchPath-6: Win\n"
+
+#: ARBUpdater/DlgDigest.cpp:383 CalSites/CalSites.cpp:244
+#: CalSites/CalendarSiteUSDAA.cpp:221 CalSites/CalendarSites.cpp:1041
+#: CalSites/CalendarSites.cpp:1077 CalSites/CalendarSites.cpp:1145
+#: CalSites/DlgPluginDetails.cpp:234 Win/AgilityBook.cpp:537
+#: Win/AgilityBookCalendarListView.cpp:476
+#: Win/AgilityBookCalendarListView.cpp:1020 Win/AgilityBookDoc.cpp:189
+#: Win/AgilityBookDoc.cpp:526 Win/AgilityBookDoc.cpp:539
+#: Win/AgilityBookDoc.cpp:584 Win/AgilityBookDoc.cpp:612
+#: Win/AgilityBookDoc.cpp:621 Win/AgilityBookDoc.cpp:645
+#: Win/AgilityBookDoc.cpp:666 Win/AgilityBookDoc.cpp:716
+#: Win/AgilityBookDoc.cpp:825 Win/AgilityBookDoc.cpp:834
+#: Win/AgilityBookDoc.cpp:868 Win/AgilityBookDoc.cpp:971
+#: Win/AgilityBookDoc.cpp:1237 Win/AgilityBookDoc.cpp:1243
+#: Win/AgilityBookDoc.cpp:1260 Win/AgilityBookDoc.cpp:1276
+#: Win/AgilityBookDoc.cpp:1282 Win/AgilityBookDoc.cpp:1299
+#: Win/AgilityBookDoc.cpp:1315 Win/AgilityBookDoc.cpp:1321
+#: Win/AgilityBookDoc.cpp:1652 Win/AgilityBookDoc.cpp:1673
+#: Win/AgilityBookDoc.cpp:1689 Win/AgilityBookDoc.cpp:1696
+#: Win/AgilityBookDoc.cpp:1798 Win/AgilityBookDoc.cpp:1844
+#: Win/AgilityBookDoc.cpp:1849 Win/AgilityBookDoc.cpp:1918
+#: Win/AgilityBookDoc.cpp:2049 Win/AgilityBookRunsView.cpp:1186
+#: Win/AgilityBookTrainingView.cpp:309 Win/AgilityBookTreeData.cpp:214
+#: Win/AgilityBookTreeView.cpp:191 Win/AgilityBookTreeView.cpp:686
+#: Win/AgilityBookTreeView.cpp:703 Win/AgilityBookTreeView.cpp:763
+#: Win/AgilityBookTreeView.cpp:797 Win/AgilityBookTreeView.cpp:817
+#: Win/AgilityBookTreeView.cpp:1355 Win/AgilityBookTreeView.cpp:1371
+#: Win/AgilityBookTreeView.cpp:1389 Win/ClipBoard.cpp:155
+#: Win/DlgAssignColumns.cpp:1200 Win/DlgCalendar.cpp:899
+#: Win/DlgCalendar.cpp:905 Win/DlgCalendar.cpp:917 Win/DlgConfigEvent.cpp:1156
+#: Win/DlgConfigEvent.cpp:1168 Win/DlgConfigEvent.cpp:1176
+#: Win/DlgConfigEvent.cpp:1459 Win/DlgConfigEvent.cpp:1470
+#: Win/DlgConfigEvent.cpp:1477 Win/DlgConfigEvent.cpp:1620
+#: Win/DlgConfigEvent.cpp:1631 Win/DlgConfigEventMethod.cpp:1031
+#: Win/DlgConfigEventMethod.cpp:1038 Win/DlgConfigEventMethod.cpp:1045
+#: Win/DlgConfigEventMethod.cpp:1058 Win/DlgConfigEventMethod.cpp:1071
+#: Win/DlgConfigLifetimeName.cpp:137 Win/DlgConfigMultiQ.cpp:399
+#: Win/DlgConfigUpdate.cpp:151 Win/DlgConfigUpdate.cpp:160
+#: Win/DlgConfigUpdate.cpp:167 Win/DlgConfigVenue.cpp:107
+#: Win/DlgConfigVenue.cpp:198 Win/DlgConfigVenue.cpp:692
+#: Win/DlgConfigure.cpp:438 Win/DlgConfigure.cpp:834
+#: Win/DlgConfigureData.cpp:192 Win/DlgConfigureData.cpp:220
+#: Win/DlgConfigureData.cpp:238 Win/DlgConfigureData.cpp:335
+#: Win/DlgConfigureData.cpp:374 Win/DlgConfigureData.cpp:403
+#: Win/DlgConfigureData.cpp:490 Win/DlgConfigureData.cpp:506
+#: Win/DlgConfigureData.cpp:608 Win/DlgConfigureData.cpp:626
+#: Win/DlgMessageBox.cpp:57 Win/DlgOptionsFilter.cpp:671
+#: Win/DlgRunPanelScore.cpp:1133 Win/DlgRunPanelScore.cpp:1142
+#: Win/DlgRunPanelScore.cpp:1151 Win/DlgRunPanelScore.cpp:1161
+#: Win/DlgRunPanelScore.cpp:1171 Win/DlgRunPanelScore.cpp:1178
+#: Win/DlgRunPanelScore.cpp:1185 Win/DlgRunPanelScore.cpp:1241
+#: Win/DlgTrial.cpp:602 Win/DlgTrial.cpp:739 Win/MainFrm.cpp:173
+#: Win/UpdateInfo.cpp:155 Win/UpdateInfo.cpp:323 Win/UpdateInfo.cpp:348
+#: Win/UpdateInfo.cpp:461 Win/UpdateInfo.cpp:534 Win/UpdateInfo.cpp:608
+#: Win/UpdateInfo.cpp:720 Win/UpdateInfo.cpp:739 Win/UpdateInfo.cpp:758
+#: Win/WizardExport.cpp:1461 Win/WizardExport.cpp:1518 Win/WizardImport.cpp:432
+#: Win/WizardImport.cpp:774 Win/WizardStart.cpp:562 Win/WizardStart.cpp:595
+#: Win/WizardStart.cpp:715 Win/WizardStart.cpp:880
+msgid "Agility Record Book"
+msgstr "Agility Record Book"
 
 #: CalSites/CalendarSiteUSDAA.cpp:138
 msgid ""
@@ -125,7 +185,7 @@ msgstr "Close"
 msgid "IDS_USE_PLUGIN"
 msgstr "Do you want to continue using this plugin?"
 
-#: CalSites/CalendarSites.cpp:1144 Win/AgilityBookDoc.cpp:1272
+#: CalSites/CalendarSites.cpp:1144 Win/AgilityBookDoc.cpp:1275
 msgid "IDS_UPDATED_CAL_ITEMS"
 msgstr "Added {0} new calendar items, {1} updated items."
 
@@ -151,9 +211,9 @@ msgid "IDS_COL_CODE"
 msgstr "Code"
 
 #: CalSites/DlgCalendarQueryDetail.cpp:124 CalSites/DlgQueryDetail.cpp:91
-#: Win/AgilityBookCalendarView.cpp:653 Win/DlgAssignColumns.cpp:223
+#: Win/AgilityBookCalendarView.cpp:654 Win/DlgAssignColumns.cpp:223
 #: Win/DlgAssignColumns.cpp:323 Win/DlgAssignColumns.cpp:380
-#: Win/DlgAssignColumns.cpp:464 Win/DlgInfoNote.cpp:563 Win/DlgListCtrl.cpp:454
+#: Win/DlgAssignColumns.cpp:464 Win/DlgInfoNote.cpp:564 Win/DlgListCtrl.cpp:454
 #: Win/DlgListViewer.cpp:980 Win/DlgListViewer.cpp:1018
 #: Win/DlgListViewer.cpp:1030 Win/DlgListViewer.cpp:1190
 #: Win/DlgListViewer.cpp:1257 Win/DlgListViewer.cpp:1310 Win/Print.cpp:267
@@ -200,12 +260,12 @@ msgstr ""
 "Book's venue names."
 
 #: CalSites/DlgCalendarQueryDetail.cpp:169 CalSites/DlgQueryDetail.cpp:91
-#: Win/AgilityBookCalendarView.cpp:652 Win/DlgAssignColumns.cpp:217
+#: Win/AgilityBookCalendarView.cpp:653 Win/DlgAssignColumns.cpp:217
 #: Win/DlgAssignColumns.cpp:329 Win/DlgAssignColumns.cpp:377
 #: Win/DlgDogPanelPoints.cpp:64 Win/DlgDogPanelRegNums.cpp:52
 #: Win/DlgDogPanelTitles.cpp:61 Win/DlgListCtrl.cpp:456
 #: Win/DlgListViewer.cpp:1184 Win/DlgListViewer.cpp:1251
-#: Win/DlgListViewer.cpp:1388 Win/DlgTrial.cpp:387 Win/Print.cpp:264
+#: Win/DlgListViewer.cpp:1388 Win/DlgTrial.cpp:383 Win/Print.cpp:264
 msgid "IDS_COL_VENUE"
 msgstr "Venue"
 
@@ -297,7 +357,7 @@ msgstr "Configure the Location and Venue codes that are supported."
 msgid "IDC_PLUGINDETAIL_CODES_TEXT"
 msgstr "{0} Location and {1} Venue Code(s)"
 
-#: CalSites/DlgPluginDetails.cpp:234 Win/DlgConfigEvent.cpp:1630
+#: CalSites/DlgPluginDetails.cpp:234 Win/DlgConfigEvent.cpp:1631
 #: Win/DlgConfigLifetimeName.cpp:137 Win/DlgConfigMultiQ.cpp:399
 #: Win/DlgConfigOtherPoints.cpp:73 Win/DlgConfigVenue.cpp:107
 #: Win/DlgConfigVenue.cpp:198 Win/DlgConfigVenue.cpp:692
@@ -335,7 +395,7 @@ msgstr "This is the pretty name displayed to the user to select a code."
 msgid "Please enter a value"
 msgstr "Please enter a value"
 
-#: CalSites/DlgQueryDetail.cpp:211 Win/DlgClub.cpp:289 Win/DlgClub.cpp:298
+#: CalSites/DlgQueryDetail.cpp:211 Win/DlgClub.cpp:294 Win/DlgClub.cpp:303
 #: Win/DlgConfigOtherPoints.cpp:73 Win/DlgConfigPlaceInfo.cpp:73
 #: Win/DlgConfigPlaceInfo.cpp:79 Win/DlgConfigPlaceInfo.cpp:117
 #: Win/DlgRegNum.cpp:191 Win/ValidatorsQ.cpp:98 Win/ValidatorsQ.cpp:107
@@ -491,15 +551,15 @@ msgstr "Past"
 msgid "IDS_CALENDAR_NOTENTERED"
 msgstr "Not entered"
 
-#: TestARB/Local.cpp:90 Win/Localization.cpp:88 Win/WizardImport.cpp:1329
+#: TestARB/Local.cpp:90 Win/Localization.cpp:88 Win/WizardImport.cpp:1332
 msgid "IDS_CALENDAR_ENTERED"
 msgstr "Entered"
 
-#: TestARB/Local.cpp:91 Win/Localization.cpp:89 Win/WizardImport.cpp:1323
+#: TestARB/Local.cpp:91 Win/Localization.cpp:89 Win/WizardImport.cpp:1326
 msgid "IDS_CALENDAR_PENDING"
 msgstr "Pending"
 
-#: TestARB/Local.cpp:92 Win/Localization.cpp:90 Win/WizardImport.cpp:1317
+#: TestARB/Local.cpp:92 Win/Localization.cpp:90 Win/WizardImport.cpp:1320
 msgid "IDS_CALENDAR_PLANNING"
 msgstr "Planning"
 
@@ -603,7 +663,7 @@ msgid "IDS_UPDATE_IDENTICAL"
 msgstr "{} identical"
 
 #: TestARB/Local.cpp:135 Win/DlgConfigure.cpp:243 Win/DlgDogPanelPoints.cpp:63
-#: Win/DlgListCtrl.cpp:557 Win/Localization.cpp:132 Win/PointsData.cpp:1364
+#: Win/DlgListCtrl.cpp:561 Win/Localization.cpp:132 Win/PointsData.cpp:1364
 #: Win/PointsData.cpp:1405 Win/PointsData.cpp:1446 Win/PointsData.cpp:1490
 #: Win/PointsData.cpp:1747
 msgid "IDS_OTHERPOINTS"
@@ -859,152 +919,152 @@ msgstr "Print Preview"
 msgid "Agility Record Book file"
 msgstr "Agility Record Book file"
 
-#: Win/AgilityBookCalendarListView.cpp:474 Win/AgilityBookDoc.cpp:1914
-#: Win/AgilityBookRunsView.cpp:1184 Win/AgilityBookTrainingView.cpp:307
-#: Win/AgilityBookTreeView.cpp:189
+#: Win/AgilityBookCalendarListView.cpp:475 Win/AgilityBookDoc.cpp:1917
+#: Win/AgilityBookRunsView.cpp:1185 Win/AgilityBookTrainingView.cpp:308
+#: Win/AgilityBookTreeView.cpp:190
 msgid "IDS_CANNOT_FIND"
 msgstr "Cannot find '{}'"
 
-#: Win/AgilityBookCalendarListView.cpp:629 Win/AgilityBookCalendarView.cpp:1324
+#: Win/AgilityBookCalendarListView.cpp:630 Win/AgilityBookCalendarView.cpp:1325
 msgid "IDS_NUM_EVENTS"
 msgstr "{} events"
 
 # This is 11 spaces
-#: Win/AgilityBookCalendarListView.cpp:636 Win/AgilityBookCalendarView.cpp:1331
-#: Win/AgilityBookDoc.cpp:1557 Win/AgilityBookPointsView.cpp:191
-#: Win/AgilityBookRunsView.cpp:1368 Win/AgilityBookTrainingView.cpp:436
-#: Win/AgilityBookTreeView.cpp:435
+#: Win/AgilityBookCalendarListView.cpp:637 Win/AgilityBookCalendarView.cpp:1332
+#: Win/AgilityBookDoc.cpp:1560 Win/AgilityBookPointsView.cpp:191
+#: Win/AgilityBookRunsView.cpp:1369 Win/AgilityBookTrainingView.cpp:437
+#: Win/AgilityBookTreeView.cpp:436
 msgid "IDS_INDICATOR_BLANK"
 msgstr "          "
 
-#: Win/AgilityBookCalendarListView.cpp:1017
+#: Win/AgilityBookCalendarListView.cpp:1019
 msgid "IDS_NOT_VISIBLE"
 msgstr "Warning: {} new entries are not visible due to your viewing options."
 
-#: Win/AgilityBookCalendarView.cpp:650 Win/DlgAssignColumns.cpp:311
+#: Win/AgilityBookCalendarView.cpp:651 Win/DlgAssignColumns.cpp:311
 #: Win/DlgAssignColumns.cpp:368 Win/DlgAssignColumns.cpp:419
 #: Win/DlgAssignColumns.cpp:486 Win/DlgListCtrl.cpp:452
 msgid "IDS_COL_START_DATE"
 msgstr "Start Date"
 
-#: Win/AgilityBookCalendarView.cpp:651 Win/DlgAssignColumns.cpp:314
+#: Win/AgilityBookCalendarView.cpp:652 Win/DlgAssignColumns.cpp:314
 #: Win/DlgAssignColumns.cpp:371 Win/DlgAssignColumns.cpp:425
 #: Win/DlgListCtrl.cpp:453
 msgid "IDS_COL_END_DATE"
 msgstr "End Date"
 
-#: Win/AgilityBookCalendarView.cpp:654 Win/DlgAssignColumns.cpp:220
+#: Win/AgilityBookCalendarView.cpp:655 Win/DlgAssignColumns.cpp:220
 #: Win/DlgAssignColumns.cpp:326 Win/DlgAssignColumns.cpp:374
-#: Win/DlgInfoNote.cpp:557 Win/DlgListCtrl.cpp:455 Win/DlgListViewer.cpp:974
+#: Win/DlgInfoNote.cpp:558 Win/DlgListCtrl.cpp:455 Win/DlgListViewer.cpp:974
 #: Win/DlgListViewer.cpp:1012 Win/DlgListViewer.cpp:1024
 #: Win/DlgListViewer.cpp:1191 Win/DlgListViewer.cpp:1258
-#: Win/DlgListViewer.cpp:1311 Win/DlgListViewer.cpp:1387 Win/DlgTrial.cpp:386
+#: Win/DlgListViewer.cpp:1311 Win/DlgListViewer.cpp:1387 Win/DlgTrial.cpp:382
 #: Win/Print.cpp:265
 msgid "IDS_COL_CLUB"
 msgstr "Club"
 
-#: Win/AgilityBookCalendarView.cpp:655 Win/DlgAssignColumns.cpp:332
+#: Win/AgilityBookCalendarView.cpp:656 Win/DlgAssignColumns.cpp:332
 msgid "IDS_COL_OPENS"
 msgstr "Opens"
 
-#: Win/AgilityBookCalendarView.cpp:656 Win/DlgAssignColumns.cpp:335
+#: Win/AgilityBookCalendarView.cpp:657 Win/DlgAssignColumns.cpp:335
 msgid "IDS_COL_CLOSES"
 msgstr "Closes"
 
-#: Win/AgilityBookCalendarView.cpp:657 Win/AgilityBookDoc.cpp:2246
+#: Win/AgilityBookCalendarView.cpp:658 Win/AgilityBookDoc.cpp:2260
 #: Win/DlgAssignColumns.cpp:338 Win/DlgAssignColumns.cpp:348
 #: Win/DlgAssignColumns.cpp:383 Win/DlgAssignColumns.cpp:528
 #: Win/DlgListCtrl.cpp:457
 msgid "IDS_COL_NOTES"
 msgstr "Notes"
 
-#: Win/AgilityBookCalendarView.cpp:975
+#: Win/AgilityBookCalendarView.cpp:976
 msgid "January"
 msgstr "January"
 
-#: Win/AgilityBookCalendarView.cpp:976
+#: Win/AgilityBookCalendarView.cpp:977
 msgid "February"
 msgstr "February"
 
-#: Win/AgilityBookCalendarView.cpp:977
+#: Win/AgilityBookCalendarView.cpp:978
 msgid "March"
 msgstr "March"
 
-#: Win/AgilityBookCalendarView.cpp:978
+#: Win/AgilityBookCalendarView.cpp:979
 msgid "April"
 msgstr "April"
 
-#: Win/AgilityBookCalendarView.cpp:979
+#: Win/AgilityBookCalendarView.cpp:980
 msgid "May"
 msgstr "May"
 
-#: Win/AgilityBookCalendarView.cpp:980
+#: Win/AgilityBookCalendarView.cpp:981
 msgid "June"
 msgstr "June"
 
-#: Win/AgilityBookCalendarView.cpp:981
+#: Win/AgilityBookCalendarView.cpp:982
 msgid "July"
 msgstr "July"
 
-#: Win/AgilityBookCalendarView.cpp:982
+#: Win/AgilityBookCalendarView.cpp:983
 msgid "August"
 msgstr "August"
 
-#: Win/AgilityBookCalendarView.cpp:983
+#: Win/AgilityBookCalendarView.cpp:984
 msgid "September"
 msgstr "September"
 
-#: Win/AgilityBookCalendarView.cpp:984
+#: Win/AgilityBookCalendarView.cpp:985
 msgid "October"
 msgstr "October"
 
-#: Win/AgilityBookCalendarView.cpp:985
+#: Win/AgilityBookCalendarView.cpp:986
 msgid "November"
 msgstr "November"
 
-#: Win/AgilityBookCalendarView.cpp:986
+#: Win/AgilityBookCalendarView.cpp:987
 msgid "December"
 msgstr "December"
 
-#: Win/AgilityBookCalendarView.cpp:987 Win/DlgOptionsCalendar.cpp:211
+#: Win/AgilityBookCalendarView.cpp:988 Win/DlgOptionsCalendar.cpp:211
 msgid "Sunday"
 msgstr "Sunday"
 
-#: Win/AgilityBookCalendarView.cpp:988 Win/DlgOptionsCalendar.cpp:212
+#: Win/AgilityBookCalendarView.cpp:989 Win/DlgOptionsCalendar.cpp:212
 msgid "Monday"
 msgstr "Monday"
 
-#: Win/AgilityBookCalendarView.cpp:989 Win/DlgOptionsCalendar.cpp:213
+#: Win/AgilityBookCalendarView.cpp:990 Win/DlgOptionsCalendar.cpp:213
 msgid "Tuesday"
 msgstr "Tuesday"
 
-#: Win/AgilityBookCalendarView.cpp:990 Win/DlgOptionsCalendar.cpp:214
+#: Win/AgilityBookCalendarView.cpp:991 Win/DlgOptionsCalendar.cpp:214
 msgid "Wednesday"
 msgstr "Wednesday"
 
-#: Win/AgilityBookCalendarView.cpp:991 Win/DlgOptionsCalendar.cpp:215
+#: Win/AgilityBookCalendarView.cpp:992 Win/DlgOptionsCalendar.cpp:215
 msgid "Thursday"
 msgstr "Thursday"
 
-#: Win/AgilityBookCalendarView.cpp:992 Win/DlgOptionsCalendar.cpp:216
+#: Win/AgilityBookCalendarView.cpp:993 Win/DlgOptionsCalendar.cpp:216
 msgid "Friday"
 msgstr "Friday"
 
-#: Win/AgilityBookCalendarView.cpp:993 Win/DlgOptionsCalendar.cpp:217
+#: Win/AgilityBookCalendarView.cpp:994 Win/DlgOptionsCalendar.cpp:217
 msgid "Saturday"
 msgstr "Saturday"
 
-#: Win/AgilityBookDoc.cpp:523 Win/AgilityBookTreeView.cpp:1352
+#: Win/AgilityBookDoc.cpp:526 Win/AgilityBookTreeView.cpp:1354
 msgid "IDS_CREATETRIAL_FAILED"
 msgstr "Error: Failed to create trial."
 
-#: Win/AgilityBookDoc.cpp:536 Win/AgilityBookTreeView.cpp:1368
+#: Win/AgilityBookDoc.cpp:539 Win/AgilityBookTreeView.cpp:1370
 msgid "IDS_CREATETRIAL_FILTERED"
 msgstr ""
 "Warning: The trial you have just created cannot be shown due to filter "
 "options."
 
-#: Win/AgilityBookDoc.cpp:580
+#: Win/AgilityBookDoc.cpp:583
 msgid "IDS_DELETE_TRIAL_DATA"
 msgstr ""
 "WARNING\n"
@@ -1014,24 +1074,24 @@ msgstr ""
 "\n"
 "Are you sure you want to continue?"
 
-#: Win/AgilityBookDoc.cpp:609
+#: Win/AgilityBookDoc.cpp:612
 msgid "IDS_NEED_CLUB"
 msgstr "You must create a hosting club before creating any events."
 
-#: Win/AgilityBookDoc.cpp:617
+#: Win/AgilityBookDoc.cpp:620
 msgid "IDS_VENUE_CONFIG_MISSING"
 msgstr "Unable to locate configuration information for the venue '{}'."
 
-#: Win/AgilityBookDoc.cpp:642 Win/AgilityBookTreeView.cpp:762
+#: Win/AgilityBookDoc.cpp:645 Win/AgilityBookTreeView.cpp:763
 msgid "IDS_CREATERUN_FAILED"
 msgstr "Error: Failed to create run."
 
-#: Win/AgilityBookDoc.cpp:662 Win/AgilityBookTreeView.cpp:795
+#: Win/AgilityBookDoc.cpp:665 Win/AgilityBookTreeView.cpp:796
 msgid "IDS_CREATERUN_FILTERED"
 msgstr ""
 "Warning: The run you have just created cannot be shown due to filter options."
 
-#: Win/AgilityBookDoc.cpp:712
+#: Win/AgilityBookDoc.cpp:715
 msgid "IDS_DELETE_EVENT_DATA"
 msgstr ""
 "WARNING\n"
@@ -1040,139 +1100,139 @@ msgstr ""
 "\n"
 "Are you sure you want to continue?"
 
-#: Win/AgilityBookDoc.cpp:821
+#: Win/AgilityBookDoc.cpp:824
 msgid "IDS_ARE_YOU_SURE_CONTINUE"
 msgstr "Are you sure you want to continue?"
 
-#: Win/AgilityBookDoc.cpp:865 Win/DlgConfigure.cpp:834
+#: Win/AgilityBookDoc.cpp:868 Win/DlgConfigure.cpp:834
 msgid "IDS_CONFIG_NO_UPDATE"
 msgstr "No updates were performed. The configurations are the same."
 
-#: Win/AgilityBookDoc.cpp:1157
+#: Win/AgilityBookDoc.cpp:1160
 msgid "IDS_ADDED"
 msgstr "Added"
 
-#: Win/AgilityBookDoc.cpp:1164
+#: Win/AgilityBookDoc.cpp:1167
 msgid "IDS_ADDED_DOGS"
 msgstr "{} dogs"
 
-#: Win/AgilityBookDoc.cpp:1171 Win/AgilityBookDoc.cpp:1223
+#: Win/AgilityBookDoc.cpp:1174 Win/AgilityBookDoc.cpp:1226
 msgid "IDS_ADDED_REGNUMS"
 msgstr "{} registration numbers"
 
-#: Win/AgilityBookDoc.cpp:1178
+#: Win/AgilityBookDoc.cpp:1181
 msgid "IDS_ADDED_EXISTINGPTS"
 msgstr "{} existing points"
 
-#: Win/AgilityBookDoc.cpp:1185 Win/AgilityBookDoc.cpp:1232
+#: Win/AgilityBookDoc.cpp:1188 Win/AgilityBookDoc.cpp:1235
 msgid "IDS_ADDED_TITLES"
 msgstr "{} titles"
 
-#: Win/AgilityBookDoc.cpp:1192
+#: Win/AgilityBookDoc.cpp:1195
 msgid "IDS_ADDED_TRIALS"
 msgstr "{} trials"
 
-#: Win/AgilityBookDoc.cpp:1199
+#: Win/AgilityBookDoc.cpp:1202
 msgid "IDS_ADDED_CLUBS"
 msgstr "{} clubs"
 
-#: Win/AgilityBookDoc.cpp:1206
+#: Win/AgilityBookDoc.cpp:1209
 msgid "IDS_ADDED_JUDGES"
 msgstr "{} judges"
 
-#: Win/AgilityBookDoc.cpp:1213
+#: Win/AgilityBookDoc.cpp:1216
 msgid "IDS_ADDED_LOCATIONS"
 msgstr "{} locations"
 
-#: Win/AgilityBookDoc.cpp:1221 Win/AgilityBookDoc.cpp:1230
+#: Win/AgilityBookDoc.cpp:1224 Win/AgilityBookDoc.cpp:1233
 msgid "IDS_UPDATED"
 msgstr "Updated"
 
-#: Win/AgilityBookDoc.cpp:1311
+#: Win/AgilityBookDoc.cpp:1314
 msgid "IDS_UPDATED_TRAINING_ITEMS"
 msgstr "Added {0} new Training Log items, {1} updated items."
 
-#: Win/AgilityBookDoc.cpp:1581 Win/DlgDog.cpp:74 Win/DlgFindLinks.cpp:129
-#: Win/DlgListCtrl.cpp:512 Win/DlgListViewer.cpp:1246 Win/Print.cpp:262
+#: Win/AgilityBookDoc.cpp:1584 Win/DlgDog.cpp:74 Win/DlgFindLinks.cpp:62
+#: Win/DlgListCtrl.cpp:516 Win/DlgListViewer.cpp:1246 Win/Print.cpp:262
 msgid "IDS_COL_DOG"
 msgstr "Dog"
 
-#: Win/AgilityBookDoc.cpp:1648
+#: Win/AgilityBookDoc.cpp:1651
 msgid "Sorry, could not open this file."
 msgstr "Sorry, could not open this file."
 
-#: Win/AgilityBookDoc.cpp:1665 Win/AgilityBookDoc.cpp:1681
+#: Win/AgilityBookDoc.cpp:1668 Win/AgilityBookDoc.cpp:1684
 msgid "Cannot open file '{}'."
 msgstr "Cannot open file '{}'."
 
-#: Win/AgilityBookDoc.cpp:1692
+#: Win/AgilityBookDoc.cpp:1695
 msgid "IDS_NONFATAL_MSGS"
 msgstr ""
 "Warning: Some non-fatal messages were generated while loading the file:"
 
-#: Win/AgilityBookDoc.cpp:1795
+#: Win/AgilityBookDoc.cpp:1798
 msgid "IDS_WARN_FILE_UPDATED"
 msgstr ""
 "Warning: This file has changed since it was opened. Are you sure you want to "
 "overwrite any changes?"
 
-#: Win/AgilityBookDoc.cpp:1840 Win/UpdateInfo.cpp:773
+#: Win/AgilityBookDoc.cpp:1843 Win/UpdateInfo.cpp:782
 msgid "IDS_CANNOT_OPEN"
 msgstr "Unable to open file '{}' for writing."
 
-#: Win/AgilityBookDoc.cpp:1846
+#: Win/AgilityBookDoc.cpp:1849
 msgid "IDS_INTERNAL_ERROR"
 msgstr "Internal error: File not saved."
 
-#: Win/AgilityBookDoc.cpp:1875
+#: Win/AgilityBookDoc.cpp:1878
 msgid "IDS_SEARCH_NOTES"
 msgstr "Search Notes"
 
-#: Win/AgilityBookDoc.cpp:2044
+#: Win/AgilityBookDoc.cpp:2049
 msgid "IDS_NO_LINKED_FILES"
 msgstr "No linked files found."
 
-#: Win/AgilityBookDoc.cpp:2300
+#: Win/AgilityBookDoc.cpp:2315
 msgid "IDS_FILEPROP_NAME"
 msgstr "File name: {}"
 
-#: Win/AgilityBookDoc.cpp:2303
+#: Win/AgilityBookDoc.cpp:2318
 msgid "IDS_FILEPROP_NAME_READONLY"
 msgstr "[readonly]"
 
-#: Win/AgilityBookDoc.cpp:2306 Win/AgilityBookDoc.cpp:2330
+#: Win/AgilityBookDoc.cpp:2321 Win/AgilityBookDoc.cpp:2345
 msgid "IDS_FILEPROP_NAME_MODIFIED"
 msgstr "[changes pending]"
 
-#: Win/AgilityBookDoc.cpp:2311
+#: Win/AgilityBookDoc.cpp:2326
 msgid "IDS_FILEPROP_SIZE"
 msgstr "File size: {} bytes"
 
-#: Win/AgilityBookDoc.cpp:2319
+#: Win/AgilityBookDoc.cpp:2334
 msgid "IDS_FILEPROP_CREATED"
 msgstr "Created: {}"
 
-#: Win/AgilityBookDoc.cpp:2323
+#: Win/AgilityBookDoc.cpp:2338
 msgid "IDS_FILEPROP_MODIFIED"
 msgstr "Modified: {}"
 
-#: Win/AgilityBookDoc.cpp:2341
+#: Win/AgilityBookDoc.cpp:2356
 msgid "IDS_FILEPROP_CONFIGURATION"
 msgstr "Configuration: {}"
 
-#: Win/AgilityBookDoc.cpp:2347
+#: Win/AgilityBookDoc.cpp:2362
 msgid "IDS_FILEPROP_CONFIGURATION_CURRENT"
 msgstr "Configuration: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2358
+#: Win/AgilityBookDoc.cpp:2373
 msgid "IDS_FILEPROP_VERSION"
 msgstr "Document version: {}"
 
-#: Win/AgilityBookDoc.cpp:2364
+#: Win/AgilityBookDoc.cpp:2379
 msgid "IDS_FILEPROP_VERSION_CURRENT"
 msgstr "Document version: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2376
+#: Win/AgilityBookDoc.cpp:2391
 msgid "IDS_FILEPROP_FILEWRITTEN"
 msgstr ""
 "File written on:\n"
@@ -1181,7 +1241,7 @@ msgstr ""
 "Local time: {2}\n"
 "ARB: {3}"
 
-#: Win/AgilityBookDoc.cpp:2384
+#: Win/AgilityBookDoc.cpp:2399
 msgid "IDS_FILE_PROPERTIES"
 msgstr "File Properties"
 
@@ -1981,16 +2041,16 @@ msgstr "This panel contains information about upcoming trials."
 msgid "PanelTraining"
 msgstr "This panel contains your training log entries."
 
-#: Win/AgilityBookRunsView.cpp:352 Win/AgilityBookRunsView.cpp:354
-#: Win/AgilityBookTreeData.cpp:583 Win/WizardExport.cpp:850
+#: Win/AgilityBookRunsView.cpp:353 Win/AgilityBookRunsView.cpp:355
+#: Win/AgilityBookTreeData.cpp:583 Win/WizardExport.cpp:851
 msgid "IDS_SQ"
 msgstr "SQ"
 
-#: Win/AgilityBookRunsView.cpp:1355
+#: Win/AgilityBookRunsView.cpp:1356
 msgid "IDS_NUM_RUNS_QS"
 msgstr "{0} entries, {1} runs, {2} Qs"
 
-#: Win/AgilityBookTrainingView.cpp:429
+#: Win/AgilityBookTrainingView.cpp:430
 msgid "IDS_NUM_TRAINING"
 msgstr "{} entries"
 
@@ -2008,7 +2068,7 @@ msgstr ""
 "\n"
 "Are you sure you want to continue?"
 
-#: Win/AgilityBookTreeView.cpp:685
+#: Win/AgilityBookTreeView.cpp:686
 msgid "IDS_CREATEDOG_FAILED"
 msgstr "Error: Failed to create dog."
 
@@ -2171,7 +2231,7 @@ msgstr "Level"
 
 #: Win/DlgAssignColumns.cpp:235 Win/DlgAssignColumns.cpp:393
 #: Win/DlgConfigMultiQ.cpp:172 Win/DlgDogPanelPoints.cpp:68
-#: Win/DlgFindLinks.cpp:131 Win/DlgListViewer.cpp:1187
+#: Win/DlgFindLinks.cpp:64 Win/DlgListViewer.cpp:1187
 #: Win/DlgListViewer.cpp:1254 Win/DlgListViewer.cpp:1350
 #: Win/DlgListViewer.cpp:1391 Win/DlgPointsViewSort.cpp:198
 msgid "IDS_COL_EVENT"
@@ -2184,14 +2244,14 @@ msgstr "Event"
 msgid "IDS_COL_HEIGHT"
 msgstr "Height"
 
-#: Win/DlgAssignColumns.cpp:241 Win/DlgInfoNote.cpp:560
+#: Win/DlgAssignColumns.cpp:241 Win/DlgInfoNote.cpp:561
 #: Win/DlgListViewer.cpp:977 Win/DlgListViewer.cpp:1015
 #: Win/DlgListViewer.cpp:1027 Win/DlgListViewer.cpp:1192
 #: Win/DlgListViewer.cpp:1259 Win/Print.cpp:269
 msgid "IDS_COL_JUDGE"
 msgstr "Judge"
 
-#: Win/DlgAssignColumns.cpp:244 Win/DlgListCtrl.cpp:514 Win/Print.cpp:270
+#: Win/DlgAssignColumns.cpp:244 Win/DlgListCtrl.cpp:518 Win/Print.cpp:270
 msgid "IDS_COL_HANDLER"
 msgstr "Handler"
 
@@ -2232,11 +2292,11 @@ msgstr "Required Opening"
 msgid "IDS_COL_REQ_CLOSING"
 msgstr "Required Closing"
 
-#: Win/DlgAssignColumns.cpp:274 Win/DlgOptionsCalendar.cpp:493
+#: Win/DlgAssignColumns.cpp:274 Win/DlgOptionsCalendar.cpp:492
 msgid "IDS_COL_OPENING"
 msgstr "Opening"
 
-#: Win/DlgAssignColumns.cpp:277 Win/DlgOptionsCalendar.cpp:500
+#: Win/DlgAssignColumns.cpp:277 Win/DlgOptionsCalendar.cpp:499
 msgid "IDS_COL_CLOSING"
 msgstr "Closing"
 
@@ -2245,7 +2305,7 @@ msgid "IDS_COL_REQ_POINTS"
 msgstr "Required Points"
 
 #: Win/DlgAssignColumns.cpp:283 Win/DlgDogPanelPoints.cpp:62
-#: Win/DlgListCtrl.cpp:561 Win/DlgListViewer.cpp:1357
+#: Win/DlgListCtrl.cpp:565 Win/DlgListViewer.cpp:1357
 #: Win/DlgListViewer.cpp:1392
 msgid "IDS_COL_POINTS"
 msgstr "Points"
@@ -2286,7 +2346,7 @@ msgid "IDS_COL_TITLE_PTS"
 msgstr "Title Points"
 
 #: Win/DlgAssignColumns.cpp:304 Win/DlgDogPanelPoints.cpp:70
-#: Win/DlgInfoNote.cpp:75 Win/DlgInfoNote.cpp:1013 Win/DlgListViewer.cpp:1422
+#: Win/DlgInfoNote.cpp:75 Win/DlgInfoNote.cpp:1014 Win/DlgListViewer.cpp:1422
 #: Win/Print.cpp:284
 msgid "IDS_COL_COMMENTS"
 msgstr "Comments"
@@ -2300,8 +2360,8 @@ msgid "IDS_COL_ENTERED"
 msgstr "Entered"
 
 #: Win/DlgAssignColumns.cpp:345 Win/DlgDogPanelTitles.cpp:63
-#: Win/DlgFindLinks.cpp:128 Win/DlgInfoNote.cpp:74 Win/DlgInfoNote.cpp:1012
-#: Win/DlgListCtrl.cpp:560 Win/DlgListViewer.cpp:1421
+#: Win/DlgFindLinks.cpp:61 Win/DlgInfoNote.cpp:74 Win/DlgInfoNote.cpp:1013
+#: Win/DlgListCtrl.cpp:564 Win/DlgListViewer.cpp:1421
 #: Win/DlgRunPanelRefRuns.cpp:67
 msgid "IDS_COL_NAME"
 msgstr "Name"
@@ -2562,7 +2622,7 @@ msgstr "Fields that are currently assigned for importing and exporting."
 msgid "IDS_BLANK_COLUMN"
 msgstr "<Blank Column>"
 
-#: Win/DlgAssignColumns.cpp:1200 Win/DlgOptionsFilter.cpp:689
+#: Win/DlgAssignColumns.cpp:1200 Win/DlgOptionsFilter.cpp:671
 msgid "IDS_NAME_FILTER"
 msgstr "You must name a filter in order to save it."
 
@@ -2807,12 +2867,12 @@ msgstr "N&otes"
 msgid "HIDC_CAL_NOTES"
 msgstr "Any notes you want to make about this trial."
 
-#: Win/DlgCalendar.cpp:903 Win/DlgCalendar.cpp:909
+#: Win/DlgCalendar.cpp:899 Win/DlgCalendar.cpp:905
 msgid "IDS_BAD_DRAWDATE"
 msgstr ""
 "The draw date must be after the opening date and before the closing date."
 
-#: Win/DlgCalendar.cpp:920
+#: Win/DlgCalendar.cpp:916
 msgid "IDS_AUTODELETE_CAL"
 msgstr ""
 "Warning: The date you have entered will cause this entry to automatically be "
@@ -2862,11 +2922,11 @@ msgid "HIDC_CLUB_PRIMARY"
 msgstr ""
 "This club is the primary club in a co-sanctioned trial. Its rules are used."
 
-#: Win/DlgClub.cpp:289 Win/DlgRegNum.cpp:191 Win/DlgRunPanelScore.cpp:1133
+#: Win/DlgClub.cpp:294 Win/DlgRegNum.cpp:191 Win/DlgRunPanelScore.cpp:1133
 msgid "IDS_SELECT_VENUE"
 msgstr "Please select a venue."
 
-#: Win/DlgClub.cpp:298
+#: Win/DlgClub.cpp:303
 msgid "IDS_SELECT_COSANCTION"
 msgstr "Please select a co-sanctioning club."
 
@@ -3071,77 +3131,77 @@ msgstr ""
 msgid "HIDC_CONFIG_EVENT_NOTES"
 msgstr "Notes about the current scoring method."
 
-#: Win/DlgConfigEvent.cpp:622 Win/DlgConfigEventMethod.cpp:212
-#: Win/DlgConfigEventMethod.cpp:842 Win/FilterOptions.cpp:276
+#: Win/DlgConfigEvent.cpp:623 Win/DlgConfigEventMethod.cpp:212
+#: Win/DlgConfigEventMethod.cpp:841 Win/FilterOptions.cpp:276
 #: Win/FilterOptions.cpp:359 Win/FilterOptions.cpp:428
 #: Win/FilterOptions.cpp:436 Win/FilterOptions.cpp:467
 msgid "IDS_ALL"
 msgstr "<All>"
 
-#: Win/DlgConfigEvent.cpp:738
+#: Win/DlgConfigEvent.cpp:739
 msgid "IDS_CONFIGEVENT_STYLE"
 msgstr "Scoring Style"
 
-#: Win/DlgConfigEvent.cpp:753 Win/DlgConfigEvent.cpp:770
-#: Win/DlgConfigEvent.cpp:791 Win/DlgConfigEvent.cpp:806
-#: Win/DlgConfigEvent.cpp:817
+#: Win/DlgConfigEvent.cpp:754 Win/DlgConfigEvent.cpp:771
+#: Win/DlgConfigEvent.cpp:792 Win/DlgConfigEvent.cpp:807
+#: Win/DlgConfigEvent.cpp:818
 msgid "IDS_CONFIGEVENT_TIMEFAULTMULT"
 msgstr "Time Fault Multiplier"
 
-#: Win/DlgConfigEvent.cpp:757
+#: Win/DlgConfigEvent.cpp:758
 msgid "IDS_CONFIGEVENT_REQOPEN"
 msgstr "Required Opening"
 
-#: Win/DlgConfigEvent.cpp:758
+#: Win/DlgConfigEvent.cpp:759
 msgid "IDS_CONFIGEVENT_REQCLOSE"
 msgstr "Required Closing"
 
-#: Win/DlgConfigEvent.cpp:768 Win/DlgConfigEvent.cpp:789
+#: Win/DlgConfigEvent.cpp:769 Win/DlgConfigEvent.cpp:790
 msgid "IDS_CONFIGEVENT_TF_FROMSCORE"
 msgstr "Subtract time faults from score"
 
-#: Win/DlgConfigEvent.cpp:774 Win/DlgConfigEvent.cpp:795
-#: Win/DlgConfigEvent.cpp:822
+#: Win/DlgConfigEvent.cpp:775 Win/DlgConfigEvent.cpp:796
+#: Win/DlgConfigEvent.cpp:823
 msgid "IDS_CONFIGEVENT_TF_UNDER"
 msgstr "Compute time faults under SCT"
 
-#: Win/DlgConfigEvent.cpp:779 Win/DlgConfigEvent.cpp:800
-#: Win/DlgConfigEvent.cpp:827
+#: Win/DlgConfigEvent.cpp:780 Win/DlgConfigEvent.cpp:801
+#: Win/DlgConfigEvent.cpp:828
 msgid "IDS_CONFIGEVENT_TF_OVER"
 msgstr "Compute time faults over SCT"
 
-#: Win/DlgConfigEvent.cpp:785 Win/DlgRunPanelScore.cpp:2001 Win/TabView.cpp:254
-#: Win/TabView.cpp:301 Win/TabView.cpp:376
+#: Win/DlgConfigEvent.cpp:786 Win/DlgRunPanelScore.cpp:2001 Win/TabView.cpp:255
+#: Win/TabView.cpp:302 Win/TabView.cpp:377
 msgid "IDS_POINTS"
 msgstr "Points"
 
-#: Win/DlgConfigEvent.cpp:812
+#: Win/DlgConfigEvent.cpp:813
 msgid "IDS_CONFIGEVENT_CLEANQ"
 msgstr "Runs must be clean to Q"
 
-#: Win/DlgConfigEvent.cpp:837
+#: Win/DlgConfigEvent.cpp:838
 msgid "IDS_CONFIGEVENT_DROPFRAC"
 msgstr "Drop time fractions for faults"
 
-#: Win/DlgConfigEvent.cpp:842
+#: Win/DlgConfigEvent.cpp:843
 msgid "IDS_CONFIGEVENT_BONUSTITLE"
 msgstr "Has Bonus Title Points"
 
-#: Win/DlgConfigEvent.cpp:847
+#: Win/DlgConfigEvent.cpp:848
 msgid "IDS_CONFIGEVENT_SUPERQ"
 msgstr "Has Super Qs"
 
-#: Win/DlgConfigEvent.cpp:852
+#: Win/DlgConfigEvent.cpp:853
 msgid "IDS_CONFIGEVENT_SPEEDPTS"
 msgstr "Has Speed Points"
 
-#: Win/DlgConfigEvent.cpp:1154 Win/DlgConfigEvent.cpp:1166
-#: Win/DlgConfigEvent.cpp:1174 Win/DlgConfigEvent.cpp:1457
-#: Win/DlgConfigEvent.cpp:1468 Win/DlgConfigEvent.cpp:1475
+#: Win/DlgConfigEvent.cpp:1155 Win/DlgConfigEvent.cpp:1167
+#: Win/DlgConfigEvent.cpp:1175 Win/DlgConfigEvent.cpp:1458
+#: Win/DlgConfigEvent.cpp:1469 Win/DlgConfigEvent.cpp:1476
 msgid "IDS_TITLEPTS_EXISTS"
 msgstr "An entry already exists for the specified faults"
 
-#: Win/DlgConfigEvent.cpp:1618
+#: Win/DlgConfigEvent.cpp:1619
 msgid "IDS_CONFIGEVENT_OVERLAPDATES"
 msgstr ""
 "WARNING\n"
@@ -3332,7 +3392,7 @@ msgstr ""
 "Compute titling points using raw faults. This implies that a run must be "
 "under SCT to qualify."
 
-#: Win/DlgConfigEventMethod.cpp:539 Win/DlgConfigEventMethod.cpp:788
+#: Win/DlgConfigEventMethod.cpp:539 Win/DlgConfigEventMethod.cpp:787
 msgid "IDC_CONFIG_EVENT_OPENING_PTS"
 msgstr "Required &Opening"
 
@@ -3350,27 +3410,27 @@ msgstr "Required &Closing"
 msgid "HIDC_CONFIG_EVENT_CLOSING_PTS"
 msgstr "Number of closing points required in order to qualify."
 
-#: Win/DlgConfigEventMethod.cpp:803 Win/DlgRunPanelScore.cpp:1990
+#: Win/DlgConfigEventMethod.cpp:802 Win/DlgRunPanelScore.cpp:1990
 msgid "IDS_SCORING_REQUIRED_POINTS"
 msgstr "Required Points"
 
-#: Win/DlgConfigEventMethod.cpp:1032 Win/DlgRunPanelScore.cpp:1142
+#: Win/DlgConfigEventMethod.cpp:1031 Win/DlgRunPanelScore.cpp:1142
 msgid "IDS_SELECT_DIVISION"
 msgstr "Please select a Division."
 
-#: Win/DlgConfigEventMethod.cpp:1039 Win/DlgRunPanelScore.cpp:1151
+#: Win/DlgConfigEventMethod.cpp:1038 Win/DlgRunPanelScore.cpp:1151
 msgid "IDS_SELECT_LEVEL"
 msgstr "Please select a Level."
 
-#: Win/DlgConfigEventMethod.cpp:1046
+#: Win/DlgConfigEventMethod.cpp:1045
 msgid "IDS_SELECT_STYLE"
 msgstr "Please select a Style."
 
-#: Win/DlgConfigEventMethod.cpp:1059
+#: Win/DlgConfigEventMethod.cpp:1058
 msgid "IDS_CONFIGEVENT_DATEORDER"
 msgstr "Valid From date is before the Valid To date"
 
-#: Win/DlgConfigEventMethod.cpp:1072
+#: Win/DlgConfigEventMethod.cpp:1071
 msgid "IDS_CONFIGEVENT_PLACEMENT0"
 msgstr ""
 "In order to use a placement of 0, you must specify places that have values. "
@@ -3713,11 +3773,11 @@ msgstr "Date this title is valid until."
 msgid "IDD_CONFIG_TITLE_POINTS"
 msgstr "Title Points"
 
-#: Win/DlgConfigTitlePoints.cpp:115 Win/DlgConfigTitlePoints.cpp:333
+#: Win/DlgConfigTitlePoints.cpp:115 Win/DlgConfigTitlePoints.cpp:332
 msgid "IDC_CONFIG_TITLEPTS_VALUE_TEXT2"
 msgstr "&Place"
 
-#: Win/DlgConfigTitlePoints.cpp:116 Win/DlgConfigTitlePoints.cpp:340
+#: Win/DlgConfigTitlePoints.cpp:116 Win/DlgConfigTitlePoints.cpp:339
 msgid "IDC_CONFIG_TITLEPTS_VALUE_TEXT1"
 msgstr "&Faults Allowed"
 
@@ -3819,14 +3879,14 @@ msgstr "Select a file."
 msgid "HIDC_CONFIG_UPDATE_FILENAME"
 msgstr "Name of file to merge."
 
-#: Win/DlgConfigUpdate.cpp:146 Win/WizardStart.cpp:557 Win/WizardStart.cpp:589
-#: Win/WizardStart.cpp:704 Win/WizardStart.cpp:863
+#: Win/DlgConfigUpdate.cpp:146 Win/WizardStart.cpp:557 Win/WizardStart.cpp:590
+#: Win/WizardStart.cpp:710 Win/WizardStart.cpp:875
 msgid "AFX_IDP_FAILED_TO_OPEN_DOC"
 msgstr "Failed to open document."
 
-#: Win/DlgConfigUpdate.cpp:208 Win/WizardStart.cpp:545 Win/WizardStart.cpp:577
-#: Win/WizardStart.cpp:609 Win/WizardStart.cpp:692 Win/WizardStart.cpp:724
-#: Win/WizardStart.cpp:754
+#: Win/DlgConfigUpdate.cpp:208 Win/WizardStart.cpp:545 Win/WizardStart.cpp:578
+#: Win/WizardStart.cpp:611 Win/WizardStart.cpp:698 Win/WizardStart.cpp:731
+#: Win/WizardStart.cpp:763
 msgid "IDS_FILEEXT_FILTER_ARB"
 msgstr "Agility Record Book (*.arb)|*.arb|All Files (*.*)|*.*||"
 
@@ -4185,7 +4245,7 @@ msgstr "&Notes"
 msgid "HIDC_DOG_NOTES"
 msgstr "Notes. Anything additional you want to add."
 
-#: Win/DlgDogPanelRegNums.cpp:53 Win/DlgListCtrl.cpp:513
+#: Win/DlgDogPanelRegNums.cpp:53 Win/DlgListCtrl.cpp:517
 msgid "IDS_COL_NUMBER"
 msgstr "Number"
 
@@ -4492,40 +4552,40 @@ msgstr "&Find Next"
 msgid "IDC_FIND_CLOSE"
 msgstr "Close"
 
-#: Win/DlgFindLinks.cpp:130
+#: Win/DlgFindLinks.cpp:63
 msgid "IDS_COL_TRIAL"
 msgstr "Trial"
 
 # DlgFindLinks
-#: Win/DlgFindLinks.cpp:196
+#: Win/DlgFindLinks.cpp:185
 msgid "IDD_FIND_LINKS"
 msgstr "File Links"
 
-#: Win/DlgFindLinks.cpp:219 Win/DlgFindLinks.cpp:220
+#: Win/DlgFindLinks.cpp:201 Win/DlgFindLinks.cpp:202
 msgid "HIDC_FINDLINKS_LIST"
 msgstr "List of all linked files."
 
-#: Win/DlgFindLinks.cpp:226
+#: Win/DlgFindLinks.cpp:224
 msgid "IDC_FINDLINKS_COPY"
 msgstr "&Copy Paths"
 
-#: Win/DlgFindLinks.cpp:228 Win/DlgFindLinks.cpp:229
+#: Win/DlgFindLinks.cpp:226 Win/DlgFindLinks.cpp:227
 msgid "HIDC_FINDLINKS_COPY"
 msgstr "Copy all the paths to the clipboard."
 
-#: Win/DlgFindLinks.cpp:231
+#: Win/DlgFindLinks.cpp:229
 msgid "IDC_FINDLINKS_EDIT"
 msgstr "&Edit..."
 
-#: Win/DlgFindLinks.cpp:233 Win/DlgFindLinks.cpp:234
+#: Win/DlgFindLinks.cpp:231 Win/DlgFindLinks.cpp:232
 msgid "HIDC_FINDLINKS_EDIT"
 msgstr "Edit the selected link. This allows you to fix any bad paths."
 
-#: Win/DlgFindLinks.cpp:236
+#: Win/DlgFindLinks.cpp:234
 msgid "IDC_FINDLINKS_OPEN"
 msgstr "&Open"
 
-#: Win/DlgFindLinks.cpp:238 Win/DlgFindLinks.cpp:239
+#: Win/DlgFindLinks.cpp:236 Win/DlgFindLinks.cpp:237
 msgid "HIDC_FINDLINKS_OPEN"
 msgstr "View the selected link."
 
@@ -4594,7 +4654,7 @@ msgstr "All"
 msgid "HIDC_INFONOTE_VIS_ALL"
 msgstr "Show all items"
 
-#: Win/DlgInfoNote.cpp:439 Win/DlgInfoNote.cpp:1010
+#: Win/DlgInfoNote.cpp:439 Win/DlgInfoNote.cpp:1011
 msgid "IDC_INFONOTE_VIS_VIS"
 msgstr "Visible"
 
@@ -4622,7 +4682,7 @@ msgstr "All"
 msgid "HIDC_INFONOTE_USE_ALL"
 msgstr "Show all items"
 
-#: Win/DlgInfoNote.cpp:477 Win/DlgInfoNote.cpp:1011
+#: Win/DlgInfoNote.cpp:477 Win/DlgInfoNote.cpp:1012
 msgid "IDC_INFONOTE_USE_INUSE"
 msgstr "In use"
 
@@ -4638,23 +4698,23 @@ msgstr "Not in use"
 msgid "HIDC_INFONOTE_USE_NOTINUSE"
 msgstr "Show only items that are hidden or have a comment"
 
-#: Win/DlgInfoNote.cpp:771
+#: Win/DlgInfoNote.cpp:772
 msgid "IDS_INFONOTE_FMT_COUNT"
 msgstr "{0} items"
 
-#: Win/DlgInfoNote.cpp:774
+#: Win/DlgInfoNote.cpp:775
 msgid "IDS_INFONOTE_FMT_COUNT_OF"
 msgstr "{0} of {1} items"
 
-#: Win/DlgInfoNote.cpp:787
+#: Win/DlgInfoNote.cpp:788
 msgid "IDS_INFONOTE_FILTERED"
 msgstr "Edited information is currently hidden by the viewing options."
 
-#: Win/DlgInfoNote.cpp:1021 Win/DlgInfoNote.cpp:1025
+#: Win/DlgInfoNote.cpp:1022 Win/DlgInfoNote.cpp:1026
 msgid "IDS_INFONOTE_YES"
 msgstr "Yes"
 
-#: Win/DlgInfoNote.cpp:1021 Win/DlgInfoNote.cpp:1024
+#: Win/DlgInfoNote.cpp:1022 Win/DlgInfoNote.cpp:1025
 msgid "IDS_INFONOTE_NO"
 msgstr "No"
 
@@ -4670,72 +4730,72 @@ msgstr "Show or hide this item in various selection lists."
 msgid "HIDC_INFONOTE_COMMENTS"
 msgstr "Comments about the club, judge or location."
 
-#: Win/DlgListCtrl.cpp:447 Win/TabView.cpp:260 Win/TabView.cpp:377
+#: Win/DlgListCtrl.cpp:447 Win/TabView.cpp:261 Win/TabView.cpp:378
 msgid "IDS_CALENDAR"
 msgstr "Calendar"
 
-#: Win/DlgListCtrl.cpp:498
+#: Win/DlgListCtrl.cpp:502
 msgid "IDS_FAULT_TYPES"
 msgstr "Fault Types"
 
-#: Win/DlgListCtrl.cpp:499
+#: Win/DlgListCtrl.cpp:503
 msgid "IDS_COL_FAULT"
 msgstr "Fault"
 
-#: Win/DlgListCtrl.cpp:511 Win/DlgListViewer.cpp:1117
+#: Win/DlgListCtrl.cpp:515 Win/DlgListViewer.cpp:1117
 msgid "IDS_PARTNERS"
 msgstr "Partners"
 
-#: Win/DlgListCtrl.cpp:611 Win/DlgListCtrl.cpp:612
+#: Win/DlgListCtrl.cpp:615 Win/DlgListCtrl.cpp:616
 msgid "HIDC_LIST"
 msgstr "List of entries."
 
-#: Win/DlgListCtrl.cpp:618
+#: Win/DlgListCtrl.cpp:622
 msgid "IDC_LIST_MOVE_UP"
 msgstr "Move &Up"
 
-#: Win/DlgListCtrl.cpp:620 Win/DlgListCtrl.cpp:621
+#: Win/DlgListCtrl.cpp:624 Win/DlgListCtrl.cpp:625
 msgid "HIDC_LIST_MOVE_UP"
 msgstr "Move the selected entry up."
 
-#: Win/DlgListCtrl.cpp:623
+#: Win/DlgListCtrl.cpp:627
 msgid "IDC_LIST_MOVE_DOWN"
 msgstr "Move Do&wn"
 
-#: Win/DlgListCtrl.cpp:625 Win/DlgListCtrl.cpp:626
+#: Win/DlgListCtrl.cpp:629 Win/DlgListCtrl.cpp:630
 msgid "HIDC_LIST_MOVE_DOWN"
 msgstr "Move the selected entry down."
 
 # DlgListCtrl
-#: Win/DlgListCtrl.cpp:628
+#: Win/DlgListCtrl.cpp:632
 msgid "IDC_LIST_NEW"
 msgstr "&New..."
 
-#: Win/DlgListCtrl.cpp:630 Win/DlgListCtrl.cpp:631
+#: Win/DlgListCtrl.cpp:634 Win/DlgListCtrl.cpp:635
 msgid "HIDC_LIST_NEW"
 msgstr "Create a new entry."
 
-#: Win/DlgListCtrl.cpp:633
+#: Win/DlgListCtrl.cpp:637
 msgid "IDC_LIST_EDIT"
 msgstr "&Edit..."
 
-#: Win/DlgListCtrl.cpp:635 Win/DlgListCtrl.cpp:636
+#: Win/DlgListCtrl.cpp:639 Win/DlgListCtrl.cpp:640
 msgid "HIDC_LIST_EDIT"
 msgstr "Edit the selected entry."
 
-#: Win/DlgListCtrl.cpp:638
+#: Win/DlgListCtrl.cpp:642
 msgid "IDC_LIST_DELETE"
 msgstr "&Delete"
 
-#: Win/DlgListCtrl.cpp:640 Win/DlgListCtrl.cpp:641
+#: Win/DlgListCtrl.cpp:644 Win/DlgListCtrl.cpp:645
 msgid "HIDC_LIST_DELETE"
 msgstr "Delete the selected entry."
 
-#: Win/DlgListCtrl.cpp:643
+#: Win/DlgListCtrl.cpp:647
 msgid "IDC_LIST_TRIAL"
 msgstr "&Create Trial..."
 
-#: Win/DlgListCtrl.cpp:645 Win/DlgListCtrl.cpp:646
+#: Win/DlgListCtrl.cpp:649 Win/DlgListCtrl.cpp:650
 msgid "HIDC_LIST_TRIAL"
 msgstr ""
 "Create a trial from the selected calendar entry. Only entries with "
@@ -4777,10 +4837,6 @@ msgstr "Copy the items in the list to the clipboard in a tab-delineated form."
 #: Win/DlgListViewer.cpp:1468
 msgid "IDC_LIST_CLOSE"
 msgstr "Close"
-
-#: Win/DlgMessageBox.cpp:57 Win/MainFrm.cpp:171
-msgid "Agility Record Book"
-msgstr "Agility Record Book"
 
 # DlgMessageBox
 #: Win/DlgMessageBox.cpp:85
@@ -6285,15 +6341,15 @@ msgstr "Club Notes"
 msgid "HIDC_TRIAL_CLUB_INFO"
 msgstr "Notes about the selected club."
 
-#: Win/DlgTrial.cpp:389
+#: Win/DlgTrial.cpp:385
 msgid "IDS_COL_COSANCTION"
 msgstr "Co-Sanctioned"
 
-#: Win/DlgTrial.cpp:606
+#: Win/DlgTrial.cpp:602
 msgid "IDS_ADD_CLUB_FAILED"
 msgstr "This club and venue are already in the trial."
 
-#: Win/DlgTrial.cpp:741
+#: Win/DlgTrial.cpp:737
 msgid "IDS_CONFIG_DELETE_RUNS"
 msgstr ""
 "Warning!!!\n"
@@ -6304,31 +6360,31 @@ msgstr ""
 "Are you sure you want to continue?"
 
 # This is 11 spaces
-#: Win/MainFrm.cpp:204
+#: Win/MainFrm.cpp:209
 msgid "ID_INDICATOR_DOG"
 msgstr "          "
 
-#: Win/MainFrm.cpp:207
+#: Win/MainFrm.cpp:212
 msgid "ID_INDICATOR_STATUS"
 msgstr "status"
 
-#: Win/MainFrm.cpp:210 Win/MainFrm.cpp:245
+#: Win/MainFrm.cpp:215 Win/MainFrm.cpp:276
 msgid "ID_INDICATOR_FILTERED"
 msgstr "Filtered"
 
-#: Win/MainFrm.cpp:366
+#: Win/MainFrm.cpp:399
 msgid "Canceling file download..."
 msgstr "Canceling file download..."
 
-#: Win/MainFrm.cpp:535
+#: Win/MainFrm.cpp:575
 msgid "LinkHelpUrlSubject"
 msgstr "AgilityBook v%VERSION% Help:"
 
-#: Win/MainFrm.cpp:539 Win/MainFrm.cpp:556
+#: Win/MainFrm.cpp:579 Win/MainFrm.cpp:598
 msgid "LinkHelpAddress"
 msgstr "help@agilityrecordbook.com"
 
-#: Win/MainFrm.cpp:541
+#: Win/MainFrm.cpp:581
 msgid "LinkHelpUrlBody"
 msgstr ""
 "Please describe the problem, and if possible, how to recreate it:\n"
@@ -6337,50 +6393,50 @@ msgstr ""
 "file to this message."
 
 # DlgAbout
-#: Win/MainFrm.cpp:543
+#: Win/MainFrm.cpp:583
 msgid "IDD_ABOUTBOX"
 msgstr "About"
 
-#: Win/MainFrm.cpp:544
+#: Win/MainFrm.cpp:584
 msgid "AboutText"
 msgstr ""
 "{} is Open Source and freely distibutable. We only request that you make a "
 "contribution ($10 or more) to your local animal shelter or rescue group."
 
-#: Win/MainFrm.cpp:554
+#: Win/MainFrm.cpp:596
 msgid "AboutLinks"
 msgstr "Please send any bug reports or suggestions to:"
 
-#: Win/MainFrm.cpp:555
+#: Win/MainFrm.cpp:597
 msgid "LinkGroupText"
 msgstr "Discussion Group"
 
-#: Win/MainFrm.cpp:555
+#: Win/MainFrm.cpp:597
 msgid "LinkGroupUrl"
 msgstr "https://groups.io/g/AgilityRecordBook"
 
-#: Win/MainFrm.cpp:558
+#: Win/MainFrm.cpp:600
 msgid "UsefulLinks"
 msgstr "Useful links:"
 
-#: Win/MainFrm.cpp:559
+#: Win/MainFrm.cpp:601
 msgid "LinkArbText"
 msgstr "Agility Record Book Home Page"
 
-#: Win/MainFrm.cpp:559
+#: Win/MainFrm.cpp:601
 msgid "LinkArbUrl"
 msgstr "https://www.agilityrecordbook.com"
 
-#: Win/MainFrm.cpp:560
+#: Win/MainFrm.cpp:602
 msgid "LinkArbDownloadText"
 msgstr "Agility Record Book Downloads"
 
-#: Win/MainFrm.cpp:560 Win/UpdateInfo.cpp:214
+#: Win/MainFrm.cpp:602 Win/UpdateInfo.cpp:216
 msgid "LinkArbDownloadUrl"
 msgstr "https://www.agilityrecordbook.com/download.php"
 
 #: Win/PointsData.cpp:258 Win/PointsData.cpp:1242 Win/Print.cpp:121
-#: Win/Print.cpp:1072 Win/TabView.cpp:249 Win/TabView.cpp:375
+#: Win/Print.cpp:1072 Win/TabView.cpp:250 Win/TabView.cpp:376
 msgid "IDS_RUNS"
 msgstr "Runs"
 
@@ -6452,83 +6508,83 @@ msgstr "Other Points"
 msgid "IDS_COL_NAME_BREED_NOTE"
 msgstr "Name/Breed/Notes"
 
-#: Win/TabView.cpp:265 Win/TabView.cpp:378
+#: Win/TabView.cpp:266 Win/TabView.cpp:379
 msgid "IDS_TRAINING"
 msgstr "Training Log"
 
-#: Win/UpdateInfo.cpp:153
+#: Win/UpdateInfo.cpp:154
 msgid "IDS_UPDATED_CONFIG"
 msgstr ""
 "The configuration has been updated. Would you like to merge the new one with "
 "your data?"
 
-#: Win/UpdateInfo.cpp:271
+#: Win/UpdateInfo.cpp:273
 msgid "A file download is in progress. Closing the window will cancel it."
 msgstr "A file download is in progress. Closing the window will cancel it."
 
-#: Win/UpdateInfo.cpp:272
+#: Win/UpdateInfo.cpp:274
 msgid "Confirm"
 msgstr "Confirm"
 
-#: Win/UpdateInfo.cpp:274
+#: Win/UpdateInfo.cpp:276
 msgid "Cancel and close"
 msgstr "Cancel and close"
 
-#: Win/UpdateInfo.cpp:274
+#: Win/UpdateInfo.cpp:276
 msgid "Don't close"
 msgstr "Don't close"
 
-#: Win/UpdateInfo.cpp:321
+#: Win/UpdateInfo.cpp:323
 msgid "IDS_INSTALL_BUSY"
 msgstr ""
 "An update is available but cannot be installed at this time. Make sure the "
 "system is not updating or waiting to be rebooted."
 
-#: Win/UpdateInfo.cpp:346 Win/UpdateInfo.cpp:524
+#: Win/UpdateInfo.cpp:348 Win/UpdateInfo.cpp:533
 msgid "IDS_UPDATE_UNKNOWN"
 msgstr "Unable to determine current released version."
 
-#: Win/UpdateInfo.cpp:448 Win/UpdateInfo.cpp:725
+#: Win/UpdateInfo.cpp:456 Win/UpdateInfo.cpp:734
 msgid "IDS_LOAD_FAILED"
 msgstr "Failed to load '{}'."
 
-#: Win/UpdateInfo.cpp:598
+#: Win/UpdateInfo.cpp:607
 msgid "IDS_VERSION_AVAILABLE"
 msgstr "Version {} is available. Would you like to download it?"
 
-#: Win/UpdateInfo.cpp:711
+#: Win/UpdateInfo.cpp:720
 msgid "IDS_UPDATE_CURRENT"
 msgstr "No updates are available at this time."
 
-#: Win/UpdateInfo.cpp:781
+#: Win/UpdateInfo.cpp:790
 msgid "IDS_DOWNLOADING"
 msgstr "Downloading..."
 
-#: Win/UpdateInfo.cpp:804
+#: Win/UpdateInfo.cpp:813
 msgid "IDS_DOWNLOAD_AND_RESTART"
 msgstr ""
 "{} is now downloaded. Agility Record Book will now close so you can install "
 "it."
 
-#: Win/UpdateInfo.cpp:806
+#: Win/UpdateInfo.cpp:815
 msgid "IDS_VALIDATING"
 msgstr "Validating..."
 
-#: Win/UpdateInfo.cpp:811 Win/UpdateInfo.cpp:821 Win/UpdateInfo.cpp:829
-#: Win/UpdateInfo.cpp:837 Win/UpdateInfo.cpp:905
+#: Win/UpdateInfo.cpp:820 Win/UpdateInfo.cpp:830 Win/UpdateInfo.cpp:838
+#: Win/UpdateInfo.cpp:846 Win/UpdateInfo.cpp:914
 msgid "IDS_ERROR_DOWNLOAD"
 msgstr "ERROR: The downloaded file is corrupt."
 
-#: Win/UpdateInfo.cpp:845
+#: Win/UpdateInfo.cpp:854
 msgid "IDS_ERROR_UNEXPECTED"
 msgstr "ERROR: Unexpected file format, expected MSI file."
 
-#: Win/UpdateInfo.cpp:875 Win/UpdateInfo.cpp:896
+#: Win/UpdateInfo.cpp:884 Win/UpdateInfo.cpp:905
 msgid "IDS_ERROR_AUTOUPDATE"
 msgstr "ERROR: Internal error during update process. Procedure was cancelled."
 
 # WizardStart
-#: Win/Wizard.cpp:54 Win/WizardStart.cpp:518
+#: Win/Wizard.cpp:54 Win/WizardStart.cpp:517
 msgid "IDD_WIZARD_START"
 msgstr "Import / Export Wizard"
 
@@ -6540,259 +6596,259 @@ msgstr "&Next >"
 msgid "&Finish"
 msgstr "&Finish"
 
-#: Win/WizardExport.cpp:100
+#: Win/WizardExport.cpp:101
 msgid "IDC_WIZARD_EXPORT_DELIM_GROUP"
 msgstr "Delimiters"
 
-#: Win/WizardExport.cpp:105
+#: Win/WizardExport.cpp:106
 msgid "IDC_WIZARD_EXPORT_DELIM_TAB"
 msgstr "Tab"
 
-#: Win/WizardExport.cpp:110 Win/WizardExport.cpp:111
+#: Win/WizardExport.cpp:111 Win/WizardExport.cpp:112
 msgid "HIDC_WIZARD_EXPORT_DELIM_TAB"
 msgstr "A tab character separates the various fields."
 
-#: Win/WizardExport.cpp:114
+#: Win/WizardExport.cpp:115
 msgid "IDC_WIZARD_EXPORT_DELIM_COLON"
 msgstr "Colon"
 
-#: Win/WizardExport.cpp:116 Win/WizardExport.cpp:117
+#: Win/WizardExport.cpp:117 Win/WizardExport.cpp:118
 msgid "HIDC_WIZARD_EXPORT_DELIM_COLON"
 msgstr "A colon character separates the various fields."
 
-#: Win/WizardExport.cpp:120
+#: Win/WizardExport.cpp:121
 msgid "IDC_WIZARD_EXPORT_DELIM_COMMA"
 msgstr "Comma"
 
-#: Win/WizardExport.cpp:122 Win/WizardExport.cpp:123
+#: Win/WizardExport.cpp:123 Win/WizardExport.cpp:124
 msgid "HIDC_WIZARD_EXPORT_DELIM_COMMA"
 msgstr "A comma character separates the various fields."
 
-#: Win/WizardExport.cpp:126
+#: Win/WizardExport.cpp:127
 msgid "IDC_WIZARD_EXPORT_DELIM_SPACE"
 msgstr "Space"
 
-#: Win/WizardExport.cpp:128 Win/WizardExport.cpp:129
+#: Win/WizardExport.cpp:129 Win/WizardExport.cpp:130
 msgid "HIDC_WIZARD_EXPORT_DELIM_SPACE"
 msgstr "A space character separates the various fields."
 
-#: Win/WizardExport.cpp:132
+#: Win/WizardExport.cpp:133
 msgid "IDC_WIZARD_EXPORT_DELIM_SEMI"
 msgstr "Semicolon"
 
-#: Win/WizardExport.cpp:134 Win/WizardExport.cpp:135
+#: Win/WizardExport.cpp:135 Win/WizardExport.cpp:136
 msgid "HIDC_WIZARD_EXPORT_DELIM_SEMI"
 msgstr "A semi-colon character separates the various fields."
 
-#: Win/WizardExport.cpp:138
+#: Win/WizardExport.cpp:139
 msgid "IDC_WIZARD_EXPORT_DELIM_OTHER"
 msgstr "Other:"
 
-#: Win/WizardExport.cpp:140 Win/WizardExport.cpp:141
+#: Win/WizardExport.cpp:141 Win/WizardExport.cpp:142
 msgid "HIDC_WIZARD_EXPORT_DELIM_OTHER"
 msgstr "The specified character separates the various fields."
 
-#: Win/WizardExport.cpp:175 Win/WizardExport.cpp:176
+#: Win/WizardExport.cpp:176 Win/WizardExport.cpp:177
 msgid "HIDC_WIZARD_EXPORT_DELIM"
 msgstr "The specified character separates the various fields."
 
-#: Win/WizardExport.cpp:178
+#: Win/WizardExport.cpp:179
 msgid "IDC_WIZARD_EXPORT_ASSIGN"
 msgstr "Assign Columns..."
 
-#: Win/WizardExport.cpp:180 Win/WizardExport.cpp:181
+#: Win/WizardExport.cpp:181 Win/WizardExport.cpp:182
 msgid "HIDC_WIZARD_EXPORT_ASSIGN"
 msgstr ""
 "Configure how the exported data is aligned. When the fields/columns are "
 "assigned, changes will be reflected in the preview below."
 
-#: Win/WizardExport.cpp:184
+#: Win/WizardExport.cpp:185
 msgid "IDC_WIZARD_EXPORT_DATE"
 msgstr "Date Format:"
 
-#: Win/WizardExport.cpp:202
+#: Win/WizardExport.cpp:203
 msgid "IDS_DATEFORMAT_DASH_MDY"
 msgstr "M-D-Y"
 
-#: Win/WizardExport.cpp:203
+#: Win/WizardExport.cpp:204
 msgid "IDS_DATEFORMAT_SLASH_MDY"
 msgstr "M/D/Y"
 
-#: Win/WizardExport.cpp:204
+#: Win/WizardExport.cpp:205
 msgid "IDS_DATEFORMAT_DASH_YMD"
 msgstr "Y-M-D"
 
-#: Win/WizardExport.cpp:205
+#: Win/WizardExport.cpp:206
 msgid "IDS_DATEFORMAT_SLASH_YMD"
 msgstr "Y/M/D"
 
-#: Win/WizardExport.cpp:206
+#: Win/WizardExport.cpp:207
 msgid "IDS_DATEFORMAT_DASH_DMY"
 msgstr "D-M-Y"
 
-#: Win/WizardExport.cpp:207
+#: Win/WizardExport.cpp:208
 msgid "IDS_DATEFORMAT_SLASH_DMY"
 msgstr "D/M/Y"
 
-#: Win/WizardExport.cpp:222 Win/WizardExport.cpp:223
+#: Win/WizardExport.cpp:223 Win/WizardExport.cpp:224
 msgid "HIDC_WIZARD_EXPORT_DATE"
 msgstr "Format the date will be exported in."
 
-#: Win/WizardExport.cpp:226
+#: Win/WizardExport.cpp:227
 msgid "IDC_WIZARD_EXPORT_PREVIEW"
 msgstr "Preview"
 
-#: Win/WizardExport.cpp:230 Win/WizardExport.cpp:231
+#: Win/WizardExport.cpp:231 Win/WizardExport.cpp:232
 msgid "HIDC_WIZARD_EXPORT_PREVIEW"
 msgstr ""
 "Preview of how the exported data will appear. Use the 'Assign Columns' "
 "button above to align."
 
-#: Win/WizardExport.cpp:429
+#: Win/WizardExport.cpp:430
 msgid "IDS_NO_DELIM_SPECIFIED"
 msgstr "No delimiter specified. Unable to preview data."
 
-#: Win/WizardExport.cpp:1235
+#: Win/WizardExport.cpp:1236
 msgid "IDS_TRIAL_DATES"
 msgstr "Trial dates: {0} to {1}"
 
 # WizardExport
-#: Win/WizardExport.cpp:1427
+#: Win/WizardExport.cpp:1429
 msgid "IDD_WIZARD_EXPORT"
 msgstr "Export Wizard"
 
-#: Win/WizardExport.cpp:1459 Win/WizardImport.cpp:773
+#: Win/WizardExport.cpp:1461 Win/WizardImport.cpp:774
 msgid "IDS_SPECIFY_DATEFORMAT"
 msgstr "Please specify a date format."
 
-#: Win/WizardExport.cpp:1486
+#: Win/WizardExport.cpp:1489
 msgid "IDS_EXPORTING"
 msgstr "Exporting..."
 
-#: Win/WizardExport.cpp:1515
+#: Win/WizardExport.cpp:1518
 msgid "IDS_EXPORT_FAILED"
 msgstr "Failed to export data."
 
-#: Win/WizardExport.cpp:1526 Win/WizardImport.cpp:398
+#: Win/WizardExport.cpp:1530 Win/WizardImport.cpp:398
 msgid "IDS_FILEEXT_FILTER_TXTCSV"
 msgstr "Text Files (*.txt; *.csv)|*.txt;*.csv|All Files (*.*)|*.*||"
 
-#: Win/WizardImport.cpp:105
+#: Win/WizardImport.cpp:106
 msgid "IDC_WIZARD_IMPORT_ROW"
 msgstr "Start import at row:"
 
-#: Win/WizardImport.cpp:119 Win/WizardImport.cpp:120
+#: Win/WizardImport.cpp:120 Win/WizardImport.cpp:121
 msgid "HIDC_WIZARD_IMPORT_ROW"
 msgstr ""
 "Start the import at the specified row. This allows skipping of header data."
 
-#: Win/WizardImport.cpp:123
+#: Win/WizardImport.cpp:124
 msgid "IDC_WIZARD_IMPORT_DATE"
 msgstr "Date Format:"
 
-#: Win/WizardImport.cpp:141
+#: Win/WizardImport.cpp:142
 msgid "IDS_DATEFORMAT_DASH_MMDDYYYY"
 msgstr "MM-DD-YYYY"
 
-#: Win/WizardImport.cpp:142
+#: Win/WizardImport.cpp:143
 msgid "IDS_DATEFORMAT_SLASH_MMDDYYYY"
 msgstr "MM/DD/YYYY"
 
-#: Win/WizardImport.cpp:143
+#: Win/WizardImport.cpp:144
 msgid "IDS_DATEFORMAT_DASH_YYYYMMDD"
 msgstr "YYYY-MM-DD"
 
-#: Win/WizardImport.cpp:144
+#: Win/WizardImport.cpp:145
 msgid "IDS_DATEFORMAT_SLASH_YYYYMMDD"
 msgstr "YYYY/MM/DD"
 
-#: Win/WizardImport.cpp:145
+#: Win/WizardImport.cpp:146
 msgid "IDS_DATEFORMAT_DASH_DDMMYYYY"
 msgstr "DD-MM-YYYY"
 
-#: Win/WizardImport.cpp:146
+#: Win/WizardImport.cpp:147
 msgid "IDS_DATEFORMAT_SLASH_DDMMYYYY"
 msgstr "DD/MM/YYYY"
 
-#: Win/WizardImport.cpp:160 Win/WizardImport.cpp:161
+#: Win/WizardImport.cpp:161 Win/WizardImport.cpp:162
 msgid "HIDC_WIZARD_IMPORT_DATE"
 msgstr "Format the imported date is in."
 
-#: Win/WizardImport.cpp:163
+#: Win/WizardImport.cpp:164
 msgid "IDC_WIZARD_IMPORT_DELIM_GROUP"
 msgstr "Delimiters"
 
-#: Win/WizardImport.cpp:168
+#: Win/WizardImport.cpp:169
 msgid "IDC_WIZARD_IMPORT_DELIM_TAB"
 msgstr "Tab"
 
-#: Win/WizardImport.cpp:173 Win/WizardImport.cpp:174
+#: Win/WizardImport.cpp:174 Win/WizardImport.cpp:175
 msgid "HIDC_WIZARD_IMPORT_DELIM_TAB"
 msgstr "A tab character separates the various fields."
 
-#: Win/WizardImport.cpp:177
+#: Win/WizardImport.cpp:178
 msgid "IDC_WIZARD_IMPORT_DELIM_COLON"
 msgstr "Colon"
 
-#: Win/WizardImport.cpp:179 Win/WizardImport.cpp:180
+#: Win/WizardImport.cpp:180 Win/WizardImport.cpp:181
 msgid "HIDC_WIZARD_IMPORT_DELIM_COLON"
 msgstr "A colon character separates the various fields."
 
-#: Win/WizardImport.cpp:183
+#: Win/WizardImport.cpp:184
 msgid "IDC_WIZARD_IMPORT_DELIM_COMMA"
 msgstr "Comma"
 
-#: Win/WizardImport.cpp:185 Win/WizardImport.cpp:186
+#: Win/WizardImport.cpp:186 Win/WizardImport.cpp:187
 msgid "HIDC_WIZARD_IMPORT_DELIM_COMMA"
 msgstr "A comma character separates the various fields."
 
-#: Win/WizardImport.cpp:189
+#: Win/WizardImport.cpp:190
 msgid "IDC_WIZARD_IMPORT_DELIM_SPACE"
 msgstr "Space"
 
-#: Win/WizardImport.cpp:191 Win/WizardImport.cpp:192
+#: Win/WizardImport.cpp:192 Win/WizardImport.cpp:193
 msgid "HIDC_WIZARD_IMPORT_DELIM_SPACE"
 msgstr "A space character separates the various fields."
 
-#: Win/WizardImport.cpp:195
+#: Win/WizardImport.cpp:196
 msgid "IDC_WIZARD_IMPORT_DELIM_SEMI"
 msgstr "Semicolon"
 
-#: Win/WizardImport.cpp:197 Win/WizardImport.cpp:198
+#: Win/WizardImport.cpp:198 Win/WizardImport.cpp:199
 msgid "HIDC_WIZARD_IMPORT_DELIM_SEMI"
 msgstr "A semi-colon character separates the various fields."
 
-#: Win/WizardImport.cpp:201
+#: Win/WizardImport.cpp:202
 msgid "IDC_WIZARD_IMPORT_DELIM_OTHER"
 msgstr "Other:"
 
-#: Win/WizardImport.cpp:203 Win/WizardImport.cpp:204
+#: Win/WizardImport.cpp:204 Win/WizardImport.cpp:205
 msgid "HIDC_WIZARD_IMPORT_DELIM_OTHER"
 msgstr "The specified character separates the various fields."
 
-#: Win/WizardImport.cpp:232 Win/WizardImport.cpp:233
+#: Win/WizardImport.cpp:233 Win/WizardImport.cpp:234
 msgid "HIDC_WIZARD_IMPORT_DELIM"
 msgstr "The specified character separates the various fields."
 
-#: Win/WizardImport.cpp:235
+#: Win/WizardImport.cpp:236
 msgid "IDC_WIZARD_IMPORT_ASSIGN"
 msgstr "Assign Columns..."
 
-#: Win/WizardImport.cpp:237 Win/WizardImport.cpp:238
+#: Win/WizardImport.cpp:238 Win/WizardImport.cpp:239
 msgid "HIDC_WIZARD_IMPORT_ASSIGN"
 msgstr ""
 "Configure how the imported data is aligned. When the fields/columns are "
 "assigned, changes will be reflected in the preview below."
 
-#: Win/WizardImport.cpp:240
+#: Win/WizardImport.cpp:241
 msgid "IDC_WIZARD_IMPORT_FILE"
 msgstr "File..."
 
-#: Win/WizardImport.cpp:242 Win/WizardImport.cpp:243
+#: Win/WizardImport.cpp:243 Win/WizardImport.cpp:244
 msgid "HIDC_WIZARD_IMPORT_FILE"
 msgstr "Select a file to import."
 
-#: Win/WizardImport.cpp:249 Win/WizardImport.cpp:250
+#: Win/WizardImport.cpp:250 Win/WizardImport.cpp:251
 msgid "HIDC_WIZARD_IMPORT_PREVIEW"
 msgstr ""
 "Preview of how the imported fields are aligned. Verify the data is aligned "
@@ -6815,50 +6871,50 @@ msgid "IDS_IMPORT_FAILED"
 msgstr "Failed to read data."
 
 # WizardImport
-#: Win/WizardImport.cpp:737
+#: Win/WizardImport.cpp:738
 msgid "IDD_WIZARD_IMPORT"
 msgstr "Import Wizard"
 
-#: Win/WizardImport.cpp:874 Win/WizardImport.cpp:1115
+#: Win/WizardImport.cpp:876 Win/WizardImport.cpp:1117
 msgid "IDS_IMPORT_SKIP_NOCONFIG"
 msgstr ""
 "Warning: Line {}: Skipped entry, unable to find a valid configuration entry"
 
-#: Win/WizardImport.cpp:944
+#: Win/WizardImport.cpp:946
 msgid "IDS_IMPORT_BAD_DATE_RUN"
 msgstr "ERROR: Line {0}, Column {1}: Invalid run date: {2}"
 
-#: Win/WizardImport.cpp:1102
+#: Win/WizardImport.cpp:1104
 msgid "IDS_IMPORT_BAD_VENUE"
 msgstr "Warning: Line {0}: Skipped entry, invalid venue name: {1}"
 
-#: Win/WizardImport.cpp:1279
+#: Win/WizardImport.cpp:1282
 msgid "IDS_IMPORT_BAD_DATE_CALSTART"
 msgstr "ERROR: Line {0}, Column {1}: Invalid calendar start date: {2}"
 
-#: Win/WizardImport.cpp:1299
+#: Win/WizardImport.cpp:1302
 msgid "IDS_IMPORT_BAD_DATE_CALEND"
 msgstr "ERROR: Line {0}, Column {1}: Invalid calendar end date: {2}"
 
-#: Win/WizardImport.cpp:1339
+#: Win/WizardImport.cpp:1342
 msgid "IDS_IMPORT_BAD_CAL_VALUE"
 msgstr ""
 "ERROR: Line {0}, Column {1}: Invalid calendar Entered value: {2} (valid: N, "
 "P or E)"
 
-#: Win/WizardImport.cpp:1370
+#: Win/WizardImport.cpp:1373
 msgid "IDS_IMPORT_BAD_DATE_CALOPEN"
 msgstr "ERROR: Line {0}, Column {1}: Invalid calendar opening date: {2}"
 
-#: Win/WizardImport.cpp:1390
+#: Win/WizardImport.cpp:1393
 msgid "IDS_IMPORT_BAD_DATE_CALCLOSE"
 msgstr "ERROR: Line {0}, Column {1}: Invalid calendar closing date: {2}"
 
-#: Win/WizardImport.cpp:1430
+#: Win/WizardImport.cpp:1434
 msgid "IDS_IMPORT_BAD_DATE_LOG"
 msgstr "ERROR: Line {0}, Column {1}: Invalid training log date: {2}"
 
-#: Win/WizardImport.cpp:1476
+#: Win/WizardImport.cpp:1480
 msgid "IDS_IMPORT_STATS"
 msgstr ""
 "{0} entries added\n"
@@ -6866,57 +6922,57 @@ msgstr ""
 "{2} duplicates (not added)\n"
 "{3} entries skipped"
 
-#: Win/WizardStart.cpp:108
+#: Win/WizardStart.cpp:109
 msgid "IDC_WIZARD_RADIO_BOX"
 msgstr "Import from / Export to:"
 
-#: Win/WizardStart.cpp:115
+#: Win/WizardStart.cpp:116
 msgid "IDC_WIZARD_START_EXCEL"
 msgstr "Microsoft Excel (directly)"
 
-#: Win/WizardStart.cpp:120 Win/WizardStart.cpp:121
+#: Win/WizardStart.cpp:121 Win/WizardStart.cpp:122
 msgid "HIDC_WIZARD_START_EXCEL"
 msgstr "Import data directly from or export data directly to Microsoft Excel."
 
-#: Win/WizardStart.cpp:127
+#: Win/WizardStart.cpp:128
 msgid "IDC_WIZARD_START_CALC"
 msgstr "OpenOffice Calc (directly)"
 
-#: Win/WizardStart.cpp:129 Win/WizardStart.cpp:130
+#: Win/WizardStart.cpp:130 Win/WizardStart.cpp:131
 msgid "HIDC_WIZARD_START_CALC"
 msgstr "Import data directly from or export data directly to Open Office Calc."
 
-#: Win/WizardStart.cpp:134
+#: Win/WizardStart.cpp:135
 msgid "IDC_WIZARD_START_SPREADSHEET"
 msgstr "For a spreadsheet"
 
-#: Win/WizardStart.cpp:136 Win/WizardStart.cpp:137
+#: Win/WizardStart.cpp:137 Win/WizardStart.cpp:138
 msgid "HIDC_WIZARD_START_SPREADSHEET"
 msgstr "Import data from or export data to a spreadsheet in text form."
 
-#: Win/WizardStart.cpp:140
+#: Win/WizardStart.cpp:141
 msgid "IDC_WIZARD_START_ARB"
 msgstr "Agility Record Book"
 
-#: Win/WizardStart.cpp:142 Win/WizardStart.cpp:143
+#: Win/WizardStart.cpp:143 Win/WizardStart.cpp:144
 msgid "HIDC_WIZARD_START_ARB"
 msgstr "Import data from or export data to another Agility Record Book file."
 
-#: Win/WizardStart.cpp:176 Win/WizardStart.cpp:177
+#: Win/WizardStart.cpp:177 Win/WizardStart.cpp:178
 msgid "HIDC_WIZARD_START_LIST"
 msgstr ""
 "Things that can be imported or exported. Selecting an item will display some "
 "information in the pane to the right."
 
-#: Win/WizardStart.cpp:179
+#: Win/WizardStart.cpp:180
 msgid "IDC_WIZARD_START_DESCRIPTION"
 msgstr "Description"
 
-#: Win/WizardStart.cpp:244 Win/WizardStart.cpp:245 Win/WizardStart.cpp:247
+#: Win/WizardStart.cpp:242 Win/WizardStart.cpp:243 Win/WizardStart.cpp:245
 msgid "IDS_WIZ_IMPORT_RUNS"
 msgstr "Import Trials and Runs"
 
-#: Win/WizardStart.cpp:244
+#: Win/WizardStart.cpp:242
 msgid "IDS_WIZ_IMPORT_RUNS_EXCEL"
 msgstr ""
 "Import trial and run information from Microsoft Excel.\n"
@@ -6925,7 +6981,7 @@ msgstr ""
 "Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the "
 "'/' character is assumed to separate the list of venue names and club names."
 
-#: Win/WizardStart.cpp:245
+#: Win/WizardStart.cpp:243
 msgid "IDS_WIZ_IMPORT_RUNS_SPREAD"
 msgstr ""
 "Import trial and run information from a spreadsheet. Data must be in a text "
@@ -6935,15 +6991,15 @@ msgstr ""
 "Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the "
 "'/' character is assumed to separate the list of venue names and club names."
 
-#: Win/WizardStart.cpp:246
+#: Win/WizardStart.cpp:244
 msgid "IDS_WIZ_IMPORT_RUNS_PLUS"
 msgstr "Import Dogs, Trials, Runs and Judges"
 
-#: Win/WizardStart.cpp:246
+#: Win/WizardStart.cpp:244
 msgid "IDS_WIZ_IMPORT_RUNS_ARB"
 msgstr "Import dog, trial, run and judge information from Agility Record Book."
 
-#: Win/WizardStart.cpp:247
+#: Win/WizardStart.cpp:245
 msgid "IDS_WIZ_IMPORT_RUNS_CALC"
 msgstr ""
 "Import trial and run information from OpenOffice Calc.\n"
@@ -6952,256 +7008,256 @@ msgstr ""
 "Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the "
 "'/' character is assumed to separate the list of venue names and club names."
 
-#: Win/WizardStart.cpp:253 Win/WizardStart.cpp:254 Win/WizardStart.cpp:256
+#: Win/WizardStart.cpp:251 Win/WizardStart.cpp:252 Win/WizardStart.cpp:254
 msgid "IDS_WIZ_EXPORT_RUNS"
 msgstr "Export Runs"
 
-#: Win/WizardStart.cpp:253
+#: Win/WizardStart.cpp:251
 msgid "IDS_WIZ_EXPORT_RUNS_EXCEL"
 msgstr "Export trial and run information to Microsoft Excel."
 
-#: Win/WizardStart.cpp:254
+#: Win/WizardStart.cpp:252
 msgid "IDS_WIZ_EXPORT_RUNS_SPREAD"
 msgstr ""
 "Export trial and run information so it can be imported into a spreadsheet."
 
-#: Win/WizardStart.cpp:256
+#: Win/WizardStart.cpp:254
 msgid "IDS_WIZ_EXPORT_RUNS_CALC"
 msgstr "Export trial and run information to OpenOffice Calc."
 
-#: Win/WizardStart.cpp:262 Win/WizardStart.cpp:263 Win/WizardStart.cpp:264
-#: Win/WizardStart.cpp:265
+#: Win/WizardStart.cpp:260 Win/WizardStart.cpp:261 Win/WizardStart.cpp:262
+#: Win/WizardStart.cpp:263
 msgid "IDS_WIZ_IMPORT_CAL"
 msgstr "Import Calendar"
 
-#: Win/WizardStart.cpp:262
+#: Win/WizardStart.cpp:260
 msgid "IDS_WIZ_IMPORT_CAL_EXCEL"
 msgstr "Import a calendar listing from Microsoft Excel."
 
-#: Win/WizardStart.cpp:263
+#: Win/WizardStart.cpp:261
 msgid "IDS_WIZ_IMPORT_CAL_SPREAD"
 msgstr "Import a calendar listing from a spreadsheet."
 
-#: Win/WizardStart.cpp:264
+#: Win/WizardStart.cpp:262
 msgid "IDS_WIZ_IMPORT_CAL_ARB"
 msgstr "Import a calendar listing that was exported from Agility Record Book."
 
-#: Win/WizardStart.cpp:265
+#: Win/WizardStart.cpp:263
 msgid "IDS_WIZ_IMPORT_CAL_CALC"
 msgstr "Import a calendar listing from OpenOffice Calc."
 
-#: Win/WizardStart.cpp:271 Win/WizardStart.cpp:272 Win/WizardStart.cpp:273
-#: Win/WizardStart.cpp:274
+#: Win/WizardStart.cpp:269 Win/WizardStart.cpp:270 Win/WizardStart.cpp:271
+#: Win/WizardStart.cpp:272
 msgid "IDS_WIZ_EXPORT_CAL"
 msgstr "Export Calendar"
 
-#: Win/WizardStart.cpp:271
+#: Win/WizardStart.cpp:269
 msgid "IDS_WIZ_EXPORT_CAL_EXCEL"
 msgstr "Export your calendar listing to Microsoft Excel."
 
-#: Win/WizardStart.cpp:272
+#: Win/WizardStart.cpp:270
 msgid "IDS_WIZ_EXPORT_CAL_SPREAD"
 msgstr "Export your calendar listing to a spreadsheet."
 
-#: Win/WizardStart.cpp:273
+#: Win/WizardStart.cpp:271
 msgid "IDS_WIZ_EXPORT_CAL_ARB"
 msgstr ""
 "Export your calendar listing so it can be imported into Agility Record Book."
 
-#: Win/WizardStart.cpp:274
+#: Win/WizardStart.cpp:272
 msgid "IDS_WIZ_EXPORT_CAL_CALC"
 msgstr "Export your calendar listing to OpenOffice Calc."
 
-#: Win/WizardStart.cpp:281
+#: Win/WizardStart.cpp:279
 msgid "IDS_WIZ_EXPORT_CAL_VCAL"
 msgstr "Export Calendar (vCalendar)"
 
-#: Win/WizardStart.cpp:281
+#: Win/WizardStart.cpp:279
 msgid "IDS_WIZ_EXPORT_CAL_VCAL_SPREAD"
 msgstr ""
 "Export calendar entries in vCalendar (.vcs) format so they can be imported "
 "into other programs."
 
-#: Win/WizardStart.cpp:290
+#: Win/WizardStart.cpp:288
 msgid "IDS_WIZ_EXPORT_CAL_ICAL"
 msgstr "Export Calendar (iCalendar)"
 
-#: Win/WizardStart.cpp:290
+#: Win/WizardStart.cpp:288
 msgid "IDS_WIZ_EXPORT_CAL_ICAL_SPREAD"
 msgstr ""
 "Export calendar entries in iCalendar (.ics) format so they can be imported "
 "into other programs."
 
-#: Win/WizardStart.cpp:298 Win/WizardStart.cpp:299
+#: Win/WizardStart.cpp:296 Win/WizardStart.cpp:297
 msgid "IDS_WIZ_EXPORT_CAL_APPT"
 msgstr "Export Calendar (MS Outlook Appointment)"
 
-#: Win/WizardStart.cpp:298
+#: Win/WizardStart.cpp:296
 msgid "IDS_WIZ_EXPORT_CAL_APPT_EXCEL"
 msgstr ""
 "Export calendar entries to Excel so they can be imported into Microsoft "
 "Outlook as Appointments."
 
-#: Win/WizardStart.cpp:299
+#: Win/WizardStart.cpp:297
 msgid "IDS_WIZ_EXPORT_CAL_APPT_SPREAD"
 msgstr ""
 "Export calendar entries to a spreadsheet so they can be imported into "
 "Microsoft Outlook as Appointments."
 
-#: Win/WizardStart.cpp:307 Win/WizardStart.cpp:308
+#: Win/WizardStart.cpp:305 Win/WizardStart.cpp:306
 msgid "IDS_WIZ_EXPORT_CAL_TASK"
 msgstr "Export Calendar (MS Outlook Task)"
 
-#: Win/WizardStart.cpp:307
+#: Win/WizardStart.cpp:305
 msgid "IDS_WIZ_EXPORT_CAL_TASK_EXCEL"
 msgstr ""
 "Export calendar entries to Excel so they can be imported into Microsoft "
 "Outlook as Tasks. Only Calendar entries that at marked as 'Planning' will be "
 "exported."
 
-#: Win/WizardStart.cpp:308
+#: Win/WizardStart.cpp:306
 msgid "IDS_WIZ_EXPORT_CAL_TASK_SPREAD"
 msgstr ""
 "Export calendar entries to a spreadsheet so they can be imported into "
 "Microsoft Outlook as Tasks. Only Calendar entries that at marked as "
 "'Planning' will be exported."
 
-#: Win/WizardStart.cpp:316 Win/WizardStart.cpp:317 Win/WizardStart.cpp:318
-#: Win/WizardStart.cpp:319
+#: Win/WizardStart.cpp:314 Win/WizardStart.cpp:315 Win/WizardStart.cpp:316
+#: Win/WizardStart.cpp:317
 msgid "IDS_WIZ_IMPORT_LOG"
 msgstr "Import Training Log"
 
-#: Win/WizardStart.cpp:316
+#: Win/WizardStart.cpp:314
 msgid "IDS_WIZ_IMPORT_LOG_EXCEL"
 msgstr "Import a Training Log from Microsoft Excel."
 
-#: Win/WizardStart.cpp:317
+#: Win/WizardStart.cpp:315
 msgid "IDS_WIZ_IMPORT_LOG_SPREAD"
 msgstr "Import a Training Log from a spreadsheet."
 
-#: Win/WizardStart.cpp:318
+#: Win/WizardStart.cpp:316
 msgid "IDS_WIZ_IMPORT_LOG_ARB"
 msgstr "Import a Training Log that was exported from Agility Record Book."
 
-#: Win/WizardStart.cpp:319
+#: Win/WizardStart.cpp:317
 msgid "IDS_WIZ_IMPORT_LOG_CALC"
 msgstr "Import a Training Log from OpenOffice Calc."
 
-#: Win/WizardStart.cpp:325 Win/WizardStart.cpp:326 Win/WizardStart.cpp:327
-#: Win/WizardStart.cpp:328
+#: Win/WizardStart.cpp:323 Win/WizardStart.cpp:324 Win/WizardStart.cpp:325
+#: Win/WizardStart.cpp:326
 msgid "IDS_WIZ_EXPORT_LOG"
 msgstr "Export Training Log"
 
-#: Win/WizardStart.cpp:325
+#: Win/WizardStart.cpp:323
 msgid "IDS_WIZ_EXPORT_LOG_EXCEL"
 msgstr "Export your Training Log to Microsoft Excel."
 
-#: Win/WizardStart.cpp:326
+#: Win/WizardStart.cpp:324
 msgid "IDS_WIZ_EXPORT_LOG_SPREAD"
 msgstr "Export your Training Log to a spreadsheet."
 
-#: Win/WizardStart.cpp:327
+#: Win/WizardStart.cpp:325
 msgid "IDS_WIZ_EXPORT_LOG_ARB"
 msgstr ""
 "Export your Training Log so it can be imported into Agility Record Book."
 
-#: Win/WizardStart.cpp:328
+#: Win/WizardStart.cpp:326
 msgid "IDS_WIZ_EXPORT_LOG_CALC"
 msgstr "Export your Training Log to OpenOffice Calc."
 
-#: Win/WizardStart.cpp:336
+#: Win/WizardStart.cpp:334
 msgid "IDS_WIZ_IMPORT_CONFIG"
 msgstr "Import Configuration"
 
-#: Win/WizardStart.cpp:336
+#: Win/WizardStart.cpp:334
 msgid "IDS_WIZ_IMPORT_CONFIG_ARB"
 msgstr "Update your configuration to support new and/or updated venues."
 
-#: Win/WizardStart.cpp:345
+#: Win/WizardStart.cpp:343
 msgid "IDS_WIZ_EXPORT_CONFIG"
 msgstr "Export Configuration"
 
-#: Win/WizardStart.cpp:345
+#: Win/WizardStart.cpp:343
 msgid "IDS_WIZ_EXPORT_CONFIG_ARB"
 msgstr ""
 "Export your configuration so it can be imported into Agility Record Book."
 
-#: Win/WizardStart.cpp:354
+#: Win/WizardStart.cpp:352
 msgid "IDS_WIZ_EXPORT_DTD"
 msgstr "Export DTD"
 
-#: Win/WizardStart.cpp:354
+#: Win/WizardStart.cpp:352
 msgid "IDS_WIZ_EXPORT_DTD_ARB"
 msgstr ""
 "Export the Document Type Definition. This data describes the XML format of "
 "the data file."
 
-#: Win/WizardStart.cpp:363
+#: Win/WizardStart.cpp:361
 msgid "IDS_WIZ_EXPORT_XML"
 msgstr "Export File as XML"
 
-#: Win/WizardStart.cpp:363
+#: Win/WizardStart.cpp:361
 msgid "IDS_WIZ_EXPORT_XML_ARB"
 msgstr ""
 "Export your data file as an XML file. The DTD will be contained within this "
 "file."
 
-#: Win/WizardStart.cpp:372
+#: Win/WizardStart.cpp:370
 msgid "IDS_WIZ_IMPORT_SETTINGS"
 msgstr "Import Program Settings"
 
-#: Win/WizardStart.cpp:372
+#: Win/WizardStart.cpp:370
 msgid "IDS_WIZ_IMPORT_SETTINGS_ARB"
 msgstr "Import your program settings from another computer or a backup."
 
-#: Win/WizardStart.cpp:381
+#: Win/WizardStart.cpp:379
 msgid "IDS_WIZ_EXPORT_SETTINGS"
 msgstr "Export Program Settings"
 
-#: Win/WizardStart.cpp:381
+#: Win/WizardStart.cpp:379
 msgid "IDS_WIZ_EXPORT_SETTINGS_ARB"
 msgstr ""
 "Export your program settings for use on another computer, or simply for "
 "backup purposes."
 
-#: Win/WizardStart.cpp:544 Win/WizardStart.cpp:576 Win/WizardStart.cpp:608
-#: Win/WizardStart.cpp:691 Win/WizardStart.cpp:723 Win/WizardStart.cpp:753
+#: Win/WizardStart.cpp:544 Win/WizardStart.cpp:577 Win/WizardStart.cpp:610
+#: Win/WizardStart.cpp:697 Win/WizardStart.cpp:730 Win/WizardStart.cpp:762
 msgid "IDS_FILEEXT_FNAME_ARB"
 msgstr "*.arb"
 
-#: Win/WizardStart.cpp:632
+#: Win/WizardStart.cpp:635
 msgid "IDS_FILEEXT_FNAME_VCS"
 msgstr "*.vcs"
 
-#: Win/WizardStart.cpp:633
+#: Win/WizardStart.cpp:636
 msgid "IDS_FILEEXT_FILTER_VCS"
 msgstr "vCalendar (*.vcs)|*.vcs|All Files (*.*)|*.*||"
 
-#: Win/WizardStart.cpp:637
+#: Win/WizardStart.cpp:641
 msgid "IDS_FILEEXT_FNAME_ICS"
 msgstr "*.ics"
 
-#: Win/WizardStart.cpp:638
+#: Win/WizardStart.cpp:642
 msgid "IDS_FILEEXT_FILTER_ICS"
 msgstr "iCalendar (*.ics)|*.ics|All Files (*.*)|*.*||"
 
-#: Win/WizardStart.cpp:778
+#: Win/WizardStart.cpp:788
 msgid "IDS_FILEEXT_FILTER_DTD"
 msgstr "DTD Files (*.dtd)|*.dtd|All Files (*.*)|*.*||"
 
-#: Win/WizardStart.cpp:802 Win/WizardStart.cpp:808 Win/WizardStart.cpp:812
+#: Win/WizardStart.cpp:813 Win/WizardStart.cpp:819 Win/WizardStart.cpp:823
 msgid "IDS_FILEEXT_DEF_XML"
 msgstr "xml"
 
-#: Win/WizardStart.cpp:820
+#: Win/WizardStart.cpp:831
 msgid "IDS_FILEEXT_FILTER_XML"
 msgstr "XML Files (*.xml)|*.xml|All Files (*.*)|*.*||"
 
-#: Win/WizardStart.cpp:841 Win/WizardStart.cpp:877
+#: Win/WizardStart.cpp:853 Win/WizardStart.cpp:890
 msgid "IDS_FILEEXT_DEF_SETTINGS"
 msgstr "arbsettings"
 
-#: Win/WizardStart.cpp:847 Win/WizardStart.cpp:883
+#: Win/WizardStart.cpp:859 Win/WizardStart.cpp:896
 msgid "IDS_FILEEXT_FILTER_SETTINGS"
 msgstr ""
 "Agility Record Book settings (*.arbsettings)|*.arbsettings|All Files (*.*)|*."

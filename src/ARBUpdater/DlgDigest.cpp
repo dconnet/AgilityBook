@@ -380,7 +380,7 @@ void CDlgDigest::OnCopy(wxCommandEvent& evt)
 			delete dataObj;
 		wxTheClipboard->Flush();
 		wxTheClipboard->Close();
-		wxMessageBox(L"Copied!", wxMessageBoxCaptionStr, wxOK, this);
+		wxMessageBox(L"Copied!", _("Agility Record Book"), wxOK, this);
 	}
 	else
 		wxBell();

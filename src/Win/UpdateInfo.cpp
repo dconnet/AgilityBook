@@ -152,7 +152,7 @@ void GotoUrl(wxString const& url)
 bool CUpdateInfo::AllowUpdateConfig(CAgilityBookDoc* ioDoc)
 {
 	wxString msg(_("IDS_UPDATED_CONFIG"));
-	bool b = (wxYES == wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_QUESTION));
+	bool b = (wxYES == wxMessageBox(msg, _("Agility Record Book"), wxYES_NO | wxCENTRE | wxICON_QUESTION));
 	/* TODO: Change to include 'never' option
 	if (!b)
 	{
@@ -320,7 +320,7 @@ void CUpdateInfo::UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outDownloadSt
 	if (CheckProgram(pDoc, wxGetApp().CurrentLanguage(), outDownloadStarted, canInstall))
 	{
 		if (!canInstall)
-			wxMessageBox(_("IDS_INSTALL_BUSY"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+			wxMessageBox(_("IDS_INSTALL_BUSY"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 		return;
 	}
 	CheckConfig(pDoc, true);
@@ -345,7 +345,7 @@ CReadHttp::ReturnCode CUpdateInfo::ReadVersionFile(bool bVerbose, OnReadComplete
 		if (!file.Open(fullpath))
 		{
 			if (bVerbose)
-				wxMessageBox(_("IDS_UPDATE_UNKNOWN"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+				wxMessageBox(_("IDS_UPDATE_UNKNOWN"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return CReadHttp::ReturnCode::Failed;
 		}
 
@@ -458,7 +458,7 @@ bool CUpdateInfo::ReadVersionFile(std::string const& data, bool bVerbose)
 				{
 					fmt::format_to(std::back_inserter(msg), L"\n\n{}", fmt::to_string(errMsg2));
 				}
-				wxMessageBox(fmt::to_string(msg), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+				wxMessageBox(fmt::to_string(msg), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			}
 		}
 		else if (tree->GetName() == L"Data")
@@ -531,7 +531,7 @@ bool CUpdateInfo::ReadVersionFile(std::string const& data, bool bVerbose)
 						{
 							wxMessageBox(
 								_("IDS_UPDATE_UNKNOWN"),
-								wxMessageBoxCaptionStr,
+								_("Agility Record Book"),
 								wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						}
 						// If the parsing failed, clear everything.
@@ -605,7 +605,7 @@ bool CUpdateInfo::CheckProgram(
 		}
 		wxConfig::Get()->Write(CFG_SETTINGS_LASTVERCHECK, today.GetString(ARBDateFormat::ISO).c_str());
 		std::wstring msg = fmt::format(_("IDS_VERSION_AVAILABLE").wc_str(), m_VersionNum.GetVersionString());
-		if (wxYES == wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_QUESTION))
+		if (wxYES == wxMessageBox(msg, _("Agility Record Book"), wxYES_NO | wxCENTRE | wxICON_QUESTION))
 		{
 			bool bGotoWeb = false;
 			// If running in standalone mode, just go to the web.
@@ -717,7 +717,7 @@ void CUpdateInfo::CheckConfig(CAgilityBookDoc* pDoc, bool bVerbose)
 	}
 	if (bUpToDate && bVerbose)
 	{
-		wxMessageBox(_("IDS_UPDATE_CURRENT"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+		wxMessageBox(_("IDS_UPDATE_CURRENT"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 }
 
@@ -736,7 +736,7 @@ bool CUpdateInfo::CheckConfig(CAgilityBookDoc* pDoc, wxString url, std::string c
 			{
 				fmt::format_to(std::back_inserter(msg2), L"\n\n{}", fmt::to_string(errMsg2));
 			}
-			wxMessageBox(fmt::to_string(msg2), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+			wxMessageBox(fmt::to_string(msg2), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
 		}
 	}
@@ -755,7 +755,7 @@ bool CUpdateInfo::CheckConfig(CAgilityBookDoc* pDoc, wxString url, std::string c
 			if (0 < err.m_ErrMsg.size())
 				wxMessageBox(
 					StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-					wxMessageBoxCaptionStr,
+					_("Agility Record Book"),
 					wxOK | wxCENTRE | wxICON_WARNING);
 			return false;
 		}

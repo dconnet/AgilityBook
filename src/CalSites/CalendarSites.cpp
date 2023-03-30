@@ -1038,7 +1038,7 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 							{
 								wxMessageBox(
 									StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-									wxMessageBoxCaptionStr,
+									_("Agility Record Book"),
 									wxOK | wxCENTRE | wxICON_INFORMATION);
 								progress.SetForegroundWindow();
 							}
@@ -1074,7 +1074,7 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 						}
 						else
 							flags |= wxOK;
-						if (wxNO == wxMessageBox(fmt::to_string(err), wxMessageBoxCaptionStr, flags))
+						if (wxNO == wxMessageBox(fmt::to_string(err), _("Agility Record Book"), flags))
 							pData->Disable();
 						progress.SetForegroundWindow();
 					}
@@ -1142,7 +1142,7 @@ void CDlgCalendarPlugins::OnPluginAddCalEntry(wxCommandEvent& evt)
 		//m_pDoc->Modify(true);
 	}
 	std::wstring str = fmt::format(_("IDS_UPDATED_CAL_ITEMS").wx_str(), nAdded, nUpdated);
-	wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+	wxMessageBox(str, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 	UpdateControls();
 #endif
 }

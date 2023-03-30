@@ -176,7 +176,7 @@ public:
 		long& outBottom,
 		wxDC const* pDC); // Used to convert to logical units
 	static void SetPrinterMargins(
-		bool bAsMM, // In .01 inches or millimeters
+		bool bAsMM,       // In .01 inches or millimeters
 		long inLeft,
 		long inRight,
 		long inTop,
@@ -187,7 +187,7 @@ public:
 		long& outHeight,
 		wxDC const* pDC); // Used to convert to logical units
 	static void SetRunPageSize(
-		bool bAsMM, // In .01 inches or millimeters
+		bool bAsMM,       // In .01 inches or millimeters
 		long inWidth,
 		long inHeight);
 	static void GetCalendarFontInfo(CFontInfo& info);

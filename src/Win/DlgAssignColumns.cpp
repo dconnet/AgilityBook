@@ -1197,7 +1197,7 @@ void CDlgAssignColumns::OnClickedOptNamesSave(wxCommandEvent& evt)
 		FillColumns();
 	}
 	else
-		wxMessageBox(_("IDS_NAME_FILTER"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+		wxMessageBox(_("IDS_NAME_FILTER"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 }
 
 

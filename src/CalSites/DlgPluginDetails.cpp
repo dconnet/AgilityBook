@@ -231,7 +231,7 @@ void CDlgPluginDetails::OnOk(wxCommandEvent& evt)
 
 	if ((!m_OrigCalSite || m_OrigCalSite->GetName() != m_CalSite->GetName()) && m_sites.FindSite(m_CalSite->GetName()))
 	{
-		wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+		wxMessageBox(_("IDS_NAME_IN_USE"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 		m_ctrlName->SetFocus();
 		return;
 	}

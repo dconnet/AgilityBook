@@ -896,13 +896,13 @@ void CDlgCalendar::OnOk(wxCommandEvent& evt)
 	{
 		if (!m_bOpeningUnknown && m_dateOpens > m_dateDraws)
 		{
-			wxMessageBox(_("IDS_BAD_DRAWDATE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+			wxMessageBox(_("IDS_BAD_DRAWDATE"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 			m_ctrlDraws->SetFocus();
 			return;
 		}
 		if (!m_bClosingUnknown && m_dateDraws > m_dateCloses)
 		{
-			wxMessageBox(_("IDS_BAD_DRAWDATE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+			wxMessageBox(_("IDS_BAD_DRAWDATE"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 			m_ctrlDraws->SetFocus();
 			return;
 		}
@@ -914,7 +914,7 @@ void CDlgCalendar::OnOk(wxCommandEvent& evt)
 		if (wxYES
 			!= wxMessageBox(
 				_("IDS_AUTODELETE_CAL"),
-				wxMessageBoxCaptionStr,
+				_("Agility Record Book"),
 				wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_WARNING))
 			return;
 	}

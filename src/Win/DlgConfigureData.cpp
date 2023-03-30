@@ -189,7 +189,7 @@ bool CDlgConfigureDataDivision::DoAdd()
 			if (m_Div->GetLevels().FindSubLevel(name))
 			{
 				done = false;
-				wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+				wxMessageBox(_("IDS_NAME_IN_USE"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				continue;
 			}
 			ARBConfigLevelPtr pNewLevel;
@@ -217,7 +217,7 @@ bool CDlgConfigureDataDivision::DoEdit()
 		if (wxYES
 			!= wxMessageBox(
 				_("IDS_CHANGEDIV_ISSUES"),
-				wxMessageBoxCaptionStr,
+				_("Agility Record Book"),
 				wxYES_NO | wxCENTRE | wxICON_EXCLAMATION))
 			return false;
 	}
@@ -235,7 +235,7 @@ bool CDlgConfigureDataDivision::DoEdit()
 				if (m_pDlg->m_pVenue->GetDivisions().FindDivision(name))
 				{
 					done = false;
-					wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+					wxMessageBox(_("IDS_NAME_IN_USE"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					continue;
 				}
 				m_Div->SetName(name);
@@ -332,7 +332,7 @@ bool CDlgConfigureDataLevel::DoAdd()
 			if (m_Division->GetLevels().FindSubLevel(name))
 			{
 				done = false;
-				wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+				wxMessageBox(_("IDS_NAME_IN_USE"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				continue;
 			}
 			ARBConfigSubLevelPtr pNewSubLevel;
@@ -371,7 +371,7 @@ bool CDlgConfigureDataLevel::DoEdit()
 			if (wxYES
 				!= wxMessageBox(
 					_("IDS_CHANGELEVEL_ISSUES"),
-					wxMessageBoxCaptionStr,
+					_("Agility Record Book"),
 					wxYES_NO | wxCENTRE | wxICON_EXCLAMATION))
 				return false;
 		}
@@ -400,7 +400,7 @@ bool CDlgConfigureDataLevel::DoEdit()
 				if (bInUse)
 				{
 					done = false;
-					wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+					wxMessageBox(_("IDS_NAME_IN_USE"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					continue;
 				}
 				m_Level->SetName(name);
@@ -487,7 +487,7 @@ bool CDlgConfigureDataSubLevel::DoEdit()
 		if (wxYES
 			!= wxMessageBox(
 				_("IDS_CHANGESUBLEVEL_ISSUES"),
-				wxMessageBoxCaptionStr,
+				_("Agility Record Book"),
 				wxYES_NO | wxCENTRE | wxICON_EXCLAMATION))
 			return false;
 	}
@@ -503,7 +503,7 @@ bool CDlgConfigureDataSubLevel::DoEdit()
 				if (m_Division->GetLevels().FindSubLevel(name))
 				{
 					done = false;
-					wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+					wxMessageBox(_("IDS_NAME_IN_USE"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					continue;
 				}
 				m_SubLevel->SetName(name);
@@ -605,7 +605,7 @@ bool CDlgConfigureDataTitle::DoEdit()
 						if (wxYES
 							== wxMessageBox(
 								_("IDS_NAME_IN_USE_MERGE"),
-								wxMessageBoxCaptionStr,
+								_("Agility Record Book"),
 								wxYES_NO | wxCENTRE | wxICON_EXCLAMATION))
 						{
 							bInUse = false;
@@ -623,7 +623,7 @@ bool CDlgConfigureDataTitle::DoEdit()
 						done = false;
 						wxMessageBox(
 							_("IDS_NAME_IN_USE"),
-							wxMessageBoxCaptionStr,
+							_("Agility Record Book"),
 							wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					}
 					continue;

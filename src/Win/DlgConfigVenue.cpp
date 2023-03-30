@@ -104,7 +104,7 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 				if (m_pDlg->m_pVenue->GetDivisions().FindDivision(name))
 				{
 					done = false;
-					wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+					wxMessageBox(_("IDS_NAME_IN_USE"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					continue;
 				}
 				ARBConfigDivisionPtr pNewDiv;
@@ -195,7 +195,7 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 				if (m_pDlg->m_pVenue->GetTitles().FindTitle(name))
 				{
 					done = false;
-					wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+					wxMessageBox(_("IDS_NAME_IN_USE"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					continue;
 				}
 				ARBConfigTitlePtr pTitle;
@@ -689,7 +689,7 @@ void CDlgConfigVenue::OnOk(wxCommandEvent& evt)
 	{
 		if (m_Config.GetVenues().FindVenue(name))
 		{
-			wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+			wxMessageBox(_("IDS_NAME_IN_USE"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return;
 		}
 		m_pVenue->SetName(name);

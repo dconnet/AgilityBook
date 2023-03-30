@@ -188,7 +188,7 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 	if (!bFound)
 	{
 		std::wstring msg = fmt::format(_("IDS_CANNOT_FIND").wx_str(), m_strSearch);
-		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+		wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	return bFound;
 }
@@ -683,7 +683,10 @@ bool CAgilityBookTreeView::PasteDog(bool& bLoaded)
 					if (!GetDocument()->Book().GetDogs().AddDog(pDog))
 					{
 						bLoaded = false;
-						wxMessageBox(_("IDS_CREATEDOG_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+						wxMessageBox(
+							_("IDS_CREATEDOG_FAILED"),
+							_("Agility Record Book"),
+							wxOK | wxCENTRE | wxICON_STOP);
 					}
 					else
 					{
@@ -700,7 +703,7 @@ bool CAgilityBookTreeView::PasteDog(bool& bLoaded)
 				else if (0 < err.m_ErrMsg.size())
 					wxMessageBox(
 						StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-						wxMessageBoxCaptionStr,
+						_("Agility Record Book"),
 						wxOK | wxCENTRE | wxICON_WARNING);
 			}
 		}
@@ -760,7 +763,10 @@ bool CAgilityBookTreeView::PasteRuns(
 					if (!inTrial->GetRuns().AddRun(pRun))
 					{
 						++nFailed;
-						wxMessageBox(_("IDS_CREATERUN_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
+						wxMessageBox(
+							_("IDS_CREATERUN_FAILED"),
+							_("Agility Record Book"),
+							wxOK | wxCENTRE | wxICON_STOP);
 					}
 					else
 						GetDocument()->ResetVisibility(venues, inTrial, pRun);
@@ -794,7 +800,7 @@ bool CAgilityBookTreeView::PasteRuns(
 						if (CFilterOptions::Options().IsFilterEnabled())
 							wxMessageBox(
 								_("IDS_CREATERUN_FILTERED"),
-								wxMessageBoxCaptionStr,
+								_("Agility Record Book"),
 								wxOK | wxCENTRE | wxICON_STOP);
 					}
 					else
@@ -814,7 +820,7 @@ bool CAgilityBookTreeView::PasteRuns(
 			if (!bLoaded && 0 < err.m_ErrMsg.size())
 				wxMessageBox(
 					StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-					wxMessageBoxCaptionStr,
+					_("Agility Record Book"),
 					wxOK | wxCENTRE | wxICON_WARNING);
 		}
 		return true;
@@ -1352,7 +1358,7 @@ bool CAgilityBookTreeView::OnCmd(int id)
 								bLoaded = false;
 								wxMessageBox(
 									_("IDS_CREATETRIAL_FAILED"),
-									wxMessageBoxCaptionStr,
+									_("Agility Record Book"),
 									wxOK | wxCENTRE | wxICON_STOP);
 							}
 							else
@@ -1368,7 +1374,7 @@ bool CAgilityBookTreeView::OnCmd(int id)
 									bOk = false;
 									wxMessageBox(
 										_("IDS_CREATETRIAL_FILTERED"),
-										wxMessageBoxCaptionStr,
+										_("Agility Record Book"),
 										wxOK | wxCENTRE | wxICON_STOP);
 								}
 								else
@@ -1386,7 +1392,7 @@ bool CAgilityBookTreeView::OnCmd(int id)
 						else if (0 < err.m_ErrMsg.size())
 							wxMessageBox(
 								StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-								wxMessageBoxCaptionStr,
+								_("Agility Record Book"),
 								wxOK | wxCENTRE | wxICON_WARNING);
 					}
 				}

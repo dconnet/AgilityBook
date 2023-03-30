@@ -396,7 +396,7 @@ void CDlgConfigMultiQ::OnOk(wxCommandEvent& evt)
 	{
 		if (m_pVenue->GetMultiQs().FindMultiQ(stdName))
 		{
-			wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+			wxMessageBox(_("IDS_NAME_IN_USE"), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			m_ctrlName->SetFocus();
 			return;
 		}
