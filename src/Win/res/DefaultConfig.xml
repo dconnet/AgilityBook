@@ -4,6 +4,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2023-04-17 Configuration version 69.
+           Updated NADAC titles, new NATCHes, removed All-Around
 2023-02-27 Configuration version 68.
            Renamed ISC/Master to ISC/Level3. Added Level 1 and 2.
 		   Dropped DOCNA.
@@ -225,7 +227,7 @@ Reminder to self: Action/@Config: Only apply this action up to this config
 (non-inclusive, 0 == always) Basically, this is when the action was added.
 -->
 
-  <Configuration version="68">
+  <Configuration version="69">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -2931,10 +2933,13 @@ Extended title at 300 points (repeats every 100)</Titles>
       <Titles LongName="Elite Weavers Skilled Superior Performance" Name="S-WVS-E">200 points</Titles>
       <Titles LongName="Elite Gaters Skilled Superior Performance" Name="S-GTS-E">200 points</Titles>
       <Titles LongName="Elite Grounders Skilled Superior Performance" Name="S-GRS-E" ValidFrom="2022-1-1">200 points</Titles>
-      <Titles LongName="NADAC Agility Trial Champion" Name="NATCH" Prefix="y" StartAt="1">Proficient Elite points: 230 Regular, 130 Chances, 130 Jumpers. Each subsequent NATCH requires an additional 200 Regular, 100 Chances, 100 Jumpers points.</Titles>
-      <Titles LongName="NADAC Versatility Champion" Name="Vers-NATCH" StartAt="1">Proficient Elite points: 230 Regular, 130 of each other class. Each subsequent Vers-NATCH requires an additional 200 Regular, 100 of each other class.</Titles>
-      <Titles LongName="All Around NATCH" Name="All Around NATCH" StartAt="1">Superior title in: Regular, Jumpers, Tunnelers, Grounders, Chances, TouchNGo, Weavers</Titles>
-      <Titles LongName="Platinum All Around NATCH" Name="Platinum All Around NATCH" StartAt="1">Superior title in: Regular, Jumpers, Tunnelers, Grounders, Chances, TouchNGo, Weavers, Gamblers</Titles>
+      <Titles LongName="Non Jumping NATCH" Name="NonJump-NATCH" StartAt="1">Points: 130 Grounders, 130 Touch n Go, 130 Tunnelers, 130 Weavers</Titles>
+      <Titles LongName="NADAC Agility Trial Champion" Name="NATCH" Prefix="y" StartAt="1">Points: 230 Regular, 130 Chances, 130 Jumpers. Each subsequent NATCH requires an additional 200 Regular, 100 Chances, 100 Jumpers points.</Titles>
+      <Titles LongName="Versatility NATCH" Name="Vers-NATCH" StartAt="1">NATCH, plus 130 Touch n Go, 130 Tunnelers, 130 Weavers</Titles>
+      <Titles LongName="Gamblers Versatility NATCH" Name="Gamblers Vers-NATCH" StartAt="1">Vers-NATCH, plus 130 Gamblers</Titles>
+      <Titles LongName="Grounders Versatility NATCH" Name="Grounder Vers-NATCH" StartAt="1">Vers-NATCH, plus 130 Grounders</Titles>
+      <Titles LongName="All Around NATCH" Name="All Around NATCH" StartAt="1" ValidTo="2021-12-31">Superior title in: Regular, Jumpers, Tunnelers, Grounders, Chances, TouchNGo, Weavers</Titles>
+      <Titles LongName="Platinum All Around NATCH" Name="Platinum All Around NATCH" StartAt="1" ValidTo="2021-12-31">Superior title in: Regular, Jumpers, Tunnelers, Grounders, Chances, TouchNGo, Weavers, Gamblers</Titles>
       <Titles LongName="Platinum NATCH" Name="Platinum NATCH">Vers-NATCH plus 130 Grounders, 130 Gamblers</Titles>
       <Titles LongName="Platinum Versatility NATCH" Name="Platinum Versatility NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index, if applicable.</Titles>
       <Titles LongName="Purple NATCH" Name="Purple NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
