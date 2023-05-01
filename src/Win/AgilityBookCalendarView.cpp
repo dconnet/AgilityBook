@@ -146,8 +146,8 @@ private:
 	std::vector<long> m_Columns;
 	std::vector<ARBCalendarPtr> m_Calendar;
 	std::vector<ARBCalendarPtr> m_CalendarHidden;
-	ARBDate m_First;   ///< First date, adjusted to Mon of that week.
-	ARBDate m_Last;    ///< Last trial date.
+	ARBDate m_First; ///< First date, adjusted to Mon of that week.
+	ARBDate m_Last;  ///< Last trial date.
 	int m_nMonths;
 	int m_nCurOffset;  // Used during printing.
 	ARBDate m_Current; ///< Currently selected date.
