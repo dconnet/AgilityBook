@@ -1,6 +1,8 @@
-4/17/2023: v3.8.2.<dev>
+5/15/2023: v3.8.2.<dev>
 - Bumped Configuration v69:
   - Updated NADAC titles, new NATCHes, removed All-Around
+- Bug fixes:
+  - Fix printing from preview in post-wx3.2.2.
 
 3/10/2023: v3.8.1.119
 - Bumped Configuration v68:

@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2023-05-15 Initialize From/To pages in CPrintPreview::Print
  * 2018-12-16 Convert to fmt.
  * 2018-10-09 Change PrintRuns view to autoclose after printing runs.
  * 2017-09-04 Change default DogsInClass to -1 (allows for DNR runs with 0 dogs)
@@ -74,7 +75,11 @@ bool CPrintPreview::Print(bool interactive)
 	bool rc = false;
 	if (GetPrintoutForPrinting())
 	{
-		wxPrinter printer(&GetPrintDialogData());
+		auto& data = GetPrintDialogData();
+		data.SetFromPage(GetMinPage());
+		data.SetToPage(GetMaxPage());
+		data.SetAllPages(true);
+		wxPrinter printer(&data);
 		rc = printer.Print(GetFrame(), GetPrintoutForPrinting(), interactive);
 		if (rc)
 		{
