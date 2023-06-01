@@ -4,12 +4,13 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2023-04-17 Configuration version 69.
+2023-06-01 Configuration version 69.
            Updated NADAC titles, new NATCHes, removed All-Around
+           Updated AKC AGCH title, added Std/JWW to ACT.
 2023-02-27 Configuration version 68.
            Renamed ISC/Master to ISC/Level3. Added Level 1 and 2.
-		   Dropped DOCNA.
-		   Updated URLs.
+           Dropped DOCNA.
+           Updated URLs.
 2023-01-02 Configuration version 67.
            Updated NADAC. Enable Gamblers titles. Title didn't exist between
            1/1/2006 and 8/1/2019, but ARB does not currently handled multiple
@@ -459,6 +460,7 @@ Reminder to self: Action/@Config: Only apply this action up to this config
     <Action Config="65" OldName="ExSc Gold" NewName="ExSCG" Venue="AAC" Verb="RenameTitle" />
     <Action Config="65" OldName="ExT Gold" NewName="ExTRG" Venue="AAC" Verb="RenameTitle" />
     <Action Config="68" Div="ISC" OldName="Master" NewName="Level 3" Venue="AKC" Verb="RenameLevel" />
+    <Action Config="69" OldName="ACT" NewName="Standard" Venue="AKC" Verb="RenameEvent" />
     <Venue LongName="Agility Association of Canada" Name="AAC" URL="https://www.aac.ca/" icon="3">
       <LifetimeNames/>
       <Titles LongName="Agility Dog of Canada" Name="ADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
@@ -735,9 +737,11 @@ Repeat titles are MFPC + 75 Qs</Titles>
       <Titles LongName="Silver Premier Jumpers Dog Preferred" Name="PJSP" StartAt="1" ValidFrom="2015-10-1">PJDP plus 25 Qs</Titles>
       <Titles LongName="Gold Premier Jumpers Dog Preferred" Name="PJGP" StartAt="1" ValidFrom="2015-10-1">PJSP plus 25 Qs</Titles>
       <Titles LongName="Century Premier Jumpers Dog Preferred" Name="PJCP" StartAt="1" ValidFrom="2015-10-1">PJGP plus 25 Qs</Titles>
-      <Titles LongName="Agility Grand Champion" Name="AGCH" Prefix="y">100 Std, 100 JWW, 75 FAST, 75 T2B, 50 Premier Std, 50 Premier JWW. (Regular or Preferred)</Titles>
+      <Titles LongName="Agility Grand Champion" Name="AGCH" Prefix="y" StartAt="1">100 Std, 100 JWW, 75 FAST, 75 T2B, 50 Premier Std, 50 Premier JWW. (Regular or Preferred)</Titles>
       <Titles LongName="Agility Course Test 1" Name="ACT1">2 passing ACT1 scores</Titles>
       <Titles LongName="Agility Course Test 2" Name="ACT2">2 passing ACT2 scores</Titles>
+      <Titles LongName="Agility Course Test 1 Jumpers" Name="ACT1J">2 passing ACT1J scores</Titles>
+      <Titles LongName="Agility Course Test 2 Jumpers" Name="ACT2J">2 passing ACT2J scores</Titles>
       <Division Name="ISC">
         <Level Name="Level 1"/>
         <Level Name="Level 2"/>
@@ -797,6 +801,9 @@ Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior tria
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Name="NAC" SpeedPts="y"/>
         </Scoring>
+        <Scoring Division="ACT" Level="*" ValidFrom="2016-1-1" dropFractions="y" hasTable="y" type="Faults100ThenTime">
+          <TitlePoints Faults="15" Points="1"/>
+        </Scoring>
         <Scoring Division="*" Level="Excellent" dropFractions="y" hasTable="y" timeFault="3" type="Faults100ThenTime">
           <Note>Time Faults only</Note>
           <TitlePoints Faults="15" Points="1"/>
@@ -849,6 +856,9 @@ Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior tria
 Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Name="NAC" SpeedPts="y"/>
+        </Scoring>
+        <Scoring Division="ACT" Level="*" ValidFrom="2016-1-1" dropFractions="y" type="Faults100ThenTime">
+          <TitlePoints Faults="15" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Excellent" dropFractions="y" timeFault="3" type="Faults100ThenTime">
           <Note>Time Faults only</Note>
@@ -958,11 +968,6 @@ You must enter the SCT (1st place) and your placement to generate the titling po
         </Scoring>
         <Scoring Division="Preferred" Level="T2B" ValidFrom="2010-1-1" ValidTo="2011-6-30" timeFault="0" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="0"/>
-        </Scoring>
-      </Event>
-      <Event Name="ACT">
-        <Scoring Division="ACT" Level="*" ValidFrom="2016-1-1" dropFractions="y" hasTable="y" type="Faults100ThenTime">
-          <TitlePoints Faults="15" Points="1"/>
         </Scoring>
       </Event>
       <Event Name="Game: Faults/Time" ShortName="Game: FT">

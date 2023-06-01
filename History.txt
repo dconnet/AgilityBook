@@ -1,8 +1,10 @@
-5/15/2023: v3.8.2.<dev>
+6/1/2023: v3.8.2.<dev>
 - Bumped Configuration v69:
   - Updated NADAC titles, new NATCHes, removed All-Around
+  - Updated AKC AGCH title, added Std/JWW to ACT.
 - Bug fixes:
   - Fix printing from preview in post-wx3.2.2.
+(todo: update config test for v69 before release)
 
 3/10/2023: v3.8.1.119
 - Bumped Configuration v68:
@@ -19,7 +21,7 @@
 - Bumped Configuration v67:
   - Updated NADAC. Enable Gamblers titles. Title didn't exist between 1/1/2006
     and 8/1/2019, but ARB does not currently handled multiple date ranges.
-	Enabled bonus title points on Gamblers.
+    Enabled bonus title points on Gamblers.
 - New features / Enhancements:
   - Make buttons the same size in Faults/CalList/etc (DlgListCtrl)
   - Don't count empty judges, hide "0 judges" in Points view.
