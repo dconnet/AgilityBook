@@ -1491,7 +1491,7 @@ void CAgilityBookOptions::SetImportExportDateFormat(bool bImport, ARBDateFormat 
 
 namespace
 {
-wchar_t const* const GetColumnName(CAgilityBookOptions::ColumnOrder eOrder)
+wchar_t const* GetColumnName(CAgilityBookOptions::ColumnOrder eOrder)
 {
 	switch (eOrder)
 	{

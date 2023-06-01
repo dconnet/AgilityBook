@@ -352,7 +352,7 @@ CReadHttp::ReturnCode CUpdateInfo::ReadVersionFile(bool bVerbose, OnReadComplete
 		std::string data; // must be 'char' for XML parsing
 		for (size_t line = 0; line < file.GetLineCount(); ++line)
 		{
-			data += file[line].ToUTF8();
+			data += file[line].utf8_string();
 			data += '\n';
 		}
 		file.Close();
@@ -679,7 +679,7 @@ void CUpdateInfo::CheckConfig(CAgilityBookDoc* pDoc, bool bVerbose)
 				}
 				for (size_t line = 0; line < file.GetLineCount(); ++line)
 				{
-					strConfig += file[line].ToUTF8();
+					strConfig += file[line].utf8_string();
 					strConfig += '\n';
 				}
 				file.Close();

@@ -39,6 +39,13 @@ Make sure WXWIN is set to wxWidgets root directory.
 - Mac/Unix: Use .../build/setupwx.sh to setup WX build. And ". setwxpath.sh" to
   set the ARB compile environment.
 
+=== Changes to 3.2.2.1: (for VisualStudio 17.6)
+>diff itemid.h.orig itemid.h
+36c36
+<     operator const Type() const { return m_pItem; }
+---
+>     operator Type() const { return m_pItem; }
+
 === Changes to 3.2.0, Changes to 3.2.1, Changes to 3.2.2.1:
   (include/wx/msw/setup.h)
   - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)

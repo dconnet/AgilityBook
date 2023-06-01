@@ -128,8 +128,8 @@ std::string CDlgARBHelp::GetEncodedData()
 		fmt::format_to(std::back_inserter(rawdata), "{}", "\n");
 		if (fileName.GetTimes(nullptr, &dtMod, &dtCreate))
 		{
-			fmt::format_to(std::back_inserter(rawdata), "Created: {}\n", dtCreate.Format().ToUTF8());
-			fmt::format_to(std::back_inserter(rawdata), "Modified: {}\n", dtMod.Format().ToUTF8());
+			fmt::format_to(std::back_inserter(rawdata), "Created: {}\n", dtCreate.Format().utf8_string());
+			fmt::format_to(std::back_inserter(rawdata), "Modified: {}\n", dtMod.Format().utf8_string());
 		}
 		wxULongLong size = fileName.GetSize();
 		if (wxInvalidSize != size)
