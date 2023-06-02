@@ -8,6 +8,7 @@
 # Note: Found old OSX SDKs at https://github.com/phracker/MacOSX-SDKs/releases
 #
 # History
+# 2023-06-02 If not arch given on Mac, built all (x64/arm/fat)
 # 2023-03-11 Allow building non-fat binaries on Mac
 # 2023-01-20 Add ability to target different wx versions (configure options
 #            have changed from 3.2 to 3.3)
@@ -117,9 +118,12 @@ Darwin*)
 				$PROGRAM $WXVER release $TEST_ONLY x64
 				$PROGRAM $WXVER debug $TEST_ONLY arm
 				$PROGRAM $WXVER release $TEST_ONLY arm
+				$PROGRAM $WXVER debug $TEST_ONLY fat
+				$PROGRAM $WXVER release $TEST_ONLY fat
 			else
 				$PROGRAM $WXVER $CONFIG $TEST_ONLY x64
 				$PROGRAM $WXVER $CONFIG $TEST_ONLY arm
+				$PROGRAM $WXVER $CONFIG $TEST_ONLY fat
 			fi
 		else
 			echo "$USAGE"
