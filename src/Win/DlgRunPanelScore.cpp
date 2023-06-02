@@ -271,6 +271,10 @@ CDlgRunPanelScore::CDlgRunPanelScore(
 
 	// Controls (these are done first to control tab order)
 
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
+	std::vector<wxClientData*> data;
+
 	wxStaticText* textDate
 		= new wxStaticText(this, wxID_ANY, _("IDC_RUNSCORE_DATE"), wxDefaultPosition, wxDefaultSize, 0);
 	textDate->Wrap(-1);
@@ -299,17 +303,23 @@ CDlgRunPanelScore::CDlgRunPanelScore(
 	m_ctrlVenues->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgRunPanelScore::OnSelchangeVenue, this);
 	m_ctrlVenues->SetHelpText(_("HIDC_RUNSCORE_VENUE"));
 	m_ctrlVenues->SetToolTip(_("HIDC_RUNSCORE_VENUE"));
+	idxCur = wxNOT_FOUND;
+	items.clear();
+	data.clear();
 	for (auto pClub : inTrial->GetClubs())
 	{
 		if (pClub->GetPrimaryClub())
 			continue;
 		ARBConfigVenuePtr pVenue;
 		m_pDoc->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue);
-		int index = m_ctrlVenues->Append(fmt::format(L"[{}] {}", pClub->GetVenue(), pClub->GetName()));
-		m_ctrlVenues->SetClientObject(index, new CDlgDogVenueData(pClub, pVenue));
+		items.Add(fmt::format(L"[{}] {}", pClub->GetVenue(), pClub->GetName()));
+		data.push_back(new CDlgDogVenueData(pClub, pVenue));
 		if (m_Run->GetClub() && *(m_Run->GetClub()) == *pClub)
-			m_ctrlVenues->SetSelection(index);
+			idxCur = static_cast<int>(items.size()) - 1;
 	}
+	m_ctrlVenues->Append(items, data.data());
+	m_ctrlVenues->SetSelection(idxCur);
+
 	if (wxNOT_FOUND == m_ctrlVenues->GetSelection())
 	{
 		m_ctrlVenues->SetSelection(0);
@@ -426,15 +436,13 @@ CDlgRunPanelScore::CDlgRunPanelScore(
 	m_ctrlHeight->SetToolTip(_("HIDC_RUNSCORE_HEIGHT"));
 	std::set<std::wstring> names;
 	m_pDoc->Book().GetAllHeights(names);
-	std::set<std::wstring>::const_iterator iter;
-	wxArrayString choices;
-	for (iter = names.begin(); iter != names.end(); ++iter)
+	items.clear();
+	for (auto iter = names.begin(); iter != names.end(); ++iter)
 	{
-		wxString wxName(StringUtil::stringWX(*iter));
-		m_ctrlHeight->Append(wxName);
-		choices.Add(wxName);
+		items.Add(*iter);
 	}
-	m_ctrlHeight->AutoComplete(choices);
+	m_ctrlHeight->Append(items);
+	m_ctrlHeight->AutoComplete(items);
 
 	m_textJudge = new wxStaticText(this, wxID_ANY, _("IDC_RUNSCORE_JUDGE"), wxDefaultPosition, wxDefaultSize, 0);
 	m_textJudge->Wrap(-1);
@@ -474,14 +482,13 @@ CDlgRunPanelScore::CDlgRunPanelScore(
 	m_ctrlHandler->SetHelpText(_("HIDC_RUNSCORE_HANDLER"));
 	m_ctrlHandler->SetToolTip(_("HIDC_RUNSCORE_HANDLER"));
 	m_pDoc->Book().GetAllHandlers(names);
-	choices.Clear();
-	for (iter = names.begin(); iter != names.end(); ++iter)
+	items.clear();
+	for (auto iter = names.begin(); iter != names.end(); ++iter)
 	{
-		wxString wxName(StringUtil::stringWX(*iter));
-		m_ctrlHandler->Append(wxName);
-		choices.Add(wxName);
+		items.Add(*iter);
 	}
-	m_ctrlHandler->AutoComplete(choices);
+	m_ctrlHandler->Append(items);
+	m_ctrlHandler->AutoComplete(items);
 
 	wxStaticText* textConditions
 		= new wxStaticText(this, wxID_ANY, _("IDC_RUNSCORE_CONDITIONS"), wxDefaultPosition, wxDefaultSize, 0);
@@ -1373,6 +1380,9 @@ void CDlgRunPanelScore::FillDivisions(bool bOnEventChange)
 		div = m_Run->GetDivision();
 	m_ctrlDivisions->Clear();
 
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
+	std::vector<wxClientData*> data;
 	for (ARBConfigDivisionList::const_iterator iterDiv = pVenue->GetDivisions().begin();
 		 iterDiv != pVenue->GetDivisions().end();
 		 ++iterDiv)
@@ -1385,14 +1395,17 @@ void CDlgRunPanelScore::FillDivisions(bool bOnEventChange)
 		{
 			if ((*iterEvent)->VerifyEvent(pDiv->GetName(), WILDCARD_LEVEL, m_Run->GetDate()))
 			{
-				index = m_ctrlDivisions->Append(StringUtil::stringWX(pDiv->GetName()));
-				m_ctrlDivisions->SetClientObject(index, new CDlgDogDivData(pDiv));
+				items.Add(pDiv->GetName());
+				data.push_back(new CDlgDogDivData(pDiv));
 				if (pDiv->GetName() == div)
-					m_ctrlDivisions->SetSelection(index);
+					idxCur = static_cast<int>(items.size()) - 1;
 				break;
 			}
 		}
 	}
+	m_ctrlDivisions->Append(items, data.data());
+	m_ctrlDivisions->SetSelection(idxCur);
+
 	// First try to find 'div' (in case the divisions changed)
 	if (wxNOT_FOUND == m_ctrlDivisions->GetSelection() && !div.empty())
 	{
@@ -1440,6 +1453,9 @@ void CDlgRunPanelScore::FillLevels(bool bOnEventChange)
 	if (level.empty())
 		level = m_Run->GetLevel();
 	m_ctrlLevels->Clear();
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
+	std::vector<wxClientData*> data;
 	index = m_ctrlDivisions->GetSelection();
 	if (wxNOT_FOUND != index)
 	{
@@ -1462,23 +1478,25 @@ void CDlgRunPanelScore::FillLevels(bool bOnEventChange)
 							 ++iterSub)
 						{
 							ARBConfigSubLevelPtr pSubLevel = (*iterSub);
-							int idx = m_ctrlLevels->Append(StringUtil::stringWX(pSubLevel->GetName()));
-							m_ctrlLevels->SetClientObject(idx, new CDlgDogLevelData(pLevel, pSubLevel));
+							items.Add(pSubLevel->GetName());
+							data.push_back(new CDlgDogLevelData(pLevel, pSubLevel));
 							if (level == pSubLevel->GetName())
-								m_ctrlLevels->SetSelection(idx);
+								idxCur = static_cast<int>(items.size()) - 1;
 						}
 					}
 					else
 					{
-						int idx = m_ctrlLevels->Append(StringUtil::stringWX(pLevel->GetName()));
-						m_ctrlLevels->SetClientObject(idx, new CDlgDogLevelData(pLevel));
+						items.Add(pLevel->GetName());
+						data.push_back(new CDlgDogLevelData(pLevel));
 						if (level == pLevel->GetName())
-							m_ctrlLevels->SetSelection(idx);
+							idxCur = static_cast<int>(items.size()) - 1;
 					}
 					break;
 				}
 			}
 		}
+		m_ctrlLevels->Append(items, data.data());
+		m_ctrlLevels->SetSelection(idxCur);
 		if (wxNOT_FOUND == m_ctrlLevels->GetSelection())
 		{
 			std::wstring last = CAgilityBookOptions::GetLastEnteredLevel(m_pDog, pVenue);
@@ -1519,6 +1537,8 @@ void CDlgRunPanelScore::FillEvents(bool bOnEventChange)
 	if (evt.empty())
 		evt = m_Run->GetEvent();
 	m_ctrlEvents->Clear();
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
 	int idxDiv = m_ctrlDivisions->GetSelection();
 	if (wxNOT_FOUND != idxDiv)
 	{
@@ -1535,10 +1555,10 @@ void CDlgRunPanelScore::FillEvents(bool bOnEventChange)
 				ARBConfigEventPtr pEvent = (*iter);
 				if (pEvent->FindEvent(pDiv->GetName(), pData->m_pLevel->GetName(), m_Run->GetDate()))
 				{
-					int idx = m_ctrlEvents->Append(StringUtil::stringWX(pEvent->GetName()));
+					items.Add(pEvent->GetName());
 					if (evt == pEvent->GetName())
 					{
-						m_ctrlEvents->SetSelection(idx);
+						idxCur = static_cast<int>(items.size()) - 1;
 						SetEventDesc(pEvent);
 					}
 					else
@@ -1550,14 +1570,16 @@ void CDlgRunPanelScore::FillEvents(bool bOnEventChange)
 				}
 			}
 			// If there's only one event, auto-select it.
-			if (pLastAddedEvent && 1 == m_ctrlEvents->GetCount() && 0 > m_ctrlEvents->GetSelection())
+			if (pLastAddedEvent && 1 == items.size() && 0 > idxCur)
 			{
-				m_ctrlEvents->SetSelection(0);
+				idxCur = 0;
 				SetEventDesc(pLastAddedEvent);
 				m_Run->SetEvent(pLastAddedEvent->GetName());
 			}
 		}
 	}
+	m_ctrlEvents->Append(items);
+	m_ctrlEvents->SetSelection(idxCur);
 	FillSubNames();
 	UpdateControls(bOnEventChange);
 }
@@ -1582,10 +1604,9 @@ void CDlgRunPanelScore::FillSubNames()
 			wxArrayString choices;
 			for (std::set<std::wstring>::const_iterator iter = names.begin(); iter != names.end(); ++iter)
 			{
-				wxString wxName(StringUtil::stringWX(*iter));
-				m_ctrlSubNames->Append(wxName);
-				choices.Add(wxName);
+				choices.Add(*iter);
 			}
+			m_ctrlSubNames->Append(choices);
 			m_ctrlSubNames->AutoComplete(choices);
 			m_ctrlSubNamesText->Show(true);
 			m_ctrlSubNames->Show(true);
@@ -1614,10 +1635,9 @@ void CDlgRunPanelScore::FillJudges()
 	wxArrayString choices;
 	for (std::set<std::wstring>::const_iterator iter = names.begin(); iter != names.end(); ++iter)
 	{
-		wxString wxName(StringUtil::stringWX(*iter));
-		m_ctrlJudge->Append(wxName);
-		choices.Add(wxName);
+		choices.Add(*iter);
 	}
+	m_ctrlJudge->Append(choices);
 	m_ctrlJudge->AutoComplete(choices);
 	m_ctrlJudge->SetValue(m_Judge);
 }
