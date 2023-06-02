@@ -1,4 +1,4 @@
-# A script I use on the Mac to help manage multiple build environments.
+# A script I use on unix to help manage multiple build environments.
 # This allows working with the released version and also testing using
 # the current SourceForge trunk. (Use svn to manage that)
 #
@@ -8,7 +8,8 @@
 # Note: Found old OSX SDKs at https://github.com/phracker/MacOSX-SDKs/releases
 #
 # History
-# 2023-06-02 If not arch given on Mac, built all (x64/arm/fat)
+# 2023-06-02 If not arch given on Mac, build all (x64/arm/fat)
+#            Actually run 'make' after configuring.
 # 2023-03-11 Allow building non-fat binaries on Mac
 # 2023-01-20 Add ability to target different wx versions (configure options
 #            have changed from 3.2 to 3.3)
@@ -289,4 +290,5 @@ echo "../configure $COMPILERS $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS"
 if [[ "x$TEST_ONLY" = "x" ]]
 then
 	../configure $COMPILERS $DEBUG $VERSION $LIBRARIES $CONFIG_PARAMS
+	make
 fi

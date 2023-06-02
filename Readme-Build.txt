@@ -36,8 +36,8 @@ Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in AgilityBookLibs/lang/res/fr_FR) IMPORTANT: This means the directory name
    in fr_FR must match the wx version number being used.
-- Mac/Unix: Use .../build/setupwx.sh to setup WX build. And ". setwxpath.sh" to
-  set the ARB compile environment.
+- Mac/Unix: Use .../build/BuildUnix.sh to setup WX build. And ". setwxpath.sh"
+  to set the ARB compile environment.
 
 === Changes to 3.2.2.1: (for VisualStudio 17.6)
 >diff itemid.h.orig itemid.h
@@ -113,7 +113,7 @@ font in a text control on OSX.
 
 
 To build for VC, see ./build/CompileWX.py
-To build for Mac/Unix, see ./build/setupwx.sh
+To build for Mac/Unix, see ./build/BuildUnix.sh
 
 --------------------
 
