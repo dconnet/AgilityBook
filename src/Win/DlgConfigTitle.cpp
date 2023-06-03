@@ -251,17 +251,18 @@ CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pPa
 		{arbT("IDS_CONFIG_TITLE_NUMBER"), ARBTitleStyle::Number},
 		{arbT("IDS_CONFIG_TITLE_ROMAN"), ARBTitleStyle::Roman},
 	};
-	constexpr int nStyles = sizeof(styles) / sizeof(styles[0]);
-	for (int n = 0; n < nStyles; ++n)
+	int idxCur = 0; // Default to first item.
+	wxArrayString items;
+	std::vector<void*> data;
+	for (auto const& style : styles)
 	{
-		wxString str = wxGetTranslation(styles[n].idRes);
-		int idx = m_ctrlStyle->Append(str);
-		m_ctrlStyle->SetClientData(idx, reinterpret_cast<void*>(styles[n].style));
-		if (m_Title->GetMultipleStyle() == styles[n].style)
-			m_ctrlStyle->SetSelection(n);
+		items.Add(wxGetTranslation(style.idRes));
+		data.push_back(reinterpret_cast<void*>(style.style));
+		if (m_Title->GetMultipleStyle() == style.style)
+			idxCur = static_cast<int>(items.size()) - 1;
 	}
-	if (0 > m_ctrlStyle->GetSelection())
-		m_ctrlStyle->SetSelection(0);
+	m_ctrlStyle->Append(items, data.data());
+	m_ctrlStyle->SetSelection(idxCur);
 
 	wxStaticText* textSep
 		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_TITLE_SEP"), wxDefaultPosition, wxDefaultSize, 0);
@@ -287,17 +288,18 @@ CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pPa
 		{arbT("IDS_CONFIG_TITLE_SEP_SPACE"), ARBTitleSeparator::Space},
 		{arbT("IDS_CONFIG_TITLE_SEP_HYPHEN"), ARBTitleSeparator::Hyphen},
 	};
-	constexpr int nSeps = sizeof(seps) / sizeof(seps[0]);
-	for (int n = 0; n < nSeps; ++n)
+	idxCur = 0; // Default to first item.
+	items.clear();
+	data.clear();
+	for (auto const& sep : seps)
 	{
-		wxString str = wxGetTranslation(seps[n].idRes);
-		int idx = m_ctrlSep->Append(str);
-		m_ctrlSep->SetClientData(idx, reinterpret_cast<void*>(seps[n].sep));
-		if (m_Title->GetMultipleStyleSeparator() == seps[n].sep)
-			m_ctrlSep->SetSelection(n);
+		items.Add(wxGetTranslation(sep.idRes));
+		data.push_back(reinterpret_cast<void*>(sep.sep));
+		if (m_Title->GetMultipleStyleSeparator() == sep.sep)
+			idxCur = static_cast<int>(items.size()) - 1;
 	}
-	if (0 > m_ctrlSep->GetSelection())
-		m_ctrlSep->SetSelection(0);
+	m_ctrlSep->Append(items, data.data());
+	m_ctrlSep->SetSelection(idxCur);
 
 	wxCheckBox* ctrlValidFrom = new wxCheckBox(
 		this,

@@ -186,19 +186,22 @@ CDlgClub::CDlgClub(
 		m_ctrlPrimary->SetHelpText(_("HIDC_CLUB_PRIMARY"));
 		m_ctrlPrimary->SetToolTip(_("HIDC_CLUB_PRIMARY"));
 		m_ctrlPrimary->Show(m_bCoSanction);
+		int idxCur = 0; // Default to first item
+		wxArrayString items;
+		std::vector<wxClientData*> data;
 		for (auto item : inClubs)
 		{
 			if (item->GetPrimaryClub())
 				continue;
 			if (m_pClub && *m_pClub == *item)
 				continue;
-			int index = m_ctrlPrimary->Append(fmt::format(L"[{}] {}", item->GetVenue(), item->GetName()));
-			m_ctrlPrimary->SetClientObject(index, new CDlgClubData(item));
+			items.Add(fmt::format(L"[{}] {}", item->GetVenue(), item->GetName()));
+			data.push_back(new CDlgClubData(item));
 			if (m_pClub->GetPrimaryClub() && m_pClub->GetPrimaryClub()->GetVenue() == item->GetVenue())
-				m_ctrlPrimary->SetSelection(index);
+				idxCur = static_cast<int>(items.size()) - 1;
 		}
-		if (wxNOT_FOUND == m_ctrlVenues->GetSelection())
-			m_ctrlPrimary->SetSelection(0);
+		m_ctrlPrimary->Append(items, data.data());
+		m_ctrlPrimary->SetSelection(idxCur);
 	}
 
 	// Sizers

@@ -85,34 +85,34 @@ CDlgOptionsFilter::CDlgOptionsFilter(wxWindow* parent, CAgilityBookDoc* pDoc)
 
 	wxStaticBox* boxFilters = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_FILTER_NAMES"));
 
+	std::vector<std::wstring> filterNames;
+	m_FilterOptions.GetAllFilterNames(filterNames, true);
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
+	for (auto const& name : filterNames)
+	{
+		items.Add(name);
+		if (name == m_FilterOptions.GetCurrentFilter())
+		{
+			m_FilterName = StringUtil::stringWX(m_FilterOptions.GetCurrentFilter());
+			idxCur = static_cast<int>(items.size()) - 1;
+		}
+	}
+
 	m_ctrlFilters = new wxComboBox(
 		this,
 		wxID_ANY,
 		wxEmptyString,
 		wxDefaultPosition,
 		wxDefaultSize,
-		0,
-		nullptr,
+		items,
 		wxCB_DROPDOWN,
 		CTrimValidator(&m_FilterName, TRIMVALIDATOR_TRIM_BOTH));
+	m_ctrlFilters->SetSelection(idxCur);
 	m_ctrlFilters->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgOptionsFilter::OnSelchangeFilterNames, this);
 	m_ctrlFilters->SetHelpText(_("HIDC_OPT_FILTER_NAMES"));
 	m_ctrlFilters->SetToolTip(_("HIDC_OPT_FILTER_NAMES"));
-	std::vector<std::wstring> filterNames;
-	m_FilterOptions.GetAllFilterNames(filterNames, true);
-	wxArrayString choices;
-	for (std::vector<std::wstring>::iterator iterName = filterNames.begin(); iterName != filterNames.end(); ++iterName)
-	{
-		wxString wxName(StringUtil::stringWX(*iterName));
-		int idx = m_ctrlFilters->Append(wxName);
-		choices.Add(wxName);
-		if ((*iterName) == m_FilterOptions.GetCurrentFilter())
-		{
-			m_FilterName = StringUtil::stringWX(m_FilterOptions.GetCurrentFilter());
-			m_ctrlFilters->SetSelection(idx);
-		}
-	}
-	m_ctrlFilters->AutoComplete(choices);
+	m_ctrlFilters->AutoComplete(items);
 
 	wxButton* btnSave
 		= new wxButton(this, wxID_ANY, _("IDC_OPT_FILTER_NAMES_SAVE"), wxDefaultPosition, wxDefaultSize, 0);

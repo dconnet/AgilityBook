@@ -192,6 +192,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_pScoring->GetPlaceInfo().Clone(m_PlaceInfo);
 
 	// Controls (these are done first to control tab order)
+	wxArrayString items;
 
 	wxStaticText* textDiv
 		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_EVENT_DIVISION"), wxDefaultPosition, wxDefaultSize, 0);
@@ -209,20 +210,25 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlDivision->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgConfigEventMethod::OnSelchangeDivision, this);
 	m_ctrlDivision->SetHelpText(_("HIDC_CONFIG_EVENT_DIVISION"));
 	m_ctrlDivision->SetToolTip(_("HIDC_CONFIG_EVENT_DIVISION"));
-	wxString all = _("IDS_ALL");
-	int index = m_ctrlDivision->Append(all);
+	int idxCur = wxNOT_FOUND;
+	items.clear();
+	std::vector<wxClientData*> data;
+	items.Add(_("IDS_ALL"));
+	data.push_back(nullptr);
 	if (m_pScoring->GetDivision() == WILDCARD_DIVISION)
-		m_ctrlDivision->SetSelection(index);
+		idxCur = static_cast<int>(items.size()) - 1;
 	for (ARBConfigDivisionList::iterator iterDiv = m_pVenue->GetDivisions().begin();
 		 iterDiv != m_pVenue->GetDivisions().end();
 		 ++iterDiv)
 	{
 		ARBConfigDivisionPtr pDiv = (*iterDiv);
-		index = m_ctrlDivision->Append(StringUtil::stringWX(pDiv->GetName()));
-		m_ctrlDivision->SetClientObject(index, new CDlgConfigureMethodDataDivision(pDiv));
+		items.Add(pDiv->GetName());
+		data.push_back(new CDlgConfigureMethodDataDivision(pDiv));
 		if (m_pScoring->GetDivision() == pDiv->GetName())
-			m_ctrlDivision->SetSelection(index);
+			idxCur = static_cast<int>(items.size()) - 1;
 	}
+	m_ctrlDivision->Append(items, data.data());
+	m_ctrlDivision->SetSelection(idxCur);
 
 	wxStaticText* textLevel
 		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_EVENT_LEVEL"), wxDefaultPosition, wxDefaultSize, 0);
@@ -339,13 +345,14 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		ARBScoringStyle::TimePlusFaults,
 		ARBScoringStyle::TimeNoPlaces,
 	};
-	constexpr int nStyles = sizeof(Styles) / sizeof(Styles[0]);
-	for (index = 0; index < nStyles; ++index)
+	items.clear();
+	std::vector<void*> dataVoid;
+	for (auto const& style : Styles)
 	{
-		std::wstring str = ARBConfigScoring::GetScoringStyleStr(Styles[index]);
-		int idx = m_ctrlType->Append(StringUtil::stringWX(str));
-		m_ctrlType->SetClientData(idx, reinterpret_cast<void*>(Styles[index]));
+		items.Add(ARBConfigScoring::GetScoringStyleStr(style));
+		dataVoid.push_back(reinterpret_cast<void*>(style));
 	}
+	m_ctrlType->Append(items, dataVoid.data());
 
 	m_ctrlDropFractions = new wxCheckBox(
 		this,
@@ -427,9 +434,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlPlacement->SetToolTip(_("HIDC_CONFIG_EVENT_PLACEMENT"));
 	m_ctrlPlacement->InsertColumn(0, _("IDS_COL_PLACE"));
 	m_ctrlPlacement->InsertColumn(1, _("IDS_COL_MULTIPLIER"));
-	index = 0;
-	for (ARBConfigPlaceInfoList::iterator iterPlace = m_PlaceInfo.begin(); iterPlace != m_PlaceInfo.end();
-		 ++index, ++iterPlace)
+	for (ARBConfigPlaceInfoList::iterator iterPlace = m_PlaceInfo.begin(); iterPlace != m_PlaceInfo.end(); ++iterPlace)
 	{
 		CDlgConfigureDataPlacementPtr pData(
 			std::make_shared<CDlgConfigureDataPlacement>((*iterPlace)->GetPlace(), (*iterPlace)->GetValue()));
@@ -837,29 +842,26 @@ void CDlgConfigEventMethod::UpdateControls()
 
 void CDlgConfigEventMethod::FillLevelList()
 {
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
 	m_ctrlLevel->Clear();
-	wxString all = _("IDS_ALL");
-	int index = m_ctrlLevel->Append(all);
+	items.Add(_("IDS_ALL"));
 	if (m_pScoring->GetLevel() == WILDCARD_LEVEL)
-		m_ctrlLevel->SetSelection(index);
+		idxCur = static_cast<int>(items.size()) - 1;
+
 	int idxDiv = m_ctrlDivision->GetSelection();
 	if (0 == idxDiv) // All
 	{
-		for (ARBConfigDivisionList::iterator iter = m_pVenue->GetDivisions().begin();
-			 iter != m_pVenue->GetDivisions().end();
-			 ++iter)
+		for (auto const& pDiv : m_pVenue->GetDivisions())
 		{
-			ARBConfigDivisionPtr pDiv = (*iter);
-			for (ARBConfigLevelList::iterator iterLevel = pDiv->GetLevels().begin();
-				 iterLevel != pDiv->GetLevels().end();
-				 ++iterLevel)
+			for (auto const& pLevel : pDiv->GetLevels())
 			{
-				wxString wxName(StringUtil::stringWX((*iterLevel)->GetName()));
+				wxString wxName(pLevel->GetName());
 				if (wxNOT_FOUND == m_ctrlLevel->FindString(wxName, true))
 				{
-					index = m_ctrlLevel->Append(wxName);
-					if (m_pScoring->GetLevel() == (*iterLevel)->GetName())
-						m_ctrlLevel->SetSelection(index);
+					items.Add(wxName);
+					if (m_pScoring->GetLevel() == pLevel->GetName())
+						idxCur = static_cast<int>(items.size()) - 1;
 				}
 			}
 		}
@@ -872,11 +874,13 @@ void CDlgConfigEventMethod::FillLevelList()
 			 iterLevel != pDiv->m_Div->GetLevels().end();
 			 ++iterLevel)
 		{
-			index = m_ctrlLevel->Append(StringUtil::stringWX((*iterLevel)->GetName()));
+			items.Add((*iterLevel)->GetName());
 			if (m_pScoring->GetLevel() == (*iterLevel)->GetName())
-				m_ctrlLevel->SetSelection(index);
+				idxCur = static_cast<int>(items.size()) - 1;
 		}
 	}
+	m_ctrlLevel->Append(items);
+	m_ctrlLevel->SetSelection(idxCur);
 }
 
 

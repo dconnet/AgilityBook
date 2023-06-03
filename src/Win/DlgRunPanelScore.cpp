@@ -306,7 +306,7 @@ CDlgRunPanelScore::CDlgRunPanelScore(
 	idxCur = wxNOT_FOUND;
 	items.clear();
 	data.clear();
-	for (auto pClub : inTrial->GetClubs())
+	for (auto const& pClub : inTrial->GetClubs())
 	{
 		if (pClub->GetPrimaryClub())
 			continue;

@@ -163,14 +163,18 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 		0,
 		nullptr,
 		wxCB_DROPDOWN | wxCB_READONLY | wxCB_SORT);
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
+	std::vector<wxClientData*> data;
 	for (int index = 0; index < sc_numTally; ++index)
 	{
-		wxString desc = wxGetTranslation(sc_Tally[index].idDesc);
-		int id = m_ctrlTally->Append(desc);
-		m_ctrlTally->SetClientObject(id, new DlgConfigOtherPointData(sc_Tally[index].tally));
+		items.Add(wxGetTranslation(sc_Tally[index].idDesc));
+		data.push_back(new DlgConfigOtherPointData(sc_Tally[index].tally));
 		if (m_pOther->GetTally() == sc_Tally[index].tally)
-			m_ctrlTally->SetSelection(id);
+			idxCur = static_cast<int>(items.size()) - 1;
 	}
+	m_ctrlTally->Append(items, data.data());
+	m_ctrlTally->SetSelection(idxCur);
 	m_ctrlTally->SetHelpText(_("HIDC_CONFIG_OTHER_TALLY"));
 	m_ctrlTally->SetToolTip(_("HIDC_CONFIG_OTHER_TALLY"));
 

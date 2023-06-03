@@ -1,9 +1,12 @@
-6/1/2023: v3.8.2.<dev>
+6/3/2023: v3.8.2.<dev>
 - Bumped Configuration v69:
   - Updated NADAC titles, new NATCHes, removed All-Around
   - Updated AKC AGCH title, added Std/JWW to ACT.
 - Bug fixes:
   - Fix printing from preview in post-wx3.2.2.
+  - Fixed crash in Existing Points dialog.
+- New features / Enhancements:
+  - Improved combobox insertions.
 (todo: update config test for v69 before release)
 
 3/10/2023: v3.8.1.119

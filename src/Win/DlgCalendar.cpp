@@ -399,6 +399,18 @@ CDlgCalendar::CDlgCalendar(ARBCalendarPtr const& inCal, CAgilityBookDoc* pDoc, w
 	if (m_EMailSecAddr.empty())
 		m_ctrlEMailSec->Enable(false);
 
+	std::set<std::wstring> addrs;
+	for (auto const& cal : m_pDoc->Book().GetCalendar())
+	{
+		addrs.insert(cal->GetSecEmail());
+	}
+	wxArrayString items;
+	for (auto const& addr : addrs)
+	{
+		if (!addr.empty())
+			items.Add(addr);
+	}
+
 	m_ctrlEMailSecAddr = new wxComboBox(
 		this,
 		wxID_ANY,
@@ -409,27 +421,10 @@ CDlgCalendar::CDlgCalendar(ARBCalendarPtr const& inCal, CAgilityBookDoc* pDoc, w
 		nullptr,
 		wxCB_DROPDOWN | wxCB_SORT,
 		CTrimValidator(&m_EMailSecAddr, TRIMVALIDATOR_TRIM_BOTH));
+	m_ctrlEMailSecAddr->AutoComplete(items);
 	m_ctrlEMailSecAddr->Bind(wxEVT_COMMAND_TEXT_UPDATED, &CDlgCalendar::OnEnChangeCalEmailSecAddr, this);
 	m_ctrlEMailSecAddr->SetHelpText(_("HIDC_CAL_EMAIL_SEC_ADDR"));
 	m_ctrlEMailSecAddr->SetToolTip(_("HIDC_CAL_EMAIL_SEC_ADDR"));
-	std::set<std::wstring> addrs;
-	for (ARBCalendarList::const_iterator iCal = m_pDoc->Book().GetCalendar().begin();
-		 iCal != m_pDoc->Book().GetCalendar().end();
-		 ++iCal)
-	{
-		addrs.insert((*iCal)->GetSecEmail());
-	}
-	wxArrayString choices;
-	for (std::set<std::wstring>::iterator i = addrs.begin(); i != addrs.end(); ++i)
-	{
-		if (!(*i).empty())
-		{
-			wxString wxName(StringUtil::stringWX((*i)));
-			m_ctrlEMailSecAddr->Append(wxName);
-			choices.Add(wxName);
-		}
-	}
-	m_ctrlEMailSecAddr->AutoComplete(choices);
 
 	wxStaticText* textVenue = new wxStaticText(this, wxID_ANY, _("IDC_CAL_VENUE"), wxDefaultPosition, wxDefaultSize, 0);
 	textVenue->Wrap(-1);
@@ -677,23 +672,24 @@ void CDlgCalendar::ListLocations()
 	m_pDoc->Book().GetAllTrialLocations(locations, true, true);
 	if (!m_pCal->GetLocation().empty())
 		locations.insert(m_pCal->GetLocation());
-	wxString loc(m_Location);
+	std::wstring loc(m_Location);
 	if (m_Location.empty())
-		loc = StringUtil::stringWX(m_pCal->GetLocation());
+		loc = m_pCal->GetLocation();
 	m_ctrlLocation->Clear();
-	wxArrayString choices;
-	for (std::set<std::wstring>::const_iterator iter = locations.begin(); iter != locations.end(); ++iter)
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
+	for (auto const& itLoc : locations)
 	{
-		wxString itLoc = StringUtil::stringWX(*iter);
-		int index = m_ctrlLocation->Append(itLoc);
-		choices.Add(itLoc);
+		items.Add(itLoc);
 		if (itLoc == loc)
 		{
-			m_ctrlLocation->SetSelection(index);
+			idxCur = static_cast<int>(items.size()) - 1;
 			UpdateLocationInfo(itLoc);
 		}
 	}
-	m_ctrlLocation->AutoComplete(choices);
+	m_ctrlLocation->Append(items);
+	m_ctrlLocation->SetSelection(idxCur);
+	m_ctrlLocation->AutoComplete(items);
 }
 
 
@@ -718,23 +714,24 @@ void CDlgCalendar::ListClubs()
 	m_pDoc->Book().GetAllClubNames(clubs, true, true);
 	if (!m_pCal->GetClub().empty())
 		clubs.insert(m_pCal->GetClub());
-	wxString club(m_Club);
+	std::wstring club(m_Club);
 	if (m_Club.empty())
-		club = StringUtil::stringWX(m_pCal->GetClub());
+		club = m_pCal->GetClub();
 	m_ctrlClub->Clear();
-	wxArrayString choices;
-	for (std::set<std::wstring>::const_iterator iter = clubs.begin(); iter != clubs.end(); ++iter)
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
+	for (auto const& itClub : clubs)
 	{
-		wxString itClub = StringUtil::stringWX((*iter));
-		int index = m_ctrlClub->Append(itClub);
-		choices.Add(itClub);
+		items.Add(itClub);
 		if (itClub == club)
 		{
-			m_ctrlClub->SetSelection(index);
+			idxCur = static_cast<int>(items.size()) - 1;
 			UpdateClubInfo(itClub);
 		}
 	}
-	m_ctrlClub->AutoComplete(choices);
+	m_ctrlClub->Append(items);
+	m_ctrlClub->SetSelection(idxCur);
+	m_ctrlClub->AutoComplete(items);
 }
 
 

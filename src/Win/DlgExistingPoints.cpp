@@ -217,18 +217,20 @@ CDlgExistingPoints::CDlgExistingPoints(
 		   ARBExistingPointType::Speed,
 		   // ARBExistingPointType::MQ, Not here - will be added later as long as a venue supports it
 		   ARBExistingPointType::SQ};
-	int nTypes = sizeof(types) / sizeof(types[0]);
-	for (int i = 0; i < nTypes; ++i)
+	int idxCur = 0; // Default to first item.
+	wxArrayString items;
+	std::vector<void*> data;
+	for (auto const& type : types)
 	{
-		int index = m_ctrlType->Append(StringUtil::stringWX(ARBDogExistingPoints::GetPointTypeName(types[i])));
-		m_ctrlType->SetClientData(index, reinterpret_cast<void*>(types[i]));
-		if (m_pExistingPoints && m_pExistingPoints->GetType() == types[i])
-			m_ctrlType->SetSelection(index);
-		else if (!m_pExistingPoints && ARBExistingPointType::Title == types[i])
-			m_ctrlType->SetSelection(index);
+		items.Add(ARBDogExistingPoints::GetPointTypeName(type));
+		data.push_back(reinterpret_cast<void*>(type));
+		if (m_pExistingPoints && m_pExistingPoints->GetType() == type)
+			idxCur = static_cast<int>(items.size()) - 1;
+		else if (!m_pExistingPoints && ARBExistingPointType::Title == type)
+			idxCur = static_cast<int>(items.size()) - 1;
 	}
-	if (wxNOT_FOUND == m_ctrlType->GetSelection())
-		m_ctrlType->SetSelection(0);
+	m_ctrlType->Append(items, data.data());
+	m_ctrlType->SetSelection(idxCur);
 
 	wxStaticText* textEarned
 		= new wxStaticText(this, wxID_ANY, _("IDC_EXISTING_DATE"), wxDefaultPosition, wxDefaultSize, 0);
@@ -525,22 +527,22 @@ ARBConfigScoringPtr CDlgExistingPoints::GetConfigScoring() const
 {
 	ARBConfigScoringPtr scoring;
 
-	long index = m_ctrlDivMultiQs->GetSelection();
-	if (wxNOT_FOUND == index)
+	auto idxDiv = m_ctrlDivMultiQs->GetSelection();
+	if (wxNOT_FOUND == idxDiv)
 		return scoring;
 
-	index = m_ctrlLevels->GetSelection();
-	if (wxNOT_FOUND == index)
+	auto idxLevel = m_ctrlLevels->GetSelection();
+	if (wxNOT_FOUND == idxLevel)
 		return scoring;
 
-	index = m_ctrlEvents->GetSelection();
-	if (wxNOT_FOUND == index)
+	auto idxEvent = m_ctrlEvents->GetSelection();
+	if (wxNOT_FOUND == idxEvent)
 		return scoring;
 
-	ARBConfigEventPtr pEvent = GetEventData(index)->m_Event;
+	ARBConfigEventPtr pEvent = GetEventData(idxEvent)->m_Event;
 	pEvent->FindEvent(
-		GetDivisionData(index)->m_Div->GetName(),
-		GetLevelData(index)->m_Level->GetName(),
+		GetDivisionData(idxDiv)->m_Div->GetName(),
+		GetLevelData(idxLevel)->m_Level->GetName(),
 		m_Date,
 		&scoring);
 	return scoring;
@@ -676,19 +678,22 @@ void CDlgExistingPoints::FillVenues()
 
 	ARBExistingPointType type = GetCurrentType();
 
-	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->Book().GetConfig().GetVenues().begin();
-		 iterVenue != m_pDoc->Book().GetConfig().GetVenues().end();
-		 ++iterVenue)
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
+	std::vector<wxClientData*> data;
+
+	for (auto const& pVenue : m_pDoc->Book().GetConfig().GetVenues())
 	{
-		ARBConfigVenuePtr pVenue = (*iterVenue);
 		if (ARBExistingPointType::MQ != type || 0 < pVenue->GetMultiQs().size())
 		{
-			int idx = m_ctrlVenues->Append(StringUtil::stringWX(pVenue->GetName()));
-			m_ctrlVenues->SetClientObject(idx, new CDlgPointsVenueData(pVenue));
+			items.Add(pVenue->GetName());
+			data.push_back(new CDlgPointsVenueData(pVenue));
 			if (m_pExistingPoints && venue == pVenue->GetName())
-				m_ctrlVenues->SetSelection(idx);
+				idxCur = static_cast<int>(items.size()) - 1;
 		}
 	}
+	m_ctrlVenues->Append(items, data.data());
+	m_ctrlVenues->SetSelection(idxCur);
 
 	FillDivMultiQ();
 }
@@ -710,6 +715,10 @@ void CDlgExistingPoints::FillDivMultiQ()
 	}
 	m_ctrlDivMultiQs->Clear();
 
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
+	std::vector<wxClientData*> data;
+
 	int idxVenue = m_ctrlVenues->GetSelection();
 	if (wxNOT_FOUND != idxVenue)
 	{
@@ -717,31 +726,27 @@ void CDlgExistingPoints::FillDivMultiQ()
 
 		if (ARBExistingPointType::MQ == type)
 		{
-			for (ARBConfigMultiQList::const_iterator iterQ = pVenue->GetMultiQs().begin();
-				 iterQ != pVenue->GetMultiQs().end();
-				 ++iterQ)
+			for (auto const& pMulti : pVenue->GetMultiQs())
 			{
-				ARBConfigMultiQPtr pMulti = *iterQ;
-				int idx = m_ctrlDivMultiQs->Append(StringUtil::stringWX(pMulti->GetName()));
-				m_ctrlDivMultiQs->SetClientObject(idx, new CDlgPointsMultiQData(pMulti));
+				items.Add(pMulti->GetName());
+				data.push_back(new CDlgPointsMultiQData(pMulti));
 				if (m_pExistingPoints && divMultiQ == pMulti->GetName())
-					m_ctrlDivMultiQs->SetSelection(idx);
+					idxCur = static_cast<int>(items.size()) - 1;
 			}
 		}
 		else
 		{
-			for (ARBConfigDivisionList::const_iterator iterDiv = pVenue->GetDivisions().begin();
-				 iterDiv != pVenue->GetDivisions().end();
-				 ++iterDiv)
+			for (auto const& pDiv : pVenue->GetDivisions())
 			{
-				ARBConfigDivisionPtr pDiv = (*iterDiv);
-				int idx = m_ctrlDivMultiQs->Append(StringUtil::stringWX(pDiv->GetName()));
-				m_ctrlDivMultiQs->SetClientObject(idx, new CDlgPointsDivisionData(pDiv));
+				items.Add(pDiv->GetName());
+				data.push_back(new CDlgPointsDivisionData(pDiv));
 				if (m_pExistingPoints && divMultiQ == pDiv->GetName())
-					m_ctrlDivMultiQs->SetSelection(idx);
+					idxCur = static_cast<int>(items.size()) - 1;
 			}
 		}
 	}
+	m_ctrlDivMultiQs->Append(items, data.data());
+	m_ctrlDivMultiQs->SetSelection(idxCur);
 	if (ARBExistingPointType::MQ != type)
 		FillLevels();
 }
@@ -755,40 +760,39 @@ void CDlgExistingPoints::FillLevels()
 		level = m_ctrlLevels->GetString(index);
 	else if (m_pExistingPoints)
 		level = m_pExistingPoints->GetLevel();
-
 	m_ctrlLevels->Clear();
+
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
+	std::vector<wxClientData*> data;
+
 	int idxDiv = m_ctrlDivMultiQs->GetSelection();
 	if (wxNOT_FOUND != idxDiv)
 	{
 		ARBConfigDivisionPtr pDiv = GetDivisionData(idxDiv)->m_Div;
-		for (ARBConfigLevelList::const_iterator iter = pDiv->GetLevels().begin(); iter != pDiv->GetLevels().end();
-			 ++iter)
+		for (auto const& pLevel : pDiv->GetLevels())
 		{
-			ARBConfigLevelPtr pLevel = (*iter);
 			if (0 < pLevel->GetSubLevels().size())
 			{
-				for (ARBConfigSubLevelList::const_iterator iterSub = pLevel->GetSubLevels().begin();
-					 iterSub != pLevel->GetSubLevels().end();
-					 ++iterSub)
+				for (auto const& pSubLevel : pLevel->GetSubLevels())
 				{
-					ARBConfigSubLevelPtr pSubLevel = (*iterSub);
-					CDlgPointsLevelData* pData = new CDlgPointsLevelData(pLevel, pSubLevel);
-					int idx = m_ctrlLevels->Append(StringUtil::stringWX(pSubLevel->GetName()));
-					m_ctrlLevels->SetClientObject(idx, pData);
+					items.Add(pSubLevel->GetName());
+					data.push_back(new CDlgPointsLevelData(pLevel, pSubLevel));
 					if (level == pSubLevel->GetName())
-						m_ctrlLevels->SetSelection(idx);
+						idxCur = static_cast<int>(items.size()) - 1;
 				}
 			}
 			else
 			{
-				CDlgPointsLevelData* pData = new CDlgPointsLevelData(pLevel);
-				int idx = m_ctrlLevels->Append(StringUtil::stringWX(pLevel->GetName()));
-				m_ctrlLevels->SetClientObject(idx, pData);
+				items.Add(pLevel->GetName());
+				data.push_back(new CDlgPointsLevelData(pLevel));
 				if (level == pLevel->GetName())
-					m_ctrlLevels->SetSelection(idx);
+					idxCur = static_cast<int>(items.size()) - 1;
 			}
 		}
 	}
+	m_ctrlLevels->Append(items, data.data());
+	m_ctrlLevels->SetSelection(idxCur);
 	FillEvents();
 }
 
@@ -802,6 +806,10 @@ void CDlgExistingPoints::FillEvents()
 	else if (m_pExistingPoints)
 		evt = m_pExistingPoints->GetEvent();
 	m_ctrlEvents->Clear();
+
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
+	std::vector<wxClientData*> data;
 
 	int idxVenue = m_ctrlVenues->GetSelection();
 	if (wxNOT_FOUND != idxVenue)
@@ -822,15 +830,17 @@ void CDlgExistingPoints::FillEvents()
 					ARBConfigEventPtr pEvent = (*iter);
 					if (pEvent->FindEvent(pDiv->GetName(), pData->m_Level->GetName(), m_Date))
 					{
-						int idx = m_ctrlEvents->Append(StringUtil::stringWX(pEvent->GetName()));
-						m_ctrlEvents->SetClientObject(idx, new CDlgPointsEventData(pEvent));
+						items.Add(pEvent->GetName());
+						data.push_back(new CDlgPointsEventData(pEvent));
 						if (evt == pEvent->GetName())
-							m_ctrlEvents->SetSelection(idx);
+							idxCur = static_cast<int>(items.size()) - 1;
 					}
 				}
 			}
 		}
 	}
+	m_ctrlEvents->Append(items, data.data());
+	m_ctrlEvents->SetSelection(idxCur);
 	FillSubNames();
 	UpdateControls();
 }
@@ -856,15 +866,20 @@ void CDlgExistingPoints::FillSubNames()
 
 	if (scoring->HasSubNames())
 	{
+		int idxCur = wxNOT_FOUND;
+		wxArrayString items;
+
 		m_ctrlSubNames->Enable(true);
 		std::set<std::wstring> names;
 		m_pDoc->Book().GetAllEventSubNames(pVenue->GetName(), pEvent, names);
-		for (std::set<std::wstring>::const_iterator iter = names.begin(); iter != names.end(); ++iter)
+		for (auto const& name : names)
 		{
-			index = m_ctrlSubNames->Append(StringUtil::stringWX(*iter));
-			if (m_pExistingPoints && *iter == m_pExistingPoints->GetSubName())
-				m_ctrlSubNames->SetSelection(index);
+			items.Add(name);
+			if (m_pExistingPoints && name == m_pExistingPoints->GetSubName())
+				idxCur = static_cast<int>(items.size()) - 1;
 		}
+		m_ctrlSubNames->Append(items);
+		m_ctrlSubNames->SetSelection(idxCur);
 	}
 	else
 		m_ctrlSubNames->Enable(false);
@@ -881,6 +896,10 @@ void CDlgExistingPoints::FillTypeNames()
 
 	m_ctrlTypeNames->Clear();
 
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
+	std::vector<wxClientData*> data;
+
 	switch (type)
 	{
 	case ARBExistingPointType::Unknown:
@@ -891,36 +910,36 @@ void CDlgExistingPoints::FillTypeNames()
 		break;
 
 	case ARBExistingPointType::OtherPoints:
-		for (ARBConfigOtherPointsList::const_iterator iterOther = m_pDoc->Book().GetConfig().GetOtherPoints().begin();
-			 iterOther != m_pDoc->Book().GetConfig().GetOtherPoints().end();
-			 ++iterOther)
+		for (auto const& pOther: m_pDoc->Book().GetConfig().GetOtherPoints())
 		{
-			ARBConfigOtherPointsPtr pOther = (*iterOther);
-			int idxName = m_ctrlTypeNames->Append(StringUtil::stringWX(pOther->GetName()));
-			m_ctrlTypeNames->SetClientObject(idxName, new CDlgPointsTypeNameData(pOther));
+			items.Add(pOther->GetName());
+			data.push_back(new CDlgPointsTypeNameData(pOther));
 			if (m_pExistingPoints && ARBExistingPointType::OtherPoints == m_pExistingPoints->GetType())
 			{
 				if (m_pExistingPoints->GetTypeName() == pOther->GetName())
-					m_ctrlTypeNames->SetSelection(idxName);
+					idxCur = static_cast<int>(items.size()) - 1;
 			}
 		}
+		m_ctrlTypeNames->Append(items, data.data());
+		m_ctrlTypeNames->SetSelection(idxCur);
 		break;
 
 	case ARBExistingPointType::Lifetime:
 		if (pVenue)
-			for (ARBConfigLifetimeNameList::const_iterator iterOther = pVenue->GetLifetimeNames().begin();
-				 iterOther != pVenue->GetLifetimeNames().end();
-				 ++iterOther)
+		{
+			for (auto const& pOther : pVenue->GetLifetimeNames())
 			{
-				ARBConfigLifetimeNamePtr pOther = (*iterOther);
-				int idxName = m_ctrlTypeNames->Append(StringUtil::stringWX(pOther->GetName()));
-				m_ctrlTypeNames->SetClientObject(idxName, new CDlgPointsTypeNameData(pOther));
+				items.Add(pOther->GetName());
+				data.push_back(new CDlgPointsTypeNameData(pOther));
 				if (m_pExistingPoints && ARBExistingPointType::Lifetime == m_pExistingPoints->GetType())
 				{
 					if (m_pExistingPoints->GetTypeName() == pOther->GetName())
-						m_ctrlTypeNames->SetSelection(idxName);
+						idxCur = static_cast<int>(items.size()) - 1;
 				}
 			}
+			m_ctrlTypeNames->Append(items, data.data());
+			m_ctrlTypeNames->SetSelection(idxCur);
+		}
 		break;
 	}
 }

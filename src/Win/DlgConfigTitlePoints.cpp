@@ -169,13 +169,13 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 	{
 		wxString text;
 		ARBPointsType type;
-	} items[] = {
+	} itemsNormal[] = {
 		{_("IDS_TITLEPOINT_NORMAL_NORMAL"), ARBPointsType::Normal},
 		{_("IDS_TITLEPOINT_NORMAL_T2B"), ARBPointsType::T2B},
 		{_("IDS_TITLEPOINT_NORMAL_UKI"), ARBPointsType::UKI},
 	};
 	m_ctrlTypeNormal = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-	for (auto const& item : items)
+	for (auto const& item : itemsNormal)
 	{
 		auto type = m_ctrlTypeNormal->Append(item.text);
 		m_ctrlTypeNormal->SetClientData(type, reinterpret_cast<void*>(static_cast<size_t>(item.type)));
@@ -206,33 +206,35 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 	m_ctrlLifetimeName->SetHelpText(_("HIDC_CONFIG_TITLEPTS_LIFETIMENAME"));
 	m_ctrlLifetimeName->SetToolTip(_("HIDC_CONFIG_TITLEPTS_LIFETIMENAME"));
 
-	for (ARBConfigLifetimeNameList::iterator iter = m_Venue->GetLifetimeNames().begin();
-		 iter != m_Venue->GetLifetimeNames().end();
-		 ++iter)
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
+	std::vector<void*> data;
+	for (auto const& lifetime : m_Venue->GetLifetimeNames())
 	{
-		wxString str = StringUtil::stringWX((*iter)->GetName());
+		wxString str = StringUtil::stringWX(lifetime->GetName());
 		bool bDefault = false;
 		if (str.empty())
 		{
 			bDefault = true;
 			str = _("IDS_TITLEPOINT_LIFETIME_NAME");
 		}
-		int index = m_ctrlLifetimeName->Append(str);
-		m_ctrlLifetimeName->SetClientData(index, reinterpret_cast<void*>(static_cast<uintptr_t>(bDefault ? 1 : 0)));
+		items.Add(str);
+		data.push_back(reinterpret_cast<void*>(static_cast<uintptr_t>(bDefault ? 1 : 0)));
 		if (str == m_LifetimeName || (m_LifetimeName.empty() && bDefault))
 		{
-			m_ctrlLifetimeName->SetSelection(index);
+			idxCur = static_cast<int>(items.size()) - 1;
 		}
 	}
 	if (0 == m_ctrlLifetimeName->GetCount())
 	{
-		wxString str = _("IDS_TITLEPOINT_LIFETIME_NAME");
-		int index = m_ctrlLifetimeName->Append(str);
-		m_ctrlLifetimeName->SetClientData(index, reinterpret_cast<void*>(1));
-		m_ctrlLifetimeName->SetSelection(index);
+		items.Add(_("IDS_TITLEPOINT_LIFETIME_NAME"));
+		data.push_back(reinterpret_cast<void*>(1));
+		idxCur = static_cast<int>(items.size()) - 1;
 	}
 	if (1 == m_ctrlLifetimeName->GetCount())
-		m_ctrlLifetimeName->SetSelection(0);
+		idxCur = 0;
+	m_ctrlLifetimeName->Append(items, data.data());
+	m_ctrlLifetimeName->SetSelection(idxCur);
 
 	if (ARBTitlePointType::Lifetime != m_Type)
 	{

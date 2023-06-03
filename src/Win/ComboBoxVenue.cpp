@@ -72,23 +72,26 @@ CVenueComboBox::CVenueComboBox(
 		wxCB_DROPDOWN | (bEditable ? 0 : wxCB_READONLY) | wxCB_SORT,
 		validator);
 
-	wxArrayString choices;
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
+	std::vector<wxClientData*> data;
+
 	for (ARBConfigVenueList::const_iterator iterVenue = inVenues.begin(); iterVenue != inVenues.end(); ++iterVenue)
 	{
 		ARBConfigVenuePtr pVenue = (*iterVenue);
-		wxString wxShortName = StringUtil::stringWX(pVenue->GetName());
-		wxString wxName(wxShortName);
-		int index = 0;
+		wxString wxShortName(pVenue->GetName());
 		if (useLongName)
-			wxName = StringUtil::stringWX(pVenue->GetLongName());
-		index = Append(wxName);
-		choices.Add(wxName);
-		SetClientObject(index, new CVenueComboData(pVenue));
+			items.Add(pVenue->GetLongName());
+		else
+			items.Add(wxShortName);
+		data.push_back(new CVenueComboData(pVenue));
 		if (!inSelectVenue.empty() && wxShortName == inSelectVenue)
-			SetSelection(index);
+			idxCur = static_cast<int>(items.size()) - 1;
 	}
+	Append(items, data.data());
+	SetSelection(idxCur);
 	if (bEditable)
-		AutoComplete(choices);
+		AutoComplete(items);
 }
 
 

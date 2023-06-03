@@ -277,34 +277,41 @@ void CDlgTitle::FillTitles(bool bIniting)
 	if (wxNOT_FOUND != index)
 		pSelTitle = GetTitleData(index);
 	m_ctrlTitles->Clear();
+
 	index = m_ctrlVenues->GetSelection();
 	if (wxNOT_FOUND != index)
 	{
 		ARBDate date = GetDate();
 		ARBConfigVenuePtr pVenue = m_ctrlVenues->GetVenue(index);
 		assert(pVenue);
-		for (ARBConfigTitleList::const_iterator iterTitle = pVenue->GetTitles().begin();
-			 iterTitle != pVenue->GetTitles().end();
-			 ++iterTitle)
+
+		int idxCur = wxNOT_FOUND;
+		wxArrayString items;
+		std::vector<wxClientData*> data;
+
+		for (auto const& pTitle : pVenue->GetTitles())
 		{
-			ARBConfigTitlePtr pTitle = (*iterTitle);
 			// Suppress any titles we already have.
 			if (pTitle->IsRecurring() || 0 == m_Titles.NumTitlesInUse(pVenue->GetName(), pTitle->GetName())
 				|| (m_pTitle && m_pTitle->GetRawName() == pTitle->GetName()))
 			{
 				if (pTitle->IsValidOn(date))
 				{
-					int idx = m_ctrlTitles->Append(StringUtil::stringWX(pTitle->GetCompleteName()));
-					m_ctrlTitles->SetClientObject(idx, new CTitleTitleData(pTitle));
+					items.Add(pTitle->GetCompleteName());
+					data.push_back(new CTitleTitleData(pTitle));
 					if ((bIniting && m_pTitle && m_pTitle->GetRawName() == pTitle->GetName())
 						|| (!bIniting && pSelTitle && pSelTitle->GetName() == pTitle->GetName()))
 					{
-						m_ctrlTitles->SetSelection(idx);
+						idxCur = static_cast<int>(items.size()) - 1;
 						FillTitleInfo();
 					}
 				}
 			}
 		}
+		m_ctrlTitles->Append(items, data.data());
+		m_ctrlTitles->SetSelection(idxCur);
+		if (wxNOT_FOUND != idxCur)
+			FillTitleInfo();
 	}
 }
 

@@ -445,16 +445,17 @@ void CDlgTrial::ListLocations()
 	if (m_Location.empty())
 		loc = m_pTrial->GetLocation();
 	m_ctrlLocation->Clear();
-	wxArrayString choices;
-	for (std::set<std::wstring>::const_iterator iter = locations.begin(); iter != locations.end(); ++iter)
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
+	for (auto const& location : locations)
 	{
-		wxString wxName(StringUtil::stringWX(*iter));
-		int index = m_ctrlLocation->Append(wxName);
-		choices.Add(wxName);
-		if ((*iter) == loc)
-			m_ctrlLocation->SetSelection(index);
+		items.Add(location);
+		if (location == loc)
+			idxCur = static_cast<int>(items.size()) - 1;
 	}
-	m_ctrlLocation->AutoComplete(choices);
+	m_ctrlLocation->Append(items);
+	m_ctrlLocation->SetSelection(idxCur);
+	m_ctrlLocation->AutoComplete(items);
 }
 
 

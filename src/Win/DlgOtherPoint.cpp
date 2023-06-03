@@ -155,22 +155,25 @@ void CDlgOtherPoint::LoadPoints(ARBConfigOtherPointsPtr const& inOther)
 {
 	m_ctrlOtherPoints->Clear();
 	m_ctrlDesc->SetValue(L"");
-	for (ARBConfigOtherPointsList::const_iterator iterOther = m_Config.GetOtherPoints().begin();
-		 iterOther != m_Config.GetOtherPoints().end();
-		 ++iterOther)
+
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
+	std::vector<wxClientData*> data;
+	for (auto const& pOther : m_Config.GetOtherPoints())
 	{
-		ARBConfigOtherPointsPtr pOther = (*iterOther);
-		int index = m_ctrlOtherPoints->Append(StringUtil::stringWX(pOther->GetName()));
-		m_ctrlOtherPoints->SetClientObject(index, new COtherPointData(pOther));
+		items.Add(pOther->GetName());
+		data.push_back(new COtherPointData(pOther));
 		if ((!inOther && pOther->GetName() == m_pRunOther->GetName()) || (inOther && *inOther == *pOther))
 		{
-			m_ctrlOtherPoints->SetSelection(index);
+			idxCur = static_cast<int>(items.size()) - 1;
 			m_ctrlDesc->SetValue(StringUtil::stringWX(pOther->GetDescription()));
 			if (0.0 == m_Points)
 				m_Points = pOther->GetDefault();
 			TransferDataToWindow();
 		}
 	}
+	m_ctrlOtherPoints->Append(items, data.data());
+	m_ctrlOtherPoints->SetSelection(idxCur);
 }
 
 

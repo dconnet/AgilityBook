@@ -187,16 +187,18 @@ CDlgEventSelect::CDlgEventSelect(
 	m_ctrlOk = wxDynamicCast(FindWindowInSizer(bSizer, wxID_OK), wxButton);
 	assert(!!m_ctrlOk);
 
-	for (ARBConfigDivisionList::const_iterator iterDiv = m_pVenue->GetDivisions().begin();
-		 iterDiv != m_pVenue->GetDivisions().end();
-		 ++iterDiv)
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
+	std::vector<wxClientData*> data;
+	for (auto const& pDiv : m_pVenue->GetDivisions())
 	{
-		ARBConfigDivisionPtr pDiv = (*iterDiv);
-		int index = m_ctrlDivisions->Append(StringUtil::stringWX(pDiv->GetName()));
-		m_ctrlDivisions->SetClientObject(index, new CDlgDivSelectData(pDiv));
+		items.Add(pDiv->GetName());
+		data.push_back(new CDlgDivSelectData(pDiv));
 		if (pDiv->GetName() == inDivision)
-			m_ctrlDivisions->SetSelection(index);
+			idxCur = static_cast<int>(items.size()) - 1;
 	}
+	m_ctrlDivisions->Append(items, data.data());
+	m_ctrlDivisions->SetSelection(idxCur);
 	FillLevels();
 
 	SetSizer(bSizer);
@@ -246,8 +248,7 @@ void CDlgEventSelect::UpdateControls()
 void CDlgEventSelect::FillLevels()
 {
 	std::wstring level;
-	int index = m_ctrlLevels->GetSelection();
-	if (wxNOT_FOUND != index)
+	if (wxNOT_FOUND != m_ctrlLevels->GetSelection())
 	{
 		TransferDataFromWindow();
 		level = m_Level;
@@ -258,37 +259,37 @@ void CDlgEventSelect::FillLevels()
 		m_inLevel.clear();
 	}
 	m_ctrlLevels->Clear();
-	index = m_ctrlDivisions->GetSelection();
+
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
+	std::vector<wxClientData*> data;
+	int index = m_ctrlDivisions->GetSelection();
 	if (wxNOT_FOUND != index)
 	{
 		CDlgDivSelectData* pData = dynamic_cast<CDlgDivSelectData*>(m_ctrlDivisions->GetClientObject(index));
-		for (ARBConfigLevelList::const_iterator iter = pData->m_pDiv->GetLevels().begin();
-			 iter != pData->m_pDiv->GetLevels().end();
-			 ++iter)
+		for (auto const& pLevel : pData->m_pDiv->GetLevels())
 		{
-			ARBConfigLevelPtr pLevel = (*iter);
 			if (0 < pLevel->GetSubLevels().size())
 			{
-				for (ARBConfigSubLevelList::const_iterator iterSub = pLevel->GetSubLevels().begin();
-					 iterSub != pLevel->GetSubLevels().end();
-					 ++iterSub)
+				for (auto const& pSubLevel : pLevel->GetSubLevels())
 				{
-					ARBConfigSubLevelPtr pSubLevel = (*iterSub);
-					int idx = m_ctrlLevels->Append(StringUtil::stringWX(pSubLevel->GetName()));
-					m_ctrlLevels->SetClientObject(idx, new CDlgEventSelectData(pLevel, pSubLevel));
+					items.Add(pSubLevel->GetName());
+					data.push_back(new CDlgEventSelectData(pLevel, pSubLevel));
 					if (level == pSubLevel->GetName())
-						m_ctrlLevels->SetSelection(idx);
+						idxCur = static_cast<int>(items.size()) - 1;
 				}
 			}
 			else
 			{
-				int idx = m_ctrlLevels->Append(StringUtil::stringWX(pLevel->GetName()));
-				m_ctrlLevels->SetClientObject(idx, new CDlgEventSelectData(pLevel));
+				items.Add(pLevel->GetName());
+				data.push_back(new CDlgEventSelectData(pLevel));
 				if (level == pLevel->GetName())
-					m_ctrlLevels->SetSelection(idx);
+					idxCur = static_cast<int>(items.size()) - 1;
 			}
 		}
 	}
+	m_ctrlLevels->Append(items, data.data());
+	m_ctrlLevels->SetSelection(idxCur);
 	FillEvents();
 }
 
@@ -296,8 +297,7 @@ void CDlgEventSelect::FillLevels()
 void CDlgEventSelect::FillEvents()
 {
 	std::wstring evt;
-	int index = m_ctrlEvents->GetSelection();
-	if (wxNOT_FOUND != index)
+	if (wxNOT_FOUND != m_ctrlEvents->GetSelection())
 	{
 		TransferDataFromWindow();
 		evt = m_Event;
@@ -308,6 +308,9 @@ void CDlgEventSelect::FillEvents()
 		m_inEvent.clear();
 	}
 	m_ctrlEvents->Clear();
+
+	int idxCur = wxNOT_FOUND;
+	wxArrayString items;
 	int idxDiv = m_ctrlDivisions->GetSelection();
 	if (wxNOT_FOUND != idxDiv)
 	{
@@ -316,22 +319,19 @@ void CDlgEventSelect::FillEvents()
 		if (wxNOT_FOUND != idxLevel)
 		{
 			CDlgEventSelectData* pEvtData = dynamic_cast<CDlgEventSelectData*>(m_ctrlLevels->GetClientObject(idxLevel));
-			for (ARBConfigEventList::const_iterator iter = m_pVenue->GetEvents().begin();
-				 iter != m_pVenue->GetEvents().end();
-				 ++iter)
+			for (auto const& pEvent : m_pVenue->GetEvents())
 			{
-				ARBConfigEventPtr pEvent = (*iter);
 				if (pEvent->FindEvent(pData->m_pDiv->GetName(), pEvtData->m_pLevel->GetName(), m_Date))
 				{
-					int idx = m_ctrlEvents->Append(StringUtil::stringWX(pEvent->GetName()));
+					items.Add(pEvent->GetName());
 					if (evt == pEvent->GetName())
-					{
-						m_ctrlEvents->SetSelection(idx);
-					}
+						idxCur = static_cast<int>(items.size()) - 1;
 				}
 			}
 		}
 	}
+	m_ctrlEvents->Append(items);
+	m_ctrlEvents->SetSelection(idxCur);
 	UpdateControls();
 }
 

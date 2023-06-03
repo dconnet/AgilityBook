@@ -207,18 +207,20 @@ CWizardExport::CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 		{arbT("IDS_DATEFORMAT_DASH_DMY"), ARBDateFormat::DashDMY, ARBDateFormat::DashDDMMYYYY},
 		{arbT("IDS_DATEFORMAT_SLASH_DMY"), ARBDateFormat::SlashDMY, ARBDateFormat::SlashDDMMYYYY},
 	};
-	constexpr size_t sc_nDates = sizeof(sc_Dates) / sizeof(sc_Dates[0]);
 	ARBDateFormat format;
 	CAgilityBookOptions::GetImportExportDateFormat(false, format);
-	for (size_t i = 0; i < sc_nDates; ++i)
+	int idxCur = 0; // Default to first item.
+	wxArrayString items;
+	std::vector<void*> data;
+	for (auto const& date : sc_Dates)
 	{
-		long index = m_ctrlDateFormat->Append(wxGetTranslation(sc_Dates[i].uFormat));
-		m_ctrlDateFormat->SetClientData(index, reinterpret_cast<void*>(sc_Dates[i].format));
-		if (sc_Dates[i].format == format || sc_Dates[i].extendedFormat == format)
-			m_ctrlDateFormat->SetSelection(index);
+		items.Add(wxGetTranslation(date.uFormat));
+		data.push_back(reinterpret_cast<void*>(date.format));
+		if (date.format == format || date.extendedFormat == format)
+			idxCur = static_cast<int>(items.size()) - 1;
 	}
-	if (0 > m_ctrlDateFormat->GetSelection())
-		m_ctrlDateFormat->SetSelection(0);
+	m_ctrlDateFormat->Append(items, data.data());
+	m_ctrlDateFormat->SetSelection(idxCur);
 	m_ctrlDateFormat->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CWizardExport::OnSelchangeDate, this);
 	m_ctrlDateFormat->SetHelpText(_("HIDC_WIZARD_EXPORT_DATE"));
 	m_ctrlDateFormat->SetToolTip(_("HIDC_WIZARD_EXPORT_DATE"));

@@ -126,19 +126,19 @@ CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
 
 	wxBoxSizer* sizer1 = new wxBoxSizer(wxHORIZONTAL);
 	sizer1->Add(text1, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizer1->Add(m_ctrlPrimary, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND);
+	sizer1->Add(m_ctrlPrimary, 1, wxEXPAND);
 
 	bSizer->Add(sizer1, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
 	sizer2->Add(text2, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizer2->Add(m_ctrlSecondary, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND);
+	sizer2->Add(m_ctrlSecondary, 1, wxEXPAND);
 
 	bSizer->Add(sizer2, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
 
 	wxBoxSizer* sizer3 = new wxBoxSizer(wxHORIZONTAL);
 	sizer3->Add(text3, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizer3->Add(m_ctrlTertiary, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND);
+	sizer3->Add(m_ctrlTertiary, 1, wxEXPAND);
 
 	bSizer->Add(sizer3, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
 
@@ -186,18 +186,15 @@ int AddItem(wxComboBox* ctrl, ARBPointsViewSort item, ARBPointsViewSort inSelect
 		break;
 	case ARBPointsViewSort::Division:
 		str = _("IDS_COL_DIVISION");
-		idx = ctrl->Append(str);
-		ctrl->SetClientObject(idx, new CPointViewData(item));
+		idx = ctrl->Append(str, new CPointViewData(item));
 		break;
 	case ARBPointsViewSort::Level:
 		str = _("IDS_COL_LEVEL");
-		idx = ctrl->Append(str);
-		ctrl->SetClientObject(idx, new CPointViewData(item));
+		idx = ctrl->Append(str, new CPointViewData(item));
 		break;
 	case ARBPointsViewSort::Event:
 		str = _("IDS_COL_EVENT");
-		idx = ctrl->Append(str);
-		ctrl->SetClientObject(idx, new CPointViewData(item));
+		idx = ctrl->Append(str, new CPointViewData(item));
 		break;
 	}
 	if (item == inSelect && 0 <= idx)
