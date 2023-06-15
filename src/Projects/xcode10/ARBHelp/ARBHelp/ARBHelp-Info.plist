@@ -23,7 +23,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>3.8.2</string>
 	<key>CFBundleVersion</key>
-	<string>119</string>
+	<string>120</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2012-2023 David Connet. All rights reserved.</string>
 	<key>NSPrincipalClass</key>

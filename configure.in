@@ -6,7 +6,7 @@
 ################################################################################
 # Initialise autoconf, set package name, version number and contact details.   #
 ################################################################################
-AC_INIT(Agility Record Book, 3.8.1.119, [help@agilityrecordbook.com])
+AC_INIT(Agility Record Book, 3.8.2.120, [help@agilityrecordbook.com])
 
 # Allows linking when AgilityBookLibs is a submodule or built directly
 AC_SUBST(ARBLIBS_DIR, "AgilityBookLibs/")
