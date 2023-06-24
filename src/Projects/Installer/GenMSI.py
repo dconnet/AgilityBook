@@ -7,6 +7,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2023-06-24 Prepare for msilib deprecation in py3.13. (see comments below)
 # 2022-04-10 Change default compiler to vc143
 # 2021-11-11 Add vc143 support, changed default (no args) to '-b all'
 # 2020-01-26 Change default compiler to vc142
@@ -207,26 +208,37 @@ def getoutputvars(code, version, platformTools):
 	return baseDir, outputFile, distDir
 
 
-def ReadPipe(logFile, cmd):
+def ReadPipe(logFile, cmd, retval):
+	output = ''
 	while (1):
 		line = cmd.readline()
 		if line:
 			line = str.rstrip(line.decode())
-			print(line, file=logFile)
+			if retval:
+				output += line
+			else:
+				print(line, file=logFile)
 		else:
 			break
+	return output
 
 
-def runcmd(command):
+# Note: If the output is more than one line, we'll lose the newlines. This is
+# only used when reading the productcode so I'm not going to worry about this.
+# If there are multiple lines, something went really wrong.
+def runcmd(command, retVal = False):
 	print(command)
 	p = subprocess.Popen(command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
-	ReadPipe(sys.stdout, p.stdout)
+	return ReadPipe(sys.stdout, p.stdout, retVal)
 
 
-# This is the old WiSubStg.vbs script
-#runcmd('cscript /nologo WiSubStg.vbs ' + baseMsi + ' ' + langId + '.mst ' + langId)
 # No error checking - just let the exception kill it.
 def WiSubStg(baseMsi, langId):
+	# Note: switching back to the vbs script means truly no error checking.
+	# Any exception won't come thru. The vbs scripts work and can be used now.
+	# But I'll wait until I switch to python3.13. Maybe by then I'll write
+	# some native code so the scripts aren't needed
+	#runcmd('cscript /nologo WiSubStg.vbs ' + baseMsi + ' ' + langId + '.mst ' + langId)
 	database = msilib.OpenDatabase(baseMsi, msilib.MSIDBOPEN_TRANSACT)
 	view = database.OpenView("SELECT `Name`,`Data` FROM _Storages")
 	record = msilib.CreateRecord(2)
@@ -239,10 +251,9 @@ def WiSubStg(baseMsi, langId):
 	database = None
 
 
-# This is the old WiLangId.vbs script
-#runcmd('cscript /nologo WiLangId.vbs ' + baseMsi + ' Package ' + sumInfoStream)
 # No error checking - just let the exception kill it.
 def WiLangId(baseMsi, sumInfoStream):
+	#runcmd('cscript /nologo WiLangId.vbs ' + baseMsi + ' Package ' + sumInfoStream)
 	database = msilib.OpenDatabase(baseMsi, msilib.MSIDBOPEN_TRANSACT)
 	sumInfo = database.GetSummaryInformation(1)
 	template = sumInfo.GetProperty(7).decode()
@@ -256,8 +267,9 @@ def WiLangId(baseMsi, sumInfoStream):
 	database = None
 
 
-def WriteCode(baseMsi, ver4Dot, code, vcver):
-	global AgilityBookDir, code64, UpgradeCode
+# No error checking - just let the exception kill it.
+def WiProdCode(baseMsi):
+	#prodcode = runcmd('cscript /nologo WiProdCode.vbs ' + baseMsi, True)
 	database = msilib.OpenDatabase(baseMsi, msilib.MSIDBOPEN_READONLY)
 	view = database.OpenView("SELECT `Value` FROM Property WHERE `Property`='ProductCode'")
 	record = msilib.CreateRecord(1)
@@ -266,8 +278,15 @@ def WriteCode(baseMsi, ver4Dot, code, vcver):
 	view = None
 	database = None
 	prodcode = data.GetString(1)
+	return prodcode
 
-	if len(prodcode) > 0:
+
+def WriteCode(baseMsi, ver4Dot, code, vcver):
+	global AgilityBookDir, code64, UpgradeCode
+	prodcode = WiProdCode(baseMsi)
+
+	# {BAB76981-245D-452C-92ED-FCC9DBF2D914}
+	if len(prodcode) == 38:
 		d = datetime.datetime.now().isoformat(' ')
 		codes = open(AgilityBookDir + r'\Misc\InstallGUIDs.csv', 'a')
 		installs = ''
@@ -276,6 +295,10 @@ def WriteCode(baseMsi, ver4Dot, code, vcver):
 		else:
 			installs = 'VC' + vcver + ',win32'
 		print('v' + ver4Dot + ',' + d + ',' + prodcode + ',' + UpgradeCode + ',' + installs, file=codes)
+	else:
+		print(len(prodcode))
+		print('Warning: Unknown ProductCode:', prodcode)
+		print('Not recorded in InstallGUIDs.csv')
 
 
 def GetWxsFiles(extension):
