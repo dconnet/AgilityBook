@@ -229,13 +229,17 @@ def ReadPipe(logFile, cmd, retval):
 def runcmd(command, retVal = False):
 	print(command)
 	p = subprocess.Popen(command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
-	return ReadPipe(sys.stdout, p.stdout, retVal)
+	output = ReadPipe(sys.stdout, p.stdout, retVal)
+	# To get return code set
+	data = p.communicate()[0]
+	if not p.returncode == 0:
+		raise Exception('Command returned non-zero code')
+	return output
 
 
 # No error checking - just let the exception kill it.
 def WiSubStg(baseMsi, langId):
-	# Note: switching back to the vbs script means truly no error checking.
-	# Any exception won't come thru. The vbs scripts work and can be used now.
+	# The vbs scripts work and can be used now.
 	# But I'll wait until I switch to python3.13. Maybe by then I'll write
 	# some native code so the scripts aren't needed
 	#runcmd('cscript /nologo WiSubStg.vbs ' + baseMsi + ' ' + langId + '.mst ' + langId)
