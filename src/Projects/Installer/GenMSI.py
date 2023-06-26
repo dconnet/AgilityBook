@@ -277,8 +277,7 @@ def WiProdCode(baseMsi):
 	#prodcode = runcmd('cscript /nologo WiProdCode.vbs ' + baseMsi, True)
 	database = msilib.OpenDatabase(baseMsi, msilib.MSIDBOPEN_READONLY)
 	view = database.OpenView("SELECT `Value` FROM Property WHERE `Property`='ProductCode'")
-	record = msilib.CreateRecord(1)
-	view.Execute(record)
+	view.Execute(None)
 	data = view.Fetch()
 	view = None
 	database = None
