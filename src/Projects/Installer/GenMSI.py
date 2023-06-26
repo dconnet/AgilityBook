@@ -1,3 +1,4 @@
+# coding=utf-8
 # Above line is for python
 #
 # Generate MSI files
