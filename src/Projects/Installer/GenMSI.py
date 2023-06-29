@@ -190,18 +190,18 @@ def getversion(numParts):
 
 
 # returns baseDir, outputFile
-def getoutputvars(b32, version, platformTools):
+def getoutputvars(b32, version, vcver):
 	global AgilityBookDir
 	outputFile = ''
 	baseDir = ''
 	if b32:
 		outputFile = 'AgilityBook-' + version + '-x86'
-		baseDir = AgilityBookDir + r'\bin\vc' + platformTools + 'x86\Release'
-		distDir = 'vc' + platformTools
+		baseDir = AgilityBookDir + r'\bin\vc' + vcver + 'x86\Release'
+		distDir = 'vc' + vcver
 	else:
 		outputFile = 'AgilityBook-' + version + '-x64'
-		baseDir = AgilityBookDir + r'\bin\vc' + platformTools + 'x64\Release'
-		distDir = 'vc' + platformTools + 'x64'
+		baseDir = AgilityBookDir + r'\bin\vc' + vcver + 'x64\Release'
+		distDir = 'vc' + vcver + 'x64'
 	return baseDir, outputFile, distDir
 
 
@@ -311,9 +311,9 @@ def GetWxsFilesAsString(extension):
 	return str
 
 
-def CopyCAdll(ver4Line, platformTools):
+def CopyCAdll(ver4Line, vcver):
 	global CA_dll
-	baseDir, outputFile, distDir = getoutputvars(True, ver4Line, platformTools)
+	baseDir, outputFile, distDir = getoutputvars(True, ver4Line, vcver)
 	arbdll = baseDir + '\\' + CA_dll
 	if not os.access(arbdll, os.F_OK):
 		print(arbdll + r' does not exist, MSI skipped')
@@ -322,9 +322,9 @@ def CopyCAdll(ver4Line, platformTools):
 	return 1
 
 
-def genWiX(ver3Dot, ver4Dot, ver4Line, b32, tidy, perUser, testing, vcver, platformTools, distrib):
+def genWiX(ver3Dot, ver4Dot, ver4Line, b32, tidy, perUser, testing, vcver, distrib):
 	global FilesToCopy, supportedLangs
-	baseDir, outputFile, distDir = getoutputvars(b32, ver4Line, platformTools)
+	baseDir, outputFile, distDir = getoutputvars(b32, ver4Line, vcver)
 
 	vcdir = os.path.join(distrib, distDir)
 	if not os.access(vcdir, os.F_OK):
@@ -417,7 +417,6 @@ def main():
 	tidy = True
 	testing = False
 	vcver = '143'
-	platformTools = '143'
 	distrib = DistribDir
 
 	try:
@@ -447,13 +446,10 @@ def main():
 		elif '-t' == o:
 			if a == 'vc141':
 				vcver = '141'
-				platformTools = '141'
 			elif a == 'vc142':
 				vcver = '142'
-				platformTools = '142'
 			elif a == 'vc143':
 				vcver = '143'
-				platformTools = '143'
 			else:
 				usage = True
 		elif '-x' == o:
@@ -487,12 +483,12 @@ def main():
 
 	# Wix
 	os.environ['PATH'] += ';' + WiXdir
-	if not CopyCAdll(ver4Line, platformTools):
+	if not CopyCAdll(ver4Line, vcver):
 		return 1
 	if b32:
-		genWiX(ver3Dot, ver4Dot, ver4Line, True, tidy, perUser, testing, vcver, platformTools, distrib)
+		genWiX(ver3Dot, ver4Dot, ver4Line, True, tidy, perUser, testing, vcver, distrib)
 	if b64:
-		genWiX(ver3Dot, ver4Dot, ver4Line, False, tidy, perUser, testing, vcver, platformTools, distrib)
+		genWiX(ver3Dot, ver4Dot, ver4Line, False, tidy, perUser, testing, vcver, distrib)
 	if os.access(CA_dll, os.W_OK):
 		os.remove(CA_dll)
 
