@@ -214,33 +214,13 @@ def getoutputvars(code, version, platformTools):
 	return baseDir, outputFile, distDir
 
 
-def ReadPipe(logFile, cmd, retval):
-	output = ''
-	while (1):
-		line = cmd.readline()
-		if line:
-			line = str.rstrip(line.decode())
-			if retval:
-				output += line
-			else:
-				print(line, file=logFile)
-		else:
-			break
-	return output
-
-
-# Note: If the output is more than one line, we'll lose the newlines. This is
-# only used when reading the productcode so I'm not going to worry about this.
-# If there are multiple lines, something went really wrong.
-def runcmd(command, retVal = False):
+def runcmd(command):
 	print(command)
-	p = subprocess.Popen(command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
-	output = ReadPipe(sys.stdout, p.stdout, retVal)
-	# To get return code set
-	data = p.communicate()[0]
-	if not p.returncode == 0:
+	newenv = os.environ.copy()
+	proc = subprocess.Popen(command, env=newenv)
+	proc.wait()
+	if not proc.returncode == 0:
 		raise Exception('Command returned non-zero code')
-	return output
 
 
 # This is the equivalent of msilib's 'comobj.StringData(index)'
@@ -252,7 +232,6 @@ def GetProperty(comobj, prop, index):
 
 
 def SetProperty(comobj, prop, index, data):
-	print('SetProperty', prop, data)
 	dispid = comobj.GetIDsOfNames(prop)
 	comobj.Invoke(dispid, 0, pythoncom.INVOKE_PROPERTYPUT, 0, index, data)
 
