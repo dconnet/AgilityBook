@@ -8,7 +8,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
-# 2023-06-27 Prepare for msilib deprecation in py3.13.
+# 2023-06-29 Replace msilib usage with direct COM (msilib is deprecated in py3.13)
 # 2022-04-10 Change default compiler to vc143
 # 2021-11-11 Add vc143 support, changed default (no args) to '-b all'
 # 2020-01-26 Change default compiler to vc142
@@ -74,7 +74,6 @@
 
 import datetime
 import getopt
-import msilib
 import os
 import pythoncom
 import shutil
@@ -246,16 +245,16 @@ def runcmd(command, retVal = False):
 
 # This is the equivalent of msilib's 'comobj.StringData(index)'
 def GetProperty(comobj, prop, index):
-	dispid = comobj._oleobj_.GetIDsOfNames(prop)
+	dispid = comobj.GetIDsOfNames(prop)
 	# the '1' after 'GET' is 'yes, I want the return value'
 	# https://stackoverflow.com/questions/72531735/setting-value-of-a-iterable-property-of-a-python-com-object
-	return comobj._oleobj_.Invoke(dispid, 0, pythoncom.INVOKE_PROPERTYGET, 1, index)
+	return comobj.Invoke(dispid, 0, pythoncom.INVOKE_PROPERTYGET, 1, index)
 
 
 def SetProperty(comobj, prop, index, data):
 	print('SetProperty', prop, data)
-	dispid = comobj._oleobj_.GetIDsOfNames(prop)
-	comobj._oleobj_.Invoke(dispid, 0, pythoncom.INVOKE_PROPERTYPUT, 0, index, data)
+	dispid = comobj.GetIDsOfNames(prop)
+	comobj.Invoke(dispid, 0, pythoncom.INVOKE_PROPERTYPUT, 0, index, data)
 
 
 # No error checking - just let the exception kill it.
@@ -264,7 +263,7 @@ def WiSubStg(baseMsi, langId):
 	database = installer.OpenDatabase(baseMsi, msiOpenDatabaseModeTransact)
 	view = database.OpenView("SELECT `Name`,`Data` FROM _Storages")
 	record = installer.CreateRecord(2)
-	SetProperty(record, 'StringData', 1, langId)
+	SetProperty(record._oleobj_, 'StringData', 1, langId)
 	view.Execute(record)
 	record.SetStream(2, langId + '.mst')
 	view.Modify(msiViewModifyAssign, record)
@@ -276,39 +275,20 @@ def WiSubStg(baseMsi, langId):
 
 # No error checking - just let the exception kill it.
 def WiLangId(baseMsi, sumInfoStream):
-	#runcmd('cscript /nologo WiLangId.vbs ' + baseMsi + ' Package ' + sumInfoStream)
-	database = msilib.OpenDatabase(baseMsi, msilib.MSIDBOPEN_TRANSACT)
-	sumInfo = database.GetSummaryInformation(1)
-	template = sumInfo.GetProperty(7).decode()
+	installer = wc.Dispatch('WindowsInstaller.Installer')
+	database = installer.OpenDatabase(baseMsi, msiOpenDatabaseModeTransact)
+	sumInfo = GetProperty(database._oleobj_, 'SummaryInformation', 1)
+	template = GetProperty(sumInfo, 'Property', 7)
 	iDelim = template.find(';')
 	platform = ';'
 	if 0 <= iDelim:
 		platform = template[0:iDelim+1]
-	sumInfo.SetProperty(7, platform + sumInfoStream)
-	sumInfo.Persist()
+	SetProperty(sumInfo, 'Property', 7, platform + sumInfoStream)
+	dispid = sumInfo.GetIDsOfNames('Persist')
+	sumInfo.Invoke(dispid, 0, pythoncom.INVOKE_FUNC, 0)
 	database.Commit()
-	database = None
-
-	# Keep using msilib for now.
-	# Switching to the cscript will work too, but let's keep things internal.
-	# The below (direct COM) doesn't work. I can get the SummaryInformation as
-	# a readonly object via "sumInfo = database.SummaryInformation", but trying
-	# to get "sumInfo = database.SummaryInformation(1)" doesn't work. I can
-	# get an IDispatch back, but it's not a SummaryInformation object.
-
-	#installer = wc.Dispatch('WindowsInstaller.Installer')
-	#database = installer.OpenDatabase(baseMsi, msiOpenDatabaseModeTransact)
-	#sumInfo = GetProperty(database, 'SummaryInformation', 1)
-	#template = GetProperty(sumInfo, 'Property', 7)
-	#iDelim = template.find(';')
-	#platform = ';'
-	#if 0 <= iDelim:
-	#	platform = template[0:iDelim+1]
-	#SetProperty(sumInfo, 'Property', 7, platform + sumInfoStream)
-	#sumInfo.Persist()
-	#database.Commit()
-	#del database
-	#del installer
+	del database
+	del installer
 
 
 # No error checking - just let the exception kill it.
@@ -318,7 +298,7 @@ def WiProdCode(baseMsi):
 	view = database.OpenView("SELECT `Value` FROM Property WHERE `Property`='ProductCode'")
 	view.Execute(None)
 	record = view.Fetch()
-	prodcode = GetProperty(record, 'StringData', 1)
+	prodcode = GetProperty(record._oleobj_, 'StringData', 1)
 	del view
 	del database
 	del installer
