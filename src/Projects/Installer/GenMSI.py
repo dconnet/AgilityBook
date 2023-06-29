@@ -108,13 +108,6 @@ FilesToCopy = [
 # This is initially set to %WIX%/bin, if WiX is actually installed.
 WiXdir = r'c:\Tools\wix3'
 
-# Code:
-#  1: x86/Unicode
-#  2: x86/MBCS
-#  3: x64/Unicode
-code32 = 1
-code64 = 3
-
 # This is only used to update the InstallGUIDs file. Make sure it stays in
 # sync with the current code in AgilityBook.wxi (UPGRADECODE)
 UpgradeCode = '4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4'
@@ -197,20 +190,18 @@ def getversion(numParts):
 
 
 # returns baseDir, outputFile
-def getoutputvars(code, version, platformTools):
-	global AgilityBookDir, code32, code64 
+def getoutputvars(b32, version, platformTools):
+	global AgilityBookDir
 	outputFile = ''
 	baseDir = ''
-	if code32 == code:
+	if b32:
 		outputFile = 'AgilityBook-' + version + '-x86'
 		baseDir = AgilityBookDir + r'\bin\vc' + platformTools + 'x86\Release'
 		distDir = 'vc' + platformTools
-	elif code64 == code:
+	else:
 		outputFile = 'AgilityBook-' + version + '-x64'
 		baseDir = AgilityBookDir + r'\bin\vc' + platformTools + 'x64\Release'
 		distDir = 'vc' + platformTools + 'x64'
-	else:
-		raise Exception('Invalid code')
 	return baseDir, outputFile, distDir
 
 
@@ -284,8 +275,8 @@ def WiProdCode(baseMsi):
 	return prodcode
 
 
-def WriteCode(baseMsi, ver4Dot, code, vcver):
-	global AgilityBookDir, code64, UpgradeCode
+def WriteCode(baseMsi, ver4Dot, b32, vcver):
+	global AgilityBookDir, UpgradeCode
 	prodcode = WiProdCode(baseMsi)
 
 	# {BAB76981-245D-452C-92ED-FCC9DBF2D914}
@@ -293,10 +284,10 @@ def WriteCode(baseMsi, ver4Dot, code, vcver):
 		d = datetime.datetime.now().isoformat(' ')
 		codes = open(AgilityBookDir + r'\Misc\InstallGUIDs.csv', 'a')
 		installs = ''
-		if code == code64:
-			installs = 'VC' + vcver + ',x64'
-		else:
+		if b32:
 			installs = 'VC' + vcver + ',win32'
+		else:
+			installs = 'VC' + vcver + ',x64'
 		print('v' + ver4Dot + ',' + d + ',' + prodcode + ',' + UpgradeCode + ',' + installs, file=codes)
 	else:
 		print(len(prodcode))
@@ -321,8 +312,8 @@ def GetWxsFilesAsString(extension):
 
 
 def CopyCAdll(ver4Line, platformTools):
-	global CA_dll, code32, code64
-	baseDir, outputFile, distDir = getoutputvars(code32, ver4Line, platformTools)
+	global CA_dll
+	baseDir, outputFile, distDir = getoutputvars(True, ver4Line, platformTools)
 	arbdll = baseDir + '\\' + CA_dll
 	if not os.access(arbdll, os.F_OK):
 		print(arbdll + r' does not exist, MSI skipped')
@@ -331,9 +322,9 @@ def CopyCAdll(ver4Line, platformTools):
 	return 1
 
 
-def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver, platformTools, distrib):
+def genWiX(ver3Dot, ver4Dot, ver4Line, b32, tidy, perUser, testing, vcver, platformTools, distrib):
 	global FilesToCopy, supportedLangs
-	baseDir, outputFile, distDir = getoutputvars(code, ver4Line, platformTools)
+	baseDir, outputFile, distDir = getoutputvars(b32, ver4Line, platformTools)
 
 	vcdir = os.path.join(distrib, distDir)
 	if not os.access(vcdir, os.F_OK):
@@ -351,10 +342,10 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver, plat
 	# -wx: Treat warnings as errors
 	candleCmd = 'candle -nologo -wx -pedantic'
 	candleCmd += ' -dCURRENT_VERSION=' + ver3Dot
-	if code == code64:
-		candleCmd += ' -arch x64'
-	else:
+	if b32:
 		candleCmd += ' -arch x86'
+	else:
+		candleCmd += ' -arch x64'
 	candleCmd += ' -ext WixUIExtension -ext WixUtilExtension'
 	candleCmd += ' -dBASEDIR="' + baseDir + '"'
 	candleCmd += ' -dINSTALL_SCOPE=' + perUser
@@ -399,7 +390,7 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver, plat
 	if tidy:
 		RmMinusRF(cabcache)
 	if not testing:
-		WriteCode(baseMsi, ver4Dot, code, vcver)
+		WriteCode(baseMsi, ver4Dot, b32, vcver)
 	runcmd(r'python ..\..\..\AgilityBookLibs\Projects\SignStuff.py ' + baseMsi)
 
 	zip = zipfile.ZipFile(baseMsiZip, 'w')
@@ -415,7 +406,7 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver, plat
 
 
 def main():
-	global CA_dll, code32, code64, DistribDir, WiXdir
+	global CA_dll, DistribDir, WiXdir
 	# When WiX is installed, it sets "WIX" to point to the top-level directory
 	if 'WIX' in os.environ:
 		WiXdir = os.environ['WIX'] + r'\bin'
@@ -499,9 +490,9 @@ def main():
 	if not CopyCAdll(ver4Line, platformTools):
 		return 1
 	if b32:
-		genWiX(ver3Dot, ver4Dot, ver4Line, code32, tidy, perUser, testing, vcver, platformTools, distrib)
+		genWiX(ver3Dot, ver4Dot, ver4Line, True, tidy, perUser, testing, vcver, platformTools, distrib)
 	if b64:
-		genWiX(ver3Dot, ver4Dot, ver4Line, code64, tidy, perUser, testing, vcver, platformTools, distrib)
+		genWiX(ver3Dot, ver4Dot, ver4Line, False, tidy, perUser, testing, vcver, platformTools, distrib)
 	if os.access(CA_dll, os.W_OK):
 		os.remove(CA_dll)
 
