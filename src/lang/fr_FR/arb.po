@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-29 17:40-0700\n"
-"PO-Revision-Date: 2023-03-29 17:40-0700\n"
+"POT-Creation-Date: 2023-07-06 08:37-0700\n"
+"PO-Revision-Date: 2023-07-06 08:38-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: fr_FR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: _;arbT\n"
 "X-Poedit-Basepath: ../..\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Poedit-SearchPath-0: Include\n"
 "X-Poedit-SearchPath-1: Libraries/ARB\n"
 "X-Poedit-SearchPath-2: ARBHelp\n"
@@ -26,41 +26,41 @@ msgstr ""
 "X-Poedit-SearchPath-5: TestARB\n"
 "X-Poedit-SearchPath-6: Win\n"
 
-#: ARBUpdater/DlgDigest.cpp:383 CalSites/CalSites.cpp:244
+#: ARBUpdater/DlgDigest.cpp:383 CalSites/CalSites.cpp:245
 #: CalSites/CalendarSiteUSDAA.cpp:221 CalSites/CalendarSites.cpp:1041
 #: CalSites/CalendarSites.cpp:1077 CalSites/CalendarSites.cpp:1145
 #: CalSites/DlgPluginDetails.cpp:234 Win/AgilityBook.cpp:537
 #: Win/AgilityBookCalendarListView.cpp:476
-#: Win/AgilityBookCalendarListView.cpp:1020 Win/AgilityBookDoc.cpp:189
-#: Win/AgilityBookDoc.cpp:526 Win/AgilityBookDoc.cpp:539
-#: Win/AgilityBookDoc.cpp:584 Win/AgilityBookDoc.cpp:612
-#: Win/AgilityBookDoc.cpp:621 Win/AgilityBookDoc.cpp:645
-#: Win/AgilityBookDoc.cpp:666 Win/AgilityBookDoc.cpp:716
-#: Win/AgilityBookDoc.cpp:825 Win/AgilityBookDoc.cpp:834
-#: Win/AgilityBookDoc.cpp:868 Win/AgilityBookDoc.cpp:971
-#: Win/AgilityBookDoc.cpp:1237 Win/AgilityBookDoc.cpp:1243
-#: Win/AgilityBookDoc.cpp:1260 Win/AgilityBookDoc.cpp:1276
-#: Win/AgilityBookDoc.cpp:1282 Win/AgilityBookDoc.cpp:1299
-#: Win/AgilityBookDoc.cpp:1315 Win/AgilityBookDoc.cpp:1321
-#: Win/AgilityBookDoc.cpp:1652 Win/AgilityBookDoc.cpp:1673
-#: Win/AgilityBookDoc.cpp:1689 Win/AgilityBookDoc.cpp:1696
-#: Win/AgilityBookDoc.cpp:1798 Win/AgilityBookDoc.cpp:1844
-#: Win/AgilityBookDoc.cpp:1849 Win/AgilityBookDoc.cpp:1918
-#: Win/AgilityBookDoc.cpp:2049 Win/AgilityBookRunsView.cpp:1186
+#: Win/AgilityBookCalendarListView.cpp:1020 Win/AgilityBookDoc.cpp:190
+#: Win/AgilityBookDoc.cpp:527 Win/AgilityBookDoc.cpp:542
+#: Win/AgilityBookDoc.cpp:588 Win/AgilityBookDoc.cpp:616
+#: Win/AgilityBookDoc.cpp:625 Win/AgilityBookDoc.cpp:649
+#: Win/AgilityBookDoc.cpp:670 Win/AgilityBookDoc.cpp:720
+#: Win/AgilityBookDoc.cpp:829 Win/AgilityBookDoc.cpp:838
+#: Win/AgilityBookDoc.cpp:872 Win/AgilityBookDoc.cpp:975
+#: Win/AgilityBookDoc.cpp:1241 Win/AgilityBookDoc.cpp:1247
+#: Win/AgilityBookDoc.cpp:1264 Win/AgilityBookDoc.cpp:1280
+#: Win/AgilityBookDoc.cpp:1286 Win/AgilityBookDoc.cpp:1303
+#: Win/AgilityBookDoc.cpp:1319 Win/AgilityBookDoc.cpp:1325
+#: Win/AgilityBookDoc.cpp:1656 Win/AgilityBookDoc.cpp:1677
+#: Win/AgilityBookDoc.cpp:1693 Win/AgilityBookDoc.cpp:1700
+#: Win/AgilityBookDoc.cpp:1802 Win/AgilityBookDoc.cpp:1848
+#: Win/AgilityBookDoc.cpp:1853 Win/AgilityBookDoc.cpp:1922
+#: Win/AgilityBookDoc.cpp:2053 Win/AgilityBookRunsView.cpp:1186
 #: Win/AgilityBookTrainingView.cpp:309 Win/AgilityBookTreeData.cpp:214
-#: Win/AgilityBookTreeView.cpp:191 Win/AgilityBookTreeView.cpp:686
-#: Win/AgilityBookTreeView.cpp:703 Win/AgilityBookTreeView.cpp:763
-#: Win/AgilityBookTreeView.cpp:797 Win/AgilityBookTreeView.cpp:817
-#: Win/AgilityBookTreeView.cpp:1355 Win/AgilityBookTreeView.cpp:1371
-#: Win/AgilityBookTreeView.cpp:1389 Win/ClipBoard.cpp:155
-#: Win/DlgAssignColumns.cpp:1200 Win/DlgCalendar.cpp:899 Win/DlgCalendar.cpp:905
-#: Win/DlgCalendar.cpp:917 Win/DlgConfigEvent.cpp:1156
+#: Win/AgilityBookTreeView.cpp:191 Win/AgilityBookTreeView.cpp:688
+#: Win/AgilityBookTreeView.cpp:706 Win/AgilityBookTreeView.cpp:768
+#: Win/AgilityBookTreeView.cpp:803 Win/AgilityBookTreeView.cpp:823
+#: Win/AgilityBookTreeView.cpp:1361 Win/AgilityBookTreeView.cpp:1377
+#: Win/AgilityBookTreeView.cpp:1395 Win/ClipBoard.cpp:155
+#: Win/DlgAssignColumns.cpp:1201 Win/DlgCalendar.cpp:896 Win/DlgCalendar.cpp:902
+#: Win/DlgCalendar.cpp:914 Win/DlgConfigEvent.cpp:1156
 #: Win/DlgConfigEvent.cpp:1168 Win/DlgConfigEvent.cpp:1176
 #: Win/DlgConfigEvent.cpp:1459 Win/DlgConfigEvent.cpp:1470
 #: Win/DlgConfigEvent.cpp:1477 Win/DlgConfigEvent.cpp:1620
-#: Win/DlgConfigEvent.cpp:1631 Win/DlgConfigEventMethod.cpp:1031
-#: Win/DlgConfigEventMethod.cpp:1038 Win/DlgConfigEventMethod.cpp:1045
-#: Win/DlgConfigEventMethod.cpp:1058 Win/DlgConfigEventMethod.cpp:1071
+#: Win/DlgConfigEvent.cpp:1631 Win/DlgConfigEventMethod.cpp:1035
+#: Win/DlgConfigEventMethod.cpp:1042 Win/DlgConfigEventMethod.cpp:1049
+#: Win/DlgConfigEventMethod.cpp:1062 Win/DlgConfigEventMethod.cpp:1077
 #: Win/DlgConfigLifetimeName.cpp:137 Win/DlgConfigMultiQ.cpp:399
 #: Win/DlgConfigUpdate.cpp:151 Win/DlgConfigUpdate.cpp:160
 #: Win/DlgConfigUpdate.cpp:167 Win/DlgConfigVenue.cpp:107
@@ -71,16 +71,16 @@ msgstr ""
 #: Win/DlgConfigureData.cpp:403 Win/DlgConfigureData.cpp:490
 #: Win/DlgConfigureData.cpp:506 Win/DlgConfigureData.cpp:608
 #: Win/DlgConfigureData.cpp:626 Win/DlgMessageBox.cpp:57
-#: Win/DlgOptionsFilter.cpp:671 Win/DlgRunPanelScore.cpp:1133
-#: Win/DlgRunPanelScore.cpp:1142 Win/DlgRunPanelScore.cpp:1151
-#: Win/DlgRunPanelScore.cpp:1161 Win/DlgRunPanelScore.cpp:1171
-#: Win/DlgRunPanelScore.cpp:1178 Win/DlgRunPanelScore.cpp:1185
-#: Win/DlgRunPanelScore.cpp:1241 Win/DlgTrial.cpp:602 Win/DlgTrial.cpp:739
+#: Win/DlgOptionsFilter.cpp:671 Win/DlgRunPanelScore.cpp:1035
+#: Win/DlgRunPanelScore.cpp:1044 Win/DlgRunPanelScore.cpp:1053
+#: Win/DlgRunPanelScore.cpp:1063 Win/DlgRunPanelScore.cpp:1073
+#: Win/DlgRunPanelScore.cpp:1080 Win/DlgRunPanelScore.cpp:1087
+#: Win/DlgRunPanelScore.cpp:1143 Win/DlgTrial.cpp:603 Win/DlgTrial.cpp:740
 #: Win/MainFrm.cpp:173 Win/UpdateInfo.cpp:155 Win/UpdateInfo.cpp:323
 #: Win/UpdateInfo.cpp:348 Win/UpdateInfo.cpp:461 Win/UpdateInfo.cpp:534
 #: Win/UpdateInfo.cpp:608 Win/UpdateInfo.cpp:720 Win/UpdateInfo.cpp:739
-#: Win/UpdateInfo.cpp:758 Win/WizardExport.cpp:1461 Win/WizardExport.cpp:1518
-#: Win/WizardImport.cpp:432 Win/WizardImport.cpp:774 Win/WizardStart.cpp:562
+#: Win/UpdateInfo.cpp:758 Win/WizardExport.cpp:1463 Win/WizardExport.cpp:1520
+#: Win/WizardImport.cpp:434 Win/WizardImport.cpp:776 Win/WizardStart.cpp:562
 #: Win/WizardStart.cpp:595 Win/WizardStart.cpp:715 Win/WizardStart.cpp:880
 msgid "Agility Record Book"
 msgstr "Agility Record Book"
@@ -183,7 +183,7 @@ msgstr "Quitter"
 msgid "IDS_USE_PLUGIN"
 msgstr "Voulez-vous continuer d'utiliser ce plugin?"
 
-#: CalSites/CalendarSites.cpp:1144 Win/AgilityBookDoc.cpp:1275
+#: CalSites/CalendarSites.cpp:1144 Win/AgilityBookDoc.cpp:1279
 msgid "IDS_UPDATED_CAL_ITEMS"
 msgstr "{0} nouveaux entrés calendrier rajouté, {1} entrés mis a jour."
 
@@ -214,7 +214,7 @@ msgstr "Code"
 #: Win/DlgAssignColumns.cpp:464 Win/DlgInfoNote.cpp:564 Win/DlgListCtrl.cpp:454
 #: Win/DlgListViewer.cpp:980 Win/DlgListViewer.cpp:1018
 #: Win/DlgListViewer.cpp:1030 Win/DlgListViewer.cpp:1190
-#: Win/DlgListViewer.cpp:1257 Win/DlgListViewer.cpp:1310 Win/Print.cpp:267
+#: Win/DlgListViewer.cpp:1257 Win/DlgListViewer.cpp:1310 Win/Print.cpp:272
 msgid "IDS_COL_LOCATION"
 msgstr "Endroit"
 
@@ -263,7 +263,7 @@ msgstr ""
 #: Win/DlgDogPanelPoints.cpp:64 Win/DlgDogPanelRegNums.cpp:52
 #: Win/DlgDogPanelTitles.cpp:61 Win/DlgListCtrl.cpp:456
 #: Win/DlgListViewer.cpp:1184 Win/DlgListViewer.cpp:1251
-#: Win/DlgListViewer.cpp:1388 Win/DlgTrial.cpp:383 Win/Print.cpp:264
+#: Win/DlgListViewer.cpp:1388 Win/DlgTrial.cpp:383 Win/Print.cpp:269
 msgid "IDS_COL_VENUE"
 msgstr "Organisation"
 
@@ -396,24 +396,24 @@ msgstr ""
 msgid "Please enter a value"
 msgstr "Renseignez le champ, svp."
 
-#: CalSites/DlgQueryDetail.cpp:211 Win/DlgClub.cpp:294 Win/DlgClub.cpp:303
+#: CalSites/DlgQueryDetail.cpp:211 Win/DlgClub.cpp:297 Win/DlgClub.cpp:306
 #: Win/DlgConfigOtherPoints.cpp:73 Win/DlgConfigPlaceInfo.cpp:73
 #: Win/DlgConfigPlaceInfo.cpp:79 Win/DlgConfigPlaceInfo.cpp:117
 #: Win/DlgRegNum.cpp:191 Win/ValidatorsQ.cpp:98 Win/ValidatorsQ.cpp:107
 msgid "Validation conflict"
 msgstr "Conflit de validation"
 
-#: Libraries/ARB/ARBCalcPoints.cpp:117 Win/DlgConfigTitlePoints.cpp:174
+#: Libraries/ARB/ARBCalcPoints.cpp:118 Win/DlgConfigTitlePoints.cpp:174
 #, fuzzy
 msgid "IDS_TITLEPOINT_NORMAL_T2B"
 msgstr "AKC / Time 2 Beat"
 
-#: Libraries/ARB/ARBCalcPoints.cpp:169 Win/DlgConfigTitlePoints.cpp:175
+#: Libraries/ARB/ARBCalcPoints.cpp:171 Win/DlgConfigTitlePoints.cpp:175
 #, fuzzy
 msgid "IDS_TITLEPOINT_NORMAL_UKI"
 msgstr "UKI"
 
-#: Libraries/ARB/ARBCalcPoints.cpp:236
+#: Libraries/ARB/ARBCalcPoints.cpp:243
 #, fuzzy
 msgid "IDS_TITLEPOINT_TOP10_USDAA"
 msgstr "USDAA Top Ten"
@@ -556,15 +556,15 @@ msgstr "Passé"
 msgid "IDS_CALENDAR_NOTENTERED"
 msgstr "Pas inscrit"
 
-#: TestARB/Local.cpp:90 Win/Localization.cpp:88 Win/WizardImport.cpp:1332
+#: TestARB/Local.cpp:90 Win/Localization.cpp:88 Win/WizardImport.cpp:1334
 msgid "IDS_CALENDAR_ENTERED"
 msgstr "Inscrit"
 
-#: TestARB/Local.cpp:91 Win/Localization.cpp:89 Win/WizardImport.cpp:1326
+#: TestARB/Local.cpp:91 Win/Localization.cpp:89 Win/WizardImport.cpp:1328
 msgid "IDS_CALENDAR_PENDING"
 msgstr "En attente"
 
-#: TestARB/Local.cpp:92 Win/Localization.cpp:90 Win/WizardImport.cpp:1320
+#: TestARB/Local.cpp:92 Win/Localization.cpp:90 Win/WizardImport.cpp:1322
 msgid "IDS_CALENDAR_PLANNING"
 msgstr "Prevue"
 
@@ -643,7 +643,7 @@ msgid "IDS_EXISTING_POINTS_SQ"
 msgstr "Super Q"
 
 #: TestARB/Local.cpp:125 Win/DlgAssignColumns.cpp:307 Win/DlgConfigure.cpp:235
-#: Win/Localization.cpp:122 Win/Print.cpp:278
+#: Win/Localization.cpp:122 Win/Print.cpp:283
 msgid "IDS_COL_FAULTS"
 msgstr "Fautes"
 
@@ -921,11 +921,11 @@ msgstr ""
 "Subname setting updated in {} runs.\n"
 "(Date, Venue, Event, Division/Level)"
 
-#: Win/AgilityBook.cpp:177 Win/Print.cpp:1030 Win/Print.cpp:1066
+#: Win/AgilityBook.cpp:177 Win/Print.cpp:1035 Win/Print.cpp:1071
 msgid "Sorry, print preview needs a printer to be installed."
 msgstr "L'aperçu avant impression nécessite une imprimante installée."
 
-#: Win/AgilityBook.cpp:183 Win/Print.cpp:1036
+#: Win/AgilityBook.cpp:183 Win/Print.cpp:1041
 msgid "Print Preview"
 msgstr "Aperçu avant impression"
 
@@ -933,7 +933,7 @@ msgstr "Aperçu avant impression"
 msgid "Agility Record Book file"
 msgstr "fichier de Agility Record Book"
 
-#: Win/AgilityBookCalendarListView.cpp:475 Win/AgilityBookDoc.cpp:1917
+#: Win/AgilityBookCalendarListView.cpp:475 Win/AgilityBookDoc.cpp:1921
 #: Win/AgilityBookRunsView.cpp:1185 Win/AgilityBookTrainingView.cpp:308
 #: Win/AgilityBookTreeView.cpp:190
 msgid "IDS_CANNOT_FIND"
@@ -945,7 +945,7 @@ msgstr "{} epreuves"
 
 # This is 11 spaces
 #: Win/AgilityBookCalendarListView.cpp:637 Win/AgilityBookCalendarView.cpp:1332
-#: Win/AgilityBookDoc.cpp:1560 Win/AgilityBookPointsView.cpp:191
+#: Win/AgilityBookDoc.cpp:1564 Win/AgilityBookPointsView.cpp:191
 #: Win/AgilityBookRunsView.cpp:1369 Win/AgilityBookTrainingView.cpp:437
 #: Win/AgilityBookTreeView.cpp:436
 msgid "IDS_INDICATOR_BLANK"
@@ -975,7 +975,7 @@ msgstr "Dernier date"
 #: Win/DlgListViewer.cpp:1012 Win/DlgListViewer.cpp:1024
 #: Win/DlgListViewer.cpp:1191 Win/DlgListViewer.cpp:1258
 #: Win/DlgListViewer.cpp:1311 Win/DlgListViewer.cpp:1387 Win/DlgTrial.cpp:382
-#: Win/Print.cpp:265
+#: Win/Print.cpp:270
 msgid "IDS_COL_CLUB"
 msgstr "Club"
 
@@ -987,7 +987,7 @@ msgstr "Ouverture"
 msgid "IDS_COL_CLOSES"
 msgstr "Fermeture"
 
-#: Win/AgilityBookCalendarView.cpp:658 Win/AgilityBookDoc.cpp:2260
+#: Win/AgilityBookCalendarView.cpp:658 Win/AgilityBookDoc.cpp:2264
 #: Win/DlgAssignColumns.cpp:338 Win/DlgAssignColumns.cpp:348
 #: Win/DlgAssignColumns.cpp:383 Win/DlgAssignColumns.cpp:528
 #: Win/DlgListCtrl.cpp:457
@@ -1070,17 +1070,17 @@ msgstr "vendredi"
 msgid "Saturday"
 msgstr "samedi"
 
-#: Win/AgilityBookDoc.cpp:526 Win/AgilityBookTreeView.cpp:1354
+#: Win/AgilityBookDoc.cpp:527 Win/AgilityBookTreeView.cpp:1360
 msgid "IDS_CREATETRIAL_FAILED"
 msgstr "Erreur: Impossible de créer concours."
 
-#: Win/AgilityBookDoc.cpp:539 Win/AgilityBookTreeView.cpp:1370
+#: Win/AgilityBookDoc.cpp:541 Win/AgilityBookTreeView.cpp:1376
 msgid "IDS_CREATETRIAL_FILTERED"
 msgstr ""
 "Attention: Le concours juste creé ne peut pas etre montré a cause des filtres "
 "choisis."
 
-#: Win/AgilityBookDoc.cpp:583
+#: Win/AgilityBookDoc.cpp:587
 msgid "IDS_DELETE_TRIAL_DATA"
 msgstr ""
 "ATTENTION\n"
@@ -1090,26 +1090,26 @@ msgstr ""
 "\n"
 "Etes-vous sur de continuer?"
 
-#: Win/AgilityBookDoc.cpp:612
+#: Win/AgilityBookDoc.cpp:616
 msgid "IDS_NEED_CLUB"
 msgstr "Il faut créer un club organisateur avant créer des epreuves."
 
-#: Win/AgilityBookDoc.cpp:620
+#: Win/AgilityBookDoc.cpp:624
 msgid "IDS_VENUE_CONFIG_MISSING"
 msgstr ""
 "Impossible de localiser information configuration pour organisation '{}'."
 
-#: Win/AgilityBookDoc.cpp:645 Win/AgilityBookTreeView.cpp:763
+#: Win/AgilityBookDoc.cpp:649 Win/AgilityBookTreeView.cpp:767
 msgid "IDS_CREATERUN_FAILED"
 msgstr "Erreur: Impossible de créer parcours."
 
-#: Win/AgilityBookDoc.cpp:665 Win/AgilityBookTreeView.cpp:796
+#: Win/AgilityBookDoc.cpp:669 Win/AgilityBookTreeView.cpp:802
 msgid "IDS_CREATERUN_FILTERED"
 msgstr ""
 "Attention: Le parcours juste creé ne peut pas etre montré a cause des filtres "
 "choisis."
 
-#: Win/AgilityBookDoc.cpp:715
+#: Win/AgilityBookDoc.cpp:719
 msgid "IDS_DELETE_EVENT_DATA"
 msgstr ""
 "ATTENTION\n"
@@ -1118,149 +1118,149 @@ msgstr ""
 "\n"
 "Etes-vous sur de continuer?"
 
-#: Win/AgilityBookDoc.cpp:824
+#: Win/AgilityBookDoc.cpp:828
 msgid "IDS_ARE_YOU_SURE_CONTINUE"
 msgstr "Vous etes sur de continuer?"
 
-#: Win/AgilityBookDoc.cpp:868 Win/DlgConfigure.cpp:834
+#: Win/AgilityBookDoc.cpp:872 Win/DlgConfigure.cpp:834
 msgid "IDS_CONFIG_NO_UPDATE"
 msgstr "Pas mis a jour; configurations pas changé."
 
-#: Win/AgilityBookDoc.cpp:1160
+#: Win/AgilityBookDoc.cpp:1164
 msgid "IDS_ADDED"
 msgstr "Ajouté"
 
-#: Win/AgilityBookDoc.cpp:1167
+#: Win/AgilityBookDoc.cpp:1171
 msgid "IDS_ADDED_DOGS"
 msgstr "{} chiens"
 
-#: Win/AgilityBookDoc.cpp:1174 Win/AgilityBookDoc.cpp:1226
+#: Win/AgilityBookDoc.cpp:1178 Win/AgilityBookDoc.cpp:1230
 msgid "IDS_ADDED_REGNUMS"
 msgstr "{} numeros d'enregistrement"
 
-#: Win/AgilityBookDoc.cpp:1181
+#: Win/AgilityBookDoc.cpp:1185
 msgid "IDS_ADDED_EXISTINGPTS"
 msgstr "{} points existant"
 
-#: Win/AgilityBookDoc.cpp:1188 Win/AgilityBookDoc.cpp:1235
+#: Win/AgilityBookDoc.cpp:1192 Win/AgilityBookDoc.cpp:1239
 msgid "IDS_ADDED_TITLES"
 msgstr "{} distinctions"
 
-#: Win/AgilityBookDoc.cpp:1195
+#: Win/AgilityBookDoc.cpp:1199
 msgid "IDS_ADDED_TRIALS"
 msgstr "{} epreuves"
 
-#: Win/AgilityBookDoc.cpp:1202
+#: Win/AgilityBookDoc.cpp:1206
 msgid "IDS_ADDED_CLUBS"
 msgstr "{} clubs"
 
-#: Win/AgilityBookDoc.cpp:1209
+#: Win/AgilityBookDoc.cpp:1213
 msgid "IDS_ADDED_JUDGES"
 msgstr "{} juges"
 
-#: Win/AgilityBookDoc.cpp:1216
+#: Win/AgilityBookDoc.cpp:1220
 msgid "IDS_ADDED_LOCATIONS"
 msgstr "{} endroits"
 
-#: Win/AgilityBookDoc.cpp:1224 Win/AgilityBookDoc.cpp:1233
+#: Win/AgilityBookDoc.cpp:1228 Win/AgilityBookDoc.cpp:1237
 msgid "IDS_UPDATED"
 msgstr "Mis a jour"
 
-#: Win/AgilityBookDoc.cpp:1314
+#: Win/AgilityBookDoc.cpp:1318
 msgid "IDS_UPDATED_TRAINING_ITEMS"
 msgstr "{0} nouveaux entrés Log Entraînement rajoutés, {1} entrés mis a jour."
 
-#: Win/AgilityBookDoc.cpp:1584 Win/DlgDog.cpp:74 Win/DlgFindLinks.cpp:62
-#: Win/DlgListCtrl.cpp:516 Win/DlgListViewer.cpp:1246 Win/Print.cpp:262
+#: Win/AgilityBookDoc.cpp:1588 Win/DlgDog.cpp:74 Win/DlgFindLinks.cpp:62
+#: Win/DlgListCtrl.cpp:516 Win/DlgListViewer.cpp:1246 Win/Print.cpp:267
 msgid "IDS_COL_DOG"
 msgstr "Chien"
 
-#: Win/AgilityBookDoc.cpp:1651
+#: Win/AgilityBookDoc.cpp:1655
 msgid "Sorry, could not open this file."
 msgstr "Impossible d'ouvrir ce fichier."
 
-#: Win/AgilityBookDoc.cpp:1668 Win/AgilityBookDoc.cpp:1684
+#: Win/AgilityBookDoc.cpp:1672 Win/AgilityBookDoc.cpp:1688
 msgid "Cannot open file '{}'."
 msgstr "Impossible d'ouvrir le fichier « {} »."
 
-#: Win/AgilityBookDoc.cpp:1695
+#: Win/AgilityBookDoc.cpp:1699
 msgid "IDS_NONFATAL_MSGS"
 msgstr "Attention: Des messages pas fatal ont etais crée en chargent le fichier:"
 
-#: Win/AgilityBookDoc.cpp:1798
+#: Win/AgilityBookDoc.cpp:1802
 #, fuzzy
 msgid "IDS_WARN_FILE_UPDATED"
 msgstr ""
 "Warning: This file has been modified after it was opened. Are you sure you "
 "want to overwrite any changes?"
 
-#: Win/AgilityBookDoc.cpp:1843 Win/UpdateInfo.cpp:782
+#: Win/AgilityBookDoc.cpp:1847 Win/UpdateInfo.cpp:782
 msgid "IDS_CANNOT_OPEN"
 msgstr "Impossible d'ouvrir fichier '{}' pour ecriture."
 
-#: Win/AgilityBookDoc.cpp:1849
+#: Win/AgilityBookDoc.cpp:1853
 msgid "IDS_INTERNAL_ERROR"
 msgstr "Erreur interne: Fichier pas enregistré."
 
-#: Win/AgilityBookDoc.cpp:1878
+#: Win/AgilityBookDoc.cpp:1882
 msgid "IDS_SEARCH_NOTES"
 msgstr "Notes Recherche"
 
-#: Win/AgilityBookDoc.cpp:2049
+#: Win/AgilityBookDoc.cpp:2053
 msgid "IDS_NO_LINKED_FILES"
 msgstr "Aucun fichier associé trouvé."
 
-#: Win/AgilityBookDoc.cpp:2315
+#: Win/AgilityBookDoc.cpp:2319
 #, fuzzy
 msgid "IDS_FILEPROP_NAME"
 msgstr "File name: {}"
 
-#: Win/AgilityBookDoc.cpp:2318
+#: Win/AgilityBookDoc.cpp:2322
 #, fuzzy
 msgid "IDS_FILEPROP_NAME_READONLY"
 msgstr "[readonly]"
 
-#: Win/AgilityBookDoc.cpp:2321 Win/AgilityBookDoc.cpp:2345
+#: Win/AgilityBookDoc.cpp:2325 Win/AgilityBookDoc.cpp:2349
 #, fuzzy
 msgid "IDS_FILEPROP_NAME_MODIFIED"
 msgstr "[changes pending]"
 
-#: Win/AgilityBookDoc.cpp:2326
+#: Win/AgilityBookDoc.cpp:2330
 #, fuzzy
 msgid "IDS_FILEPROP_SIZE"
 msgstr "File size: {} bytes"
 
-#: Win/AgilityBookDoc.cpp:2334
+#: Win/AgilityBookDoc.cpp:2338
 #, fuzzy
 msgid "IDS_FILEPROP_CREATED"
 msgstr "Created: {}"
 
-#: Win/AgilityBookDoc.cpp:2338
+#: Win/AgilityBookDoc.cpp:2342
 #, fuzzy
 msgid "IDS_FILEPROP_MODIFIED"
 msgstr "Modified: {}"
 
-#: Win/AgilityBookDoc.cpp:2356
+#: Win/AgilityBookDoc.cpp:2360
 #, fuzzy
 msgid "IDS_FILEPROP_CONFIGURATION"
 msgstr "Configuration: {}"
 
-#: Win/AgilityBookDoc.cpp:2362
+#: Win/AgilityBookDoc.cpp:2366
 #, fuzzy
 msgid "IDS_FILEPROP_CONFIGURATION_CURRENT"
 msgstr "Configuration: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2373
+#: Win/AgilityBookDoc.cpp:2377
 #, fuzzy
 msgid "IDS_FILEPROP_VERSION"
 msgstr "Document version: {}"
 
-#: Win/AgilityBookDoc.cpp:2379
+#: Win/AgilityBookDoc.cpp:2383
 #, fuzzy
 msgid "IDS_FILEPROP_VERSION_CURRENT"
 msgstr "Document version: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2391
+#: Win/AgilityBookDoc.cpp:2395
 #, fuzzy
 msgid "IDS_FILEPROP_FILEWRITTEN"
 msgstr ""
@@ -1270,7 +1270,7 @@ msgstr ""
 "Local time: {2}\n"
 "ARB: {3}"
 
-#: Win/AgilityBookDoc.cpp:2399
+#: Win/AgilityBookDoc.cpp:2403
 msgid "IDS_FILE_PROPERTIES"
 msgstr "Propriétés du fichier"
 
@@ -2086,7 +2086,7 @@ msgstr ""
 "Cette fenêtre contient toutes les informations concernant vos entrainements."
 
 #: Win/AgilityBookRunsView.cpp:353 Win/AgilityBookRunsView.cpp:355
-#: Win/AgilityBookTreeData.cpp:583 Win/WizardExport.cpp:851
+#: Win/AgilityBookTreeData.cpp:583 Win/WizardExport.cpp:853
 msgid "IDS_SQ"
 msgstr "SQ"
 
@@ -2112,7 +2112,7 @@ msgstr ""
 "\n"
 "Etes-vous sur de continuer?"
 
-#: Win/AgilityBookTreeView.cpp:686
+#: Win/AgilityBookTreeView.cpp:687
 msgid "IDS_CREATEDOG_FAILED"
 msgstr "Erreur: Impossible de créer chien."
 
@@ -2248,7 +2248,7 @@ msgstr "Nom"
 #: Win/DlgAssignColumns.cpp:387 Win/DlgDogPanelPoints.cpp:60
 #: Win/DlgDogPanelTitles.cpp:60 Win/DlgListViewer.cpp:1180
 #: Win/DlgListViewer.cpp:1247 Win/DlgListViewer.cpp:1307
-#: Win/DlgListViewer.cpp:1384 Win/Print.cpp:263
+#: Win/DlgListViewer.cpp:1384 Win/Print.cpp:268
 msgid "IDS_COL_DATE"
 msgstr "Date"
 
@@ -2268,7 +2268,7 @@ msgstr "Niveau conducteur"
 #: Win/DlgConfigMultiQ.cpp:171 Win/DlgDogPanelPoints.cpp:67
 #: Win/DlgListViewer.cpp:1186 Win/DlgListViewer.cpp:1253
 #: Win/DlgListViewer.cpp:1355 Win/DlgListViewer.cpp:1390
-#: Win/DlgPointsViewSort.cpp:193
+#: Win/DlgPointsViewSort.cpp:192
 msgid "IDS_COL_LEVEL"
 msgstr "Degré"
 
@@ -2276,27 +2276,27 @@ msgstr "Degré"
 #: Win/DlgConfigMultiQ.cpp:172 Win/DlgDogPanelPoints.cpp:68
 #: Win/DlgFindLinks.cpp:64 Win/DlgListViewer.cpp:1187 Win/DlgListViewer.cpp:1254
 #: Win/DlgListViewer.cpp:1350 Win/DlgListViewer.cpp:1391
-#: Win/DlgPointsViewSort.cpp:198
+#: Win/DlgPointsViewSort.cpp:196
 msgid "IDS_COL_EVENT"
 msgstr "Epreuve"
 
 #: Win/DlgAssignColumns.cpp:238 Win/DlgAssignColumns.cpp:402
-#: Win/DlgDogPanelRegNums.cpp:54 Win/DlgRunPanelRefRuns.cpp:68 Win/Print.cpp:268
-#: Win/Print.cpp:289 Win/Print.cpp:295 Win/Print.cpp:301 Win/Print.cpp:307
+#: Win/DlgDogPanelRegNums.cpp:54 Win/DlgRunPanelRefRuns.cpp:68 Win/Print.cpp:273
+#: Win/Print.cpp:294 Win/Print.cpp:300 Win/Print.cpp:306 Win/Print.cpp:312
 msgid "IDS_COL_HEIGHT"
 msgstr "Catégorie"
 
 #: Win/DlgAssignColumns.cpp:241 Win/DlgInfoNote.cpp:561 Win/DlgListViewer.cpp:977
 #: Win/DlgListViewer.cpp:1015 Win/DlgListViewer.cpp:1027
-#: Win/DlgListViewer.cpp:1192 Win/DlgListViewer.cpp:1259 Win/Print.cpp:269
+#: Win/DlgListViewer.cpp:1192 Win/DlgListViewer.cpp:1259 Win/Print.cpp:274
 msgid "IDS_COL_JUDGE"
 msgstr "Juge"
 
-#: Win/DlgAssignColumns.cpp:244 Win/DlgListCtrl.cpp:518 Win/Print.cpp:270
+#: Win/DlgAssignColumns.cpp:244 Win/DlgListCtrl.cpp:518 Win/Print.cpp:275
 msgid "IDS_COL_HANDLER"
 msgstr "Conducteur"
 
-#: Win/DlgAssignColumns.cpp:247 Win/Print.cpp:271
+#: Win/DlgAssignColumns.cpp:247 Win/Print.cpp:276
 msgid "IDS_COL_CONDITIONS"
 msgstr "Conditions"
 
@@ -2304,12 +2304,12 @@ msgstr "Conditions"
 msgid "IDS_COL_COURSEFAULTS"
 msgstr "Fautes parcours"
 
-#: Win/DlgAssignColumns.cpp:253 Win/DlgRunPanelRefRuns.cpp:65 Win/Print.cpp:276
-#: Win/Print.cpp:287 Win/Print.cpp:293 Win/Print.cpp:299 Win/Print.cpp:305
+#: Win/DlgAssignColumns.cpp:253 Win/DlgRunPanelRefRuns.cpp:65 Win/Print.cpp:281
+#: Win/Print.cpp:292 Win/Print.cpp:298 Win/Print.cpp:304 Win/Print.cpp:310
 msgid "IDS_COL_TIME"
 msgstr "Temps"
 
-#: Win/DlgAssignColumns.cpp:256 Win/Print.cpp:274
+#: Win/DlgAssignColumns.cpp:256 Win/Print.cpp:279
 msgid "IDS_COL_YARDS"
 msgstr "Metres"
 
@@ -2317,7 +2317,7 @@ msgstr "Metres"
 msgid "IDS_COL_YPS"
 msgstr "m/s"
 
-#: Win/DlgAssignColumns.cpp:262 Win/Print.cpp:273
+#: Win/DlgAssignColumns.cpp:262 Win/Print.cpp:278
 msgid "IDS_COL_SCT"
 msgstr "TPS"
 
@@ -2350,33 +2350,33 @@ msgstr "Points exigé"
 msgid "IDS_COL_POINTS"
 msgstr "Points"
 
-#: Win/DlgAssignColumns.cpp:286 Win/DlgConfigEventMethod.cpp:428
+#: Win/DlgAssignColumns.cpp:286 Win/DlgConfigEventMethod.cpp:435
 #: Win/DlgListViewer.cpp:1193 Win/DlgListViewer.cpp:1260
-#: Win/DlgRunPanelRefRuns.cpp:63 Win/Print.cpp:280 Win/Print.cpp:285
-#: Win/Print.cpp:291 Win/Print.cpp:297 Win/Print.cpp:303
+#: Win/DlgRunPanelRefRuns.cpp:63 Win/Print.cpp:285 Win/Print.cpp:290
+#: Win/Print.cpp:296 Win/Print.cpp:302 Win/Print.cpp:308
 msgid "IDS_COL_PLACE"
 msgstr "Classement"
 
 #: Win/DlgAssignColumns.cpp:289 Win/DlgListViewer.cpp:1194
-#: Win/DlgListViewer.cpp:1261 Win/Print.cpp:281
+#: Win/DlgListViewer.cpp:1261 Win/Print.cpp:286
 msgid "IDS_COL_IN_CLASS"
 msgstr "Engagés"
 
 #: Win/DlgAssignColumns.cpp:292 Win/DlgListViewer.cpp:1195
-#: Win/DlgListViewer.cpp:1262 Win/Print.cpp:282
+#: Win/DlgListViewer.cpp:1262 Win/Print.cpp:287
 msgid "IDS_COL_Q_D"
 msgstr "Nombres Q"
 
 #: Win/DlgAssignColumns.cpp:295 Win/DlgAssignColumns.cpp:390
 #: Win/DlgListViewer.cpp:1182 Win/DlgListViewer.cpp:1249
-#: Win/DlgRunPanelRefRuns.cpp:62 Win/Print.cpp:272 Win/Print.cpp:286
-#: Win/Print.cpp:292 Win/Print.cpp:298 Win/Print.cpp:304
+#: Win/DlgRunPanelRefRuns.cpp:62 Win/Print.cpp:277 Win/Print.cpp:291
+#: Win/Print.cpp:297 Win/Print.cpp:303 Win/Print.cpp:309
 msgid "IDS_COL_Q"
 msgstr "Q"
 
 #: Win/DlgAssignColumns.cpp:298 Win/DlgListViewer.cpp:1393
-#: Win/DlgRunPanelRefRuns.cpp:64 Win/Print.cpp:279 Win/Print.cpp:288
-#: Win/Print.cpp:294 Win/Print.cpp:300 Win/Print.cpp:306
+#: Win/DlgRunPanelRefRuns.cpp:64 Win/Print.cpp:284 Win/Print.cpp:293
+#: Win/Print.cpp:299 Win/Print.cpp:305 Win/Print.cpp:311
 msgid "IDS_COL_SCORE"
 msgstr "Resultats"
 
@@ -2387,7 +2387,7 @@ msgstr "Points Distinction"
 
 #: Win/DlgAssignColumns.cpp:304 Win/DlgDogPanelPoints.cpp:70
 #: Win/DlgInfoNote.cpp:75 Win/DlgInfoNote.cpp:1014 Win/DlgListViewer.cpp:1422
-#: Win/Print.cpp:284
+#: Win/Print.cpp:289
 msgid "IDS_COL_COMMENTS"
 msgstr "Notes"
 
@@ -2480,7 +2480,7 @@ msgstr "Info facturation"
 msgid "IDS_COL_CATEGORIES"
 msgstr "Cathegories"
 
-#: Win/DlgAssignColumns.cpp:461 Win/DlgAssignColumns.cpp:938
+#: Win/DlgAssignColumns.cpp:461 Win/DlgAssignColumns.cpp:939
 msgid "IDS_COL_DESCRIPTION"
 msgstr "Description"
 
@@ -2553,7 +2553,7 @@ msgstr "Min TSP"
 msgid "IDS_COL_DRAWS"
 msgstr "Draws"
 
-#: Win/DlgAssignColumns.cpp:558 Win/Print.cpp:277
+#: Win/DlgAssignColumns.cpp:558 Win/Print.cpp:282
 msgid "IDS_COL_OBSTACLES"
 msgstr "Obstacles"
 
@@ -2570,100 +2570,100 @@ msgstr "Attribuer Colonnes"
 msgid "IDC_ASSIGN_NAMES"
 msgstr "Configurations enregistrées"
 
-#: Win/DlgAssignColumns.cpp:899 Win/DlgAssignColumns.cpp:900
+#: Win/DlgAssignColumns.cpp:915 Win/DlgAssignColumns.cpp:916
 msgid "HIDC_ASSIGN_NAMES"
 msgstr "Liste des configurations prédéfinies"
 
-#: Win/DlgAssignColumns.cpp:917
+#: Win/DlgAssignColumns.cpp:918
 msgid "IDC_ASSIGN_NAMES_SAVE"
 msgstr "Sauvegarder"
 
-#: Win/DlgAssignColumns.cpp:919 Win/DlgAssignColumns.cpp:920
+#: Win/DlgAssignColumns.cpp:920 Win/DlgAssignColumns.cpp:921
 msgid "HIDC_ASSIGN_NAMES_SAVE"
 msgstr ""
 "Enregistrer la configuration sous le nom donné. Attention: Cliquez sur le "
 "bouton 'enregistrer' pour sauvegarder une configuration."
 
-#: Win/DlgAssignColumns.cpp:923
+#: Win/DlgAssignColumns.cpp:924
 msgid "IDC_ASSIGN_NAMES_DELETE"
 msgstr "Supprimer"
 
-#: Win/DlgAssignColumns.cpp:925 Win/DlgAssignColumns.cpp:926
+#: Win/DlgAssignColumns.cpp:926 Win/DlgAssignColumns.cpp:927
 msgid "HIDC_ASSIGN_NAMES_DELETE"
 msgstr "Supprimer la configuration selectionnée."
 
-#: Win/DlgAssignColumns.cpp:935 Win/DlgAssignColumns.cpp:936
+#: Win/DlgAssignColumns.cpp:936 Win/DlgAssignColumns.cpp:937
 msgid "HIDC_ASSIGN_TYPE"
 msgstr "Type de parcours (méthode pour calculer les points) pour ces champs."
 
-#: Win/DlgAssignColumns.cpp:937
+#: Win/DlgAssignColumns.cpp:938
 msgid "IDS_COL_RUNTYPE"
 msgstr "Type parcours"
 
-#: Win/DlgAssignColumns.cpp:970
+#: Win/DlgAssignColumns.cpp:971
 msgid "IDC_ASSIGN_AVAILABLE"
 msgstr "&Champs Disponibles:"
 
-#: Win/DlgAssignColumns.cpp:975 Win/DlgAssignColumns.cpp:976
+#: Win/DlgAssignColumns.cpp:976 Win/DlgAssignColumns.cpp:977
 msgid "HIDC_ASSIGN_AVAILABLE"
 msgstr "Les champs disponibles pour l'importation ou l'exportation."
 
-#: Win/DlgAssignColumns.cpp:981
+#: Win/DlgAssignColumns.cpp:982
 msgid "IDC_ASSIGN_ADD"
 msgstr "&Ajouter ->"
 
-#: Win/DlgAssignColumns.cpp:983 Win/DlgAssignColumns.cpp:984
+#: Win/DlgAssignColumns.cpp:984 Win/DlgAssignColumns.cpp:985
 msgid "HIDC_ASSIGN_ADD"
 msgstr ""
 "Ajouter le champ disponible sélectionné à la fin des articles d'ordre de champ."
 
-#: Win/DlgAssignColumns.cpp:986
+#: Win/DlgAssignColumns.cpp:987
 msgid "IDC_ASSIGN_DELETE"
 msgstr "<- &Supprimer"
 
-#: Win/DlgAssignColumns.cpp:988 Win/DlgAssignColumns.cpp:989
+#: Win/DlgAssignColumns.cpp:989 Win/DlgAssignColumns.cpp:990
 msgid "HIDC_ASSIGN_DELETE"
 msgstr ""
 "Enlever le champ sélectionné de l'ordre de champ. Ceci replacera le champ dans "
 "les champs disponibles."
 
-#: Win/DlgAssignColumns.cpp:991
+#: Win/DlgAssignColumns.cpp:992
 msgid "IDC_ASSIGN_MOVE_UP"
 msgstr "&Monter"
 
-#: Win/DlgAssignColumns.cpp:993 Win/DlgAssignColumns.cpp:994
+#: Win/DlgAssignColumns.cpp:994 Win/DlgAssignColumns.cpp:995
 msgid "HIDC_ASSIGN_MOVE_UP"
 msgstr "Monter le champ sélectionné dans l'ordre."
 
-#: Win/DlgAssignColumns.cpp:996
+#: Win/DlgAssignColumns.cpp:997
 msgid "IDC_ASSIGN_MOVE_DOWN"
 msgstr "&Descendre"
 
-#: Win/DlgAssignColumns.cpp:998 Win/DlgAssignColumns.cpp:999
+#: Win/DlgAssignColumns.cpp:999 Win/DlgAssignColumns.cpp:1000
 msgid "HIDC_ASSIGN_MOVE_DOWN"
 msgstr "Descendre le champ sélectionné dans l'ordre."
 
-#: Win/DlgAssignColumns.cpp:1001
+#: Win/DlgAssignColumns.cpp:1002
 msgid "IDC_ASSIGN_RESET"
 msgstr "Réinitialiser"
 
-#: Win/DlgAssignColumns.cpp:1003 Win/DlgAssignColumns.cpp:1004
+#: Win/DlgAssignColumns.cpp:1004 Win/DlgAssignColumns.cpp:1005
 msgid "HIDC_ASSIGN_RESET"
 msgstr "Réinitialise la sélection à la valeur par défaut."
 
-#: Win/DlgAssignColumns.cpp:1007
+#: Win/DlgAssignColumns.cpp:1008
 msgid "IDC_ASSIGN_COLUMNS"
 msgstr "&Ordre des Champs:"
 
-#: Win/DlgAssignColumns.cpp:1012 Win/DlgAssignColumns.cpp:1013
+#: Win/DlgAssignColumns.cpp:1013 Win/DlgAssignColumns.cpp:1014
 msgid "HIDC_ASSIGN_COLUMNS"
 msgstr "Les champs actuellement assignés pour importer et exporter."
 
-#: Win/DlgAssignColumns.cpp:1094
+#: Win/DlgAssignColumns.cpp:1095
 msgid "IDS_BLANK_COLUMN"
 msgstr "<Colonne vierge>"
 
-#: Win/DlgAssignColumns.cpp:1200 Win/DlgOptionsFilter.cpp:671
+#: Win/DlgAssignColumns.cpp:1201 Win/DlgOptionsFilter.cpp:671
 msgid "IDS_NAME_FILTER"
 msgstr "Il faut donner un nom pour enregistrer le filtre."
 
@@ -2854,15 +2854,15 @@ msgid "HIDC_CAL_EMAIL_SEC"
 msgstr ""
 "Envoyer un e-mail au secrétaire du concours utilisant l'adresse spécifiée."
 
-#: Win/DlgCalendar.cpp:413 Win/DlgCalendar.cpp:414
+#: Win/DlgCalendar.cpp:426 Win/DlgCalendar.cpp:427
 msgid "HIDC_CAL_EMAIL_SEC_ADDR"
 msgstr "Envoyer un e-mail au secrétaire du concours."
 
-#: Win/DlgCalendar.cpp:434
+#: Win/DlgCalendar.cpp:429
 msgid "IDC_CAL_VENUE"
 msgstr "&Organisation:"
 
-#: Win/DlgCalendar.cpp:444 Win/DlgCalendar.cpp:445
+#: Win/DlgCalendar.cpp:439 Win/DlgCalendar.cpp:440
 msgid "HIDC_CAL_VENUE"
 msgstr ""
 "Lorganisation pour le concours. Vous pouvez choisir une organisation existante "
@@ -2870,51 +2870,51 @@ msgstr ""
 "existant, vous ne pourrez pas automatiquement créer un concours de cette "
 "entrée de calendrier."
 
-#: Win/DlgCalendar.cpp:447
+#: Win/DlgCalendar.cpp:442
 msgid "IDC_CAL_CLUB"
 msgstr "&Club:"
 
-#: Win/DlgCalendar.cpp:461 Win/DlgCalendar.cpp:462
+#: Win/DlgCalendar.cpp:456 Win/DlgCalendar.cpp:457
 msgid "HIDC_CAL_CLUB"
 msgstr "Le nom du club d'accueil de l'épreuve."
 
-#: Win/DlgCalendar.cpp:466 Win/DlgCalendar.cpp:467
+#: Win/DlgCalendar.cpp:461 Win/DlgCalendar.cpp:462
 msgid "HIDC_CAL_CLUB_NOTES"
 msgstr "Entrez des notes d'un club."
 
-#: Win/DlgCalendar.cpp:476 Win/DlgCalendar.cpp:477
+#: Win/DlgCalendar.cpp:471 Win/DlgCalendar.cpp:472
 msgid "HIDC_CAL_CLUB_NOTE"
 msgstr "Les notes du club sélectionné."
 
-#: Win/DlgCalendar.cpp:480
+#: Win/DlgCalendar.cpp:475
 msgid "IDC_CAL_LOCATION"
 msgstr "&Endroit:"
 
-#: Win/DlgCalendar.cpp:494 Win/DlgCalendar.cpp:495
+#: Win/DlgCalendar.cpp:489 Win/DlgCalendar.cpp:490
 msgid "HIDC_CAL_LOCATION"
 msgstr "L'endroit pour le concours."
 
-#: Win/DlgCalendar.cpp:499 Win/DlgCalendar.cpp:500
+#: Win/DlgCalendar.cpp:494 Win/DlgCalendar.cpp:495
 msgid "HIDC_CAL_LOCATION_NOTES"
 msgstr "Entrer notes sur l'endroit."
 
-#: Win/DlgCalendar.cpp:509 Win/DlgCalendar.cpp:510
+#: Win/DlgCalendar.cpp:504 Win/DlgCalendar.cpp:505
 msgid "HIDC_CAL_LOCATION_NOTE"
 msgstr "Notes sur lendroit sélectionné."
 
-#: Win/DlgCalendar.cpp:512
+#: Win/DlgCalendar.cpp:507
 msgid "IDC_CAL_NOTES"
 msgstr "&Notes"
 
-#: Win/DlgCalendar.cpp:523 Win/DlgCalendar.cpp:524
+#: Win/DlgCalendar.cpp:518 Win/DlgCalendar.cpp:519
 msgid "HIDC_CAL_NOTES"
 msgstr "N'importe quelles notes sur ce concours."
 
-#: Win/DlgCalendar.cpp:899 Win/DlgCalendar.cpp:905
+#: Win/DlgCalendar.cpp:896 Win/DlgCalendar.cpp:902
 msgid "IDS_BAD_DRAWDATE"
 msgstr "Le date tirage doit etre apres le date ouverture et avant le fermeture."
 
-#: Win/DlgCalendar.cpp:916
+#: Win/DlgCalendar.cpp:913
 msgid "IDS_AUTODELETE_CAL"
 msgstr ""
 "Attention: Le date entré va causé le suppression automatique de cette entré. "
@@ -2965,11 +2965,11 @@ msgid "HIDC_CLUB_PRIMARY"
 msgstr ""
 "This club is the primary club in a co-sanctioned trial. Its rules are used."
 
-#: Win/DlgClub.cpp:294 Win/DlgRegNum.cpp:191 Win/DlgRunPanelScore.cpp:1133
+#: Win/DlgClub.cpp:297 Win/DlgRegNum.cpp:191 Win/DlgRunPanelScore.cpp:1035
 msgid "IDS_SELECT_VENUE"
 msgstr "Choisissez un epreuve."
 
-#: Win/DlgClub.cpp:303
+#: Win/DlgClub.cpp:306
 #, fuzzy
 msgid "IDS_SELECT_COSANCTION"
 msgstr "Please select a co-sanctioning club."
@@ -3177,8 +3177,8 @@ msgstr ""
 msgid "HIDC_CONFIG_EVENT_NOTES"
 msgstr "Les notes concernant la méthode couramment sélectionnée."
 
-#: Win/DlgConfigEvent.cpp:623 Win/DlgConfigEventMethod.cpp:212
-#: Win/DlgConfigEventMethod.cpp:841 Win/FilterOptions.cpp:276
+#: Win/DlgConfigEvent.cpp:623 Win/DlgConfigEventMethod.cpp:216
+#: Win/DlgConfigEventMethod.cpp:848 Win/FilterOptions.cpp:276
 #: Win/FilterOptions.cpp:359 Win/FilterOptions.cpp:428 Win/FilterOptions.cpp:436
 #: Win/FilterOptions.cpp:467
 msgid "IDS_ALL"
@@ -3216,7 +3216,7 @@ msgstr "Calculer Fautes Temps sur TPS"
 msgid "IDS_CONFIGEVENT_TF_OVER"
 msgstr "Calculer Fautes Temps sous TPS"
 
-#: Win/DlgConfigEvent.cpp:786 Win/DlgRunPanelScore.cpp:2001 Win/TabView.cpp:255
+#: Win/DlgConfigEvent.cpp:786 Win/DlgRunPanelScore.cpp:1916 Win/TabView.cpp:255
 #: Win/TabView.cpp:302 Win/TabView.cpp:377
 msgid "IDS_POINTS"
 msgstr "Points"
@@ -3263,235 +3263,235 @@ msgstr ""
 msgid "IDD_CONFIG_EVENT_METHOD"
 msgstr "Paramètres de la méthode"
 
-#: Win/DlgConfigEventMethod.cpp:197
+#: Win/DlgConfigEventMethod.cpp:198
 msgid "IDC_CONFIG_EVENT_DIVISION"
 msgstr "Niveau &conducteur"
 
-#: Win/DlgConfigEventMethod.cpp:210 Win/DlgConfigEventMethod.cpp:211
+#: Win/DlgConfigEventMethod.cpp:211 Win/DlgConfigEventMethod.cpp:212
 msgid "HIDC_CONFIG_EVENT_DIVISION"
 msgstr "Le niveau du conducteur pour lequel cette méthode sapplique."
 
-#: Win/DlgConfigEventMethod.cpp:228
+#: Win/DlgConfigEventMethod.cpp:234
 msgid "IDC_CONFIG_EVENT_LEVEL"
 msgstr "&Degré"
 
-#: Win/DlgConfigEventMethod.cpp:240 Win/DlgConfigEventMethod.cpp:241
+#: Win/DlgConfigEventMethod.cpp:246 Win/DlgConfigEventMethod.cpp:247
 msgid "HIDC_CONFIG_EVENT_LEVEL"
 msgstr "Le degré pour lequel cette méthode sapplique."
 
-#: Win/DlgConfigEventMethod.cpp:246
+#: Win/DlgConfigEventMethod.cpp:252
 msgid "IDC_CONFIG_EVENT_DATE_VALID_FROM"
 msgstr "&Valide du"
 
-#: Win/DlgConfigEventMethod.cpp:251 Win/DlgConfigEventMethod.cpp:252
+#: Win/DlgConfigEventMethod.cpp:257 Win/DlgConfigEventMethod.cpp:258
 msgid "HIDC_CONFIG_EVENT_DATE_VALID_FROM"
 msgstr ""
 "Activer ou désactiver lattribution de la date. Ceci permet de faire évoluer de "
 "changements de règle."
 
-#: Win/DlgConfigEventMethod.cpp:272 Win/DlgConfigEventMethod.cpp:273
+#: Win/DlgConfigEventMethod.cpp:278 Win/DlgConfigEventMethod.cpp:279
 msgid "HIDC_CONFIG_EVENT_DATE_START"
 msgstr "Date jusqu'à laquelle cette méthode est valide."
 
-#: Win/DlgConfigEventMethod.cpp:282
+#: Win/DlgConfigEventMethod.cpp:288
 msgid "IDC_CONFIG_EVENT_DATE_VALID_TO"
 msgstr "Valide &jusqu'au"
 
-#: Win/DlgConfigEventMethod.cpp:287 Win/DlgConfigEventMethod.cpp:288
+#: Win/DlgConfigEventMethod.cpp:293 Win/DlgConfigEventMethod.cpp:294
 msgid "HIDC_CONFIG_EVENT_DATE_VALID_TO"
 msgstr ""
 "Activer ou désactiver lattribution de la date. Ceci permet de faire évoluer de "
 "changements de règle."
 
-#: Win/DlgConfigEventMethod.cpp:308 Win/DlgConfigEventMethod.cpp:309
+#: Win/DlgConfigEventMethod.cpp:314 Win/DlgConfigEventMethod.cpp:315
 msgid "HIDC_CONFIG_EVENT_DATE_END"
 msgstr "Date à quand cette méthode est valide."
 
-#: Win/DlgConfigEventMethod.cpp:316
+#: Win/DlgConfigEventMethod.cpp:322
 msgid "IDC_CONFIG_EVENT_TYPE"
 msgstr "&Style de Comptage"
 
-#: Win/DlgConfigEventMethod.cpp:329 Win/DlgConfigEventMethod.cpp:330
+#: Win/DlgConfigEventMethod.cpp:335 Win/DlgConfigEventMethod.cpp:336
 msgid "HIDC_CONFIG_EVENT_TYPE"
 msgstr "Le type de cette méthode de calcul."
 
-#: Win/DlgConfigEventMethod.cpp:353
+#: Win/DlgConfigEventMethod.cpp:360
 msgid "IDC_CONFIG_EVENT_DROP_FRACTIONS"
 msgstr "Compter les secondes entières pour les pénalités"
 
-#: Win/DlgConfigEventMethod.cpp:358 Win/DlgConfigEventMethod.cpp:359
+#: Win/DlgConfigEventMethod.cpp:365 Win/DlgConfigEventMethod.cpp:366
 msgid "HIDC_CONFIG_EVENT_DROP_FRACTIONS"
 msgstr ""
 "En calculant les fautes de temps, est-ce que les fractions sont supprimées?"
 
-#: Win/DlgConfigEventMethod.cpp:364
+#: Win/DlgConfigEventMethod.cpp:371
 #, fuzzy
 msgid "IDC_CONFIG_EVENT_BONUSTITLE"
 msgstr "Points bonus?"
 
-#: Win/DlgConfigEventMethod.cpp:369 Win/DlgConfigEventMethod.cpp:370
+#: Win/DlgConfigEventMethod.cpp:376 Win/DlgConfigEventMethod.cpp:377
 msgid "HIDC_CONFIG_EVENT_BONUSTITLE"
 msgstr ""
 "Cette méthode a-t-elle es points qualifiants supplémentaires? Ceci "
 "s'appliquerait aux organisations comme NADAC qui utilisent des bonus qui "
 "permettent au chien de gagner 15 points Q supplémentaires."
 
-#: Win/DlgConfigEventMethod.cpp:375
+#: Win/DlgConfigEventMethod.cpp:382
 msgid "IDC_CONFIG_EVENT_SUPERQ"
 msgstr "Super Q?"
 
-#: Win/DlgConfigEventMethod.cpp:380 Win/DlgConfigEventMethod.cpp:381
+#: Win/DlgConfigEventMethod.cpp:387 Win/DlgConfigEventMethod.cpp:388
 msgid "HIDC_CONFIG_EVENT_SUPERQ"
 msgstr "Cette méthode a-t-elle des points Super Q?"
 
-#: Win/DlgConfigEventMethod.cpp:386
+#: Win/DlgConfigEventMethod.cpp:393
 msgid "IDC_CONFIG_EVENT_SPEED"
 msgstr "Points vitesse?"
 
-#: Win/DlgConfigEventMethod.cpp:392 Win/DlgConfigEventMethod.cpp:393
+#: Win/DlgConfigEventMethod.cpp:399 Win/DlgConfigEventMethod.cpp:400
 msgid "HIDC_CONFIG_EVENT_SPEED"
 msgstr ""
 "Cette méthode a-t-elle des points de vitesse? (Dans AKC, ce sont les points de "
 "MACH.) Les points de vitesse sont calculés comme les secondes pleines sous TPS."
 
-#: Win/DlgConfigEventMethod.cpp:396
+#: Win/DlgConfigEventMethod.cpp:403
 msgid "IDC_CONFIG_EVENT_TF_MULTIPLY"
 msgstr "Multiplicateur pour pénalités temps"
 
-#: Win/DlgConfigEventMethod.cpp:407 Win/DlgConfigEventMethod.cpp:408
+#: Win/DlgConfigEventMethod.cpp:414 Win/DlgConfigEventMethod.cpp:415
 msgid "HIDC_CONFIG_EVENT_TF_MULTIPLY"
 msgstr "Multiplier toutes les fautes de temps par un facteur."
 
-#: Win/DlgConfigEventMethod.cpp:411
+#: Win/DlgConfigEventMethod.cpp:418
 msgid "IDC_CONFIG_EVENT_PLACEMENT"
 msgstr "Multiplicateur pour points de vitesse et de Classements"
 
-#: Win/DlgConfigEventMethod.cpp:426 Win/DlgConfigEventMethod.cpp:427
+#: Win/DlgConfigEventMethod.cpp:433 Win/DlgConfigEventMethod.cpp:434
 msgid "HIDC_CONFIG_EVENT_PLACEMENT"
 msgstr ""
 "La liste de multiplicateurs pour le classement utilisé en calculant les points "
 "vitesse. S'il n'y a pas d'entrée, le classement n'affecte pas les points de "
 "vitesse."
 
-#: Win/DlgConfigEventMethod.cpp:429
+#: Win/DlgConfigEventMethod.cpp:436
 msgid "IDS_COL_MULTIPLIER"
 msgstr "Multiplicateur"
 
-#: Win/DlgConfigEventMethod.cpp:446
+#: Win/DlgConfigEventMethod.cpp:451
 msgid "IDC_CONFIG_EVENT_PLACEMENT_NEW"
 msgstr "Nouveau..."
 
-#: Win/DlgConfigEventMethod.cpp:451 Win/DlgConfigEventMethod.cpp:452
+#: Win/DlgConfigEventMethod.cpp:456 Win/DlgConfigEventMethod.cpp:457
 msgid "HIDC_CONFIG_EVENT_PLACEMENT_NEW"
 msgstr ""
 "Ajouter un nouveau multiplicateur point de vitesse. Les Classements doivent "
 "être uniques."
 
-#: Win/DlgConfigEventMethod.cpp:458
+#: Win/DlgConfigEventMethod.cpp:463
 msgid "IDC_CONFIG_EVENT_PLACEMENT_EDIT"
 msgstr "Édition..."
 
-#: Win/DlgConfigEventMethod.cpp:463 Win/DlgConfigEventMethod.cpp:464
+#: Win/DlgConfigEventMethod.cpp:468 Win/DlgConfigEventMethod.cpp:469
 msgid "HIDC_CONFIG_EVENT_PLACEMENT_EDIT"
 msgstr "Éditer le multiplicateur point de vitesse sélectionné."
 
-#: Win/DlgConfigEventMethod.cpp:470
+#: Win/DlgConfigEventMethod.cpp:475
 msgid "IDC_CONFIG_EVENT_PLACEMENT_DELETE"
 msgstr "Supprimer"
 
-#: Win/DlgConfigEventMethod.cpp:475 Win/DlgConfigEventMethod.cpp:476
+#: Win/DlgConfigEventMethod.cpp:480 Win/DlgConfigEventMethod.cpp:481
 msgid "HIDC_CONFIG_EVENT_PLACEMENT_DELETE"
 msgstr "Supprimer le multiplicateur point de vitesse sélectionné."
 
-#: Win/DlgConfigEventMethod.cpp:482
+#: Win/DlgConfigEventMethod.cpp:487
 msgid "IDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ"
 msgstr "Zéro fautes seul qualifiants"
 
-#: Win/DlgConfigEventMethod.cpp:487 Win/DlgConfigEventMethod.cpp:488
+#: Win/DlgConfigEventMethod.cpp:492 Win/DlgConfigEventMethod.cpp:493
 msgid "HIDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ"
 msgstr ""
 "Pour les parcours TimePlusFault, le parcours doit être sans faute pour gagner "
 "des points cumulatifs."
 
-#: Win/DlgConfigEventMethod.cpp:493
+#: Win/DlgConfigEventMethod.cpp:498
 msgid "IDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"
 msgstr "Déduire pénalités temps du résultat"
 
-#: Win/DlgConfigEventMethod.cpp:499 Win/DlgConfigEventMethod.cpp:500
+#: Win/DlgConfigEventMethod.cpp:504 Win/DlgConfigEventMethod.cpp:505
 msgid "HIDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"
 msgstr "Soustraire toutes fautes du temps des points gagnés."
 
-#: Win/DlgConfigEventMethod.cpp:505
+#: Win/DlgConfigEventMethod.cpp:510
 msgid "IDC_CONFIG_EVENT_TIME_FAULTS_UNDER"
 msgstr "Calculer pénalités temps sous TPS"
 
-#: Win/DlgConfigEventMethod.cpp:511 Win/DlgConfigEventMethod.cpp:512
+#: Win/DlgConfigEventMethod.cpp:516 Win/DlgConfigEventMethod.cpp:517
 msgid "HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER"
 msgstr ""
 "Ajouter des fautes de temps pour le nombre de secondes sous le temps de "
 "parcours."
 
-#: Win/DlgConfigEventMethod.cpp:517
+#: Win/DlgConfigEventMethod.cpp:522
 msgid "IDC_CONFIG_EVENT_TIME_FAULTS_OVER"
 msgstr "Calculer penalités temps au-dessus TPS"
 
-#: Win/DlgConfigEventMethod.cpp:523 Win/DlgConfigEventMethod.cpp:524
+#: Win/DlgConfigEventMethod.cpp:528 Win/DlgConfigEventMethod.cpp:529
 msgid "HIDC_CONFIG_EVENT_TIME_FAULTS_OVER"
 msgstr ""
 "Ajouter des fautes de temps pour le nombre de secondes au-dessus du temps de "
 "parcours."
 
-#: Win/DlgConfigEventMethod.cpp:529
+#: Win/DlgConfigEventMethod.cpp:534
 #, fuzzy
 msgid "IDC_CONFIG_EVENT_TIME_FAULTS_TITLING_PTS"
 msgstr "Compute titling points using raw faults"
 
-#: Win/DlgConfigEventMethod.cpp:535 Win/DlgConfigEventMethod.cpp:536
+#: Win/DlgConfigEventMethod.cpp:540 Win/DlgConfigEventMethod.cpp:541
 #, fuzzy
 msgid "HIDC_CONFIG_EVENT_TIME_FAULTS_TITLING_PTS"
 msgstr ""
 "Compute titling points using raw faults. This implies that a run must be under "
 "SCT to qualify."
 
-#: Win/DlgConfigEventMethod.cpp:539 Win/DlgConfigEventMethod.cpp:787
+#: Win/DlgConfigEventMethod.cpp:544 Win/DlgConfigEventMethod.cpp:792
 msgid "IDC_CONFIG_EVENT_OPENING_PTS"
 msgstr "Exigé pour débuter"
 
-#: Win/DlgConfigEventMethod.cpp:550 Win/DlgConfigEventMethod.cpp:551
+#: Win/DlgConfigEventMethod.cpp:555 Win/DlgConfigEventMethod.cpp:556
 msgid "HIDC_CONFIG_EVENT_OPENING_PTS"
 msgstr ""
 "Le nombre de points d'ouverture nécessaire pour qualifier. Pour les épreuves "
 "sans points de clôture, ceci est le nombre total de points nécessaires."
 
-#: Win/DlgConfigEventMethod.cpp:554
+#: Win/DlgConfigEventMethod.cpp:559
 msgid "IDC_CONFIG_EVENT_CLOSING_PTS"
 msgstr "Exigé pour finir"
 
-#: Win/DlgConfigEventMethod.cpp:565 Win/DlgConfigEventMethod.cpp:566
+#: Win/DlgConfigEventMethod.cpp:570 Win/DlgConfigEventMethod.cpp:571
 msgid "HIDC_CONFIG_EVENT_CLOSING_PTS"
 msgstr "Le nombre de points de clôture nécessaires pour qualifier."
 
-#: Win/DlgConfigEventMethod.cpp:802 Win/DlgRunPanelScore.cpp:1990
+#: Win/DlgConfigEventMethod.cpp:807 Win/DlgRunPanelScore.cpp:1905
 msgid "IDS_SCORING_REQUIRED_POINTS"
 msgstr "Points Necessaire"
 
-#: Win/DlgConfigEventMethod.cpp:1031 Win/DlgRunPanelScore.cpp:1142
+#: Win/DlgConfigEventMethod.cpp:1035 Win/DlgRunPanelScore.cpp:1044
 msgid "IDS_SELECT_DIVISION"
 msgstr "Choisissez un nouveau conducteur."
 
-#: Win/DlgConfigEventMethod.cpp:1038 Win/DlgRunPanelScore.cpp:1151
+#: Win/DlgConfigEventMethod.cpp:1042 Win/DlgRunPanelScore.cpp:1053
 msgid "IDS_SELECT_LEVEL"
 msgstr "Choisissez un degré."
 
-#: Win/DlgConfigEventMethod.cpp:1045
+#: Win/DlgConfigEventMethod.cpp:1049
 msgid "IDS_SELECT_STYLE"
 msgstr "Choisissez une méthode calculation points"
 
-#: Win/DlgConfigEventMethod.cpp:1058
+#: Win/DlgConfigEventMethod.cpp:1062
 msgid "IDS_CONFIGEVENT_DATEORDER"
 msgstr "Date commencement doit etre avant date fermeture."
 
-#: Win/DlgConfigEventMethod.cpp:1071
+#: Win/DlgConfigEventMethod.cpp:1076
 msgid "IDS_CONFIGEVENT_PLACEMENT0"
 msgstr ""
 "Pour une rang de 0, il faut des endroits specifiés ou que les points vitesses "
@@ -3620,25 +3620,25 @@ msgstr "Le nom de cet Autre Point."
 msgid "IDC_CONFIG_OTHER_TALLY"
 msgstr "Points &Correspondance"
 
-#: Win/DlgConfigOtherPoints.cpp:174 Win/DlgConfigOtherPoints.cpp:175
+#: Win/DlgConfigOtherPoints.cpp:178 Win/DlgConfigOtherPoints.cpp:179
 msgid "HIDC_CONFIG_OTHER_TALLY"
 msgstr "Comment sont ces Autres Points accumulés?"
 
-#: Win/DlgConfigOtherPoints.cpp:178
+#: Win/DlgConfigOtherPoints.cpp:182
 msgid "IDC_CONFIG_OTHER_DEFAULT"
 msgstr "&Points par défaut"
 
-#: Win/DlgConfigOtherPoints.cpp:189 Win/DlgConfigOtherPoints.cpp:190
+#: Win/DlgConfigOtherPoints.cpp:193 Win/DlgConfigOtherPoints.cpp:194
 msgid "HIDC_CONFIG_OTHER_DEFAULT"
 msgstr ""
 "Le nombre de points mis par défaut quand le dialogue Autre Points est affiché "
 "au début."
 
-#: Win/DlgConfigOtherPoints.cpp:193
+#: Win/DlgConfigOtherPoints.cpp:197
 msgid "IDC_CONFIG_OTHER_DESC"
 msgstr "&Description"
 
-#: Win/DlgConfigOtherPoints.cpp:204 Win/DlgConfigOtherPoints.cpp:205
+#: Win/DlgConfigOtherPoints.cpp:208 Win/DlgConfigOtherPoints.cpp:209
 msgid "HIDC_CONFIG_OTHER_DESC"
 msgstr ""
 "La description de cet Autre Point. Ceci est normalement les « règles » sur "
@@ -3790,58 +3790,58 @@ msgstr "chiffre arabe"
 msgid "IDS_CONFIG_TITLE_ROMAN"
 msgstr "chiffre romain"
 
-#: Win/DlgConfigTitle.cpp:267
+#: Win/DlgConfigTitle.cpp:268
 #, fuzzy
 msgid "IDC_CONFIG_TITLE_SEP"
 msgstr "F&ormat:"
 
-#: Win/DlgConfigTitle.cpp:279 Win/DlgConfigTitle.cpp:280
+#: Win/DlgConfigTitle.cpp:280 Win/DlgConfigTitle.cpp:281
 #, fuzzy
 msgid "HIDC_CONFIG_TITLE_SEP"
 msgstr ""
 "When a title allows multiple copies, set the formatting for the multiple after "
 "the title."
 
-#: Win/DlgConfigTitle.cpp:286
+#: Win/DlgConfigTitle.cpp:287
 #, fuzzy
 msgid "IDS_CONFIG_TITLE_SEP_NONE"
 msgstr "No space"
 
-#: Win/DlgConfigTitle.cpp:287
+#: Win/DlgConfigTitle.cpp:288
 #, fuzzy
 msgid "IDS_CONFIG_TITLE_SEP_SPACE"
 msgstr "Space"
 
-#: Win/DlgConfigTitle.cpp:288
+#: Win/DlgConfigTitle.cpp:289
 #, fuzzy
 msgid "IDS_CONFIG_TITLE_SEP_HYPHEN"
 msgstr "Hyphen"
 
-#: Win/DlgConfigTitle.cpp:305
+#: Win/DlgConfigTitle.cpp:307
 msgid "IDC_CONFIG_TITLE_VALID_FROM"
 msgstr "&Valide du"
 
-#: Win/DlgConfigTitle.cpp:311 Win/DlgConfigTitle.cpp:312
+#: Win/DlgConfigTitle.cpp:313 Win/DlgConfigTitle.cpp:314
 msgid "HIDC_CONFIG_TITLE_VALID_FROM"
 msgstr ""
 "Activer ou désactiver lattribution de la date. Ceci permet de faire évoluer "
 "les changements de récompense."
 
-#: Win/DlgConfigTitle.cpp:324 Win/DlgConfigTitle.cpp:325
+#: Win/DlgConfigTitle.cpp:326 Win/DlgConfigTitle.cpp:327
 msgid "HIDC_CONFIG_TITLE_VALID_FROM_DATE"
 msgstr "La date à laquelle la récompense devient valide."
 
-#: Win/DlgConfigTitle.cpp:330
+#: Win/DlgConfigTitle.cpp:332
 msgid "IDC_CONFIG_TITLE_VALID_TO"
 msgstr "Valide &jusqu'au"
 
-#: Win/DlgConfigTitle.cpp:336 Win/DlgConfigTitle.cpp:337
+#: Win/DlgConfigTitle.cpp:338 Win/DlgConfigTitle.cpp:339
 msgid "HIDC_CONFIG_TITLE_VALID_TO"
 msgstr ""
 "Activer ou désactiver lattribution de la date. Ceci permet d e faire évoluer "
 "les changements de récompense."
 
-#: Win/DlgConfigTitle.cpp:349 Win/DlgConfigTitle.cpp:350
+#: Win/DlgConfigTitle.cpp:351 Win/DlgConfigTitle.cpp:352
 msgid "HIDC_CONFIG_TITLE_VALID_TO_DATE"
 msgstr "La date jusqu'à laquelle la récompense reste valide."
 
@@ -3850,11 +3850,11 @@ msgstr "La date jusqu'à laquelle la récompense reste valide."
 msgid "IDD_CONFIG_TITLE_POINTS"
 msgstr "Points Récompense"
 
-#: Win/DlgConfigTitlePoints.cpp:115 Win/DlgConfigTitlePoints.cpp:332
+#: Win/DlgConfigTitlePoints.cpp:115 Win/DlgConfigTitlePoints.cpp:334
 msgid "IDC_CONFIG_TITLEPTS_VALUE_TEXT2"
 msgstr "&Classement"
 
-#: Win/DlgConfigTitlePoints.cpp:116 Win/DlgConfigTitlePoints.cpp:339
+#: Win/DlgConfigTitlePoints.cpp:116 Win/DlgConfigTitlePoints.cpp:341
 msgid "IDC_CONFIG_TITLEPTS_VALUE_TEXT1"
 msgstr "&Nombre de fautes permises"
 
@@ -3919,7 +3919,7 @@ msgstr ""
 "Dénomination pour les points Cumulatifs. Si rien n'est entré, le nom, 'Points "
 "Cumulatifs' est utilisé."
 
-#: Win/DlgConfigTitlePoints.cpp:218 Win/DlgConfigTitlePoints.cpp:229
+#: Win/DlgConfigTitlePoints.cpp:219 Win/DlgConfigTitlePoints.cpp:230
 #: Win/DlgConfigureData.cpp:806 Win/PointsData.cpp:416 Win/PointsData.cpp:452
 msgid "IDS_TITLEPOINT_LIFETIME_NAME"
 msgstr "Lifetime"
@@ -4452,100 +4452,100 @@ msgstr ""
 "Type de points existants. Notez que si vous entrez un parcours Snooker et vous "
 "avez des points SuperQ, vous devez créer deux entrées séparées pour les points."
 
-#: Win/DlgExistingPoints.cpp:234
+#: Win/DlgExistingPoints.cpp:236
 msgid "IDC_EXISTING_DATE"
 msgstr "&Points acquis au:"
 
-#: Win/DlgExistingPoints.cpp:247 Win/DlgExistingPoints.cpp:248
+#: Win/DlgExistingPoints.cpp:249 Win/DlgExistingPoints.cpp:250
 msgid "HIDC_EXISTING_DATE"
 msgstr "Date à laquelle ces points ont été gagnés."
 
-#: Win/DlgExistingPoints.cpp:251
+#: Win/DlgExistingPoints.cpp:253
 msgid "IDC_EXISTING_POINTS"
 msgstr "Po&ints"
 
-#: Win/DlgExistingPoints.cpp:262 Win/DlgExistingPoints.cpp:263
+#: Win/DlgExistingPoints.cpp:264 Win/DlgExistingPoints.cpp:265
 msgid "HIDC_EXISTING_POINTS"
 msgstr "Nombre des points gagnés."
 
-#: Win/DlgExistingPoints.cpp:265
+#: Win/DlgExistingPoints.cpp:267
 msgid "IDC_EXISTING_POINTS_WHERE"
 msgstr "Lieu d'Acquisition des points"
 
-#: Win/DlgExistingPoints.cpp:268 Win/DlgExistingPoints.cpp:1035
+#: Win/DlgExistingPoints.cpp:270 Win/DlgExistingPoints.cpp:1054
 msgid "IDC_EXISTING_VENUES"
 msgstr "&Organisation"
 
-#: Win/DlgExistingPoints.cpp:282 Win/DlgExistingPoints.cpp:283
+#: Win/DlgExistingPoints.cpp:284 Win/DlgExistingPoints.cpp:285
 msgid "HIDC_EXISTING_VENUES"
 msgstr "Lendroit o les points ont été gagnés."
 
-#: Win/DlgExistingPoints.cpp:301 Win/DlgExistingPoints.cpp:1062
+#: Win/DlgExistingPoints.cpp:303 Win/DlgExistingPoints.cpp:1081
 msgid "IDC_EXISTING_LEVEL"
 msgstr "&Degré"
 
-#: Win/DlgExistingPoints.cpp:315 Win/DlgExistingPoints.cpp:316
+#: Win/DlgExistingPoints.cpp:317 Win/DlgExistingPoints.cpp:318
 msgid "HIDC_EXISTING_LEVEL"
 msgstr "Degré dans lequel ces points ont été gagnés."
 
-#: Win/DlgExistingPoints.cpp:319 Win/DlgExistingPoints.cpp:1068
+#: Win/DlgExistingPoints.cpp:321 Win/DlgExistingPoints.cpp:1087
 msgid "IDC_EXISTING_EVENT"
 msgstr "&Epreuve"
 
-#: Win/DlgExistingPoints.cpp:333 Win/DlgExistingPoints.cpp:334
+#: Win/DlgExistingPoints.cpp:335 Win/DlgExistingPoints.cpp:336
 msgid "HIDC_EXISTING_EVENT"
 msgstr "L'épreuve dans laquelle ces points ont été gagnés."
 
-#: Win/DlgExistingPoints.cpp:337 Win/DlgExistingPoints.cpp:1074
+#: Win/DlgExistingPoints.cpp:339 Win/DlgExistingPoints.cpp:1093
 msgid "IDC_EXISTING_SUBNAME"
 msgstr "&Sous-titre"
 
-#: Win/DlgExistingPoints.cpp:350 Win/DlgExistingPoints.cpp:351
+#: Win/DlgExistingPoints.cpp:352 Win/DlgExistingPoints.cpp:353
 msgid "HIDC_EXISTING_SUBNAME"
 msgstr "Information supplémentaire sur nom utilisé pour organiser des épreuves."
 
-#: Win/DlgExistingPoints.cpp:354 Win/DlgExistingPoints.cpp:1080
+#: Win/DlgExistingPoints.cpp:356 Win/DlgExistingPoints.cpp:1099
 msgid "IDC_EXISTING_TYPENAME"
 msgstr "No&m"
 
-#: Win/DlgExistingPoints.cpp:367 Win/DlgExistingPoints.cpp:368
+#: Win/DlgExistingPoints.cpp:369 Win/DlgExistingPoints.cpp:370
 #, fuzzy
 msgid "HIDC_EXISTING_TYPENAME"
 msgstr "Type Name these points were earned in."
 
-#: Win/DlgExistingPoints.cpp:370
+#: Win/DlgExistingPoints.cpp:372
 msgid "IDC_EXISTING_COMMENTS"
 msgstr "&Notes"
 
-#: Win/DlgExistingPoints.cpp:380 Win/DlgExistingPoints.cpp:381
+#: Win/DlgExistingPoints.cpp:382 Win/DlgExistingPoints.cpp:383
 msgid "HIDC_EXISTING_COMMENTS"
 msgstr "Notes sur ces points accumulés."
 
-#: Win/DlgExistingPoints.cpp:651 Win/DlgExistingPoints.cpp:1045
+#: Win/DlgExistingPoints.cpp:653 Win/DlgExistingPoints.cpp:1064
 msgid "IDC_EXISTING_MULTIQ"
 msgstr "&MultiQ"
 
-#: Win/DlgExistingPoints.cpp:652 Win/DlgExistingPoints.cpp:653
+#: Win/DlgExistingPoints.cpp:654 Win/DlgExistingPoints.cpp:655
 msgid "HIDC_EXISTING_MULTIQ"
 msgstr "MultiQ gagnés."
 
-#: Win/DlgExistingPoints.cpp:657 Win/DlgExistingPoints.cpp:1054
+#: Win/DlgExistingPoints.cpp:659 Win/DlgExistingPoints.cpp:1073
 msgid "IDC_EXISTING_DIVISION"
 msgstr "Niveau &conducteur"
 
-#: Win/DlgExistingPoints.cpp:658 Win/DlgExistingPoints.cpp:659
+#: Win/DlgExistingPoints.cpp:660 Win/DlgExistingPoints.cpp:661
 msgid "HIDC_EXISTING_DIVISION"
 msgstr "Le niveau conducteur pour lequel ces points ont été gagnés."
 
-#: Win/DlgExistingPoints.cpp:1032
+#: Win/DlgExistingPoints.cpp:1051
 #, fuzzy
 msgid "You must select a '{}' name."
 msgstr "You must select a '{}' name."
 
-#: Win/DlgExistingPoints.cpp:1035 Win/DlgExistingPoints.cpp:1045
-#: Win/DlgExistingPoints.cpp:1054 Win/DlgExistingPoints.cpp:1062
-#: Win/DlgExistingPoints.cpp:1068 Win/DlgExistingPoints.cpp:1074
-#: Win/DlgExistingPoints.cpp:1080
+#: Win/DlgExistingPoints.cpp:1054 Win/DlgExistingPoints.cpp:1064
+#: Win/DlgExistingPoints.cpp:1073 Win/DlgExistingPoints.cpp:1081
+#: Win/DlgExistingPoints.cpp:1087 Win/DlgExistingPoints.cpp:1093
+#: Win/DlgExistingPoints.cpp:1099
 msgid "Warning"
 msgstr "Attention"
 
@@ -5134,7 +5134,7 @@ msgstr "Modifier la police utilisée pour afficher les dates du calendrier."
 msgid "IDC_OPT_FILTER_NAMES"
 msgstr "&Filtres nommés"
 
-#: Win/DlgOptionsFilter.cpp:99 Win/DlgOptionsFilter.cpp:100
+#: Win/DlgOptionsFilter.cpp:113 Win/DlgOptionsFilter.cpp:114
 msgid "HIDC_OPT_FILTER_NAMES"
 msgstr "Liste de filtres prédéfinis."
 
@@ -5898,43 +5898,43 @@ msgstr "&Supprimer"
 msgid "HIDC_RUNREF_DELETE"
 msgstr "Supprimer le parcours de référence sélectionné."
 
-#: Win/DlgRunPanelScore.cpp:275
+#: Win/DlgRunPanelScore.cpp:281
 msgid "IDC_RUNSCORE_DATE"
 msgstr "&Date"
 
-#: Win/DlgRunPanelScore.cpp:287 Win/DlgRunPanelScore.cpp:288
+#: Win/DlgRunPanelScore.cpp:293 Win/DlgRunPanelScore.cpp:294
 msgid "HIDC_RUNSCORE_DATE"
 msgstr "La date de ce parcours."
 
-#: Win/DlgRunPanelScore.cpp:300 Win/DlgRunPanelScore.cpp:301
+#: Win/DlgRunPanelScore.cpp:306 Win/DlgRunPanelScore.cpp:307
 #, fuzzy
 msgid "HIDC_RUNSCORE_VENUE"
 msgstr "Venue for this run."
 
-#: Win/DlgRunPanelScore.cpp:329
+#: Win/DlgRunPanelScore.cpp:341
 msgid "IDC_RUNSCORE_DIVISION"
 msgstr "&Niveau conducteur"
 
-#: Win/DlgRunPanelScore.cpp:342 Win/DlgRunPanelScore.cpp:343
+#: Win/DlgRunPanelScore.cpp:354 Win/DlgRunPanelScore.cpp:355
 msgid "HIDC_RUNSCORE_DIVISION"
 msgstr "Niveau conducteur pour ce parcours."
 
-#: Win/DlgRunPanelScore.cpp:346
+#: Win/DlgRunPanelScore.cpp:358
 msgid "IDC_RUNSCORE_LEVEL"
 msgstr "De&gré"
 
-#: Win/DlgRunPanelScore.cpp:359 Win/DlgRunPanelScore.cpp:360
+#: Win/DlgRunPanelScore.cpp:371 Win/DlgRunPanelScore.cpp:372
 msgid "HIDC_RUNSCORE_LEVEL"
 msgstr ""
 "Le niveau de ce parcours. Cette liste est remplie à partir de la sélection "
 "dans la liste des niveaux conducteurs. Si celle-ci est vide, un niveau na pas "
 "encore été sélectionné."
 
-#: Win/DlgRunPanelScore.cpp:363
+#: Win/DlgRunPanelScore.cpp:375
 msgid "IDC_RUNSCORE_EVENT"
 msgstr "&Épreuve"
 
-#: Win/DlgRunPanelScore.cpp:376 Win/DlgRunPanelScore.cpp:377
+#: Win/DlgRunPanelScore.cpp:388 Win/DlgRunPanelScore.cpp:389
 msgid "HIDC_RUNSCORE_EVENT"
 msgstr ""
 "Type du parcours. Cette liste est remplie à partir de la sélection dans la "
@@ -5942,286 +5942,296 @@ msgstr ""
 "sélectionné. Cette sélection contrôlera quels champs sont accessibles dans ce "
 "dialogue."
 
-#: Win/DlgRunPanelScore.cpp:380
+#: Win/DlgRunPanelScore.cpp:392
 msgid "IDC_RUNSCORE_SUBNAME"
 msgstr "&Sous-titre"
 
-#: Win/DlgRunPanelScore.cpp:393 Win/DlgRunPanelScore.cpp:394
+#: Win/DlgRunPanelScore.cpp:405 Win/DlgRunPanelScore.cpp:406
 msgid "HIDC_RUNSCORE_SUBNAME"
 msgstr ""
 "Information supplémentaire sur le nom utilisé pour organiser des épreuve."
 
-#: Win/DlgRunPanelScore.cpp:399
+#: Win/DlgRunPanelScore.cpp:411
+#, fuzzy
+msgid "IDC_RUNSCORE_ATHOME"
+msgstr "At Home"
+
+#: Win/DlgRunPanelScore.cpp:419 Win/DlgRunPanelScore.cpp:420
+#, fuzzy
+msgid "HIDC_RUNSCORE_ATHOME"
+msgstr "This is an @Home run."
+
+#: Win/DlgRunPanelScore.cpp:425
 msgid "IDC_RUNSCORE_TABLE"
 msgstr "&Table?"
 
-#: Win/DlgRunPanelScore.cpp:405 Win/DlgRunPanelScore.cpp:406
+#: Win/DlgRunPanelScore.cpp:431 Win/DlgRunPanelScore.cpp:432
 msgid "HIDC_RUNSCORE_TABLE"
 msgstr "Ce parcours a-t-il une table?"
 
-#: Win/DlgRunPanelScore.cpp:408
+#: Win/DlgRunPanelScore.cpp:434
 msgid "IDC_RUNSCORE_HEIGHT"
 msgstr "&Hauteur"
 
-#: Win/DlgRunPanelScore.cpp:425 Win/DlgRunPanelScore.cpp:426
+#: Win/DlgRunPanelScore.cpp:451 Win/DlgRunPanelScore.cpp:452
 msgid "HIDC_RUNSCORE_HEIGHT"
 msgstr ""
 "La hauteur de ce parcours. Cette liste contient toutes hauteurs précédentes. "
 "Vous pouvez entrer n'importe quel texte que vous voulez."
 
-#: Win/DlgRunPanelScore.cpp:439
+#: Win/DlgRunPanelScore.cpp:463
 msgid "IDC_RUNSCORE_JUDGE"
 msgstr "&Juge"
 
-#: Win/DlgRunPanelScore.cpp:452 Win/DlgRunPanelScore.cpp:453
+#: Win/DlgRunPanelScore.cpp:476 Win/DlgRunPanelScore.cpp:477
 msgid "HIDC_RUNSCORE_JUDGE"
 msgstr ""
 "Liste de juges déjà entrés. Vous pouvez entrer n'importe quel texte que vous "
 "voulez."
 
-#: Win/DlgRunPanelScore.cpp:457 Win/DlgRunPanelScore.cpp:458
+#: Win/DlgRunPanelScore.cpp:481 Win/DlgRunPanelScore.cpp:482
 msgid "HIDC_RUNSCORE_JUDGE_NOTES"
 msgstr "Entrer des commentaires sur un juge."
 
-#: Win/DlgRunPanelScore.cpp:461
+#: Win/DlgRunPanelScore.cpp:485
 msgid "IDC_RUNSCORE_HANDLER"
 msgstr "C&onducteur"
 
-#: Win/DlgRunPanelScore.cpp:474 Win/DlgRunPanelScore.cpp:475
+#: Win/DlgRunPanelScore.cpp:498 Win/DlgRunPanelScore.cpp:499
 msgid "HIDC_RUNSCORE_HANDLER"
 msgstr "Qui a conduit le chien? Peut être vide."
 
-#: Win/DlgRunPanelScore.cpp:487
+#: Win/DlgRunPanelScore.cpp:510
 msgid "IDC_RUNSCORE_CONDITIONS"
 msgstr "&Conditions"
 
-#: Win/DlgRunPanelScore.cpp:498 Win/DlgRunPanelScore.cpp:499
+#: Win/DlgRunPanelScore.cpp:521 Win/DlgRunPanelScore.cpp:522
 msgid "HIDC_RUNSCORE_CONDITIONS"
 msgstr "Circonstances du parcours: temps, états du terrain, etc."
 
-#: Win/DlgRunPanelScore.cpp:508 Win/DlgRunPanelScore.cpp:509
+#: Win/DlgRunPanelScore.cpp:531 Win/DlgRunPanelScore.cpp:532
 msgid "HIDC_RUNSCORE_DESC"
 msgstr "Description de l'épreuve (de la configuration)."
 
-#: Win/DlgRunPanelScore.cpp:512
+#: Win/DlgRunPanelScore.cpp:535
 msgid "IDC_RUNSCORE_PARTNERS_EDIT"
 msgstr "&Accompagnant..."
 
-#: Win/DlgRunPanelScore.cpp:514 Win/DlgRunPanelScore.cpp:515
+#: Win/DlgRunPanelScore.cpp:537 Win/DlgRunPanelScore.cpp:538
 msgid "HIDC_RUNSCORE_PARTNERS_EDIT"
 msgstr "Configurer l'information sur le coéquipier."
 
-#: Win/DlgRunPanelScore.cpp:525 Win/DlgRunPanelScore.cpp:526
+#: Win/DlgRunPanelScore.cpp:548 Win/DlgRunPanelScore.cpp:549
 msgid "HIDC_RUNSCORE_PARTNER"
 msgstr "Liste des coéquipiers."
 
-#: Win/DlgRunPanelScore.cpp:528
+#: Win/DlgRunPanelScore.cpp:551
 msgid "IDC_RUNSCORE_SCT"
 msgstr "Temps standard (TSP)"
 
-#: Win/DlgRunPanelScore.cpp:540 Win/DlgRunPanelScore.cpp:541
+#: Win/DlgRunPanelScore.cpp:563 Win/DlgRunPanelScore.cpp:564
 msgid "HIDC_RUNSCORE_SCT"
 msgstr ""
 "Temps Standard du Parcours (ou le temps d'ouverture pour les épreuves basé sur "
 "points)"
 
-#: Win/DlgRunPanelScore.cpp:544 Win/DlgRunPanelScore.cpp:1939
+#: Win/DlgRunPanelScore.cpp:567 Win/DlgRunPanelScore.cpp:1854
 msgid "IDC_RUNSCORE_OPENING_PTS"
 msgstr "Points exigé pour participer"
 
-#: Win/DlgRunPanelScore.cpp:550 Win/DlgRunPanelScore.cpp:551
-#: Win/DlgRunPanelScore.cpp:1941 Win/DlgRunPanelScore.cpp:1942
-#: Win/DlgRunPanelScore.cpp:1992 Win/DlgRunPanelScore.cpp:1993
+#: Win/DlgRunPanelScore.cpp:573 Win/DlgRunPanelScore.cpp:574
+#: Win/DlgRunPanelScore.cpp:1856 Win/DlgRunPanelScore.cpp:1857
+#: Win/DlgRunPanelScore.cpp:1907 Win/DlgRunPanelScore.cpp:1908
 msgid "HIDC_RUNSCORE_OPENING_PTS"
 msgstr "Le nombre de points nécessaire pour la première séquence."
 
-#: Win/DlgRunPanelScore.cpp:554 Win/DlgRunPanelScore.cpp:1901
+#: Win/DlgRunPanelScore.cpp:577 Win/DlgRunPanelScore.cpp:1816
 msgid "IDC_RUNSCORE_MIN_YPS"
 msgstr "Vitesse minimum"
 
-#: Win/DlgRunPanelScore.cpp:560 Win/DlgRunPanelScore.cpp:561
-#: Win/DlgRunPanelScore.cpp:1949 Win/DlgRunPanelScore.cpp:1950
+#: Win/DlgRunPanelScore.cpp:583 Win/DlgRunPanelScore.cpp:584
+#: Win/DlgRunPanelScore.cpp:1864 Win/DlgRunPanelScore.cpp:1865
 msgid "HIDC_RUNSCORE_SCT2"
 msgstr ""
 "Temps Standard du Parcours (ou le temps fermeture pour les épreuves basé sur "
 "points)"
 
-#: Win/DlgRunPanelScore.cpp:564
+#: Win/DlgRunPanelScore.cpp:587
 msgid "IDC_RUNSCORE_CLOSING_PTS"
 msgstr "Points exigé pour finir"
 
-#: Win/DlgRunPanelScore.cpp:576 Win/DlgRunPanelScore.cpp:577
+#: Win/DlgRunPanelScore.cpp:599 Win/DlgRunPanelScore.cpp:600
 msgid "HIDC_RUNSCORE_CLOSING_PTS"
 msgstr "Le nombre de points demandés pour la dernière séquence."
 
-#: Win/DlgRunPanelScore.cpp:580
+#: Win/DlgRunPanelScore.cpp:603
 msgid "IDC_RUNSCORE_OBSTACLES"
 msgstr "Nombre d'obstacles"
 
-#: Win/DlgRunPanelScore.cpp:592 Win/DlgRunPanelScore.cpp:593
+#: Win/DlgRunPanelScore.cpp:615 Win/DlgRunPanelScore.cpp:616
 msgid "HIDC_RUNSCORE_OBSTACLES"
 msgstr ""
 "Nombre d'obstacles tentés. Pour des parcours avec des temps de départ et "
 "d'arrivée c'est le nombre pour le départ."
 
-#: Win/DlgRunPanelScore.cpp:595
+#: Win/DlgRunPanelScore.cpp:618
 msgid "IDC_RUNSCORE_TIME"
 msgstr "Temps"
 
-#: Win/DlgRunPanelScore.cpp:607 Win/DlgRunPanelScore.cpp:608
+#: Win/DlgRunPanelScore.cpp:630 Win/DlgRunPanelScore.cpp:631
 msgid "HIDC_RUNSCORE_TIME"
 msgstr "Le temps pour finir le parcours. (32.14, pas 32:14)"
 
-#: Win/DlgRunPanelScore.cpp:610
+#: Win/DlgRunPanelScore.cpp:633
 msgid "IDC_RUNSCORE_FAULTS"
 msgstr "Pénalités parcours"
 
-#: Win/DlgRunPanelScore.cpp:622 Win/DlgRunPanelScore.cpp:623
+#: Win/DlgRunPanelScore.cpp:645 Win/DlgRunPanelScore.cpp:646
 msgid "HIDC_RUNSCORE_FAULTS"
 msgstr "Le nombre des points de pénalités de ce parcours."
 
-#: Win/DlgRunPanelScore.cpp:626 Win/DlgRunPanelScore.cpp:1961
+#: Win/DlgRunPanelScore.cpp:649 Win/DlgRunPanelScore.cpp:1876
 msgid "IDC_RUNSCORE_OPEN_PTS"
 msgstr "Points au début"
 
-#: Win/DlgRunPanelScore.cpp:632 Win/DlgRunPanelScore.cpp:633
-#: Win/DlgRunPanelScore.cpp:1963 Win/DlgRunPanelScore.cpp:1964
-#: Win/DlgRunPanelScore.cpp:2003 Win/DlgRunPanelScore.cpp:2004
+#: Win/DlgRunPanelScore.cpp:655 Win/DlgRunPanelScore.cpp:656
+#: Win/DlgRunPanelScore.cpp:1878 Win/DlgRunPanelScore.cpp:1879
+#: Win/DlgRunPanelScore.cpp:1918 Win/DlgRunPanelScore.cpp:1919
 msgid "HIDC_RUNSCORE_OPEN_PTS"
 msgstr "Le nombre de points gagnés dans la première séquence."
 
-#: Win/DlgRunPanelScore.cpp:636 Win/DlgRunPanelScore.cpp:1969
+#: Win/DlgRunPanelScore.cpp:659 Win/DlgRunPanelScore.cpp:1884
 msgid "IDC_RUNSCORE_CLOSE_PTS"
 msgstr "Points au final"
 
-#: Win/DlgRunPanelScore.cpp:642 Win/DlgRunPanelScore.cpp:643
-#: Win/DlgRunPanelScore.cpp:1971 Win/DlgRunPanelScore.cpp:1972
+#: Win/DlgRunPanelScore.cpp:665 Win/DlgRunPanelScore.cpp:666
+#: Win/DlgRunPanelScore.cpp:1886 Win/DlgRunPanelScore.cpp:1887
 msgid "HIDC_RUNSCORE_CLOSE_PTS"
 msgstr "Le nombre de points gagnés dans la dernière séquence."
 
-#: Win/DlgRunPanelScore.cpp:646 Win/DlgRunPanelScore.cpp:2053
+#: Win/DlgRunPanelScore.cpp:669 Win/DlgRunPanelScore.cpp:1968
 msgid "IDC_RUNSCORE_OBSTACLES_PER_SEC"
 msgstr "Obstacles par seconde"
 
-#: Win/DlgRunPanelScore.cpp:657 Win/DlgRunPanelScore.cpp:658
-#: Win/DlgRunPanelScore.cpp:2056 Win/DlgRunPanelScore.cpp:2057
+#: Win/DlgRunPanelScore.cpp:680 Win/DlgRunPanelScore.cpp:681
+#: Win/DlgRunPanelScore.cpp:1971 Win/DlgRunPanelScore.cpp:1972
 msgid "HIDC_RUNSCORE_OBSTACLES_PER_SEC"
 msgstr ""
 "Nombre d'obstacles par seconde. Pour des parcours avec des temps de départ et "
 "d'arrivée, seulement le temps de départ est utilisé. Autrement le temps du "
 "chien est utilisé."
 
-#: Win/DlgRunPanelScore.cpp:660
+#: Win/DlgRunPanelScore.cpp:683
 msgid "IDC_RUNSCORE_PLACE"
 msgstr "Classement"
 
-#: Win/DlgRunPanelScore.cpp:672 Win/DlgRunPanelScore.cpp:673
+#: Win/DlgRunPanelScore.cpp:695 Win/DlgRunPanelScore.cpp:696
 msgid "HIDC_RUNSCORE_PLACE"
 msgstr ""
 "Le Classement gagné. Entrez 0 si pas connu ou si Classement ne s'applique pas."
 
-#: Win/DlgRunPanelScore.cpp:675
+#: Win/DlgRunPanelScore.cpp:698
 msgid "IDC_RUNSCORE_IN_CLASS"
 msgstr "de"
 
-#: Win/DlgRunPanelScore.cpp:687 Win/DlgRunPanelScore.cpp:688
+#: Win/DlgRunPanelScore.cpp:710 Win/DlgRunPanelScore.cpp:711
 msgid "HIDC_RUNSCORE_IN_CLASS"
 msgstr "Le nombre de chiens dans cette épreuve. Entrez -1 si pas connu."
 
-#: Win/DlgRunPanelScore.cpp:690
+#: Win/DlgRunPanelScore.cpp:713
 msgid "IDC_RUNSCORE_DOGS_QD"
 msgstr "Chiens qualifiés"
 
-#: Win/DlgRunPanelScore.cpp:701 Win/DlgRunPanelScore.cpp:702
+#: Win/DlgRunPanelScore.cpp:724 Win/DlgRunPanelScore.cpp:725
 msgid "HIDC_RUNSCORE_DOGS_QD"
 msgstr "Le nombre de chiens qui ont été qualifiés. Entrez \"-1\" si pas connu."
 
-#: Win/DlgRunPanelScore.cpp:704
+#: Win/DlgRunPanelScore.cpp:727
 msgid "IDC_RUNSCORE_Q"
 msgstr "&Qualifié?"
 
-#: Win/DlgRunPanelScore.cpp:709 Win/DlgRunPanelScore.cpp:710
+#: Win/DlgRunPanelScore.cpp:732 Win/DlgRunPanelScore.cpp:733
 msgid "HIDC_RUNSCORE_Q"
 msgstr "Statuts qualifiant du parcours."
 
-#: Win/DlgRunPanelScore.cpp:713
+#: Win/DlgRunPanelScore.cpp:736
 #, fuzzy
 msgid "IDC_RUNSCORE_BONUSPTS"
 msgstr "Points bonus"
 
-#: Win/DlgRunPanelScore.cpp:725 Win/DlgRunPanelScore.cpp:726
+#: Win/DlgRunPanelScore.cpp:748 Win/DlgRunPanelScore.cpp:749
 msgid "HIDC_RUNSCORE_BONUSTITLEPTS"
 msgstr ""
 "Le nombre des Récompenses supplémentaires et points Cumulatifs gagnés. Entrez "
 "5 pour NADAC pour un parcours qualifiant sans faute où vous avez complété la "
 "boîte bonus afin de gagner 15 points de Récompense."
 
-#: Win/DlgRunPanelScore.cpp:729
+#: Win/DlgRunPanelScore.cpp:752
 msgid "IDC_RUNSCORE_SPEEDPTS"
 msgstr "Points vitesse"
 
-#: Win/DlgRunPanelScore.cpp:742
+#: Win/DlgRunPanelScore.cpp:765
 msgid "IDC_RUNSCORE_TITLE_POINTS"
 msgstr "Points Récompense"
 
-#: Win/DlgRunPanelScore.cpp:755
+#: Win/DlgRunPanelScore.cpp:778
 msgid "IDC_RUNSCORE_SCORE"
 msgstr "Résultat"
 
-#: Win/DlgRunPanelScore.cpp:768
+#: Win/DlgRunPanelScore.cpp:791
 msgid "IDC_RUNSCORE_OTHERPOINTS"
 msgstr "Autres &points..."
 
-#: Win/DlgRunPanelScore.cpp:770 Win/DlgRunPanelScore.cpp:771
+#: Win/DlgRunPanelScore.cpp:793 Win/DlgRunPanelScore.cpp:794
 msgid "HIDC_RUNSCORE_OTHERPOINTS"
 msgstr "Configurer information sur Autre Point ici."
 
-#: Win/DlgRunPanelScore.cpp:1161
+#: Win/DlgRunPanelScore.cpp:1063
 msgid "IDS_SELECT_EVENT"
 msgstr "Choisissez un epreuve."
 
-#: Win/DlgRunPanelScore.cpp:1171
+#: Win/DlgRunPanelScore.cpp:1073
 msgid "IDS_BAD_EVENT"
 msgstr "Impossible de trouver l'epreuve specifié dans le configuration."
 
-#: Win/DlgRunPanelScore.cpp:1178
+#: Win/DlgRunPanelScore.cpp:1080
 msgid "IDS_BAD_SCORINGMETHOD"
 msgstr ""
 "Impossible de trouver le method pour calculer les points (epreuve/degré/niveau "
 "conducteur) specifié dans le configuration."
 
-#: Win/DlgRunPanelScore.cpp:1185 Win/ValidatorsQ.cpp:107
+#: Win/DlgRunPanelScore.cpp:1087 Win/ValidatorsQ.cpp:107
 msgid "IDS_SELECT_Q"
 msgstr "Choisissez un 'Q'."
 
-#: Win/DlgRunPanelScore.cpp:1895 Win/DlgRunPanelScore.cpp:2014
+#: Win/DlgRunPanelScore.cpp:1810 Win/DlgRunPanelScore.cpp:1929
 msgid "IDC_RUNSCORE_YARDS"
 msgstr "Mètres"
 
-#: Win/DlgRunPanelScore.cpp:1897 Win/DlgRunPanelScore.cpp:1898
-#: Win/DlgRunPanelScore.cpp:2016 Win/DlgRunPanelScore.cpp:2017
+#: Win/DlgRunPanelScore.cpp:1812 Win/DlgRunPanelScore.cpp:1813
+#: Win/DlgRunPanelScore.cpp:1931 Win/DlgRunPanelScore.cpp:1932
 msgid "HIDC_RUNSCORE_YARDS"
 msgstr ""
 "Longueur du parcours. Entrez 0 si pas connu ou si longueur ne s'applique pas."
 
-#: Win/DlgRunPanelScore.cpp:1911 Win/DlgRunPanelScore.cpp:2026
+#: Win/DlgRunPanelScore.cpp:1826 Win/DlgRunPanelScore.cpp:1941
 msgid "IDC_RUNSCORE_YPS"
 msgstr "Mètres par seconde"
 
-#: Win/DlgRunPanelScore.cpp:1917
+#: Win/DlgRunPanelScore.cpp:1832
 msgid "IDC_RUNSCORE_TOTAL_FAULTS"
 msgstr "Pénalités totale"
 
-#: Win/DlgRunPanelScore.cpp:1946
+#: Win/DlgRunPanelScore.cpp:1861
 msgid "IDC_RUNSCORE_SCT2"
 msgstr "Temps final"
 
-#: Win/DlgRunPanelScore.cpp:2061
+#: Win/DlgRunPanelScore.cpp:1976
 #, fuzzy
 msgid "IDC_RUNSCORE_MILESPERHOUR"
 msgstr "MPH"
 
-#: Win/DlgRunPanelScore.cpp:2064 Win/DlgRunPanelScore.cpp:2065
+#: Win/DlgRunPanelScore.cpp:1979 Win/DlgRunPanelScore.cpp:1980
 #, fuzzy
 msgid "HIDC_RUNSCORE_MILESPERHOUR"
 msgstr ""
@@ -6260,7 +6270,7 @@ msgid "IDS_FILEEXT_FILTER_ALL"
 msgstr "Tous fichiers (*.*)|*.*||"
 
 # DlgTitle
-#: Win/DlgTitle.cpp:96 Win/DlgTitle.cpp:314
+#: Win/DlgTitle.cpp:96 Win/DlgTitle.cpp:321
 msgid "IDD_TITLE"
 msgstr "Récompense"
 
@@ -6468,12 +6478,12 @@ msgstr "Notes sur le club sélectionné."
 msgid "IDS_COL_COSANCTION"
 msgstr "Co-Sanctioned"
 
-#: Win/DlgTrial.cpp:602
+#: Win/DlgTrial.cpp:603
 #, fuzzy
 msgid "IDS_ADD_CLUB_FAILED"
 msgstr "This club and venue are already in the trial."
 
-#: Win/DlgTrial.cpp:737
+#: Win/DlgTrial.cpp:738
 msgid "IDS_CONFIG_DELETE_RUNS"
 msgstr ""
 "Attention!!!\n"
@@ -6559,8 +6569,8 @@ msgstr "Telecharger Agility Record Book"
 msgid "LinkArbDownloadUrl"
 msgstr "https://www.agilityrecordbook.com/download.php"
 
-#: Win/PointsData.cpp:258 Win/PointsData.cpp:1242 Win/Print.cpp:121
-#: Win/Print.cpp:1072 Win/TabView.cpp:250 Win/TabView.cpp:376
+#: Win/PointsData.cpp:258 Win/PointsData.cpp:1242 Win/Print.cpp:126
+#: Win/Print.cpp:1077 Win/TabView.cpp:250 Win/TabView.cpp:376
 msgid "IDS_RUNS"
 msgstr "Parcours"
 
@@ -6616,19 +6626,19 @@ msgstr "[{} vitesse]"
 msgid "IDS_TITLING_POINTS"
 msgstr "Points Distinction"
 
-#: Win/Print.cpp:266
+#: Win/Print.cpp:271
 msgid "IDS_COL_DIV_LVL_EVT"
 msgstr "Niveau conducteur/Degré/Epreuve"
 
-#: Win/Print.cpp:275
+#: Win/Print.cpp:280
 msgid "IDS_COL_OPEN_CLOSE"
 msgstr "Ouverture/Fermeture"
 
-#: Win/Print.cpp:283
+#: Win/Print.cpp:288
 msgid "IDS_COL_OTHERPOINTS"
 msgstr "Autres points"
 
-#: Win/Print.cpp:290 Win/Print.cpp:296 Win/Print.cpp:302 Win/Print.cpp:308
+#: Win/Print.cpp:295 Win/Print.cpp:301 Win/Print.cpp:307 Win/Print.cpp:313
 msgid "IDS_COL_NAME_BREED_NOTE"
 msgstr "Nom/Race/Notes"
 
@@ -6817,46 +6827,46 @@ msgstr "J-M-A"
 msgid "IDS_DATEFORMAT_SLASH_DMY"
 msgstr "J/M/A"
 
-#: Win/WizardExport.cpp:223 Win/WizardExport.cpp:224
+#: Win/WizardExport.cpp:225 Win/WizardExport.cpp:226
 msgid "HIDC_WIZARD_EXPORT_DATE"
 msgstr "Le format dans lequel la date sera exportée."
 
-#: Win/WizardExport.cpp:227
+#: Win/WizardExport.cpp:229
 msgid "IDC_WIZARD_EXPORT_PREVIEW"
 msgstr "Apreçu"
 
-#: Win/WizardExport.cpp:231 Win/WizardExport.cpp:232
+#: Win/WizardExport.cpp:233 Win/WizardExport.cpp:234
 msgid "HIDC_WIZARD_EXPORT_PREVIEW"
 msgstr ""
 "Un aperçu de la façon dont les données exportées apparaîtront. Utiliser le "
 "bouton 'Assigner des Colonnes' au-dessus pour aligner."
 
-#: Win/WizardExport.cpp:430
+#: Win/WizardExport.cpp:432
 msgid "IDS_NO_DELIM_SPECIFIED"
 msgstr "Aucun délimiteur specifié. Impossible de prevoir data."
 
-#: Win/WizardExport.cpp:1236
+#: Win/WizardExport.cpp:1238
 msgid "IDS_TRIAL_DATES"
 msgstr "Dates concours: {0} a {1}"
 
 # WizardExport
-#: Win/WizardExport.cpp:1429
+#: Win/WizardExport.cpp:1431
 msgid "IDD_WIZARD_EXPORT"
 msgstr "Utilitaire d'Exportation"
 
-#: Win/WizardExport.cpp:1461 Win/WizardImport.cpp:774
+#: Win/WizardExport.cpp:1463 Win/WizardImport.cpp:776
 msgid "IDS_SPECIFY_DATEFORMAT"
 msgstr "SVP specifiez un format date."
 
-#: Win/WizardExport.cpp:1489
+#: Win/WizardExport.cpp:1491
 msgid "IDS_EXPORTING"
 msgstr "Exporter..."
 
-#: Win/WizardExport.cpp:1518
+#: Win/WizardExport.cpp:1520
 msgid "IDS_EXPORT_FAILED"
 msgstr "Impossible d'exporter data."
 
-#: Win/WizardExport.cpp:1530 Win/WizardImport.cpp:398
+#: Win/WizardExport.cpp:1532 Win/WizardImport.cpp:400
 msgid "IDS_FILEEXT_FILTER_TXTCSV"
 msgstr "Fichiers Texte (*.txt; *.csv)|*.txt;*.csv|Tous fichiers (*.*)|*.*||"
 
@@ -6898,154 +6908,154 @@ msgstr "JJ-MM-AAAA"
 msgid "IDS_DATEFORMAT_SLASH_DDMMYYYY"
 msgstr "JJ/MM/AAAA"
 
-#: Win/WizardImport.cpp:161 Win/WizardImport.cpp:162
+#: Win/WizardImport.cpp:163 Win/WizardImport.cpp:164
 msgid "HIDC_WIZARD_IMPORT_DATE"
 msgstr "Le format dans lequel la date sera importée."
 
-#: Win/WizardImport.cpp:164
+#: Win/WizardImport.cpp:166
 msgid "IDC_WIZARD_IMPORT_DELIM_GROUP"
 msgstr "Limites"
 
-#: Win/WizardImport.cpp:169
+#: Win/WizardImport.cpp:171
 msgid "IDC_WIZARD_IMPORT_DELIM_TAB"
 msgstr "Tabulation"
 
-#: Win/WizardImport.cpp:174 Win/WizardImport.cpp:175
+#: Win/WizardImport.cpp:176 Win/WizardImport.cpp:177
 msgid "HIDC_WIZARD_IMPORT_DELIM_TAB"
 msgstr "Un tabulation est utilisé pour séparer les différents champs."
 
-#: Win/WizardImport.cpp:178
+#: Win/WizardImport.cpp:180
 msgid "IDC_WIZARD_IMPORT_DELIM_COLON"
 msgstr "Point"
 
-#: Win/WizardImport.cpp:180 Win/WizardImport.cpp:181
+#: Win/WizardImport.cpp:182 Win/WizardImport.cpp:183
 msgid "HIDC_WIZARD_IMPORT_DELIM_COLON"
 msgstr "\":\" est utilisé pour séparer les différents champs."
 
-#: Win/WizardImport.cpp:184
+#: Win/WizardImport.cpp:186
 msgid "IDC_WIZARD_IMPORT_DELIM_COMMA"
 msgstr "Virgule"
 
-#: Win/WizardImport.cpp:186 Win/WizardImport.cpp:187
+#: Win/WizardImport.cpp:188 Win/WizardImport.cpp:189
 msgid "HIDC_WIZARD_IMPORT_DELIM_COMMA"
 msgstr "\",\" est utilisé pour séparer les différents champs."
 
-#: Win/WizardImport.cpp:190
+#: Win/WizardImport.cpp:192
 msgid "IDC_WIZARD_IMPORT_DELIM_SPACE"
 msgstr "Espace"
 
-#: Win/WizardImport.cpp:192 Win/WizardImport.cpp:193
+#: Win/WizardImport.cpp:194 Win/WizardImport.cpp:195
 msgid "HIDC_WIZARD_IMPORT_DELIM_SPACE"
 msgstr "\" \" est utilisé pour séparer les différents champs."
 
-#: Win/WizardImport.cpp:196
+#: Win/WizardImport.cpp:198
 msgid "IDC_WIZARD_IMPORT_DELIM_SEMI"
 msgstr "Point-virgule"
 
-#: Win/WizardImport.cpp:198 Win/WizardImport.cpp:199
+#: Win/WizardImport.cpp:200 Win/WizardImport.cpp:201
 msgid "HIDC_WIZARD_IMPORT_DELIM_SEMI"
 msgstr "\";\" est utilisé pour séparer les différents champs."
 
-#: Win/WizardImport.cpp:202
+#: Win/WizardImport.cpp:204
 msgid "IDC_WIZARD_IMPORT_DELIM_OTHER"
 msgstr "Autre:"
 
-#: Win/WizardImport.cpp:204 Win/WizardImport.cpp:205
+#: Win/WizardImport.cpp:206 Win/WizardImport.cpp:207
 msgid "HIDC_WIZARD_IMPORT_DELIM_OTHER"
 msgstr "Le caractère qui sépare les différents champs."
 
-#: Win/WizardImport.cpp:233 Win/WizardImport.cpp:234
+#: Win/WizardImport.cpp:235 Win/WizardImport.cpp:236
 msgid "HIDC_WIZARD_IMPORT_DELIM"
 msgstr "Le caractère spécifié sépare les champs différents."
 
-#: Win/WizardImport.cpp:236
+#: Win/WizardImport.cpp:238
 msgid "IDC_WIZARD_IMPORT_ASSIGN"
 msgstr "Attribuer Colonnes..."
 
-#: Win/WizardImport.cpp:238 Win/WizardImport.cpp:239
+#: Win/WizardImport.cpp:240 Win/WizardImport.cpp:241
 msgid "HIDC_WIZARD_IMPORT_ASSIGN"
 msgstr ""
 "Configurer comment les données importées seront alignées. Quand les champs/"
 "colonnes sont assignées, les changements seront affichés dans l'aperçu dessous."
 
-#: Win/WizardImport.cpp:241
+#: Win/WizardImport.cpp:243
 msgid "IDC_WIZARD_IMPORT_FILE"
 msgstr "Fichier..."
 
-#: Win/WizardImport.cpp:243 Win/WizardImport.cpp:244
+#: Win/WizardImport.cpp:245 Win/WizardImport.cpp:246
 msgid "HIDC_WIZARD_IMPORT_FILE"
 msgstr "Choisir un dossier pour importer."
 
-#: Win/WizardImport.cpp:250 Win/WizardImport.cpp:251
+#: Win/WizardImport.cpp:252 Win/WizardImport.cpp:253
 msgid "HIDC_WIZARD_IMPORT_PREVIEW"
 msgstr ""
 "Un aperçu de la façon dont les champs importés seront alignés. Vérifiez que "
 "les données sont alignées comme il faut avant d'importer. Utiliser le bouton "
 "'Assigner des Colonnes' au-dessus pour aligner."
 
-#: Win/WizardImport.cpp:394
+#: Win/WizardImport.cpp:396
 msgid "IDS_FILEEXT_FILTER_MSEXCEL"
 msgstr "Fichiers Excel (*.xls,*.xlsx)|*.xls;*.xlsx|Tous fichiers (*.*)|*.*||"
 
-#: Win/WizardImport.cpp:396
+#: Win/WizardImport.cpp:398
 msgid "IDS_FILEEXT_FILTER_OOCALC"
 msgstr "Fichiers Calc (*.ods)|*.ods|Tous fichiers (*.*)|*.*||"
 
-#: Win/WizardImport.cpp:409
+#: Win/WizardImport.cpp:411
 msgid "IDS_FILE_PREVIEW"
 msgstr "Prevue de {}."
 
-#: Win/WizardImport.cpp:432
+#: Win/WizardImport.cpp:434
 msgid "IDS_IMPORT_FAILED"
 msgstr "Impossible de lire data."
 
 # WizardImport
-#: Win/WizardImport.cpp:738
+#: Win/WizardImport.cpp:740
 msgid "IDD_WIZARD_IMPORT"
 msgstr "Utilitaire d'Importation"
 
-#: Win/WizardImport.cpp:876 Win/WizardImport.cpp:1117
+#: Win/WizardImport.cpp:878 Win/WizardImport.cpp:1119
 msgid "IDS_IMPORT_SKIP_NOCONFIG"
 msgstr ""
 "Attention: Ligne {}: Entré passé, impossible de trouver un entré configuration "
 "valide"
 
-#: Win/WizardImport.cpp:946
+#: Win/WizardImport.cpp:948
 msgid "IDS_IMPORT_BAD_DATE_RUN"
 msgstr "ERREUR: Ligne {0}, Colonne {1}: Date parcours invalide: {2}"
 
-#: Win/WizardImport.cpp:1104
+#: Win/WizardImport.cpp:1106
 msgid "IDS_IMPORT_BAD_VENUE"
 msgstr "Attention: Ligne {0}: Entré passé, nom organisation invalide: {1}"
 
-#: Win/WizardImport.cpp:1282
+#: Win/WizardImport.cpp:1284
 msgid "IDS_IMPORT_BAD_DATE_CALSTART"
 msgstr ""
 "ERREUR: Ligne {0}, colonne {1}: Date commencement calendrier invalide: {2}"
 
-#: Win/WizardImport.cpp:1302
+#: Win/WizardImport.cpp:1304
 msgid "IDS_IMPORT_BAD_DATE_CALEND"
 msgstr "ERREUR: Ligne {0}, colonne {1}: Date fermeture calendrier invalide: {2}"
 
-#: Win/WizardImport.cpp:1342
+#: Win/WizardImport.cpp:1344
 msgid "IDS_IMPORT_BAD_CAL_VALUE"
 msgstr ""
 "ERREUR: Ligne {0}, colonne {1}: Invalide entré calendrier: {2} (valide: N, P "
 "ou E)"
 
-#: Win/WizardImport.cpp:1373
+#: Win/WizardImport.cpp:1375
 msgid "IDS_IMPORT_BAD_DATE_CALOPEN"
 msgstr "ERREUR: Ligne {0}, colonne {1}: Date ouverture calendrier invalide: {2}"
 
-#: Win/WizardImport.cpp:1393
+#: Win/WizardImport.cpp:1395
 msgid "IDS_IMPORT_BAD_DATE_CALCLOSE"
 msgstr "ERREUR: Ligne {0}, colonne {1}: Date fermeture calendrier invalide: {2}"
 
-#: Win/WizardImport.cpp:1434
+#: Win/WizardImport.cpp:1436
 msgid "IDS_IMPORT_BAD_DATE_LOG"
 msgstr "ERREUR: Ligne {0}, colonne {1}: Date log entraînement invalide: {2}"
 
-#: Win/WizardImport.cpp:1480
+#: Win/WizardImport.cpp:1482
 msgid "IDS_IMPORT_STATS"
 msgstr ""
 "{0} entrés rajoutés\n"

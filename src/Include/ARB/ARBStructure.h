@@ -240,6 +240,7 @@ namespace ARB
 #define ATTRIB_RUN_HEIGHT					L"Height"
 #define ATTRIB_RUN_EVENT					L"Event"
 #define ATTRIB_RUN_SUBNAME					L"SubName"
+#define ATTRIB_RUN_ATHOME					L"AtHome"
 #define ATTRIB_PARTNER_HANDLER				L"Handler"
 #define ATTRIB_PARTNER_DOG					L"Dog"
 #define ATTRIB_PARTNER_REGNUM				L"RegNum"

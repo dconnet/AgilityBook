@@ -103,6 +103,8 @@ private:
 	wxStaticText* m_ctrlSubNamesText;
 	wxComboBox* m_ctrlSubNames;
 	wxString m_SubName;
+	wxCheckBox* m_ctrlAtHome;
+	bool m_isAtHome;
 	wxCheckBox* m_ctrlTable;
 	bool m_Table;
 	wxStaticText* m_textHeight;

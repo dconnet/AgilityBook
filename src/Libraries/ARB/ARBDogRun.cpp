@@ -96,6 +96,7 @@ ARBDogRun::ARBDogRun()
 	, m_Height()
 	, m_Event()
 	, m_SubName()
+	, m_isAtHome(false)
 	, m_Conditions()
 	, m_Judge()
 	, m_Handler()
@@ -122,6 +123,7 @@ ARBDogRun::ARBDogRun(ARBDogRun const& rhs)
 	, m_Height(rhs.m_Height)
 	, m_Event(rhs.m_Event)
 	, m_SubName(rhs.m_SubName)
+	, m_isAtHome(rhs.m_isAtHome)
 	, m_Conditions(rhs.m_Conditions)
 	, m_Judge(rhs.m_Judge)
 	, m_Handler(rhs.m_Handler)
@@ -151,6 +153,7 @@ ARBDogRun::ARBDogRun(ARBDogRun&& rhs)
 	, m_Height(std::move(rhs.m_Height))
 	, m_Event(std::move(rhs.m_Event))
 	, m_SubName(std::move(rhs.m_SubName))
+	, m_isAtHome(std::move(rhs.m_isAtHome))
 	, m_Conditions(std::move(rhs.m_Conditions))
 	, m_Judge(std::move(rhs.m_Judge))
 	, m_Handler(std::move(rhs.m_Handler))
@@ -191,6 +194,7 @@ ARBDogRun& ARBDogRun::operator=(ARBDogRun const& rhs)
 		m_Height = rhs.m_Height;
 		m_Event = rhs.m_Event;
 		m_SubName = rhs.m_SubName;
+		m_isAtHome = rhs.m_isAtHome;
 		m_Conditions = rhs.m_Conditions;
 		m_Judge = rhs.m_Judge;
 		m_Handler = rhs.m_Handler;
@@ -221,6 +225,7 @@ ARBDogRun& ARBDogRun::operator=(ARBDogRun&& rhs)
 		m_Height = std::move(rhs.m_Height);
 		m_Event = std::move(rhs.m_Event);
 		m_SubName = std::move(rhs.m_SubName);
+		m_isAtHome = std::move(rhs.m_isAtHome);
 		m_Conditions = std::move(rhs.m_Conditions);
 		m_Judge = std::move(rhs.m_Judge);
 		m_Handler = std::move(rhs.m_Handler);
@@ -249,6 +254,7 @@ bool ARBDogRun::operator==(ARBDogRun const& rhs) const
 		&& m_Height == rhs.m_Height
 		&& m_Event == rhs.m_Event
 		&& m_SubName == rhs.m_SubName
+		&& m_isAtHome == rhs.m_isAtHome
 		&& m_Conditions == rhs.m_Conditions
 		&& m_Judge == rhs.m_Judge
 		&& m_Handler == rhs.m_Handler
@@ -436,6 +442,7 @@ bool ARBDogRun::Load(
 	}
 
 	inTree->GetAttrib(ATTRIB_RUN_SUBNAME, m_SubName);
+	inTree->GetAttrib(ATTRIB_RUN_ATHOME, m_isAtHome);
 
 	// This will get the first scoring style to match. So the order of
 	// the clubs is critical as we'll search the venues by club order.
@@ -547,6 +554,8 @@ bool ARBDogRun::Save(ElementNodePtr const& ioTree, ARBDogTrial const* pTrial, AR
 	run->AddAttrib(ATTRIB_RUN_EVENT, m_Event);
 	if (0 < m_SubName.length())
 		run->AddAttrib(ATTRIB_RUN_SUBNAME, m_SubName);
+	if (m_isAtHome)
+		run->AddAttrib(ATTRIB_RUN_ATHOME, m_isAtHome);
 	if (0 < m_Conditions.length())
 	{
 		ElementNodePtr element = run->AddElementNode(TREE_CONDITIONS);
@@ -753,7 +762,8 @@ double ARBDogRun::GetTitlePoints(ARBConfigScoringPtr const& inScoring, bool* out
 							  GetPlace(),
 							  GetInClass(),
 							  GetDate(),
-							  isTourney)
+							  isTourney,
+							  m_isAtHome)
 						  + bonusTitlePts;
 			}
 		}
@@ -766,7 +776,8 @@ double ARBDogRun::GetTitlePoints(ARBConfigScoringPtr const& inScoring, bool* out
 					  GetPlace(),
 					  GetInClass(),
 					  GetDate(),
-					  isTourney)
+					  isTourney,
+					  m_isAtHome)
 				  + bonusTitlePts;
 		}
 	}
@@ -801,7 +812,8 @@ double ARBDogRun::GetTitlePoints(ARBConfigScoringPtr const& inScoring, bool* out
 					  GetPlace(),
 					  GetInClass(),
 					  GetDate(),
-					  isTourney)
+					  isTourney,
+					  m_isAtHome)
 				  + bonusTitlePts;
 		}
 		break;
@@ -830,7 +842,8 @@ double ARBDogRun::GetTitlePoints(ARBConfigScoringPtr const& inScoring, bool* out
 					  GetPlace(),
 					  GetInClass(),
 					  GetDate(),
-					  isTourney)
+					  isTourney,
+					  m_isAtHome)
 				  + bonusTitlePts;
 		}
 		break;

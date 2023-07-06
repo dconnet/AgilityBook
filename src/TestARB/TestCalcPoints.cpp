@@ -54,9 +54,9 @@ TEST_CASE("CalcPoints")
 			REQUIRE(p->GetType() == ARBPointsType::Normal);
 			REQUIRE(p->AllowConfiguration());
 			// All fields ignored except first.
-			double pt = p->GetPoints(1.0, 10.0, 5.0, 0, 0, ARBDate(), false);
+			double pt = p->GetPoints(1.0, 10.0, 5.0, 0, 0, ARBDate(), false, false);
 			REQUIRE(pt == 1.0);
-			pt = p->GetPoints(1.0, 0.0, 0.0, 0, 0, ARBDate(), false);
+			pt = p->GetPoints(1.0, 0.0, 0.0, 0, 0, ARBDate(), false, false);
 			REQUIRE(pt == 1.0);
 		}
 	}
@@ -70,20 +70,20 @@ TEST_CASE("CalcPoints")
 			REQUIRE(p->GetType() == ARBPointsType::T2B);
 			REQUIRE(!p->AllowConfiguration());
 			// First and last 2 fields ignored.
-			double pt = p->GetPoints(0.0, 28.73, 28.73, 1, 10, ARBDate(), false);
+			double pt = p->GetPoints(0.0, 28.73, 28.73, 1, 10, ARBDate(), false, false);
 			// Using the example from the AKC rule book.
 			REQUIRE(pt == 10.0);
-			pt = p->GetPoints(0.0, 28.73, 28.73, 2, 10, ARBDate(), false);
+			pt = p->GetPoints(0.0, 28.73, 28.73, 2, 10, ARBDate(), false, false);
 			REQUIRE(pt == 9.0);
-			pt = p->GetPoints(0.0, 31.0, 28.73, 2, 10, ARBDate(), false);
+			pt = p->GetPoints(0.0, 31.0, 28.73, 2, 10, ARBDate(), false, false);
 			REQUIRE(pt == 9.0);
-			pt = p->GetPoints(0.0, 31.99, 28.73, 2, 10, ARBDate(), false);
+			pt = p->GetPoints(0.0, 31.99, 28.73, 2, 10, ARBDate(), false, false);
 			REQUIRE(pt == 9.0);
-			pt = p->GetPoints(0.0, 32.0, 28.73, 2, 10, ARBDate(), false);
+			pt = p->GetPoints(0.0, 32.0, 28.73, 2, 10, ARBDate(), false, false);
 			REQUIRE(pt == 8.0);
-			pt = p->GetPoints(0.0, 34.99, 28.73, 2, 10, ARBDate(), false);
+			pt = p->GetPoints(0.0, 34.99, 28.73, 2, 10, ARBDate(), false, false);
 			REQUIRE(pt == 8.0);
-			pt = p->GetPoints(0.0, 35.0, 28.73, 2, 10, ARBDate(), false);
+			pt = p->GetPoints(0.0, 35.0, 28.73, 2, 10, ARBDate(), false, false);
 			REQUIRE(pt == 7.0);
 		}
 	}
@@ -135,8 +135,11 @@ TEST_CASE("CalcPoints")
 			for (size_t i = 0; i < nPoints; ++i)
 			{
 				// First 3 and last 2 fields ignored.
-				double pt = p->GetPoints(0.0, 0.0, 0.0, points[i].place, points[i].inCls, ARBDate(), false);
+				double pt = p->GetPoints(0.0, 0.0, 0.0, points[i].place, points[i].inCls, ARBDate(), false, false);
 				REQUIRE(pt == points[i].pts);
+				// AtHome is always 2 pts.
+				pt = p->GetPoints(0.0, 0.0, 0.0, points[i].place, points[i].inCls, ARBDate(), false, true);
+				REQUIRE(pt == 2.0);
 			}
 		}
 	}
@@ -250,7 +253,8 @@ TEST_CASE("CalcPoints")
 					points[i].place,
 					points[i].inCls,
 					points[i].date,
-					points[i].isTourney);
+					points[i].isTourney,
+					false);
 				REQUIRE(pt == points[i].pts);
 			}
 		}

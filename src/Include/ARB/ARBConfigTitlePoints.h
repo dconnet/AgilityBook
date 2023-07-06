@@ -177,6 +177,7 @@ public:
 	 * @param inClass Number of dogs in the event.
 	 * @param inDate Date of run.
 	 * @param isTourney Is this a USDAA tournament event?
+	 * @param isAtHome @Home accumulates points differently
 	 * @return Number of titling points.
 	 */
 	double GetTitlePoints(
@@ -186,7 +187,8 @@ public:
 		short inPlace,
 		short inClass,
 		ARBCommon::ARBDate inDate,
-		bool isTourney) const;
+		bool isTourney,
+		bool isAtHome) const;
 
 	/**
 	 * Find a title points object.

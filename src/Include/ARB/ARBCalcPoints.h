@@ -85,7 +85,8 @@ public:
 		short inPlace,
 		short inClass,
 		ARBCommon::ARBDate date, // For USDAA
-		bool isTourney           // For USDAA
+		bool isTourney,          // For USDAA
+		bool isAtHome            // @Home accumulates points differently
 	) const
 		= 0;
 };
@@ -115,7 +116,8 @@ public:
 		short inPlace,
 		short inClass,
 		ARBCommon::ARBDate date,
-		bool isTourney) const override;
+		bool isTourney,
+		bool isAtHome) const override;
 };
 
 
@@ -139,7 +141,8 @@ public:
 		short inPlace,
 		short inClass,
 		ARBCommon::ARBDate date,
-		bool isTourney) const override;
+		bool isTourney,
+		bool isAtHome) const override;
 };
 
 
@@ -163,7 +166,8 @@ public:
 		short inPlace,
 		short inClass,
 		ARBCommon::ARBDate date,
-		bool isTourney) const override;
+		bool isTourney,
+		bool isAtHome) const override;
 };
 
 
@@ -187,7 +191,8 @@ public:
 		short inPlace,
 		short inClass,
 		ARBCommon::ARBDate date,
-		bool isTourney) const override;
+		bool isTourney,
+		bool isAtHome) const override;
 };
 
 } // namespace ARB

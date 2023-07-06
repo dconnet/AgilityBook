@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<DefaultConfig Book="15.3">
+<DefaultConfig Book="15.4">
 <!--
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2023-07-06 File version 15.4
 2023-06-01 Configuration version 69.
            Updated NADAC titles, new NATCHes, removed All-Around
            Updated AKC AGCH title, added Std/JWW to ACT.

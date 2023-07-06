@@ -910,7 +910,7 @@ void CDlgExistingPoints::FillTypeNames()
 		break;
 
 	case ARBExistingPointType::OtherPoints:
-		for (auto const& pOther: m_pDoc->Book().GetConfig().GetOtherPoints())
+		for (auto const& pOther : m_pDoc->Book().GetConfig().GetOtherPoints())
 		{
 			items.Add(pOther->GetName());
 			data.push_back(new CDlgPointsTypeNameData(pOther));

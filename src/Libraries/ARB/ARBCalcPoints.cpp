@@ -93,7 +93,8 @@ double ARBCalcPointsNormal::GetPoints(
 	short inPlace,
 	short inClass,
 	ARBDate date,
-	bool isTourney) const
+	bool isTourney,
+	bool isAtHome) const
 {
 	// Pass through.
 	return inPoints;
@@ -125,7 +126,8 @@ double ARBCalcPointsT2B::GetPoints(
 	short inPlace,
 	short inClass,
 	ARBDate date,
-	bool isTourney) const
+	bool isTourney,
+	bool isAtHome) const
 {
 	if (inTime == inSCT && inPlace == 1)
 		return 10.0;
@@ -177,10 +179,15 @@ double ARBCalcPointsUKI::GetPoints(
 	short inPlace,
 	short inClass,
 	ARBDate date,
-	bool isTourney) const
+	bool isTourney,
+	bool isAtHome) const
 {
 	double pts = 4.0;
-	if (inClass <= 10)
+	if (isAtHome)
+	{
+		pts = 2.0;
+	}
+	else if (inClass <= 10)
 	{
 		switch (inPlace)
 		{
@@ -244,7 +251,8 @@ double ARBCalcPointsTop10USDAA::GetPoints(
 	short inPlace,
 	short inClass,
 	ARBDate date,
-	bool isTourney) const
+	bool isTourney,
+	bool isAtHome) const
 {
 	static const ARBDate ruleChange(2020, 1, 1);
 

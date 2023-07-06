@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2023-07-06 File version 15.4
+           Add titling point support for @Home programs.
 2020-09-15 File version 15.3
            Removed CalSite
 2020-01-16 File version 15.2
@@ -594,6 +596,7 @@ a Level or SubLevel element.
 		Height CDATA #IMPLIED
 		Event CDATA #REQUIRED
 		SubName CDATA #IMPLIED
+		AtHome (y|n) 'n'
 		>
 
 <!ELEMENT Conditions (#PCDATA) >

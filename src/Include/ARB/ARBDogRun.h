@@ -228,6 +228,14 @@ public:
 	{
 		m_SubName = inSubName;
 	}
+	bool IsAtHome() const
+	{
+		return m_isAtHome;
+	}
+	void SetAtHome(bool value)
+	{
+		m_isAtHome = value;
+	}
 	std::wstring const& GetHeight() const
 	{
 		return m_Height;
@@ -378,6 +386,7 @@ private:
 	std::wstring m_Height;
 	std::wstring m_Event;
 	std::wstring m_SubName; //< Only used if the config supports it.
+	bool m_isAtHome;
 	std::wstring m_Conditions;
 	std::wstring m_Judge;
 	std::wstring m_Handler;
