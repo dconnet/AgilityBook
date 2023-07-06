@@ -36,6 +36,7 @@
 #include "ARB/ARBDogTrial.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/CheckLink.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/ReportListCtrl.h"
 
@@ -237,23 +238,24 @@ CDlgFindLinks::CDlgFindLinks(ARBDogList& inDogs, wxWindow* pParent)
 	m_ctrlOpen->SetToolTip(_("HIDC_FINDLINKS_OPEN"));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* bSizerList = new wxBoxSizer(wxHORIZONTAL);
-	bSizerList->Add(m_ctrlLinks, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	bSizerList->Add(m_ctrlLinks, 1, wxEXPAND | wxRIGHT, padding.Controls());
 
 	wxBoxSizer* bSizerSide = new wxBoxSizer(wxVERTICAL);
-	bSizerSide->Add(btnOk, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizerSide->Add(btnOk, 0, wxEXPAND | wxBOTTOM, padding.Inner());
 	bSizerSide->Add(btnCancel, 0, wxEXPAND);
 	bSizerSide->AddStretchSpacer();
-	bSizerSide->Add(btnCopy, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
-	bSizerSide->Add(m_ctrlEdit, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizerSide->Add(btnCopy, 0, wxEXPAND | wxBOTTOM, padding.Inner());
+	bSizerSide->Add(m_ctrlEdit, 0, wxEXPAND | wxBOTTOM, padding.Inner());
 	bSizerSide->Add(m_ctrlOpen, 0, wxEXPAND);
 
 	bSizerList->Add(bSizerSide, 0, wxEXPAND);
 
-	bSizer->Add(bSizerList, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(bSizerList, 1, wxEXPAND | wxALL, padding.Controls());
 
 	SetSizer(bSizer);
 	Layout();

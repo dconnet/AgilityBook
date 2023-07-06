@@ -32,6 +32,7 @@
 
 #include "ARB/ARBConfigTitle.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/Validators.h"
 #include "LibARBWin/Widgets.h"
 #include <wx/datectrl.h>
@@ -352,31 +353,32 @@ CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pPa
 	m_ctrlDateTo->SetToolTip(_("HIDC_CONFIG_TITLE_VALID_TO_DATE"));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
-	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerName->Add(ctrlName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
+	sizerName->Add(ctrlName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
 	sizerName->Add(ctrlPrefix, 0, wxALIGN_CENTER_VERTICAL);
 
-	bSizer->Add(sizerName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(textLong, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(ctrlLongName, 0, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(textDesc, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(ctrlDesc, 1, wxEXPAND | wxLEFT | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(textLong, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(ctrlLongName, 0, wxEXPAND | wxLEFT | wxRIGHT, padding.Controls());
+	bSizer->Add(textDesc, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(ctrlDesc, 1, wxEXPAND | wxLEFT | wxRIGHT, padding.Controls());
 
 	wxBoxSizer* sizerMultiple = new wxBoxSizer(wxVERTICAL);
-	sizerMultiple->Add(ctrlAllowMany, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
+	sizerMultiple->Add(ctrlAllowMany, 0, wxBOTTOM, padding.TightControls());
 
 	wxBoxSizer* sizerShowFirst = new wxBoxSizer(wxHORIZONTAL);
-	sizerShowFirst->AddSpacer(wxDLG_UNIT_X(this, 10));
+	sizerShowFirst->AddSpacer(padding.CheckboxOffset());
 
 	wxBoxSizer* sizerShowMulti = new wxBoxSizer(wxVERTICAL);
-	sizerShowMulti->Add(m_ctrlShowFirst, 0, wxBOTTOM, wxDLG_UNIT_X(this, 2));
+	sizerShowMulti->Add(m_ctrlShowFirst, 0, wxBOTTOM, padding.TightControls());
 
 	wxFlexGridSizer* sizerMultiInfo
-		= new wxFlexGridSizer(4, 2, wxDLG_UNIT_X(this, 2), wxDLG_UNIT_X(this, 3)); // rows/cols/vgap/hgap
+		= new wxFlexGridSizer(4, 2, padding.TightControls(), padding.Inner()); // rows/cols/vgap/hgap
 	sizerMultiInfo->SetFlexibleDirection(wxBOTH);
 	sizerMultiInfo->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 	sizerMultiInfo->Add(textStart, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
@@ -395,7 +397,7 @@ CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pPa
 	sizerDetails->Add(sizerMultiple);
 	sizerDetails->AddStretchSpacer();
 
-	wxFlexGridSizer* sizerDates = new wxFlexGridSizer(2, 2, wxDLG_UNIT_X(this, 3), wxDLG_UNIT_X(this, 5));
+	wxFlexGridSizer* sizerDates = new wxFlexGridSizer(2, 2, padding.Controls(), padding.Inner());
 	sizerDates->SetFlexibleDirection(wxBOTH);
 	sizerDates->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 	sizerDates->Add(ctrlValidFrom, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
@@ -404,10 +406,10 @@ CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pPa
 	sizerDates->Add(m_ctrlDateTo, 0, wxALIGN_CENTER_VERTICAL);
 	sizerDetails->Add(sizerDates);
 
-	bSizer->Add(sizerDetails, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerDetails, 0, wxEXPAND | wxALL, padding.Controls());
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 
 	SetSizer(bSizer);
 	Layout();

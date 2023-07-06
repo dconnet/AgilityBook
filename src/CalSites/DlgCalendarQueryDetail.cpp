@@ -28,6 +28,7 @@
 #include "ARB/ARBConfig.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
+#include "LibARBWin/DlgPadding.h"
 #include <wx/listctrl.h>
 #include <algorithm>
 
@@ -200,6 +201,7 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 	}
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
@@ -207,7 +209,7 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 
 	wxBoxSizer* sizerLocationCodes = new wxBoxSizer(wxVERTICAL);
 	sizerLocationCodes->Add(textLocCodes, 0, 0, 0);
-	sizerLocationCodes->Add(m_ctrlLocations, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 1));
+	sizerLocationCodes->Add(m_ctrlLocations, 1, wxEXPAND | wxTOP, padding.Tight());
 
 	sizerLocation->Add(sizerLocationCodes, 1, wxEXPAND, 0);
 
@@ -216,19 +218,19 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 		wxBoxSizer* sizerLocBtns = new wxBoxSizer(wxVERTICAL);
 		sizerLocBtns->Add(0, 0, 1, wxEXPAND, 0);
 		sizerLocBtns->Add(m_ctrlNewLoc, 0, 0, 0);
-		sizerLocBtns->Add(m_ctrlEditLoc, 0, wxTOP, wxDLG_UNIT_X(this, 2));
-		sizerLocBtns->Add(m_ctrlDeleteLoc, 0, wxTOP, wxDLG_UNIT_X(this, 2));
+		sizerLocBtns->Add(m_ctrlEditLoc, 0, wxTOP, padding.TightControls());
+		sizerLocBtns->Add(m_ctrlDeleteLoc, 0, wxTOP, padding.TightControls());
 
-		sizerLocation->Add(sizerLocBtns, 0, wxEXPAND | wxLEFT, wxDLG_UNIT_X(this, 5));
+		sizerLocation->Add(sizerLocBtns, 0, wxEXPAND | wxLEFT, padding.Controls());
 	}
 
-	bSizer->Add(sizerLocation, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerLocation, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizerVenueCodes = new wxBoxSizer(wxVERTICAL);
 	sizerVenueCodes->Add(textVenueCodes, 0, 0, 0);
-	sizerVenueCodes->Add(m_ctrlVenues, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 1));
+	sizerVenueCodes->Add(m_ctrlVenues, 1, wxEXPAND | wxTOP, padding.Tight());
 
 	sizerVenue->Add(sizerVenueCodes, 1, wxEXPAND, 0);
 
@@ -237,16 +239,16 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 		wxBoxSizer* sizerVenueBtns = new wxBoxSizer(wxVERTICAL);
 		sizerVenueBtns->Add(0, 0, 1, wxEXPAND, 0);
 		sizerVenueBtns->Add(m_ctrlNewVenue, 0, 0, 0);
-		sizerVenueBtns->Add(m_ctrlEditVenue, 0, wxTOP, wxDLG_UNIT_X(this, 2));
-		sizerVenueBtns->Add(m_ctrlDeleteVenue, 0, wxTOP, wxDLG_UNIT_X(this, 2));
+		sizerVenueBtns->Add(m_ctrlEditVenue, 0, wxTOP, padding.TightControls());
+		sizerVenueBtns->Add(m_ctrlDeleteVenue, 0, wxTOP, padding.TightControls());
 
-		sizerVenue->Add(sizerVenueBtns, 0, wxEXPAND | wxLEFT, wxDLG_UNIT_X(this, 5));
+		sizerVenue->Add(sizerVenueBtns, 0, wxEXPAND | wxLEFT, padding.Controls());
 	}
 
-	bSizer->Add(sizerVenue, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerVenue, 1, wxEXPAND | wxALL, padding.Controls());
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 
 	SetSizer(bSizer);
 	Layout();

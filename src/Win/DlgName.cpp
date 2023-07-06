@@ -21,6 +21,7 @@
 #include "AgilityBook.h"
 
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/Validators.h"
 #include "LibARBWin/Widgets.h"
 
@@ -76,12 +77,13 @@ bool CDlgName::Create(wxString const& caption, wxWindow* pParent)
 	textCtrl->SetToolTip(_("HIDC_NAME"));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(textCtrl, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(textCtrl, 0, wxEXPAND | wxALL, padding.Controls());
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 
 	SetSizer(bSizer);
 	Layout();

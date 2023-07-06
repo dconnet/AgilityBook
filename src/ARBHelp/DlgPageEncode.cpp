@@ -31,6 +31,7 @@
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBDebug.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/Logger.h"
 #include <wx/config.h>
 #include <wx/dir.h>
@@ -88,10 +89,11 @@ CDlgPageEncode::CDlgPageEncode(CDlgARBHelp* pParent)
 	text2->Wrap(wxDLG_UNIT_X(this, 345));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 	bSizer->Add(text1, 0, wxEXPAND);
-	bSizer->Add(text2, 0, wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(text2, 0, wxTOP, padding.Controls());
 
 	SetSizer(bSizer);
 	Layout();

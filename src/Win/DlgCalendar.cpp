@@ -40,6 +40,7 @@
 #include "ARB/ARBCalendar.h"
 #include "ARB/ARBConfig.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/RichEditCtrl2.h"
 #include "LibARBWin/Validators.h"
 #include <wx/datectrl.h>
@@ -519,6 +520,7 @@ CDlgCalendar::CDlgCalendar(ARBCalendarPtr const& inCal, CAgilityBookDoc* pDoc, w
 	ctrlNotes->SetToolTip(_("HIDC_CAL_NOTES"));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
@@ -526,7 +528,7 @@ CDlgCalendar::CDlgCalendar(ARBCalendarPtr const& inCal, CAgilityBookDoc* pDoc, w
 
 	wxBoxSizer* sizerTrialInfo = new wxBoxSizer(wxVERTICAL);
 
-	wxFlexGridSizer* sizerDates1 = new wxFlexGridSizer(2, 2, wxDLG_UNIT_X(this, 3), wxDLG_UNIT_X(this, 3));
+	wxFlexGridSizer* sizerDates1 = new wxFlexGridSizer(2, 2, padding.Inner(), padding.Inner());
 	sizerDates1->SetFlexibleDirection(wxBOTH);
 	sizerDates1->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 	sizerDates1->Add(textStart, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
@@ -534,12 +536,12 @@ CDlgCalendar::CDlgCalendar(ARBCalendarPtr const& inCal, CAgilityBookDoc* pDoc, w
 	sizerDates1->Add(textEnd, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
 	sizerDates1->Add(m_ctrlEnd, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizerTrialInfo->Add(sizerDates1, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerTrialInfo->Add(sizerDates1, 0, wxEXPAND | wxBOTTOM, padding.Controls());
 	sizerTrialInfo->Add(ctrlTentative);
 
-	sizerDates->Add(sizerTrialInfo, 0, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerDates->Add(sizerTrialInfo, 0, wxEXPAND | wxRIGHT, padding.Controls());
 
-	wxFlexGridSizer* sizerDates2 = new wxFlexGridSizer(3, 3, wxDLG_UNIT_X(this, 3), wxDLG_UNIT_X(this, 3));
+	wxFlexGridSizer* sizerDates2 = new wxFlexGridSizer(3, 3, padding.Inner(), padding.Inner());
 	sizerDates2->SetFlexibleDirection(wxBOTH);
 	sizerDates2->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 	sizerDates2->Add(textOpens, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
@@ -554,89 +556,89 @@ CDlgCalendar::CDlgCalendar(ARBCalendarPtr const& inCal, CAgilityBookDoc* pDoc, w
 
 	sizerDates->Add(sizerDates2, 0, wxEXPAND);
 
-	bSizer->Add(sizerDates, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerDates, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerContent = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizer1 = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticBoxSizer* sizerEntry = new wxStaticBoxSizer(boxEntry, wxVERTICAL);
-	sizerEntry->Add(m_ctrlEntryNot, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerEntry->Add(m_ctrlEntryPlan, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerEntry->Add(m_ctrlEntryNot, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
+	sizerEntry->Add(m_ctrlEntryPlan, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
 
 	wxBoxSizer* sizerOnline = new wxBoxSizer(wxHORIZONTAL);
-	sizerOnline->AddSpacer(wxDLG_UNIT_X(this, 11)); // 8 + 3
-	sizerOnline->Add(m_ctrlOnlineUrlEntry, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerOnline->Add(m_ctrlOnlineUrl, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerOnline->AddSpacer(padding.CheckboxOffset() + padding.Inner());
+	sizerOnline->Add(m_ctrlOnlineUrlEntry, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
+	sizerOnline->Add(m_ctrlOnlineUrl, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 
-	sizerEntry->Add(sizerOnline, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 1));
-	sizerEntry->Add(m_ctrlEntryPending, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerEntry->Add(m_ctrlEntryEntered, 0, wxALL, wxDLG_UNIT_X(this, 3));
+	sizerEntry->Add(sizerOnline, 0, wxEXPAND | wxTOP, padding.Tight());
+	sizerEntry->Add(m_ctrlEntryPending, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
+	sizerEntry->Add(m_ctrlEntryEntered, 0, wxALL, padding.Inner());
 
 	sizer1->Add(sizerEntry, 0, wxEXPAND);
 
 	wxBoxSizer* sizerPremium = new wxBoxSizer(wxHORIZONTAL);
-	sizerPremium->Add(m_ctrlPremiumEntry, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerPremium->Add(m_ctrlPremiumEntry, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	sizerPremium->Add(m_ctrlPremiumUrl, 1, wxALIGN_CENTER_VERTICAL);
 
-	sizer1->Add(sizerPremium, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizer1->Add(sizerPremium, 0, wxEXPAND | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerSec = new wxBoxSizer(wxHORIZONTAL);
-	sizerSec->Add(m_ctrlEMailSec, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerSec->Add(m_ctrlEMailSec, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	sizerSec->Add(m_ctrlEMailSecAddr, 1, wxALIGN_CENTER_VERTICAL);
 
-	sizer1->Add(sizerSec, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizer1->Add(sizerSec, 0, wxEXPAND | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
-	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	sizerVenue->Add(m_ctrlVenue, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizer1->Add(sizerVenue, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizer1->Add(sizerVenue, 0, wxEXPAND | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerClub = new wxBoxSizer(wxHORIZONTAL);
-	sizerClub->Add(textClub, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerClub->Add(m_ctrlClub, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 1));
+	sizerClub->Add(textClub, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
+	sizerClub->Add(m_ctrlClub, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Tight());
 	sizerClub->Add(m_ctrlClubNotes, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizer1->Add(sizerClub, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizer1->Add(m_ctrlClubInfo, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizer1->Add(sizerClub, 0, wxEXPAND | wxTOP, padding.Controls());
+	sizer1->Add(m_ctrlClubInfo, 0, wxEXPAND | wxTOP, padding.Inner());
 
-	sizerContent->Add(sizer1, 3, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerContent->Add(sizer1, 3, wxEXPAND | wxRIGHT, padding.Controls());
 
 	wxBoxSizer* sizer2 = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticBoxSizer* sizerAccom = new wxStaticBoxSizer(boxAccom, wxVERTICAL);
-	sizerAccom->Add(m_ctrlAccomNot, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerAccom->Add(m_ctrlAccomNeeded, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerAccom->Add(m_ctrlAccomNot, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
+	sizerAccom->Add(m_ctrlAccomNeeded, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
 
 	wxBoxSizer* sizerMade = new wxBoxSizer(wxHORIZONTAL);
-	sizerMade->Add(m_ctrlAccomMade, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 1));
+	sizerMade->Add(m_ctrlAccomMade, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Tight());
 	sizerMade->Add(m_ctrlConfirmation, 1, wxALIGN_CENTER_VERTICAL);
 
-	sizerAccom->Add(sizerMade, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
+	sizerAccom->Add(sizerMade, 0, wxEXPAND | wxALL, padding.Inner());
 
 	sizer2->Add(sizerAccom, 0, wxEXPAND);
 	sizer2->AddStretchSpacer();
 	sizer2->Add(textLocation);
 
 	wxBoxSizer* sizerLocation = new wxBoxSizer(wxHORIZONTAL);
-	sizerLocation->Add(m_ctrlLocation, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 1));
+	sizerLocation->Add(m_ctrlLocation, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Tight());
 	sizerLocation->Add(m_ctrlLocationNotes, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizer2->Add(sizerLocation, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizer2->Add(sizerLocation, 0, wxEXPAND | wxBOTTOM, padding.Inner());
 	sizer2->Add(m_ctrlLocationInfo, 0, wxEXPAND);
 
 	sizerContent->Add(sizer2, 2, wxEXPAND);
-	bSizer->Add(sizerContent, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerContent, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerNotes = new wxBoxSizer(wxVERTICAL);
-	sizerNotes->Add(textNotes, 0, wxBOTTOM, wxDLG_UNIT_X(this, 1));
+	sizerNotes->Add(textNotes, 0, wxBOTTOM, padding.Tight());
 	sizerNotes->Add(ctrlNotes, 1, wxEXPAND);
 
-	bSizer->Add(sizerNotes, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerNotes, 0, wxEXPAND | wxALL, padding.Controls());
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 
 	ListLocations();
 	ListClubs();

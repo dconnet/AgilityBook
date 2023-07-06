@@ -24,6 +24,7 @@
 #include "AgilityBookOptions.h"
 
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/Widgets.h"
 #include <wx/url.h>
 #include <wx/valgen.h>
@@ -132,25 +133,26 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	m_ctrlProxy->Enable(m_UseProxy);
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(ctrlUpdates, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(textUpdates, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(ctrlUpdates, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(textUpdates, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerBackups = new wxBoxSizer(wxHORIZONTAL);
-	sizerBackups->Add(textBackups, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerBackups->Add(ctrlBackups, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerBackups->Add(textBackups, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
+	sizerBackups->Add(ctrlBackups, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
 	sizerBackups->Add(textBackupHelp, 0, wxALIGN_CENTER_VERTICAL);
 
-	bSizer->Add(sizerBackups, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(ctrlShowDog, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(ctrlShowCoSanction, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(ctrlUseProxy, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerBackups, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(ctrlShowDog, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(ctrlShowCoSanction, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(ctrlUseProxy, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerProxy = new wxBoxSizer(wxHORIZONTAL);
-	sizerProxy->AddSpacer(wxDLG_UNIT_X(this, 10));
+	sizerProxy->AddSpacer(padding.CheckboxOffset());
 	sizerProxy->Add(m_ctrlProxy, 1, wxEXPAND);
-	bSizer->Add(sizerProxy, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerProxy, 0, wxEXPAND | wxALL, padding.Controls());
 
 	SetSizer(bSizer);
 	Layout();

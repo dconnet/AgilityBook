@@ -49,6 +49,7 @@
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/DlgMessage.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/Widgets.h"
 
 #ifdef __WXMSW__
@@ -194,30 +195,31 @@ CDlgConfigure::CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book, 
 	btnUpdate->SetToolTip(_("HIDC_CONFIG_UPDATE"));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerConfig = new wxBoxSizer(wxHORIZONTAL);
-	sizerConfig->Add(m_ctrlItems, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerConfig->Add(m_ctrlItems, 1, wxEXPAND | wxRIGHT, padding.Controls());
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
-	sizerBtns->Add(m_ctrlNew, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
-	sizerBtns->Add(m_ctrlEdit, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
-	sizerBtns->Add(m_ctrlDelete, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlNew, 0, wxEXPAND | wxBOTTOM, padding.Inner());
+	sizerBtns->Add(m_ctrlEdit, 0, wxEXPAND | wxBOTTOM, padding.Inner());
+	sizerBtns->Add(m_ctrlDelete, 0, wxEXPAND | wxBOTTOM, padding.Inner());
 	sizerBtns->Add(m_ctrlCopy, 0, wxEXPAND);
 
 	sizerConfig->Add(sizerBtns, 0, wxEXPAND);
 
-	bSizer->Add(sizerConfig, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerConfig, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerUpdate = new wxBoxSizer(wxHORIZONTAL);
 	sizerUpdate->AddStretchSpacer();
 	sizerUpdate->Add(btnUpdate);
 
-	bSizer->Add(sizerUpdate, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerUpdate, 0, wxEXPAND | wxALL, padding.Controls());
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 
 	wxTreeItemId root = m_ctrlItems->AddRoot(L"Root");
 

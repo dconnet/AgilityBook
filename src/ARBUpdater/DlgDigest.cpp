@@ -30,6 +30,7 @@
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
 #include "LibARBWin/ARBWinUtilities.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/ResourceManager.h"
 #include "LibARBWin/Validators.h"
 
@@ -182,28 +183,29 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	ctrlSize->SetBackgroundColour(GetBackgroundColour());
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizeConfigData = new wxBoxSizer(wxVERTICAL);
-	sizeConfigData->Add(m_ctrlConfig, 0, wxBOTTOM, wxDLG_UNIT_X(this, 1));
+	sizeConfigData->Add(m_ctrlConfig, 0, wxBOTTOM, padding.Tight());
 
 	wxBoxSizer* sizeConfigVersion = new wxBoxSizer(wxHORIZONTAL);
-	sizeConfigVersion->Add(ctrlVersion, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizeConfigVersion->Add(ctrlVersion, 0, wxRIGHT, padding.Inner());
 	sizeConfigVersion->Add(m_ctrlConfigVersion);
 	sizeConfigData->Add(sizeConfigVersion);
 
 	wxBoxSizer* sizeConfig = new wxBoxSizer(wxHORIZONTAL);
-	sizeConfig->Add(m_ctrlInit, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizeConfig->Add(m_ctrlInit, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
 	sizeConfig->Add(sizeConfigData, 0, wxEXPAND);
-	bSizer->Add(sizeConfig, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizeConfig, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizeFile = new wxBoxSizer(wxHORIZONTAL);
-	sizeFile->Add(ctrlFile, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizeFile->Add(ctrlFile, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
 	sizeFile->Add(ctrlFind, 0, wxALIGN_CENTER_VERTICAL);
-	bSizer->Add(sizeFile, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizeFile, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
-	wxFlexGridSizer* sizerGrid = new wxFlexGridSizer(4, 2, wxDLG_UNIT_X(this, 3), wxDLG_UNIT_X(this, 3));
+	wxFlexGridSizer* sizerGrid = new wxFlexGridSizer(4, 2, padding.Inner(), padding.Inner());
 	sizerGrid->AddGrowableCol(1);
 	sizerGrid->SetFlexibleDirection(wxBOTH);
 	sizerGrid->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
@@ -215,7 +217,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	sizerGrid->Add(ctrlSHA256, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND);
 	sizerGrid->Add(txtSize, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
 	sizerGrid->Add(ctrlSize, 0, wxALIGN_CENTER_VERTICAL);
-	bSizer->Add(sizerGrid, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerGrid, 1, wxEXPAND | wxALL, padding.Controls());
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	m_ctrlCopy = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_OK), wxButton);
@@ -224,7 +226,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	m_ctrlCopy->Enable(false);
 	wxButton* cancel = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_CANCEL), wxButton);
 	cancel->SetLabel(L"Close");
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 
 	SetSizer(bSizer);
 	Layout();

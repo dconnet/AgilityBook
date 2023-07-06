@@ -28,6 +28,7 @@
 
 #include "ARB/ARBDog.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/ReportListCtrl.h"
 #include "LibARBWin/ReportListHeader.h"
@@ -256,10 +257,11 @@ CDlgDogPanelPoints::CDlgDogPanelPoints(CAgilityBookDoc* pDoc, ARBDogPtr const& i
 	m_ctrlSelectedPts->Wrap(-1);
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	m_sizerButtons->Add(0, 0, 1, wxEXPAND, 0);
-	m_sizerButtons->Add(textPts, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	m_sizerButtons->Add(m_ctrlSelectedPts, 0, wxALIGN_CENTER_VERTICAL, wxDLG_UNIT_X(this, 5));
+	m_sizerButtons->Add(textPts, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
+	m_sizerButtons->Add(m_ctrlSelectedPts, 0, wxALIGN_CENTER_VERTICAL, padding.Controls());
 
 	Layout();
 	GetSizer()->Fit(this);

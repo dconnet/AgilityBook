@@ -37,6 +37,7 @@
 #include "DlgDogPanelTitles.h"
 #include "FilterOptions.h"
 
+#include "LibARBWin/DlgPadding.h"
 #include <wx/notebook.h>
 
 #ifdef __WXMSW__
@@ -102,12 +103,13 @@ CDlgDog::CDlgDog(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog, wxWindow* pParen
 	notebook->AddPage(m_panelPoints, _("IDD_DOG_POINTS"), false);
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(notebook, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(notebook, 1, wxEXPAND | wxALL, padding.ButtonSizer());
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 
 	SetSizer(bSizer);
 	Layout();

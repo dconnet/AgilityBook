@@ -32,6 +32,7 @@
 #include "ARB/ARBAgilityRecordBook.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/Widgets.h"
 #include <wx/filedlg.h>
 
@@ -92,24 +93,25 @@ CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)
 	m_FileName->SetToolTip(_("HIDC_CONFIG_UPDATE_FILENAME"));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(m_radioDefault, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_radioDefault, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* bSizerRadio = new wxBoxSizer(wxHORIZONTAL);
-	bSizerRadio->Add(m_radioExisting, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	bSizerRadio->Add(m_radioExisting, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
 	bSizerRadio->Add(m_btnPick, 0, wxALIGN_CENTER_VERTICAL);
 
-	bSizer->Add(bSizerRadio, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(bSizerRadio, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* bSizerWithSpace = new wxBoxSizer(wxHORIZONTAL);
-	bSizerWithSpace->AddSpacer(wxDLG_UNIT_X(this, 10));
+	bSizerWithSpace->AddSpacer(padding.CheckboxOffset());
 	bSizerWithSpace->Add(m_FileName, 1, wxEXPAND);
 
-	bSizer->Add(bSizerWithSpace, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(bSizerWithSpace, 0, wxEXPAND | wxALL, padding.Controls());
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 
 	SetSizer(bSizer);
 	Layout();

@@ -20,6 +20,7 @@
 #include "DlgARBHelp.h"
 
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -52,19 +53,20 @@ CDlgPageEncodeFiles::CDlgPageEncodeFiles(CDlgARBHelp* pParent)
 	btnNone->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgPageEncodeFiles::OnCheckNone, this);
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 	bSizer->Add(text1, 0, wxEXPAND);
 
 	wxBoxSizer* sizerListBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerListBtns->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerListBtns->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, padding.Controls());
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
-	sizerBtns->Add(btnAll, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(btnAll, 0, wxEXPAND | wxBOTTOM, padding.Inner());
 	sizerBtns->Add(btnNone, 0, wxEXPAND);
 	sizerListBtns->Add(sizerBtns);
 
-	bSizer->Add(sizerListBtns, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerListBtns, 1, wxEXPAND | wxTOP, padding.Controls());
 
 	SetSizer(bSizer);
 	Layout();

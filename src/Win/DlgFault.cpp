@@ -24,6 +24,7 @@
 #include "AgilityBook.h"
 
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/Validators.h"
 
 #ifdef __WXMSW__
@@ -74,12 +75,12 @@ CDlgFault::CDlgFault(std::set<std::wstring>& inFaults, std::wstring const& fault
 	comboBox->AutoComplete(faults);
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(comboBox, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
-
+	bSizer->Add(comboBox, 1, wxEXPAND | wxALL, padding.Controls());
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 
 	SetSizer(bSizer);
 	Layout();

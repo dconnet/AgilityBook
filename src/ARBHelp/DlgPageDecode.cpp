@@ -29,6 +29,7 @@
 #include "ARBCommon/BinaryData.h"
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/Widgets.h"
 #include "fmt/xchar.h"
 #include <wx/ffile.h>
@@ -92,18 +93,19 @@ CDlgPageDecode::CDlgPageDecode()
 	wxButton* btnClose = new wxButton(this, wxID_CANCEL, L"Close", wxDefaultPosition, wxDefaultSize, 0);
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(staticText, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(m_ctrlEncoded, 2, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(m_ctrlDecoded, 3, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(staticText, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(m_ctrlEncoded, 2, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(m_ctrlDecoded, 3, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizeBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizeBtns->Add(btnDecode, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizeBtns->Add(btnDecode, 0, wxRIGHT, padding.Controls());
 	sizeBtns->Add(0, 0, 1, wxEXPAND);
 	sizeBtns->Add(btnClose);
 
-	bSizer->Add(sizeBtns, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizeBtns, 0, wxEXPAND | wxALL, padding.Controls());
 
 	SetSizer(bSizer);
 	Layout();

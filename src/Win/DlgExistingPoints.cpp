@@ -36,6 +36,7 @@
 #include "ARB/ARBDogExistingPoints.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/Validators.h"
 #include "LibARBWin/Widgets.h"
 #include <wx/datectrl.h>
@@ -383,24 +384,25 @@ CDlgExistingPoints::CDlgExistingPoints(
 	ctrlNote->SetToolTip(_("HIDC_EXISTING_COMMENTS"));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerPoints = new wxBoxSizer(wxHORIZONTAL);
-	sizerPoints->Add(textType, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerPoints->Add(m_ctrlType, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerPoints->Add(textEarned, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerPoints->Add(m_ctrlDate, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerPoints->Add(textType, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
+	sizerPoints->Add(m_ctrlType, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
+	sizerPoints->Add(textEarned, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
+	sizerPoints->Add(m_ctrlDate, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
+	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	sizerPoints->Add(ctrlPoints, 0, wxALIGN_CENTER_VERTICAL);
 
-	bSizer->Add(sizerPoints, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerPoints, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerContent = new wxBoxSizer(wxHORIZONTAL);
 
 	wxStaticBoxSizer* sizerWhere = new wxStaticBoxSizer(boxWhere, wxVERTICAL);
 
-	wxFlexGridSizer* sizerCombo = new wxFlexGridSizer(6, 2, wxDLG_UNIT_X(this, 3), wxDLG_UNIT_X(this, 3));
+	wxFlexGridSizer* sizerCombo = new wxFlexGridSizer(6, 2, padding.Inner(), padding.Inner());
 	sizerCombo->SetFlexibleDirection(wxBOTH);
 	sizerCombo->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 
@@ -422,20 +424,20 @@ CDlgExistingPoints::CDlgExistingPoints(
 	sizerCombo->Add(textOther, 0, wxALIGN_CENTER_VERTICAL);
 	sizerCombo->Add(m_ctrlTypeNames, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizerWhere->Add(sizerCombo, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
+	sizerWhere->Add(sizerCombo, 0, wxEXPAND | wxALL, padding.Inner());
 
-	sizerContent->Add(sizerWhere, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerContent->Add(sizerWhere, 1, wxEXPAND | wxRIGHT, padding.Controls());
 
 	wxStaticBoxSizer* sizerComment = new wxStaticBoxSizer(boxComment, wxVERTICAL);
-	sizerComment->Add(ctrlNote, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
+	sizerComment->Add(ctrlNote, 1, wxEXPAND | wxALL, padding.Inner());
 	sizerContent->Add(sizerComment, 1, wxEXPAND);
 
-	bSizer->Add(sizerContent, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerContent, 1, wxEXPAND | wxALL, padding.Controls());
 
 	// Not a separated sizer like most other dialogs because of the groups
 	// boxes right above them.
 	m_sdbSizer = CreateButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(m_sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(m_sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 
 	// Add MultiQ to types if at least one venue supports it.
 	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->Book().GetConfig().GetVenues().begin();

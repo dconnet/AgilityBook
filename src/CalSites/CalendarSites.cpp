@@ -44,6 +44,7 @@
 #include "ARBCommon/VersionNum.h"
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/CheckTreeCtrl.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/DlgProgress.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/ReadHttp.h"
@@ -862,42 +863,43 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	}
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizerPlugins = new wxBoxSizer(wxVERTICAL);
-	sizerPlugins->Add(m_ctrlPlugins, 1, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerPlugins->Add(m_ctrlPlugins, 1, wxEXPAND | wxBOTTOM, padding.Controls());
 	sizerPlugins->Add(m_ctrlDetails, 0, wxEXPAND, 0);
 
-	bSizer->Add(sizerPlugins, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerPlugins, 1, wxEXPAND | wxALL, padding.Controls());
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
-	sizerBtns->Add(m_ctrlRead, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
-	sizerBtns->Add(m_ctrlAdd, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlRead, 0, wxBOTTOM, padding.Inner());
+	sizerBtns->Add(m_ctrlAdd, 0, wxBOTTOM, padding.Inner());
 	sizerBtns->Add(
 		new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL),
 		0,
 		wxEXPAND | wxBOTTOM,
-		wxDLG_UNIT_X(this, 3));
-	sizerBtns->Add(m_ctrlEnable, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
-	sizerBtns->Add(m_ctrlQuery, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+		padding.Inner());
+	sizerBtns->Add(m_ctrlEnable, 0, wxBOTTOM, padding.Inner());
+	sizerBtns->Add(m_ctrlQuery, 0, wxBOTTOM, padding.Inner());
 	sizerBtns->Add(
 		new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL),
 		0,
 		wxEXPAND | wxBOTTOM,
-		wxDLG_UNIT_X(this, 3));
-	sizerBtns->Add(btnNew, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
-	sizerBtns->Add(m_ctrlEdit, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
-	sizerBtns->Add(m_ctrlDelete, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+		padding.Inner());
+	sizerBtns->Add(btnNew, 0, wxBOTTOM, padding.Inner());
+	sizerBtns->Add(m_ctrlEdit, 0, wxBOTTOM, padding.Inner());
+	sizerBtns->Add(m_ctrlDelete, 0, wxBOTTOM, padding.Inner());
 	sizerBtns->Add(
 		new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL),
 		0,
 		wxEXPAND | wxBOTTOM,
-		wxDLG_UNIT_X(this, 3));
+		padding.Inner());
 	sizerBtns->Add(0, 0, 1, wxEXPAND, 0);
 	sizerBtns->Add(btnClose, 0, 0, 0);
 
-	bSizer->Add(sizerBtns, 0, wxEXPAND | wxRIGHT | wxTOP | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerBtns, 0, wxEXPAND | wxRIGHT | wxTOP | wxBOTTOM, padding.Controls());
 
 	SetSizer(bSizer);
 	Layout();

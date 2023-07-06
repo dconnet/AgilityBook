@@ -25,6 +25,7 @@
 
 #include "ARB/ARBDog.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/Validators.h"
 #include "LibARBWin/Widgets.h"
 #include <wx/datectrl.h>
@@ -165,34 +166,35 @@ CDlgDogPanelProp::CDlgDogPanelProp(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog
 	ctrlNotes->SetToolTip(_("HIDC_DOG_NOTES"));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* sizerProp = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
-	sizerName->Add(textCallName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerName->Add(m_ctrlName, 2, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerName->Add(textBreed, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerName->Add(textCallName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
+	sizerName->Add(m_ctrlName, 2, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
+	sizerName->Add(textBreed, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
 	sizerName->Add(ctrlBreed, 3, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerProp->Add(sizerName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerProp->Add(sizerName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerRegName = new wxBoxSizer(wxHORIZONTAL);
-	sizerRegName->Add(textRegName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerRegName->Add(textRegName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
 	sizerRegName->Add(ctrlRegName, 1, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerProp->Add(sizerRegName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerProp->Add(sizerRegName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerAge = new wxBoxSizer(wxHORIZONTAL);
-	sizerAge->Add(textAge, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerAge->Add(m_ctrlAge, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerAge->Add(textBDay, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerAge->Add(ctrlBDay, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
-	sizerAge->Add(ctrlDeceased, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerAge->Add(textAge, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
+	sizerAge->Add(m_ctrlAge, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
+	sizerAge->Add(textBDay, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
+	sizerAge->Add(ctrlBDay, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
+	sizerAge->Add(ctrlDeceased, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
 	sizerAge->Add(m_ctrlDDay, 0, wxALIGN_CENTER_VERTICAL, 0);
 
-	sizerProp->Add(sizerAge, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerProp->Add(textNotes, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerProp->Add(ctrlNotes, 1, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerProp->Add(sizerAge, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	sizerProp->Add(textNotes, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	sizerProp->Add(ctrlNotes, 1, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.Controls());
 
 	SetSizer(sizerProp);
 	Layout();

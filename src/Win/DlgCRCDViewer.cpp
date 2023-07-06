@@ -18,6 +18,7 @@
 #include "stdafx.h"
 #include "DlgCRCDViewer.h"
 
+#include "LibARBWin/DlgPadding.h"
 #include <wx/dcbuffer.h>
 #include <algorithm>
 
@@ -100,10 +101,11 @@ CDlgCRCDViewer::CDlgCRCDViewer(HENHMETAFILE inMetaFile, wxWindow* pParent)
 	btnClose->SetDefault();
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(textCtrl, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(btnClose, 0, wxALIGN_RIGHT | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(textCtrl, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(btnClose, 0, wxALIGN_RIGHT | wxALL, padding.Controls());
 
 	SetSizer(bSizer);
 	Layout();

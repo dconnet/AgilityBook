@@ -47,6 +47,7 @@
 
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ConfigPosition.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/ReportListCtrl.h"
 #include "LibARBWin/ReportListHeader.h"
@@ -502,37 +503,38 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	LoadItems(&inSelect);
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticBoxSizer* sizerVis = new wxStaticBoxSizer(boxVis, wxVERTICAL);
-	sizerVis->Add(ctrlVisAll, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerVis->Add(ctrlVisVis, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerVis->Add(ctrlVisHidden, 0, wxALL, wxDLG_UNIT_X(this, 3));
+	sizerVis->Add(ctrlVisAll, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
+	sizerVis->Add(ctrlVisVis, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
+	sizerVis->Add(ctrlVisHidden, 0, wxALL, padding.Inner());
 
 	wxStaticBoxSizer* sizerUse = new wxStaticBoxSizer(boxUse, wxVERTICAL);
-	sizerUse->Add(ctrlUsageAll, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerUse->Add(ctrlUsageInUse, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerUse->Add(ctrlUsageNot, 0, wxALL, wxDLG_UNIT_X(this, 3));
+	sizerUse->Add(ctrlUsageAll, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
+	sizerUse->Add(ctrlUsageInUse, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
+	sizerUse->Add(ctrlUsageNot, 0, wxALL, padding.Inner());
 
 	wxBoxSizer* sizerButtons = new wxBoxSizer(wxVERTICAL);
-	sizerButtons->Add(ctrlNew, 0, wxBOTTOM, wxDLG_UNIT_X(parent, 3));
-	sizerButtons->Add(m_ctrlEdit, 0, wxBOTTOM, wxDLG_UNIT_X(parent, 3));
-	sizerButtons->Add(m_ctrlDelete, 0, wxBOTTOM, wxDLG_UNIT_X(parent, 3));
+	sizerButtons->Add(ctrlNew, 0, wxBOTTOM, padding.Inner());
+	sizerButtons->Add(m_ctrlEdit, 0, wxBOTTOM, padding.Inner());
+	sizerButtons->Add(m_ctrlDelete, 0, wxBOTTOM, padding.Inner());
 	sizerButtons->Add(m_ctrlCopy);
 	sizerButtons->AddStretchSpacer();
-	sizerButtons->Add(sizerVis, 0, wxTOP, wxDLG_UNIT_X(parent, 5));
-	sizerButtons->Add(sizerUse, 0, wxTOP, wxDLG_UNIT_X(parent, 5));
+	sizerButtons->Add(sizerVis, 0, wxTOP, padding.Controls());
+	sizerButtons->Add(sizerUse, 0, wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerControls = new wxBoxSizer(wxHORIZONTAL);
-	sizerControls->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(parent, 5));
+	sizerControls->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, padding.Controls());
 	sizerControls->Add(sizerButtons);
 
-	bSizer->Add(sizerControls, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(parent, 5));
-	bSizer->Add(m_textCount, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(parent, 5));
+	bSizer->Add(sizerControls, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(m_textCount, 0, wxEXPAND | wxALL, padding.Controls());
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgInfoNote::OnOk, this, wxID_OK);
 

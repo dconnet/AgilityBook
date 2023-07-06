@@ -43,6 +43,7 @@
 
 #include "ARB/ARBDogTrial.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/ReportListCtrl.h"
 #include "LibARBWin/RichEditCtrl2.h"
@@ -312,39 +313,40 @@ CDlgTrial::CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrialPtr const& inTrial, wxWin
 	m_ctrlClubInfo->SetToolTip(_("HIDC_TRIAL_CLUB_INFO"));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerDate = new wxBoxSizer(wxHORIZONTAL);
-	sizerDate->Add(textStart, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerDate->Add(textStart, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	sizerDate->Add(m_ctrlStart);
 
 	wxBoxSizer* sizerLocation = new wxBoxSizer(wxHORIZONTAL);
-	sizerLocation->Add(textLocation, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerLocation->Add(textLocation, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	sizerLocation->Add(m_ctrlLocation, 1, wxEXPAND);
 
 	wxBoxSizer* sizerLocationNotes = new wxBoxSizer(wxHORIZONTAL);
-	sizerLocationNotes->Add(m_ctrlLocationNotes, 0, wxALIGN_BOTTOM | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerLocationNotes->Add(m_ctrlLocationNotes, 0, wxALIGN_BOTTOM | wxRIGHT, padding.Inner());
 	sizerLocationNotes->Add(noteLocationNotes, 0, wxALIGN_BOTTOM);
 
 	wxBoxSizer* sizerNote = new wxBoxSizer(wxHORIZONTAL);
-	sizerNote->Add(textNotes, 0, wxALIGN_TOP | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerNote->Add(textNotes, 0, wxALIGN_TOP | wxRIGHT, padding.Inner());
 	sizerNote->Add(ctrlTrialNotes, 1, wxEXPAND);
 
 	wxBoxSizer* sizerClubBtns = new wxBoxSizer(wxHORIZONTAL);
 	sizerClubBtns->Add(textClub, 0, wxALIGN_BOTTOM);
 	sizerClubBtns->AddStretchSpacer();
-	sizerClubBtns->Add(btnNew, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerClubBtns->Add(m_ctrlEdit, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerClubBtns->Add(m_ctrlDelete, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerClubBtns->Add(m_ctrlUp, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerClubBtns->Add(btnNew, 0, wxRIGHT, padding.Inner());
+	sizerClubBtns->Add(m_ctrlEdit, 0, wxRIGHT, padding.Inner());
+	sizerClubBtns->Add(m_ctrlDelete, 0, wxRIGHT, padding.Inner());
+	sizerClubBtns->Add(m_ctrlUp, 0, wxRIGHT, padding.Inner());
 	sizerClubBtns->Add(m_ctrlDn);
 
 	wxBoxSizer* sizerClubNotes = new wxBoxSizer(wxHORIZONTAL);
-	sizerClubNotes->Add(m_ctrlClubNotes, 0, wxALIGN_BOTTOM | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerClubNotes->Add(m_ctrlClubNotes, 0, wxALIGN_BOTTOM | wxRIGHT, padding.Inner());
 	sizerClubNotes->Add(textClubNotes);
 
-	wxFlexGridSizer* sizerGrid = new wxFlexGridSizer(5, 2, 0, wxDLG_UNIT_X(this, 5)); // rows/cols/vgap/hgap
+	wxFlexGridSizer* sizerGrid = new wxFlexGridSizer(5, 2, 0, padding.Controls()); // rows/cols/vgap/hgap
 	sizerGrid->SetFlexibleDirection(wxBOTH);
 	sizerGrid->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_ALL);
 	sizerGrid->AddGrowableCol(0, 3);
@@ -356,22 +358,22 @@ CDlgTrial::CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrialPtr const& inTrial, wxWin
 	sizerGrid->Add(sizerDate, 0, wxEXPAND);
 	sizerGrid->Add(checkVerified, 0, wxEXPAND);
 	// row 1
-	sizerGrid->Add(sizerLocation, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerGrid->Add(sizerLocationNotes, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerGrid->Add(sizerLocation, 0, wxEXPAND | wxTOP, padding.Controls());
+	sizerGrid->Add(sizerLocationNotes, 0, wxEXPAND | wxTOP, padding.Controls());
 	// row 2
-	sizerGrid->Add(sizerNote, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
-	sizerGrid->Add(m_ctrlLocationInfo, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerGrid->Add(sizerNote, 0, wxEXPAND | wxTOP, padding.TightControls());
+	sizerGrid->Add(m_ctrlLocationInfo, 0, wxEXPAND | wxTOP, padding.TightControls());
 	// row 3
-	sizerGrid->Add(sizerClubBtns, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
-	sizerGrid->Add(sizerClubNotes, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerGrid->Add(sizerClubBtns, 0, wxEXPAND | wxTOP, padding.Controls());
+	sizerGrid->Add(sizerClubNotes, 0, wxEXPAND | wxTOP, padding.Controls());
 	// row 4
-	sizerGrid->Add(m_ctrlClubs, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
-	sizerGrid->Add(m_ctrlClubInfo, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 2));
+	sizerGrid->Add(m_ctrlClubs, 0, wxEXPAND | wxTOP, padding.TightControls());
+	sizerGrid->Add(m_ctrlClubInfo, 0, wxEXPAND | wxTOP, padding.TightControls());
 
-	bSizer->Add(sizerGrid, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerGrid, 1, wxEXPAND | wxALL, padding.Controls());
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 
 	SetSizer(bSizer);
 	Layout();

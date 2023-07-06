@@ -43,6 +43,7 @@
 #include "ARB/ARBDogTrial.h"
 #include "ARBCommon/ARBDate.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/ReportListCtrl.h"
 #include <algorithm>
 
@@ -1469,16 +1470,17 @@ bool CDlgListViewer::Create(std::wstring const& inCaption, wxWindow* pParent)
 	btnClose->SetDefault();
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(m_ctrlList, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_ctrlList, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxHORIZONTAL);
 	sizerBtns->AddStretchSpacer();
-	sizerBtns->Add(m_ctrlCopy, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerBtns->Add(m_ctrlCopy, 0, wxRIGHT, padding.Controls());
 	sizerBtns->Add(btnClose);
 
-	bSizer->Add(sizerBtns, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerBtns, 0, wxEXPAND | wxALL, padding.Controls());
 
 	SetSizer(bSizer);
 	Layout();

@@ -20,6 +20,7 @@
 
 #include "DlgARBHelp.h"
 
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/Widgets.h"
 
 #ifdef __WXMSW__
@@ -58,10 +59,11 @@ CDlgPageEncodeFinish::CDlgPageEncodeFinish(CDlgARBHelp* pParent)
 	m_ctrlText->SetFont(fontFixed);
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 	bSizer->Add(text1, 0, wxEXPAND);
-	bSizer->Add(m_ctrlText, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_ctrlText, 1, wxEXPAND | wxTOP, padding.Controls());
 
 	SetSizer(bSizer);
 	Layout();

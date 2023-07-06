@@ -21,6 +21,7 @@
 
 #include "ARB/ARBDogRun.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/Validators.h"
 #include "LibARBWin/Widgets.h"
 
@@ -68,15 +69,16 @@ CDlgRunPanelComments::CDlgRunPanelComments(
 	btnFaults->SetToolTip(_("HIDC_RUNCOMMENT_COMMENTS_FAULTS"));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* sizerCommentsFaults = new wxBoxSizer(wxHORIZONTAL);
-	sizerCommentsFaults->Add(ctrlComments, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	sizerCommentsFaults->Add(ctrlComments, 1, wxEXPAND | wxALL, padding.Controls());
 
 	wxBoxSizer* sizerFaultsList = new wxBoxSizer(wxVERTICAL);
 	sizerFaultsList->Add(m_ctrlFaultsList, 1, wxEXPAND, 0);
-	sizerFaultsList->Add(btnFaults, 0, wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerFaultsList->Add(btnFaults, 0, wxTOP, padding.Controls());
 
-	sizerCommentsFaults->Add(sizerFaultsList, 0, wxEXPAND | wxRIGHT | wxTOP | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerCommentsFaults->Add(sizerFaultsList, 0, wxEXPAND | wxRIGHT | wxTOP | wxBOTTOM, padding.Controls());
 
 	SetSizer(sizerCommentsFaults);
 	Layout();

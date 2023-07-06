@@ -25,6 +25,7 @@
 
 #include "ARB/ARBDogRun.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/Widgets.h"
 #include <wx/dcbuffer.h>
 
@@ -391,27 +392,28 @@ CDlgRunPanelCRCD::CDlgRunPanelCRCD(
 	}
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* sizerCRCD = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizerDisplay = new wxBoxSizer(wxVERTICAL);
 	sizerDisplay->Add(textCRCD, 0, wxEXPAND, 0);
-	sizerDisplay->Add(m_CRCDDisplay, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerDisplay->Add(m_CRCDDisplay, 1, wxEXPAND | wxTOP, padding.Controls());
 
-	sizerCRCD->Add(sizerDisplay, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	sizerCRCD->Add(sizerDisplay, 1, wxEXPAND | wxALL, padding.Controls());
 
 	wxBoxSizer* sizerBtnsCRCD = new wxBoxSizer(wxVERTICAL);
 	if (m_ctrlCourse)
-		sizerBtnsCRCD->Add(m_ctrlCourse, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+		sizerBtnsCRCD->Add(m_ctrlCourse, 0, wxBOTTOM, padding.Inner());
 	if (m_ctrlCRCDView)
-		sizerBtnsCRCD->Add(m_ctrlCRCDView, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
-	sizerBtnsCRCD->Add(m_ctrlCRCDCopy, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+		sizerBtnsCRCD->Add(m_ctrlCRCDView, 0, wxBOTTOM, padding.Inner());
+	sizerBtnsCRCD->Add(m_ctrlCRCDCopy, 0, wxBOTTOM, padding.Inner());
 	if (m_ctrlIncImage)
-		sizerBtnsCRCD->Add(m_ctrlIncImage, 0, wxBOTTOM, 3);
+		sizerBtnsCRCD->Add(m_ctrlIncImage, 0, wxBOTTOM, padding.Inner());
 	if (textImageDesc)
-		sizerBtnsCRCD->Add(textImageDesc, 0, wxBOTTOM, wxDLG_UNIT_X(this, 3));
+		sizerBtnsCRCD->Add(textImageDesc, 0, wxBOTTOM, padding.Inner());
 
-	sizerCRCD->Add(sizerBtnsCRCD, 0, wxEXPAND | wxRIGHT | wxTOP | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerCRCD->Add(sizerBtnsCRCD, 0, wxEXPAND | wxRIGHT | wxTOP | wxBOTTOM, padding.Controls());
 
 	SetSizer(sizerCRCD);
 	Layout();

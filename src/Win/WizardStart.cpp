@@ -48,6 +48,7 @@
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
 #include "LibARBWin/DlgMessage.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/Logger.h"
 #include <wx/config.h>
 #include <wx/wfstream.h>
@@ -183,26 +184,27 @@ CWizardStart::CWizardStart(CWizard* pSheet, CAgilityBookDoc* pDoc)
 	m_ctrlDesc->Wrap(wxDLG_UNIT_X(this, 115));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticBoxSizer* sizerImportExport = new wxStaticBoxSizer(boxImportExport, wxVERTICAL);
 	if (radioExcel)
-		sizerImportExport->Add(radioExcel, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
+		sizerImportExport->Add(radioExcel, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
 	if (radioCalc)
-		sizerImportExport->Add(radioCalc, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerImportExport->Add(radioSpread, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 3));
-	sizerImportExport->Add(radioArb, 0, wxALL, wxDLG_UNIT_X(this, 3));
-	bSizer->Add(sizerImportExport, 0, wxDLG_UNIT_X(this, 3));
+		sizerImportExport->Add(radioCalc, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
+	sizerImportExport->Add(radioSpread, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
+	sizerImportExport->Add(radioArb, 0, wxALL, padding.Inner());
+	bSizer->Add(sizerImportExport, 0, padding.Inner());
 
 	wxStaticBoxSizer* sizerDesc = new wxStaticBoxSizer(boxDesc, wxVERTICAL);
 	sizerDesc->Add(m_ctrlDesc, 1, wxEXPAND);
 
 	wxBoxSizer* sizerAction = new wxBoxSizer(wxHORIZONTAL);
-	sizerAction->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerAction->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, padding.Controls());
 	sizerAction->Add(sizerDesc, 1, wxEXPAND);
 
-	bSizer->Add(sizerAction, 1, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerAction, 1, wxEXPAND | wxTOP, padding.Controls());
 
 	SetSizer(bSizer);
 	bSizer->Fit(this);

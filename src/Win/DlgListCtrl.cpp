@@ -45,6 +45,7 @@
 #include "ARB/ARBDogRunOtherPoints.h"
 #include "ARB/ARBDogRunPartner.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/ReportListCtrl.h"
 
@@ -651,31 +652,32 @@ bool CDlgListCtrl::Create(std::wstring const& inCaption, wxWindow* pParent, bool
 	m_ctrlCreateTrial->Show(false);
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* bSizerList = new wxBoxSizer(wxHORIZONTAL);
-	bSizerList->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	bSizerList->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, padding.Controls());
 
 	wxBoxSizer* bSizerSide = new wxBoxSizer(wxVERTICAL);
-	bSizerSide->Add(btnOk, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizerSide->Add(btnOk, 0, wxEXPAND | wxBOTTOM, padding.Inner());
 	bSizerSide->Add(btnCancel, 0, wxEXPAND);
 	bSizerSide->AddStretchSpacer();
-	bSizerSide->Add(m_ctrlUp, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizerSide->Add(m_ctrlUp, 0, wxEXPAND | wxBOTTOM, padding.Inner());
 	bSizerSide->Add(m_ctrlDown, 0, wxEXPAND);
 
 	bSizerList->Add(bSizerSide, 0, wxEXPAND);
 
-	bSizer->Add(bSizerList, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(bSizerList, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* bSizerEdit = new wxBoxSizer(wxHORIZONTAL);
-	bSizerEdit->Add(m_ctrlNew, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	bSizerEdit->Add(m_ctrlEdit, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	bSizerEdit->Add(m_ctrlNew, 0, wxRIGHT, padding.Inner());
+	bSizerEdit->Add(m_ctrlEdit, 0, wxRIGHT, padding.Inner());
 	bSizerEdit->Add(m_ctrlDelete);
 	bSizerEdit->AddStretchSpacer();
 	bSizerEdit->Add(m_ctrlCreateTrial);
 
-	bSizer->Add(bSizerEdit, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(bSizerEdit, 0, wxEXPAND | wxALL, padding.Controls());
 
 	SetSizer(bSizer);
 	Layout();

@@ -51,6 +51,7 @@
 #include "ARBCommon/BreakLine.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/DlgProgress.h"
 #include "LibARBWin/Logger.h"
 #include "LibARBWin/ReportListCtrl.h"
@@ -234,6 +235,7 @@ CWizardExport::CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 	m_ctrlPreview->SetToolTip(_("HIDC_WIZARD_EXPORT_PREVIEW"));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
@@ -241,7 +243,7 @@ CWizardExport::CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 
 	wxStaticBoxSizer* sizerDelimiters = new wxStaticBoxSizer(m_boxDelimiters, wxVERTICAL);
 
-	wxFlexGridSizer* sizerDelim2 = new wxFlexGridSizer(2, 3, wxDLG_UNIT_X(this, 3), wxDLG_UNIT_X(this, 3));
+	wxFlexGridSizer* sizerDelim2 = new wxFlexGridSizer(2, 3, padding.Inner(), padding.Inner());
 	sizerDelim2->SetFlexibleDirection(wxBOTH);
 	sizerDelim2->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 	sizerDelim2->Add(m_ctrlTab);
@@ -251,29 +253,29 @@ CWizardExport::CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 	sizerDelim2->Add(m_ctrlSemicolon, 0, wxALIGN_CENTER_VERTICAL);
 
 	wxBoxSizer* sizerOther = new wxBoxSizer(wxHORIZONTAL);
-	sizerOther->Add(m_ctrlOther, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerOther->Add(m_ctrlOther, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	sizerOther->Add(m_ctrlOtherChar, 0, wxALIGN_CENTER_VERTICAL);
 
 	sizerDelim2->Add(sizerOther, 1, wxEXPAND | wxALIGN_CENTER_VERTICAL);
 
-	sizerDelimiters->Add(sizerDelim2, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 3));
+	sizerDelimiters->Add(sizerDelim2, 1, wxEXPAND | wxALL, padding.Inner());
 
-	sizerOptions->Add(sizerDelimiters, 0, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerOptions->Add(sizerDelimiters, 0, wxEXPAND | wxRIGHT, padding.Controls());
 
 	wxBoxSizer* sizerAssign = new wxBoxSizer(wxHORIZONTAL);
-	sizerAssign->Add(m_ctrlAssign, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerAssign->Add(m_ctrlAssign, 0, wxRIGHT, padding.Controls());
 
 	wxBoxSizer* sizerFormat = new wxBoxSizer(wxHORIZONTAL);
-	sizerFormat->Add(textFormat, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerFormat->Add(textFormat, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	sizerFormat->Add(m_ctrlDateFormat, wxALIGN_CENTER_VERTICAL);
 
 	sizerAssign->Add(sizerFormat, 0, wxALIGN_TOP);
 
 	sizerOptions->AddStretchSpacer();
-	sizerOptions->Add(sizerAssign, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 3));
+	sizerOptions->Add(sizerAssign, 0, wxEXPAND | wxTOP, padding.Inner());
 
 	bSizer->Add(sizerOptions, 0, wxEXPAND);
-	bSizer->Add(textPreview, 0, wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(textPreview, 0, wxTOP, padding.Controls());
 	bSizer->Add(m_ctrlPreview, 1, wxEXPAND);
 
 	SetSizer(bSizer);

@@ -26,6 +26,7 @@
 
 #include "ARB/ARBDogRunPartner.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/Validators.h"
 #include "LibARBWin/Widgets.h"
 
@@ -127,29 +128,30 @@ CDlgPartner::CDlgPartner(
 	ctrlNumber->SetToolTip(_("HIDC_PARTNER_REG_NUM"));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizer1 = new wxBoxSizer(wxHORIZONTAL);
-	sizer1->Add(textHandler, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizer1->Add(textHandler, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	sizer1->Add(ctrlHandler, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND);
 
-	bSizer->Add(sizer1, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizer1, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
-	sizer2->Add(textDog, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizer2->Add(textDog, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	sizer2->Add(ctrlDog, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND);
 
-	bSizer->Add(sizer2, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizer2, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizer3 = new wxBoxSizer(wxHORIZONTAL);
-	sizer3->Add(textNumber, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizer3->Add(textNumber, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	sizer3->Add(ctrlNumber, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND);
 
-	bSizer->Add(sizer3, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizer3, 1, wxEXPAND | wxALL, padding.Controls());
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 
 	SetSizer(bSizer);
 	Layout();

@@ -27,6 +27,7 @@
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/CheckLink.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/ResourceManager.h"
 #include "LibARBWin/Widgets.h"
 #include <wx/dnd.h>
@@ -132,18 +133,19 @@ CDlgRunPanelLinks::CDlgRunPanelLinks(
 	m_ctrlLinkOpen->SetToolTip(_("HIDC_RUNLINK_OPEN"));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* sizerLinks = new wxBoxSizer(wxVERTICAL);
-	sizerLinks->Add(m_ctrlLinks, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerLinks->Add(m_ctrlLinks, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerLinkBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerLinkBtns->Add(btnLinkNew, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerLinkBtns->Add(m_ctrlLinkEdit, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerLinkBtns->Add(m_ctrlLinkDelete, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerLinkBtns->Add(btnLinkNew, 0, wxRIGHT, padding.Inner());
+	sizerLinkBtns->Add(m_ctrlLinkEdit, 0, wxRIGHT, padding.Inner());
+	sizerLinkBtns->Add(m_ctrlLinkDelete, 0, wxRIGHT, padding.Inner());
 	sizerLinkBtns->Add(0, 0, 1, wxEXPAND, 0);
 	sizerLinkBtns->Add(m_ctrlLinkOpen, 0, 0, 0);
 
-	sizerLinks->Add(sizerLinkBtns, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	sizerLinks->Add(sizerLinkBtns, 0, wxEXPAND | wxALL, padding.Controls());
 
 	SetSizer(sizerLinks);
 	Layout();

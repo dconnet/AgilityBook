@@ -20,6 +20,7 @@
 #include "DlgMessageBox.h"
 
 #include "ImageHelper.h"
+#include "LibARBWin/DlgPadding.h"
 #include <wx/artprov.h>
 
 #ifdef __WXMSW__
@@ -89,21 +90,22 @@ CDlgMessageBox::CDlgMessageBox(
 	long btnFlags = inFlags & (wxOK | wxCANCEL | wxYES | wxNO | wxHELP | wxNO_DEFAULT);
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerText = new wxBoxSizer(wxHORIZONTAL);
 	if (ctrlIcon)
-		sizerText->Add(ctrlIcon, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+		sizerText->Add(ctrlIcon, 0, wxRIGHT, padding.Controls());
 	sizerText->Add(ctrlText, 1, wxEXPAND);
 
-	bSizer->Add(sizerText, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerText, 1, wxEXPAND | wxALL, padding.Controls());
 
 	if (ctrlDetails)
-		bSizer->Add(ctrlDetails, 0, wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 5));
+		bSizer->Add(ctrlDetails, 0, wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxBOTTOM, padding.Controls());
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(btnFlags);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 
 	SetSizer(bSizer);
 	Layout();

@@ -40,6 +40,7 @@
 #include "ARB/ARBConfigEvent.h"
 #include "ARB/ARBConfigVenue.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/ReportListCtrl.h"
 #include "LibARBWin/Validators.h"
@@ -571,13 +572,13 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlPointsClosing->SetToolTip(_("HIDC_CONFIG_EVENT_CLOSING_PTS"));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerDivDates = new wxBoxSizer(wxHORIZONTAL);
 
-	wxFlexGridSizer* sizerDiv
-		= new wxFlexGridSizer(2, 2, wxDLG_UNIT_X(this, 5), wxDLG_UNIT_X(this, 3)); // rows/cols/vgap/hgap
+	wxFlexGridSizer* sizerDiv = new wxFlexGridSizer(2, 2, padding.Controls(), padding.Inner()); // rows/cols/vgap/hgap
 	sizerDiv->SetFlexibleDirection(wxBOTH);
 	sizerDiv->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 	sizerDiv->Add(textDiv, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
@@ -585,9 +586,9 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	sizerDiv->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
 	sizerDiv->Add(m_ctrlLevel, 1, wxALIGN_CENTER_VERTICAL);
 
-	sizerDivDates->Add(sizerDiv, 0, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerDivDates->Add(sizerDiv, 0, wxEXPAND | wxRIGHT, padding.Controls());
 
-	wxFlexGridSizer* sizerDates = new wxFlexGridSizer(2, 2, wxDLG_UNIT_X(this, 5), wxDLG_UNIT_X(this, 5));
+	wxFlexGridSizer* sizerDates = new wxFlexGridSizer(2, 2, padding.Controls(), padding.Controls());
 	sizerDates->SetFlexibleDirection(wxBOTH);
 	sizerDates->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 	sizerDates->Add(m_ctrlValidFrom, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
@@ -597,51 +598,51 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 
 	sizerDivDates->Add(sizerDates, 1, wxEXPAND);
 
-	bSizer->Add(sizerDivDates, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerDivDates, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerStyle = new wxBoxSizer(wxHORIZONTAL);
-	sizerStyle->Add(textStyle, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerStyle->Add(textStyle, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	sizerStyle->Add(m_ctrlType, 0, wxALIGN_CENTER_VERTICAL);
-	bSizer->Add(sizerStyle, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerStyle, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerOptions = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizerCol1 = new wxBoxSizer(wxVERTICAL);
-	sizerCol1->Add(m_ctrlDropFractions, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
-	sizerCol1->Add(m_ctrlBonus, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
-	sizerCol1->Add(m_ctrlSuperQ, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
-	sizerCol1->Add(m_ctrlSpeedPts, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerCol1->Add(m_ctrlDropFractions, 0, wxBOTTOM, padding.Controls());
+	sizerCol1->Add(m_ctrlBonus, 0, wxBOTTOM, padding.Controls());
+	sizerCol1->Add(m_ctrlSuperQ, 0, wxBOTTOM, padding.Controls());
+	sizerCol1->Add(m_ctrlSpeedPts, 0, wxBOTTOM, padding.Controls());
 
 	wxBoxSizer* sizerMultiplier = new wxBoxSizer(wxHORIZONTAL);
-	sizerMultiplier->Add(m_ctrlMultiplyText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerMultiplier->Add(m_ctrlMultiplyText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	sizerMultiplier->Add(m_ctrlMultiply, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizerCol1->Add(sizerMultiplier, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerCol1->Add(sizerMultiplier, 0, wxBOTTOM, padding.Controls());
 	sizerCol1->Add(m_ctrlPlacementText);
 
 	wxBoxSizer* sizerPlacements = new wxBoxSizer(wxHORIZONTAL);
 
-	sizerPlacements->Add(m_ctrlPlacement, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerPlacements->Add(m_ctrlPlacement, 1, wxEXPAND | wxRIGHT, padding.Controls());
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
-	sizerBtns->Add(m_ctrlPlacementNew, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
-	sizerBtns->Add(m_ctrlPlacementEdit, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(m_ctrlPlacementNew, 0, wxEXPAND | wxBOTTOM, padding.Inner());
+	sizerBtns->Add(m_ctrlPlacementEdit, 0, wxEXPAND | wxBOTTOM, padding.Inner());
 	sizerBtns->Add(m_ctrlPlacementDelete, 0, wxEXPAND);
 
 	sizerPlacements->Add(sizerBtns, 0, wxEXPAND);
 
 	sizerCol1->Add(sizerPlacements, 0, wxEXPAND);
 
-	sizerOptions->Add(sizerCol1, 0, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerOptions->Add(sizerCol1, 0, wxEXPAND | wxRIGHT, padding.Controls());
 
 	wxBoxSizer* sizerCol2 = new wxBoxSizer(wxVERTICAL);
-	sizerCol2->Add(m_ctrlTimeFaultsCleanQ, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
-	sizerCol2->Add(m_ctrlSubtractTimeFaults, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
-	sizerCol2->Add(m_ctrlTimeFaultsUnder, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
-	sizerCol2->Add(m_ctrlTimeFaultsOver, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerCol2->Add(m_ctrlTimeFaultsCleanQ, 0, wxBOTTOM, padding.Controls());
+	sizerCol2->Add(m_ctrlSubtractTimeFaults, 0, wxBOTTOM, padding.Controls());
+	sizerCol2->Add(m_ctrlTimeFaultsUnder, 0, wxBOTTOM, padding.Controls());
+	sizerCol2->Add(m_ctrlTimeFaultsOver, 0, wxBOTTOM, padding.Controls());
 	sizerCol2->Add(m_ctrlTimeFaultsTitlingPts);
 
-	wxFlexGridSizer* sizerPoints = new wxFlexGridSizer(2, 2, wxDLG_UNIT_X(this, 5), wxDLG_UNIT_X(this, 3));
+	wxFlexGridSizer* sizerPoints = new wxFlexGridSizer(2, 2, padding.Controls(), padding.Inner());
 	sizerPoints->SetFlexibleDirection(wxBOTH);
 	sizerPoints->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 	sizerPoints->Add(m_ctrlPointsOpeningText, 0, wxALIGN_CENTER_VERTICAL);
@@ -652,10 +653,10 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 
 	sizerOptions->Add(sizerCol2, 0, wxEXPAND);
 
-	bSizer->Add(sizerOptions, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerOptions, 0, wxEXPAND | wxALL, padding.Controls());
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 
 	FillLevelList();
 	m_ctrlType->SetSelection(-1);

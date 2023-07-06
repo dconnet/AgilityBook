@@ -29,6 +29,7 @@
 #include "ARB/ARBDog.h"
 #include "ARBCommon/ARBDate.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/Widgets.h"
 
 #ifdef __WXMSW__
@@ -162,25 +163,26 @@ void CDlgReorder::InitDlg(wxWindow* pParent)
 	m_ctrlDown->SetToolTip(_("HIDC_REORDER_MOVE_DOWN"));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* bSizerList = new wxBoxSizer(wxHORIZONTAL);
 	if (m_ctrlList)
-		bSizerList->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+		bSizerList->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, padding.Controls());
 	else if (m_ctrlTree)
-		bSizerList->Add(m_ctrlTree, 1, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+		bSizerList->Add(m_ctrlTree, 1, wxEXPAND | wxRIGHT, padding.Controls());
 
 	wxBoxSizer* bSizerSide = new wxBoxSizer(wxVERTICAL);
-	bSizerSide->Add(btnOk, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizerSide->Add(btnOk, 0, wxEXPAND | wxBOTTOM, padding.Inner());
 	bSizerSide->Add(btnCancel, 0, wxEXPAND);
 	bSizerSide->AddStretchSpacer();
-	bSizerSide->Add(m_ctrlUp, 0, wxEXPAND | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizerSide->Add(m_ctrlUp, 0, wxEXPAND | wxBOTTOM, padding.Inner());
 	bSizerSide->Add(m_ctrlDown, 0, wxEXPAND);
 
 	bSizerList->Add(bSizerSide, 0, wxEXPAND);
 
-	bSizer->Add(bSizerList, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(bSizerList, 1, wxEXPAND | wxALL, padding.Controls());
 
 	if (m_Dogs && m_ctrlList)
 	{

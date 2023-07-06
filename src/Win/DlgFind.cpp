@@ -23,6 +23,7 @@
 #include "AgilityBook.h"
 
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/Widgets.h"
 
 #ifdef __WXMSW__
@@ -123,28 +124,29 @@ CDlgFind::CDlgFind(IFindCallback& callback, wxWindow* pParent)
 	wxButton* btnClose = new wxButton(this, wxID_CANCEL, _("IDC_FIND_CLOSE"), wxDefaultPosition, wxDefaultSize, 0);
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* bSizerWhat = new wxBoxSizer(wxHORIZONTAL);
-	bSizerWhat->Add(staticText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	bSizerWhat->Add(staticText, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	bSizerWhat->Add(m_textCtrl, 1, wxALIGN_CENTER_VERTICAL);
 
-	bSizer->Add(bSizerWhat, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(m_checkBox, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(bSizerWhat, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(m_checkBox, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* bSizerFind = new wxBoxSizer(wxHORIZONTAL);
-	bSizerFind->Add(m_radioBoxSearch, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	bSizerFind->Add(m_radioBoxSearch, 0, wxRIGHT, padding.Controls());
 	bSizerFind->Add(m_radioBoxDir);
 
-	bSizer->Add(bSizerFind, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(bSizerFind, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* bSizerBtns = new wxBoxSizer(wxHORIZONTAL);
 	bSizerBtns->AddStretchSpacer();
-	bSizerBtns->Add(m_btnFind, 0, wxRIGHT, wxDLG_UNIT_X(this, 5));
+	bSizerBtns->Add(m_btnFind, 0, wxRIGHT, padding.Controls());
 	bSizerBtns->Add(btnClose);
 
-	bSizer->Add(bSizerBtns, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(bSizerBtns, 0, wxEXPAND | wxALL, padding.Controls());
 
 	SetSizer(bSizer);
 	Layout();

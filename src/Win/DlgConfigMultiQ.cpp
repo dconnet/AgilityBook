@@ -32,6 +32,7 @@
 #include "ARB/ARBConfigVenue.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ARBWinUtilities.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/ReportListCtrl.h"
 #include "LibARBWin/Validators.h"
 #include <wx/datectrl.h>
@@ -187,22 +188,23 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 	m_ctrlRemove->SetToolTip(_("HIDC_CONFIG_MULTIQ_DELETE"));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
-	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	sizerName->Add(m_ctrlName, 1, wxALIGN_CENTER_VERTICAL);
 
-	bSizer->Add(sizerName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerAbbrev = new wxBoxSizer(wxHORIZONTAL);
-	sizerAbbrev->Add(textAbbrev, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerAbbrev->Add(textAbbrev, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	sizerAbbrev->Add(ctrlAbbrev, 0, wxALIGN_CENTER_VERTICAL);
 
-	bSizer->Add(sizerAbbrev, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerAbbrev, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
-	wxFlexGridSizer* sizerDates = new wxFlexGridSizer(2, 2, wxDLG_UNIT_X(this, 3), wxDLG_UNIT_X(this, 5));
+	wxFlexGridSizer* sizerDates = new wxFlexGridSizer(2, 2, padding.Inner(), padding.Controls());
 	sizerDates->SetFlexibleDirection(wxBOTH);
 	sizerDates->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 
@@ -211,18 +213,18 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 	sizerDates->Add(ctrlValidTo, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
 	sizerDates->Add(m_ctrlDateTo, 0, wxALIGN_CENTER_VERTICAL);
 
-	bSizer->Add(sizerDates, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(m_ctrlItems, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerDates, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(m_ctrlItems, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerBtns->Add(btnAdd, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerBtns->Add(m_ctrlEdit, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerBtns->Add(btnAdd, 0, wxRIGHT, padding.Inner());
+	sizerBtns->Add(m_ctrlEdit, 0, wxRIGHT, padding.Inner());
 	sizerBtns->Add(m_ctrlRemove);
 
-	bSizer->Add(sizerBtns, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerBtns, 0, wxEXPAND | wxALL, padding.Controls());
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 
 	size_t n = m_pMultiQ->GetNumItems();
 	for (size_t i = 0; i < n; ++i)

@@ -13,6 +13,7 @@
 #include "stdafx.h"
 #include "DlgDogPanelBase.h"
 
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/ReportListCtrl.h"
 #include "LibARBWin/ReportListHeader.h"
 
@@ -97,15 +98,18 @@ void CDlgDogPanelReportBase::DoCreate(bool isSingleSel, bool hasImageList)
 	m_btnDelete = new wxButton(this, wxID_ANY, _("Delete"), wxDefaultPosition, wxDefaultSize, 0);
 	m_btnDelete->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgDogPanelReportBase::OnDelete, this);
 
+	// Sizers
+	const ARBWin::CDlgPadding padding(this);
+
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(m_ctrlList, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_ctrlList, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	m_sizerButtons = new wxBoxSizer(wxHORIZONTAL);
-	m_sizerButtons->Add(m_btnNew, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	m_sizerButtons->Add(m_btnEdit, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	m_sizerButtons->Add(m_btnDelete, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
+	m_sizerButtons->Add(m_btnNew, 0, wxRIGHT, padding.Inner());
+	m_sizerButtons->Add(m_btnEdit, 0, wxRIGHT, padding.Inner());
+	m_sizerButtons->Add(m_btnDelete, 0, wxRIGHT, padding.Inner());
 
-	bSizer->Add(m_sizerButtons, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_sizerButtons, 0, wxEXPAND | wxALL, padding.Controls());
 
 	DoInitList();
 	m_reportColumn.SizeColumns();

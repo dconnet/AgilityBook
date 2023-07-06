@@ -28,6 +28,7 @@
 
 #include "ARB/ARBConfig.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/Validators.h"
 #include "LibARBWin/Widgets.h"
 
@@ -146,34 +147,35 @@ CDlgPluginDetails::CDlgPluginDetails(
 	m_ctrlCodes->Wrap(-1);
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
-	sizerName->Add(textName, 0, wxALIGN_CENTER | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerName->Add(textName, 0, wxALIGN_CENTER | wxRIGHT, padding.Controls());
 	sizerName->Add(m_ctrlName, 1, wxEXPAND, 0);
-	bSizer->Add(sizerName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerDesc = new wxBoxSizer(wxVERTICAL);
 	sizerDesc->Add(textDesc, 0, 0, 0);
-	sizerDesc->Add(ctrlDesc, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 1));
-	bSizer->Add(sizerDesc, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerDesc->Add(ctrlDesc, 0, wxEXPAND | wxTOP, padding.Tight());
+	bSizer->Add(sizerDesc, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerSearch = new wxBoxSizer(wxVERTICAL);
 	sizerSearch->Add(textSearchURL, 0, 0, 0);
-	sizerSearch->Add(ctrlSearchURL, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 1));
-	bSizer->Add(sizerSearch, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerSearch->Add(ctrlSearchURL, 0, wxEXPAND | wxTOP, padding.Tight());
+	bSizer->Add(sizerSearch, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerHelp = new wxBoxSizer(wxVERTICAL);
 	sizerHelp->Add(textHelpURL, 0, 0, 0);
-	sizerHelp->Add(ctrlHelpURL, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 1));
-	bSizer->Add(sizerHelp, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerHelp->Add(ctrlHelpURL, 0, wxEXPAND | wxTOP, padding.Tight());
+	bSizer->Add(sizerHelp, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
-	bSizer->Add(btnCodes, 0, wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
-	bSizer->Add(m_ctrlCodes, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(btnCodes, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(m_ctrlCodes, 0, wxEXPAND | wxALL, padding.Controls());
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 
 	SetSizer(bSizer);
 	Layout();

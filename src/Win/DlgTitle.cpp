@@ -38,6 +38,7 @@
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBDogTitle.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/RichEditCtrl2.h"
 #include "LibARBWin/Validators.h"
 #include <wx/datectrl.h>
@@ -199,6 +200,7 @@ CDlgTitle::CDlgTitle(ARBConfig const& config, ARBDogTitleList& titles, ARBDogTit
 	FillTitles(true);
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
@@ -207,37 +209,37 @@ CDlgTitle::CDlgTitle(ARBConfig const& config, ARBDogTitleList& titles, ARBDogTit
 	wxBoxSizer* sizerDateVenue = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerDate = new wxBoxSizer(wxHORIZONTAL);
-	sizerDate->Add(checkEarned, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerDate->Add(checkEarned, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	sizerDate->Add(m_ctrlDate, 0, wxALIGN_CENTER_VERTICAL);
 
 	sizerDateVenue->Add(sizerDate, 0, wxEXPAND);
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
-	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	sizerVenue->Add(m_ctrlVenues, 0, wxALIGN_CENTER_VERTICAL);
 
-	sizerDateVenue->Add(sizerVenue, 0, wxEXPAND | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerDateVenue->Add(sizerVenue, 0, wxEXPAND | wxTOP, padding.Controls());
 
-	sizerTop2Rows->Add(sizerDateVenue, 0, wxEXPAND | wxRIGHT, wxDLG_UNIT_X(this, 5));
+	sizerTop2Rows->Add(sizerDateVenue, 0, wxEXPAND | wxRIGHT, padding.Controls());
 
 	wxBoxSizer* sizerChecks = new wxBoxSizer(wxVERTICAL);
-	sizerChecks->Add(m_ctrlHide, 0, wxBOTTOM, wxDLG_UNIT_X(this, 5));
+	sizerChecks->Add(m_ctrlHide, 0, wxBOTTOM, padding.Controls());
 	sizerChecks->Add(m_ctrlReceived);
 
 	sizerTop2Rows->Add(sizerChecks, 0, wxEXPAND);
 
-	bSizer->Add(sizerTop2Rows, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerTop2Rows, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerTitle = new wxBoxSizer(wxHORIZONTAL);
-	sizerTitle->Add(textTitle, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, wxDLG_UNIT_X(this, 3));
+	sizerTitle->Add(textTitle, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
 	sizerTitle->Add(m_ctrlTitles, 1, wxALIGN_CENTER_VERTICAL);
 
-	bSizer->Add(sizerTitle, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(sizerTitle, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
-	bSizer->Add(m_ctrlDesc, 1, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	bSizer->Add(m_ctrlDesc, 1, wxEXPAND | wxALL, padding.Controls());
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, wxDLG_UNIT_X(this, 3));
+	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 
 	SetSizer(bSizer);
 	Layout();

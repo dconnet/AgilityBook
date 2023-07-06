@@ -32,6 +32,7 @@
 
 #include "ARB/ARBDogRun.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/ReportListCtrl.h"
 #include <wx/dcbuffer.h>
@@ -270,16 +271,17 @@ CDlgRunPanelRefRuns::CDlgRunPanelRefRuns(
 	m_ctrlRefDelete->SetToolTip(_("HIDC_RUNREF_DELETE"));
 
 	// Sizers
+	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* sizerRefRuns = new wxBoxSizer(wxVERTICAL);
-	sizerRefRuns->Add(m_ctrlRefRuns, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, wxDLG_UNIT_X(this, 5));
+	sizerRefRuns->Add(m_ctrlRefRuns, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerRefBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerRefBtns->Add(btnRefNew, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerRefBtns->Add(m_ctrlRefAddMe, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerRefBtns->Add(m_ctrlRefEdit, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerRefBtns->Add(m_ctrlRefDelete, 0, wxRIGHT, wxDLG_UNIT_X(this, 3));
-	sizerRefRuns->Add(sizerRefBtns, 0, wxEXPAND | wxALL, wxDLG_UNIT_X(this, 5));
+	sizerRefBtns->Add(btnRefNew, 0, wxRIGHT, padding.Inner());
+	sizerRefBtns->Add(m_ctrlRefAddMe, 0, wxRIGHT, padding.Inner());
+	sizerRefBtns->Add(m_ctrlRefEdit, 0, wxRIGHT, padding.Inner());
+	sizerRefBtns->Add(m_ctrlRefDelete, 0, wxRIGHT, padding.Inner());
+	sizerRefRuns->Add(sizerRefBtns, 0, wxEXPAND | wxALL, padding.Controls());
 
 	SetSizer(sizerRefRuns);
 	Layout();
