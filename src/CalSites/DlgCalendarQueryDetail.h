@@ -85,7 +85,6 @@ private:
 	wxButton* m_ctrlEditVenue;
 	wxButton* m_ctrlDeleteVenue;
 
-	DECLARE_EVENT_TABLE()
 	void OnLocationsItemSelected(wxListEvent& evt);
 	void OnLocationsItemActivated(wxListEvent& evt);
 	void OnVenuesItemSelected(wxListEvent& evt);

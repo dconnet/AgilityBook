@@ -41,10 +41,6 @@ using namespace ARB;
 using namespace ARBCommon;
 using namespace ARBWin;
 
-wxBEGIN_EVENT_TABLE(CDlgQueryDetail, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgQueryDetail::OnOk)
-wxEND_EVENT_TABLE()
-
 
 CDlgQueryDetail::CDlgQueryDetail(
 	bool bReadOnly,
@@ -150,6 +146,7 @@ CDlgQueryDetail::CDlgQueryDetail(
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgQueryDetail::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);
 	Layout();

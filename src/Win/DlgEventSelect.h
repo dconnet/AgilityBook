@@ -59,7 +59,6 @@ private:
 	ARBCommon::ARBDate m_Date;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnSelchangeDivision(wxCommandEvent& evt);
 	void OnSelchangeLevel(wxCommandEvent& evt);
 	void OnSelchangeEvent(wxCommandEvent& evt);

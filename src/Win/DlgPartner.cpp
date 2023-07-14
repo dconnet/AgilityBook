@@ -41,10 +41,6 @@ using namespace ARB;
 using namespace ARBCommon;
 using namespace ARBWin;
 
-wxBEGIN_EVENT_TABLE(CDlgPartner, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgPartner::OnOk)
-wxEND_EVENT_TABLE()
-
 
 CDlgPartner::CDlgPartner(
 	ARBDogRunPartnerPtr const& inPartner,
@@ -153,6 +149,7 @@ CDlgPartner::CDlgPartner(
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgPartner::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);
 	Layout();

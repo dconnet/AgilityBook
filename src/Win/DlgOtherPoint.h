@@ -43,7 +43,6 @@ private:
 	double m_Points;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnSelchangeOtherpoints(wxCommandEvent& evt);
 	void OnOtherNew(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);

@@ -80,11 +80,6 @@ bool CMultipleValidator::Validate(wxWindow* parent)
 
 /////////////////////////////////////////////////////////////////////////////
 
-wxBEGIN_EVENT_TABLE(CDlgConfigTitle, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgConfigTitle::OnOk)
-wxEND_EVENT_TABLE()
-
-
 CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pParent)
 	: wxDialog()
 	, m_Title(inTitle)
@@ -409,6 +404,7 @@ CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pPa
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigTitle::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);
 	Layout();

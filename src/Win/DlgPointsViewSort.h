@@ -44,7 +44,6 @@ private:
 	ARBPointsViewSort m_Tertiary;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnSelchangePrimary(wxCommandEvent& evt);
 	void OnSelchangeSecondary(wxCommandEvent& evt);
 	void OnSelchangeTertiary(wxCommandEvent& evt);

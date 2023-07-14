@@ -42,7 +42,6 @@ private:
 	ARB::ARBDogRunPartnerPtr m_Partner;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);
 };
 

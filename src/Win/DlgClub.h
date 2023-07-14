@@ -55,7 +55,6 @@ private:
 	bool m_bCoSanction;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnClickedPrimary(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };

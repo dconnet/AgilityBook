@@ -64,11 +64,7 @@ public:
 	ARBDogRunPtr m_pRun;
 };
 
-
-wxBEGIN_EVENT_TABLE(CDlgReorder, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgReorder::OnOk)
-wxEND_EVENT_TABLE()
-
+/////////////////////////////////////////////////////////////////////////////
 
 CDlgReorder::CDlgReorder(CAgilityBookDoc* pDoc, ARBDogList* dogs, wxWindow* pParent)
 	: wxDialog()
@@ -151,6 +147,7 @@ void CDlgReorder::InitDlg(wxWindow* pParent)
 	}
 
 	wxButton* btnOk = new wxButton(this, wxID_OK);
+	btnOk->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgReorder::OnOk, this);
 
 	wxButton* btnCancel = new wxButton(this, wxID_CANCEL);
 

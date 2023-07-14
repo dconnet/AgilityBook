@@ -53,7 +53,6 @@ private:
 	wxString m_Code;
 	wxString m_Name;
 
-	DECLARE_EVENT_TABLE()
 	void OnSelchangeVenues(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };

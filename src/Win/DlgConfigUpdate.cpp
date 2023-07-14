@@ -47,10 +47,6 @@ using namespace ARB;
 using namespace ARBCommon;
 using namespace ARBWin;
 
-wxBEGIN_EVENT_TABLE(CDlgConfigUpdate, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgConfigUpdate::OnOk)
-wxEND_EVENT_TABLE()
-
 
 CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)
 	: wxDialog()
@@ -113,6 +109,7 @@ CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigUpdate::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);
 	Layout();

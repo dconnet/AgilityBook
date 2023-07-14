@@ -102,7 +102,6 @@ private:
 	short m_ClosingPts;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnSelchangeDivision(wxCommandEvent& evt);
 	void OnValidFrom(wxCommandEvent& evt);
 	void OnValidTo(wxCommandEvent& evt);

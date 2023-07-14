@@ -70,7 +70,6 @@ private:
 	bool m_bReceived;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnTitleDateChanged(wxDateEvent& evt);
 	void OnClickedEarned(wxCommandEvent& evt);
 	void OnSelchangeVenues(wxCommandEvent& evt);

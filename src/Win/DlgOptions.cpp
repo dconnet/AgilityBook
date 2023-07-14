@@ -42,11 +42,6 @@
 namespace dconSoft
 {
 
-wxBEGIN_EVENT_TABLE(CDlgOptions, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgOptions::OnOk)
-wxEND_EVENT_TABLE()
-
-
 CDlgOptions::CDlgOptions(CAgilityBookDoc* pDoc, wxWindow* pParent, size_t iSelectPage)
 	: wxDialog()
 	, m_pDoc(pDoc)
@@ -79,6 +74,7 @@ CDlgOptions::CDlgOptions(CAgilityBookDoc* pDoc, wxWindow* pParent, size_t iSelec
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgOptions::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);
 	Layout();

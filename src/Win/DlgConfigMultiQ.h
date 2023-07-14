@@ -62,7 +62,6 @@ private:
 	wxButton* m_ctrlRemove;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnItemchanged(wxListEvent& evt);
 	void OnItemActivated(wxListEvent& evt);
 	void OnKeydownItem(wxKeyEvent& evt);

@@ -60,7 +60,6 @@ private:
 	wxComboBox* m_ctrlSep;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnAllowMultiple(wxCommandEvent& evt);
 	void OnCheck(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);

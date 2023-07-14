@@ -45,7 +45,6 @@ private:
 	wxCheckListBox* m_checkList;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);
 };
 

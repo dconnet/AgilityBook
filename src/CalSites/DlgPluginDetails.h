@@ -49,7 +49,6 @@ private:
 	wxStaticText* m_ctrlCodes;
 	wxString m_strHelp;
 
-	DECLARE_EVENT_TABLE()
 	void OnPluginDetailCodes(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };

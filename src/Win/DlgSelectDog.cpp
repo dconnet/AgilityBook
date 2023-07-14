@@ -43,10 +43,6 @@ using namespace ARB;
 using namespace ARBCommon;
 using namespace ARBWin;
 
-wxBEGIN_EVENT_TABLE(CDlgSelectDog, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgSelectDog::OnOk)
-wxEND_EVENT_TABLE()
-
 
 CDlgSelectDog::CDlgSelectDog(CAgilityBookDoc* pDoc, std::vector<ARBDogPtr>& outDogs, wxWindow* pParent, bool onlyLiving)
 	: wxDialog()
@@ -118,6 +114,7 @@ CDlgSelectDog::CDlgSelectDog(CAgilityBookDoc* pDoc, std::vector<ARBDogPtr>& outD
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgSelectDog::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);
 	Layout();

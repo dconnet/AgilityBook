@@ -828,11 +828,6 @@ int wxCALLBACK CompareTypes(wxIntPtr lParam1, wxIntPtr lParam2, wxIntPtr lParam3
 }
 
 
-wxBEGIN_EVENT_TABLE(CDlgAssignColumns, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgAssignColumns::OnOk)
-wxEND_EVENT_TABLE()
-
-
 CDlgAssignColumns::CDlgAssignColumns(
 	CAgilityBookOptions::ColumnOrder eOrder,
 	wxWindow* pParent,
@@ -1058,6 +1053,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgAssignColumns::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);
 	Layout();

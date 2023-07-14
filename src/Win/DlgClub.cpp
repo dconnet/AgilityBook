@@ -56,11 +56,6 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-wxBEGIN_EVENT_TABLE(CDlgClub, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgClub::OnOk)
-wxEND_EVENT_TABLE()
-
-
 // If inClub is NULL, we're creating a new entry. Otherwise, we're editing an existing.
 CDlgClub::CDlgClub(
 	CAgilityBookDoc* pDoc,
@@ -235,6 +230,7 @@ CDlgClub::CDlgClub(
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgClub::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);
 	Layout();

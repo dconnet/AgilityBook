@@ -118,11 +118,6 @@ void CDetails::OnDetails(wxWindow* pParent)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigure dialog
 
-wxBEGIN_EVENT_TABLE(CDlgConfigure, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgConfigure::OnOk)
-wxEND_EVENT_TABLE()
-
-
 CDlgConfigure::CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book, wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
@@ -221,6 +216,7 @@ CDlgConfigure::CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book, 
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigure::OnOk, this, wxID_OK);
 
 	wxTreeItemId root = m_ctrlItems->AddRoot(L"Root");
 

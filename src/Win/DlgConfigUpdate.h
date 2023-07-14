@@ -55,7 +55,6 @@ private:
 	ARB::ARBAgilityRecordBook m_Book;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnUpdateDefault(wxCommandEvent& evt);
 	void OnUpdateExisting(wxCommandEvent& evt);
 	void OnName(wxCommandEvent& evt);

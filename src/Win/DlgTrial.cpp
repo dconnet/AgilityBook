@@ -116,12 +116,6 @@ std::wstring CListTrialData::OnNeedText(long iCol) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-wxBEGIN_EVENT_TABLE(CDlgTrial, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgTrial::OnOk)
-	EVT_BUTTON(wxID_CANCEL, CDlgTrial::OnCancel)
-wxEND_EVENT_TABLE()
-
-
 CDlgTrial::CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrialPtr const& inTrial, wxWindow* pParent)
 	: wxDialog()
 	, m_dateStart(inTrial->GetStartDate())
@@ -375,6 +369,8 @@ CDlgTrial::CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrialPtr const& inTrial, wxWin
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgTrial::OnOk, this, wxID_OK);
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgTrial::OnCancel, this, wxID_CANCEL);
 
 	SetSizer(bSizer);
 	Layout();

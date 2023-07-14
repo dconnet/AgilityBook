@@ -107,11 +107,6 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-wxBEGIN_EVENT_TABLE(CDlgConfigOtherPoints, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgConfigOtherPoints::OnOk)
-wxEND_EVENT_TABLE()
-
-
 CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 	ARBConfig& config,
 	ARBConfigOtherPointsPtr const& inOther,
@@ -235,6 +230,7 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigOtherPoints::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);
 	Layout();

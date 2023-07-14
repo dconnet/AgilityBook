@@ -109,7 +109,6 @@ private:
 	wxString m_LifetimeName;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnUseSpeedPoints(wxCommandEvent& evt);
 	void OnSelchangeTitlePoints(wxCommandEvent& evt);
 	void OnOk(wxCommandEvent& evt);

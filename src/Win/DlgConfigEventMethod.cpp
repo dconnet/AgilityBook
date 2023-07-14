@@ -128,11 +128,6 @@ int wxCALLBACK ComparePlacement(CListDataPtr const& item1, CListDataPtr const& i
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigEventMethod dialog
 
-wxBEGIN_EVENT_TABLE(CDlgConfigEventMethod, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgConfigEventMethod::OnOk)
-wxEND_EVENT_TABLE()
-
-
 CDlgConfigEventMethod::CDlgConfigEventMethod(
 	ARBConfigVenuePtr const& inVenue,
 	ARBConfigScoringPtr const& inScoring,
@@ -658,6 +653,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigEventMethod::OnOk, this, wxID_OK);
 
 	FillLevelList();
 	m_ctrlType->SetSelection(-1);

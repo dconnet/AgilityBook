@@ -102,7 +102,6 @@ private:
 	int m_imgEnteredTentative;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnItemSelected(wxListEvent& evt);
 	void OnItemActivated(wxListEvent& evt);
 	void OnKeyDown(wxKeyEvent& evt);

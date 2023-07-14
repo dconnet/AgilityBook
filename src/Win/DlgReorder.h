@@ -56,7 +56,6 @@ private:
 	wxButton* m_ctrlDown;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnListSelected(wxCommandEvent& evt);
 	void OnTreeSelected(wxTreeEvent& evt);
 	void OnMoveUp(wxCommandEvent& evt);

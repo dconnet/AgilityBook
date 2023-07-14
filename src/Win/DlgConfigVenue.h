@@ -111,7 +111,6 @@ private:
 	wxButton* m_ctrlMoveDown;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnSelectionChanged(wxTreeEvent& evt);
 	void OnItemActivated(wxTreeEvent& evt);
 	void OnKeydown(wxKeyEvent& evt);

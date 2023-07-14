@@ -96,7 +96,6 @@ private:
 	ARBWin::CRichEditCtrl2* m_ctrlLocationInfo;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnDatetimechangeStart(wxDateEvent& evt);
 	void OnDateOpensUnknown(wxCommandEvent& evt);
 	void OnDateDrawsUnknown(wxCommandEvent& evt);

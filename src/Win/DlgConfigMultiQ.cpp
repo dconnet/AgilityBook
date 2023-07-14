@@ -49,10 +49,6 @@ using namespace ARB;
 using namespace ARBCommon;
 using namespace ARBWin;
 
-wxBEGIN_EVENT_TABLE(CDlgConfigMultiQ, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgConfigMultiQ::OnOk)
-wxEND_EVENT_TABLE()
-
 
 CDlgConfigMultiQ::CDlgConfigMultiQ(
 	ARBConfigVenuePtr const& inVenue,
@@ -226,6 +222,7 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigMultiQ::OnOk, this, wxID_OK);
 
 	size_t n = m_pMultiQ->GetNumItems();
 	for (size_t i = 0; i < n; ++i)

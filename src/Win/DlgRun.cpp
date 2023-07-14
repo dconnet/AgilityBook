@@ -71,10 +71,6 @@ using namespace ARB;
 using namespace ARBCommon;
 using namespace ARBWin;
 
-wxBEGIN_EVENT_TABLE(CDlgRun, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgRun::OnOk)
-wxEND_EVENT_TABLE()
-
 
 CDlgRun::CDlgRun(
 	CAgilityBookDoc* pDoc,
@@ -147,6 +143,7 @@ CDlgRun::CDlgRun(
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgRun::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);
 	Layout();

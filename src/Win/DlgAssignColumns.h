@@ -91,7 +91,6 @@ private:
 	wxButton* m_btnDown;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnSelchangeNames(wxCommandEvent& evt);
 	void OnClickedOptNamesSave(wxCommandEvent& evt);
 	void OnClickedOptNamesDelete(wxCommandEvent& evt);

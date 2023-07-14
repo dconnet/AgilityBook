@@ -55,7 +55,6 @@ private:
 	CDlgDogPanelPoints* m_panelPoints;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnPageChanging(wxBookCtrlEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };

@@ -49,10 +49,6 @@ using namespace ARB;
 using namespace ARBCommon;
 using namespace ARBWin;
 
-wxBEGIN_EVENT_TABLE(CDlgConfigLifetimeName, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgConfigLifetimeName::OnOk)
-wxEND_EVENT_TABLE()
-
 
 CDlgConfigLifetimeName::CDlgConfigLifetimeName(ARBConfigVenuePtr const& inVenue, wxWindow* pParent)
 	: wxDialog()
@@ -115,6 +111,7 @@ void CDlgConfigLifetimeName::InitDlg(wxWindow* pParent)
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigLifetimeName::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);
 	Layout();

@@ -43,7 +43,6 @@ private:
 	wxString m_Desc;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);
 };
 

@@ -102,7 +102,6 @@ private:
 	int m_idxMethod;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnClickedTable(wxCommandEvent& evt);
 	void OnClickedSubNames(wxCommandEvent& evt);
 	void OnLbnSelchangeSubnames(wxCommandEvent& evt);

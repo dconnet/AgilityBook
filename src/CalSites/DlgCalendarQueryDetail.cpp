@@ -41,10 +41,6 @@ namespace dconSoft
 {
 using namespace ARBCommon;
 
-wxBEGIN_EVENT_TABLE(CDlgCalendarQueryDetail, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgCalendarQueryDetail::OnOk)
-wxEND_EVENT_TABLE()
-
 
 CDlgCalendarQueryDetail::CDlgCalendarQueryDetail(
 	ARBConfigCalSiteList const& sites,
@@ -249,6 +245,7 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarQueryDetail::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);
 	Layout();

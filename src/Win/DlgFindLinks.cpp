@@ -164,11 +164,6 @@ void CDlgFindLinksData::OnNeedListItem(long iCol, wxListItem& info) const
 /////////////////////////////////////////////////////////////////////////////
 // CDlgFindLinks dialog
 
-wxBEGIN_EVENT_TABLE(CDlgFindLinks, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgFindLinks::OnOk)
-wxEND_EVENT_TABLE()
-
-
 CDlgFindLinks::CDlgFindLinks(ARBDogList& inDogs, wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlLinks(nullptr)
@@ -220,6 +215,7 @@ CDlgFindLinks::CDlgFindLinks(ARBDogList& inDogs, wxWindow* pParent)
 	m_reportColumn.CreateColumns(k_columns, -1, k_regkeyBase);
 
 	wxButton* btnOk = new wxButton(this, wxID_OK);
+	btnOk->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgFindLinks::OnOk, this);
 
 	wxButton* btnCancel = new wxButton(this, wxID_CANCEL);
 

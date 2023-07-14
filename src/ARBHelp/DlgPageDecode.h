@@ -37,7 +37,6 @@ private:
 	ARBWin::CTextCtrl* m_ctrlDecoded;
 	std::vector<wxString> m_TmpFiles;
 
-	DECLARE_EVENT_TABLE()
 	void OnDecode(wxCommandEvent& evt);
 	void OnCancel(wxCommandEvent& evt);
 };

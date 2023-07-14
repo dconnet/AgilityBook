@@ -48,7 +48,6 @@ private:
 	std::wstring m_NewName;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);
 };
 

@@ -79,7 +79,6 @@ private:
 	wxTreeItemId m_hItemOtherPts;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnItemActivated(wxTreeEvent& evt);
 	void OnSelectionChanged(wxTreeEvent& evt);
 	void OnNew(wxCommandEvent& evt);

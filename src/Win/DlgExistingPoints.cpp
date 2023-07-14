@@ -129,11 +129,6 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-wxBEGIN_EVENT_TABLE(CDlgExistingPoints, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgExistingPoints::OnOk)
-wxEND_EVENT_TABLE()
-
-
 // Controls (all are readonly, except subname):
 // ARBDogExistingPoints::eOtherPoints:
 //  Venue  Division  Level  Event          OtherPts
@@ -439,6 +434,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 	// boxes right above them.
 	m_sdbSizer = CreateButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(m_sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgExistingPoints::OnOk, this, wxID_OK);
 
 	// Add MultiQ to types if at least one venue supports it.
 	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->Book().GetConfig().GetVenues().begin();

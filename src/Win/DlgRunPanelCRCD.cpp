@@ -97,14 +97,8 @@ private:
 	bool m_ViewText;
 	bool m_Insert;
 
-	DECLARE_EVENT_TABLE()
 	void OnPaint(wxPaintEvent& evt);
 };
-
-
-wxBEGIN_EVENT_TABLE(CMetaDataDisplay, CTextCtrl)
-	EVT_PAINT(CMetaDataDisplay::OnPaint)
-wxEND_EVENT_TABLE()
 
 
 CMetaDataDisplay::CMetaDataDisplay(wxWindow* parent, ARBDogRunPtr const& inRun)
@@ -139,6 +133,8 @@ CMetaDataDisplay::CMetaDataDisplay(wxWindow* parent, ARBDogRunPtr const& inRun)
 		}
 	}
 #endif
+
+	Bind(wxEVT_PAINT, &CMetaDataDisplay::OnPaint, this);
 }
 
 

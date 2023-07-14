@@ -40,14 +40,8 @@ public:
 private:
 	HENHMETAFILE m_MetaFile;
 
-	DECLARE_EVENT_TABLE()
 	void OnPaint(wxPaintEvent& evt);
 };
-
-
-wxBEGIN_EVENT_TABLE(CMetaDataStatic, wxStaticText)
-	EVT_PAINT(CMetaDataStatic::OnPaint)
-wxEND_EVENT_TABLE()
 
 
 CMetaDataStatic::CMetaDataStatic(wxWindow* pParent, HENHMETAFILE inMetaFile)
@@ -61,6 +55,7 @@ CMetaDataStatic::CMetaDataStatic(wxWindow* pParent, HENHMETAFILE inMetaFile)
 		wxDLG_UNIT(pParent, wxSize(260, 220)),
 		wxSUNKEN_BORDER);
 	SetBackgroundStyle(wxBG_STYLE_PAINT);
+	Bind(wxEVT_PAINT, &CMetaDataStatic::OnPaint, this);
 }
 
 

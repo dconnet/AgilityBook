@@ -62,7 +62,6 @@ private:
 	std::vector<CDlgFindLinksDataPtr> m_Data;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnCopy(wxCommandEvent& evt);
 	void OnEdit(wxCommandEvent& evt);
 	void OnOpen(wxCommandEvent& evt);

@@ -56,7 +56,6 @@ private:
 	std::vector<CDlgRunPanelBase*> m_panels;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnPageChanging(wxBookCtrlEvent& evt);
 	void OnPageChanged(wxBookCtrlEvent& evt);
 	void OnOk(wxCommandEvent& evt);

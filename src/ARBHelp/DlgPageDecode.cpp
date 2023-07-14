@@ -46,10 +46,6 @@ namespace dconSoft
 using namespace ARBCommon;
 using namespace ARBWin;
 
-wxBEGIN_EVENT_TABLE(CDlgPageDecode, wxDialog)
-	EVT_BUTTON(wxID_CANCEL, CDlgPageDecode::OnCancel)
-wxEND_EVENT_TABLE()
-
 
 CDlgPageDecode::CDlgPageDecode()
 	: wxDialog(
@@ -91,6 +87,7 @@ CDlgPageDecode::CDlgPageDecode()
 	btnDecode->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgPageDecode::OnDecode, this);
 
 	wxButton* btnClose = new wxButton(this, wxID_CANCEL, L"Close", wxDefaultPosition, wxDefaultSize, 0);
+	btnClose->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgPageDecode::OnCancel, this);
 
 	// Sizers
 	const ARBWin::CDlgPadding padding(this);

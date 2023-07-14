@@ -48,11 +48,6 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-wxBEGIN_EVENT_TABLE(CDlgPointsViewSort, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgPointsViewSort::OnOk)
-wxEND_EVENT_TABLE()
-
-
 CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlPrimary(nullptr)
@@ -149,6 +144,7 @@ CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 	m_ctrlOk = wxDynamicCast(FindWindowInSizer(bSizer, wxID_OK), wxButton);
 	assert(!!m_ctrlOk);
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgPointsViewSort::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);
 	Layout();

@@ -410,11 +410,6 @@ void CDlgListCtrlDataPartners::Apply()
 /////////////////////////////////////////////////////////////////////////////
 // CDlgListCtrl dialog
 
-wxBEGIN_EVENT_TABLE(CDlgListCtrl, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgListCtrl::OnOk)
-wxEND_EVENT_TABLE()
-
-
 // Calendar
 CDlgListCtrl::CDlgListCtrl(
 	CAgilityBookDoc* pDoc,
@@ -620,6 +615,7 @@ bool CDlgListCtrl::Create(std::wstring const& inCaption, wxWindow* pParent, bool
 	m_ctrlList->SetToolTip(_("HIDC_LIST"));
 
 	wxButton* btnOk = new wxButton(this, wxID_OK);
+	btnOk->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgListCtrl::OnOk, this);
 
 	wxButton* btnCancel = new wxButton(this, wxID_CANCEL);
 

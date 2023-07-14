@@ -101,7 +101,6 @@ private:
 	wxSizer* m_sdbSizer;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnDateChanged(wxDateEvent& evt);
 	void OnSelchangeType(wxCommandEvent& evt);
 	void OnSelchangeVenue(wxCommandEvent& evt);

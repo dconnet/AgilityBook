@@ -59,7 +59,6 @@ protected:
 	CDlgOptionsPrint* m_pagePrint;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnPageChanging(wxBookCtrlEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 };

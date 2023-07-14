@@ -81,7 +81,6 @@ private:
 	bool m_bRunsDeleted;
 	ARBWin::CStackLogger m_trace;
 
-	DECLARE_EVENT_TABLE()
 	void OnEnChangeLocation(wxCommandEvent& evt);
 	void OnSelchangeLocation(wxCommandEvent& evt);
 	void OnItemSelectedClubs(wxListEvent& evt);

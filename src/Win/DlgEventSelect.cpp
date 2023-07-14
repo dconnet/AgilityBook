@@ -76,11 +76,6 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-wxBEGIN_EVENT_TABLE(CDlgEventSelect, wxDialog)
-	EVT_BUTTON(wxID_OK, CDlgEventSelect::OnOk)
-wxEND_EVENT_TABLE()
-
-
 CDlgEventSelect::CDlgEventSelect(
 	ARBConfigVenuePtr const& inVenue,
 	ARBDate const& inDate,
@@ -189,6 +184,7 @@ CDlgEventSelect::CDlgEventSelect(
 	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
 	m_ctrlOk = wxDynamicCast(FindWindowInSizer(bSizer, wxID_OK), wxButton);
 	assert(!!m_ctrlOk);
+	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgEventSelect::OnOk, this, wxID_OK);
 
 	int idxCur = wxNOT_FOUND;
 	wxArrayString items;
