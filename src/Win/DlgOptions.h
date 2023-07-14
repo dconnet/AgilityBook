@@ -17,6 +17,9 @@
  * 2005-08-18 Separated options and filters into two dialogs.
  */
 
+#include "LibARBWin/Logger.h"
+
+
 namespace dconSoft
 {
 class CAgilityBookDoc;
@@ -54,6 +57,7 @@ protected:
 	CDlgOptionsFilter* m_pageFilter;
 	CDlgOptionsCalendar* m_pageCal;
 	CDlgOptionsPrint* m_pagePrint;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnPageChanging(wxBookCtrlEvent& evt);

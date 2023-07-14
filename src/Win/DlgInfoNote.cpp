@@ -287,6 +287,7 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	, m_imgAdded(-1)
 	, m_imgNoteAdded(-1)
 	, m_textCount(nullptr)
+	, m_trace("CDlgInfoNote")
 {
 	std::wstring caption = L"?";
 	std::set<std::wstring> allNames;

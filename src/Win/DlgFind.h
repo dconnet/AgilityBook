@@ -16,6 +16,9 @@
  * 2003-12-27 Created
  */
 
+#include "LibARBWin/Logger.h"
+
+
 namespace dconSoft
 {
 namespace ARBWin
@@ -113,6 +116,7 @@ private:
 	wxRadioBox* m_radioBoxSearch;
 	wxRadioBox* m_radioBoxDir;
 	wxButton* m_btnFind;
+	ARBWin::CStackLogger m_trace;
 
 	void OnChangeName(wxCommandEvent& evt);
 	void OnFind(wxCommandEvent& evt);

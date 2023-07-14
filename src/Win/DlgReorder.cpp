@@ -80,6 +80,7 @@ CDlgReorder::CDlgReorder(CAgilityBookDoc* pDoc, ARBDogList* dogs, wxWindow* pPar
 	, m_ctrlTree(nullptr)
 	, m_ctrlUp(nullptr)
 	, m_ctrlDown(nullptr)
+	, m_trace("CDlgReorder")
 {
 	InitDlg(pParent);
 }
@@ -99,6 +100,7 @@ CDlgReorder::CDlgReorder(
 	, m_ctrlTree(nullptr)
 	, m_ctrlUp(nullptr)
 	, m_ctrlDown(nullptr)
+	, m_trace("CDlgReorder")
 {
 	InitDlg(pParent);
 }

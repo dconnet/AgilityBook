@@ -24,6 +24,7 @@
 #include "ARB/ARBDogClub.h"
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/ARBDate.h"
+#include "LibARBWin/Logger.h"
 class wxDatePickerCtrl;
 class wxListEvent;
 class wxTextUrlEvent;
@@ -51,6 +52,12 @@ public:
 	}
 
 private:
+	ARB::ARBDogClubPtr GetClubData(long index) const;
+	void UpdateNotes(wxString const& location, bool bLocation, bool bClub);
+	void ListLocations();
+	void ListClubs(ARB::ARBDogClubPtr const* inClub = nullptr);
+	void EditClub();
+
 	wxDatePickerCtrl* m_ctrlStart;
 	ARBCommon::ARBDate m_dateStart;
 	bool m_Verified;
@@ -72,13 +79,7 @@ private:
 	bool m_bShowCoSanction;
 	bool m_bFixup;
 	bool m_bRunsDeleted;
-
-private:
-	ARB::ARBDogClubPtr GetClubData(long index) const;
-	void UpdateNotes(wxString const& location, bool bLocation, bool bClub);
-	void ListLocations();
-	void ListClubs(ARB::ARBDogClubPtr const* inClub = nullptr);
-	void EditClub();
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnEnChangeLocation(wxCommandEvent& evt);

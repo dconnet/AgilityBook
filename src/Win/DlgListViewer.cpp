@@ -1145,6 +1145,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_ctrlCopy(nullptr)
 	, m_pDoc(inDoc)
 	, m_SortColumn(1)
+	, m_trace("CDlgListViewer")
 {
 	Create(inCaption, pParent);
 
@@ -1232,6 +1233,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_ctrlCopy(nullptr)
 	, m_pDoc(inDoc)
 	, m_SortColumn(1)
+	, m_trace("CDlgListViewer")
 {
 	Create(inCaption, pParent);
 
@@ -1285,6 +1287,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_ctrlCopy(nullptr)
 	, m_pDoc(inDoc)
 	, m_SortColumn(1)
+	, m_trace("CDlgListViewer")
 {
 	Create(inCaption, pParent);
 
@@ -1342,6 +1345,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_ctrlCopy(nullptr)
 	, m_pDoc(inDoc)
 	, m_SortColumn(1)
+	, m_trace("CDlgListViewer")
 {
 	Create(inCaption, pParent);
 
@@ -1378,6 +1382,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_ctrlCopy(nullptr)
 	, m_pDoc(inDoc)
 	, m_SortColumn(1)
+	, m_trace("CDlgListViewer")
 {
 	Create(inCaption, pParent);
 
@@ -1413,6 +1418,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_ctrlCopy(nullptr)
 	, m_pDoc(inDoc)
 	, m_SortColumn(1)
+	, m_trace("CDlgListViewer")
 {
 	Create(inCaption, pParent);
 

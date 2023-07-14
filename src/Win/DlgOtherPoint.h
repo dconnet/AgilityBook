@@ -17,6 +17,7 @@
  */
 
 #include "ARB/ARBTypes2.h"
+#include "LibARBWin/Logger.h"
 
 
 namespace dconSoft
@@ -40,6 +41,7 @@ private:
 	wxComboBox* m_ctrlOtherPoints;
 	ARBWin::CRichEditCtrl2* m_ctrlDesc;
 	double m_Points;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnSelchangeOtherpoints(wxCommandEvent& evt);

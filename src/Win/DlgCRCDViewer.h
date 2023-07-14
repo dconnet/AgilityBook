@@ -19,6 +19,9 @@
 
 #ifdef __WXMSW__
 
+#include "LibARBWin/Logger.h"
+
+
 namespace dconSoft
 {
 
@@ -28,6 +31,9 @@ class CDlgCRCDViewer : public wxDialog
 {
 public:
 	CDlgCRCDViewer(HENHMETAFILE inMetaFile, wxWindow* pParent = nullptr);
+
+private:
+	ARBWin::CStackLogger m_trace;
 };
 
 } // namespace dconSoft

@@ -56,6 +56,7 @@ CDlgPartner::CDlgPartner(
 	, m_Dog(StringUtil::stringWX(inPartner->GetDog()))
 	, m_RegNum(StringUtil::stringWX(inPartner->GetRegNum()))
 	, m_Partner(inPartner)
+	, m_trace("CDlgPartner")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

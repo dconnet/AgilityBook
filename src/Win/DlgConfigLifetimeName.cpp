@@ -60,6 +60,7 @@ CDlgConfigLifetimeName::CDlgConfigLifetimeName(ARBConfigVenuePtr const& inVenue,
 	, m_bCheckOldName(false)
 	, m_Name()
 	, m_NewName()
+	, m_trace("CDlgConfigLifetimeName")
 {
 	InitDlg(pParent);
 }
@@ -74,6 +75,7 @@ CDlgConfigLifetimeName::CDlgConfigLifetimeName(
 	, m_bCheckOldName(true)
 	, m_Name(StringUtil::stringW(inName))
 	, m_NewName(inName)
+	, m_trace("CDlgConfigLifetimeName")
 {
 	InitDlg(pParent);
 }

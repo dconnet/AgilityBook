@@ -38,6 +38,7 @@ using namespace ARBWin;
 
 CDlgName::CDlgName(std::wstring const& name, wxWindow* pParent)
 	: m_Name(StringUtil::stringWX(name))
+	, m_trace("CDlgName")
 {
 	Create(_("IDD_NAME"), pParent);
 }
@@ -45,6 +46,7 @@ CDlgName::CDlgName(std::wstring const& name, wxWindow* pParent)
 
 CDlgName::CDlgName(std::wstring const& name, wxString const& caption, wxWindow* pParent)
 	: m_Name(StringUtil::stringWX(name))
+	, m_trace("CDlgName")
 {
 	Create(caption, pParent);
 }

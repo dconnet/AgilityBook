@@ -19,6 +19,7 @@
 
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/ARBDate.h"
+#include "LibARBWin/Logger.h"
 
 
 namespace dconSoft
@@ -56,6 +57,7 @@ private:
 	wxString m_inEvent;
 	ARB::ARBConfigVenuePtr m_pVenue;
 	ARBCommon::ARBDate m_Date;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnSelchangeDivision(wxCommandEvent& evt);

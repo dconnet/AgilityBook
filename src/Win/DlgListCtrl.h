@@ -20,6 +20,7 @@
 
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/ARBDate.h"
+#include "LibARBWin/Logger.h"
 #include <vector>
 class wxListEvent;
 
@@ -99,6 +100,7 @@ private:
 	int m_imgPendingTentative;
 	int m_imgEntered;
 	int m_imgEnteredTentative;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnItemSelected(wxListEvent& evt);

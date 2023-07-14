@@ -177,6 +177,7 @@ CDlgFindLinks::CDlgFindLinks(ARBDogList& inDogs, wxWindow* pParent)
 	, m_ctrlOpen(nullptr)
 	, m_imgOk(-1)
 	, m_imgMissing(-1)
+	, m_trace("CDlgFindLinks")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

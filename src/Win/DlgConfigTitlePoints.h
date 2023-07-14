@@ -20,6 +20,7 @@
 
 #include "ARB/ARBCalcPoints.h"
 #include "ARB/ARBTypes2.h"
+#include "LibARBWin/Logger.h"
 
 
 namespace dconSoft
@@ -87,6 +88,8 @@ public:
 	}
 
 private:
+	bool UpdateControls(ARBTitlePointType oldType);
+
 	ARB::ARBConfigVenuePtr m_Venue;
 	ARBTitlePointType m_Type;
 	ARB::ARBPointsType m_TypeNormal;
@@ -104,8 +107,7 @@ private:
 	bool m_bSpeed;
 	double m_Points;
 	wxString m_LifetimeName;
-
-	bool UpdateControls(ARBTitlePointType oldType);
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnUseSpeedPoints(wxCommandEvent& evt);

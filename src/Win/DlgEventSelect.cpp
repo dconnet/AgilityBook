@@ -100,6 +100,7 @@ CDlgEventSelect::CDlgEventSelect(
 	, m_inEvent(StringUtil::stringWX(inEvent))
 	, m_pVenue(inVenue)
 	, m_Date(inDate)
+	, m_trace("CDlgEventSelect")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

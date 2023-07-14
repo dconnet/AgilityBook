@@ -18,6 +18,7 @@
  */
 
 #include "ARB/ARBTypes2.h"
+#include "LibARBWin/Logger.h"
 #include <set>
 
 
@@ -39,6 +40,7 @@ private:
 	wxString m_Dog;
 	wxString m_RegNum;
 	ARB::ARBDogRunPartnerPtr m_Partner;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);

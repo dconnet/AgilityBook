@@ -21,6 +21,7 @@
  */
 
 #include "ARB/ARBInfo.h"
+#include "LibARBWin/Logger.h"
 #include "PointsData.h"
 #include <set>
 
@@ -180,9 +181,9 @@ private:
 
 	ARBWin::CReportListCtrl* m_ctrlList;
 	wxButton* m_ctrlCopy;
-
 	CAgilityBookDoc* m_pDoc;
 	int m_SortColumn;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnItemFocused(wxListEvent& evt);

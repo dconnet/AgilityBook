@@ -90,6 +90,7 @@ CDlgRun::CDlgRun(
 	, m_Run(inRun->Clone())
 	, m_panelScore(nullptr)
 	, m_panels()
+	, m_trace("CDlgRun")
 {
 	SetExtraStyle(wxWS_EX_VALIDATE_RECURSIVELY | GetExtraStyle());
 	if (!pParent)

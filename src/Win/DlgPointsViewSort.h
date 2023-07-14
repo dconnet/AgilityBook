@@ -17,6 +17,7 @@
  */
 
 #include "AgilityBookOptions.h"
+#include "LibARBWin/Logger.h"
 
 
 namespace dconSoft
@@ -29,20 +30,19 @@ public:
 	CDlgPointsViewSort(wxWindow* pParent = nullptr);
 
 private:
-	wxComboBox* m_ctrlPrimary;
-	wxComboBox* m_ctrlSecondary;
-	wxComboBox* m_ctrlTertiary;
-	wxButton* m_ctrlOk;
-
-	ARBPointsViewSort m_Primary;
-	ARBPointsViewSort m_Secondary;
-	ARBPointsViewSort m_Tertiary;
-
-protected:
 	void UpdateControls();
 	void FillPrimary();
 	void FillSecondary();
 	void FillTertiary();
+
+	wxComboBox* m_ctrlPrimary;
+	wxComboBox* m_ctrlSecondary;
+	wxComboBox* m_ctrlTertiary;
+	wxButton* m_ctrlOk;
+	ARBPointsViewSort m_Primary;
+	ARBPointsViewSort m_Secondary;
+	ARBPointsViewSort m_Tertiary;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnSelchangePrimary(wxCommandEvent& evt);

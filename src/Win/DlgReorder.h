@@ -18,6 +18,7 @@
  */
 
 #include "ARB/ARBBase.h"
+#include "LibARBWin/Logger.h"
 #include <vector>
 class wxTreeEvent;
 
@@ -42,6 +43,9 @@ public:
 		wxWindow* pParent = nullptr);
 
 private:
+	void InitDlg(wxWindow* pParent);
+	void UpdateControls();
+
 	CAgilityBookDoc* m_pDoc;
 	ARB::ARBDogList* m_Dogs;
 	ARB::ARBDogTrialPtr m_Trial;
@@ -50,10 +54,7 @@ private:
 	ARBWin::CTreeCtrl* m_ctrlTree;
 	wxButton* m_ctrlUp;
 	wxButton* m_ctrlDown;
-
-protected:
-	void InitDlg(wxWindow* pParent);
-	void UpdateControls();
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnListSelected(wxCommandEvent& evt);

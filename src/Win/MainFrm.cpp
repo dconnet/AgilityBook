@@ -161,6 +161,8 @@ wxBEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
 	EVT_MENU(ID_PREV_PANE, CMainFrame::OnPrevPane)
 	EVT_MENU(ID_VIEW_CUSTOMIZE_ACCEL, CMainFrame::OnViewCustomizeAccel)
 	EVT_MENU(ID_HELP_UPDATE, CMainFrame::OnHelpCheckUpdates)
+	EVT_MENU(ID_HELP_LOG, CMainFrame::OnHelpLog)
+	EVT_MENU(ID_HELP_LOG_VERBOSE, CMainFrame::OnHelpLogVerbose)
 	EVT_MENU(wxID_ABOUT, CMainFrame::OnHelpAbout)
 wxEND_EVENT_TABLE()
 
@@ -246,12 +248,14 @@ void CMainFrame::EnableLogWindow()
 {
 	if (!m_logger.IsEnabled())
 	{
+		// 'show' is used for default showing of the log window
+		// AND enabling of CStackLogger messages.
 #ifdef _DEBUG
 		bool show = true;
 #else
 		bool show = false;
 #endif
-		m_logger.EnableLogWindow(this, show, wxGetApp().GetUpdateInfoKey().c_str());
+		m_logger.EnableLogWindow(this, show, wxGetApp().GetUpdateInfoKey().c_str(), show);
 	}
 }
 
@@ -459,6 +463,14 @@ void CMainFrame::OnUpdateCmd(wxUpdateUIEvent& evt)
 	case ID_HELP_UPDATE:
 		bEnable = !m_UpdateInfo.DownloadInProgress();
 		break;
+	case ID_HELP_LOG:
+		bEnable = m_logger.IsEnabled();
+		evt.Check((m_logger.IsEnabled() && m_logger.GetFrame()->IsVisible()));
+		break;
+	case ID_HELP_LOG_VERBOSE:
+		bEnable = true;
+		evt.Check(CStackLogger::IsLoggerEnabled()); 
+		break;
 	}
 	evt.Enable(bEnable);
 }
@@ -565,6 +577,36 @@ void CMainFrame::OnHelpCheckUpdates(wxCommandEvent& evt)
 	CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
 	UpdateConfiguration(pDoc, close);
 	// App will auto-close when download is done.
+}
+
+
+void CMainFrame::OnHelpLog(wxCommandEvent& evt)
+{
+	CLogger::Log(L"MENU: MainFrm::OnHelpLog");
+	if (m_logger.IsEnabled())
+	{
+		if (m_logger.GetFrame()->IsVisible())
+			m_logger.Show(false);
+		else
+			m_logger.Show(true);
+	}
+}
+
+
+void CMainFrame::OnHelpLogVerbose(wxCommandEvent& evt)
+{
+	wxString msg(L"MENU: MainFrm::OnHelpLogVerbose");
+	if (CStackLogger::IsLoggerEnabled())
+	{
+		msg << L" off";
+		wxLog::SetLogLevel(CLogger::GetLogLevel());
+	}
+	else
+	{
+		msg << L" on";
+		wxLog::SetLogLevel(CStackLogger::GetLogLevel());
+	}
+	CLogger::Log(msg);
 }
 
 

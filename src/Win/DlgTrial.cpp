@@ -140,6 +140,7 @@ CDlgTrial::CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrialPtr const& inTrial, wxWin
 	, m_bShowCoSanction(CAgilityBookOptions::ShowCoSanctioning())
 	, m_bFixup(false)
 	, m_bRunsDeleted(false)
+	, m_trace("CDlgTrial")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

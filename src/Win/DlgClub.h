@@ -19,6 +19,7 @@
  */
 
 #include "ARB/ARBTypes2.h"
+#include "LibARBWin/Logger.h"
 
 
 namespace dconSoft
@@ -52,6 +53,7 @@ private:
 	wxString m_Club;
 	wxString m_Venue;
 	bool m_bCoSanction;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnClickedPrimary(wxCommandEvent& evt);

@@ -69,6 +69,7 @@ CDlgOtherPoint::CDlgOtherPoint(ARBConfig& config, ARBDogRunOtherPointsPtr const&
 	, m_ctrlOtherPoints(nullptr)
 	, m_ctrlDesc(nullptr)
 	, m_Points(inRunOther->GetPoints())
+	, m_trace("CDlgOtherPoint")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

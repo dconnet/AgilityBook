@@ -16,6 +16,7 @@
  */
 
 #include "ARB/ARBTypes2.h"
+#include "LibARBWin/Logger.h"
 #include <set>
 
 
@@ -53,6 +54,7 @@ private:
 	wxString m_Comment;
 	bool m_isVisible;
 	ARBWin::CSpellCheckCtrl* m_ctrlNotes;
+	ARBWin::CStackLogger m_trace;
 
 	void OnOk(wxCommandEvent& evt);
 };

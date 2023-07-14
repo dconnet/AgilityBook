@@ -18,6 +18,7 @@
  */
 
 #include "ARB/ARBTypes2.h"
+#include "LibARBWin/Logger.h"
 class wxDatePickerCtrl;
 
 
@@ -38,6 +39,7 @@ private:
 	wxString m_Name;
 	wxString m_SubName;
 	wxString m_Notes;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);

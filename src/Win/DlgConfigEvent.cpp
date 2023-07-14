@@ -220,6 +220,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 	, m_ctrlPointsDelete(nullptr)
 	, m_ctrlNote(nullptr)
 	, m_idxMethod(-1)
+	, m_trace("CDlgConfigEvent")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

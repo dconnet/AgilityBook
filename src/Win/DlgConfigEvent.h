@@ -22,6 +22,7 @@
  */
 
 #include "ARB/ARBConfigScoring.h"
+#include "LibARBWin/Logger.h"
 
 
 namespace dconSoft
@@ -99,6 +100,7 @@ private:
 	wxButton* m_ctrlPointsDelete;
 	ARBWin::CSpellCheckCtrl* m_ctrlNote;
 	int m_idxMethod;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnClickedTable(wxCommandEvent& evt);

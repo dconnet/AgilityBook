@@ -182,6 +182,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	, m_TitlingPointsRawFaults(m_pScoring->ComputeTitlingPointsRawFaults())
 	, m_OpeningPts(m_pScoring->GetRequiredOpeningPoints())
 	, m_ClosingPts(m_pScoring->GetRequiredClosingPoints())
+	, m_trace("CDlgConfigEventMethod")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

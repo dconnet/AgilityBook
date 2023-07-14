@@ -59,6 +59,7 @@ CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
 	, m_ctrlSecondary(nullptr)
 	, m_ctrlTertiary(nullptr)
 	, m_ctrlOk(nullptr)
+	, m_trace("CDlgPointsViewSort")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

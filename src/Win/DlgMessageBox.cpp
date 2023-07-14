@@ -21,6 +21,7 @@
 
 #include "ImageHelper.h"
 #include "LibARBWin/DlgPadding.h"
+#include "LibARBWin/Logger.h"
 #include <wx/artprov.h>
 
 #ifdef __WXMSW__
@@ -39,6 +40,7 @@ public:
 
 private:
 	IMessageBoxCallback* m_Callback;
+	ARBWin::CStackLogger m_trace;
 
 	void OnDetails(wxCommandEvent& evt);
 };
@@ -51,6 +53,7 @@ CDlgMessageBox::CDlgMessageBox(
 	wxWindow* inParent)
 	: wxDialog()
 	, m_Callback(inCallback)
+	, m_trace("CDlgMessageBox")
 {
 	Create(
 		inParent,

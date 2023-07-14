@@ -63,6 +63,7 @@ CDlgRegNum::CDlgRegNum(
 	, m_Height()
 	, m_bReceived(false)
 	, m_Note()
+	, m_trace("CDlgRegNum")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

@@ -21,6 +21,7 @@
 
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/ARBDate.h"
+#include "LibARBWin/Logger.h"
 class wxDateEvent;
 class wxDatePickerCtrl;
 
@@ -93,6 +94,7 @@ private:
 	wxComboBox* m_ctrlLocation;
 	CNoteButton* m_ctrlLocationNotes;
 	ARBWin::CRichEditCtrl2* m_ctrlLocationInfo;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnDatetimechangeStart(wxDateEvent& evt);

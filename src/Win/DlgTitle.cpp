@@ -88,6 +88,7 @@ CDlgTitle::CDlgTitle(ARBConfig const& config, ARBDogTitleList& titles, ARBDogTit
 	, m_bEarned(true)
 	, m_bHidden(false)
 	, m_bReceived(false)
+	, m_trace("CDlgTitle")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

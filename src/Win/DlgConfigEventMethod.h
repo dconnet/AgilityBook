@@ -18,6 +18,7 @@
 
 #include "ARB/ARBConfigScoring.h"
 #include "ARBCommon/ARBDate.h"
+#include "LibARBWin/Logger.h"
 class wxDatePickerCtrl;
 class wxListEvent;
 
@@ -99,6 +100,7 @@ private:
 	bool m_TitlingPointsRawFaults;
 	short m_OpeningPts;
 	short m_ClosingPts;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnSelchangeDivision(wxCommandEvent& evt);

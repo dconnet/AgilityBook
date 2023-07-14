@@ -16,6 +16,7 @@
  */
 
 #include "ARB/ARBAgilityRecordBook.h"
+#include "LibARBWin/Logger.h"
 
 
 namespace dconSoft
@@ -52,6 +53,7 @@ private:
 	// CString	m_FileName;
 	// CButton	m_ctrlFileName;
 	ARB::ARBAgilityRecordBook m_Book;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnUpdateDefault(wxCommandEvent& evt);

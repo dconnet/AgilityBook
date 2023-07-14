@@ -20,6 +20,7 @@
  */
 
 #include "ARB/ARBTypes2.h"
+#include "LibARBWin/Logger.h"
 #include "LibARBWin/ReportListHeader.h"
 #include <vector>
 class wxListEvent;
@@ -56,10 +57,10 @@ private:
 	ARBWin::CReportListHeader m_reportColumn;
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlOpen;
-
 	int m_imgOk;
 	int m_imgMissing;
 	std::vector<CDlgFindLinksDataPtr> m_Data;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnCopy(wxCommandEvent& evt);

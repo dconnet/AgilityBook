@@ -92,12 +92,10 @@ CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pPa
 	, m_Prefix(inTitle->GetPrefix())
 	, m_LongName(StringUtil::stringWX(inTitle->GetLongName()))
 	, m_Desc(StringUtil::stringWX(inTitle->GetDescription()))
-
 	, m_AllowMany(inTitle->IsRecurring())
 	, m_MultipleStartAt(inTitle->GetMultipleStartAt())
 	, m_MultipleInc(inTitle->GetMultipleIncrement())
 	, m_bShowFirst(inTitle->ShowMultipleOnFirstInstance())
-
 	, m_DateFrom(inTitle->GetValidFrom().IsValid())
 	, m_DateTo(inTitle->GetValidTo().IsValid())
 	, m_ctrlMultipleStartAt(nullptr)
@@ -106,6 +104,7 @@ CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pPa
 	, m_ctrlDateTo(nullptr)
 	, m_ctrlStyle(nullptr)
 	, m_ctrlSep(nullptr)
+	, m_trace("CDlgConfigTitle")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

@@ -43,6 +43,7 @@ CDlgSelectURL::CDlgSelectURL(std::wstring const& name, wxWindow* pParent)
 	: wxDialog()
 	, m_Name(StringUtil::stringWX(name))
 	, m_textCtrl(nullptr)
+	, m_trace("CDlgSelectURL")
 {
 	InitDlg(pParent, false);
 }
@@ -52,6 +53,7 @@ CDlgSelectURL::CDlgSelectURL(std::wstring const& name, bool bAllowEmpty, wxWindo
 	: wxDialog()
 	, m_Name(StringUtil::stringWX(name))
 	, m_textCtrl(nullptr)
+	, m_trace("CDlgSelectURL")
 {
 	InitDlg(pParent, bAllowEmpty);
 }

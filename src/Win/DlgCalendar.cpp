@@ -110,6 +110,7 @@ CDlgCalendar::CDlgCalendar(ARBCalendarPtr const& inCal, CAgilityBookDoc* pDoc, w
 	, m_ctrlLocation(nullptr)
 	, m_ctrlLocationNotes(nullptr)
 	, m_ctrlLocationInfo(nullptr)
+	, m_trace("CDlgCalendar")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

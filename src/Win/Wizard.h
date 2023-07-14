@@ -18,6 +18,7 @@
  */
 
 #include "ARB/ARBCalendar.h"
+#include "LibARBWin/Logger.h"
 #include "LibARBWin/SpreadSheet.h"
 #include <wx/wizard.h>
 #include <vector>
@@ -80,6 +81,7 @@ private:
 	int m_ImportExportItem;
 	int m_ImportExportStyle;
 	wxButton* m_Finish;
+	ARBWin::CStackLogger m_trace;
 
 	// Operations
 public:

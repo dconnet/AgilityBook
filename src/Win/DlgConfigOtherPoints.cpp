@@ -123,6 +123,7 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 	, m_ctrlTally(nullptr)
 	, m_Default(inOther->GetDefault())
 	, m_Desc(StringUtil::stringWX(inOther->GetDescription()))
+	, m_trace("CDlgConfigOtherPoints")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

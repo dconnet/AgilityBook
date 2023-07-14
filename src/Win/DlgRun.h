@@ -22,6 +22,7 @@
  */
 
 #include "ARB/ARBTypes2.h"
+#include "LibARBWin/Logger.h"
 
 
 namespace dconSoft
@@ -51,9 +52,9 @@ private:
 	ARB::ARBDogTrialPtr m_pTrial;
 	ARB::ARBDogRunPtr m_pRealRun;
 	ARB::ARBDogRunPtr m_Run;
-
 	CDlgRunPanelScore* m_panelScore;
 	std::vector<CDlgRunPanelBase*> m_panels;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnPageChanging(wxBookCtrlEvent& evt);

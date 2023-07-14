@@ -56,6 +56,7 @@ CDlgTraining::CDlgTraining(ARBTrainingPtr const& inTraining, CAgilityBookDoc* pD
 	, m_Name(StringUtil::stringWX(inTraining->GetName()))
 	, m_SubName(StringUtil::stringWX(inTraining->GetSubName()))
 	, m_Notes(StringUtil::stringWX(inTraining->GetNote()))
+	, m_trace("CDlgTraining")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

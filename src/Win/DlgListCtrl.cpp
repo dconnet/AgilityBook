@@ -444,6 +444,7 @@ CDlgListCtrl::CDlgListCtrl(
 	, m_imgPendingTentative(-1)
 	, m_imgEntered(-1)
 	, m_imgEnteredTentative(-1)
+	, m_trace("CDlgListCtrl")
 {
 	Create(StringUtil::stringW(_("IDS_CALENDAR")), pParent, true);
 	m_ctrlCreateTrial->Show();
@@ -494,6 +495,7 @@ CDlgListCtrl::CDlgListCtrl(
 	, m_imgPendingTentative(-1)
 	, m_imgEntered(-1)
 	, m_imgEnteredTentative(-1)
+	, m_trace("CDlgListCtrl")
 {
 	int nCols = 0;
 	std::vector<CDlgListCtrlDataPtr> items;
@@ -558,6 +560,7 @@ CDlgListCtrl::CDlgListCtrl(ARB::ARBConfig& pConfig, ARB::ARBDogRunPtr const& inR
 	, m_imgPendingTentative(-1)
 	, m_imgEntered(-1)
 	, m_imgEnteredTentative(-1)
+	, m_trace("CDlgListCtrl")
 {
 	Create(StringUtil::stringW(_("IDS_OTHERPOINTS")), pParent, false);
 

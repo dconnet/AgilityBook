@@ -18,6 +18,7 @@
  */
 
 #include "ARB/ARBConfigScoring.h"
+#include "LibARBWin/Logger.h"
 class wxTreeEvent;
 class wxTreeItemId;
 
@@ -108,6 +109,7 @@ private:
 	wxButton* m_ctrlCopy;
 	wxButton* m_ctrlMoveUp;
 	wxButton* m_ctrlMoveDown;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnSelectionChanged(wxTreeEvent& evt);

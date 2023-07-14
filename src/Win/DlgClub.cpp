@@ -77,6 +77,7 @@ CDlgClub::CDlgClub(
 	, m_Club()
 	, m_Venue()
 	, m_bCoSanction(inClub && !!inClub->GetPrimaryClub())
+	, m_trace("CDlgClub")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

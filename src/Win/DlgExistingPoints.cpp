@@ -176,6 +176,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 	, m_TextSubName()
 	, m_ctrlTypeNames(nullptr)
 	, m_TextTypeName()
+	, m_trace("CDlgExistingPoints")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

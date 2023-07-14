@@ -20,6 +20,7 @@
 
 #include "ARB/ARBTypes2.h"
 #include "ARB/ARB_Q.h"
+#include "LibARBWin/Logger.h"
 #include <set>
 
 
@@ -58,6 +59,7 @@ private:
 	wxString m_Name;
 	wxString m_Breed;
 	wxString m_Notes;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnEnChangeRefRunTime(wxCommandEvent& evt);

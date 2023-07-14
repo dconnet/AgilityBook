@@ -44,6 +44,7 @@ CDlgFind::CDlgFind(IFindCallback& callback, wxWindow* pParent)
 	, m_radioBoxSearch(nullptr)
 	, m_radioBoxDir(nullptr)
 	, m_btnFind(nullptr)
+	, m_trace("CDlgFind")
 {
 	wxString caption = StringUtil::stringWX(m_Callback.GetCaption());
 	if (caption.empty())

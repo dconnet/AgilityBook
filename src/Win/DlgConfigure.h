@@ -20,6 +20,7 @@
 #include "ARB/ARBConfig.h"
 #include "ARB/ARBTypes2.h"
 #include "IconList.h"
+#include "LibARBWin/Logger.h"
 
 
 namespace dconSoft
@@ -76,6 +77,7 @@ private:
 	wxTreeItemId m_hItemVenues;
 	wxTreeItemId m_hItemFaults;
 	wxTreeItemId m_hItemOtherPts;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnItemActivated(wxTreeEvent& evt);

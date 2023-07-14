@@ -138,6 +138,7 @@ CDlgConfigure::CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book, 
 	, m_hItemVenues()
 	, m_hItemFaults()
 	, m_hItemOtherPts()
+	, m_trace("CDlgConfigure")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

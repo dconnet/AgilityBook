@@ -50,6 +50,7 @@ wxEND_EVENT_TABLE()
 CDlgOptions::CDlgOptions(CAgilityBookDoc* pDoc, wxWindow* pParent, size_t iSelectPage)
 	: wxDialog()
 	, m_pDoc(pDoc)
+	, m_trace("CDlgOptions")
 {
 	SetExtraStyle(wxWS_EX_VALIDATE_RECURSIVELY | GetExtraStyle());
 	if (!pParent)

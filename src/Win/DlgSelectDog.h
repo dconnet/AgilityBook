@@ -18,6 +18,7 @@
  */
 
 #include "ARB/ARBTypes2.h"
+#include "LibARBWin/Logger.h"
 #include <vector>
 
 
@@ -42,6 +43,7 @@ private:
 	std::vector<ARB::ARBDogPtr>& m_outDogs;
 	std::vector<ARB::ARBDogPtr> m_Dogs;
 	wxCheckListBox* m_checkList;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);

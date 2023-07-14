@@ -22,6 +22,7 @@
  */
 
 #include "ARB/ARBInfo.h"
+#include "LibARBWin/Logger.h"
 #include "LibARBWin/ReportListHeader.h"
 #include <set>
 #include <vector>
@@ -183,6 +184,7 @@ private:
 	int m_imgAdded;
 	int m_imgNoteAdded;
 	wxStaticText* m_textCount;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnItemFocused(wxListEvent& evt);

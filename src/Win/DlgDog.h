@@ -21,6 +21,7 @@
  */
 
 #include "ARB/ARBTypes2.h"
+#include "LibARBWin/Logger.h"
 class wxDateEvent;
 class wxDatePickerCtrl;
 
@@ -48,11 +49,11 @@ private:
 	CAgilityBookDoc* m_pDoc;
 	ARB::ARBDogPtr m_pDog;
 	bool m_viewHidden;
-
 	CDlgDogPanelProp* m_panelProps;
 	CDlgDogPanelTitles* m_panelTitles;
 	CDlgDogPanelRegNums* m_panelRegNums;
 	CDlgDogPanelPoints* m_panelPoints;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnPageChanging(wxBookCtrlEvent& evt);

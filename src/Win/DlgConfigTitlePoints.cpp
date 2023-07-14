@@ -73,6 +73,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	, m_bSpeed(false)
 	, m_Points(inPoints)
 	, m_LifetimeName()
+	, m_trace("CDlgConfigTitlePoints")
 {
 	InitDlg(pParent);
 }
@@ -100,6 +101,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	, m_bSpeed(inLifetime->UseSpeedPts())
 	, m_Points(inLifetime->GetPoints())
 	, m_LifetimeName(inLifetime->GetName())
+	, m_trace("CDlgConfigTitlePoints")
 {
 	InitDlg(pParent);
 }

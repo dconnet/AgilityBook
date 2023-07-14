@@ -41,6 +41,7 @@ using namespace ARBWin;
 CDlgFault::CDlgFault(std::set<std::wstring>& inFaults, std::wstring const& fault, wxWindow* pParent)
 	: wxDialog()
 	, m_Fault(StringUtil::stringWX(fault))
+	, m_trace("CDlgFault")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

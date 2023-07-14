@@ -17,6 +17,7 @@
  */
 
 #include "ARB/ARBTypes2.h"
+#include "LibARBWin/Logger.h"
 
 
 namespace dconSoft
@@ -40,6 +41,7 @@ private:
 	wxComboBox* m_ctrlTally;
 	double m_Default;
 	wxString m_Desc;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);

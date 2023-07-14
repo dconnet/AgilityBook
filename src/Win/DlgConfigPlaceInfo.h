@@ -16,6 +16,7 @@
  * 2006-11-04 Created.
  */
 
+#include "LibARBWin/Logger.h"
 #include <vector>
 
 
@@ -44,6 +45,7 @@ public:
 private:
 	short m_Place;
 	double m_Value;
+	ARBWin::CStackLogger m_trace;
 };
 
 } // namespace dconSoft

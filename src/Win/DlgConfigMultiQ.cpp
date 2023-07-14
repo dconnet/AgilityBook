@@ -74,6 +74,7 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 	, m_ctrlItems(nullptr)
 	, m_ctrlEdit(nullptr)
 	, m_ctrlRemove(nullptr)
+	, m_trace("CDlgConfigMultiQ")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

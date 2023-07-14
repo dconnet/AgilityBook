@@ -77,6 +77,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	, m_Name(StringUtil::stringWX(inRef->GetName()))
 	, m_Breed(StringUtil::stringWX(inRef->GetBreed()))
 	, m_Notes(StringUtil::stringWX(inRef->GetNote()))
+	, m_trace("CDlgReferenceRun")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

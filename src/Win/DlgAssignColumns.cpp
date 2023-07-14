@@ -852,6 +852,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 	, m_btnRemove(nullptr)
 	, m_btnUp(nullptr)
 	, m_btnDown(nullptr)
+	, m_trace("CDlgAssignColumns")
 {
 	assert(pParent);
 	Create(

@@ -16,6 +16,9 @@
  * 2009-02-11 Ported to wxWidgets.
  */
 
+#include "LibARBWin/Logger.h"
+
+
 namespace dconSoft
 {
 
@@ -29,9 +32,10 @@ public:
 	std::wstring Name() const;
 
 private:
-	wxString m_Name;
-
 	bool Create(wxString const& caption, wxWindow* pParent = nullptr);
+
+	wxString m_Name;
+	ARBWin::CStackLogger m_trace;
 };
 
 } // namespace dconSoft

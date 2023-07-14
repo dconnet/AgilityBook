@@ -57,6 +57,7 @@ CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)
 	, m_radioDefault(nullptr)
 	, m_radioExisting(nullptr)
 	, m_btnPick(nullptr)
+	, m_trace("CDlgConfigUpdate")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

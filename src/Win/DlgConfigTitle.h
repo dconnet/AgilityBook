@@ -20,6 +20,7 @@
  */
 
 #include "ARB/ARBTypes2.h"
+#include "LibARBWin/Logger.h"
 class wxDatePickerCtrl;
 
 
@@ -37,6 +38,8 @@ public:
 	CDlgConfigTitle(ARB::ARBConfigTitlePtr const& inTitle, wxWindow* pParent = nullptr);
 
 private:
+	void UpdateButtons();
+
 	ARB::ARBConfigTitlePtr m_Title;
 	wxString m_Name;
 	bool m_Prefix;
@@ -55,9 +58,7 @@ private:
 	wxDatePickerCtrl* m_ctrlDateTo;
 	wxComboBox* m_ctrlStyle;
 	wxComboBox* m_ctrlSep;
-
-protected:
-	void UpdateButtons();
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnAllowMultiple(wxCommandEvent& evt);

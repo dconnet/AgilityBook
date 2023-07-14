@@ -24,6 +24,7 @@
  */
 
 #include "AgilityBookOptions.h"
+#include "LibARBWin/Logger.h"
 #include "NamedColumns.h"
 #include <vector>
 class wxListEvent;
@@ -69,6 +70,12 @@ public:
 		int initSelection = 0); // IO_TYPE list to initially select (if multiple)
 
 private:
+	ColumnData* GetAvailableData(long idx) const;
+	ColumnData* GetInUseData(long idx) const;
+	void FillColumns();
+	void UpdateColumnVector();
+	void UpdateButtons();
+
 	CAgilityBookDoc* m_pDoc;
 	CNamedColumns m_Configs;
 	int m_initSelection;
@@ -82,15 +89,8 @@ private:
 	wxButton* m_btnRemove;
 	wxButton* m_btnUp;
 	wxButton* m_btnDown;
+	ARBWin::CStackLogger m_trace;
 
-private:
-	ColumnData* GetAvailableData(long idx) const;
-	ColumnData* GetInUseData(long idx) const;
-	void FillColumns();
-	void UpdateColumnVector();
-	void UpdateButtons();
-
-protected:
 	DECLARE_EVENT_TABLE()
 	void OnSelchangeNames(wxCommandEvent& evt);
 	void OnClickedOptNamesSave(wxCommandEvent& evt);

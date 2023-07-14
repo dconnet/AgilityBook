@@ -16,6 +16,7 @@
  */
 
 #include "ARB/ARBTypes2.h"
+#include "LibARBWin/Logger.h"
 
 
 namespace dconSoft
@@ -45,8 +46,8 @@ private:
 	bool m_bCheckOldName;
 	wxString m_Name;
 	std::wstring m_NewName;
+	ARBWin::CStackLogger m_trace;
 
-protected:
 	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);
 };

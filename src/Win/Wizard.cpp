@@ -45,6 +45,7 @@ CWizard::CWizard(CAgilityBookDoc* pDoc, std::vector<ARBCalendarPtr>* pCalEntries
 	, m_Calc()
 	, m_ImportExportItem(-1)
 	, m_ImportExportStyle(-1)
+	, m_trace("CWizard")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

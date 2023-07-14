@@ -132,6 +132,7 @@ CDlgConfigPlaceInfo::CDlgConfigPlaceInfo(
 	: wxDialog()
 	, m_Place(inPlace)
 	, m_Value(inValue)
+	, m_trace("CDlgConfigPlaceInfo")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

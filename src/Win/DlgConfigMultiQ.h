@@ -19,6 +19,7 @@
 
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/ARBDate.h"
+#include "LibARBWin/Logger.h"
 class wxDatePickerCtrl;
 class wxListEvent;
 
@@ -59,6 +60,7 @@ private:
 	ARBWin::CListCtrl* m_ctrlItems;
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlRemove;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnItemchanged(wxListEvent& evt);

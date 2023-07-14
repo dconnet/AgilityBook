@@ -99,6 +99,8 @@ private:
 	void OnPrevPane(wxCommandEvent& evt);
 	void OnViewCustomizeAccel(wxCommandEvent& evt);
 	void OnHelpCheckUpdates(wxCommandEvent& evt);
+	void OnHelpLog(wxCommandEvent& evt);
+	void OnHelpLogVerbose(wxCommandEvent& evt);
 	void OnHelpAbout(wxCommandEvent& evt);
 };
 

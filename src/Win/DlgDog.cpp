@@ -65,6 +65,7 @@ CDlgDog::CDlgDog(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog, wxWindow* pParen
 	, m_panelTitles(nullptr)
 	, m_panelRegNums(nullptr)
 	, m_panelPoints(nullptr)
+	, m_trace("CDlgDog")
 {
 	SetExtraStyle(wxWS_EX_VALIDATE_RECURSIVELY | GetExtraStyle());
 	if (!pParent)

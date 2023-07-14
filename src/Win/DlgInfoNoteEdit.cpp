@@ -51,6 +51,7 @@ CDlgInfoNoteEdit::CDlgInfoNoteEdit(
 	, m_Name(inName)
 	, m_Comment(inComment)
 	, m_isVisible(isVisible)
+	, m_trace("CDlgInfoNoteEdit")
 {
 	Create(
 		parent,

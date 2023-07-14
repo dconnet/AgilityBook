@@ -20,6 +20,7 @@
 
 #include "ARB/ARBDogExistingPoints.h"
 #include "ARBCommon/ARBDate.h"
+#include "LibARBWin/Logger.h"
 class wxDateEvent;
 class wxDatePickerCtrl;
 
@@ -98,6 +99,7 @@ private:
 	wxComboBox* m_ctrlTypeNames;
 	wxString m_TextTypeName;
 	wxSizer* m_sdbSizer;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnDateChanged(wxDateEvent& evt);

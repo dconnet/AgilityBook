@@ -17,6 +17,9 @@
  * 2004-03-30 Created.
  */
 
+#include "LibARBWin/Logger.h"
+
+
 namespace dconSoft
 {
 namespace ARBWin
@@ -34,12 +37,12 @@ public:
 	std::wstring Name() const;
 
 private:
+	void InitDlg(wxWindow* pParent, bool bAllowEmpty);
+	void OnFilename(wxCommandEvent& evt);
+
 	wxString m_Name;
 	ARBWin::CTextCtrl* m_textCtrl;
-
-	void InitDlg(wxWindow* pParent, bool bAllowEmpty);
-
-	void OnFilename(wxCommandEvent& evt);
+	ARBWin::CStackLogger m_trace;
 };
 
 } // namespace dconSoft

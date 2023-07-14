@@ -19,6 +19,7 @@
 
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/ARBDate.h"
+#include "LibARBWin/Logger.h"
 class wxDateEvent;
 class wxDatePickerCtrl;
 
@@ -67,6 +68,7 @@ private:
 	bool m_bEarned;
 	bool m_bHidden;
 	bool m_bReceived;
+	ARBWin::CStackLogger m_trace;
 
 	DECLARE_EVENT_TABLE()
 	void OnTitleDateChanged(wxDateEvent& evt);

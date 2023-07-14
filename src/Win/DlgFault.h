@@ -18,6 +18,7 @@
  */
 
 #include "ARB/ARBTypes2.h"
+#include "LibARBWin/Logger.h"
 #include <set>
 
 
@@ -33,6 +34,7 @@ public:
 
 private:
 	wxString m_Fault;
+	ARBWin::CStackLogger m_trace;
 };
 
 } // namespace dconSoft

@@ -250,6 +250,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 	, m_ctrlCopy(nullptr)
 	, m_ctrlMoveUp(nullptr)
 	, m_ctrlMoveDown(nullptr)
+	, m_trace("CDlgConfigVenue")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

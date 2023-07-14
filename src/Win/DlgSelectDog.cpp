@@ -54,6 +54,7 @@ CDlgSelectDog::CDlgSelectDog(CAgilityBookDoc* pDoc, std::vector<ARBDogPtr>& outD
 	, m_outDogs(outDogs)
 	, m_Dogs()
 	, m_checkList(nullptr)
+	, m_trace("CDlgSelectDog")
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();

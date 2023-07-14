@@ -92,6 +92,7 @@ CDlgCRCDViewer::CDlgCRCDViewer(HENHMETAFILE inMetaFile, wxWindow* pParent)
 		wxDefaultPosition,
 		wxDefaultSize,
 		wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
+	, m_trace("CDlgCRCDViewer")
 {
 	// Controls (these are done first to control tab order)
 
