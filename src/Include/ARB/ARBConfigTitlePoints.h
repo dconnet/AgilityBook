@@ -177,7 +177,7 @@ public:
 	 * @param inClass Number of dogs in the event.
 	 * @param inDate Date of run.
 	 * @param isTourney Is this a USDAA tournament event?
-	 * @param isAtHome @Home accumulates points differently
+	 * @param isAtHome atHome accumulates points differently
 	 * @return Number of titling points.
 	 */
 	double GetTitlePoints(

@@ -47,7 +47,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>3.8.3</string>
 	<key>CFBundleVersion</key>
-	<string>120</string>
+	<string>121</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2002-2023 David Connet. All rights reserved.</string>
 	<key>ATSApplicationFontsPath</key>
