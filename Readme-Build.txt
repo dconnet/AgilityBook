@@ -26,7 +26,7 @@ option, run 'git submodule update --init' to also get all dependent code.
 --------------------
 
 python: https://www.python.org
-Currently using version 3.11.2.
+Currently using version 3.11.4.
 - Include pip in install
 - "pip install pywin32"
 
@@ -119,7 +119,7 @@ To build for Mac/Unix, see ./build/BuildUnix.sh
 
 poedit: http://www.poedit.net
 Cross platform editor for modifying .po files.
-Currently using version 3.0.6387.
+Currently using version 3.3.2.
 - includes gettext
   - on Mac, probably want to include MacPorts version
 Use this to keep the catalog in sync with the source code.
@@ -160,13 +160,13 @@ Currently using version 1.9.3.
 
 GraphViz: http://www.graphviz.org
 Used to create source code documentation.
-Currently using version 7.1.0.
+Currently using version 8.1.0.
 Earlier versions may work. (I used 2.14.1 with no problems for a while)
 [Install to default location]
 
 --------------------
 LLVM: https://releases.llvm.org/download.html
-Currently using version 16.0.0 (ubuntu18: v10, ubuntu20: v12, ubuntu22: v14)
+Currently using version 16.0.6 (ubuntu18: v10, ubuntu20: v12, ubuntu22: v14)
 [Install to default location, ubuntu: apt install]
 - clang-format -i *.h *.cpp
   (ubuntu: clang-format-14 -i *.h *.cpp)

@@ -20,8 +20,6 @@ Files to change before marking files for release:
 - If configuration has changed:
   - Same as file version changing above
   - Make sure it is added to TestARB (TestConfig.cpp and CompileDatListTest.txt)
-- Update CD Labels (.../Misc)
-  - lsl: LightScribe Template Labeler
 - History.txt
   Update program version and date, along with any comments.
   - Reflect these changes into www/agilityrecordbook/history.php
@@ -33,13 +31,13 @@ Run Doxygen and fix any warnings/errors it reports.
 - doxygen AgilityBook.dox
 
 Commit all changes to GitHub.
-(note: if doing this on official build machine, can skip this commit)
+(note: if doing this on official build machine, skip this commit and do it later)
 
 Switch to build machine, do a full rebuild and verify it.
 - cd ...\build
-- 'BuildAll.py -w %WXBASE%\wxWidgets-3.2.0 -b fullupdate' [runs VC143 compile]
+- 'BuildAll.py -w %WXBASE%\wxWidgets-3.2.2 -b fullupdate' [runs VC143 compile]
   - BuildAll options: -w wxwin [-b fullupdate | clean] compiler*
-      -w wxwin: Root of wx tree, normally %WXBASE%\wxWidgets-3.2.0'
+      -w wxwin: Root of wx tree, normally %WXBASE%\wxWidgets-3.2.2'
                 Default is %WXWIN%
       -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
       -t:       Testing, just print commands to run
@@ -50,17 +48,15 @@ Switch to build machine, do a full rebuild and verify it.
 - Run 'GenMSI.py -b all' to create w32/x64 installers (and sign them),
   auto-update Misc\Installations\InstallGUIDs.csv, and create distribution dir.
   - Move distrib dir to \AgilityBook\distrib\vN.N.N.N
+- Edit 
+  - src/Projects/xcode*/AgilityBook/AgilityBook/AgilityBook-Info.plist
+  - src/Projects/xcode*/ARBHelp/ARBHelp/ARBHelp-Info.plist
+  and update the build number to what is in .../AgilityBookLibs/Include/VersionNumber.h
 
-Commit all changes to GitHub.
+Commit all changes to GitHub. (First push AgilityBookLibs changes, then push
+AgilityBook changes with that submodule update.)
 
 Pull files onto Mac and build there (see MAC_BUILD.txt)
-- Update Version (x.y.z) and Build (n) in xcode project General settings
-  (unless this was done as prep for a new release below)
-- Update CFBundleVersion in xcode plist files (build number), this can be
-  done in Xcode in the 'General' page for ARBHelp and AgilityBook.
-  (preferable to edit files on build machine step above for single commit)
-  - NOTE: xcode is no longer updating CFBundleGetInfoString or
-    CFBundleLongVersionString. Edit the plist files directly.
 - Build:
   - cd .../AgilityBook/build
   - . ./setwxpath x.y.z release fat
@@ -80,14 +76,12 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
         hdiutil resize -size 200m ARB.dmg
       (or just create in DU with 200M - also can name directly when creating
       instead of below)
-    - Name it AgilityBook-n_n_n_n-mac.dmg
-    - After dragging in image, rename the mount point. (AgilityBook x.y.z)
+    - Set the name to "AgilityBook x.y.z". If this isn't done, if can be done
+      later when the file is mounted.
+    - Name the file AgilityBook-n_n_n_n-mac.dmg
     - Unmount and 'Convert' in DU (save as same name) to compress.
 
-Commit all changes to GitHub (should just be the xcode project).
-
-Create a release tag on AgilityBookLibs (see form below), sync AgilityBook
-submodule to this tag and commit that change too.
+There should be no changes to commit.
 
 Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
@@ -104,7 +98,9 @@ Create the files to be distributed (make sure you archive them too)
 
 Create a release on GitHub tagged as: 'release/vn.n.n'
   - Create tag "release/vn.n.n"
-  - Use History to create release notes, these will be the same as the announcement below.
+  - AgilityBookLibs: Use the text as "See AgilityBook for details".
+    Push no artifacts.
+  - AgilityBook: Use History to create release notes, this is generally the same as the email announcement below.
   - AgilityBook-n_n_n_n-src.zip
   - AgilityBook-n_n_n_n-win.msi
   - AgilityBook-n_n_n_n-x64.msi
@@ -117,11 +113,12 @@ Web Site:
   - AgilityBook-n_n_n_n-mac.dmg
 - Update "$fileversion" and "$fileVerNo" in func.php
 - Update version2.xml
-  - Run 'ARBUpdater /g' and generate new size and md5/sha1 tags for each file.
+  - Run 'ARBUpdater /g' and generate new size and md5/sha1 tags for each file
+    in version2.xml.
   - Update config file (ConfigN.txt) [if necessary]
-  - (note: version.txt is no longer updated. It's only for 2.x support)
   - Note: Duplicate 'osx' entry for 'osx-arm64' and 'osx-x64'. In the future
     I may release non-fat binaries, for now, keep it simple and release one.
+    Since these are priority ranked, 'osx' should be last.
 - Make sure things are current (ongoing task!).
   - Update DTD
   - Update bugs.php, index.php
@@ -134,16 +131,13 @@ Web Site:
 In Groups
 - Send an email announcing new release.
 
-Backup:
-- Backup development directory onto CD.
-  - Remove unnecessary files (build relics, leave .git - complete backup!)
-  - (Note: Could just expand the src.zip file)
-
 Prepare for next release:
 - Switch back to master
 - Update version number
   - This is done by editing .../AgilityBookLibs/Include/VersionNumber.h
 - Update History.txt
-- Update CFBundleShortVersionString in xcode plist files
-  (so it doesn't have to be done as part of the release process, except for
-  CFBundleVersion - the build number - that is done at start of release process)
+- Update
+  - src/Projects/xcode*/AgilityBook/AgilityBook/AgilityBook-Info.plist
+  - src/Projects/xcode*/ARBHelp/ARBHelp/ARBHelp-Info.plist
+  to the new version number. Do not change the build number, we'll do that at
+  release. This is so I can easily track dev builds.
