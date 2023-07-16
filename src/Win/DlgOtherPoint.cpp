@@ -155,7 +155,7 @@ void CDlgOtherPoint::LoadPoints(ARBConfigOtherPointsPtr const& inOther)
 	m_ctrlOtherPoints->Clear();
 	m_ctrlDesc->SetValue(L"");
 
-	int idxCur = wxNOT_FOUND;
+	wxString current;
 	wxArrayString items;
 	std::vector<wxClientData*> data;
 	for (auto const& pOther : m_Config.GetOtherPoints())
@@ -164,7 +164,7 @@ void CDlgOtherPoint::LoadPoints(ARBConfigOtherPointsPtr const& inOther)
 		data.push_back(new COtherPointData(pOther));
 		if ((!inOther && pOther->GetName() == m_pRunOther->GetName()) || (inOther && *inOther == *pOther))
 		{
-			idxCur = static_cast<int>(items.size()) - 1;
+			current = pOther->GetName();
 			m_ctrlDesc->SetValue(StringUtil::stringWX(pOther->GetDescription()));
 			if (0.0 == m_Points)
 				m_Points = pOther->GetDefault();
@@ -172,7 +172,7 @@ void CDlgOtherPoint::LoadPoints(ARBConfigOtherPointsPtr const& inOther)
 		}
 	}
 	m_ctrlOtherPoints->Append(items, data.data());
-	m_ctrlOtherPoints->SetSelection(idxCur);
+	m_ctrlOtherPoints->SetSelection(m_ctrlOtherPoints->FindString(current));
 }
 
 

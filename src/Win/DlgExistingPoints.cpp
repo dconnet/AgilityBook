@@ -214,19 +214,24 @@ CDlgExistingPoints::CDlgExistingPoints(
 		   ARBExistingPointType::Speed,
 		   // ARBExistingPointType::MQ, Not here - will be added later as long as a venue supports it
 		   ARBExistingPointType::SQ};
-	int idxCur = 0; // Default to first item.
+	wxString current;
 	wxArrayString items;
 	std::vector<void*> data;
 	for (auto const& type : types)
 	{
-		items.Add(ARBDogExistingPoints::GetPointTypeName(type));
+		wxString name = ARBDogExistingPoints::GetPointTypeName(type);
+		items.Add(name);
 		data.push_back(reinterpret_cast<void*>(type));
 		if (m_pExistingPoints && m_pExistingPoints->GetType() == type)
-			idxCur = static_cast<int>(items.size()) - 1;
+			current = name;
 		else if (!m_pExistingPoints && ARBExistingPointType::Title == type)
-			idxCur = static_cast<int>(items.size()) - 1;
+			current = name;
 	}
 	m_ctrlType->Append(items, data.data());
+	// Default to first item.
+	int idxCur = m_ctrlType->FindString(current);
+	if (idxCur < 0)
+		idxCur = 0;
 	m_ctrlType->SetSelection(idxCur);
 
 	wxStaticText* textEarned

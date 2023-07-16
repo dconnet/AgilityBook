@@ -72,7 +72,6 @@ CVenueComboBox::CVenueComboBox(
 		wxCB_DROPDOWN | (bEditable ? 0 : wxCB_READONLY) | wxCB_SORT,
 		validator);
 
-	int idxCur = wxNOT_FOUND;
 	wxArrayString items;
 	std::vector<wxClientData*> data;
 
@@ -85,11 +84,9 @@ CVenueComboBox::CVenueComboBox(
 		else
 			items.Add(wxShortName);
 		data.push_back(new CVenueComboData(pVenue));
-		if (!inSelectVenue.empty() && wxShortName == inSelectVenue)
-			idxCur = static_cast<int>(items.size()) - 1;
 	}
 	Append(items, data.data());
-	SetSelection(idxCur);
+	SetSelection(FindString(inSelectVenue));
 	if (bEditable)
 		AutoComplete(items);
 }

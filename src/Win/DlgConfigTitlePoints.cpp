@@ -205,7 +205,7 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 	m_ctrlLifetimeName->SetHelpText(_("HIDC_CONFIG_TITLEPTS_LIFETIMENAME"));
 	m_ctrlLifetimeName->SetToolTip(_("HIDC_CONFIG_TITLEPTS_LIFETIMENAME"));
 
-	int idxCur = wxNOT_FOUND;
+	wxString current;
 	wxArrayString items;
 	std::vector<void*> data;
 	for (auto const& lifetime : m_Venue->GetLifetimeNames())
@@ -220,19 +220,19 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 		items.Add(str);
 		data.push_back(reinterpret_cast<void*>(static_cast<uintptr_t>(bDefault ? 1 : 0)));
 		if (str == m_LifetimeName || (m_LifetimeName.empty() && bDefault))
-		{
-			idxCur = static_cast<int>(items.size()) - 1;
-		}
+			current = str;
 	}
 	if (0 == m_ctrlLifetimeName->GetCount())
 	{
 		items.Add(_("IDS_TITLEPOINT_LIFETIME_NAME"));
 		data.push_back(reinterpret_cast<void*>(1));
-		idxCur = static_cast<int>(items.size()) - 1;
 	}
+	m_ctrlLifetimeName->Append(items, data.data());
+	int idxCur = -1;
 	if (1 == m_ctrlLifetimeName->GetCount())
 		idxCur = 0;
-	m_ctrlLifetimeName->Append(items, data.data());
+	else
+		idxCur = m_ctrlLifetimeName->FindString(current);
 	m_ctrlLifetimeName->SetSelection(idxCur);
 
 	if (ARBTitlePointType::Lifetime != m_Type)

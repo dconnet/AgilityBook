@@ -676,19 +676,15 @@ void CDlgCalendar::ListLocations()
 	if (m_Location.empty())
 		loc = m_pCal->GetLocation();
 	m_ctrlLocation->Clear();
-	int idxCur = wxNOT_FOUND;
 	wxArrayString items;
 	for (auto const& itLoc : locations)
 	{
 		items.Add(itLoc);
 		if (itLoc == loc)
-		{
-			idxCur = static_cast<int>(items.size()) - 1;
 			UpdateLocationInfo(itLoc);
-		}
 	}
 	m_ctrlLocation->Append(items);
-	m_ctrlLocation->SetSelection(idxCur);
+	m_ctrlLocation->SetSelection(m_ctrlLocation->FindString(loc));
 	m_ctrlLocation->AutoComplete(items);
 }
 
@@ -718,19 +714,15 @@ void CDlgCalendar::ListClubs()
 	if (m_Club.empty())
 		club = m_pCal->GetClub();
 	m_ctrlClub->Clear();
-	int idxCur = wxNOT_FOUND;
 	wxArrayString items;
 	for (auto const& itClub : clubs)
 	{
 		items.Add(itClub);
 		if (itClub == club)
-		{
-			idxCur = static_cast<int>(items.size()) - 1;
 			UpdateClubInfo(itClub);
-		}
 	}
 	m_ctrlClub->Append(items);
-	m_ctrlClub->SetSelection(idxCur);
+	m_ctrlClub->SetSelection(m_ctrlClub->FindString(club));
 	m_ctrlClub->AutoComplete(items);
 }
 

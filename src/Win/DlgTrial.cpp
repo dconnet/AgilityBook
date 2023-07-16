@@ -444,16 +444,14 @@ void CDlgTrial::ListLocations()
 	if (m_Location.empty())
 		loc = m_pTrial->GetLocation();
 	m_ctrlLocation->Clear();
-	int idxCur = wxNOT_FOUND;
 	wxArrayString items;
 	for (auto const& location : locations)
 	{
 		items.Add(location);
-		if (location == loc)
-			idxCur = static_cast<int>(items.size()) - 1;
 	}
+	items.Sort();
 	m_ctrlLocation->Append(items);
-	m_ctrlLocation->SetSelection(idxCur);
+	m_ctrlLocation->SetSelection(m_ctrlLocation->FindString(loc));
 	m_ctrlLocation->AutoComplete(items);
 }
 

@@ -1,4 +1,7 @@
-7/14/2023: v3.8.4.<dev>
+7/16/2023: v3.8.4.<dev>
+- Bug fixes:
+  - Fix combobox selection due to bug in 3.8.2.
+    (Don't use indices into unsorted data to set selection in sorted combobox)
 
 7/14/2023: v3.8.3.121
 - Bumped file version to 15.4:

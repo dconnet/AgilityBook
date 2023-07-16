@@ -882,7 +882,6 @@ CDlgAssignColumns::CDlgAssignColumns(
 		= new wxStaticText(this, wxID_ANY, _("IDC_ASSIGN_NAMES"), wxDefaultPosition, wxDefaultSize, 0);
 	textNames->Wrap(-1);
 
-	int idxCur = wxNOT_FOUND;
 	wxArrayString items;
 	std::vector<wxClientData*> data;
 	std::vector<std::wstring> configNames;
@@ -891,10 +890,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 	{
 		items.Add(name);
 		if (name == m_Configs.GetCurrentConfig())
-		{
 			m_ConfigName = StringUtil::stringWX(m_Configs.GetCurrentConfig());
-			idxCur = static_cast<int>(items.size()) - 1;
-		}
 	}
 
 	m_ctrlConfig = new wxComboBox(
@@ -906,7 +902,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 		items,
 		wxCB_DROPDOWN | wxCB_SORT,
 		CTrimValidator(&m_ConfigName, TRIMVALIDATOR_TRIM_BOTH));
-	m_ctrlConfig->SetSelection(idxCur);
+	m_ctrlConfig->SetSelection(m_ctrlConfig->FindString(m_ConfigName));
 	m_ctrlConfig->AutoComplete(items);
 	m_ctrlConfig->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CDlgAssignColumns::OnSelchangeNames, this);
 	m_ctrlConfig->SetHelpText(_("HIDC_ASSIGN_NAMES"));
