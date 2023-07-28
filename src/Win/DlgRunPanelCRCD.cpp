@@ -118,7 +118,7 @@ CMetaDataDisplay::CMetaDataDisplay(wxWindow* parent, ARBDogRunPtr const& inRun)
 		wxDefaultSize,
 		wxTE_MULTILINE | wxTE_READONLY);
 	SetBackgroundStyle(wxBG_STYLE_PAINT);
-	AllowMultilineTabstop(true);
+	SetAllowReadonlyTabstop();
 
 #ifdef HAS_ENHMETAFILE
 	if (0 < m_Run->GetCRCDRawMetaData().length())
