@@ -415,8 +415,7 @@ CDlgCalendar::CDlgCalendar(ARBCalendarPtr const& inCal, CAgilityBookDoc* pDoc, w
 		wxEmptyString,
 		wxDefaultPosition,
 		wxDefaultSize,
-		0,
-		nullptr,
+		items,
 		wxCB_DROPDOWN | wxCB_SORT,
 		CTrimValidator(&m_EMailSecAddr, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlEMailSecAddr->AutoComplete(items);

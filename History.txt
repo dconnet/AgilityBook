@@ -1,4 +1,6 @@
-7/16/2023: v3.8.5.<dev>
+8/1/2023: v3.8.5.<dev>
+- Bug fixes:
+  - Fix secretary list in Calendar (bug introduced in 3.8.2)
 
 7/16/2023: v3.8.4.122
 - Bug fixes:
