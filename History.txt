@@ -1,3 +1,7 @@
+8/7/2023: v3.8.6.<dev>
+- New features / Enhancements:
+  - Return x.y.z for OS version, use shorter name for OS name.
+
 8/3/2023: v3.8.5.123
 - Bug fixes:
   - Fix secretary list in Calendar (bug introduced in 3.8.2)
