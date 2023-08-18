@@ -483,7 +483,8 @@ bool CUpdateInfo::ReadVersionFile(std::string const& data, bool bVerbose)
 							{
 								int majVer;
 								int minVer;
-								GetOSInfo(majVer, minVer);
+								int microVer;
+								GetOSInfo(majVer, minVer, microVer);
 								ARBVersion ver(
 									static_cast<unsigned short>(majVer),
 									static_cast<unsigned short>(minVer));
