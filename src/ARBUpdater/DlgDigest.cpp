@@ -375,13 +375,13 @@ void CDlgDigest::OnCopy(wxCommandEvent& evt)
 	fmt::format_to(std::back_inserter(str), L"\tsha1=\"{}\"\n", m_SHA1.wx_str());
 	fmt::format_to(std::back_inserter(str), L"\tsize=\"{}\"\n\t/>\n", m_Size);
 
-	if (wxTheClipboard->Open())
+	if (wxClipboard::Get()->Open())
 	{
 		auto* dataObj = new wxTextDataObject(fmt::to_string(str));
-		if (!wxTheClipboard->SetData(dataObj))
+		if (!wxClipboard::Get()->SetData(dataObj))
 			delete dataObj;
-		wxTheClipboard->Flush();
-		wxTheClipboard->Close();
+		wxClipboard::Get()->Flush();
+		wxClipboard::Get()->Close();
 		wxMessageBox(L"Copied!", _("Agility Record Book"), wxOK, this);
 	}
 	else

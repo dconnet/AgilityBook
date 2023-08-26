@@ -97,7 +97,7 @@ bool CClipboardData::Open()
 {
 	if (!m_bOkay)
 	{
-		if (wxTheClipboard && wxTheClipboard->Open())
+		if (wxClipboard::Get() && wxClipboard::Get()->Open())
 			m_bOkay = true;
 	}
 	return m_bOkay;
@@ -109,8 +109,8 @@ void CClipboardData::Close()
 	if (m_bOkay)
 	{
 		m_bOkay = false;
-		wxTheClipboard->Flush();
-		wxTheClipboard->Close();
+		wxClipboard::Get()->Flush();
+		wxClipboard::Get()->Close();
 	}
 }
 
@@ -124,20 +124,20 @@ CClipboardDataReader::CClipboardDataReader()
 
 bool CClipboardDataReader::IsFormatAvailable(ARBClipFormat clpFmt)
 {
-	return wxTheClipboard && wxTheClipboard->IsSupported(GetClipboardFormat(clpFmt));
+	return wxClipboard::Get() && wxClipboard::Get()->IsSupported(GetClipboardFormat(clpFmt));
 }
 
 
 bool CClipboardDataReader::GetData(ARBClipFormat clpFmt, ARBCommon::ElementNodePtr const& outTree)
 {
 	outTree->clear();
-	if (!wxTheClipboard->IsSupported(GetClipboardFormat(clpFmt)) || !Open())
+	if (!wxClipboard::Get()->IsSupported(GetClipboardFormat(clpFmt)) || !Open())
 		return false;
 	std::string data;
 	{
 		wxCustomDataObject txtData;
 		txtData.SetFormat(GetClipboardFormat(clpFmt));
-		wxTheClipboard->GetData(txtData);
+		wxClipboard::Get()->GetData(txtData);
 		// When we put the data on the clipboard, we include the null terminator.
 		// Don't include that when recreating the string.
 		data = std::string(static_cast<const char*>(txtData.GetData()), txtData.GetSize() - 1);
@@ -162,10 +162,10 @@ bool CClipboardDataReader::GetData(ARBClipFormat clpFmt, ARBCommon::ElementNodeP
 bool CClipboardDataReader::GetData(std::wstring& outData)
 {
 	outData.clear();
-	if (!wxTheClipboard->IsSupported(wxDF_TEXT) || !Open())
+	if (!wxClipboard::Get()->IsSupported(wxDF_TEXT) || !Open())
 		return false;
 	wxTextDataObject data;
-	wxTheClipboard->GetData(data);
+	wxClipboard::Get()->GetData(data);
 	outData = data.GetText();
 	return true;
 }
@@ -237,7 +237,7 @@ CClipboardDataWriter::CClipboardDataWriter()
 {
 	if (m_bOkay)
 	{
-		wxTheClipboard->Clear();
+		wxClipboard::Get()->Clear();
 	}
 }
 
@@ -348,7 +348,7 @@ bool CClipboardDataWriter::CommitData()
 	bool bOk = false;
 	if (!m_Object)
 		return bOk;
-	bOk = wxTheClipboard->SetData(m_Object);
+	bOk = wxClipboard::Get()->SetData(m_Object);
 	if (!bOk)
 		delete m_Object;
 	m_Object = nullptr;

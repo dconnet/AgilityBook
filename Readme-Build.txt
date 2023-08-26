@@ -39,6 +39,15 @@ Make sure WXWIN is set to wxWidgets root directory.
 - Mac/Unix: Use .../build/BuildUnix.sh to setup WX build. And ". setwxpath.sh"
   to set the ARB compile environment.
 
+=== Changes to 3.3.0
+  (include/wx/msw/setup.h)
+  - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
+  - Set wxWIN_COMPATIBILITY_3_2 to 0 (currently 1)
+  - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
+  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
+    the library is compiled one way and the users do something different.)
+  - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
+
 === Changes to 3.2.2.1: (for VisualStudio 17.6)
 >diff itemid.h.orig itemid.h
 36c36

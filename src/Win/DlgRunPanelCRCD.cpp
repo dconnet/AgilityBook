@@ -192,10 +192,10 @@ void CMetaDataDisplay::OnCopy()
 	if (m_Insert)
 	{
 		bool bText = false;
-		if (wxTheClipboard->Open())
+		if (wxClipboard::Get()->Open())
 		{
-			bText = wxTheClipboard->IsSupported(wxDF_TEXT);
-			wxTheClipboard->Close();
+			bText = wxClipboard::Get()->IsSupported(wxDF_TEXT);
+			wxClipboard::Get()->Close();
 		}
 		bool bMeta = false;
 #ifdef HAS_ENHMETAFILE
@@ -233,7 +233,7 @@ void CMetaDataDisplay::OnCopy()
 					{
 						// Note, wxClipboard may be using the OLE clipboard
 						// which doesn't actually open the windows one.
-						wxOpenClipboard();
+						wxClipboard::Get()->Open();
 						HENHMETAFILE hData = static_cast<HENHMETAFILE>(GetClipboardData(CF_ENHMETAFILE));
 						m_metaFile = CopyEnhMetaFile(hData, nullptr);
 						m_metaFileBack = m_metaFile;
@@ -243,7 +243,7 @@ void CMetaDataDisplay::OnCopy()
 							m_ViewText = false;
 							m_Insert = false;
 						}
-						wxCloseClipboard();
+						wxClipboard::Get()->Close();
 					}
 #endif
 				}
