@@ -1127,7 +1127,7 @@ void InsertRun(
 // Viewing runs
 
 // TODO: not getting selected when selecting 2nd item via shift-click (wx bug)
-// Listen to focused because of https://trac.wxwidgets.org/ticket/4541
+// Listen to focused because of https://github.com/wxWidgets/wxWidgets/issues/4541
 // Use EventTable because Binding allows a focused event after destroy on mac
 constexpr int LIST_CTRL = 1000;
 wxBEGIN_EVENT_TABLE(CDlgListViewer, wxDialog)
