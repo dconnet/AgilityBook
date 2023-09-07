@@ -367,6 +367,8 @@ bool CAgilityBookDoc::StatusBarContextMenu(wxWindow* parent, int id, wxPoint con
 			}
 		}
 		break;
+		default:
+			break;
 		}
 	}
 	return bHandled;
@@ -839,7 +841,7 @@ void CConfigActionCallback::PostDelete(std::wstring const& msg) const
 }
 
 
-bool CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
+bool CAgilityBookDoc::ImportConfiguration(ARBConfig const& update)
 {
 	unsigned int iHint = 0;
 	fmt::wmemory_buffer info;
@@ -1363,7 +1365,7 @@ bool CAgilityBookDoc::ResetVisibility()
 }
 
 
-bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARB::ARBDogPtr const& inDog)
+bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter> const& venues, ARB::ARBDogPtr const& inDog)
 {
 	bool bChanged = false;
 	for (ARBDogTrialList::iterator iterTrial = inDog->GetTrials().begin(); iterTrial != inDog->GetTrials().end();
@@ -1377,7 +1379,7 @@ bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARB::AR
 }
 
 
-bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARB::ARBDogTrialPtr const& inTrial)
+bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter> const& venues, ARB::ARBDogTrialPtr const& inTrial)
 {
 	bool bChanged = false;
 	bool bVisTrial = CFilterOptions::Options().IsTrialVisible(venues, inTrial);
@@ -1402,7 +1404,7 @@ bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARB::AR
 
 
 bool CAgilityBookDoc::ResetVisibility(
-	std::vector<CVenueFilter>& venues,
+	std::vector<CVenueFilter> const& venues,
 	ARB::ARBDogTrialPtr const& inTrial,
 	ARB::ARBDogRunPtr const& inRun)
 {
@@ -1424,7 +1426,7 @@ bool CAgilityBookDoc::ResetVisibility(
 }
 
 
-bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARB::ARBDogTitlePtr const& inTitle)
+bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter> const& venues, ARB::ARBDogTitlePtr const& inTitle)
 {
 	bool bChanged = false;
 	bool bVisTitle = CFilterOptions::Options().IsTitleVisible(venues, inTitle);
@@ -1437,7 +1439,7 @@ bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARB::AR
 }
 
 
-bool CAgilityBookDoc::ResetVisibility(std::set<std::wstring>& names, ARB::ARBTrainingPtr const& inTraining)
+bool CAgilityBookDoc::ResetVisibility(std::set<std::wstring> const& names, ARB::ARBTrainingPtr const& inTraining)
 {
 	bool bChanged = false;
 	bool bVisTraining = CFilterOptions::Options().IsTrainingLogVisible(names, inTraining);
@@ -2032,6 +2034,8 @@ void CAgilityBookDoc::OnUpdateCmd(wxUpdateUIEvent& evt)
 		evt.Enable(false);
 		evt.Skip();
 		break;
+	default:
+		break;
 	}
 }
 
@@ -2296,6 +2300,9 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 		options.ShowModal();
 	}
 	break;
+
+	default:
+		break;
 	}
 }
 

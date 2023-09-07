@@ -1657,6 +1657,9 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_DOGSQD);
 				outValues.push_back(IO_RUNS_Q);
 				break;
+
+			default:
+				break;
 			}
 			break;
 		case eCalImport:
@@ -1795,6 +1798,8 @@ void CAgilityBookOptions::GetColumnOrder(
 			case IO_TYPE_VIEW_CALENDAR:
 				outValues.push_back(IO_CAL_VENUE);
 				outValues.push_back(IO_CAL_LOCATION);
+				break;
+			default:
 				break;
 			}
 			break;

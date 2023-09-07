@@ -219,6 +219,8 @@ std::wstring CDlgListViewerDataExisting::OnNeedText(long iCol) const
 	case COL_RUN_MQ_LOCATION:
 		str = StringUtil::stringW(_("IDS_EXISTING_POINTS"));
 		break;
+	default:
+		break;
 	}
 	return str;
 }
@@ -355,6 +357,8 @@ std::wstring CDlgListViewerDataRun::OnNeedText(long iCol) const
 		str = fmt::to_string(buffer);
 	}
 	break;
+	default:
+		break;
 	}
 	return str;
 }
@@ -410,6 +414,8 @@ std::wstring CDlgListViewerDataMultiQ::OnNeedText(long iCol) const
 		break;
 	case COL_RUN_MQ_CLUB:
 		str = m_Club;
+		break;
+	default:
 		break;
 	}
 	return str;
@@ -732,6 +738,8 @@ std::wstring CDlgListViewerDataLifetime::OnNeedText(long iCol) const
 			else
 				str = fmt::format(L"{}", m_info->points);
 			break;
+		default:
+			break;
 		}
 	}
 	return str;
@@ -839,6 +847,8 @@ std::wstring CDlgListViewerDataOther::OnNeedText(long iCol) const
 	case COL_OTHER_SCORE:
 		if (m_info.m_bScore)
 			str = fmt::format(L"{}", m_info.m_Score);
+		break;
+	default:
 		break;
 	}
 	return str;
@@ -991,6 +1001,9 @@ std::wstring CDlgListViewerDataItem::OnNeedText(long iCol) const
 	case COL_ITEM_COMMENT:
 		if (m_info.pItem)
 			str = m_info.pItem->GetComment();
+		break;
+
+	default:
 		break;
 	}
 	return str;

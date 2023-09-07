@@ -135,9 +135,9 @@ int CDlgDogRefRunData::OnCompare(CListDataPtr const& item, long iCol) const
 	case k_colYPS:
 	{
 		double time1 = pRefRun1->GetTime();
-		double yps1;
+		double yps1 = 0.0;
 		double time2 = pRefRun2->GetTime();
-		double yps2;
+		double yps2 = 0.0;
 		if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), time1, yps1)
 			&& m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), time2, yps2))
 		{

@@ -218,6 +218,8 @@ void CTabView::RecreateBook(wxDocument* doc, long inFlags, bool bOnCreate)
 		m_ctrlBook->Bind(wxEVT_COMMAND_TOOLBOOK_PAGE_CHANGED, &CTabView::OnToolbookChanged, this);
 		break;
 #endif
+	default:
+		break;
 	}
 
 	if (!m_ctrlBook)

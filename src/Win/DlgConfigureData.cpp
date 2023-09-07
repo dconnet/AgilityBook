@@ -97,6 +97,8 @@ std::wstring CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 	case 2:
 		str = StringUtil::Replace(m_Venue->GetDesc(), L"\n", L" ");
 		break;
+	default:
+		break;
 	}
 	return str;
 }

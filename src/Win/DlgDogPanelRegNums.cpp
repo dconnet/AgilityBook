@@ -121,6 +121,8 @@ int CDlgDogDataRegNum::OnCompare(CListDataPtr const& item, long iCol) const
 		else if (pRegNum1->GetNote() > pRegNum2->GetNote())
 			rc = 1;
 		break;
+	default:
+		break;
 	}
 	return rc;
 }
@@ -145,6 +147,8 @@ std::wstring CDlgDogDataRegNum::OnNeedText(long iCol) const
 		break;
 	case k_colNote:
 		text = StringUtil::Replace(m_RegNum->GetNote(), L"\n", L" ");
+		break;
+	default:
 		break;
 	}
 	return text;

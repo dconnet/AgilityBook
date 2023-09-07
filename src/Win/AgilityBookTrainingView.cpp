@@ -121,6 +121,8 @@ std::wstring CAgilityBookTrainingViewData::OnNeedText(long iCol) const
 		case IO_LOG_NOTES:
 			str = StringUtil::Replace(m_pTraining->GetNote(), L"\n", L" ");
 			break;
+		default:
+			break;
 		}
 	}
 	return str;
@@ -240,6 +242,8 @@ int wxCALLBACK CompareTraining(CListDataPtr const& item1, CListDataPtr const& it
 		break;
 	case IO_LOG_NOTES:
 		nRet = StringUtil::CompareNoCase(pItem1->GetTraining()->GetNote(), pItem2->GetTraining()->GetNote());
+		break;
+	default:
 		break;
 	}
 	if (0 > pInfo->nCol)
@@ -679,6 +683,8 @@ void CAgilityBookTrainingView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		break;
 	case ID_VIEW_CUSTOMIZE:
 		evt.Enable(true);
+		break;
+	default:
 		break;
 	}
 }

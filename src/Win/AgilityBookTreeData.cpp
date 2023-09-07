@@ -151,6 +151,8 @@ std::wstring CAgilityBookTreeDataDog::OnNeedText() const
 					ARBDouble::ToString(age.GetDays() / 365.0, 1));
 			}
 			break;
+		default:
+			break;
 		}
 	}
 	return fmt::to_string(str);
@@ -388,6 +390,8 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 				bNeedSpace = true;
 			}
 			break;
+		default:
+			break;
 		}
 	}
 	return fmt::to_string(str);
@@ -605,6 +609,8 @@ std::wstring CAgilityBookTreeDataRun::OnNeedText() const
 			break;
 		case IO_TREE_RUN_HEIGHT:
 			fmt::format_to(std::back_inserter(str), L"{}", m_pRun->GetHeight());
+			break;
+		default:
 			break;
 		}
 	}

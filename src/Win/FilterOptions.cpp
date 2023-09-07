@@ -75,10 +75,10 @@ void FilterVenue(wxString inVenue, std::vector<CVenueFilter>& venues)
 				default:
 				case 3:
 					filter.level = rawFilter[2];
-					// fallthru
+					[[fallthrough]];
 				case 2:
 					filter.division = rawFilter[1];
-					// fallthru
+					[[fallthrough]];
 				case 1:
 					filter.venue = rawFilter[0];
 				}

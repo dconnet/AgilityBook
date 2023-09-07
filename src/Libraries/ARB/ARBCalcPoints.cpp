@@ -197,6 +197,8 @@ double ARBCalcPointsUKI::GetPoints(
 		case 2:
 			pts = 5.0;
 			break;
+		default:
+			break;
 		}
 	}
 	else if (inClass <= 30)
@@ -214,6 +216,8 @@ double ARBCalcPointsUKI::GetPoints(
 			break;
 		case 4:
 			pts = 5.0;
+			break;
+		default:
 			break;
 		}
 	}

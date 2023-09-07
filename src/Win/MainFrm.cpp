@@ -469,7 +469,7 @@ void CMainFrame::OnUpdateCmd(wxUpdateUIEvent& evt)
 		break;
 	case ID_HELP_LOG_VERBOSE:
 		bEnable = true;
-		evt.Check(CStackLogger::IsLoggerEnabled()); 
+		evt.Check(CStackLogger::IsLoggerEnabled());
 		break;
 	}
 	evt.Enable(bEnable);

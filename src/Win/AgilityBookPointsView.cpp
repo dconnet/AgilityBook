@@ -279,6 +279,8 @@ void CAgilityBookPointsView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 	case ID_VIEW_LIFETIME_EVENTS:
 		evt.Enable(true);
 		break;
+	default:
+		break;
 	}
 }
 
@@ -340,6 +342,9 @@ void CAgilityBookPointsView::OnViewCmd(wxCommandEvent& evt)
 		LoadData();
 	}
 	break;
+
+	default:
+		break;
 	}
 }
 

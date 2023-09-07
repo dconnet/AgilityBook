@@ -199,6 +199,8 @@ void CCheckListCtrl::OnKeyDown(wxKeyEvent& evt)
 				}
 			}
 			break;
+		default:
+			break;
 		}
 	}
 	evt.Skip();

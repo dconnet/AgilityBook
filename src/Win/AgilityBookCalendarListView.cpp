@@ -147,6 +147,8 @@ std::wstring CAgilityBookCalendarListViewData::OnNeedText(long iCol) const
 		case IO_CAL_NOTES:
 			str = StringUtil::Replace(m_pCal->GetNote(), L"\n", L" ");
 			break;
+		default:
+			break;
 		}
 	}
 	return str;
@@ -408,6 +410,8 @@ int wxCALLBACK CompareCalendar(CListDataPtr const& item1, CListDataPtr const& it
 	break;
 	case IO_CAL_NOTES:
 		nRet = StringUtil::CompareNoCase(pItem1->GetCalendar()->GetNote(), pItem2->GetCalendar()->GetNote());
+		break;
+	default:
 		break;
 	}
 	if (0 > pInfo->nCol)
@@ -964,6 +968,8 @@ void CAgilityBookCalendarListView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		break;
 	case ID_VIEW_CUSTOMIZE:
 		evt.Enable(true);
+		break;
+	default:
 		break;
 	}
 }

@@ -235,8 +235,8 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 		break;
 		case IO_RUNS_OPS:
 		{
-			double ops;
-			int prec;
+			double ops = 0.0;
+			int prec = 2;
 			if (m_pRun->GetScoring().GetObstaclesPS(
 					CAgilityBookOptions::GetTableInYPS(),
 					CAgilityBookOptions::GetRunTimeInOPS(),
@@ -1828,6 +1828,8 @@ void CAgilityBookRunsView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 	case ID_VIEW_TABLE_IN_YPS:
 	case ID_VIEW_RUNTIME_IN_OPS:
 		bEnable = true;
+		break;
+	default:
 		break;
 	}
 	evt.Enable(bEnable);

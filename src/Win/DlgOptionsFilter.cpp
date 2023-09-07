@@ -608,10 +608,10 @@ void CDlgOptionsFilter::FillFilter(wxTreeItemId hItem, std::wstring path, std::v
 			default:
 			case 3:
 				filter.level = rawFilter[2];
-				// fallthru
+				[[fallthrough]];
 			case 2:
 				filter.division = rawFilter[1];
-				// fallthru
+				[[fallthrough]];
 			case 1:
 				filter.venue = rawFilter[0];
 			}

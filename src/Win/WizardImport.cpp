@@ -1088,6 +1088,8 @@ bool CWizardImport::DoWizardFinish()
 					pRun->SetNote(str);
 				}
 				break;
+				default:
+					break;
 				}
 			}
 			pScoring.reset();
@@ -1405,6 +1407,8 @@ bool CWizardImport::DoWizardFinish()
 					pCal = CreateCal(pCal);
 					pCal->SetNote(entry[iCol]);
 					break;
+				default:
+					break;
 				}
 			}
 			if (!listCal.AddCalendar(pCal))
@@ -1453,6 +1457,8 @@ bool CWizardImport::DoWizardFinish()
 				case IO_LOG_NOTES:
 					pLog = CreateLog(pLog);
 					pLog->SetNote(entry[iCol]);
+					break;
+				default:
 					break;
 				}
 			}

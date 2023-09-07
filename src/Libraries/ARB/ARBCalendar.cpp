@@ -154,6 +154,8 @@ ARBiCal::ARBiCal(std::ostream& ioStream, int inVersion)
 		// Figured this out thru trial/error with Outlook2003.
 		Write("METHOD:PUBLISH\r\n");
 		break;
+	default:
+		break;
 	}
 }
 

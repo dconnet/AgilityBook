@@ -94,7 +94,7 @@ void CAgilityBookBaseExtraView::UpdateMessages()
 }
 
 
-bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, CListCtrl& ctrl, wxContextMenuEvent const& evt)
+bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, CListCtrl const& ctrl, wxContextMenuEvent const& evt)
 {
 	bool bOk = true;
 	outPos = evt.GetPosition(); // in screen
@@ -130,7 +130,7 @@ bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, CListCtrl& ctrl
 }
 
 
-bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, CListCtrl& ctrl, wxListEvent const& evt)
+bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, CListCtrl const& ctrl, wxListEvent const& evt)
 {
 	bool bOk = true;
 	outPos = evt.GetPoint(); // in client
@@ -165,7 +165,7 @@ bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, CListCtrl& ctrl
 }
 
 
-bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, CTreeCtrl& ctrl, wxContextMenuEvent const& evt)
+bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, CTreeCtrl const& ctrl, wxContextMenuEvent const& evt)
 {
 	bool bOk = true;
 	outPos = evt.GetPosition(); // in screen
@@ -201,7 +201,7 @@ bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, CTreeCtrl& ctrl
 }
 
 
-bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, CTreeCtrl& ctrl, wxTreeEvent const& evt)
+bool CAgilityBookBaseExtraView::GetMenuPosition(wxPoint& outPos, CTreeCtrl const& ctrl, wxTreeEvent const& evt)
 {
 	bool bOk = true;
 	outPos = evt.GetPoint(); // in client

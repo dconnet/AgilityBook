@@ -335,6 +335,8 @@ std::string CCalendarSiteUSDAA::Process(
 							//Text[0]=["Event Type","1 - Titling Only Event&lt;BR&gt;2 - Titling Event with Tournament Classes&lt;BR&gt;3 - Titling Event with Junior Handler Classes&lt;BR&gt;4 - Titling Event with Tournament &amp; Junior Handler Classes&lt;BR&gt;5 - Tournament Only Event&lt;BR&gt;6 - Tournament Event with Junior Handler Classes&lt;BR&gt;7 - Junior Handler Only Event&lt;BR&gt;8 - Seminar&lt;BR&gt;9 - Seminar with Non-titling Match&lt;BR&gt;0 - Non-titling Match"];
 							// clang-format on
 							break;
+						default:
+							break;
 						}
 						++idx;
 					}
@@ -465,6 +467,8 @@ std::string CCalendarSiteUSDAA::Process(
 								}
 							}
 							break;
+							default:
+								break;
 							}
 							++idx;
 						}

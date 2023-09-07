@@ -171,6 +171,8 @@ int CDlgDogDataPoint::OnCompare(CListDataPtr const& item, long iCol) const
 		else if (pExistingPoints1->GetComment() > pExistingPoints2->GetComment())
 			rc = 1;
 		break;
+	default:
+		break;
 	}
 	return rc;
 }
@@ -213,6 +215,8 @@ std::wstring CDlgDogDataPoint::OnNeedText(long iCol) const
 		break;
 	case k_colComments:
 		text = StringUtil::Replace(m_Pts->GetComment(), L"\n", L" ");
+		break;
+	default:
 		break;
 	}
 	return text;

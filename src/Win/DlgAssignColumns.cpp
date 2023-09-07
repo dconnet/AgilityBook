@@ -1058,7 +1058,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 	CenterOnParent();
 
 	m_ctrlType->Select(idxSelect); // Causes change event that fills columns
-	if (m_Configs.Order() == CAgilityBookOptions::eView)
+	if ((CAgilityBookOptions::eView & m_Configs.Order()) == CAgilityBookOptions::eView)
 		m_ctrlType->SortItems(CompareTypes, 0);
 	m_ctrlType->Focus(idxSelect);
 	m_ctrlType->SetFocus();
@@ -1119,9 +1119,9 @@ void CDlgAssignColumns::FillColumns()
 				m_ctrlAvailable->SetClientObject(idx, new ColumnData(0, -1));
 		}
 		bool bImport
-			= (CAgilityBookOptions::eRunsImport == m_Configs.Order()
-			   || CAgilityBookOptions::eCalImport == m_Configs.Order()
-			   || CAgilityBookOptions::eLogImport == m_Configs.Order());
+			= ((CAgilityBookOptions::eRunsImport & m_Configs.Order()) == CAgilityBookOptions::eRunsImport
+			   || (CAgilityBookOptions::eCalImport & m_Configs.Order()) == CAgilityBookOptions::eCalImport
+			   || (CAgilityBookOptions::eLogImport & m_Configs.Order()) == CAgilityBookOptions::eLogImport);
 		for (i = 0; 0 <= sc_Fields[idxType][i]; ++i)
 		{
 			if (!(sc_FieldNames[sc_Fields[idxType][i]].valid & m_Configs.Order())
@@ -1366,7 +1366,7 @@ void CDlgAssignColumns::OnReset(wxCommandEvent& evt)
 void CDlgAssignColumns::OnOk(wxCommandEvent& evt)
 {
 	m_Configs.Save();
-	if (m_pDoc && CAgilityBookOptions::eView == m_Configs.Order())
+	if (m_pDoc && (CAgilityBookOptions::eView & m_Configs.Order()) == CAgilityBookOptions::eView)
 	{
 		CUpdateHint hint(UPDATE_CUSTOMIZE);
 		m_pDoc->UpdateAllViews(nullptr, &hint);

@@ -137,7 +137,7 @@ public:
 	bool CreateTrialFromCalendar(ARB::ARBCalendar const& cal, CTabView* pTabView);
 	bool SetCalenderDate(ARBCommon::ARBDate const& date);
 	void SortDates();
-	bool ImportConfiguration(ARB::ARBConfig& update);
+	bool ImportConfiguration(ARB::ARBConfig const& update);
 	bool ImportConfiguration(bool bUseDefault);
 
 	bool ImportARBCalEntry(
@@ -165,14 +165,14 @@ public:
 	 *       object!
 	 */
 	bool ResetVisibility();
-	bool ResetVisibility(std::vector<CVenueFilter>& venues, ARB::ARBDogPtr const& inDog);
-	bool ResetVisibility(std::vector<CVenueFilter>& venues, ARB::ARBDogTrialPtr const& inTrial);
+	bool ResetVisibility(std::vector<CVenueFilter> const& venues, ARB::ARBDogPtr const& inDog);
+	bool ResetVisibility(std::vector<CVenueFilter> const& venues, ARB::ARBDogTrialPtr const& inTrial);
 	bool ResetVisibility(
-		std::vector<CVenueFilter>& venues,
+		std::vector<CVenueFilter> const& venues,
 		ARB::ARBDogTrialPtr const& inTrial,
 		ARB::ARBDogRunPtr const& inRun);
-	bool ResetVisibility(std::vector<CVenueFilter>& venues, ARB::ARBDogTitlePtr const& inTitle);
-	bool ResetVisibility(std::set<std::wstring>& names, ARB::ARBTrainingPtr const& inTraining);
+	bool ResetVisibility(std::vector<CVenueFilter> const& venues, ARB::ARBDogTitlePtr const& inTitle);
+	bool ResetVisibility(std::set<std::wstring> const& names, ARB::ARBTrainingPtr const& inTraining);
 
 	bool ShowPointsAsHtml(bool bHtml);
 	void BackupFile(wxString const& lpszPathName);

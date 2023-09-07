@@ -164,6 +164,8 @@ CWizardStart::CWizardStart(CWizard* pSheet, CAgilityBookDoc* pDoc)
 	case WIZARD_RADIO_ARB:
 		radioArb->SetValue(true);
 		break;
+	default:
+		break;
 	}
 
 	m_ctrlList = new wxListBox(
@@ -433,7 +435,7 @@ void CWizardStart::DoUpdateExportList(bool bInit)
 	{
 	case WizardPage::None:
 		bEnableNext = false;
-		// fallthru
+		[[fallthrough]];
 	case WizardPage::Finish:
 		m_Next = nullptr;
 		break;

@@ -132,10 +132,10 @@ public:
 
 protected:
 	// Returns points in client coordinates
-	bool GetMenuPosition(wxPoint& outPos, ARBWin::CListCtrl& ctrl, wxContextMenuEvent const& evt);
-	bool GetMenuPosition(wxPoint& outPos, ARBWin::CListCtrl& ctrl, wxListEvent const& evt);
-	bool GetMenuPosition(wxPoint& outPos, ARBWin::CTreeCtrl& ctrl, wxContextMenuEvent const& evt);
-	bool GetMenuPosition(wxPoint& outPos, ARBWin::CTreeCtrl& ctrl, wxTreeEvent const& evt);
+	bool GetMenuPosition(wxPoint& outPos, ARBWin::CListCtrl const& ctrl, wxContextMenuEvent const& evt);
+	bool GetMenuPosition(wxPoint& outPos, ARBWin::CListCtrl const& ctrl, wxListEvent const& evt);
+	bool GetMenuPosition(wxPoint& outPos, ARBWin::CTreeCtrl const& ctrl, wxContextMenuEvent const& evt);
+	bool GetMenuPosition(wxPoint& outPos, ARBWin::CTreeCtrl const& ctrl, wxTreeEvent const& evt);
 	bool GetMenuPosition(wxPoint& outPos, wxWindow const* ctrl, wxContextMenuEvent const& evt);
 
 	CTabView* m_pTabView;

@@ -435,6 +435,8 @@ void RefRunHelper(fmt::wmemory_buffer& text, ARBDogReferenceRunPtr const& inRef,
 		if (!inRef->GetNote().empty())
 			fmt::format_to(std::back_inserter(text), L"/{}", inRef->GetNote());
 		break;
+	default:
+		break;
 	}
 }
 } // namespace

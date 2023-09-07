@@ -726,8 +726,8 @@ void CWizardExport::UpdatePreview()
 								break;
 								case IO_RUNS_OPS:
 								{
-									double ops;
-									int prec;
+									double ops = 0.0;
+									int prec = 2;
 									if (pRun->GetScoring().GetObstaclesPS(
 											CAgilityBookOptions::GetTableInYPS(),
 											CAgilityBookOptions::GetRunTimeInOPS(),
@@ -974,6 +974,8 @@ void CWizardExport::UpdatePreview()
 				case IO_CAL_NOTES:
 					data += AddPreviewData(iLine, idx, pCal->GetNote());
 					break;
+				default:
+					break;
 				}
 			}
 			if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
@@ -1119,6 +1121,8 @@ void CWizardExport::UpdatePreview()
 				case IO_CAL_APPT_SHOW_TIME_AS:
 					data += AddPreviewData(iLine, idx, L"");
 					break;
+				default:
+					break;
 				}
 			}
 			if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
@@ -1262,6 +1266,8 @@ void CWizardExport::UpdatePreview()
 				case IO_CAL_TASK_STATUS:
 					data += AddPreviewData(iLine, idx, L"");
 					break;
+				default:
+					break;
 				}
 			}
 			if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
@@ -1295,6 +1301,8 @@ void CWizardExport::UpdatePreview()
 					break;
 				case IO_LOG_NOTES:
 					data += AddPreviewData(iLine, idx, pLog->GetNote());
+					break;
+				default:
 					break;
 				}
 			}

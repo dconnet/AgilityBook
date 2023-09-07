@@ -1280,6 +1280,9 @@ void CAgilityBookTreeView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 	case ID_COLLAPSE_ALL:
 		bEnable = (item.IsOk() && m_Ctrl->ItemHasChildren(item));
 		break;
+
+	default:
+		break;
 	}
 
 	evt.Enable(bEnable);

@@ -416,6 +416,8 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 								else
 									str += pCal->GetNote();
 								break;
+							default:
+								break;
 							}
 						}
 						bool bReset = false;
@@ -1666,6 +1668,8 @@ void CAgilityBookCalendarView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 		case ID_VIEW_CUSTOMIZE:
 			bEnable = true;
 			break;
+		default:
+			break;
 		}
 	}
 	evt.Enable(bEnable);
@@ -1702,6 +1706,8 @@ void CAgilityBookCalendarView::OnViewCmd(wxCommandEvent& evt)
 		dlg.ShowModal();
 	}
 	break;
+	default:
+		break;
 	}
 }
 

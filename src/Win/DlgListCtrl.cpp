@@ -176,6 +176,8 @@ std::wstring CDlgListCtrlDataCalendar::OnNeedText(long iCol) const
 	case 6: // Notes
 		str = StringUtil::Replace(m_pCal->GetNote(), L"\n", L" ");
 		break;
+	default:
+		break;
 	}
 	return str;
 }

@@ -589,7 +589,7 @@ bool CDlgInfoNote::NameExists(std::wstring const& name)
 
 size_t CDlgInfoNote::AddName(std::wstring const& name, UpdateStatus& status)
 {
-	size_t idxName;
+	size_t idxName = 0;
 	auto iter = std::find(m_Names.begin(), m_Names.end(), name);
 	if (iter != m_Names.end())
 	{

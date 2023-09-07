@@ -144,6 +144,8 @@ int CDlgDogDataTitle::OnCompare(CListDataPtr const& item, long iCol) const
 			rc = 1;
 	}
 	break;
+	default:
+		break;
 	}
 	return rc;
 }
@@ -168,6 +170,8 @@ std::wstring CDlgDogDataTitle::OnNeedText(long iCol) const
 		break;
 	case k_colName:
 		text = m_pDlg->m_pDoc->Book().GetConfig().GetTitleNiceName(m_Title->GetVenue(), m_Title->GetRawName());
+		break;
+	default:
 		break;
 	}
 	return text;
