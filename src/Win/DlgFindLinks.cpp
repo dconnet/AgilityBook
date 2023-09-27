@@ -107,7 +107,9 @@ int CDlgFindLinksData::OnCompare(CListDataPtr const& item, long iCol) const
 	{
 	default:
 		assert(0);
+#ifndef __WXMAC__
 		[[fallthrough]];
+#endif
 	case k_colLink:
 		str1 = m_Link;
 		str2 = pData2->m_Link;
@@ -139,7 +141,9 @@ std::wstring CDlgFindLinksData::OnNeedText(long iCol) const
 	{
 	default:
 		assert(0);
+#ifndef __WXMAC__
 		[[fallthrough]];
+#endif
 	case k_colLink:
 		return m_Link;
 	case k_colTrial:
