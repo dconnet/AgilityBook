@@ -437,7 +437,7 @@ bool CAgilityBookTreeView::GetMessage2(std::wstring& msg) const
 	// If there's no dog, still return true. Or we won't blank an existing name.
 	// We only need to worry about this here and the Runs view since this is the
 	// only place we can delete a dog.
-	return false;
+	return true;
 }
 
 

@@ -1,6 +1,9 @@
-8/7/2023: v3.8.6.<dev>
+9/27/2023: v3.8.6.<dev>
 - New features / Enhancements:
   - Return x.y.z for OS version, use shorter name for OS name.
+- Bug fixes:
+  - Fixed sizing of status bar text on Mac/Unix
+  - Fixed name of current dog sometimes not displaying in Runs view.
 
 8/3/2023: v3.8.5.123
 - Bug fixes:
