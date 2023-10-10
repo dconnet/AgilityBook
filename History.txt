@@ -1,6 +1,7 @@
-9/27/2023: v3.8.6.<dev>
+10/10/2023: v3.8.6.<dev>
 - New features / Enhancements:
   - Return x.y.z for OS version, use shorter name for OS name.
+  - Updated to wxWidgets 3.2.3
 - Bug fixes:
   - Fixed sizing of status bar text on Mac/Unix
   - Fixed name of current dog sometimes not displaying in Runs view.

@@ -26,12 +26,12 @@ option, run 'git submodule update --init' to also get all dependent code.
 --------------------
 
 python: https://www.python.org
-Currently using version 3.11.4.
+Currently using version 3.11.6.
 - Include pip in install
 - "pip install pywin32"
 
 wxWidgets: http://www.wxwidgets.org/
-Currently using version 3.2.2.1. Min supported is 3.1.6.
+Currently using version 3.2.3. Min supported is 3.1.6.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in AgilityBookLibs/lang/res/fr_FR) IMPORTANT: This means the directory name
@@ -48,14 +48,7 @@ Make sure WXWIN is set to wxWidgets root directory.
     the library is compiled one way and the users do something different.)
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
 
-=== Changes to 3.2.2.1: (for VisualStudio 17.6)
->diff itemid.h.orig itemid.h
-36c36
-<     operator const Type() const { return m_pItem; }
----
->     operator Type() const { return m_pItem; }
-
-=== Changes to 3.2.0, Changes to 3.2.1, Changes to 3.2.2.1:
+=== Changes to 3.2.3, Changes to 3.2.2.1, Changes to 3.2.1, Changes to 3.2.0
   (include/wx/msw/setup.h)
   - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
   - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
@@ -63,6 +56,13 @@ Make sure WXWIN is set to wxWidgets root directory.
     the library is compiled one way and the users do something different.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
+
+=== Changes to 3.2.3, Changes to 3.2.2.1: (for VisualStudio 17.6)
+>diff itemid.h.orig itemid.h
+36c36
+<     operator const Type() const { return m_pItem; }
+---
+>     operator Type() const { return m_pItem; }
 
 === Changes to 3.1.7:
   (include/wx/msw/setup.h)
@@ -128,7 +128,7 @@ To build for Mac/Unix, see ./build/BuildUnix.sh
 
 poedit: http://www.poedit.net
 Cross platform editor for modifying .po files.
-Currently using version 3.3.2.
+Currently using version 3.4.0.
 - includes gettext
   - on Mac, probably want to include MacPorts version
 Use this to keep the catalog in sync with the source code.
@@ -162,20 +162,20 @@ Currently using version 3.11.2.
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen
 Used to create source code documentation.
-Currently using version 1.9.3.
+Currently using version 1.9.3. (Note: Newer versions cause issues)
 [Install to default location]
 
 --------------------
 
 GraphViz: http://www.graphviz.org
 Used to create source code documentation.
-Currently using version 8.1.0.
+Currently using version 9.0.0.
 Earlier versions may work. (I used 2.14.1 with no problems for a while)
 [Install to default location]
 
 --------------------
 LLVM: https://releases.llvm.org/download.html
-Currently using version 16.0.6 (ubuntu18: v10, ubuntu20: v12, ubuntu22: v14)
+Currently using version 17.0.2 (ubuntu18: v10, ubuntu20: v12, ubuntu22: v14)
 [Install to default location, ubuntu: apt install]
 - clang-format -i *.h *.cpp
   (ubuntu: clang-format-14 -i *.h *.cpp)
@@ -236,7 +236,7 @@ OSX 10.9:
   Must reboot after modifying.
 ===
 setenv WXBASE /Users/dconnet/devtools/wx
-setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.2.2
+setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.2.3
 ====
 OSX 10.10+:
 - launchd.conf has been deprecated.
@@ -257,7 +257,7 @@ OSX 10.10+:
     <string>-c</string>
     <string>
     launchctl setenv WXBASE /Users/dconnet/devtools/wx
-    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.2.2
+    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.2.3
     </string>
   </array>
   <key>RunAtLoad</key>
