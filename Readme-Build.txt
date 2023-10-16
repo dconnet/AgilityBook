@@ -57,6 +57,38 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
 
+=== Changes to 3.2.3 only
+>diff -c wxWidgets-3.2.3.orig\src\msw\thread.cpp wxWidgets-3.2.3\src\msw\thread.cpp
+*** wxWidgets-3.2.3.orig\src\msw\thread.cpp     Sat Oct 07 07:28:50 2023
+--- wxWidgets-3.2.3\src\msw\thread.cpp  Sun Oct 15 12:16:21 2023
+***************
+*** 201,207 ****
+--- 201,212 ----
+
+      static void CleanUp()
+      {
++         // To avoid bogus memory leaks reports when using debug version of
++         // static MSVC CRT we need to free memory ourselves even when it would
++         // have been done by FlsAlloc() callback because it does it too late.
++ #if !defined(_MSC_VER) || !defined(_DEBUG) || defined(_DLL)
+          if (!Instance().AllocCallback)
++ #endif
+          {
+              // FLS API was not available, which means that objects will not be freed automatically.
+              delete Get();
+***************
+*** 1465,1470 ****
+--- 1470,1478 ----
+
+  void wxThreadModule::OnExit()
+  {
++     // Delete thread-specific info object for the main thread too, if any.
++     wxThreadSpecificInfoTLS::CleanUp();
++
+      if ( !::TlsFree(gs_tlsThisThread) )
+      {
+          wxLogLastError(wxT("TlsFree failed."));
+
 === Changes to 3.2.3, Changes to 3.2.2.1: (for VisualStudio 17.6)
 >diff itemid.h.orig itemid.h
 36c36
