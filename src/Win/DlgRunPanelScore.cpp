@@ -49,6 +49,32 @@
  * 2003-07-14 Changed 'Score' to show data on 'Q' and 'NQ'.
  */
 
+// clang-format off
+/*
+Score Layout:
+
+sct        time       placeNofM  bonusPt
+yards      faults     dogsQ      speedPt
+minyps     yps        Q?         titlePt
+reqclosePt totalFault top%       score
+num_ob     OPS        -          OtherPts
+
+m_ctrlDate m_ctrlVenues
+m_ctrlDivisions m_textHeight m_ctrlHeight m_textJudge m_ctrlJudge m_ctrlJudgeNote m_ctrlHandler
+m_ctrlLevels m_ctrlConditions
+m_ctrlEvents
+m_ctrlSubNamesText
+m_ctrlSubNames
+m_ctrlAtHome m_ctrlDesc m_ctrlPartnerEdit m_ctrlPartner
+m_ctrlTable
+(m_ctrlSCTText m_ctrlSCT)                           (m_ctrlTimeText m_ctrlTime)                               (m_textPlace m_ctrlPlace m_textPlaceOf m_ctrlInClass) (m_ctrlBonusPtsText m_ctrlBonusTitlePts)
+(m_textYardsReqOpeningPts m_ctrlYardsReqOpeningPts) (m_ctrlFaultsText m_ctrlFaults)                           (m_textDogsQd m_ctrlDogsQd)                           (m_ctrlSpeedPtsText m_ctrlSpeedPts)
+(m_textMinYPSClosingTime m_ctrlMinYPSClosingTime)   (m_textYPSOpeningPts m_ctrlYPSOpeningPts)                 m_ctrlQ                                               (m_ctrlTitlePointsText m_ctrlTitlePoints)
+(m_ctrlClosingText m_ctrlClosing)                   (m_textClosingPtsTotalFaults m_ctrlClosingPtsTotalFaults) -                                                     m_ctrlScore 
+(m_ctrlObstaclesText m_ctrlObstacles)               (m_ctrlObstaclesPSText m_ctrlObstaclesPS)                 -                                                     btnOtherPoints
+*/
+// clang-format on
+
 #include "stdafx.h"
 #include "DlgRunPanelScore.h"
 
