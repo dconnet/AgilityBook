@@ -1,5 +1,15 @@
 Last Updated: 2023-3-13
 
+- USDAA SuperQ:
+  [as of 1/1/2020]
+  1-5: 1
+  6-10: 2
+  11-15: 3
+  (every 5, +1)
+  [prior]
+  15%, Any fractional number shall be rounded up to the next whole number.
+  at least 2 dogs
+
 - FEO in UKI is called NFC. Add the ability to customize the name per-venue.
 
 - New file format? https://en.wikipedia.org/wiki/Open_Packaging_Conventions
