@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2023-12-12 Fix wrong view being set current on filter change.
  * 2019-12-26 Fixed file size in properties for new file.
  * 2018-12-16 Convert to fmt.
  * 2018-09-15 Refactored how tree/list handle common actions.
@@ -290,11 +291,20 @@ void CAgilityBookDoc::OnStatusFilter(wxCommandEvent& evt)
 		m_StatusData->filterOptions.SetCurrentFilter(m_StatusData->filterNames[evt.GetId() - baseID]);
 		m_StatusData->filterOptions.Save();
 		CFilterOptions::Options().Load();
+		// When loading the data, it triggers a setfocus in the main view when
+		// deleting the tree items. This in turn causes that view to activate
+		// itself. For now, remember the current view, then reset it.
+		// This probably happens whenever that view is updated, but all the
+		// other functions in here that can do that are only invoked from that
+		// view. So we'll just worry about it here.
+		auto* view = GetDocumentManager()->GetCurrentView();
 		if (ResetVisibility())
 		{
 			CUpdateHint hint(UPDATE_ALL_VIEW);
 			UpdateAllViews(nullptr, &hint);
 		}
+		if (view)
+			view->Activate(true);
 	}
 }
 
