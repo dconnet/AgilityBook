@@ -1,4 +1,4 @@
-12/12/2023: v3.8.6.<dev>
+12/29/2023: v3.8.6.124
 - New features / Enhancements:
   - Return x.y.z for OS version, use shorter name for OS name.
   - Updated to wxWidgets 3.2.4

@@ -26,7 +26,7 @@ option, run 'git submodule update --init' to also get all dependent code.
 --------------------
 
 python: https://www.python.org
-Currently using version 3.11.6.
+Currently using version 3.11.7.
 - Include pip in install
 - "pip install pywin32"
 
@@ -169,7 +169,7 @@ To build for Mac/Unix, see ./build/BuildUnix.sh
 
 poedit: http://www.poedit.net
 Cross platform editor for modifying .po files.
-Currently using version 3.4.0.
+Currently using version 3.4.2.
 - includes gettext
   - on Mac, probably want to include MacPorts version
 Use this to keep the catalog in sync with the source code.
@@ -203,7 +203,7 @@ Currently using version 3.11.2.
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen
 Used to create source code documentation.
-Currently using version 1.9.3. (Note: Newer versions cause issues)
+Currently using version 1.9.3. (Note: Newer versions cause issues in wx)
 [Install to default location]
 
 --------------------
@@ -216,7 +216,7 @@ Earlier versions may work. (I used 2.14.1 with no problems for a while)
 
 --------------------
 LLVM: https://releases.llvm.org/download.html
-Currently using version 17.0.2 (ubuntu18: v10, ubuntu20: v12, ubuntu22: v14)
+Currently using version 17.0.6 (ubuntu18: v10, ubuntu20: v12, ubuntu22: v14)
 [Install to default location, ubuntu: apt install]
 - clang-format -i *.h *.cpp
   (ubuntu: clang-format-14 -i *.h *.cpp)
@@ -277,7 +277,7 @@ OSX 10.9:
   Must reboot after modifying.
 ===
 setenv WXBASE /Users/dconnet/devtools/wx
-setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.2.3
+setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.2.4
 ====
 OSX 10.10+:
 - launchd.conf has been deprecated.
@@ -298,7 +298,7 @@ OSX 10.10+:
     <string>-c</string>
     <string>
     launchctl setenv WXBASE /Users/dconnet/devtools/wx
-    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.2.3
+    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.2.4
     </string>
   </array>
   <key>RunAtLoad</key>
