@@ -50,7 +50,7 @@ using namespace ARBCommon;
 using namespace ARBWin;
 
 
-CDlgConfigLifetimeName::CDlgConfigLifetimeName(ARBConfigVenuePtr const& inVenue, wxWindow* pParent)
+CDlgConfigLifetimeName::CDlgConfigLifetimeName(ARB::ARBConfigVenuePtr const& inVenue, wxWindow* pParent)
 	: wxDialog()
 	, m_Venue(inVenue)
 	, m_bCheckOldName(false)

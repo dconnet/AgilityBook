@@ -415,8 +415,8 @@ void CDlgListCtrlDataPartners::Apply()
 // Calendar
 CDlgListCtrl::CDlgListCtrl(
 	CAgilityBookDoc* pDoc,
-	ARBDate const& date,
-	std::vector<ARBCalendarPtr> const* entries,
+	ARBCommon::ARBDate const& date,
+	std::vector<ARB::ARBCalendarPtr> const* entries,
 	CTabView* pTabView,
 	wxWindow* pParent)
 	: wxDialog()

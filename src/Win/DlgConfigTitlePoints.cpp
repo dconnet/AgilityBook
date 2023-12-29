@@ -45,7 +45,7 @@ using namespace ARBWin;
 
 
 CDlgConfigTitlePoints::CDlgConfigTitlePoints(
-	ARBConfigVenuePtr const& inVenue,
+	ARB::ARBConfigVenuePtr const& inVenue,
 	double inValue, // Faults or Place
 	double inPoints,
 	ARBTitlePointType inType,
