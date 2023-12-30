@@ -66,7 +66,7 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
   - rm -rf build-rel-fat
   - mkdir build-rel-fat
   - cd build-rel-fat
-  - ../configure
+  - ../configure --enable-official
   - make dist
   - On machine (Mac) where pfx has been imported:
     - codesign -s "David Connet" ARBHelp.app

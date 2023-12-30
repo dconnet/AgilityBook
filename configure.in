@@ -53,6 +53,8 @@ AC_ARG_PROGRAM
 # We get these libs from our own src/ directories
 # AC_CHECK_LIB([unittest], [RunAllTests])
 
+AC_ARG_ENABLE(official, [--enable-official official build], USE_OFFICIAL_BUILD=yes)
+
 AC_SUBST(CC, "`wx-config --cc`")
 AC_SUBST(CXX, "`wx-config --cxx`")
 AC_SUBST(LD, "`wx-config --ld`")
@@ -61,6 +63,9 @@ AC_SUBST(CXXFLAGS, "`wx-config --cxxflags`")
 AC_SUBST(LDFLAGS, "`wx-config --libs`")
 
 AC_SUBST(CXXFLAGS,"$CXXFLAGS -DUSE_WXWIDGETS")
+if test $USE_OFFICIAL_BUILD = "yes" ; then
+	AC_SUBST(CXXFLAGS,"$CXXFLAGS -DOFFICIAL_BUILD -DVER_PARTS=3")
+fi
 
 # Ubuntu18 has 3.6, we need 3.8. If it doesn't exist, then building will just fail.
 # There might be a better way, but this works...
