@@ -8,6 +8,8 @@
 ################################################################################
 AC_INIT(Agility Record Book, 3.8.6.124, [help@agilityrecordbook.com])
 
+AC_ARG_ENABLE(official, [--enable-official official build], USE_OFFICIAL_BUILD=$enableval, USE_OFFICIAL_BUILD=no)
+
 # Allows linking when AgilityBookLibs is a submodule or built directly
 AC_SUBST(ARBLIBS_DIR, "AgilityBookLibs/")
 
@@ -52,8 +54,6 @@ AC_ARG_PROGRAM
 # Add macros to check for library functions here
 # We get these libs from our own src/ directories
 # AC_CHECK_LIB([unittest], [RunAllTests])
-
-AC_ARG_ENABLE(official, [--enable-official official build], USE_OFFICIAL_BUILD=$enableval, USE_OFFICIAL_BUILD=no)
 
 AC_SUBST(CC, "`wx-config --cc`")
 AC_SUBST(CXX, "`wx-config --cxx`")
