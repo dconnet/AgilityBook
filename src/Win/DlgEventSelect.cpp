@@ -196,8 +196,11 @@ CDlgEventSelect::CDlgEventSelect(
 		if (pDiv->GetName() == inDivision)
 			idxCur = static_cast<int>(items.size()) - 1;
 	}
-	m_ctrlDivisions->Append(items, data.data());
-	m_ctrlDivisions->SetSelection(idxCur);
+	if (!items.empty())
+	{
+		m_ctrlDivisions->Append(items, data.data());
+		m_ctrlDivisions->SetSelection(idxCur);
+	}
 	FillLevels();
 
 	SetSizer(bSizer);
@@ -287,8 +290,11 @@ void CDlgEventSelect::FillLevels()
 			}
 		}
 	}
-	m_ctrlLevels->Append(items, data.data());
-	m_ctrlLevels->SetSelection(idxCur);
+	if (!items.empty())
+	{
+		m_ctrlLevels->Append(items, data.data());
+		m_ctrlLevels->SetSelection(idxCur);
+	}
 	FillEvents();
 }
 
@@ -329,8 +335,11 @@ void CDlgEventSelect::FillEvents()
 			}
 		}
 	}
-	m_ctrlEvents->Append(items);
-	m_ctrlEvents->SetSelection(idxCur);
+	if (!items.empty())
+	{
+		m_ctrlEvents->Append(items);
+		m_ctrlEvents->SetSelection(idxCur);
+	}
 	UpdateControls();
 }
 

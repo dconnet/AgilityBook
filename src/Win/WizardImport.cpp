@@ -159,8 +159,11 @@ CWizardImport::CWizardImport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 		if (date.format == format || date.extendedFormat == format)
 			idxCur = static_cast<int>(items.size()) - 1;
 	}
-	m_ctrlDateFormat->Append(items, data.data());
-	m_ctrlDateFormat->SetSelection(idxCur);
+	if (!items.empty())
+	{
+		m_ctrlDateFormat->Append(items, data.data());
+		m_ctrlDateFormat->SetSelection(idxCur);
+	}
 	m_ctrlDateFormat->SetHelpText(_("HIDC_WIZARD_IMPORT_DATE"));
 	m_ctrlDateFormat->SetToolTip(_("HIDC_WIZARD_IMPORT_DATE"));
 

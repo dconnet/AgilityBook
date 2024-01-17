@@ -256,8 +256,11 @@ CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pPa
 		if (m_Title->GetMultipleStyle() == style.style)
 			idxCur = static_cast<int>(items.size()) - 1;
 	}
-	m_ctrlStyle->Append(items, data.data());
-	m_ctrlStyle->SetSelection(idxCur);
+	if (!items.empty())
+	{
+		m_ctrlStyle->Append(items, data.data());
+		m_ctrlStyle->SetSelection(idxCur);
+	}
 
 	wxStaticText* textSep
 		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_TITLE_SEP"), wxDefaultPosition, wxDefaultSize, 0);
@@ -293,8 +296,11 @@ CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pPa
 		if (m_Title->GetMultipleStyleSeparator() == sep.sep)
 			idxCur = static_cast<int>(items.size()) - 1;
 	}
-	m_ctrlSep->Append(items, data.data());
-	m_ctrlSep->SetSelection(idxCur);
+	if (!items.empty())
+	{
+		m_ctrlSep->Append(items, data.data());
+		m_ctrlSep->SetSelection(idxCur);
+	}
 
 	wxCheckBox* ctrlValidFrom = new wxCheckBox(
 		this,

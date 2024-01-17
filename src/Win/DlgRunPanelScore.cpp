@@ -346,10 +346,13 @@ CDlgRunPanelScore::CDlgRunPanelScore(
 		if (m_Run->GetClub() && *(m_Run->GetClub()) == *pClub)
 			idxCur = static_cast<int>(items.size()) - 1;
 	}
-	m_ctrlVenues->Append(items, data.data());
-	m_ctrlVenues->SetSelection(idxCur);
+	if (!items.empty())
+	{
+		m_ctrlVenues->Append(items, data.data());
+		m_ctrlVenues->SetSelection(idxCur);
+	}
 
-	if (wxNOT_FOUND == m_ctrlVenues->GetSelection())
+	if (wxNOT_FOUND == m_ctrlVenues->GetSelection() && m_ctrlVenues->GetCount() > 0)
 	{
 		m_ctrlVenues->SetSelection(0);
 		m_Run->SetClub(GetVenueData(0)->m_Club);
@@ -1354,8 +1357,11 @@ void CDlgRunPanelScore::FillDivisions(bool bOnEventChange)
 			}
 		}
 	}
-	m_ctrlDivisions->Append(items, data.data());
-	m_ctrlDivisions->SetSelection(idxCur);
+	if (!items.empty())
+	{
+		m_ctrlDivisions->Append(items, data.data());
+		m_ctrlDivisions->SetSelection(idxCur);
+	}
 
 	// First try to find 'div' (in case the divisions changed)
 	if (wxNOT_FOUND == m_ctrlDivisions->GetSelection() && !div.empty())
@@ -1446,8 +1452,11 @@ void CDlgRunPanelScore::FillLevels(bool bOnEventChange)
 				}
 			}
 		}
-		m_ctrlLevels->Append(items, data.data());
-		m_ctrlLevels->SetSelection(idxCur);
+		if (!items.empty())
+		{
+			m_ctrlLevels->Append(items, data.data());
+			m_ctrlLevels->SetSelection(idxCur);
+		}
 		if (wxNOT_FOUND == m_ctrlLevels->GetSelection())
 		{
 			std::wstring last = CAgilityBookOptions::GetLastEnteredLevel(m_pDog, pVenue);
@@ -1529,8 +1538,11 @@ void CDlgRunPanelScore::FillEvents(bool bOnEventChange)
 			}
 		}
 	}
-	m_ctrlEvents->Append(items);
-	m_ctrlEvents->SetSelection(idxCur);
+	if (!items.empty())
+	{
+		m_ctrlEvents->Append(items);
+		m_ctrlEvents->SetSelection(idxCur);
+	}
 	FillSubNames();
 	UpdateControls(bOnEventChange);
 }

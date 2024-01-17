@@ -220,8 +220,11 @@ CWizardExport::CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 		if (date.format == format || date.extendedFormat == format)
 			idxCur = static_cast<int>(items.size()) - 1;
 	}
-	m_ctrlDateFormat->Append(items, data.data());
-	m_ctrlDateFormat->SetSelection(idxCur);
+	if (!items.empty())
+	{
+		m_ctrlDateFormat->Append(items, data.data());
+		m_ctrlDateFormat->SetSelection(idxCur);
+	}
 	m_ctrlDateFormat->Bind(wxEVT_COMMAND_COMBOBOX_SELECTED, &CWizardExport::OnSelchangeDate, this);
 	m_ctrlDateFormat->SetHelpText(_("HIDC_WIZARD_EXPORT_DATE"));
 	m_ctrlDateFormat->SetToolTip(_("HIDC_WIZARD_EXPORT_DATE"));

@@ -307,8 +307,11 @@ void CDlgTitle::FillTitles(bool bIniting)
 				}
 			}
 		}
-		m_ctrlTitles->Append(items, data.data());
-		m_ctrlTitles->SetSelection(idxCur);
+		if (!items.empty())
+		{
+			m_ctrlTitles->Append(items, data.data());
+			m_ctrlTitles->SetSelection(idxCur);
+		}
 		if (wxNOT_FOUND != idxCur)
 			FillTitleInfo();
 	}

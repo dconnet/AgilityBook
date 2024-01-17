@@ -230,7 +230,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 	m_ctrlType->Append(items, data.data());
 	// Default to first item.
 	int idxCur = m_ctrlType->FindString(current);
-	if (idxCur < 0)
+	if (idxCur < 0 && m_ctrlType->GetCount() > 0)
 		idxCur = 0;
 	m_ctrlType->SetSelection(idxCur);
 
@@ -696,8 +696,11 @@ void CDlgExistingPoints::FillVenues()
 				idxCur = static_cast<int>(items.size()) - 1;
 		}
 	}
-	m_ctrlVenues->Append(items, data.data());
-	m_ctrlVenues->SetSelection(idxCur);
+	if (!items.empty())
+	{
+		m_ctrlVenues->Append(items, data.data());
+		m_ctrlVenues->SetSelection(idxCur);
+	}
 
 	FillDivMultiQ();
 }
@@ -749,8 +752,11 @@ void CDlgExistingPoints::FillDivMultiQ()
 			}
 		}
 	}
-	m_ctrlDivMultiQs->Append(items, data.data());
-	m_ctrlDivMultiQs->SetSelection(idxCur);
+	if (!items.empty())
+	{
+		m_ctrlDivMultiQs->Append(items, data.data());
+		m_ctrlDivMultiQs->SetSelection(idxCur);
+	}
 	if (ARBExistingPointType::MQ != type)
 		FillLevels();
 }
@@ -795,8 +801,11 @@ void CDlgExistingPoints::FillLevels()
 			}
 		}
 	}
-	m_ctrlLevels->Append(items, data.data());
-	m_ctrlLevels->SetSelection(idxCur);
+	if (!items.empty())
+	{
+		m_ctrlLevels->Append(items, data.data());
+		m_ctrlLevels->SetSelection(idxCur);
+	}
 	FillEvents();
 }
 
@@ -843,8 +852,11 @@ void CDlgExistingPoints::FillEvents()
 			}
 		}
 	}
-	m_ctrlEvents->Append(items, data.data());
-	m_ctrlEvents->SetSelection(idxCur);
+	if (!items.empty())
+	{
+		m_ctrlEvents->Append(items, data.data());
+		m_ctrlEvents->SetSelection(idxCur);
+	}
 	FillSubNames();
 	UpdateControls();
 }
@@ -882,8 +894,11 @@ void CDlgExistingPoints::FillSubNames()
 			if (m_pExistingPoints && name == m_pExistingPoints->GetSubName())
 				idxCur = static_cast<int>(items.size()) - 1;
 		}
-		m_ctrlSubNames->Append(items);
-		m_ctrlSubNames->SetSelection(idxCur);
+		if (!items.empty())
+		{
+			m_ctrlSubNames->Append(items);
+			m_ctrlSubNames->SetSelection(idxCur);
+		}
 	}
 	else
 		m_ctrlSubNames->Enable(false);
@@ -924,8 +939,11 @@ void CDlgExistingPoints::FillTypeNames()
 					idxCur = static_cast<int>(items.size()) - 1;
 			}
 		}
-		m_ctrlTypeNames->Append(items, data.data());
-		m_ctrlTypeNames->SetSelection(idxCur);
+		if (!items.empty())
+		{
+			m_ctrlTypeNames->Append(items, data.data());
+			m_ctrlTypeNames->SetSelection(idxCur);
+		}
 		break;
 
 	case ARBExistingPointType::Lifetime:
@@ -941,8 +959,11 @@ void CDlgExistingPoints::FillTypeNames()
 						idxCur = static_cast<int>(items.size()) - 1;
 				}
 			}
-			m_ctrlTypeNames->Append(items, data.data());
-			m_ctrlTypeNames->SetSelection(idxCur);
+			if (!items.empty())
+			{
+				m_ctrlTypeNames->Append(items, data.data());
+				m_ctrlTypeNames->SetSelection(idxCur);
+			}
 		}
 		break;
 	}

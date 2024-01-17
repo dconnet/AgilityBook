@@ -197,8 +197,11 @@ CDlgClub::CDlgClub(
 			if (m_pClub->GetPrimaryClub() && m_pClub->GetPrimaryClub()->GetVenue() == item->GetVenue())
 				idxCur = static_cast<int>(items.size()) - 1;
 		}
-		m_ctrlPrimary->Append(items, data.data());
-		m_ctrlPrimary->SetSelection(idxCur);
+		if (!items.empty())
+		{
+			m_ctrlPrimary->Append(items, data.data());
+			m_ctrlPrimary->SetSelection(idxCur);
+		}
 	}
 
 	// Sizers

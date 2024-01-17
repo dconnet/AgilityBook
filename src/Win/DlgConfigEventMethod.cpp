@@ -224,8 +224,11 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		if (m_pScoring->GetDivision() == pDiv->GetName())
 			idxCur = static_cast<int>(items.size()) - 1;
 	}
-	m_ctrlDivision->Append(items, data.data());
-	m_ctrlDivision->SetSelection(idxCur);
+	if (!items.empty())
+	{
+		m_ctrlDivision->Append(items, data.data());
+		m_ctrlDivision->SetSelection(idxCur);
+	}
 
 	wxStaticText* textLevel
 		= new wxStaticText(this, wxID_ANY, _("IDC_CONFIG_EVENT_LEVEL"), wxDefaultPosition, wxDefaultSize, 0);
@@ -877,8 +880,11 @@ void CDlgConfigEventMethod::FillLevelList()
 				idxCur = static_cast<int>(items.size()) - 1;
 		}
 	}
-	m_ctrlLevel->Append(items);
-	m_ctrlLevel->SetSelection(idxCur);
+	if (!items.empty())
+	{
+		m_ctrlLevel->Append(items);
+		m_ctrlLevel->SetSelection(idxCur);
+	}
 }
 
 
