@@ -1,4 +1,6 @@
-12/29/2023: v3.8.7.<dev>
+1/17/2024: v3.8.7.<dev>
+- Bug fix:
+  - SetSelection(0) on an empty wxComboBox can crash on Mac
 
 12/29/2023: v3.8.6.124
 - New features / Enhancements:
