@@ -8,6 +8,7 @@
 # Note: Found old OSX SDKs at https://github.com/phracker/MacOSX-SDKs/releases
 #
 # History
+# 2024-01-17 Minor cleanup
 # 2023-06-02 If not arch given on Mac, build all (x64/arm/fat)
 #            Actually run 'make' after configuring.
 # 2023-03-11 Allow building non-fat binaries on Mac
@@ -43,8 +44,7 @@
 export BUILDDIR=
 export DEBUG=
 export LIBRARIES=
-export MAC_CONFIG_PARAMS=
-export MAC_MIN_OS=
+export MAC_MIN_OS=10.13
 export TARGETARCH=
 export TARGETSDK=
 export VERSION=
@@ -172,8 +172,6 @@ else
 	VERSION="--disable-compat28 --disable-compat30 --enable-unicode"
 fi
 
-MAC_CONFIG_PARAMS=" --disable-nativedvc"
-MAC_MIN_OS=10.13
 
 BUILDDIR="$WXWIN/build"
 BUILDDIR+="-"
@@ -186,7 +184,7 @@ Darwin*)
 	# There are known bugs with the native wxDVC under Cocoa, use generic
 	# Disable curl on Mac - use NSURLSession (since I'm targetting a lower OS,
 	# I get a warning that curl is built for a newer OS - so just avoid it).
-	CONFIG_PARAMS+=" --without-libcurl --with-osx"$MAC_CONFIG_PARAMS
+	CONFIG_PARAMS+=" --disable-nativedvc --without-libcurl --with-osx"
 	;;
 Linux)
 	CONFIG_PARAMS+=" --with-gtk=3"
@@ -195,21 +193,19 @@ esac
 
 case `uname` in
 Darwin*)
-	export CXXFLAGS="-std=c++17 -stdlib=libc++"
-	export OBJCXXFLAGS="-std=c++17 -stdlib=libc++"
-	export LDFLAGS="-stdlib=libc++"
-	export LIBS="-lc++"
+	export CXXFLAGS="-std=c++17"
+	export OBJCXXFLAGS="-std=c++17"
 	TARGETARCH="--enable-macosx_arch=x86_64"
 	BUILDDIR_ARCH="-x64"
 
 	# Leaving this in for a couple compilers for an example.
-	# Current min deployment is 10.13 (as set via wx-config, via setupwx.sh)
+	# Current min deployment is 10.13 (as set via wx-config)
 	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk; then
 		echo "Using 10.13 SDK"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk
 		MIN_OS=$MAC_MIN_OS
 
-	# This is the current SDK on my Catalina machine
+	# This was the current SDK on my Catalina machine
 	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk; then
 		echo "Using 11.1 SDK"
 		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk
@@ -260,8 +256,6 @@ Linux)
 		export CXXFLAGS="-std=c++17"
 		export OBJCXXFLAGS="-std=c++17"
 	fi
-	#export LDFLAGS="-stdlib=libc++"
-	#export LIBS="-lc++"
 	;;
 
 *)
