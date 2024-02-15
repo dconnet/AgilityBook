@@ -422,7 +422,7 @@ int wxCALLBACK CompareCalendar(CListDataPtr const& item1, CListDataPtr const& it
 /////////////////////////////////////////////////////////////////////////////
 // Find
 
-bool CFindCalendar::Search(CDlgFind* pDlg) const
+bool CFindCalendar::Search(CDlgFind* pDlg)
 {
 	bool bFound = false;
 	int inc = 1;

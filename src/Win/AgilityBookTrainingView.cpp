@@ -254,7 +254,7 @@ int wxCALLBACK CompareTraining(CListDataPtr const& item1, CListDataPtr const& it
 /////////////////////////////////////////////////////////////////////////////
 // Find
 
-bool CFindTraining::Search(CDlgFind* pDlg) const
+bool CFindTraining::Search(CDlgFind* pDlg)
 {
 	bool bFound = false;
 	int inc = 1;

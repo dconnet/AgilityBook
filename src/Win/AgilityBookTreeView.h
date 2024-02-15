@@ -51,14 +51,14 @@ public:
 		: m_pView(pView)
 	{
 	}
-	bool Search(CDlgFind* pDlg) const override;
+	bool Search(CDlgFind* pDlg) override;
 
 private:
-	void FillTree(wxTreeItemId hItem) const;
-	wxTreeItemId GetNextItem() const;
+	void FillTree(wxTreeItemId hItem);
+	wxTreeItemId GetNextItem();
 	CAgilityBookTreeView* m_pView;
-	mutable std::vector<wxTreeItemId> m_Items;
-	mutable std::vector<wxTreeItemId>::const_iterator m_Iter;
+	std::vector<wxTreeItemId> m_Items;
+	std::vector<wxTreeItemId>::const_iterator m_Iter;
 };
 
 

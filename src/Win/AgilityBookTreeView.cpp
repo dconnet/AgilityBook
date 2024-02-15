@@ -85,7 +85,7 @@ using namespace ARBWin;
 /////////////////////////////////////////////////////////////////////////////
 // Find
 
-void CFindTree::FillTree(wxTreeItemId hItem) const
+void CFindTree::FillTree(wxTreeItemId hItem)
 {
 	if (!hItem.IsOk())
 		return;
@@ -103,7 +103,7 @@ void CFindTree::FillTree(wxTreeItemId hItem) const
 }
 
 
-wxTreeItemId CFindTree::GetNextItem() const
+wxTreeItemId CFindTree::GetNextItem()
 {
 	wxTreeItemId hItem;
 	if (SearchDown())
@@ -128,7 +128,7 @@ wxTreeItemId CFindTree::GetNextItem() const
 }
 
 
-bool CFindTree::Search(CDlgFind* pDlg) const
+bool CFindTree::Search(CDlgFind* pDlg)
 {
 	bool bFound = false;
 	m_Items.clear();

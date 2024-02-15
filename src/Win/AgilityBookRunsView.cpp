@@ -1128,7 +1128,7 @@ int wxCALLBACK CompareRuns(CListDataPtr const& item1, CListDataPtr const& item2,
 /////////////////////////////////////////////////////////////////////////////
 // Find
 
-bool CFindRuns::Search(CDlgFind* pDlg) const
+bool CFindRuns::Search(CDlgFind* pDlg)
 {
 	bool bFound = false;
 	int inc = 1;

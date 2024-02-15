@@ -45,7 +45,7 @@ public:
 		: m_pView(pView)
 	{
 	}
-	bool Search(CDlgFind* pDlg) const override;
+	bool Search(CDlgFind* pDlg) override;
 
 private:
 	CAgilityBookTrainingView* m_pView;

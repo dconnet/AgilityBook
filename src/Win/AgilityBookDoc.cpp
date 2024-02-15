@@ -1892,11 +1892,12 @@ public:
 		: m_pDoc(pDoc)
 	{
 		m_strCaption = _("IDS_SEARCH_NOTES");
+		m_strFind = _("Find");
 		m_bEnableSearch = false;
 		m_bSearchAll = true;
 		m_bEnableDirection = false;
 	}
-	bool Search(CDlgFind* pDlg) const override;
+	bool Search(CDlgFind* pDlg) override;
 	mutable std::vector<CFindItemInfo> m_Items;
 
 private:
@@ -1909,7 +1910,7 @@ private:
 };
 
 
-bool CFindInfo::Search(CDlgFind* pDlg) const
+bool CFindInfo::Search(CDlgFind* pDlg)
 {
 	m_Items.clear();
 	std::wstring search = Text();

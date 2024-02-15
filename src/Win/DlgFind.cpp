@@ -117,7 +117,10 @@ CDlgFind::CDlgFind(IFindCallback& callback, wxWindow* pParent)
 	if (!m_Callback.EnableDirection())
 		m_radioBoxDir->Enable(false);
 
-	m_btnFind = new wxButton(this, wxID_ANY, _("IDC_FIND_NEXT"), wxDefaultPosition, wxDefaultSize, 0);
+	wxString strNext = m_Callback.GetFindButton();
+	if (strNext.empty())
+		strNext = _("IDC_FIND_NEXT");
+	m_btnFind = new wxButton(this, wxID_ANY, strNext, wxDefaultPosition, wxDefaultSize, 0);
 	m_btnFind->SetDefault();
 	m_btnFind->Enable(0 < text.length());
 	m_btnFind->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgFind::OnFind, this);

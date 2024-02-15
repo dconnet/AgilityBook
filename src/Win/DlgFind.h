@@ -46,10 +46,18 @@ public:
 	{
 	}
 
+	// Caption for Find dialog
 	virtual std::wstring const& GetCaption() const
 	{
 		return m_strCaption;
 	}
+	// Text for "Find Next"
+	virtual std::wstring const& GetFindButton() const
+	{
+		return m_strFind;
+	}
+
+	// Search text from dialog
 	virtual std::wstring const& Text() const
 	{
 		return m_strSearch;
@@ -58,6 +66,8 @@ public:
 	{
 		m_strSearch = text;
 	}
+
+	// Match case
 	virtual bool MatchCase() const
 	{
 		return m_bMatchCase;
@@ -66,6 +76,8 @@ public:
 	{
 		m_bMatchCase = bCase;
 	}
+
+	// Search all/visible is enabled. Derived class controls this flag.
 	virtual bool EnableSearch() const
 	{
 		return m_bEnableSearch;
@@ -78,6 +90,8 @@ public:
 	{
 		m_bSearchAll = bAll;
 	}
+
+	// Search direction is enabled. Derived class controls this flag.
 	virtual bool EnableDirection() const
 	{
 		return m_bEnableDirection;
@@ -91,10 +105,11 @@ public:
 		m_bDown = bDown;
 	}
 
-	virtual bool Search(CDlgFind* pDlg) const = 0;
+	virtual bool Search(CDlgFind* pDlg) = 0;
 
 protected:
 	std::wstring m_strCaption;
+	std::wstring m_strFind;
 	std::wstring m_strSearch;
 	bool m_bMatchCase;
 	bool m_bEnableSearch;
