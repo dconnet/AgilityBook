@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-19 10:59-0800\n"
-"PO-Revision-Date: 2024-02-19 10:59-0800\n"
+"POT-Creation-Date: 2024-02-19 15:36-0800\n"
+"PO-Revision-Date: 2024-02-19 15:36-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -45,8 +45,8 @@ msgstr ""
 #: Win/AgilityBookDoc.cpp:1668 Win/AgilityBookDoc.cpp:1689
 #: Win/AgilityBookDoc.cpp:1705 Win/AgilityBookDoc.cpp:1712
 #: Win/AgilityBookDoc.cpp:1814 Win/AgilityBookDoc.cpp:1860
-#: Win/AgilityBookDoc.cpp:1865 Win/AgilityBookDoc.cpp:1935
-#: Win/AgilityBookDoc.cpp:2068 Win/AgilityBookRunsView.cpp:1186
+#: Win/AgilityBookDoc.cpp:1865 Win/AgilityBookDoc.cpp:1930
+#: Win/AgilityBookDoc.cpp:2056 Win/AgilityBookRunsView.cpp:1186
 #: Win/AgilityBookTrainingView.cpp:313 Win/AgilityBookTreeData.cpp:216
 #: Win/AgilityBookTreeView.cpp:191 Win/AgilityBookTreeView.cpp:688
 #: Win/AgilityBookTreeView.cpp:706 Win/AgilityBookTreeView.cpp:768
@@ -920,7 +920,7 @@ msgstr "Print Preview"
 msgid "Agility Record Book file"
 msgstr "Agility Record Book file"
 
-#: Win/AgilityBookCalendarListView.cpp:479 Win/AgilityBookDoc.cpp:1934
+#: Win/AgilityBookCalendarListView.cpp:479 Win/AgilityBookDoc.cpp:1929
 #: Win/AgilityBookRunsView.cpp:1185 Win/AgilityBookTrainingView.cpp:312
 #: Win/AgilityBookTreeView.cpp:190
 msgid "IDS_CANNOT_FIND"
@@ -972,7 +972,7 @@ msgstr "Opens"
 msgid "IDS_COL_CLOSES"
 msgstr "Closes"
 
-#: Win/AgilityBookCalendarView.cpp:660 Win/AgilityBookDoc.cpp:2279
+#: Win/AgilityBookCalendarView.cpp:660 Win/AgilityBookDoc.cpp:2267
 #: Win/DlgAssignColumns.cpp:339 Win/DlgAssignColumns.cpp:349
 #: Win/DlgAssignColumns.cpp:384 Win/DlgAssignColumns.cpp:529
 #: Win/DlgListCtrl.cpp:456
@@ -1190,55 +1190,51 @@ msgstr "Internal error: File not saved."
 msgid "IDS_SEARCH_NOTES"
 msgstr "Search Notes"
 
-#: Win/AgilityBookDoc.cpp:1895
-msgid "Find"
-msgstr "Find"
-
-#: Win/AgilityBookDoc.cpp:2068
+#: Win/AgilityBookDoc.cpp:2056
 msgid "IDS_NO_LINKED_FILES"
 msgstr "No linked files found."
 
-#: Win/AgilityBookDoc.cpp:2337
+#: Win/AgilityBookDoc.cpp:2325
 msgid "IDS_FILEPROP_NAME"
 msgstr "File name: {}"
 
-#: Win/AgilityBookDoc.cpp:2340
+#: Win/AgilityBookDoc.cpp:2328
 msgid "IDS_FILEPROP_NAME_READONLY"
 msgstr "[readonly]"
 
-#: Win/AgilityBookDoc.cpp:2343 Win/AgilityBookDoc.cpp:2367
+#: Win/AgilityBookDoc.cpp:2331 Win/AgilityBookDoc.cpp:2355
 msgid "IDS_FILEPROP_NAME_MODIFIED"
 msgstr "[changes pending]"
 
-#: Win/AgilityBookDoc.cpp:2348
+#: Win/AgilityBookDoc.cpp:2336
 msgid "IDS_FILEPROP_SIZE"
 msgstr "File size: {} bytes"
 
-#: Win/AgilityBookDoc.cpp:2356
+#: Win/AgilityBookDoc.cpp:2344
 msgid "IDS_FILEPROP_CREATED"
 msgstr "Created: {}"
 
-#: Win/AgilityBookDoc.cpp:2360
+#: Win/AgilityBookDoc.cpp:2348
 msgid "IDS_FILEPROP_MODIFIED"
 msgstr "Modified: {}"
 
-#: Win/AgilityBookDoc.cpp:2378
+#: Win/AgilityBookDoc.cpp:2366
 msgid "IDS_FILEPROP_CONFIGURATION"
 msgstr "Configuration: {}"
 
-#: Win/AgilityBookDoc.cpp:2384
+#: Win/AgilityBookDoc.cpp:2372
 msgid "IDS_FILEPROP_CONFIGURATION_CURRENT"
 msgstr "Configuration: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2395
+#: Win/AgilityBookDoc.cpp:2383
 msgid "IDS_FILEPROP_VERSION"
 msgstr "Document version: {}"
 
-#: Win/AgilityBookDoc.cpp:2401
+#: Win/AgilityBookDoc.cpp:2389
 msgid "IDS_FILEPROP_VERSION_CURRENT"
 msgstr "Document version: {0} (Current: {1})"
 
-#: Win/AgilityBookDoc.cpp:2413
+#: Win/AgilityBookDoc.cpp:2401
 msgid "IDS_FILEPROP_FILEWRITTEN"
 msgstr ""
 "File written on:\n"
@@ -1247,7 +1243,7 @@ msgstr ""
 "Local time: {2}\n"
 "ARB: {3}"
 
-#: Win/AgilityBookDoc.cpp:2421
+#: Win/AgilityBookDoc.cpp:2409
 msgid "IDS_FILE_PROPERTIES"
 msgstr "File Properties"
 
