@@ -74,7 +74,6 @@ PROGRAMS = @PACKAGE_ARB_SHORTNAME@
 	DlgEventSelect.cpp \
 	DlgExistingPoints.cpp \
 	DlgFault.cpp \
-	DlgFind.cpp \
 	DlgFindLinks.cpp \
 	DlgInfoNote.cpp \
 	DlgInfoNoteEdit.cpp \

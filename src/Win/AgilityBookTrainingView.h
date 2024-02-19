@@ -24,8 +24,8 @@
  */
 
 #include "CommonView.h"
-#include "DlgFind.h"
 
+#include "LibARBWin/DlgFind.h"
 #include "LibARBWin/ReportListCtrl.h"
 #include <wx/docview.h>
 
@@ -38,14 +38,14 @@ class CAgilityBookTrainingViewData;
 typedef std::shared_ptr<CAgilityBookTrainingViewData> CAgilityBookTrainingViewDataPtr;
 
 
-class CFindTraining : public IFindCallback
+class CFindTraining : public ARBWin::CFindCallback
 {
 public:
 	CFindTraining(CAgilityBookTrainingView* pView)
 		: m_pView(pView)
 	{
 	}
-	bool Search(CDlgFind* pDlg) override;
+	bool Search(ARBWin::CDlgFind* pDlg) override;
 
 private:
 	CAgilityBookTrainingView* m_pView;

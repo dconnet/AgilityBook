@@ -1885,17 +1885,16 @@ bool CAgilityBookDoc::OnCloseDocument()
 }
 
 
-class CFindInfo : public IFindCallback
+class CFindInfo : public CFindCallback
 {
 public:
 	CFindInfo(CAgilityBookDoc* pDoc)
 		: m_pDoc(pDoc)
 	{
-		m_strCaption = _("IDS_SEARCH_NOTES");
-		m_strFind = _("Find");
-		m_bEnableSearch = false;
-		m_bSearchAll = true;
-		m_bEnableDirection = false;
+		m_caption = _("IDS_SEARCH_NOTES");
+		m_enableSearchAll = CFindCallback::Feature::Hidden;
+		m_searchAll = true;
+		m_enableDirection = CFindCallback::Feature::Hidden;
 	}
 	bool Search(CDlgFind* pDlg) override;
 	mutable std::vector<CFindItemInfo> m_Items;
@@ -1903,7 +1902,6 @@ public:
 private:
 	CAgilityBookDoc* m_pDoc;
 	void Search(
-		std::wstring const& search,
 		ARBInfoType inType,
 		std::set<std::wstring> const& inUse,
 		ARBInfo const& info) const;
@@ -1913,17 +1911,14 @@ private:
 bool CFindInfo::Search(CDlgFind* pDlg)
 {
 	m_Items.clear();
-	std::wstring search = Text();
-	if (!MatchCase())
-		search = StringUtil::ToLower(search);
 	ARBInfo& info = m_pDoc->Book().GetInfo();
 	std::set<std::wstring> inUse;
 	m_pDoc->Book().GetAllClubNames(inUse, false, false);
-	Search(search, ARBInfoType::Club, inUse, info);
+	Search(ARBInfoType::Club, inUse, info);
 	m_pDoc->Book().GetAllJudges(inUse, false, false);
-	Search(search, ARBInfoType::Judge, inUse, info);
+	Search(ARBInfoType::Judge, inUse, info);
 	m_pDoc->Book().GetAllTrialLocations(inUse, false, false);
-	Search(search, ARBInfoType::Location, inUse, info);
+	Search(ARBInfoType::Location, inUse, info);
 	if (0 < m_Items.size())
 	{
 		pDlg->EndModal(wxID_OK);
@@ -1931,7 +1926,7 @@ bool CFindInfo::Search(CDlgFind* pDlg)
 	}
 	else
 	{
-		std::wstring msg = fmt::format(_("IDS_CANNOT_FIND").wc_str(), m_strSearch);
+		std::wstring msg = fmt::format(_("IDS_CANNOT_FIND").wc_str(), m_search.wc_str());
 		wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 		return false;
 	}
@@ -1939,21 +1934,17 @@ bool CFindInfo::Search(CDlgFind* pDlg)
 
 
 void CFindInfo::Search(
-	std::wstring const& search,
 	ARBInfoType inType,
 	std::set<std::wstring> const& inUse,
 	ARBInfo const& info) const
 {
-	for (std::set<std::wstring>::const_iterator iter = inUse.begin(); iter != inUse.end(); ++iter)
+	for (auto const& str : inUse)
 	{
-		std::wstring str((*iter));
-		if (!MatchCase())
-			str = StringUtil::ToLower(str);
-		if (std::wstring::npos != str.find(search))
+		if (Compare(str))
 		{
 			CFindItemInfo item;
 			item.type = inType;
-			item.name = *iter;
+			item.name = str;
 			item.pItem.reset();
 			m_Items.push_back(item);
 			break;
@@ -1966,12 +1957,9 @@ void CFindInfo::Search(
 		std::set<std::wstring> strings;
 		if (0 < (*iterItem)->GetSearchStrings(strings))
 		{
-			for (std::set<std::wstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+			for (auto const& str : strings)
 			{
-				std::wstring str((*iter));
-				if (!MatchCase())
-					str = StringUtil::ToLower(str);
-				if (std::wstring::npos != str.find(search))
+				if (Compare(str))
 				{
 					// First, see if we've inserted the item name
 					std::vector<CFindItemInfo>::iterator iter2;

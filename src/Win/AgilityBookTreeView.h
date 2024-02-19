@@ -29,10 +29,10 @@
  */
 
 #include "CommonView.h"
-#include "DlgFind.h"
 #include "IconList.h"
 
 #include "ARB/ARBBase.h"
+#include "LibARBWin/DlgFind.h"
 #include "LibARBWin/Widgets.h"
 #include <wx/docview.h>
 #include <vector>
@@ -44,14 +44,14 @@ class CAgilityBookTreeData;
 class CAgilityBookTreeView;
 
 
-class CFindTree : public IFindCallback
+class CFindTree : public ARBWin::CFindCallback
 {
 public:
 	CFindTree(CAgilityBookTreeView* pView)
 		: m_pView(pView)
 	{
 	}
-	bool Search(CDlgFind* pDlg) override;
+	bool Search(ARBWin::CDlgFind* pDlg) override;
 
 private:
 	void FillTree(wxTreeItemId hItem);

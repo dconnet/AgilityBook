@@ -26,8 +26,8 @@
  */
 
 #include "CommonView.h"
-#include "DlgFind.h"
 
+#include "LibARBWin/DlgFind.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/ReportListCtrl.h"
 #include <wx/docview.h>
@@ -42,14 +42,14 @@ class CTabView;
 typedef std::shared_ptr<CAgilityBookCalendarListViewData> CAgilityBookCalendarListViewDataPtr;
 
 
-class CFindCalendar : public IFindCallback
+class CFindCalendar : public ARBWin::CFindCallback
 {
 public:
 	CFindCalendar(CAgilityBookCalendarListView* pView)
 		: m_pView(pView)
 	{
 	}
-	bool Search(CDlgFind* pDlg) override;
+	bool Search(ARBWin::CDlgFind* pDlg) override;
 
 private:
 	CAgilityBookCalendarListView* m_pView;

@@ -62,7 +62,6 @@
 #include "AgilityBookTreeView.h"
 #include "ClipBoard.h"
 #include "DlgAssignColumns.h"
-#include "DlgFind.h"
 #include "DlgReorder.h"
 #include "FilterOptions.h"
 #include "ImageHelper.h"
@@ -74,6 +73,7 @@
 #include "ARB/ARBTypes2.h"
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
+#include "LibARBWin/DlgFind.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/Logger.h"
 #include <wx/config.h>
@@ -1143,9 +1143,6 @@ bool CFindRuns::Search(CDlgFind* pDlg)
 		index = 0;
 	else if (index >= m_pView->m_Ctrl->GetItemCount() && !SearchDown())
 		index = m_pView->m_Ctrl->GetItemCount() - 1;
-	std::wstring search = Text();
-	if (!MatchCase())
-		search = StringUtil::ToLower(search);
 	for (; !bFound && 0 <= index && index < m_pView->m_Ctrl->GetItemCount(); index += inc)
 	{
 		std::set<std::wstring> strings;
@@ -1168,12 +1165,9 @@ bool CFindRuns::Search(CDlgFind* pDlg)
 				strings.insert(StringUtil::stringW(info.GetText()));
 			}
 		}
-		for (std::set<std::wstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		for (auto const& str : strings)
 		{
-			std::wstring str((*iter));
-			if (!MatchCase())
-				str = StringUtil::ToLower(str);
-			if (std::wstring::npos != str.find(search))
+			if (Compare(str))
 			{
 				m_pView->m_Ctrl->SetSelection(index, true);
 				bFound = true;
@@ -1182,7 +1176,7 @@ bool CFindRuns::Search(CDlgFind* pDlg)
 	}
 	if (!bFound)
 	{
-		std::wstring msg = fmt::format(_("IDS_CANNOT_FIND").wx_str(), m_strSearch);
+		std::wstring msg = fmt::format(_("IDS_CANNOT_FIND").wx_str(), m_search.wc_str());
 		wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	return bFound;
