@@ -38,24 +38,9 @@ class CAgilityBookTrainingViewData;
 typedef std::shared_ptr<CAgilityBookTrainingViewData> CAgilityBookTrainingViewDataPtr;
 
 
-class CFindTraining : public ARBWin::CFindCallback
-{
-public:
-	CFindTraining(CAgilityBookTrainingView* pView)
-		: m_pView(pView)
-	{
-	}
-	bool Search(ARBWin::CDlgFind* pDlg) override;
-
-private:
-	CAgilityBookTrainingView* m_pView;
-};
-
-
 class CAgilityBookTrainingView : public CAgilityBookBaseExtraView
 {
 	friend class CAgilityBookTrainingViewData;
-	friend class CFindTraining;
 	friend int wxCALLBACK CompareTraining(
 		ARBWin::CListDataPtr const& item1,
 		ARBWin::CListDataPtr const& item2,
@@ -104,7 +89,14 @@ private:
 
 	ARBWin::CReportListCtrl* m_Ctrl;
 	std::vector<long> m_Columns;
-	CFindTraining m_Callback;
+	class CFindData : public ARBWin::CFindCallback
+	{
+	public:
+		CFindData(CAgilityBookTrainingView* pView);
+		bool Search(ARBWin::CDlgFind* pDlg) override;
+	private:
+		CAgilityBookTrainingView* m_pView;
+	} m_find;
 
 	class CSortColumn
 	{

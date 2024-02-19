@@ -42,20 +42,6 @@ class CTabView;
 typedef std::shared_ptr<CAgilityBookCalendarListViewData> CAgilityBookCalendarListViewDataPtr;
 
 
-class CFindCalendar : public ARBWin::CFindCallback
-{
-public:
-	CFindCalendar(CAgilityBookCalendarListView* pView)
-		: m_pView(pView)
-	{
-	}
-	bool Search(ARBWin::CDlgFind* pDlg) override;
-
-private:
-	CAgilityBookCalendarListView* m_pView;
-};
-
-
 class CAgilityBookCalendarListView : public CAgilityBookBaseExtraView
 {
 	friend int wxCALLBACK CompareCalendar(
@@ -63,7 +49,6 @@ class CAgilityBookCalendarListView : public CAgilityBookBaseExtraView
 		ARBWin::CListDataPtr const& item2,
 		ARBWin::SortInfo const* pSortInfo);
 	friend class CAgilityBookCalendarListViewData;
-	friend class CFindCalendar;
 	DECLARE_CLASS(CAgilityBookCalendarListView)
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookCalendarListView)
 
@@ -131,7 +116,14 @@ private:
 	int m_imgAccomConfirm;
 	bool m_bSuppressSelect;
 	std::vector<long> m_Columns;
-	CFindCalendar m_Callback;
+	class CFindData : public ARBWin::CFindCallback
+	{
+	public:
+		CFindData(CAgilityBookCalendarListView* pView);
+		bool Search(ARBWin::CDlgFind* pDlg) override;
+	private:
+		CAgilityBookCalendarListView* m_pView;
+	} m_find;
 
 	class CSortColumn
 	{

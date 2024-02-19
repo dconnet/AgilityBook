@@ -44,28 +44,9 @@ class CAgilityBookTreeData;
 class CAgilityBookTreeView;
 
 
-class CFindTree : public ARBWin::CFindCallback
-{
-public:
-	CFindTree(CAgilityBookTreeView* pView)
-		: m_pView(pView)
-	{
-	}
-	bool Search(ARBWin::CDlgFind* pDlg) override;
-
-private:
-	void FillTree(wxTreeItemId hItem);
-	wxTreeItemId GetNextItem();
-	CAgilityBookTreeView* m_pView;
-	std::vector<wxTreeItemId> m_Items;
-	std::vector<wxTreeItemId>::const_iterator m_Iter;
-};
-
-
 class CAgilityBookTreeView : public CAgilityBookBaseExtraView
 {
 	friend class CAgilityBookTreeData;
-	friend class CFindTree;
 	DECLARE_CLASS(CAgilityBookTreeView)
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookTreeView)
 
@@ -244,7 +225,18 @@ private:
 	bool m_bInDelete;
 	bool m_bDeleteChanged;    // Used with m_itemPopup
 	wxTreeItemId m_itemPopup; // Tried to select item during menu - delay
-	CFindTree m_Callback;
+	class CFindData : public ARBWin::CFindCallback
+	{
+	public:
+		CFindData(CAgilityBookTreeView* pView);
+		bool Search(ARBWin::CDlgFind* pDlg) override;
+	private:
+		void FillTree(wxTreeItemId hItem);
+		wxTreeItemId GetNextItem();
+		CAgilityBookTreeView* m_pView;
+		std::vector<wxTreeItemId> m_Items;
+		std::vector<wxTreeItemId>::const_iterator m_Iter;
+	} m_find;
 
 	DECLARE_EVENT_TABLE()
 	void OnCtrlSetFocus(wxFocusEvent& evt);

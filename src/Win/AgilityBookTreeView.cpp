@@ -85,7 +85,13 @@ using namespace ARBWin;
 /////////////////////////////////////////////////////////////////////////////
 // Find
 
-void CFindTree::FillTree(wxTreeItemId hItem)
+CAgilityBookTreeView::CFindData::CFindData(CAgilityBookTreeView* pView)
+	: m_pView(pView)
+{
+}
+
+
+void CAgilityBookTreeView::CFindData::FillTree(wxTreeItemId hItem)
 {
 	if (!hItem.IsOk())
 		return;
@@ -103,7 +109,7 @@ void CFindTree::FillTree(wxTreeItemId hItem)
 }
 
 
-wxTreeItemId CFindTree::GetNextItem()
+wxTreeItemId CAgilityBookTreeView::CFindData::GetNextItem()
 {
 	wxTreeItemId hItem;
 	if (SearchDown())
@@ -128,7 +134,7 @@ wxTreeItemId CFindTree::GetNextItem()
 }
 
 
-bool CFindTree::Search(CDlgFind* pDlg)
+bool CAgilityBookTreeView::CFindData::Search(CDlgFind* pDlg)
 {
 	bool bFound = false;
 	m_Items.clear();
@@ -276,7 +282,7 @@ CAgilityBookTreeView::CAgilityBookTreeView(CTabView* pTabView, wxDocument* doc)
 	, m_bInDelete(false)
 	, m_bDeleteChanged(false)
 	, m_itemPopup()
-	, m_Callback(this)
+	, m_find(this)
 {
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
@@ -1429,28 +1435,28 @@ bool CAgilityBookTreeView::OnCmd(int id)
 
 	case wxID_FIND:
 	{
-		CDlgFind dlg(m_Callback, m_Ctrl);
+		CDlgFind dlg(m_find, m_Ctrl);
 		dlg.ShowModal();
 	}
 	break;
 
 	case ID_EDIT_FIND_NEXT:
 	{
-		m_Callback.SearchDown(true);
-		if (m_Callback.Text().empty())
+		m_find.SearchDown(true);
+		if (m_find.Text().empty())
 			OnCmd(wxID_FIND);
 		else
-			m_Callback.Search(nullptr);
+			m_find.Search(nullptr);
 	}
 	break;
 
 	case ID_EDIT_FIND_PREVIOUS:
 	{
-		m_Callback.SearchDown(false);
-		if (m_Callback.Text().empty())
+		m_find.SearchDown(false);
+		if (m_find.Text().empty())
 			OnCmd(wxID_FIND);
 		else
-			m_Callback.Search(nullptr);
+			m_find.Search(nullptr);
 	}
 	break;
 

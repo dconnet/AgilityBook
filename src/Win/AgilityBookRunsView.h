@@ -40,20 +40,6 @@ class CAgilityBookRunsViewData;
 typedef std::shared_ptr<CAgilityBookRunsViewData> CAgilityBookRunsViewDataPtr;
 
 
-class CFindRuns : public ARBWin::CFindCallback
-{
-public:
-	CFindRuns(CAgilityBookRunsView* pView)
-		: m_pView(pView)
-	{
-	}
-	bool Search(ARBWin::CDlgFind* pDlg) override;
-
-private:
-	CAgilityBookRunsView* m_pView;
-};
-
-
 class CAgilityBookRunsView : public CAgilityBookBaseExtraView
 {
 	friend int wxCALLBACK CompareRuns(
@@ -61,7 +47,6 @@ class CAgilityBookRunsView : public CAgilityBookBaseExtraView
 		ARBWin::CListDataPtr const& item2,
 		ARBWin::SortInfo const* pSortInfo);
 	friend class CAgilityBookRunsViewData;
-	friend class CFindRuns;
 	DECLARE_CLASS(CAgilityBookRunsView)
 	DECLARE_NO_COPY_IMPLEMENTED(CAgilityBookRunsView)
 
@@ -125,7 +110,14 @@ private:
 	int m_imgMap;
 	bool m_bSuppressSelect;
 	std::vector<long> m_Columns;
-	CFindRuns m_Callback;
+	class CFindData : public ARBWin::CFindCallback
+	{
+	public:
+		CFindData(CAgilityBookRunsView* pView);
+		bool Search(ARBWin::CDlgFind* pDlg) override;
+	private:
+		CAgilityBookRunsView* m_pView;
+	} m_find;
 
 	class CSortColumn
 	{
