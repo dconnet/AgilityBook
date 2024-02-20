@@ -230,6 +230,7 @@ private:
 	public:
 		CFindData(CAgilityBookTreeView* pView);
 		bool Search(ARBWin::CDlgFind* pDlg) override;
+
 	private:
 		void FillTree(wxTreeItemId hItem);
 		wxTreeItemId GetNextItem();

@@ -121,6 +121,7 @@ private:
 	public:
 		CFindData(CAgilityBookCalendarListView* pView);
 		bool Search(ARBWin::CDlgFind* pDlg) override;
+
 	private:
 		CAgilityBookCalendarListView* m_pView;
 	} m_find;

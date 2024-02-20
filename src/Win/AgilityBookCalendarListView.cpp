@@ -423,7 +423,7 @@ int wxCALLBACK CompareCalendar(CListDataPtr const& item1, CListDataPtr const& it
 // Find
 
 CAgilityBookCalendarListView::CFindData::CFindData(CAgilityBookCalendarListView* pView)
-		: m_pView(pView)
+	: m_pView(pView)
 {
 }
 

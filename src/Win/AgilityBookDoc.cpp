@@ -1901,10 +1901,7 @@ public:
 
 private:
 	CAgilityBookDoc* m_pDoc;
-	void Search(
-		ARBInfoType inType,
-		std::set<std::wstring> const& inUse,
-		ARBInfo const& info) const;
+	void Search(ARBInfoType inType, std::set<std::wstring> const& inUse, ARBInfo const& info) const;
 };
 
 
@@ -1933,10 +1930,7 @@ bool CFindInfo::Search(CDlgFind* pDlg)
 }
 
 
-void CFindInfo::Search(
-	ARBInfoType inType,
-	std::set<std::wstring> const& inUse,
-	ARBInfo const& info) const
+void CFindInfo::Search(ARBInfoType inType, std::set<std::wstring> const& inUse, ARBInfo const& info) const
 {
 	for (auto const& str : inUse)
 	{

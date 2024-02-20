@@ -115,6 +115,7 @@ private:
 	public:
 		CFindData(CAgilityBookRunsView* pView);
 		bool Search(ARBWin::CDlgFind* pDlg) override;
+
 	private:
 		CAgilityBookRunsView* m_pView;
 	} m_find;
