@@ -1,4 +1,6 @@
-1/17/2024: v3.8.7.<dev>
+3/18/2024: v3.8.7.<dev>
+- Bumped Configuration v70:
+  - Rename TDAA's TMAD to TAM.
 - Bug fix:
   - SetSelection(0) on an empty wxComboBox can crash on Mac
 
