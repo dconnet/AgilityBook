@@ -56,7 +56,6 @@
 		E19B6518166C09B9004DEDA4 /* DlgEventSelect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6430166C09B9004DEDA4 /* DlgEventSelect.cpp */; };
 		E19B6519166C09B9004DEDA4 /* DlgExistingPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6432166C09B9004DEDA4 /* DlgExistingPoints.cpp */; };
 		E19B651A166C09B9004DEDA4 /* DlgFault.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6434166C09B9004DEDA4 /* DlgFault.cpp */; };
-		E19B651B166C09B9004DEDA4 /* DlgFind.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6436166C09B9004DEDA4 /* DlgFind.cpp */; };
 		E19B651C166C09B9004DEDA4 /* DlgFindLinks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B6438166C09B9004DEDA4 /* DlgFindLinks.cpp */; };
 		E19B651D166C09B9004DEDA4 /* DlgInfoNote.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B643A166C09B9004DEDA4 /* DlgInfoNote.cpp */; };
 		E19B651E166C09B9004DEDA4 /* DlgListCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E19B643C166C09B9004DEDA4 /* DlgListCtrl.cpp */; };
@@ -346,8 +345,6 @@
 		E19B6433166C09B9004DEDA4 /* DlgExistingPoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgExistingPoints.h; sourceTree = "<group>"; };
 		E19B6434166C09B9004DEDA4 /* DlgFault.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgFault.cpp; sourceTree = "<group>"; };
 		E19B6435166C09B9004DEDA4 /* DlgFault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgFault.h; sourceTree = "<group>"; };
-		E19B6436166C09B9004DEDA4 /* DlgFind.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgFind.cpp; sourceTree = "<group>"; };
-		E19B6437166C09B9004DEDA4 /* DlgFind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgFind.h; sourceTree = "<group>"; };
 		E19B6438166C09B9004DEDA4 /* DlgFindLinks.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgFindLinks.cpp; sourceTree = "<group>"; };
 		E19B6439166C09B9004DEDA4 /* DlgFindLinks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DlgFindLinks.h; sourceTree = "<group>"; };
 		E19B643A166C09B9004DEDA4 /* DlgInfoNote.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DlgInfoNote.cpp; sourceTree = "<group>"; };
@@ -775,8 +772,6 @@
 				E19B6433166C09B9004DEDA4 /* DlgExistingPoints.h */,
 				E19B6434166C09B9004DEDA4 /* DlgFault.cpp */,
 				E19B6435166C09B9004DEDA4 /* DlgFault.h */,
-				E19B6436166C09B9004DEDA4 /* DlgFind.cpp */,
-				E19B6437166C09B9004DEDA4 /* DlgFind.h */,
 				E19B6438166C09B9004DEDA4 /* DlgFindLinks.cpp */,
 				E19B6439166C09B9004DEDA4 /* DlgFindLinks.h */,
 				E19B643A166C09B9004DEDA4 /* DlgInfoNote.cpp */,
@@ -1028,7 +1023,6 @@
 				E19B6518166C09B9004DEDA4 /* DlgEventSelect.cpp in Sources */,
 				E19B6519166C09B9004DEDA4 /* DlgExistingPoints.cpp in Sources */,
 				E19B651A166C09B9004DEDA4 /* DlgFault.cpp in Sources */,
-				E19B651B166C09B9004DEDA4 /* DlgFind.cpp in Sources */,
 				E10D89F325D5AB5A00D1D8F8 /* DlgRunPanelLinks.cpp in Sources */,
 				E19B651C166C09B9004DEDA4 /* DlgFindLinks.cpp in Sources */,
 				E19B651D166C09B9004DEDA4 /* DlgInfoNote.cpp in Sources */,
