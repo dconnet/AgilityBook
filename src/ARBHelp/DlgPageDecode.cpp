@@ -49,12 +49,12 @@ using namespace ARBWin;
 
 CDlgPageDecode::CDlgPageDecode()
 	: wxDialog(
-		nullptr,
-		wxID_ANY,
-		L"Decode",
-		wxDefaultPosition,
-		wxDefaultSize,
-		wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
+		  nullptr,
+		  wxID_ANY,
+		  L"Decode",
+		  wxDefaultPosition,
+		  wxDefaultSize,
+		  wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
 {
 	// Controls (these are done first to control tab order)
 

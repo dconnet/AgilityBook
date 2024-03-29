@@ -169,13 +169,13 @@ wxEND_EVENT_TABLE()
 
 CMainFrame::CMainFrame(wxDocManager* manager)
 	: wxDocParentFrame(
-		manager,
-		nullptr,
-		wxID_ANY,
-		_("Agility Record Book"),
-		wxDefaultPosition,
-		wxDefaultSize,
-		wxDEFAULT_FRAME_STYLE)
+		  manager,
+		  nullptr,
+		  wxID_ANY,
+		  _("Agility Record Book"),
+		  wxDefaultPosition,
+		  wxDefaultSize,
+		  wxDEFAULT_FRAME_STYLE)
 	, m_manager(manager)
 	, m_logger()
 	, m_statusBar(this, NUM_STATUS_FIELDS)

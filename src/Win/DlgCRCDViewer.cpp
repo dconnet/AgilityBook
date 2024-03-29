@@ -81,12 +81,12 @@ void CMetaDataStatic::OnPaint(wxPaintEvent& evt)
 
 CDlgCRCDViewer::CDlgCRCDViewer(HENHMETAFILE inMetaFile, wxWindow* pParent)
 	: wxDialog(
-		pParent,
-		wxID_ANY,
-		_("IDD_CRCD_VIEWER"),
-		wxDefaultPosition,
-		wxDefaultSize,
-		wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
+		  pParent,
+		  wxID_ANY,
+		  _("IDD_CRCD_VIEWER"),
+		  wxDefaultPosition,
+		  wxDefaultSize,
+		  wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
 	, m_trace("CDlgCRCDViewer")
 {
 	// Controls (these are done first to control tab order)

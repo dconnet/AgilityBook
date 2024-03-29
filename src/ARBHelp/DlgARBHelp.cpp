@@ -49,14 +49,16 @@ using namespace ARBWin;
 
 CDlgARBHelp::CDlgARBHelp()
 	: wxWizard(
-		nullptr,
-		wxID_ANY,
-		wxString::Format(
-			L"Agility Record Book Helper %s",
-			CVersionNum(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD).GetVersionString(VER_PARTS).c_str()),
-		wxNullBitmap,
-		wxDefaultPosition,
-		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+		  nullptr,
+		  wxID_ANY,
+		  wxString::Format(
+			  L"Agility Record Book Helper %s",
+			  CVersionNum(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD)
+				  .GetVersionString(VER_PARTS)
+				  .c_str()),
+		  wxNullBitmap,
+		  wxDefaultPosition,
+		  wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
 	wxIconBundle icons = CResourceManager::Get()->CreateIconBundle(ImageMgrAppBundle, wxART_OTHER);
 	SetIcons(icons);

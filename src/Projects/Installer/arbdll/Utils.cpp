@@ -47,7 +47,7 @@ bool CheckOS(DWORD dwMajor, DWORD dwMinor, int op)
 
 #pragma warning(push)
 // warning C4244: 'argument' : conversion from 'int' to 'BYTE', possible loss of data
-#pragma warning(disable : 4244)
+#pragma warning(disable:4244)
 	VER_SET_CONDITION(dwlConditionMask, VER_MAJORVERSION, op);
 	VER_SET_CONDITION(dwlConditionMask, VER_MINORVERSION, op);
 	VER_SET_CONDITION(dwlConditionMask, VER_SERVICEPACKMAJOR, op);

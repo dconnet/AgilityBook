@@ -26,8 +26,8 @@
 #if defined(USING_CATCH2)
 #define CATCH_CONFIG_RUNNER
 #endif
-#pragma warning(disable : 5219) // implicit conversion from 'uint64_t' to 'double', possible loss of data
-#pragma warning(disable : 4583) // destructor is not implicitly called
+#pragma warning(disable:5219) // implicit conversion from 'uint64_t' to 'double', possible loss of data
+#pragma warning(disable:4583) // destructor is not implicitly called
 #include "TestLib.h"
 
 #include "Local.h"
