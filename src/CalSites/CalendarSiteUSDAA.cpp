@@ -378,7 +378,7 @@ std::string CCalendarSiteUSDAA::Process(
 		if (detail.empty())
 			continue;
 		cal->SetValue(L"");
-		std::wstring address(L"http://www.usdaa.com/");
+		std::wstring address(L"https://www.usdaa.com/");
 		address += detail;
 		if (progress)
 		{

@@ -127,7 +127,7 @@ List of venues we can select from.
 		venue CDATA #IMPLIED
 		>
 
-	<CalSite help="none" name="AgilityEvents" search="http://beta.agilityrecordbook.com/cal.php">
+	<CalSite help="none" name="AgilityEvents" search="https://beta.agilityrecordbook.com/cal.php">
 	  <Desc>Test data for AgilityEvents.net</Desc>
 	  <LocCode code="AK" name="Alaska"/>
 	  <LocCode code="AL" name="Alabama"/>

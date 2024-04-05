@@ -350,7 +350,7 @@ void CDlgDigest::OnCopy(wxCommandEvent& evt)
 
 	// Copy data in XML form needed for version2.xml
 	// <Platform arch = "osx" minOS = "10.4" ver = "2.4.5.93" config = "49"
-	//   file = "http://www.agilityrecordbook.com/files/AgilityBook-2_4_5_93-mac.dmg"
+	//   file = "https://www.agilityrecordbook.com/files/AgilityBook-2_4_5_93-mac.dmg"
 	//   md5 = "0ed4c6dfbcfdd764ac877a25a8c19b2e"
 	//   sha1 = "80d7faaefa9680a783c126c3918a74dc4e46e7bb"
 	//   size = "10942007"
@@ -369,7 +369,7 @@ void CDlgDigest::OnCopy(wxCommandEvent& evt)
 		m_ConfigVersion);
 	fmt::format_to(
 		std::back_inserter(str),
-		L"\tfile=\"http://www.agilityrecordbook.com/files/{}\"\n",
+		L"\tfile=\"https://www.agilityrecordbook.com/files/{}\"\n",
 		filename.GetFullName().wx_str());
 	fmt::format_to(std::back_inserter(str), L"\tmd5=\"{}\"\n", m_MD5.wx_str());
 	fmt::format_to(std::back_inserter(str), L"\tsha1=\"{}\"\n", m_SHA1.wx_str());
