@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<DefaultConfig Book="15.4">
+<DefaultConfig Book="15.5">
 <!--
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2024-04-15 File version 15.5, Added 'ByPass' scoring type for AKC Fetch.
+           Configuration version 71.
+           Added Fetch
 2024-03-18 Configuration version 70.
            Rename TDAA's TMAD to TAM.
 2023-07-06 File version 15.4
@@ -231,7 +234,7 @@ Reminder to self: Action/@Config: Only apply this action up to this config
 (non-inclusive, 0 == always) Basically, this is when the action was added.
 -->
 
-  <Configuration version="70">
+  <Configuration version="71">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -2752,6 +2755,23 @@ Repeats every additional 500 points</Titles>
           <TitlePoints Faults="5.99" Points="0"/>
           <TitlePoints Faults="15.99" Points="0"/>
           <TitlePoints Faults="25.99" Points="0"/>
+        </Scoring>
+      </Event>
+    </Venue>
+    <Venue LongName="AKC Fetch" Name="Fetch" URL="https://www.akc.org/fetch/" icon="4">
+      <Titles LongName="Fetch Novice" Name="FTN">Pass 2 tests</Titles>
+      <Titles LongName="Fetch Intermediate" Name="FTI">Pass 2 tests</Titles>
+      <Titles LongName="Fetch Advanced" Name="FTA">Pass 2 tests</Titles>
+      <Titles LongName="Fetch Retriever" Name="FTR">Pass 2 tests</Titles>
+      <Division Name="Fetch">
+        <Level Name="Novice"/>
+        <Level Name="Intermediate"/>
+        <Level Name="Advanced"/>
+        <Level Name="Retriever"/>
+      </Division>
+      <Event Name="Fetch">
+        <Scoring Division="*" Level="*" type="PassFail">
+          <TitlePoints Faults="0" Points="1"/>
         </Scoring>
       </Event>
     </Venue>

@@ -20,6 +20,7 @@ Currently Supported Venues:
 - CPE [Canine Performance Events](http://www.k9cpe.com)
 - FCAT [AKC Fast CAT](https://www.akc.org/sports/coursing/fast-cat/)
 - FCI [Fédération Cynologique Internationale](http://www.fci.be)
+- Fetch [AKC Fetch](https://www.akc.org/fetch/)
 - NADAC [North American Dog Agility Council](http://www.nadac.com)
 - SCC [Société Centrale Canine](http://www.france-agility.com)
 - TDAA [Teacup Dogs Agility Association](http://www.k9tdaa.com)

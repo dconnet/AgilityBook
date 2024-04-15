@@ -724,6 +724,7 @@ bool CDlgConfigureDataEvent::DoEdit()
 {
 	bool bEdited = false;
 	std::wstring oldName = m_Event->GetName();
+	auto numLifetime = m_pDlg->m_pVenue->GetLifetimeNames().size();
 	CDlgConfigEvent dlg(false, m_pDlg->m_pVenue, m_Event, m_pDlg);
 	if (wxID_OK == dlg.ShowModal())
 	{
@@ -731,6 +732,18 @@ bool CDlgConfigureDataEvent::DoEdit()
 		dlg.GetFixups(m_pDlg->m_DlgFixup);
 		RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
 		bEdited = true;
+
+		if (0 == numLifetime && m_pDlg->m_pVenue->GetLifetimeNames().size() > 0)
+		{
+			CDlgConfigureDataLifetimeName* pDataLifetime
+				= new CDlgConfigureDataLifetimeName(m_pDlg, *m_pDlg->m_pVenue->GetLifetimeNames().begin());
+			m_pDlg->m_ctrlItems->AppendItem(
+				m_pDlg->m_lifetimeNames,
+				StringUtil::stringWX(pDataLifetime->OnNeedText()),
+				-1,
+				-1,
+				pDataLifetime);
+		}
 	}
 	return bEdited;
 }

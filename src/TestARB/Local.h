@@ -290,6 +290,10 @@ public:
 	{
 		return m_ScoreStyleTimeNoPlaces;
 	}
+	std::wstring ScoreStylePassFail() const override
+	{
+		return m_ScoreStylePassFail;
+	}
 
 	std::wstring ExistingPointsOther() const override
 	{
@@ -372,6 +376,7 @@ private:
 	std::wstring m_ScoreStyleScoreTime;
 	std::wstring m_ScoreStyleTimePlusFaults;
 	std::wstring m_ScoreStyleTimeNoPlaces;
+	std::wstring m_ScoreStylePassFail;
 
 	std::wstring m_QTypeNA;
 	std::wstring m_QTypeQ;

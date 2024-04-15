@@ -474,7 +474,9 @@ bool ARBDogRun::Load(
 			// Ignore any errors...
 			m_Partners.Load(inConfig, element, inVersion, ioCallback);
 		}
-		else if (name == TREE_BY_TIME || name == TREE_BY_OPENCLOSE || name == TREE_BY_POINTS || name == TREE_BY_SPEED)
+		else if (
+			name == TREE_BY_TIME || name == TREE_BY_OPENCLOSE || name == TREE_BY_POINTS || name == TREE_BY_SPEED
+			|| name == TREE_BY_PASS)
 		{
 			// Ignore any errors...
 			m_Scoring.Load(inConfig.GetVersion(), pEvent, pScoring, element, inVersion, ioCallback);
@@ -716,10 +718,12 @@ double ARBDogRun::GetTitlePoints(ARBConfigScoringPtr const& inScoring, bool* out
 	bool isTourney = false;
 	if (GetClub())
 		isTourney = (GetClub()->GetVenue() == L"USDAA" && GetLevel() == L"Tournament");
+
 	switch (m_Scoring.GetType())
 	{
 	case ARBScoringType::Unknown:
 		break;
+
 	case ARBScoringType::ByTime:
 	case ARBScoringType::BySpeed:
 	{
@@ -782,6 +786,7 @@ double ARBDogRun::GetTitlePoints(ARBConfigScoringPtr const& inScoring, bool* out
 		}
 	}
 	break;
+
 	case ARBScoringType::ByOpenClose:
 		if ((m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts()
 			 && m_Scoring.GetNeedClosePts() <= m_Scoring.GetClosePts())
@@ -817,6 +822,7 @@ double ARBDogRun::GetTitlePoints(ARBConfigScoringPtr const& inScoring, bool* out
 				  + bonusTitlePts;
 		}
 		break;
+
 	case ARBScoringType::ByPoints:
 		if (m_Scoring.GetNeedOpenPts() <= m_Scoring.GetOpenPts())
 		{
@@ -847,7 +853,23 @@ double ARBDogRun::GetTitlePoints(ARBConfigScoringPtr const& inScoring, bool* out
 				  + bonusTitlePts;
 		}
 		break;
+
+	case ARBScoringType::ByPass:
+		if (m_Q.Qualified())
+		{
+			pts = inScoring->GetTitlePoints().GetTitlePoints(
+				0.0,
+				m_Scoring.GetTime(),
+				m_Scoring.GetSCT(),
+				GetPlace(),
+				GetInClass(),
+				GetDate(),
+				isTourney,
+				m_isAtHome);
+		}
+		break;
 	}
+
 	return pts;
 }
 
@@ -941,6 +963,13 @@ double ARBDogRun::GetLifetimePoints(ARBConfigScoringPtr const& inScoring, std::w
 				  + bonusTitlePts;
 		}
 		break;
+	case ARBScoringType::ByPass:
+		if (m_Q.Qualified())
+		{
+			pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, 0.0, GetSpeedPoints(inScoring))
+				  + bonusTitlePts;
+		}
+		break;
 	}
 	return pts;
 }
@@ -972,6 +1001,7 @@ double ARBDogRun::GetScore(ARBConfigScoringPtr const& inScoring) const
 		case ARBScoringStyle::OCScoreThenTime:
 		case ARBScoringStyle::ScoreThenTime:
 		case ARBScoringStyle::TimeNoPlaces:
+		case ARBScoringStyle::PassFail:
 			break;
 		case ARBScoringStyle::TimePlusFaults:
 			pts += m_Scoring.GetTime();
@@ -997,6 +1027,8 @@ double ARBDogRun::GetScore(ARBConfigScoringPtr const& inScoring) const
 		pts = m_Scoring.GetOpenPts() - m_Scoring.GetCourseFaults();
 		if (inScoring->SubtractTimeFaultsFromScore())
 			pts -= m_Scoring.GetTimeFaults(inScoring);
+		break;
+	case ARBScoringType::ByPass:
 		break;
 	}
 	return pts;

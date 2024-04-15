@@ -579,6 +579,7 @@ void CWizardExport::UpdatePreview()
 						case ARBScoringStyle::Faults100ThenTime:
 						case ARBScoringStyle::Faults200ThenTime:
 						case ARBScoringStyle::TimeNoPlaces:
+						case ARBScoringStyle::PassFail:
 							idxType = IO_TYPE_RUNS_FAULTS_TIME;
 							break;
 						case ARBScoringStyle::OCScoreThenTime:

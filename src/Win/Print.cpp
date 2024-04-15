@@ -604,6 +604,7 @@ std::wstring CPrintRuns::GetFieldText(
 			case ARBScoringType::Unknown:
 			case ARBScoringType::ByTime:
 			case ARBScoringType::BySpeed:
+			case ARBScoringType::ByPass:
 				break;
 			case ARBScoringType::ByOpenClose:
 				if (0 < inRun->GetScoring().GetNeedOpenPts())
@@ -657,6 +658,7 @@ std::wstring CPrintRuns::GetFieldText(
 			case ARBScoringType::Unknown:
 			case ARBScoringType::ByTime:
 			case ARBScoringType::BySpeed:
+			case ARBScoringType::ByPass:
 				break;
 			case ARBScoringType::ByOpenClose:
 				if (0 < inRun->GetScoring().GetOpenPts())
@@ -789,6 +791,7 @@ void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect
 			case ARBScoringType::Unknown:
 			case ARBScoringType::ByTime:
 			case ARBScoringType::BySpeed:
+			case ARBScoringType::ByPass:
 				break;
 			case ARBScoringType::ByOpenClose:
 			case ARBScoringType::ByPoints:

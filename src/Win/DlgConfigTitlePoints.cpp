@@ -222,7 +222,7 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 		if (str == m_LifetimeName || (m_LifetimeName.empty() && bDefault))
 			current = str;
 	}
-	if (0 == m_ctrlLifetimeName->GetCount())
+	if (0 == items.size())
 	{
 		items.Add(_("IDS_TITLEPOINT_LIFETIME_NAME"));
 		data.push_back(reinterpret_cast<void*>(1));

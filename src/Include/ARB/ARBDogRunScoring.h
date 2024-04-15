@@ -42,6 +42,7 @@ enum class ARBScoringType
 	ByOpenClose = 1, ///< Scoring based on Opening/Closing points.
 	ByPoints = 2,    ///< Scoring based on points.
 	BySpeed = 3,     ///< Scoring based on speed (FCAT).
+	ByPass = 4,      ///< Scoring based on Pass (Fetch).
 };
 
 

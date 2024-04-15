@@ -107,6 +107,7 @@ bool CLocalization::Load()
 	m_ScoreStyleScoreTime = StringUtil::GetTranslation(arbT("IDS_SCORE_STYLE_SCORE_TIME"));
 	m_ScoreStyleTimePlusFaults = StringUtil::GetTranslation(arbT("IDS_SCORE_STYLE_TIME_PLUS_FAULTS"));
 	m_ScoreStyleTimeNoPlaces = StringUtil::GetTranslation(arbT("IDS_SCORE_STYLE_TIME_NO_PLACES"));
+	m_ScoreStylePassFail = StringUtil::GetTranslation(arbT("IDS_SCORE_STYLE_PASS_FAIL"));
 	m_ExistingPointsOther = StringUtil::GetTranslation(arbT("IDS_EXISTING_POINTS_OTHER"));
 	m_ExistingPointsLifetime = StringUtil::GetTranslation(arbT("IDS_EXISTING_POINTS_LIFETIME"));
 	m_ExistingPointsRun = StringUtil::GetTranslation(arbT("IDS_EXISTING_POINTS_RUN"));

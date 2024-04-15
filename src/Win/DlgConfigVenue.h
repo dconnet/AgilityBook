@@ -103,6 +103,7 @@ private:
 	wxString m_URL;
 	wxString m_Desc;
 	ARBWin::CTreeCtrl* m_ctrlItems;
+	wxTreeItemId m_lifetimeNames; 
 	wxButton* m_ctrlNew;
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlDelete;

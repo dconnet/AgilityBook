@@ -344,6 +344,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		ARBScoringStyle::ScoreThenTime,
 		ARBScoringStyle::TimePlusFaults,
 		ARBScoringStyle::TimeNoPlaces,
+		ARBScoringStyle::PassFail,
 	};
 	items.clear();
 	std::vector<void*> dataVoid;
@@ -730,6 +731,8 @@ void CDlgConfigEventMethod::UpdateControls()
 	int idxType = m_ctrlType->GetSelection();
 	if (wxNOT_FOUND == idxType)
 	{
+		m_ctrlSuperQ->Show(true);
+		m_ctrlSpeedPts->Show(true);
 		m_ctrlPointsOpeningText->Show(false);
 		m_ctrlPointsOpening->Show(false);
 		m_ctrlPointsClosingText->Show(false);
@@ -748,6 +751,8 @@ void CDlgConfigEventMethod::UpdateControls()
 		switch (GetType(idxType))
 		{
 		case ARBScoringStyle::Unknown:
+			m_ctrlSuperQ->Show(true);
+			m_ctrlSpeedPts->Show(true);
 			m_ctrlPointsOpeningText->Show(false);
 			m_ctrlPointsOpening->Show(false);
 			m_ctrlPointsClosingText->Show(false);
@@ -764,6 +769,8 @@ void CDlgConfigEventMethod::UpdateControls()
 		case ARBScoringStyle::FaultsThenTime:
 		case ARBScoringStyle::Faults100ThenTime:
 		case ARBScoringStyle::Faults200ThenTime:
+			m_ctrlSuperQ->Show(true);
+			m_ctrlSpeedPts->Show(true);
 			m_ctrlPointsOpeningText->Show(false);
 			m_ctrlPointsOpening->Show(false);
 			m_ctrlPointsClosingText->Show(false);
@@ -778,6 +785,8 @@ void CDlgConfigEventMethod::UpdateControls()
 			m_ctrlMultiply->Show(true);
 			break;
 		case ARBScoringStyle::OCScoreThenTime:
+			m_ctrlSuperQ->Show(true);
+			m_ctrlSpeedPts->Show(true);
 			m_ctrlPointsOpeningText->Show(true);
 			m_ctrlPointsOpening->Show(true);
 			m_ctrlPointsClosingText->Show(true);
@@ -793,6 +802,8 @@ void CDlgConfigEventMethod::UpdateControls()
 			m_ctrlPointsOpeningText->SetLabel(_("IDC_CONFIG_EVENT_OPENING_PTS"));
 			break;
 		case ARBScoringStyle::ScoreThenTime:
+			m_ctrlSuperQ->Show(true);
+			m_ctrlSpeedPts->Show(true);
 			m_ctrlPointsOpeningText->Show(true);
 			m_ctrlPointsOpening->Show(true);
 			m_ctrlPointsClosingText->Show(false);
@@ -808,6 +819,8 @@ void CDlgConfigEventMethod::UpdateControls()
 			m_ctrlPointsOpeningText->SetLabel(_("IDS_SCORING_REQUIRED_POINTS"));
 			break;
 		case ARBScoringStyle::TimePlusFaults:
+			m_ctrlSuperQ->Show(true);
+			m_ctrlSpeedPts->Show(true);
 			m_ctrlPointsOpeningText->Show(false);
 			m_ctrlPointsOpening->Show(false);
 			m_ctrlPointsClosingText->Show(false);
@@ -822,6 +835,24 @@ void CDlgConfigEventMethod::UpdateControls()
 			m_ctrlMultiply->Show(true);
 			break;
 		case ARBScoringStyle::TimeNoPlaces:
+			m_ctrlSuperQ->Show(true);
+			m_ctrlSpeedPts->Show(true);
+			m_ctrlPointsOpeningText->Show(false);
+			m_ctrlPointsOpening->Show(false);
+			m_ctrlPointsClosingText->Show(false);
+			m_ctrlPointsClosing->Show(false);
+			m_ctrlDropFractions->Show(false);
+			m_ctrlTimeFaultsCleanQ->Show(false);
+			m_ctrlSubtractTimeFaults->Show(false);
+			m_ctrlTimeFaultsUnder->Show(false);
+			m_ctrlTimeFaultsOver->Show(false);
+			m_ctrlTimeFaultsTitlingPts->Show(false);
+			m_ctrlMultiplyText->Show(false);
+			m_ctrlMultiply->Show(false);
+			break;
+		case ARBScoringStyle::PassFail:
+			m_ctrlSuperQ->Show(false);
+			m_ctrlSpeedPts->Show(false);
 			m_ctrlPointsOpeningText->Show(false);
 			m_ctrlPointsOpening->Show(false);
 			m_ctrlPointsClosingText->Show(false);
@@ -1151,6 +1182,8 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 		m_pScoring->SetTimeFaultMultiplier(m_Multiply);
 		break;
 	case ARBScoringStyle::TimeNoPlaces:
+		break;
+	case ARBScoringStyle::PassFail:
 		break;
 	}
 

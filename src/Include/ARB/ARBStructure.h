@@ -83,6 +83,7 @@ namespace ARB
 #define TREE_BY_SPEED						L"BySpeed"
 #define TREE_BY_OPENCLOSE					L"ByOpenClose"
 #define TREE_BY_POINTS						L"ByPoints"
+#define TREE_BY_PASS						L"ByPass"
 #define TREE_PLACEMENT						L"Placement"
 #define TREE_PLACEMENT_OTHERPOINTS			L"OtherPoints"
 #define TREE_NOTES							L"Notes"

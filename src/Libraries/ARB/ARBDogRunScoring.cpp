@@ -77,6 +77,8 @@ ARBScoringType ARBDogRunScoring::TranslateConfigScoring(ARBScoringStyle inType)
 		return ARBScoringType::ByPoints;
 	case ARBScoringStyle::TimeNoPlaces:
 		return ARBScoringType::BySpeed;
+	case ARBScoringStyle::PassFail:
+		return ARBScoringType::ByPass;
 	}
 	// 'enum class' handles all cases via the switch above
 	return ARBScoringType::Unknown;
@@ -225,18 +227,14 @@ bool ARBDogRunScoring::Load(
 	ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
+	std::wstring const& name = inTree->GetName();
 	if (!inTree
 		|| !(
-			inTree->GetName() == TREE_BY_TIME || inTree->GetName() == TREE_BY_OPENCLOSE
-			|| inTree->GetName() == TREE_BY_POINTS || inTree->GetName() == TREE_BY_SPEED))
+			name == TREE_BY_TIME || name == TREE_BY_OPENCLOSE || name == TREE_BY_POINTS || name == TREE_BY_SPEED
+			|| name == TREE_BY_PASS))
 		return false;
 
 	m_bRoundTimeFaults = inEventScoring->DropFractions();
-	std::wstring const& name = inTree->GetName();
-	inTree->GetAttrib(ATTRIB_SCORING_TIME, m_Time);
-	inTree->GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
-	inTree->GetAttrib(ATTRIB_SCORING_BONUSTITLEPTS, m_BonusTitlePts);
-	inTree->GetAttrib(ATTRIB_SCORING_OBSTACLES, m_Obstacles);
 	m_type = ARBDogRunScoring::TranslateConfigScoring(inEventScoring->GetScoringStyle());
 	switch (m_type)
 	{
@@ -299,8 +297,13 @@ bool ARBDogRunScoring::Load(
 				if (!inEventScoring->HasTable())
 					m_Table = false;
 			}
+
+			inTree->GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
+			inTree->GetAttrib(ATTRIB_SCORING_TIME, m_Time);
 			inTree->GetAttrib(ATTRIB_SCORING_SCT, m_SCT);
 			inTree->GetAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);
+			inTree->GetAttrib(ATTRIB_SCORING_BONUSTITLEPTS, m_BonusTitlePts);
+			inTree->GetAttrib(ATTRIB_SCORING_OBSTACLES, m_Obstacles);
 			return true;
 		}
 		break;
@@ -308,12 +311,16 @@ bool ARBDogRunScoring::Load(
 	case ARBScoringType::ByOpenClose:
 		if (name == TREE_BY_OPENCLOSE)
 		{
+			inTree->GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
+			inTree->GetAttrib(ATTRIB_SCORING_TIME, m_Time);
 			inTree->GetAttrib(ATTRIB_SCORING_SCT, m_SCT);
 			inTree->GetAttrib(ATTRIB_SCORING_SCT2, m_SCT2);
 			inTree->GetAttrib(ATTRIB_BY_OPENCLOSE_NEEDOPEN, m_NeedOpenPts);
 			inTree->GetAttrib(ATTRIB_BY_OPENCLOSE_NEEDCLOSE, m_NeedClosePts);
 			inTree->GetAttrib(ATTRIB_BY_OPENCLOSE_GOTOPEN, m_OpenPts);
 			inTree->GetAttrib(ATTRIB_BY_OPENCLOSE_GOTCLOSE, m_ClosePts);
+			inTree->GetAttrib(ATTRIB_SCORING_BONUSTITLEPTS, m_BonusTitlePts);
+			inTree->GetAttrib(ATTRIB_SCORING_OBSTACLES, m_Obstacles);
 			return true;
 		}
 		break;
@@ -321,9 +328,13 @@ bool ARBDogRunScoring::Load(
 	case ARBScoringType::ByPoints:
 		if (name == TREE_BY_POINTS)
 		{
+			inTree->GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
+			inTree->GetAttrib(ATTRIB_SCORING_TIME, m_Time);
 			inTree->GetAttrib(ATTRIB_SCORING_SCT, m_SCT);
 			inTree->GetAttrib(ATTRIB_BY_POINTS_NEED, m_NeedOpenPts);
 			inTree->GetAttrib(ATTRIB_BY_POINTS_GOT, m_OpenPts);
+			inTree->GetAttrib(ATTRIB_SCORING_BONUSTITLEPTS, m_BonusTitlePts);
+			inTree->GetAttrib(ATTRIB_SCORING_OBSTACLES, m_Obstacles);
 			return true;
 		}
 		break;
@@ -331,7 +342,18 @@ bool ARBDogRunScoring::Load(
 	case ARBScoringType::BySpeed:
 		if (name == TREE_BY_SPEED)
 		{
+			inTree->GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
+			inTree->GetAttrib(ATTRIB_SCORING_TIME, m_Time);
 			inTree->GetAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);
+			inTree->GetAttrib(ATTRIB_SCORING_BONUSTITLEPTS, m_BonusTitlePts);
+			return true;
+		}
+		break;
+
+	case ARBScoringType::ByPass:
+		if (name == TREE_BY_PASS)
+		{
+			inTree->GetAttrib(ATTRIB_SCORING_TIME, m_Time);
 			return true;
 		}
 		break;
@@ -409,6 +431,11 @@ bool ARBDogRunScoring::Save(ElementNodePtr const& ioTree) const
 		scoring->AddAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);
 		scoring->AddAttrib(ATTRIB_SCORING_BONUSTITLEPTS, m_BonusTitlePts);
 	}
+		return true;
+
+	case ARBScoringType::ByPass:
+		ElementNodePtr scoring = ioTree->AddElementNode(TREE_BY_PASS);
+		scoring->AddAttrib(ATTRIB_SCORING_TIME, m_Time);
 		return true;
 	}
 	return false;

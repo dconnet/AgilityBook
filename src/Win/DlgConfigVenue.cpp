@@ -127,6 +127,7 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 	{
 		// The dialog will ensure uniqueness.
 		ARBConfigEventPtr pEvent(ARBConfigEvent::New());
+		auto numLifetime = m_pDlg->m_pVenue->GetLifetimeNames().size();
 		CDlgConfigEvent dlg(true, m_pDlg->m_pVenue, pEvent, m_pDlg);
 		if (wxID_OK == dlg.ShowModal())
 		{
@@ -138,6 +139,18 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 				pData->AddSubItems();
 				m_pDlg->m_ctrlItems->SelectItem(evt);
 				bAdded = true;
+
+				if (0 == numLifetime && m_pDlg->m_pVenue->GetLifetimeNames().size() > 0)
+				{
+					CDlgConfigureDataLifetimeName* pDataLifetime
+						= new CDlgConfigureDataLifetimeName(m_pDlg, *m_pDlg->m_pVenue->GetLifetimeNames().begin());
+					m_pDlg->m_ctrlItems->AppendItem(
+						m_pDlg->m_lifetimeNames,
+						StringUtil::stringWX(pDataLifetime->OnNeedText()),
+						-1,
+						-1,
+						pDataLifetime);
+				}
 			}
 		}
 	}
@@ -239,6 +252,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 	, m_URL(StringUtil::stringWX(m_pVenue->GetURL()))
 	, m_Desc(StringUtil::stringWX(m_pVenue->GetDesc()))
 	, m_ctrlItems(nullptr)
+	, m_lifetimeNames()
 	, m_ctrlNew(nullptr)
 	, m_ctrlEdit(nullptr)
 	, m_ctrlDelete(nullptr)
@@ -437,7 +451,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 	}
 	m_ctrlItems->Expand(events);
 
-	wxTreeItemId lifetimeNames = m_ctrlItems->AppendItem(
+	m_lifetimeNames = m_ctrlItems->AppendItem(
 		root,
 		_("IDC_CONFIG_VENUE_LIFETIMENAME"),
 		-1,
@@ -448,7 +462,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 		 ++iter)
 	{
 		CDlgConfigureDataLifetimeName* pData = new CDlgConfigureDataLifetimeName(this, *iter);
-		m_ctrlItems->AppendItem(lifetimeNames, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+		m_ctrlItems->AppendItem(m_lifetimeNames, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
 		pData->AddSubItems();
 	}
 

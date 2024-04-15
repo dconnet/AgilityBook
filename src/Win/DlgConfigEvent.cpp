@@ -832,6 +832,9 @@ void CDlgConfigEvent::FillControls()
 				case ARBScoringStyle::TimeNoPlaces:
 					str1.clear();
 					break;
+				case ARBScoringStyle::PassFail:
+					str1.clear();
+					break;
 				}
 				if (pScoring->DropFractions())
 				{
@@ -1636,6 +1639,20 @@ void CDlgConfigEvent::OnOk(wxCommandEvent& evt)
 			m_DlgFixup.push_back(ARBConfigActionRenameEvent::New(0, m_pVenue->GetName(), m_pEvent->GetName(), name));
 		m_pEvent->SetName(name);
 	}
+
+	// Check if any event methods have a lifetime name. If so, it's the default one. Enable it.
+	if (m_pVenue->GetLifetimeNames().empty())
+	{
+		for (auto const& scoring : m_Scorings)
+		{
+			if (!scoring->GetLifetimePoints().empty())
+			{
+				m_pVenue->GetLifetimeNames().AddLifetimeName(L"");
+				break;
+			}
+		}
+	}
+
 	// m_Book is only valid when editing an existing entry.
 	/*
 	if (!m_bNewEntry)

@@ -1,4 +1,9 @@
-3/19/2024: v3.8.8.<dev>
+4/15/2024: v3.8.8.<dev>
+- Bumped file version to 15.5:
+- Bumped Configuration v71:
+  - Added Fetch
+- Bug fix:
+  - Adding Lifetime points in a venue with no existing ones was wonky.
 
 3/19/2024: v3.8.7.125
 - Bumped Configuration v70:

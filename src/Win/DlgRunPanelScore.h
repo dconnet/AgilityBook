@@ -182,6 +182,7 @@ private:
 	ARBWin::CTextCtrl* m_ctrlSpeedPts;
 	wxStaticText* m_ctrlTitlePointsText;
 	ARBWin::CTextCtrl* m_ctrlTitlePoints;
+	wxStaticText* m_textScore;
 	ARBWin::CTextCtrl* m_ctrlScore;
 
 	void OnScoreDateChanged(wxDateEvent& evt);

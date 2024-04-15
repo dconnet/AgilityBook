@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2024-04-15 File version 15.5
+           Added 'PassFail' to scoring 'type'.
 2023-07-06 File version 15.4
            Add titling point support for @Home programs.
 2020-09-15 File version 15.3
@@ -369,6 +371,7 @@ are the types of scoring recognized:
  ScoreThenTime     Must have a required number of pts.
  TimePlusFaults    Score by adding faults and time together.
  TimeNoPlaces      Score has no places - for AKC FCAT.
+ PassFail          Simple pass/fail - for AKC Fetch.
 
 The 'Division' and 'Level' attributes should enumerate all possible
 levels listed in the Division elements (remember a level is 'Level',
@@ -430,7 +433,7 @@ Placements is used to count the number of places earned (used in FCI, SCC)
 		ValidTo CDATA #IMPLIED
 		Division CDATA #REQUIRED
 		Level CDATA #REQUIRED
-		type (FaultsThenTime|Faults100ThenTime|Faults200ThenTime|OCScoreThenTime|ScoreThenTime|TimePlusFaults|TimeNoPlaces) #REQUIRED
+		type (FaultsThenTime|Faults100ThenTime|Faults200ThenTime|OCScoreThenTime|ScoreThenTime|TimePlusFaults|TimeNoPlaces|PassFail) #REQUIRED
 		hasTable (y|n) 'n'
 		hasSubNames (y|n) 'n'
 		dropFractions (y|n) 'n'
@@ -587,7 +590,7 @@ The attributes 'Division' and 'Event' must be defined above in a
 Configuration/Venue element. The 'Level' attribute is defined in either
 a Level or SubLevel element.
 -->
-<!ELEMENT Run (Conditions?, Judge, Handler?, Partner*, (ByTime | ByOpenClose | ByPoints | BySpeed), Placement?, Notes?, ReferenceRun*, Link*) >
+<!ELEMENT Run (Conditions?, Judge, Handler?, Partner*, (ByTime | ByOpenClose | ByPoints | BySpeed | ByPass), Placement?, Notes?, ReferenceRun*, Link*) >
 	<!ATTLIST Run
 		Date CDATA #REQUIRED
 		ClubIdx CDATA #IMPLIED
@@ -623,6 +626,7 @@ These 3 elements define the major scoring mechanisms.
  ByOpenClose: OCScoreThenTime
  ByPoints: ScoreThenTime
  BySpeed: TimeNoPlaces
+ ByPass: PassFail
 
  Integer: CourseFaults,NeedOpenPts,NeedClosePts,OpenPts,ClosePts,NeedPts,Points,bonusPts
  Decimal: Time,SCT,SCT2,Yards
@@ -664,6 +668,10 @@ These 3 elements define the major scoring mechanisms.
 		Time CDATA #REQUIRED
 		Yards CDATA #IMPLIED
 		bonusPts CDATA #IMPLIED
+		>
+<!ELEMENT ByPass EMPTY >
+	<!ATTLIST ByPass
+		Time CDATA #REQUIRED
 		>
 
 <!--

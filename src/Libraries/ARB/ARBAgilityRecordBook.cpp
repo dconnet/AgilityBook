@@ -16,6 +16,8 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * 2024-04-15 File version 15.5
+ *            Add scoring type 'PassFail' for Fetch.
  * 2023-07-06 File version 15.4
  * 2020-09-15 File version 15.3
  * 2020-01-17 File version 15.2
@@ -135,7 +137,7 @@ namespace ARB
 
 ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 {
-	static ARBVersion const curVersion(15, 4);
+	static ARBVersion const curVersion(15, 5);
 	return curVersion;
 }
 
