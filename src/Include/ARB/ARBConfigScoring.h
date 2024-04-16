@@ -33,6 +33,7 @@
 #include "ARBConfigPlaceInfo.h"
 #include "ARBConfigTitlePoints.h"
 #include "ARBTypes2.h"
+#include "ARB_Q.h"
 #include "LibwxARB.h"
 
 #include "ARBCommon/ARBDate.h"
@@ -146,6 +147,13 @@ public:
 		}
 		return true;
 	}
+
+	/**
+	 * Does this scoring support this type of Q?
+	 * @param q Q to check
+	 * @return Supported
+	 */
+	bool Supports(Q q) const;
 
 	/*
 	 * Getters/setters.
@@ -304,6 +312,14 @@ public:
 	{
 		m_bSuperQ = inBool;
 	}
+	bool HasFEO() const
+	{
+		return m_bFEO;
+	}
+	void SetHasFEO(bool inBool)
+	{
+		m_bFEO = inBool;
+	}
 	bool HasSpeedPts() const
 	{
 		return m_bSpeedPts;
@@ -382,6 +398,7 @@ private:
 	short m_OpeningPts;
 	short m_ClosingPts;
 	bool m_bSuperQ;
+	bool m_bFEO;
 	bool m_bDoubleQ;
 	bool m_bSpeedPts;
 	bool m_bBonusTitlePts;

@@ -184,6 +184,7 @@ namespace ARB
 #define ATTRIB_SCORING_OPENINGPTS			L"OpeningPts"
 #define ATTRIB_SCORING_CLOSINGPTS			L"ClosingPts"
 #define ATTRIB_SCORING_SUPERQ				L"superQ"
+#define ATTRIB_SCORING_FEO					L"feo"
 #define ATTRIB_SCORING_SPEEDPTS				L"speedPts"
 #define ATTRIB_SCORING_BONUSTITLEPTS		L"bonusPts"
 #define ATTRIB_SCORING_OBSTACLES			L"obstacles"

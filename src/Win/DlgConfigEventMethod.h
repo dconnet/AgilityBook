@@ -69,6 +69,7 @@ private:
 	wxCheckBox* m_ctrlDropFractions;
 	wxCheckBox* m_ctrlBonus;
 	wxCheckBox* m_ctrlSuperQ;
+	wxCheckBox* m_ctrlFEO;
 	wxCheckBox* m_ctrlSpeedPts;
 	wxStaticText* m_ctrlMultiplyText;
 	ARBWin::CTextCtrl* m_ctrlMultiply;
@@ -91,6 +92,7 @@ private:
 	bool m_DropFractions;
 	bool m_Bonus;
 	bool m_SuperQ;
+	bool m_FEO;
 	bool m_SpeedPts;
 	short m_Multiply;
 	bool m_TimeFaultsCleanQ;

@@ -3213,6 +3213,10 @@ msgstr "Has Bonus Title Points"
 msgid "IDS_CONFIGEVENT_SUPERQ"
 msgstr "Has Super Qs"
 
+#: Win/DlgConfigEvent.cpp:851
+msgid "IDS_CONFIGEVENT_FEO"
+msgstr "Has FEO"
+
 #: Win/DlgConfigEvent.cpp:856
 msgid "IDS_CONFIGEVENT_SPEEDPTS"
 msgstr "Has Speed Points"
@@ -3315,6 +3319,14 @@ msgstr "Has Super Qs"
 #: Win/DlgConfigEventMethod.cpp:388 Win/DlgConfigEventMethod.cpp:389
 msgid "HIDC_CONFIG_EVENT_SUPERQ"
 msgstr "Does this scoring method have Super Qs?"
+
+#: Win/DlgConfigEventMethod.cpp:383
+msgid "IDC_CONFIG_EVENT_FEO"
+msgstr "Has FEOs"
+
+#: Win/DlgConfigEventMethod.cpp:388 Win/DlgConfigEventMethod.cpp:389
+msgid "HIDC_CONFIG_EVENT_FEO"
+msgstr "Does this scoring method support FEOs?"
 
 #: Win/DlgConfigEventMethod.cpp:394
 msgid "IDC_CONFIG_EVENT_SPEED"

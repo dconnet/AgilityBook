@@ -166,15 +166,6 @@ public:
 		return Q::UNK != m_Q && Q::NA != m_Q && Q::DNR != m_Q;
 	}
 
-	/**
-	 * Is this type allowed for non-titling runs?
-	 * We only show these types for non-titling runs
-	 */
-	bool AllowForNonTitling() const
-	{
-		return Q::UNK == m_Q || Q::NA == m_Q || Q::DNR == m_Q || Q::E == m_Q || Q::FEO == m_Q;
-	}
-
 	operator Q() const
 	{
 		return m_Q;

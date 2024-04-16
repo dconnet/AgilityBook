@@ -393,7 +393,7 @@ Note: TFfault=y implies that the run must be under SCT.
 
 'subtractFT' will cause the time faults to be subtracted from the run's score.
 
-The 'superQ', 'speedPts' and 'bonusPts' attributes enable built-in
+The 'superQ', 'feo', 'speedPts' and 'bonusPts' attributes enable built-in
 features for an event. (note: bonusPts are actually bonus titling points)
 
 'obstacles' specified the number of obstacles attempted so an obstacles per
@@ -443,6 +443,7 @@ Placements is used to count the number of places earned (used in FCI, SCC)
 		TFfaults (y|n) 'n'
 		subtractTF (y|n) 'n'
 		superQ (y|n) 'n'
+		feo (y|n) 'n'
 		speedPts (y|n) 'n'
 		bonusPts (y|n) 'n'
 		obstacles CDATA #IMPLIED

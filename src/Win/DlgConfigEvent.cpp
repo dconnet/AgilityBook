@@ -851,6 +851,11 @@ void CDlgConfigEvent::FillControls()
 					str1 = _("IDS_CONFIGEVENT_SUPERQ");
 					fmt::format_to(std::back_inserter(info), L"; {}", str1);
 				}
+				if (pScoring->HasFEO())
+				{
+					str1 = _("IDS_CONFIGEVENT_FEO");
+					fmt::format_to(std::back_inserter(info), L"; {}", str1);
+				}
 				if (pScoring->HasSpeedPts())
 				{
 					str1 = _("IDS_CONFIGEVENT_SPEEDPTS");

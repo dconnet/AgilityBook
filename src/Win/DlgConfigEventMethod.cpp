@@ -146,6 +146,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	, m_ctrlDropFractions(nullptr)
 	, m_ctrlBonus(nullptr)
 	, m_ctrlSuperQ(nullptr)
+	, m_ctrlFEO(nullptr)
 	, m_ctrlSpeedPts(nullptr)
 	, m_ctrlMultiplyText(nullptr)
 	, m_ctrlMultiply(nullptr)
@@ -168,6 +169,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	, m_DropFractions(m_pScoring->DropFractions())
 	, m_Bonus(m_pScoring->HasBonusTitlePts())
 	, m_SuperQ(m_pScoring->HasSuperQ())
+	, m_FEO(m_pScoring->HasFEO())
 	, m_SpeedPts(m_pScoring->HasSpeedPts())
 	, m_Multiply(m_pScoring->TimeFaultMultiplier())
 	, m_TimeFaultsCleanQ(m_pScoring->QsMustBeClean())
@@ -387,6 +389,17 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		wxGenericValidator(&m_SuperQ));
 	m_ctrlSuperQ->SetHelpText(_("HIDC_CONFIG_EVENT_SUPERQ"));
 	m_ctrlSuperQ->SetToolTip(_("HIDC_CONFIG_EVENT_SUPERQ"));
+
+	m_ctrlFEO = new wxCheckBox(
+		this,
+		wxID_ANY,
+		_("IDC_CONFIG_EVENT_FEO"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		wxGenericValidator(&m_FEO));
+	m_ctrlFEO->SetHelpText(_("HIDC_CONFIG_EVENT_FEO"));
+	m_ctrlFEO->SetToolTip(_("HIDC_CONFIG_EVENT_FEO"));
 
 	m_ctrlSpeedPts = new wxCheckBox(
 		this,
@@ -611,6 +624,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	sizerCol1->Add(m_ctrlDropFractions, 0, wxBOTTOM, padding.Controls());
 	sizerCol1->Add(m_ctrlBonus, 0, wxBOTTOM, padding.Controls());
 	sizerCol1->Add(m_ctrlSuperQ, 0, wxBOTTOM, padding.Controls());
+	sizerCol1->Add(m_ctrlFEO, 0, wxBOTTOM, padding.Controls());
 	sizerCol1->Add(m_ctrlSpeedPts, 0, wxBOTTOM, padding.Controls());
 
 	wxBoxSizer* sizerMultiplier = new wxBoxSizer(wxHORIZONTAL);
@@ -732,6 +746,7 @@ void CDlgConfigEventMethod::UpdateControls()
 	if (wxNOT_FOUND == idxType)
 	{
 		m_ctrlSuperQ->Show(true);
+		// Note: m_ctrlFEO is never hidden
 		m_ctrlSpeedPts->Show(true);
 		m_ctrlPointsOpeningText->Show(false);
 		m_ctrlPointsOpening->Show(false);
@@ -1135,6 +1150,7 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 	m_pScoring->SetDropFractions(m_DropFractions);
 	m_pScoring->SetHasBonusTitlePts(m_Bonus);
 	m_pScoring->SetHasSuperQ(m_SuperQ);
+	m_pScoring->SetHasFEO(m_FEO);
 	m_pScoring->SetHasSpeedPts(m_SpeedPts);
 	if (m_SpeedPts)
 	{

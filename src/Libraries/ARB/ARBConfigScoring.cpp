@@ -164,6 +164,7 @@ ARBConfigScoring::ARBConfigScoring()
 	, m_OpeningPts(0)
 	, m_ClosingPts(0)
 	, m_bSuperQ(false)
+	, m_bFEO(true)
 	, m_bDoubleQ(false)
 	, m_bSpeedPts(false)
 	, m_bBonusTitlePts(false)
@@ -195,6 +196,7 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 	, m_OpeningPts(rhs.m_OpeningPts)
 	, m_ClosingPts(rhs.m_ClosingPts)
 	, m_bSuperQ(rhs.m_bSuperQ)
+	, m_bFEO(rhs.m_bFEO)
 	, m_bDoubleQ(rhs.m_bDoubleQ)
 	, m_bSpeedPts(rhs.m_bSpeedPts)
 	, m_bBonusTitlePts(rhs.m_bBonusTitlePts)
@@ -230,6 +232,7 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring&& rhs)
 	, m_OpeningPts(std::move(rhs.m_OpeningPts))
 	, m_ClosingPts(std::move(rhs.m_ClosingPts))
 	, m_bSuperQ(std::move(rhs.m_bSuperQ))
+	, m_bFEO(std::move(rhs.m_bFEO))
 	, m_bDoubleQ(std::move(rhs.m_bDoubleQ))
 	, m_bSpeedPts(std::move(rhs.m_bSpeedPts))
 	, m_bBonusTitlePts(std::move(rhs.m_bBonusTitlePts))
@@ -275,6 +278,7 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 		m_OpeningPts = rhs.m_OpeningPts;
 		m_ClosingPts = rhs.m_ClosingPts;
 		m_bSuperQ = rhs.m_bSuperQ;
+		m_bFEO = rhs.m_bFEO;
 		m_bDoubleQ = rhs.m_bDoubleQ;
 		m_bSpeedPts = rhs.m_bSpeedPts;
 		m_bBonusTitlePts = rhs.m_bBonusTitlePts;
@@ -310,6 +314,7 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring&& rhs)
 		m_OpeningPts = std::move(rhs.m_OpeningPts);
 		m_ClosingPts = std::move(rhs.m_ClosingPts);
 		m_bSuperQ = std::move(rhs.m_bSuperQ);
+		m_bFEO = std::move(rhs.m_bFEO);
 		m_bDoubleQ = std::move(rhs.m_bDoubleQ);
 		m_bSpeedPts = std::move(rhs.m_bSpeedPts);
 		m_bBonusTitlePts = std::move(rhs.m_bBonusTitlePts);
@@ -344,6 +349,7 @@ bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 		&& m_OpeningPts == rhs.m_OpeningPts
 		&& m_ClosingPts == rhs.m_ClosingPts
 		&& m_bSuperQ == rhs.m_bSuperQ
+		&& m_bFEO == rhs.m_bFEO
 		&& m_bDoubleQ == rhs.m_bDoubleQ
 		&& m_bSpeedPts == rhs.m_bSpeedPts
 		&& m_bBonusTitlePts == rhs.m_bBonusTitlePts
@@ -531,6 +537,15 @@ bool ARBConfigScoring::Load(
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
 			TREE_SCORING,
 			ATTRIB_SCORING_SUPERQ,
+			Localization()->ValidValuesBool().c_str()));
+		return false;
+	}
+
+	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_FEO, m_bFEO))
+	{
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
+			TREE_SCORING,
+			ATTRIB_SCORING_FEO,
 			Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
@@ -759,6 +774,8 @@ bool ARBConfigScoring::Save(ElementNodePtr const& ioTree) const
 		scoring->AddAttrib(ATTRIB_SCORING_CLOSINGPTS, m_ClosingPts);
 	if (m_bSuperQ)
 		scoring->AddAttrib(ATTRIB_SCORING_SUPERQ, m_bSuperQ);
+	if (!m_bFEO)
+		scoring->AddAttrib(ATTRIB_SCORING_FEO, m_bFEO);
 	if (m_bSpeedPts)
 		scoring->AddAttrib(ATTRIB_SCORING_SPEEDPTS, m_bSpeedPts);
 	if (m_bBonusTitlePts)
@@ -779,6 +796,32 @@ bool ARBConfigScoring::Save(ElementNodePtr const& ioTree) const
 			return false;
 	}
 	return true;
+}
+
+
+bool ARBConfigScoring::Supports(Q q) const
+{
+	bool bHasTitling = (0 < m_TitlePoints.size() || 0 < m_LifePoints.size());
+	switch (q)
+	{
+	case Q::UNK:
+		return true;
+	case Q::NA:
+		return true;
+	case Q::DNR:
+		return true;
+	case Q::E:
+		return true;
+	case Q::NQ:
+		return bHasTitling;
+	case Q::Q:
+		return bHasTitling;
+	case Q::SuperQ:
+		return bHasTitling && HasSuperQ();
+	case Q::FEO:
+		return true;
+	}
+	return false;
 }
 
 

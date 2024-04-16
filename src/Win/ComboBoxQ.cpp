@@ -140,11 +140,7 @@ void CQualifyingComboBox::ResetContent(ARBConfigScoringPtr const& inScoring)
 	for (int index = 0; index < nQs; ++index)
 	{
 		ARB_Q q = ARB_Q::GetValidType(index);
-		if (inScoring && Q::SuperQ == q && !inScoring->HasSuperQ())
-			continue;
-		// Allow non-titling runs to only have certain types.
-		// 0 is special - it's the Unknown case.
-		if (0 < index && !bHasTitling && !q.AllowForNonTitling())
+		if (inScoring && !inScoring->Supports(q))
 			continue;
 		int idx = Append(StringUtil::stringWX(q.str()));
 		SetClientObject(idx, new CQualifyingComboData(q));

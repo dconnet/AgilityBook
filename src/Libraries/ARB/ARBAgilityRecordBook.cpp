@@ -540,10 +540,15 @@ bool ARBAgilityRecordBook::Update(
 							ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle()),
 							pScoring->DropFractions());
 					}
-					if (0 == pScoring->GetLifetimePoints().size() + pScoring->GetTitlePoints().size())
+					ARB_Q q = pRun->GetQ();
+					if (!pScoring->Supports(q))
 					{
-						ARB_Q q = pRun->GetQ();
-						if (!q.AllowForNonTitling())
+						if (Q::FEO == q)
+						{
+							// Run doesn't support FEO (after adding FEO to config)
+							pRun->SetQ(Q::E);
+						}
+						else
 						{
 							// Titling points were removed. Reset the Q/NQ to NA.
 							pRun->SetQ(Q::NA);

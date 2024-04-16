@@ -3264,6 +3264,10 @@ msgstr "Points Bonus existent"
 msgid "IDS_CONFIGEVENT_SUPERQ"
 msgstr "Super Qs existant"
 
+#: Win/DlgConfigEvent.cpp:851
+msgid "IDS_CONFIGEVENT_FEO"
+msgstr "FEO existant"
+
 #: Win/DlgConfigEvent.cpp:856
 msgid "IDS_CONFIGEVENT_SPEEDPTS"
 msgstr "Points vitesse existent"
@@ -3369,6 +3373,16 @@ msgstr "Super Q?"
 #: Win/DlgConfigEventMethod.cpp:388 Win/DlgConfigEventMethod.cpp:389
 msgid "HIDC_CONFIG_EVENT_SUPERQ"
 msgstr "Cette méthode a-t-elle des points Super Q?"
+
+#: Win/DlgConfigEventMethod.cpp:383
+#, fuzzy
+msgid "IDC_CONFIG_EVENT_FEO"
+msgstr "Has FEOs"
+
+#: Win/DlgConfigEventMethod.cpp:388 Win/DlgConfigEventMethod.cpp:389
+#, fuzzy
+msgid "HIDC_CONFIG_EVENT_FEO"
+msgstr "Does this scoring method support FEOs?"
 
 #: Win/DlgConfigEventMethod.cpp:394
 msgid "IDC_CONFIG_EVENT_SPEED"
