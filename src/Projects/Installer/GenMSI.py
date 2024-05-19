@@ -60,7 +60,7 @@
 # 2007-03-07 Created
 
 """GenMSI.py [-w path] [-b user|32|64|all]* [-x] [-e] [-t target] [-d distrib]
-	-w: Override internal wix path (c:\Tools\wix3, default %WIX%)
+	-w: Override internal wix path (c:\\Tools\\wix3, default %WIX%)
 	-b: Build target (multiple can be specified
 	    user: Create msi as a per-user install (default: per-machine)
 	    32: Create 32bit Unicode msi
@@ -196,11 +196,11 @@ def getoutputvars(b32, version, vcver):
 	baseDir = ''
 	if b32:
 		outputFile = 'AgilityBook-' + version + '-x86'
-		baseDir = AgilityBookDir + r'\bin\vc' + vcver + 'x86\Release'
+		baseDir = AgilityBookDir + r'\bin\vc' + vcver + r'x86\Release'
 		distDir = 'vc' + vcver
 	else:
 		outputFile = 'AgilityBook-' + version + '-x64'
-		baseDir = AgilityBookDir + r'\bin\vc' + vcver + 'x64\Release'
+		baseDir = AgilityBookDir + r'\bin\vc' + vcver + r'x64\Release'
 		distDir = 'vc' + vcver + 'x64'
 	return baseDir, outputFile, distDir
 
