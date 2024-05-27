@@ -62,7 +62,6 @@ namespace ARB
 namespace
 {
 #if !defined(_WIN32) && !defined(__WXWINDOWS__)
-#include <iostream>
 void OutputDebugString(wchar_t const* msg)
 {
 	if (msg)
