@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2024-06-08 Support different yardages when computing MPH.
  * 2012-07-04 Add option to use run time or opening time in gamble OPS.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2007-07-01 Fixed a problem with table flag on a run.
@@ -42,11 +43,12 @@
 
 namespace
 {
-// Magic / time == MPH
+// Magic / time == MPH (for 100yd)
 // This number is from the AKC rule book.
 // Note: My computed MPH is often lower than the official one. WTF Excel?
 // (not excel: putting in "=204.545 / A1" results in the numbers I have.
 constexpr double sc_magicMPH = 204.545;
+constexpr double sc_magicYards = 100.0;
 } // namespace
 
 
@@ -487,7 +489,10 @@ bool ARBDogRunScoring::GetObstaclesPS(bool inTableInYPS, bool inRunTimeInOPS, do
 		if (ARBScoringType::BySpeed == m_type)
 		{
 			bOk = true;
-			outOPS = sc_magicMPH / t;
+			if (GetYards() == sc_magicYards)
+				outOPS = sc_magicMPH / t;
+			else
+				outOPS = (sc_magicMPH * GetYards() / 100) / t;
 			outPrec = 2;
 		}
 		else if (0 < GetObstacles())

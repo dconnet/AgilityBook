@@ -626,7 +626,6 @@ bool CAgilityBookApp::GetResImageName(wxArtID const& id, wxArtClient const& clie
 	else if (id == ImageMgrVenueCPE)
 	{
 		outName = L"venue_cpe";
-		outSvg = false;
 	}
 	else if (id == ImageMgrVenueDOCNA)
 	{

@@ -277,6 +277,74 @@ TEST_CASE("DogRun")
 			//	double GetScore(ARBConfigScoringPtr inScoring) const;
 		}
 	}
+
+
+	SECTION("Coursing")
+	{
+		if (!g_bMicroTest)
+		{
+			CConfigHandler handler;
+			ARBConfig config;
+			config.Default(&handler);
+
+			ARBDate date(2024, 6, 8);
+
+			static const struct
+			{
+				std::wstring venue;
+				std::wstring division;
+				std::wstring level;
+				std::wstring evt;
+				double yards;
+				double time;
+				std::wstring yps;
+				std::wstring mph;
+			} tests[] = {
+				{L"FCAT", L"FCAT", L"FCAT", L"FCAT", 100.0, 7.96, L"12.56", L"25.70"},
+				{L"SW", L"Standard", L"Standard", L"Drag Race 100", 100.0, 20.2, L"4.95", L"10.13"},
+				{L"SW", L"Veterans", L"Veterans", L"Drag Race 100", 100.0, 20.2, L"4.95", L"10.13"},
+				{L"SW", L"Standard", L"Standard", L"Drag Race 50", 50.0, 10.1, L"4.95", L"10.13"},
+			};
+
+			for (auto const& test : tests)
+			{
+				ARBConfigVenuePtr pVenue;
+				REQUIRE(config.GetVenues().FindVenue(test.venue, &pVenue));
+				REQUIRE(pVenue);
+
+				ARBConfigEventPtr pEvent;
+				ARBConfigScoringPtr pScoring;
+				REQUIRE(config.GetVenues()
+							.FindEvent(test.venue, test.evt, test.division, test.level, date, &pEvent, &pScoring));
+				REQUIRE(pEvent);
+				REQUIRE(pScoring);
+
+				ARBDogClubList clubs;
+				clubs.AddClub(L"Club Name", test.venue);
+
+				ARBDogRunPtr run = ARBDogRun::New();
+				run->SetClub(clubs[0]);
+				run->SetDate(date);
+				run->SetEvent(test.evt);
+				run->SetDivision(test.division);
+				run->SetLevel(test.level);
+				run->GetScoring().SetType(ARBScoringType::BySpeed, false);
+				run->GetScoring().SetYards(test.yards);
+				run->GetScoring().SetTime(test.time);
+
+				double yps = 0.0;
+				REQUIRE(run->GetScoring().GetYPS(false, yps));
+				REQUIRE(ARBDouble::ToString(yps, 2) == test.yps);
+
+				double mph = 0.0;
+				int prec = 2;
+				REQUIRE(run->GetScoring().GetObstaclesPS(false, false, mph, prec));
+				REQUIRE(ARBDouble::ToString(mph, prec) == test.mph);
+
+				// Note: For coursing (FCAT, SpeedWay), user manually enters bonus pts.
+			}
+		}
+	}
 }
 
 

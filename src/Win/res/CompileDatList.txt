@@ -59,8 +59,7 @@
 ../../Include/images/venue_ckc@2x.png
 ../../Include/images/venue_ckcsc.png
 ../../Include/images/venue_ckcsc@2x.png
-../../Include/images/venue_cpe.png
-../../Include/images/venue_cpe@2x.png
+../../Include/images/venue_cpe.svg
 ../../Include/images/venue_docna.png
 ../../Include/images/venue_docna@2x.png
 ../../Include/images/venue_fci.png

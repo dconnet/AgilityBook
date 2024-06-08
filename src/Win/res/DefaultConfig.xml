@@ -4,6 +4,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2024-06-08 Configuration version 72.
+           Updated CPE website, added CPE SpeedWay.
 2024-04-15 File version 15.5, Added 'ByPass' scoring type for AKC Fetch.
            Configuration version 71.
            Added Fetch, Fixed TDAA's TMAD to TAM. Added specific FEO per event.
@@ -1652,7 +1654,7 @@ Repeat titles are RATCHX + 10 Qs</Titles>
         <MultiQItem Div="Preferred" Event="Standard" Level="Master"/>
       </MultiQ>
     </Venue>
-    <Venue LongName="Canine Performance Events" Name="CPE" URL="http://www.k9cpe.com/" icon="7">
+    <Venue LongName="Canine Performance Events" Name="CPE" URL="https://cpe.dog/" icon="7">
       <LifetimeNames/>
       <Titles LongName="Level 1 Standard" Name="CL1-R">2 Qualifying Legs</Titles>
       <Titles LongName="Level 1 Handler Games" Name="CL1-H">1 Qualifying Leg each of Colors and Wildcard</Titles>
@@ -3769,6 +3771,70 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="5.99" Points="0"/>
           <TitlePoints Faults="15.99" Points="0"/>
           <TitlePoints Faults="25.99" Points="0"/>
+        </Scoring>
+      </Event>
+    </Venue>
+    <Venue LongName="CPE SpeedWay" Name="SW" URL="https://cpe.dog" icon="7">
+      <Titles LongName="Speedway Elite" Name="C-SWE">150 points</Titles>
+      <Titles LongName="Speedway Pro" Name="C-SWP">500 points</Titles>
+      <Titles LongName="Speedway Master" Name="C-SWM">1000 points</Titles>
+      <Titles LongName="Speedway Bronze Legendary" Name="C-SWBL">2000 points</Titles>
+      <Titles LongName="Speedway Silver Legendary" Name="C-SWSL">5000 points</Titles>
+      <Titles LongName="Speedway Gold Legendary" Name="C-SWGL">7500 points</Titles>
+      <Titles LongName="Speedway Platinum Legendary" Name="C-SWPL" StartAt="1">10000 points</Titles>
+      <Titles LongName="Speedway Jr Handler Elite" Name="C-SWJrE">150 points</Titles>
+      <Titles LongName="Speedway Jr Handler Pro" Name="C-SWJrP">500 points</Titles>
+      <Titles LongName="Speedway Jr Handler Master" Name="C-SWJrM">1000 points</Titles>
+      <Titles LongName="Speedway Jr Handler Bronze Legendary" Name="C-SWJrBL">2000 points</Titles>
+      <Titles LongName="Speedway Jr Handler Silver Legendary" Name="C-SWJrSL">5000 points</Titles>
+      <Titles LongName="Speedway Jr Handler Gold Legendary" Name="C-SWJrGL">7500 points</Titles>
+      <Titles LongName="Speedway Jr Handler Platinum Legendary" Name="C-SWJrPL" StartAt="1">10000 points</Titles>
+      <Division Name="Standard">
+        <Level Name="Standard"/>
+      </Division>
+      <Division Name="Veterans">
+        <Level Name="Veterans"/>
+      </Division>
+      <Event Name="Drag Race 50">
+        <Desc>Enter points (MPH * Handicap) as Bonus Points, rounded up (27.1 is 28)</Desc>
+        <Scoring Division="*" Level="*" bonusPts="y" type="TimeNoPlaces">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+      </Event>
+      <Event Name="Drag Race 100">
+        <Desc>Enter points (MPH * Handicap) as Bonus Points, rounded up (27.1 is 28)</Desc>
+        <Scoring Division="*" Level="*" bonusPts="y" type="TimeNoPlaces">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+      </Event>
+      <Event Name="Pitstop">
+        <Desc>Enter points (MPH * Handicap) as Bonus Points, rounded up (27.1 is 28)</Desc>
+        <Scoring Division="*" Level="*" bonusPts="y" type="TimeNoPlaces">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+      </Event>
+      <Event Name="Slingshot">
+        <Desc>Enter points (MPH * Handicap * 1.5) as Bonus Points, rounded up (27.1 is 28)</Desc>
+        <Scoring Division="*" Level="*" bonusPts="y" type="TimeNoPlaces">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+      </Event>
+      <Event Name="Hairpin Team" hasPartner="y">
+        <Desc>Enter points (MPH * Handicap) as Bonus Points, rounded up (27.1 is 28)</Desc>
+        <Scoring Division="*" Level="*" bonusPts="y" type="TimeNoPlaces">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+      </Event>
+      <Event Name="Pole Position Solo">
+        <Desc>Enter points (MPH * Handicap) as Bonus Points, rounded up (27.1 is 28)</Desc>
+        <Scoring Division="*" Level="*" bonusPts="y" type="TimeNoPlaces">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+      </Event>
+      <Event Name="Pole Position Team" hasPartner="y">
+        <Desc>Enter points (MPH * Handicap) as Bonus Points, rounded up (27.1 is 28)</Desc>
+        <Scoring Division="*" Level="*" bonusPts="y" type="TimeNoPlaces">
+          <TitlePoints Faults="0" Points="0"/>
         </Scoring>
       </Event>
     </Venue>

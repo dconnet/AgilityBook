@@ -20,6 +20,7 @@
 #include "ARB/ARBDogRunScoring.h"
 #include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -28,6 +29,9 @@
 
 namespace dconSoft
 {
+using namespace ARB;
+using namespace ARBCommon;
+
 
 TEST_CASE("DogRunScoring")
 {
@@ -129,6 +133,36 @@ TEST_CASE("DogRunScoring")
 		{
 			TODO_TEST
 			//	bool GetObstaclesPS(bool inTableInYPS, bool inRunTimeInOPS, double& outOPS) const;
+		}
+	}
+
+
+	SECTION("MilesPerHour")
+	{
+		if (!g_bMicroTest)
+		{
+			constexpr double yards = 100.0;
+			constexpr double time100 = 20.1;
+			constexpr wchar_t mph[] = L"10.18";
+
+			// AKC FCAT and CPE DragRace100
+			ARBDogRunScoring scoring;
+			scoring.SetType(ARBScoringType::BySpeed, false);
+
+			scoring.SetYards(yards);
+			scoring.SetTime(time100);
+			double ops = 0.0;
+			int prec = 2;
+			REQUIRE(scoring.GetObstaclesPS(false, false, ops, prec));
+			REQUIRE(ARBDouble::ToString(ops, 2) == mph);
+
+			// CPE DragRace50
+			scoring.SetYards(yards / 2);
+			scoring.SetTime(time100 / 2);
+			ops = 0.0;
+			prec = 2;
+			REQUIRE(scoring.GetObstaclesPS(false, false, ops, prec));
+			REQUIRE(ARBDouble::ToString(ops, 2) == mph);
 		}
 	}
 
