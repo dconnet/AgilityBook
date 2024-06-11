@@ -68,9 +68,17 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
   - cd build-rel-fat
   - ../configure --enable-official
   - make dist
-  - On machine (Mac) where pfx has been imported:
-    - codesign -s "David Connet" ARBHelp.app
-    - codesign -s "David Connet" AgilityBook.app
+  - On machine (Mac) <del>where pfx has been imported</del>:
+    (code signing has changed to requiring a USB token on Windows)
+    - Start "KeyChain Access"
+      - View "My Certificates"
+      - Find valid Apple Dev cert (xcode will have updated this - if out-of-date, build in xcode)
+    - codesign -s "<stuff between parens>" <theApp>.cpp
+    -- or --
+    Menu: "Keychain Access"->Certificate Assistant->Create a Certificate
+        - Name it (David Connet), change type to "Code Signing", create
+    - codesign -s "David Connet" <theApp>.cpp
+    (note: to get past GateKeeper requires an actual Apple cert)
   - Use the '/Application/Utilities/Disk Utility' to create a dmg file
     - If dragging in app fails with "no space":
         hdiutil resize -size 200m ARB.dmg
