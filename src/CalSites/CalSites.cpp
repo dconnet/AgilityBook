@@ -185,9 +185,9 @@ List of venues we can select from.
 	  <VenueCode code="CKC" venue="Canadian Kennel Club"/>
 	  <VenueCode code="CPE" venue="Canine Performance Events"/>
 	  <VenueCode code="DOCNA" venue="Dogs On Course in North America"/>
-	  <VenueCode code="FCI" venue="Fédération Cynologique Internationale"/>
+	  <VenueCode code="FCI" venue="FÃ©dÃ©ration Cynologique Internationale"/>
 	  <VenueCode code="NADAC" venue="North American Dog Agility Council"/>
-	  <VenueCode code="SCC" venue="Société Centrale Canine"/>
+	  <VenueCode code="SCC" venue="SociÃ©tÃ© Centrale Canine"/>
 	  <VenueCode code="TDAA" venue="Teacup Dogs Agility Association"/>
 	  <VenueCode code="UKC" venue="United Kennel Club"/>
 	  <VenueCode code="USDAA" venue="United States Dog Agility Association"/>
