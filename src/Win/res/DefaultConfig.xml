@@ -6,6 +6,8 @@ See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 Revision History:
 2024-06-08 Configuration version 72.
            Updated CPE website, added CPE SpeedWay.
+           Fixed USDAA PDCHT abbreviation (was added in c65).
+           Added annual Top10 awards for USDAA.
 2024-04-15 File version 15.5, Added 'ByPass' scoring type for AKC Fetch.
            Configuration version 71.
            Added Fetch, Fixed TDAA's TMAD to TAM. Added specific FEO per event.
@@ -4359,7 +4361,7 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="Performance Champion Dog - Silver" Name="PDCHS" Prefix="y">All Silver titles</Titles>
       <Titles LongName="Performance Champion Dog - Gold" Name="PDCHG" Prefix="y">All Gold titles</Titles>
       <Titles LongName="Performance Champion Dog - Platinum" Name="PDCHP" Prefix="y">All Platinum titles</Titles>
-      <Titles LongName="Performance Champion Dog - Titanium" Name="PDCHD" Prefix="y">All Titanium titles</Titles>
+      <Titles LongName="Performance Champion Dog - Titanium" Name="PDCHT" Prefix="y">All Titanium titles</Titles>
       <Titles LongName="Performance Champion Dog - Diamond" Name="PDCHD" Prefix="y">All Diamond titles</Titles>
       <Titles LongName="Performance Standard Champion" Name="PSCH">PSM plus 5 additional qualifying scores in PSM or a clean round in MC Performance Standard</Titles>
       <Titles LongName="Performance Standard Champion - Bronze" Name="PSCHB">15 qualifying scores in PSM or a clean round in MC Performance Standard</Titles>
@@ -4483,6 +4485,20 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="Intro Snooker Dog - Silver" Name="IKDS">9 qualifying scores.</Titles>
       <Titles LongName="Intro Snooker Dog - Gold" Name="IKDG">12 qualifying scores.</Titles>
       <Titles LongName="Intro Versatility Dog" Name="IVD">3 Standard, 1 Jumpers, 1 Gamblers, 1 Snooker</Titles>
+      <Titles LongName="Agility Top 10 Standard" Name="AT10S" StartAt="1" Style="0">Annual Agility Top 10 Award</Titles>
+      <Titles LongName="Agility Top 10 Gamblers" Name="AT10G" StartAt="1" Style="0">Annual Agility Top 10 Award</Titles>
+      <Titles LongName="Agility Top 10 Jumpers" Name="AT10J" StartAt="1" Style="0">Annual Agility Top 10 Award</Titles>
+      <Titles LongName="Agility Top 10 Snooker" Name="AT10K" StartAt="1" Style="0">Annual Agility Top 10 Award</Titles>
+      <Titles LongName="Agility Top 10 MC Standard" Name="AT10MCS" StartAt="1" Style="0">Annual Agility Top 10 Award</Titles>
+      <Titles LongName="Agility Top 10 MC Jumpers" Name="AT10MCJ" StartAt="1" Style="0">Annual Agility Top 10 Award</Titles>
+      <Titles LongName="Performance Top 10 Standard" Name="PT10S" StartAt="1" Style="0">Annual Performance Top 10 Award</Titles>
+      <Titles LongName="Performance Top 10 Gamblers" Name="PT10G" StartAt="1" Style="0">Annual Performance Top 10 Award</Titles>
+      <Titles LongName="Performance Top 10 Jumpers" Name="PT10J" StartAt="1" Style="0">Annual Performance Top 10 Award</Titles>
+      <Titles LongName="Performance Top 10 Snooker" Name="PT10K" StartAt="1" Style="0">Annual Performance Top 10 Award</Titles>
+      <Titles LongName="Performance Top 10 MC Standard" Name="PT10MCS" StartAt="1" Style="0">Annual Performance Top 10 Award</Titles>
+      <Titles LongName="Performance Top 10 MC Jumpers" Name="PT10MCJ" StartAt="1" Style="0">Annual Performance Top 10 Award</Titles>
+      <Titles LongName="Tournament Top 10" Name="TT10" StartAt="1" Style="0">Annual Tournament Top 10 Award</Titles>
+
       <Division Name="Championship" ShortName="Ch">
         <Level Name="International" ShortName="Int"/>
         <Level Name="Nationals" ShortName="Nat"/>
