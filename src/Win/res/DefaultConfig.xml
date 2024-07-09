@@ -4,10 +4,12 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2024-06-08 Configuration version 72.
+2024-07-09 Configuration version 72.
            Updated CPE website, added CPE SpeedWay.
-           Fixed USDAA PDCHT abbreviation (was added in c65).
+           Fixed USDAA PDCHT abbreviation (was added in c65 as PDCHD).
            Added annual Top10 awards for USDAA.
+           Updated AKC Table rules. (Note: Config has always allowed FEO on
+           Std/JWW even tho it is not allowed until 2024-7-1. Not changing that)
 2024-04-15 File version 15.5, Added 'ByPass' scoring type for AKC Fetch.
            Configuration version 71.
            Added Fetch, Fixed TDAA's TMAD to TAM. Added specific FEO per event.
@@ -790,12 +792,17 @@ Repeat titles are MFPC + 75 Qs</Titles>
         <Level Name="ACT2"/>
       </Division>
       <Event Name="Standard">
-        <Scoring Division="ISC" Level="*" hasTable="y" type="FaultsThenTime">
+        <Scoring Division="ISC" Level="*" type="FaultsThenTime">
           <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.
 2023: Master was renamed to Level3.</Note>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Regular" Level="Master" ValidFrom="2011-7-1" dropFractions="y" hasTable="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="Regular" Level="Master" ValidFrom="2024-7-1" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+          <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
+          <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="NAC" SpeedPts="y"/>
+        </Scoring>
+        <Scoring Division="Regular" Level="Master" ValidFrom="2011-7-1" ValidTo="2024-6-30" dropFractions="y" hasTable="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
           <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Name="NAC" SpeedPts="y"/>
@@ -806,7 +813,35 @@ Repeat titles are MFPC + 75 Qs</Titles>
           <PlaceInfo Place="2" Value="1.5"/>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Preferred" Level="Master" dropFractions="y" hasTable="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="Preferred" Level="Master" ValidFrom="2024-7-1" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+          <Note>PACH title starts 7-Jul-2011 and points are retroactive.
+Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
+          <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="NAC" SpeedPts="y"/>
+        </Scoring>
+        <Scoring Division="Preferred" Level="Master" ValidTo="2024-6-30" dropFractions="y" hasTable="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+          <Note>PACH title starts 7-Jul-2011 and points are retroactive.
+Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
+          <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="NAC" SpeedPts="y"/>
+        </Scoring>
+        <Scoring Division="Regular" Level="Excellent" ValidFrom="2024-7-1" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+          <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
+          <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="NAC" SpeedPts="y"/>
+        </Scoring>
+        <Scoring Division="Regular" Level="Excellent" ValidTo="2024-6-30" dropFractions="y" hasTable="y" timeFault="3" type="Faults100ThenTime">
+          <Note>Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
+          <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="NAC" SpeedPts="y"/>
+        </Scoring>
+        <Scoring Division="Preferred" Level="Excellent" ValidFrom="2024-7-1" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+          <Note>PACH title starts 7-Jul-2011 and points are retroactive.
+Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
+          <TitlePoints Faults="0" Points="1"/>
+          <LifetimePoints Faults="0" Name="NAC" SpeedPts="y"/>
+        </Scoring>
+        <Scoring Division="Preferred" Level="Excellent" ValidTo="2024-6-30" dropFractions="y" hasTable="y" timeFault="3" type="Faults100ThenTime">
           <Note>PACH title starts 7-Jul-2011 and points are retroactive.
 Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior trials in ARB also.</Note>
           <TitlePoints Faults="0" Points="1"/>
@@ -815,19 +850,6 @@ Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior tria
         <Scoring Division="ACT" Level="*" ValidFrom="2016-1-1" dropFractions="y" hasTable="y" type="Faults100ThenTime">
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
-        <Scoring Division="*" Level="Excellent" dropFractions="y" hasTable="y" timeFault="3" type="Faults100ThenTime">
-          <Note>Time Faults only</Note>
-          <TitlePoints Faults="15" Points="1"/>
-        </Scoring>
-        <Scoring Division="*" Level="Open" dropFractions="y" hasTable="y" timeFault="2" type="Faults100ThenTime">
-          <Note>No more than 1R, 1W, 1T</Note>
-          <TitlePoints Faults="15" Points="1"/>
-        </Scoring>
-        <Scoring Division="*" Level="Novice" dropFractions="y" hasTable="y" type="Faults100ThenTime">
-          <Note>No more than 2R, 1W, 2T (before 9/1/2006, 2Ws were allowed)</Note>
-          <TitlePoints Faults="15" Points="1"/>
-        </Scoring>
-        <Scoring Division="*" Level="Nationals" dropFractions="y" feo="n" speedPts="y" timeFault="3" type="Faults100ThenTime"/>
         <Scoring Division="*" Level="Premier" ValidFrom="2017-12-1" dropFractions="y" superQ="y" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Name="NAC" Points="15" SpeedPts="n"/>
@@ -844,6 +866,15 @@ Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior tria
           <Note>Not official yet.</Note>
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
+        <Scoring Division="*" Level="Open" dropFractions="y" hasTable="y" timeFault="2" type="Faults100ThenTime">
+          <Note>No more than 1R, 1W, 1T</Note>
+          <TitlePoints Faults="15" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="Novice" dropFractions="y" hasTable="y" type="Faults100ThenTime">
+          <Note>No more than 2R, 1W, 2T (before 9/1/2006, 2Ws were allowed)</Note>
+          <TitlePoints Faults="15" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="Nationals" dropFractions="y" feo="n" speedPts="y" timeFault="3" type="Faults100ThenTime"/>
       </Event>
       <Event Name="JWW">
         <Scoring Division="ISC" Level="*" type="FaultsThenTime">
@@ -871,19 +902,6 @@ Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior tria
         <Scoring Division="ACT" Level="*" ValidFrom="2016-1-1" dropFractions="y" type="Faults100ThenTime">
           <TitlePoints Faults="15" Points="1"/>
         </Scoring>
-        <Scoring Division="*" Level="Excellent" dropFractions="y" timeFault="3" type="Faults100ThenTime">
-          <Note>Time Faults only</Note>
-          <TitlePoints Faults="15" Points="1"/>
-        </Scoring>
-        <Scoring Division="*" Level="Open" dropFractions="y" timeFault="2" type="Faults100ThenTime">
-          <Note>No more than 1R</Note>
-          <TitlePoints Faults="15" Points="1"/>
-        </Scoring>
-        <Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
-          <Note>No more than 2R</Note>
-          <TitlePoints Faults="15" Points="1"/>
-        </Scoring>
-        <Scoring Division="*" Level="Nationals" dropFractions="y" feo="n" speedPts="y" timeFault="3" type="Faults100ThenTime"/>
         <Scoring Division="*" Level="Premier" ValidFrom="2017-12-1" dropFractions="y" superQ="y" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifetimePoints Faults="0" Name="NAC" Points="15" SpeedPts="n"/>
@@ -900,6 +918,19 @@ Note: Excellent B was renamed to Master on 1/1/2013. This affects all prior tria
           <Note>Not official yet.</Note>
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
+        <Scoring Division="*" Level="Excellent" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+          <Note>Time Faults only</Note>
+          <TitlePoints Faults="15" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="Open" dropFractions="y" timeFault="2" type="Faults100ThenTime">
+          <Note>No more than 1R</Note>
+          <TitlePoints Faults="15" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
+          <Note>No more than 2R</Note>
+          <TitlePoints Faults="15" Points="1"/>
+        </Scoring>
+        <Scoring Division="*" Level="Nationals" dropFractions="y" feo="n" speedPts="y" timeFault="3" type="Faults100ThenTime"/>
       </Event>
       <Event Name="National Rounds" ShortName="NatRnd">
         <Desc>Hybrid, Challenger and Final Rounds</Desc>
@@ -4498,7 +4529,6 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="Performance Top 10 MC Standard" Name="PT10MCS" StartAt="1" Style="0">Annual Performance Top 10 Award</Titles>
       <Titles LongName="Performance Top 10 MC Jumpers" Name="PT10MCJ" StartAt="1" Style="0">Annual Performance Top 10 Award</Titles>
       <Titles LongName="Tournament Top 10" Name="TT10" StartAt="1" Style="0">Annual Tournament Top 10 Award</Titles>
-
       <Division Name="Championship" ShortName="Ch">
         <Level Name="International" ShortName="Int"/>
         <Level Name="Nationals" ShortName="Nat"/>
