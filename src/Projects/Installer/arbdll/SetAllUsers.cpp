@@ -85,9 +85,9 @@ extern "C" UINT __stdcall ARBSetAllUsers(MSIHANDLE hInstall)
 
 	// Find any existing installs (both permachine and peruser)
 	std::map<std::wstring, bool> productCodes;
-	size_t hasPerMachine = FindProductCodes(upgradeCode, productCodes);
+	const size_t hasPerMachine = FindProductCodes(upgradeCode, productCodes);
 
-	bool bIsAdmin = IsUserAdmin();
+	const bool bIsAdmin = IsUserAdmin();
 
 	std::wstring ARBAllUsers(L"0");
 	if (bIsAdmin)
