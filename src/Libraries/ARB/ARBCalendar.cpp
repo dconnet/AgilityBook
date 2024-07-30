@@ -1035,6 +1035,8 @@ bool ARBCalendarList::AddCalendar(ARBCalendarPtr const& inCal)
 	bool bAdded = false;
 	if (inCal)
 	{
+		if (!inCal->GetStartDate().IsValid() || !inCal->GetEndDate().IsValid())
+			return false;
 		bAdded = true;
 		push_back(inCal);
 	}

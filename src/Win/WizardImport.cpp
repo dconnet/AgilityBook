@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2024-07-30 Fix importing calendar entries with empty dates.
  * 2018-12-16 Convert to fmt.
  * 2015-01-01 Changed pixels to dialog units.
  * 2012-07-25 Importing runs with multiple clubs didn't parse venue correctly.
@@ -1270,10 +1271,27 @@ bool CWizardImport::DoWizardFinish()
 		{
 			CLogger::Log(L"WIZARD: CWizardImport WIZ_IMPORT_CALENDAR");
 			ARBCalendarPtr pCal;
-			for (iCol = 0; iCol < columns[IO_TYPE_CALENDAR].size(); ++iCol)
+			fmt::wmemory_buffer errDates;
+			for (iCol = 0; iCol < entry.size() && iCol < columns[IO_TYPE_CALENDAR].size(); ++iCol)
 			{
 				if (0 == entry[iCol].length())
+				{
+					if (IO_CAL_START_DATE == columns[IO_TYPE_CALENDAR][iCol])
+					{
+						fmt::format_to(
+							std::back_inserter(errDates),
+							L"{}\n",
+							fmt::format(_("IDS_IMPORT_BAD_DATE_CALSTART").wx_str(), nItem + 1, iCol + 1, entry[iCol]));
+					}
+					if (IO_CAL_END_DATE == columns[IO_TYPE_CALENDAR][iCol])
+					{
+						fmt::format_to(
+							std::back_inserter(errDates),
+							L"{}\n",
+							fmt::format(_("IDS_IMPORT_BAD_DATE_CALEND").wx_str(), nItem + 1, iCol + 1, entry[iCol]));
+					}
 					continue;
+				}
 				switch (columns[IO_TYPE_CALENDAR][iCol])
 				{
 				case IO_CAL_START_DATE:
@@ -1415,8 +1433,14 @@ bool CWizardImport::DoWizardFinish()
 					break;
 				}
 			}
-			if (!listCal.AddCalendar(pCal))
+			if (pCal && !listCal.AddCalendar(pCal))
+			{
+				if (errDates.size() > 0)
+				{
+					fmt::format_to(std::back_inserter(errLog), L"{}\n", fmt::to_string(errDates));
+				}
 				++nSkipped;
+			}
 		}
 		break;
 
