@@ -98,6 +98,8 @@ public:
 	void ActivateView(wxView* view, bool activate = true) override;
 
 private:
+	void OnMRUFileNotExist(unsigned n, const wxString& filename) override;
+
 	size_t m_History;
 
 	DECLARE_EVENT_TABLE()
@@ -140,6 +142,14 @@ void CAgilityBookDocManager::ActivateView(wxView* view, bool activate)
 	CTabView* pTabView = wxDynamicCast(view, CTabView);
 	if (!pTabView)
 		wxDocManager::ActivateView(view, activate);
+}
+
+
+void CAgilityBookDocManager::OnMRUFileNotExist(unsigned n, const wxString& filename)
+{
+	wxMessageBox(fmt::format(_("Cannot open file '{}'.").wc_str(), filename.wc_str()));
+
+	wxDocManager::OnMRUFileNotExist(n, filename); // Removes from history
 }
 
 

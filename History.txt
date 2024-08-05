@@ -1,10 +1,12 @@
-7/30/2024: v3.8.9.<dev>
+8/5/2024: v3.8.9.<dev>
 - Bumped Configuration v72:
   - Updated CPE website link and icon
   - Added CPE SpeedWay
   - Added annual Top10 awards for USDAA.
   - Updated AKC Table rules. (Note: Config has always allowed FEO on
     Std/JWW even tho it is not allowed until 2024-7-1. Not changing that)
+- New features / Enhancements:
+  - Add feedback when RecentFile open fails.
 - Bug fix:
   - Fixed USDAA PDCHT abbreviation (was added in c65 as PDCHD).
   - Fix importing calendar entries with empty dates.
