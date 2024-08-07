@@ -73,11 +73,11 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
     - Start "KeyChain Access"
       - View "My Certificates"
       - Find valid Apple Dev cert (xcode will have updated this - if out-of-date, build in xcode)
-    - codesign -s "<stuff between parens>" <theApp>.cpp
+    - codesign -s "<stuff between parens>" <theApp>.app
     -- or --
     Menu: "Keychain Access"->Certificate Assistant->Create a Certificate
         - Name it (David Connet), change type to "Code Signing", create
-    - codesign -s "David Connet" <theApp>.cpp
+    - codesign -s "David Connet" <theApp>.app
     (note: to get past GateKeeper requires an actual Apple cert)
   - Use the '/Application/Utilities/Disk Utility' to create a dmg file
     - If dragging in app fails with "no space":
