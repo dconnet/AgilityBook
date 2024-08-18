@@ -1,4 +1,4 @@
-8/5/2024: v3.8.9.<dev>
+8/18/2024: v3.8.9.127
 - Bumped Configuration v72:
   - Updated CPE website link and icon
   - Added CPE SpeedWay
