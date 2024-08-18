@@ -240,7 +240,7 @@ Reminder to self: Action/@Config: Only apply this action up to this config
 (non-inclusive, 0 == always) Basically, this is when the action was added.
 -->
 
-  <Configuration version="71">
+  <Configuration version="72">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
