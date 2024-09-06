@@ -5,6 +5,7 @@
 *.docx binary
 *.dox  text
 *.dtd  eol=lf
+*.icns binary
 *.in   eol=lf
 *.po   eol=lf
 *.sh   eol=lf
