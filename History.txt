@@ -1,4 +1,6 @@
-8/18/2024: v3.8.10.<dev>
+9/9/2024: v3.8.10.<dev>
+- New features / Enhancements:
+  - Updated to wxWidgets 3.2.6
 
 8/18/2024: v3.8.9.127
 - Bumped Configuration v72:
