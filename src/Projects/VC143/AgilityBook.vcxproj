@@ -640,8 +640,6 @@
     <Image Include="..\..\Include\images\venue_ckc.png" />
     <Image Include="..\..\Include\images\venue_ckcsc%402x.png" />
     <Image Include="..\..\Include\images\venue_ckcsc.png" />
-    <Image Include="..\..\Include\images\venue_cpe%402x.png" />
-    <Image Include="..\..\Include\images\venue_cpe.png" />
     <Image Include="..\..\Include\images\venue_docna%402x.png" />
     <Image Include="..\..\Include\images\venue_docna.png" />
     <Image Include="..\..\Include\images\venue_fci%402x.png" />
@@ -701,6 +699,7 @@
     <None Include="..\..\Include\images\title_visible_have.svg" />
     <None Include="..\..\Include\images\training.svg" />
     <None Include="..\..\Include\images\trial.svg" />
+    <None Include="..\..\Include\images\venue_cpe.svg" />
     <None Include="..\..\lang\en_US\arb.po">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -742,6 +741,7 @@
     <Text Include="..\..\..\Readme-Build.txt" />
     <Text Include="..\..\..\ReleaseProcess.txt" />
     <Text Include="..\..\..\Todo.txt" />
+    <Text Include="..\..\Include\images\readme.txt" />
     <Text Include="..\..\Win\res\CompileDatList.txt" />
   </ItemGroup>
   <ItemGroup>
