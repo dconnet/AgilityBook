@@ -669,12 +669,6 @@
     <Image Include="..\..\Include\images\venue_ckcsc%402x.png">
       <Filter>Resource Files\Images</Filter>
     </Image>
-    <Image Include="..\..\Include\images\venue_cpe.png">
-      <Filter>Resource Files\Images</Filter>
-    </Image>
-    <Image Include="..\..\Include\images\venue_cpe%402x.png">
-      <Filter>Resource Files\Images</Filter>
-    </Image>
     <Image Include="..\..\Include\images\venue_docna.png">
       <Filter>Resource Files\Images</Filter>
     </Image>
@@ -866,6 +860,9 @@
     <None Include="..\..\Include\images\trial.svg">
       <Filter>Resource Files\Images</Filter>
     </None>
+    <None Include="..\..\Include\images\venue_cpe.svg">
+      <Filter>Resource Files\Images</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\Win\AgilityBook.rc">
@@ -881,6 +878,9 @@
     <Text Include="..\..\..\Todo.txt" />
     <Text Include="..\..\Win\res\CompileDatList.txt">
       <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="..\..\Include\images\readme.txt">
+      <Filter>Resource Files\Images</Filter>
     </Text>
   </ItemGroup>
 </Project>
