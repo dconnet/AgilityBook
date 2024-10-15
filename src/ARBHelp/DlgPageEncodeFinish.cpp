@@ -39,7 +39,11 @@ CDlgPageEncodeFinish::CDlgPageEncodeFinish(CDlgARBHelp* pParent)
 {
 	wxFont font = GetFont();
 	wxFont fontFixed(font.GetPointSize(), wxFONTFAMILY_MODERN, font.GetStyle(), font.GetWeight());
+#if wxCHECK_VERSION(3, 3, 0)
+	wxInfoDC dc(this);
+#else
 	wxClientDC dc(this);
+#endif
 	dc.SetFont(fontFixed);
 	wxSize sz(dc.GetCharWidth() * 80, wxDefaultCoord);
 

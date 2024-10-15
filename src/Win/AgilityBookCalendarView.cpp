@@ -130,7 +130,11 @@ public:
 
 private:
 	void GetWorkingAreas(
+#if wxCHECK_VERSION(3, 3, 0)
+		wxReadOnlyDC* pDC,
+#else
 		wxDC* pDC,
+#endif
 		wxRect& outHeader,
 		wxRect& outDaysOfWeek,
 		wxRect& outCalendar,
@@ -213,7 +217,11 @@ CAgilityBookCalendar::~CAgilityBookCalendar()
 
 int CAgilityBookCalendar::GetDayHeight()
 {
+#if wxCHECK_VERSION(3, 3, 0)
+	wxInfoDC dc(this);
+#else
 	wxClientDC dc(this);
+#endif
 
 	wxRect rHeader, rDaysOfWeek, rCalendar;
 	int width = 0, height = 0;
@@ -999,7 +1007,11 @@ void CAgilityBookCalendar::LoadColumns()
 
 
 void CAgilityBookCalendar::GetWorkingAreas(
+#if wxCHECK_VERSION(3, 3, 0)
+	wxReadOnlyDC* pDC,
+#else
 	wxDC* pDC,
+#endif
 	wxRect& outHeader,
 	wxRect& outDaysOfWeek,
 	wxRect& outCalendar,
@@ -1123,7 +1135,11 @@ wxRect CAgilityBookCalendar::GetDateRect(ARBDate const& date)
 	int x = span % 7;
 	int y = span / 7;
 
+#if wxCHECK_VERSION(3, 3, 0)
+	wxInfoDC dc(this);
+#else
 	wxClientDC dc(this);
+#endif
 
 	wxRect rHeader, rDaysOfWeek, rCalendar;
 	int width = 0, height = 0;
@@ -1139,7 +1155,11 @@ void CAgilityBookCalendar::GetDateFromPoint(wxPoint pt, ARBDate& date)
 {
 	date.clear();
 
+#if wxCHECK_VERSION(3, 3, 0)
+	wxInfoDC dc(this);
+#else
 	wxClientDC dc(this);
+#endif
 
 	wxRect rHeader, rDaysOfWeek, rCalendar;
 	int width = 0, height = 0;

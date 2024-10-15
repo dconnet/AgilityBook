@@ -1060,7 +1060,12 @@ void CAgilityBookOptions::GetPrinterMargins(
 	long& outRight,
 	long& outTop,
 	long& outBottom,
-	wxDC const* pDC)
+#if wxCHECK_VERSION(3, 3, 0)
+	wxReadOnlyDC const* pDC
+#else
+	wxDC const* pDC
+#endif
+)
 {
 	bool bInMM = sc_MarginAsMM;
 	wxConfig::Get()->Read(CFG_COMMON_MARGINS_MM, &bInMM);
@@ -1115,7 +1120,16 @@ void CAgilityBookOptions::SetPrinterMargins(
 }
 
 
-void CAgilityBookOptions::GetRunPageSize(bool bAsMM, long& outWidth, long& outHeight, wxDC const* pDC)
+void CAgilityBookOptions::GetRunPageSize(
+	bool bAsMM,
+	long& outWidth,
+	long& outHeight,
+#if wxCHECK_VERSION(3, 3, 0)
+	wxReadOnlyDC const* pDC
+#else
+	wxDC const* pDC
+#endif
+)
 {
 	bool bInMM = sc_RunPageAsMM;
 	wxConfig::Get()->Read(CFG_COMMON_RUNPAGE_MM, &bInMM);

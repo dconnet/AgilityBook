@@ -174,7 +174,12 @@ public:
 		long& outRight,
 		long& outTop,
 		long& outBottom,
-		wxDC const* pDC); // Used to convert to logical units
+#if wxCHECK_VERSION(3, 3, 0)
+		wxReadOnlyDC const* pDC
+#else
+		wxDC const* pDC
+#endif
+	); // Used to convert to logical units
 	static void SetPrinterMargins(
 		bool bAsMM, // In .01 inches or millimeters
 		long inLeft,
@@ -185,7 +190,12 @@ public:
 		bool bAsMM, // In .01in or millimeters, ignored if DC is set
 		long& outWidth,
 		long& outHeight,
-		wxDC const* pDC); // Used to convert to logical units
+#if wxCHECK_VERSION(3, 3, 0)
+		wxReadOnlyDC const* pDC
+#else
+		wxDC const* pDC
+#endif
+	); // Used to convert to logical units
 	static void SetRunPageSize(
 		bool bAsMM, // In .01 inches or millimeters
 		long inWidth,
