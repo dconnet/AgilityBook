@@ -68,7 +68,7 @@
 	    all: Create all of them (default)
 	-x: Do not clean up generated files
 	-e: Generate .msi for test purposes (don't write to InstallGUIDs.csv)
-	-t target: Generate msi using specified vc version (Default: vc142)
+	-t target: Generate msi using specified vc version (Default: vc143)
 	-d distrib: Directory to write distribution files to (Default: ./distrib)
 """
 

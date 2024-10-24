@@ -39,7 +39,7 @@
    -b type:     type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
    -c config:   'release' or 'debug' (default, release)
    -t:          Testing, just print commands to run
-   compiler:    vc142, vc143 (default: vc143)
+   compiler:    vc143 (default: vc143)
 """
 
 import getopt
