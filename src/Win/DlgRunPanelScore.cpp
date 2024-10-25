@@ -1194,7 +1194,7 @@ bool CDlgRunPanelScore::Save()
 	if (m_ctrlDogsQd->IsShown())
 		m_Run->SetDogsQd(m_DogsQd);
 
-		// TODO: Remove debugging code
+	// TODO: Remove debugging code
 #if defined(_DEBUG) || defined(__WXDEBUG__)
 	{
 		assert(!!pEvent.get());
