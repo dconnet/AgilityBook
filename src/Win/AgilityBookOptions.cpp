@@ -65,6 +65,7 @@
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
 #include <wx/config.h>
+#include <wx/settings.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -1928,6 +1929,26 @@ bool CAgilityBookOptions::AutoShowPropertiesOnNewTitle()
 void CAgilityBookOptions::AutoShowPropertiesOnNewTitle(bool bShow)
 {
 	wxConfig::Get()->Write(CFG_SETTINGS_AUTOSHOWTITLE, bShow);
+}
+
+
+bool CAgilityBookOptions::EnableDarkMode()
+{
+#if wxCHECK_VERSION(3, 3, 0)
+	bool val = wxSystemSettings::GetAppearance().AreAppsDark();
+	wxConfig::Get()->Read(CFG_SETTINGS_ENABLEDARKMODE, &val);
+	return val;
+#else
+	return false;
+#endif
+}
+
+
+void CAgilityBookOptions::SetEnableDarkMode(bool enable)
+{
+#if wxCHECK_VERSION(3, 3, 0)
+	wxConfig::Get()->Write(CFG_SETTINGS_ENABLEDARKMODE, enable);
+#endif
 }
 
 

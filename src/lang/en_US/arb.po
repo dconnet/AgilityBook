@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-05 10:34-0700\n"
-"PO-Revision-Date: 2024-08-05 10:34-0700\n"
+"POT-Creation-Date: 2024-10-29 10:34-0700\n"
+"PO-Revision-Date: 2024-10-29 10:38-0700\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: Language <help@agilityrecordbook.com>\n"
 "Language: en_US\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: _;arbT\n"
 "X-Poedit-Basepath: ../..\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-SearchPath-0: Include\n"
 "X-Poedit-SearchPath-1: Libraries/ARB\n"
 "X-Poedit-SearchPath-2: ARBHelp\n"
@@ -29,7 +29,7 @@ msgstr ""
 #: ARBUpdater/DlgDigest.cpp:385 CalSites/CalSites.cpp:245
 #: CalSites/CalendarSiteUSDAA.cpp:221 CalSites/CalendarSites.cpp:1043
 #: CalSites/CalendarSites.cpp:1079 CalSites/CalendarSites.cpp:1147
-#: CalSites/DlgPluginDetails.cpp:233 Win/AgilityBook.cpp:547
+#: CalSites/DlgPluginDetails.cpp:233 Win/AgilityBook.cpp:552
 #: Win/AgilityBookCalendarListView.cpp:480
 #: Win/AgilityBookCalendarListView.cpp:1026 Win/AgilityBookDoc.cpp:191
 #: Win/AgilityBookDoc.cpp:539 Win/AgilityBookDoc.cpp:554
@@ -212,7 +212,7 @@ msgid "IDS_COL_CODE"
 msgstr "Code"
 
 #: CalSites/DlgCalendarQueryDetail.cpp:121 CalSites/DlgQueryDetail.cpp:88
-#: Win/AgilityBookCalendarView.cpp:656 Win/DlgAssignColumns.cpp:224
+#: Win/AgilityBookCalendarView.cpp:664 Win/DlgAssignColumns.cpp:224
 #: Win/DlgAssignColumns.cpp:324 Win/DlgAssignColumns.cpp:381
 #: Win/DlgAssignColumns.cpp:465 Win/DlgInfoNote.cpp:567 Win/DlgListCtrl.cpp:453
 #: Win/DlgListViewer.cpp:991 Win/DlgListViewer.cpp:1032
@@ -261,7 +261,7 @@ msgstr ""
 "Book's venue names."
 
 #: CalSites/DlgCalendarQueryDetail.cpp:166 CalSites/DlgQueryDetail.cpp:88
-#: Win/AgilityBookCalendarView.cpp:655 Win/DlgAssignColumns.cpp:218
+#: Win/AgilityBookCalendarView.cpp:663 Win/DlgAssignColumns.cpp:218
 #: Win/DlgAssignColumns.cpp:330 Win/DlgAssignColumns.cpp:378
 #: Win/DlgDogPanelPoints.cpp:65 Win/DlgDogPanelRegNums.cpp:52
 #: Win/DlgDogPanelTitles.cpp:61 Win/DlgListCtrl.cpp:455
@@ -936,12 +936,12 @@ msgstr "Agility Record Book file"
 msgid "IDS_CANNOT_FIND"
 msgstr "Cannot find '{}'"
 
-#: Win/AgilityBookCalendarListView.cpp:634 Win/AgilityBookCalendarView.cpp:1327
+#: Win/AgilityBookCalendarListView.cpp:634 Win/AgilityBookCalendarView.cpp:1347
 msgid "IDS_NUM_EVENTS"
 msgstr "{} events"
 
 # This is 11 spaces
-#: Win/AgilityBookCalendarListView.cpp:641 Win/AgilityBookCalendarView.cpp:1334
+#: Win/AgilityBookCalendarListView.cpp:641 Win/AgilityBookCalendarView.cpp:1354
 #: Win/AgilityBookDoc.cpp:1576 Win/AgilityBookPointsView.cpp:191
 #: Win/AgilityBookRunsView.cpp:1369 Win/AgilityBookTrainingView.cpp:441
 #: Win/AgilityBookTreeView.cpp:436
@@ -952,19 +952,19 @@ msgstr "          "
 msgid "IDS_NOT_VISIBLE"
 msgstr "Warning: {} new entries are not visible due to your viewing options."
 
-#: Win/AgilityBookCalendarView.cpp:653 Win/DlgAssignColumns.cpp:312
+#: Win/AgilityBookCalendarView.cpp:661 Win/DlgAssignColumns.cpp:312
 #: Win/DlgAssignColumns.cpp:369 Win/DlgAssignColumns.cpp:420
 #: Win/DlgAssignColumns.cpp:487 Win/DlgListCtrl.cpp:451
 msgid "IDS_COL_START_DATE"
 msgstr "Start Date"
 
-#: Win/AgilityBookCalendarView.cpp:654 Win/DlgAssignColumns.cpp:315
+#: Win/AgilityBookCalendarView.cpp:662 Win/DlgAssignColumns.cpp:315
 #: Win/DlgAssignColumns.cpp:372 Win/DlgAssignColumns.cpp:426
 #: Win/DlgListCtrl.cpp:452
 msgid "IDS_COL_END_DATE"
 msgstr "End Date"
 
-#: Win/AgilityBookCalendarView.cpp:657 Win/DlgAssignColumns.cpp:221
+#: Win/AgilityBookCalendarView.cpp:665 Win/DlgAssignColumns.cpp:221
 #: Win/DlgAssignColumns.cpp:327 Win/DlgAssignColumns.cpp:375
 #: Win/DlgInfoNote.cpp:561 Win/DlgListCtrl.cpp:454 Win/DlgListViewer.cpp:985
 #: Win/DlgListViewer.cpp:1026 Win/DlgListViewer.cpp:1038
@@ -974,94 +974,94 @@ msgstr "End Date"
 msgid "IDS_COL_CLUB"
 msgstr "Club"
 
-#: Win/AgilityBookCalendarView.cpp:658 Win/DlgAssignColumns.cpp:333
+#: Win/AgilityBookCalendarView.cpp:666 Win/DlgAssignColumns.cpp:333
 msgid "IDS_COL_OPENS"
 msgstr "Opens"
 
-#: Win/AgilityBookCalendarView.cpp:659 Win/DlgAssignColumns.cpp:336
+#: Win/AgilityBookCalendarView.cpp:667 Win/DlgAssignColumns.cpp:336
 msgid "IDS_COL_CLOSES"
 msgstr "Closes"
 
-#: Win/AgilityBookCalendarView.cpp:660 Win/AgilityBookDoc.cpp:2261
+#: Win/AgilityBookCalendarView.cpp:668 Win/AgilityBookDoc.cpp:2261
 #: Win/DlgAssignColumns.cpp:339 Win/DlgAssignColumns.cpp:349
 #: Win/DlgAssignColumns.cpp:384 Win/DlgAssignColumns.cpp:529
 #: Win/DlgListCtrl.cpp:456
 msgid "IDS_COL_NOTES"
 msgstr "Notes"
 
-#: Win/AgilityBookCalendarView.cpp:978
+#: Win/AgilityBookCalendarView.cpp:986
 msgid "January"
 msgstr "January"
 
-#: Win/AgilityBookCalendarView.cpp:979
+#: Win/AgilityBookCalendarView.cpp:987
 msgid "February"
 msgstr "February"
 
-#: Win/AgilityBookCalendarView.cpp:980
+#: Win/AgilityBookCalendarView.cpp:988
 msgid "March"
 msgstr "March"
 
-#: Win/AgilityBookCalendarView.cpp:981
+#: Win/AgilityBookCalendarView.cpp:989
 msgid "April"
 msgstr "April"
 
-#: Win/AgilityBookCalendarView.cpp:982
+#: Win/AgilityBookCalendarView.cpp:990
 msgid "May"
 msgstr "May"
 
-#: Win/AgilityBookCalendarView.cpp:983
+#: Win/AgilityBookCalendarView.cpp:991
 msgid "June"
 msgstr "June"
 
-#: Win/AgilityBookCalendarView.cpp:984
+#: Win/AgilityBookCalendarView.cpp:992
 msgid "July"
 msgstr "July"
 
-#: Win/AgilityBookCalendarView.cpp:985
+#: Win/AgilityBookCalendarView.cpp:993
 msgid "August"
 msgstr "August"
 
-#: Win/AgilityBookCalendarView.cpp:986
+#: Win/AgilityBookCalendarView.cpp:994
 msgid "September"
 msgstr "September"
 
-#: Win/AgilityBookCalendarView.cpp:987
+#: Win/AgilityBookCalendarView.cpp:995
 msgid "October"
 msgstr "October"
 
-#: Win/AgilityBookCalendarView.cpp:988
+#: Win/AgilityBookCalendarView.cpp:996
 msgid "November"
 msgstr "November"
 
-#: Win/AgilityBookCalendarView.cpp:989
+#: Win/AgilityBookCalendarView.cpp:997
 msgid "December"
 msgstr "December"
 
-#: Win/AgilityBookCalendarView.cpp:990 Win/DlgOptionsCalendar.cpp:212
+#: Win/AgilityBookCalendarView.cpp:998 Win/DlgOptionsCalendar.cpp:212
 msgid "Sunday"
 msgstr "Sunday"
 
-#: Win/AgilityBookCalendarView.cpp:991 Win/DlgOptionsCalendar.cpp:213
+#: Win/AgilityBookCalendarView.cpp:999 Win/DlgOptionsCalendar.cpp:213
 msgid "Monday"
 msgstr "Monday"
 
-#: Win/AgilityBookCalendarView.cpp:992 Win/DlgOptionsCalendar.cpp:214
+#: Win/AgilityBookCalendarView.cpp:1000 Win/DlgOptionsCalendar.cpp:214
 msgid "Tuesday"
 msgstr "Tuesday"
 
-#: Win/AgilityBookCalendarView.cpp:993 Win/DlgOptionsCalendar.cpp:215
+#: Win/AgilityBookCalendarView.cpp:1001 Win/DlgOptionsCalendar.cpp:215
 msgid "Wednesday"
 msgstr "Wednesday"
 
-#: Win/AgilityBookCalendarView.cpp:994 Win/DlgOptionsCalendar.cpp:216
+#: Win/AgilityBookCalendarView.cpp:1002 Win/DlgOptionsCalendar.cpp:216
 msgid "Thursday"
 msgstr "Thursday"
 
-#: Win/AgilityBookCalendarView.cpp:995 Win/DlgOptionsCalendar.cpp:217
+#: Win/AgilityBookCalendarView.cpp:1003 Win/DlgOptionsCalendar.cpp:217
 msgid "Friday"
 msgstr "Friday"
 
-#: Win/AgilityBookCalendarView.cpp:996 Win/DlgOptionsCalendar.cpp:218
+#: Win/AgilityBookCalendarView.cpp:1004 Win/DlgOptionsCalendar.cpp:218
 msgid "Saturday"
 msgstr "Saturday"
 
@@ -5291,74 +5291,82 @@ msgstr "&Bottom"
 msgid "HIDC_OPT_PRINT_MARGIN_B"
 msgstr "Set the bottom margin for printing."
 
-#: Win/DlgOptionsProgram.cpp:58
+#: Win/DlgOptionsProgram.cpp:59
 msgid "IDC_OPT_PGM_AUTO_CHECK"
 msgstr "Automatically check for updates once a month."
 
-#: Win/DlgOptionsProgram.cpp:63 Win/DlgOptionsProgram.cpp:64
+#: Win/DlgOptionsProgram.cpp:64 Win/DlgOptionsProgram.cpp:65
 msgid "HIDC_OPT_PGM_AUTO_CHECK"
 msgstr ""
 "Automatically check every 30 days to see if a new version of the program is "
 "available."
 
-#: Win/DlgOptionsProgram.cpp:67
+#: Win/DlgOptionsProgram.cpp:68
 msgid "IDC_OPT_PGM_AUTO_CHECK_TEXT"
 msgstr ""
 "Note: This only >checks< for updates. It will not download the update, nor "
 "will it install the new version after you download it. You must do that."
 
-#: Win/DlgOptionsProgram.cpp:71
+#: Win/DlgOptionsProgram.cpp:72
 msgid "IDC_OPT_PGM_EDIT"
 msgstr "Number of backup copies"
 
-#: Win/DlgOptionsProgram.cpp:82 Win/DlgOptionsProgram.cpp:83
+#: Win/DlgOptionsProgram.cpp:83 Win/DlgOptionsProgram.cpp:84
 msgid "HIDC_OPT_PGM_EDIT"
 msgstr ""
 "Number of backup copies to keep. Each time you save the file, a new backup "
 "will be made. Setting this to 0 turns the feature off."
 
-#: Win/DlgOptionsProgram.cpp:86
+#: Win/DlgOptionsProgram.cpp:87
 msgid "IDC_OPT_PGM_EDIT_TEXT"
 msgstr ""
 "Each time you save a file, a backup is made before saving the new file. Set "
 "to 0 to prevent backups."
 
-#: Win/DlgOptionsProgram.cpp:92
+#: Win/DlgOptionsProgram.cpp:93
 msgid "IDC_OPT_PGM_AUTOSHOW"
 msgstr "Automatically show Dog Properties after adding a title."
 
-#: Win/DlgOptionsProgram.cpp:97 Win/DlgOptionsProgram.cpp:98
+#: Win/DlgOptionsProgram.cpp:98 Win/DlgOptionsProgram.cpp:99
 msgid "HIDC_OPT_PGM_AUTOSHOW"
 msgstr ""
 "After adding a title, automatically display the dialog containing all titles."
 
-#: Win/DlgOptionsProgram.cpp:103
+#: Win/DlgOptionsProgram.cpp:104
 msgid "IDC_OPT_PGM_COSANCTION"
 msgstr "Show co-sanctioned trial options"
 
-#: Win/DlgOptionsProgram.cpp:108 Win/DlgOptionsProgram.cpp:109
+#: Win/DlgOptionsProgram.cpp:109 Win/DlgOptionsProgram.cpp:110
 msgid "HIDC_OPT_PGM_COSANCTION"
 msgstr ""
 "Co-sanctioning was done many years ago for ASCA and NADAC. Unless you are "
 "going to enter trial information from a long time ago, you really shouldn't "
 "need this option."
 
-#: Win/DlgOptionsProgram.cpp:114
+#: Win/DlgOptionsProgram.cpp:115
 msgid "IDC_OPT_PGM_USEPROXY"
 msgstr ""
 "Use a proxy server to connect to the Internet (<hostname>:<port number>)"
 
-#: Win/DlgOptionsProgram.cpp:120 Win/DlgOptionsProgram.cpp:121
+#: Win/DlgOptionsProgram.cpp:121 Win/DlgOptionsProgram.cpp:122
 msgid "HIDC_OPT_PGM_USEPROXY"
 msgstr ""
 "Some users will need to use a proxy server to connect to the Internet. If "
 "you are not sure, look at the settings in your browser."
 
-#: Win/DlgOptionsProgram.cpp:131 Win/DlgOptionsProgram.cpp:132
+#: Win/DlgOptionsProgram.cpp:132 Win/DlgOptionsProgram.cpp:133
 msgid "HIDC_OPT_PGM_PROXY"
 msgstr ""
 "Enter the proxy server and port number to use. For instance: 'myproxy."
 "company.com:80'"
+
+#: Win/DlgOptionsProgram.cpp:140
+msgid "IDC_OPT_PGM_DARKMODE"
+msgstr "Enable Dark Mode (must restart program after changing)"
+
+#: Win/DlgOptionsProgram.cpp:145 Win/DlgOptionsProgram.cpp:146
+msgid "HIDC_OPT_PGM_ENABLEDARKMODE"
+msgstr "Enable Dark Mode on Windows (already works on Mac)"
 
 # DlgOtherPoint
 #: Win/DlgOtherPoint.cpp:74

@@ -312,6 +312,8 @@ inline wxString CFG_SELECTION_DOG(int n)
 #define CFG_SETTINGS_AUTOCHECK_INTERVAL	CFG_KEY_SETTINGS L"/autoCheckInterval"
 //	DW autoShowTitle
 #define CFG_SETTINGS_AUTOSHOWTITLE		CFG_KEY_SETTINGS L"/autoShowTitle"
+//	DW enableDarkMode
+#define CFG_SETTINGS_ENABLEDARKMODE		CFG_KEY_SETTINGS L"/enableDarkMode"
 //	DW useAltRowColor
 #define CFG_SETTINGS_USEALTROWCOLOR		CFG_KEY_SETTINGS L"/useAltRowColor"
 //	DW BackupFiles

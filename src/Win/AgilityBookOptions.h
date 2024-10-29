@@ -263,6 +263,8 @@ public:
 	static void SetBackupDirectory(wxString const& dir);
 	static bool AutoShowPropertiesOnNewTitle();
 	static void AutoShowPropertiesOnNewTitle(bool bShow);
+	static bool EnableDarkMode();
+	static void SetEnableDarkMode(bool enable);
 	static bool UseAlternateRowColor();
 	static void SetUseAlternateRowColor(bool bUse);
 	// Internet things

@@ -41,6 +41,7 @@ private:
 	bool m_UseProxy;
 	wxString m_Proxy;
 	ARBWin::CTextCtrl* m_ctrlProxy;
+	bool m_enableDarkMode;
 
 	void OnUseProxy(wxCommandEvent& evt);
 };

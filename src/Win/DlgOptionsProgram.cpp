@@ -49,6 +49,7 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	, m_UseProxy(CAgilityBookOptions::GetUseProxy())
 	, m_Proxy(StringUtil::stringWX(CAgilityBookOptions::GetProxyServer()))
 	, m_ctrlProxy(nullptr)
+	, m_enableDarkMode(CAgilityBookOptions::EnableDarkMode())
 {
 	// Controls (these are done first to control tab order)
 
@@ -132,6 +133,19 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	m_ctrlProxy->SetToolTip(_("HIDC_OPT_PGM_PROXY"));
 	m_ctrlProxy->Enable(m_UseProxy);
 
+#if wxCHECK_VERSION(3, 3, 0)
+	wxCheckBox* ctrlDarkMode = new wxCheckBox(
+		this,
+		wxID_ANY,
+		_("IDC_OPT_PGM_DARKMODE"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		wxGenericValidator(&m_enableDarkMode));
+	ctrlDarkMode->SetHelpText(_("HIDC_OPT_PGM_ENABLEDARKMODE"));
+	ctrlDarkMode->SetToolTip(_("HIDC_OPT_PGM_ENABLEDARKMODE"));
+#endif
+
 	// Sizers
 	const ARBWin::CDlgPadding padding(this);
 
@@ -153,6 +167,10 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	sizerProxy->AddSpacer(padding.CheckboxOffset());
 	sizerProxy->Add(m_ctrlProxy, 1, wxEXPAND);
 	bSizer->Add(sizerProxy, 0, wxEXPAND | wxALL, padding.Controls());
+
+#if wxCHECK_VERSION(3, 3, 0)
+	bSizer->Add(ctrlDarkMode, 0, wxLEFT | wxRIGHT | wxBOTTOM, padding.Controls());
+#endif
 
 	SetSizer(bSizer);
 	Layout();
@@ -181,6 +199,9 @@ void CDlgOptionsProgram::Save()
 	std::wstring newProxy = CAgilityBookOptions::GetProxy();
 	if (newProxy != oldProxy)
 		wxURL::SetDefaultProxy(StringUtil::stringWX(newProxy));
+#if wxCHECK_VERSION(3, 3, 0)
+	CAgilityBookOptions::SetEnableDarkMode(m_enableDarkMode);
+#endif
 }
 
 } // namespace dconSoft

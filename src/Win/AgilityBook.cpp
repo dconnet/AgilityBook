@@ -327,6 +327,10 @@ bool CAgilityBookApp::OnInit()
 		filename = fName.GetFullPath();
 	}
 
+#if wxCHECK_VERSION(3, 3, 0)
+	SetAppearance(CAgilityBookOptions::EnableDarkMode() ? Appearance::Dark : Appearance::Light);
+#endif
+
 	CReportListCtrl::EnableRowColors(CAgilityBookOptions::UseAlternateRowColor());
 
 	m_manager = std::make_unique<CAgilityBookDocManager>(CAgilityBookOptions::GetMRUFileCount());
