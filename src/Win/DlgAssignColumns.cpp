@@ -571,7 +571,7 @@ constexpr struct
 int CDlgAssignColumns::GetFormatFromColumnID(long column)
 {
 	int fmt = 0;
-	if (0 <= column && column < IO_MAX)
+	if (0 <= column && column < static_cast<long>(IO_MAX))
 		fmt = sc_FieldNames[column].fmt;
 	return fmt;
 }
@@ -580,7 +580,7 @@ int CDlgAssignColumns::GetFormatFromColumnID(long column)
 std::wstring CDlgAssignColumns::GetNameFromColumnID(long column)
 {
 	std::wstring name;
-	if (0 <= column && column < IO_MAX)
+	if (0 <= column && column < static_cast<long>(IO_MAX))
 		name = wxGetTranslation(sc_FieldNames[column].name);
 	return name;
 }
@@ -932,13 +932,13 @@ CDlgAssignColumns::CDlgAssignColumns(
 	m_ctrlType->InsertColumn(1, _("IDS_COL_DESCRIPTION"));
 	int index;
 #if defined(_DEBUG) || defined(__WXDEBUG__)
-	for (index = 0; index < IO_MAX; ++index)
+	for (index = 0; index < static_cast<long>(IO_MAX); ++index)
 	{
 		assert(sc_FieldNames[index].index == index);
 	}
 #endif
 	int idxSelect = 0;
-	for (index = 0; index < IO_TYPE_MAX; ++index)
+	for (index = 0; index < static_cast<long>(IO_TYPE_MAX); ++index)
 	{
 		assert(sc_Types[index].index == index);
 		if (!(sc_Types[index].valid & m_Configs.Order()))
