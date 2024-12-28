@@ -36,16 +36,16 @@ using namespace ARB;
 using namespace ARBCommon;
 using namespace ARBWin;
 
-CDlgName::CDlgName(std::wstring const& name, wxWindow* pParent)
-	: m_Name(StringUtil::stringWX(name))
+CDlgName::CDlgName(wxString const& name, wxWindow* pParent)
+	: m_Name(name)
 	, m_trace("CDlgName")
 {
 	Create(_("IDD_NAME"), pParent);
 }
 
 
-CDlgName::CDlgName(std::wstring const& name, wxString const& caption, wxWindow* pParent)
-	: m_Name(StringUtil::stringWX(name))
+CDlgName::CDlgName(wxString const& name, wxString const& caption, wxWindow* pParent)
+	: m_Name(name)
 	, m_trace("CDlgName")
 {
 	Create(caption, pParent);
@@ -100,9 +100,9 @@ bool CDlgName::Create(wxString const& caption, wxWindow* pParent)
 }
 
 
-std::wstring CDlgName::Name() const
+wxString CDlgName::Name() const
 {
-	return StringUtil::stringW(m_Name);
+	return m_Name;
 }
 
 } // namespace dconSoft

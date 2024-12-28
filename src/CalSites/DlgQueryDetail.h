@@ -40,8 +40,8 @@ public:
 		wxWindow* pParent = nullptr,
 		ARBConfigCalSiteList const* sites = nullptr); // Only set when using venues
 
-	std::wstring GetDetailCode() const;
-	std::wstring GetDetailName() const;
+	wxString GetDetailCode() const;
+	wxString GetDetailName() const;
 
 private:
 	bool m_ReadOnly;

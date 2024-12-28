@@ -32,7 +32,7 @@ class CBasePanel : public wxPanel
 	DECLARE_NO_COPY_IMPLEMENTED(CBasePanel)
 
 public:
-	CBasePanel(wxWindow* parent, std::wstring const& helpText);
+	CBasePanel(wxWindow* parent, wxString const& helpText);
 	~CBasePanel();
 
 	void ActivateView();

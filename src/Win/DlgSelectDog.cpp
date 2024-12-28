@@ -75,11 +75,11 @@ CDlgSelectDog::CDlgSelectDog(CAgilityBookDoc* pDoc, std::vector<ARBDogPtr>& outD
 		m_Dogs.insert(m_Dogs.end(), pDoc->Book().GetDogs().begin(), pDoc->Book().GetDogs().end());
 	}
 
-	std::set<std::wstring> selection;
+	std::set<wxString> selection;
 	long nDogs = wxConfig::Get()->Read(CFG_SELECTION_NDOGS, 0L);
 	for (long iDog = 1; iDog <= nDogs; ++iDog)
 	{
-		std::wstring dog = StringUtil::stringW(wxConfig::Get()->Read(CFG_SELECTION_DOG(iDog), wxString()));
+		wxString dog = wxConfig::Get()->Read(CFG_SELECTION_DOG(iDog), wxString());
 		if (!dog.empty())
 			selection.insert(dog);
 	}
@@ -89,7 +89,7 @@ CDlgSelectDog::CDlgSelectDog(CAgilityBookDoc* pDoc, std::vector<ARBDogPtr>& outD
 	wxArrayString checkListChoices;
 	for (ARBDogList::const_iterator iter = m_Dogs.begin(); iter != m_Dogs.end(); ++iter)
 	{
-		checkListChoices.Add(StringUtil::stringWX((*iter)->GetCallName()));
+		checkListChoices.Add((*iter)->GetCallName());
 	}
 	m_checkList = new wxCheckListBox(
 		this,
@@ -156,7 +156,7 @@ void CDlgSelectDog::OnOk(wxCommandEvent& evt)
 		{
 			m_outDogs.push_back(m_Dogs[index]);
 			++nDogs;
-			wxConfig::Get()->Write(CFG_SELECTION_DOG(nDogs), m_Dogs[index]->GetCallName().c_str());
+			wxConfig::Get()->Write(CFG_SELECTION_DOG(nDogs), m_Dogs[index]->GetCallName());
 		}
 	}
 	wxConfig::Get()->Write(CFG_SELECTION_NDOGS, nDogs);

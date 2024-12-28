@@ -58,7 +58,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override
+	wxString GetGenericName() const override
 	{
 		return m_Name;
 	}
@@ -68,7 +68,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override;
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override;
 
 	/**
 	 * Load an other point.
@@ -96,11 +96,11 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	std::wstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(std::wstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
@@ -114,7 +114,7 @@ public:
 	}
 
 private:
-	std::wstring m_Name;
+	wxString m_Name;
 	double m_Points;
 };
 

@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2015-01-01 Changed pixels to dialog units.
  * 2012-03-16 Renamed LoadXML functions, added stream version.
  * 2012-02-16 Fix initial focus.
@@ -123,9 +122,9 @@ CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)
 }
 
 
-bool CDlgConfigUpdate::LoadConfig(wchar_t const* pFile)
+bool CDlgConfigUpdate::LoadConfig(wxString const& file)
 {
-	if (!pFile)
+	if (file.empty())
 	{
 		wxBusyCursor wait;
 		CConfigHandler handler;
@@ -133,20 +132,20 @@ bool CDlgConfigUpdate::LoadConfig(wchar_t const* pFile)
 	}
 	else
 	{
-		fmt::wmemory_buffer errMsg;
+		wxString errMsg;
 		ElementNodePtr tree(ElementNode::New());
 		// Translate the XML to a tree form.
 		bool bOk = false;
 		{
 			wxBusyCursor wait;
-			bOk = tree->LoadXML(pFile, errMsg);
+			bOk = tree->LoadXML(file, errMsg);
 		}
 		if (!bOk)
 		{
 			wxString msg = _("AFX_IDP_FAILED_TO_OPEN_DOC");
 			if (0 < errMsg.size())
 			{
-				msg << L"\n\n" << fmt::to_string(errMsg);
+				msg << L"\n\n" << errMsg;
 			}
 			wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
@@ -155,17 +154,11 @@ bool CDlgConfigUpdate::LoadConfig(wchar_t const* pFile)
 		if (!m_Book.Load(tree, false, false, true, false, false, err))
 		{
 			if (0 < err.m_ErrMsg.size())
-				wxMessageBox(
-					StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-					_("Agility Record Book"),
-					wxOK | wxCENTRE | wxICON_WARNING);
+				wxMessageBox(err.m_ErrMsg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 			return false;
 		}
 		else if (0 < err.m_ErrMsg.size())
-			wxMessageBox(
-				StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-				_("Agility Record Book"),
-				wxOK | wxCENTRE | wxICON_INFORMATION);
+			wxMessageBox(err.m_ErrMsg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	return true;
 }
@@ -218,11 +211,10 @@ void CDlgConfigUpdate::OnOk(wxCommandEvent& evt)
 {
 	if (Validate() && TransferDataFromWindow())
 	{
-		wchar_t const* pFile = nullptr;
-		wxString source(m_FileName->GetValue());
+		wxString file;
 		if (m_radioExisting->GetValue())
-			pFile = source.wc_str();
-		if (!LoadConfig(pFile))
+			file = m_FileName->GetValue();
+		if (!LoadConfig(file))
 			return;
 		EndDialog(wxID_OK);
 	}

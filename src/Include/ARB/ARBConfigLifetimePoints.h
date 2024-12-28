@@ -43,16 +43,16 @@ class ARB_API ARBConfigLifetimePoints : public ARBBase
 {
 protected:
 	ARBConfigLifetimePoints();
-	ARBConfigLifetimePoints(std::wstring const& name, double inPoints, double inFaults);
-	ARBConfigLifetimePoints(std::wstring const& name, double inFaults);
+	ARBConfigLifetimePoints(wxString const& name, double inPoints, double inFaults);
+	ARBConfigLifetimePoints(wxString const& name, double inFaults);
 	ARBConfigLifetimePoints(ARBConfigLifetimePoints const& rhs);
 	ARBConfigLifetimePoints(ARBConfigLifetimePoints&& rhs);
 
 public:
 	~ARBConfigLifetimePoints();
 	static ARBConfigLifetimePointsPtr New();
-	static ARBConfigLifetimePointsPtr New(std::wstring const& name, double inPoints, double inFaults);
-	static ARBConfigLifetimePointsPtr New(std::wstring const& name, double inFaults);
+	static ARBConfigLifetimePointsPtr New(wxString const& name, double inPoints, double inFaults);
+	static ARBConfigLifetimePointsPtr New(wxString const& name, double inFaults);
 	ARBConfigLifetimePointsPtr Clone() const;
 
 	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
@@ -68,14 +68,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override;
+	wxString GetGenericName() const override;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override
 	{
 		return 0;
 	}
@@ -104,11 +104,11 @@ public:
 	/*
 	 * Setters/getters.
 	 */
-	std::wstring GetName() const
+	wxString GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(std::wstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
@@ -135,13 +135,13 @@ public:
 	// There is no SetName/Faults since this needs to be a unique key in the list.
 
 	// Fixup routine called from ARBConfigVenue only.
-	void FixName(std::wstring const& inName)
+	void FixName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
 
 private:
-	std::wstring m_Name;
+	wxString m_Name;
 	bool m_UseSpeedPts;
 	double m_Points;
 	double m_Faults;
@@ -180,7 +180,7 @@ public:
 	 * @param inSpeedPts Number of speed points, if applicable.
 	 * @return Number of lifetime titling points.
 	 */
-	double GetLifetimePoints(std::wstring const& inName, double inFaults, short inSpeedPts) const;
+	double GetLifetimePoints(wxString const& inName, double inFaults, short inSpeedPts) const;
 
 	/**
 	 * Find a points object.
@@ -189,10 +189,8 @@ public:
 	 * @param outPoints Pointer to found object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindLifetimePoints(
-		std::wstring const& inName,
-		double inFaults,
-		ARBConfigLifetimePointsPtr* outPoints = nullptr) const;
+	bool FindLifetimePoints(wxString const& inName, double inFaults, ARBConfigLifetimePointsPtr* outPoints = nullptr)
+		const;
 
 	/**
 	 * Add an object.
@@ -204,7 +202,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddLifetimePoints(
-		std::wstring const& inName,
+		wxString const& inName,
 		bool inUseSpeedPts,
 		double inPoints,
 		double inFaults,
@@ -216,7 +214,7 @@ public:
 	 * @param inFaults Delete object with the given faults.
 	 * @return Whether object was deleted.
 	 */
-	bool DeleteLifetimePoints(std::wstring const& inName, double inFaults);
+	bool DeleteLifetimePoints(wxString const& inName, double inFaults);
 };
 
 } // namespace ARB

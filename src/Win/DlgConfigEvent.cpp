@@ -19,7 +19,6 @@
  *
  * Revision History
  * 2020-01-14 Fix initialization of HasTable
- * 2018-12-16 Convert to fmt.
  * 2016-06-19 Add support for named/speedpt lifetime points.
  * 2016-01-16 Cleaned up new/edit/delete buttons.
  * 2014-12-31 Changed pixels to dialog units.
@@ -190,9 +189,9 @@ CDlgConfigEvent::CDlgConfigEvent(
 	, m_pEvent(inEvent)
 	, m_DlgFixup()
 	, m_Scorings()
-	, m_Name(StringUtil::stringWX(m_pEvent->GetName()))
+	, m_Name(m_pEvent->GetName())
 	, m_bHasPartners(m_pEvent->HasPartner())
-	, m_Desc(StringUtil::stringWX(m_pEvent->GetDesc()))
+	, m_Desc(m_pEvent->GetDesc())
 	, m_ctrlName(nullptr)
 	, m_ctrlTable(nullptr)
 	, m_ctrlHasSubnames(nullptr)
@@ -625,14 +624,13 @@ wxString CDlgConfigEvent::GetListName(ARBConfigScoringPtr const& inScoring) cons
 	if (inScoring->GetDivision() == WILDCARD_DIVISION)
 		str = all;
 	else
-		str = StringUtil::stringWX(inScoring->GetDivision());
+		str = inScoring->GetDivision();
 	str += L" / ";
 	if (inScoring->GetLevel() == WILDCARD_LEVEL)
 		str += all;
 	else
-		str += StringUtil::stringWX(inScoring->GetLevel());
-	wxString validStr
-		= StringUtil::stringWX(ARBDate::GetValidDateString(inScoring->GetValidFrom(), inScoring->GetValidTo()));
+		str += inScoring->GetLevel();
+	wxString validStr = ARBDate::GetValidDateString(inScoring->GetValidFrom(), inScoring->GetValidTo());
 	if (0 < validStr.length())
 	{
 		str += L" ";
@@ -657,12 +655,12 @@ void CDlgConfigEvent::EditSubname()
 	int idx = m_ctrlSubNames->GetSelection();
 	if (wxNOT_FOUND != idx)
 	{
-		std::wstring name = StringUtil::stringW(m_ctrlSubNames->GetString(idx));
+		wxString name = m_ctrlSubNames->GetString(idx);
 		CDlgName dlg(name, this);
 		if (wxID_OK == dlg.ShowModal())
 		{
 			m_ctrlSubNames->Delete(idx);
-			idx = m_ctrlSubNames->Append(StringUtil::stringWX(dlg.Name()));
+			idx = m_ctrlSubNames->Append(dlg.Name());
 			m_ctrlSubNames->SetSelection(idx);
 			UpdateSubnames();
 			EnableSubnameControls();
@@ -682,12 +680,11 @@ void CDlgConfigEvent::UpdateSubnames()
 
 	if (m_ctrlHasSubnames->IsChecked())
 	{
-		std::set<std::wstring> subNames;
+		std::set<wxString> subNames;
 		int nCount = m_ctrlSubNames->GetCount();
 		for (int i = 0; i < nCount; ++i)
 		{
-			std::wstring str = StringUtil::stringW(m_ctrlSubNames->GetString(i));
-			str = StringUtil::Trim(str);
+			wxString str = StringUtil::Trim(m_ctrlSubNames->GetString(i));
 			if (!str.empty())
 				subNames.insert(str);
 		}
@@ -724,24 +721,18 @@ void CDlgConfigEvent::FillControls()
 			m_ctrlHasSubnames->SetValue(pScoring->HasSubNames());
 			if (pScoring->HasSubNames())
 			{
-				std::set<std::wstring> subNames;
+				std::set<wxString> subNames;
 				pScoring->GetSubNames(subNames);
-				for (std::set<std::wstring>::const_iterator iter = subNames.begin(); iter != subNames.end(); ++iter)
+				for (std::set<wxString>::const_iterator iter = subNames.begin(); iter != subNames.end(); ++iter)
 				{
-					m_ctrlSubNames->Append(StringUtil::stringWX(*iter));
+					m_ctrlSubNames->Append(*iter);
 				}
 			}
 			// Get info
 			{
-				std::wstring str1, str2;
-				fmt::wmemory_buffer info;
+				wxString info;
 				ARBScoringStyle style = pScoring->GetScoringStyle();
-				str1 = _("IDS_CONFIGEVENT_STYLE");
-				fmt::format_to(
-					std::back_inserter(info),
-					L"{}: {}\n",
-					str1,
-					ARBConfigScoring::GetScoringStyleStr(style));
+				info << _("IDS_CONFIGEVENT_STYLE") << L": " << ARBConfigScoring::GetScoringStyleStr(style) << L"\n";
 				// The following strings should be the same as they are in
 				// the Method Configuration dialog.
 				switch (style)
@@ -751,141 +742,109 @@ void CDlgConfigEvent::FillControls()
 				case ARBScoringStyle::FaultsThenTime:
 				case ARBScoringStyle::Faults100ThenTime:
 				case ARBScoringStyle::Faults200ThenTime:
-					str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
-					fmt::format_to(std::back_inserter(info), L"{}: {}", str1, pScoring->TimeFaultMultiplier());
+					info << _("IDS_CONFIGEVENT_TIMEFAULTMULT") << L": " << pScoring->TimeFaultMultiplier();
 					break;
 				case ARBScoringStyle::OCScoreThenTime:
-					str1 = _("IDS_CONFIGEVENT_REQOPEN");
-					str2 = _("IDS_CONFIGEVENT_REQCLOSE");
-					fmt::format_to(
-						std::back_inserter(info),
-						L"{}: {}; {}: {}",
-						str1,
-						pScoring->GetRequiredOpeningPoints(),
-						str2,
-						pScoring->GetRequiredClosingPoints());
+					info << _("IDS_CONFIGEVENT_REQOPEN") << L": " << pScoring->GetRequiredOpeningPoints() << L"; "
+						 << _("IDS_CONFIGEVENT_REQCLOSE") << L": " << pScoring->GetRequiredClosingPoints();
 					if (pScoring->SubtractTimeFaultsFromScore())
 					{
-						str1 = _("IDS_CONFIGEVENT_TF_FROMSCORE");
-						fmt::format_to(std::back_inserter(info), L"; {}", str1);
-						str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
-						fmt::format_to(std::back_inserter(info), L"; {}: {}", str1, pScoring->TimeFaultMultiplier());
+						info << L"; " << _("IDS_CONFIGEVENT_TF_FROMSCORE");
+						info << L"; " << _("IDS_CONFIGEVENT_TIMEFAULTMULT") << L": " << pScoring->TimeFaultMultiplier();
 						if (pScoring->ComputeTimeFaultsUnder())
 						{
-							str1 = _("IDS_CONFIGEVENT_TF_UNDER");
-							fmt::format_to(std::back_inserter(info), L"; {}", str1);
+							info << L"; " << _("IDS_CONFIGEVENT_TF_UNDER");
 						}
 						if (pScoring->ComputeTimeFaultsOver())
 						{
-							str1 = _("IDS_CONFIGEVENT_TF_OVER");
-							fmt::format_to(std::back_inserter(info), L"; {}", str1);
+							info << L"; " << _("IDS_CONFIGEVENT_TF_OVER");
 						}
 					}
 					break;
 				case ARBScoringStyle::ScoreThenTime:
-					str1 = _("IDS_POINTS");
-					fmt::format_to(std::back_inserter(info), L"{}: {}", str1, pScoring->GetRequiredOpeningPoints());
+					info << _("IDS_POINTS") << L": " << pScoring->GetRequiredOpeningPoints();
 					if (pScoring->SubtractTimeFaultsFromScore())
 					{
-						str1 = _("IDS_CONFIGEVENT_TF_FROMSCORE");
-						fmt::format_to(std::back_inserter(info), L"; {}", str1);
-						str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
-						fmt::format_to(std::back_inserter(info), L"; {}: {}", str1, pScoring->TimeFaultMultiplier());
+						info << L"; " << _("IDS_CONFIGEVENT_TF_FROMSCORE");
+						info << L"; " << _("IDS_CONFIGEVENT_TIMEFAULTMULT") << L": " << pScoring->TimeFaultMultiplier();
 						if (pScoring->ComputeTimeFaultsUnder())
 						{
-							str1 = _("IDS_CONFIGEVENT_TF_UNDER");
-							fmt::format_to(std::back_inserter(info), L"; {}", str1);
+							info << L"; " << _("IDS_CONFIGEVENT_TF_UNDER");
 						}
 						if (pScoring->ComputeTimeFaultsOver())
 						{
-							str1 = _("IDS_CONFIGEVENT_TF_OVER");
-							fmt::format_to(std::back_inserter(info), L"; {}", str1);
+							info << L"; " << _("IDS_CONFIGEVENT_TF_OVER");
 						}
 					}
 					break;
 				case ARBScoringStyle::TimePlusFaults:
-					str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
-					fmt::format_to(std::back_inserter(info), L"{}: {}", str1, pScoring->TimeFaultMultiplier());
+					info << _("IDS_CONFIGEVENT_TIMEFAULTMULT") << L": " << pScoring->TimeFaultMultiplier();
 					if (pScoring->QsMustBeClean())
 					{
 						// This string is slightly different: Just dropped
 						// the 'Time+Fault' at start.
-						str1 = _("IDS_CONFIGEVENT_CLEANQ");
-						fmt::format_to(std::back_inserter(info), L"; {}", str1);
+						info << L"; " << _("IDS_CONFIGEVENT_CLEANQ");
 					}
 					if (pScoring->ComputeTimeFaultsUnder() || pScoring->ComputeTimeFaultsOver())
 					{
-						str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
-						fmt::format_to(std::back_inserter(info), L"; {}: {}", str1, pScoring->TimeFaultMultiplier());
+						info << L"; " << _("IDS_CONFIGEVENT_TIMEFAULTMULT") << L": {}"
+							 << pScoring->TimeFaultMultiplier();
 					}
 					if (pScoring->ComputeTimeFaultsUnder())
 					{
-						str1 = _("IDS_CONFIGEVENT_TF_UNDER");
-						fmt::format_to(std::back_inserter(info), L"; {}", str1);
+						info << L"; " << _("IDS_CONFIGEVENT_TF_UNDER");
 					}
 					if (pScoring->ComputeTimeFaultsOver())
 					{
-						str1 = _("IDS_CONFIGEVENT_TF_OVER");
-						fmt::format_to(std::back_inserter(info), L"; {}", str1);
+						info << L"; {}" << _("IDS_CONFIGEVENT_TF_OVER");
 					}
 					break;
 				case ARBScoringStyle::TimeNoPlaces:
-					str1.clear();
 					break;
 				case ARBScoringStyle::PassFail:
-					str1.clear();
 					break;
 				}
 				if (pScoring->DropFractions())
 				{
-					str1 = _("IDS_CONFIGEVENT_DROPFRAC");
-					fmt::format_to(std::back_inserter(info), L"; {}", str1);
+					info << L"; " << _("IDS_CONFIGEVENT_DROPFRAC");
 				}
 				if (pScoring->HasBonusTitlePts())
 				{
-					str1 = _("IDS_CONFIGEVENT_BONUSTITLE");
-					fmt::format_to(std::back_inserter(info), L"; {}", str1);
+					info << L"; " << _("IDS_CONFIGEVENT_BONUSTITLE");
 				}
 				if (pScoring->HasSuperQ())
 				{
-					str1 = _("IDS_CONFIGEVENT_SUPERQ");
-					fmt::format_to(std::back_inserter(info), L"; {}", str1);
+					info << L"; " << _("IDS_CONFIGEVENT_SUPERQ");
 				}
 				if (pScoring->HasFEO())
 				{
-					str1 = _("IDS_CONFIGEVENT_FEO");
-					fmt::format_to(std::back_inserter(info), L"; {}", str1);
+					info << L"; " << _("IDS_CONFIGEVENT_FEO");
 				}
 				if (pScoring->HasSpeedPts())
 				{
-					str1 = _("IDS_CONFIGEVENT_SPEEDPTS");
-					fmt::format_to(std::back_inserter(info), L"; {}", str1);
+					info << L"; " << _("IDS_CONFIGEVENT_SPEEDPTS");
 					if (0 < pScoring->GetPlaceInfo().size())
 					{
-						fmt::format_to(std::back_inserter(info), L"{}", L" [");
+						info << L" [";
 						int idx = 0;
 						for (ARBConfigPlaceInfoList::iterator iter = pScoring->GetPlaceInfo().begin();
 							 iter != pScoring->GetPlaceInfo().end();
 							 ++idx, ++iter)
 						{
 							if (0 < idx)
-								fmt::format_to(std::back_inserter(info), L"{}", L", ");
-							fmt::format_to(
-								std::back_inserter(info),
-								L"{}={}",
-								(*iter)->GetPlace(),
-								(*iter)->GetValue());
+								info << L", ";
+							info << (*iter)->GetPlace() << L"=" << (*iter)->GetValue();
 						}
-						fmt::format_to(std::back_inserter(info), L"{}", L"]");
+						info << L"]";
 					}
 				}
-				m_ctrlInfo->SetLabel(StringUtil::stringWX(fmt::to_string(info)));
+				m_ctrlInfo->SetLabel(info);
 			}
 			// Take care of title points
 			FillTitlePoints(pScoring);
 			// And the note.
-			std::wstring str = pScoring->GetNote();
-			m_ctrlNote->SetValue(StringUtil::stringWX(str));
+			wxString str = pScoring->GetNote();
+			m_ctrlNote->SetValue(str);
 		}
 	}
 	m_ctrlTable->Enable(bEnable);
@@ -931,9 +890,9 @@ void CDlgConfigEvent::FillMethodList()
 		{
 			if (!m_Scorings.FindEvent((*iterDiv)->GetName(), (*iterLevel)->GetName(), ARBDate::Today()))
 			{
-				str = StringUtil::stringWX((*iterDiv)->GetName());
+				str = (*iterDiv)->GetName();
 				str += L" / ";
-				str += StringUtil::stringWX((*iterLevel)->GetName());
+				str += (*iterLevel)->GetName();
 				m_ctrlUnused->Append(str);
 			}
 			// Remember, configuration doesn't do sublevels.
@@ -972,7 +931,7 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr const& inScoring)
 		 ++iter)
 	{
 		ARBConfigTitlePointsPtr pTitle = (*iter);
-		int idx = m_ctrlPointsList->Append(StringUtil::stringWX(pTitle->GetGenericName()));
+		int idx = m_ctrlPointsList->Append(pTitle->GetGenericName());
 		if (wxNOT_FOUND != idx)
 		{
 			m_ctrlPointsList->SetClientObject(idx, new CConfigEventDataTitlePoints(pTitle));
@@ -985,7 +944,7 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr const& inScoring)
 		 ++iter2)
 	{
 		ARBConfigLifetimePointsPtr pLife = (*iter2);
-		int idx = m_ctrlPointsList->Append(StringUtil::stringWX(pLife->GetGenericName()));
+		int idx = m_ctrlPointsList->Append(pLife->GetGenericName());
 		if (wxNOT_FOUND != idx)
 		{
 			m_ctrlPointsList->SetClientObject(idx, new CConfigEventDataLifetimePoints(pLife));
@@ -998,7 +957,7 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr const& inScoring)
 		 ++iter3)
 	{
 		ARBConfigPlaceInfoPtr pPlace = (*iter3);
-		int idx = m_ctrlPointsList->Append(StringUtil::stringWX(pPlace->GetGenericName()));
+		int idx = m_ctrlPointsList->Append(pPlace->GetGenericName());
 		if (wxNOT_FOUND != idx)
 		{
 			m_ctrlPointsList->SetClientObject(idx, new CConfigEventDataPlaceInfo(pPlace));
@@ -1019,8 +978,8 @@ bool CDlgConfigEvent::SaveControls()
 		CConfigEventDataScoring* pScoringData = GetScoringData(m_idxMethod);
 		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		// Point/faults are already up-to-date.
-		std::wstring str = StringUtil::stringW(m_ctrlNote->GetValue());
-		pScoring->SetNote(StringUtil::TrimRight(str));
+		wxString str = StringUtil::TrimRight(m_ctrlNote->GetValue());
+		pScoring->SetNote(str);
 	}
 	return true;
 }
@@ -1165,11 +1124,8 @@ void CDlgConfigEvent::EditPoints()
 								wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						break;
 					case ARBTitlePointType::Lifetime:
-						bOk = pScoring->GetLifetimePoints().AddLifetimePoints(
-							StringUtil::stringW(dlgLifetimeName),
-							dlgUseSpeedPts,
-							dlgPoints,
-							dlgFaults);
+						bOk = pScoring->GetLifetimePoints()
+								  .AddLifetimePoints(dlgLifetimeName, dlgUseSpeedPts, dlgPoints, dlgFaults);
 						if (!bOk)
 							wxMessageBox(
 								_("IDS_TITLEPTS_EXISTS"),
@@ -1264,7 +1220,7 @@ void CDlgConfigEvent::OnBnClickedSubNamesNew(wxCommandEvent& evt)
 	CDlgName dlg(L"", this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		int idx = m_ctrlSubNames->Append(StringUtil::stringWX(dlg.Name()));
+		int idx = m_ctrlSubNames->Append(dlg.Name());
 		m_ctrlSubNames->SetSelection(idx);
 		UpdateSubnames();
 		EnableSubnameControls();
@@ -1468,11 +1424,8 @@ void CDlgConfigEvent::OnPointsNew(wxCommandEvent& evt)
 							wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					break;
 				case ARBTitlePointType::Lifetime:
-					if (!pScoring->GetLifetimePoints().AddLifetimePoints(
-							StringUtil::stringW(dlg.LifetimeName()),
-							dlg.UseSpeedPts(),
-							dlg.Points(),
-							dlg.Faults()))
+					if (!pScoring->GetLifetimePoints()
+							 .AddLifetimePoints(dlg.LifetimeName(), dlg.UseSpeedPts(), dlg.Points(), dlg.Faults()))
 						wxMessageBox(
 							_("IDS_TITLEPTS_EXISTS"),
 							_("Agility Record Book"),
@@ -1631,7 +1584,7 @@ void CDlgConfigEvent::OnOk(wxCommandEvent& evt)
 	}
 
 	ClearFixups();
-	std::wstring name(StringUtil::stringW(m_Name));
+	wxString name(m_Name);
 	if (m_pEvent->GetName() != name)
 	{
 		if (m_pVenue->GetEvents().FindEvent(name))
@@ -1677,7 +1630,7 @@ void CDlgConfigEvent::OnOk(wxCommandEvent& evt)
 	}
 	*/
 
-	m_pEvent->SetDesc(StringUtil::stringW(m_Desc));
+	m_pEvent->SetDesc(m_Desc);
 	m_pEvent->SetHasPartner(m_bHasPartners);
 	// No need to clone them, just move them.
 	m_pEvent->GetScorings() = m_Scorings;

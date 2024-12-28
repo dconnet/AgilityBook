@@ -59,7 +59,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override
+	wxString GetGenericName() const override
 	{
 		return m_Dog;
 	}
@@ -69,7 +69,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override;
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override;
 
 	/**
 	 * Load a partner.
@@ -97,35 +97,35 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	std::wstring const& GetHandler() const
+	wxString const& GetHandler() const
 	{
 		return m_Handler;
 	}
-	void SetHandler(std::wstring const& inHandler)
+	void SetHandler(wxString const& inHandler)
 	{
 		m_Handler = inHandler;
 	}
-	std::wstring const& GetDog() const
+	wxString const& GetDog() const
 	{
 		return m_Dog;
 	}
-	void SetDog(std::wstring const& inDog)
+	void SetDog(wxString const& inDog)
 	{
 		m_Dog = inDog;
 	}
-	std::wstring const& GetRegNum() const
+	wxString const& GetRegNum() const
 	{
 		return m_RegNum;
 	}
-	void SetRegNum(std::wstring const& inRegNum)
+	void SetRegNum(wxString const& inRegNum)
 	{
 		m_RegNum = inRegNum;
 	}
 
 private:
-	std::wstring m_Handler;
-	std::wstring m_Dog;
-	std::wstring m_RegNum;
+	wxString m_Handler;
+	wxString m_Dog;
+	wxString m_RegNum;
 };
 
 /////////////////////////////////////////////////////////////////////////////

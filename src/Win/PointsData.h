@@ -66,7 +66,7 @@ private:
 	MultiQdata() = delete;
 
 public:
-	MultiQdata(ARBCommon::ARBDate inDate, ARB::ARBDogTrialPtr inTrial, std::wstring const& inClub)
+	MultiQdata(ARBCommon::ARBDate inDate, ARB::ARBDogTrialPtr inTrial, wxString const& inClub)
 		: date(inDate)
 		, trial(inTrial)
 		, club(inClub)
@@ -92,7 +92,7 @@ public:
 
 	ARBCommon::ARBDate date;
 	ARB::ARBDogTrialPtr trial;
-	std::wstring club;
+	wxString club;
 };
 
 /**
@@ -105,8 +105,8 @@ private:
 
 public:
 	LifeTimePointInfo(
-		std::wstring const& inSort1, // Division or event
-		std::wstring const& inSort2, // Level or empty
+		wxString const& inSort1, // Division or event
+		wxString const& inSort2, // Level or empty
 		double inPoints,
 		double inFiltered)
 		: sort1(inSort1)
@@ -119,8 +119,8 @@ public:
 	LifeTimePointInfo(LifeTimePointInfo&&) = default;
 	LifeTimePointInfo& operator=(LifeTimePointInfo const&) = default;
 	LifeTimePointInfo& operator=(LifeTimePointInfo&&) = default;
-	std::wstring sort1;
-	std::wstring sort2;
+	wxString sort1;
+	wxString sort2;
 	double points;
 	double filtered;
 };
@@ -152,10 +152,10 @@ public:
 	ARB::ARBDogTrialPtr m_pTrial;
 	ARB::ARBDogRunPtr m_pRun;
 	ARB::ARBDogExistingPointsPtr m_pExisting;
-	std::wstring m_Venue;
-	std::wstring m_Div;
-	std::wstring m_Level;
-	std::wstring m_Event;
+	wxString m_Venue;
+	wxString m_Div;
+	wxString m_Level;
+	wxString m_Event;
 	double m_Points;
 	bool m_bScore;
 	double m_Score;
@@ -171,11 +171,11 @@ class CPointsDataTitle
 	DECLARE_NO_COPY_IMPLEMENTED(CPointsDataTitle)
 public:
 	CPointsDataTitle(CAgilityBookDoc* pDoc, ARB::ARBDogTitlePtr pTitle);
-	void GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks);
-	bool Details(std::wstring const& link, ARB::ARBDogPtr pDog);
+	void GetHtml(wxString& data, bool bNoInternalLinks);
+	bool Details(wxString const& link, ARB::ARBDogPtr pDog);
 
 private:
-	std::wstring m_refTag;
+	wxString m_refTag;
 	CAgilityBookDoc* m_pDoc;
 	ARB::ARBDogTitlePtr m_pTitle;
 };
@@ -223,18 +223,18 @@ public:
 		int inLevelIdx,
 		ARB::ARBConfigEventPtr const& inEvent,
 		int inEventIdx,
-		std::wstring const& inRunCount,
-		std::wstring const& inQcount,
-		std::wstring const& inPts,
-		std::wstring const& inSuperQ,
-		std::wstring const& inSpeed,
+		wxString const& inRunCount,
+		wxString const& inQcount,
+		wxString const& inPts,
+		wxString const& inSuperQ,
+		wxString const& inSpeed,
 		CRefTag& id);
 
-	void GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks);
-	bool Details(std::wstring const& link);
+	void GetHtml(wxString& data, bool bNoInternalLinks);
+	bool Details(wxString const& link);
 
 protected:
-	std::wstring m_refTag;
+	wxString m_refTag;
 	CAgilityBookDoc* m_pDoc;
 	ARB::ARBDogPtr m_Dog;
 	std::list<RunInfo> m_Matching;
@@ -245,11 +245,11 @@ protected:
 	int m_LevelIdx;
 	ARB::ARBConfigEventPtr m_Event;
 	int m_EventIdx;
-	std::wstring m_RunCount;
-	std::wstring m_Qcount;
-	std::wstring m_Pts;
-	std::wstring m_SuperQ;
-	std::wstring m_Speed;
+	wxString m_RunCount;
+	wxString m_Qcount;
+	wxString m_Pts;
+	wxString m_SuperQ;
+	wxString m_Speed;
 };
 typedef std::shared_ptr<CPointsDataEvent> CPointsDataEventPtr;
 
@@ -269,11 +269,11 @@ public:
 		int inPts,
 		CRefTag& id);
 
-	void GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks);
-	bool Details(std::wstring const& link);
+	void GetHtml(wxString& data, bool bNoInternalLinks);
+	bool Details(wxString const& link);
 
 protected:
-	std::wstring m_refTag;
+	wxString m_refTag;
 	CAgilityBookDoc* m_pDoc;
 	ARB::ARBConfigVenuePtr m_Venue;
 	ARB::ARBConfigDivisionPtr m_Div;
@@ -298,11 +298,11 @@ public:
 		std::set<MultiQdata> const& inMQs,
 		CRefTag& id);
 
-	void GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks);
-	bool Details(std::wstring const& link);
+	void GetHtml(wxString& data, bool bNoInternalLinks);
+	bool Details(wxString const& link);
 
 protected:
-	std::wstring m_refTag;
+	wxString m_refTag;
 	CAgilityBookDoc* m_pDoc;
 	ARB::ARBDogPtr m_Dog;
 	ARB::ARBConfigVenuePtr m_Venue;
@@ -330,17 +330,13 @@ public:
 	virtual ~CPointsDataLifetime()
 	{
 	}
-	virtual void AddLifetimeInfo(
-		std::wstring const& inDiv,
-		std::wstring const& inLevel,
-		double inLifetime,
-		double inFiltered);
+	virtual void AddLifetimeInfo(wxString const& inDiv, wxString const& inLevel, double inLifetime, double inFiltered);
 
-	virtual void GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks);
-	virtual bool Details(std::wstring const& link);
+	virtual void GetHtml(wxString& data, bool bNoInternalLinks);
+	virtual bool Details(wxString const& link);
 
 protected:
-	std::wstring m_refTag;
+	wxString m_refTag;
 	CAgilityBookDoc* m_pDoc;
 	ARB::ARBConfigLifetimeNamePtr m_LifetimeName; ///< null implies Placement
 	ARB::ARBConfigVenuePtr m_Venue;
@@ -360,23 +356,23 @@ public:
 	CPointsDataLifetimeByName(
 		CAgilityBookDoc* pDoc,
 		ARB::ARBConfigVenuePtr const& inVenue,
-		std::wstring const& inName,
+		wxString const& inName,
 		CRefTag& id);
 	CPointsDataLifetimeByName(
 		CAgilityBookDoc* pDoc,
 		ARB::ARBConfigLifetimeNamePtr const& inLifetimeName,
 		ARB::ARBConfigVenuePtr const& inVenue,
-		std::wstring const& inName,
+		wxString const& inName,
 		CRefTag& id);
 
 	// Adds are limited by inSort1 == m_Name
-	void AddLifetimeInfo(std::wstring const& inSort1, std::wstring const& inSort2, double inLifetime, double inFiltered)
+	void AddLifetimeInfo(wxString const& inSort1, wxString const& inSort2, double inLifetime, double inFiltered)
 		override;
 
-	void GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks) override;
+	void GetHtml(wxString& data, bool bNoInternalLinks) override;
 
 protected:
-	std::wstring m_Name;
+	wxString m_Name;
 };
 typedef std::shared_ptr<CPointsDataLifetimeByName> CPointsDataLifetimeByNamePtr;
 
@@ -397,13 +393,13 @@ public:
 		CRefTag& id);
 
 	bool HasData() const;
-	void GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks);
-	bool Details(std::wstring const& link);
+	void GetHtml(wxString& data, bool bNoInternalLinks);
+	bool Details(wxString const& link);
 
 private:
 	struct LifeTimePoint
 	{
-		std::wstring eventName;
+		wxString eventName;
 		double points;
 		bool bFiltered;
 		LifeTimePoint()
@@ -412,7 +408,7 @@ private:
 			, bFiltered(false)
 		{
 		}
-		LifeTimePoint(std::wstring const& inEvent, double inPoints, bool inFiltered)
+		LifeTimePoint(wxString const& inEvent, double inPoints, bool inFiltered)
 			: eventName(inEvent)
 			, points(inPoints)
 			, bFiltered(inFiltered)
@@ -435,7 +431,7 @@ private:
 	};
 	typedef std::list<PlacementPoints> PlacementPointsList;
 
-	std::wstring m_refTag;
+	wxString m_refTag;
 	CAgilityBookDoc* m_pDoc;
 	ARB::ARBDogPtr m_pDog;
 	ARB::ARBConfigVenuePtr m_pVenue;
@@ -464,15 +460,15 @@ public:
 	virtual ~CPointsDataOtherPoints()
 	{
 	}
-	virtual void GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks) = 0;
-	virtual bool Details(std::wstring const& link) = 0;
+	virtual void GetHtml(wxString& data, bool bNoInternalLinks) = 0;
+	virtual bool Details(wxString const& link) = 0;
 	ARB::ARBConfigOtherPointsPtr GetOther() const
 	{
 		return m_pOther;
 	}
 
 protected:
-	std::wstring m_refTag;
+	wxString m_refTag;
 	CAgilityBookDoc* m_pDoc;
 	ARB::ARBConfigOtherPointsPtr m_pOther;
 	std::list<OtherPtInfo> m_RunList;
@@ -490,8 +486,8 @@ public:
 		std::list<OtherPtInfo> const& inRunList,
 		CRefTag& id);
 
-	void GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks) override;
-	bool Details(std::wstring const& link) override;
+	void GetHtml(wxString& data, bool bNoInternalLinks) override;
+	bool Details(wxString const& link) override;
 };
 typedef std::shared_ptr<CPointsDataOtherPointsTallyAll> CPointsDataOtherPointsTallyAllPtr;
 
@@ -502,15 +498,15 @@ public:
 	CPointsDataOtherPointsTallyAllByEvent(
 		CAgilityBookDoc* pDoc,
 		ARB::ARBConfigOtherPointsPtr pOther,
-		std::wstring const& inEvent,
+		wxString const& inEvent,
 		std::list<OtherPtInfo> const& inRunList,
 		CRefTag& id);
 
-	void GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks) override;
-	bool Details(std::wstring const& link) override;
+	void GetHtml(wxString& data, bool bNoInternalLinks) override;
+	bool Details(wxString const& link) override;
 
 protected:
-	std::wstring m_Event;
+	wxString m_Event;
 };
 typedef std::shared_ptr<CPointsDataOtherPointsTallyAllByEvent> CPointsDataOtherPointsTallyAllByEventPtr;
 
@@ -521,15 +517,15 @@ public:
 	CPointsDataOtherPointsTallyLevel(
 		CAgilityBookDoc* pDoc,
 		ARB::ARBConfigOtherPointsPtr pOther,
-		std::wstring const& inLevel,
+		wxString const& inLevel,
 		std::list<OtherPtInfo> const& inRunList,
 		CRefTag& id);
 
-	void GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks) override;
-	bool Details(std::wstring const& link) override;
+	void GetHtml(wxString& data, bool bNoInternalLinks) override;
+	bool Details(wxString const& link) override;
 
 protected:
-	std::wstring m_Level;
+	wxString m_Level;
 };
 typedef std::shared_ptr<CPointsDataOtherPointsTallyLevel> CPointsDataOtherPointsTallyLevelPtr;
 
@@ -540,17 +536,17 @@ public:
 	CPointsDataOtherPointsTallyLevelByEvent(
 		CAgilityBookDoc* pDoc,
 		ARB::ARBConfigOtherPointsPtr pOther,
-		std::wstring const& inLevel,
-		std::wstring const& inEvent,
+		wxString const& inLevel,
+		wxString const& inEvent,
 		std::list<OtherPtInfo> const& inRunList,
 		CRefTag& id);
 
-	void GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks) override;
-	bool Details(std::wstring const& link) override;
+	void GetHtml(wxString& data, bool bNoInternalLinks) override;
+	bool Details(wxString const& link) override;
 
 protected:
-	std::wstring m_Level;
-	std::wstring m_Event;
+	wxString m_Level;
+	wxString m_Event;
 };
 typedef std::shared_ptr<CPointsDataOtherPointsTallyLevelByEvent> CPointsDataOtherPointsTallyLevelByEventPtr;
 
@@ -567,7 +563,7 @@ public:
 	void LoadData(ARB::ARBDogPtr const& inDog);
 
 	wxString GetHtml(bool bFragment, bool bNoInternalLinks);
-	bool Details(std::wstring const& link);
+	bool Details(wxString const& link);
 
 private:
 	CAgilityBookDoc* m_pDoc;

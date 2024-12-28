@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-13 Created
@@ -122,7 +121,7 @@ TEST_CASE("Training")
 		if (!g_bMicroTest)
 		{
 			ARBTrainingPtr train = ARBTraining::New();
-			fmt::wmemory_buffer errs;
+			wxString errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(train->Load(data.TrainingData, ARBVersion(2, 0), callback));
 			ARBTrainingPtr train2 = train->Clone();
@@ -153,10 +152,10 @@ TEST_CASE("Training")
 		if (!g_bMicroTest)
 		{
 			ARBTrainingPtr train = ARBTraining::New();
-			fmt::wmemory_buffer errs;
+			wxString errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(train->Load(data.TrainingData, ARBVersion(1, 0), callback));
-			std::wstring name = train->GetGenericName();
+			wxString name = train->GetGenericName();
 			REQUIRE(!name.empty());
 		}
 	}
@@ -167,7 +166,7 @@ TEST_CASE("Training")
 		if (!g_bMicroTest)
 		{
 			ARBTrainingPtr train = ARBTraining::New();
-			fmt::wmemory_buffer errs;
+			wxString errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(train->Load(data.TrainingData, ARBVersion(2, 0), callback));
 			ElementNodePtr ele = ElementNode::New();
@@ -186,7 +185,7 @@ TEST_CASE("TrainingList")
 		if (!g_bMicroTest)
 		{
 			ARBTrainingList train;
-			fmt::wmemory_buffer errs;
+			wxString errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(train.Load(data.TrainingData, ARBVersion(1, 0), callback));
 			REQUIRE(train.Load(data.TrainingData, ARBVersion(2, 0), callback));
@@ -210,7 +209,7 @@ TEST_CASE("TrainingList")
 			ele->AddAttrib(ATTRIB_TRAINING_NAME, L"Hollister, CA");
 			ele->AddAttrib(ATTRIB_TRAINING_SUBNAME, L"PASA");
 			ARBTrainingList train;
-			fmt::wmemory_buffer errs;
+			wxString errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(!train.Load(ele, ARBVersion(2, 0), callback));
 			ele->AddAttrib(ATTRIB_TRAINING_DATE, L"2008-1-13");
@@ -251,7 +250,7 @@ TEST_CASE("TrainingList")
 		{
 			ARBTrainingList trainlist;
 			CreateTrainingList(trainlist);
-			std::set<std::wstring> names;
+			std::set<wxString> names;
 			REQUIRE(2u == trainlist.GetAllNames(names));
 		}
 	}
@@ -263,7 +262,7 @@ TEST_CASE("TrainingList")
 		{
 			ARBTrainingList trainlist;
 			CreateTrainingList(trainlist);
-			std::set<std::wstring> names;
+			std::set<wxString> names;
 			REQUIRE(3u == trainlist.GetAllSubNames(names));
 		}
 	}

@@ -13,7 +13,6 @@
  * 2020-09-30 Fix clicking on FCAT title link.
  * 2020-05-12 Fix formatting of doubles.
  * 2019-05-04 Reworked PointsData usage.
- * 2018-12-16 Convert to fmt.
  * 2017-08-20 Add CPointsDataHeader, Fix MultiQ sorting.
  * 2016-04-29 Separate lifetime points from title (run) points.
  * 2014-04-23 Add anchors to all hrefs.
@@ -71,17 +70,17 @@ namespace
 constexpr wchar_t s_TableHeader[] = L"<table border=\"2\" cellspacing=\"0\" cellpadding=\"2\">";
 constexpr wchar_t s_refDog[] = L"refdog";
 // Ref Formats
-constexpr wchar_t s_refEvent[] = L"refevent{}";
-constexpr wchar_t s_refLifetime[] = L"reflifetime{}";
-constexpr wchar_t s_refMultiQ[] = L"refmultiq{}";
-constexpr wchar_t s_refOther[] = L"refother{}";
-constexpr wchar_t s_refSpeedPts[] = L"refspeedpts{}";
-constexpr wchar_t s_refTitle[] = L"reftitle{}";
-constexpr wchar_t s_refVenue[] = L"refvenue{}";
+constexpr wchar_t s_refEvent[] = L"refevent%zu";
+constexpr wchar_t s_refLifetime[] = L"reflifetime%zu";
+constexpr wchar_t s_refMultiQ[] = L"refmultiq%zu";
+constexpr wchar_t s_refOther[] = L"refother%zu";
+constexpr wchar_t s_refSpeedPts[] = L"refspeedpts%zu";
+constexpr wchar_t s_refTitle[] = L"reftitle%s";
+constexpr wchar_t s_refVenue[] = L"refvenue%s";
 
-std::wstring Sanitize(std::wstring const& inRawData, bool nbsp = false)
+wxString Sanitize(wxString const& inRawData, bool nbsp = false)
 {
-	std::wstring data = SanitizeStringForHTML(inRawData);
+	wxString data = SanitizeStringForHTML(inRawData);
 	if (nbsp && data.empty())
 		data = L"&nbsp;";
 	return data;
@@ -131,36 +130,33 @@ OtherPtInfo::OtherPtInfo(ARB::ARBDogExistingPointsPtr const& inExisting)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataTitle::CPointsDataTitle(CAgilityBookDoc* pDoc, ARBDogTitlePtr pTitle)
-	: m_refTag(fmt::format(s_refTitle, pTitle->GetGenericName()))
+	: m_refTag(wxString::Format(s_refTitle, pTitle->GetGenericName()))
 	, m_pDoc(pDoc)
 	, m_pTitle(pTitle)
 {
 }
 
 
-void CPointsDataTitle::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
+void CPointsDataTitle::GetHtml(wxString& data, bool bNoInternalLinks)
 {
-	fmt::format_to(
-		std::back_inserter(data),
-		L"<tr>\n<td>{}</td>\n<td>",
-		Sanitize(m_pTitle->GetDate().GetString(), true));
+	data << L"<tr>\n<td>" << Sanitize(m_pTitle->GetDate().GetString(), true) << L"</td>\n<td>";
 	if (!bNoInternalLinks)
 	{
-		fmt::format_to(std::back_inserter(data), L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, m_refTag);
+		data << L"<a href=\"" << ARB_PROTOCOL << m_refTag << "\" name=\"" << m_refTag << L"\">";
 	}
 
-	std::wstring str = m_pDoc->Book().GetConfig().GetTitleCompleteName(m_pTitle, false);
+	wxString str = m_pDoc->Book().GetConfig().GetTitleCompleteName(m_pTitle, false);
 	if (m_pTitle->GetReceived())
 		str += L"*";
 
-	fmt::format_to(std::back_inserter(data), L"{}", Sanitize(str));
+	data << Sanitize(str);
 	if (!bNoInternalLinks)
-		fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
-	fmt::format_to(std::back_inserter(data), L"{}", L"</td>\n</tr>\n");
+		data << L"</a>";
+	data << L"</td>\n</tr>\n";
 }
 
 
-bool CPointsDataTitle::Details(std::wstring const& link, ARBDogPtr pDog)
+bool CPointsDataTitle::Details(wxString const& link, ARBDogPtr pDog)
 {
 	if (link != m_refTag)
 		return false;
@@ -191,13 +187,13 @@ CPointsDataEvent::CPointsDataEvent(
 	int inLevelIdx,
 	ARBConfigEventPtr const& inEvent,
 	int inEventIdx,
-	std::wstring const& inRunCount,
-	std::wstring const& inQcount,
-	std::wstring const& inPts,
-	std::wstring const& inSuperQ,
-	std::wstring const& inSpeed,
+	wxString const& inRunCount,
+	wxString const& inQcount,
+	wxString const& inPts,
+	wxString const& inSuperQ,
+	wxString const& inSpeed,
 	CRefTag& id)
-	: m_refTag(fmt::format(s_refEvent, id.GetId()))
+	: m_refTag(wxString::Format(s_refEvent, id.GetId()))
 	, m_pDoc(pDoc)
 	, m_Dog(inDog)
 	, m_Matching(inMatching)
@@ -217,48 +213,44 @@ CPointsDataEvent::CPointsDataEvent(
 }
 
 
-void CPointsDataEvent::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
+void CPointsDataEvent::GetHtml(wxString& data, bool bNoInternalLinks)
 {
-	fmt::format_to(std::back_inserter(data), L"<tr>\n<td>{}</td>\n", Sanitize(m_Div->GetName(), true));
-	fmt::format_to(std::back_inserter(data), L"<td>{}</td>\n", Sanitize(m_Level->GetName(), true));
-	fmt::format_to(std::back_inserter(data), L"<td>{}</td>\n<td>", Sanitize(m_Event->GetName(), true));
+	data << L"<tr>\n<td>" << Sanitize(m_Div->GetName(), true) << L"</td>\n";
+	data << L"<td>" << Sanitize(m_Level->GetName(), true) << L"</td>\n";
+	data << L"<td>" << Sanitize(m_Event->GetName(), true) << L"</td>\n<td>";
 	if (!bNoInternalLinks)
 	{
-		fmt::format_to(std::back_inserter(data), L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, m_refTag);
+		data << L"<a href=\"" << ARB_PROTOCOL << m_refTag << L"\" name=\"" << m_refTag << L"\">";
 	}
-	fmt::format_to(std::back_inserter(data), L"{}", Sanitize(m_RunCount, true));
+	data << Sanitize(m_RunCount, true);
 	if (!bNoInternalLinks)
-		fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
-	fmt::format_to(std::back_inserter(data), L"</td>\n<td>{}</td>\n", Sanitize(m_Qcount, true));
-	fmt::format_to(std::back_inserter(data), L"<td align=\"right\">{}</td>\n", Sanitize(m_Pts, true));
+		data << L"</a>";
+	data << L"</td>\n<td>" << Sanitize(m_Qcount, true) << L"</td>\n";
+	data << L"<td align=\"right\">" << Sanitize(m_Pts, true) << L"</td>\n";
 	{ // SuperQ/SpeedPts
-		std::wstring str;
+		wxString str;
 		if (0 < m_SuperQ.length())
 			str = m_SuperQ;
 		else if (0 < m_Speed.length())
 			str = m_Speed;
-		fmt::format_to(std::back_inserter(data), L"<td>{}</td>\n", Sanitize(str, true));
+		data << L"<td>" << Sanitize(str, true) << L"</td>\n";
 	}
 	{ // Only used for SQ AND Speed
-		std::wstring str;
+		wxString str;
 		if (0 < m_SuperQ.length() && 0 < m_Speed.length())
 			str = m_Speed;
-		fmt::format_to(std::back_inserter(data), L"<td>{}</td>\n</tr>\n", Sanitize(str, true));
+		data << L"<td>" << Sanitize(str, true) << L"</td>\n</tr>\n";
 	}
 }
 
 
-bool CPointsDataEvent::Details(std::wstring const& link)
+bool CPointsDataEvent::Details(wxString const& link)
 {
 	if (link != m_refTag)
 		return false;
 
-	std::wstring str = fmt::format(
-		L"{}: {}/{}/{}",
-		_("IDS_RUNS").wx_str(),
-		m_Div->GetName(),
-		m_Level->GetName(),
-		m_Event->GetName());
+	wxString str;
+	str << _("IDS_RUNS") << L": " << m_Div->GetName() << L"/" << m_Level->GetName() << L"/" << m_Event->GetName();
 	RunInfoData data(m_Dog, m_Venue, m_Div, m_Level, m_Event);
 	CDlgListViewer dlg(m_pDoc, str, m_Dog ? &data : nullptr, m_Matching);
 	dlg.ShowModal();
@@ -273,7 +265,7 @@ CPointsDataSpeedPts::CPointsDataSpeedPts(
 	ARBConfigDivisionPtr const& inDiv,
 	int inPts,
 	CRefTag& id)
-	: m_refTag(fmt::format(s_refSpeedPts, id.GetId()))
+	: m_refTag(wxString::Format(s_refSpeedPts, id.GetId()))
 	, m_pDoc(pDoc)
 	, m_Venue(inVenue)
 	, m_Div(inDiv)
@@ -282,17 +274,14 @@ CPointsDataSpeedPts::CPointsDataSpeedPts(
 }
 
 
-void CPointsDataSpeedPts::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
+void CPointsDataSpeedPts::GetHtml(wxString& data, bool bNoInternalLinks)
 {
-	fmt::format_to(
-		std::back_inserter(data),
-		L"<tr>\n<td colspan=\"3\">{}</td>\n<td colspan=\"3\"></td>\n<td>{}</td>\n</tr>\n",
-		Sanitize(m_Div->GetName(), true),
-		Sanitize(fmt::format(_("IDS_POINTS_SPEED").wx_str(), m_Pts), true));
+	data << L"<tr>\n<td colspan=\"3\">" << Sanitize(m_Div->GetName(), true) << "</td>\n<td colspan=\"3\"></td>\n<td>"
+		 << Sanitize(wxString::Format(_("IDS_POINTS_SPEED"), m_Pts), true) << "</td>\n</tr>\n";
 }
 
 
-bool CPointsDataSpeedPts::Details(std::wstring const& link)
+bool CPointsDataSpeedPts::Details(wxString const& link)
 {
 	return false;
 }
@@ -306,7 +295,7 @@ CPointsDataMultiQs::CPointsDataMultiQs(
 	ARBConfigMultiQPtr const& inMultiQ,
 	std::set<MultiQdata> const& inMQs,
 	CRefTag& id)
-	: m_refTag(fmt::format(s_refMultiQ, id.GetId()))
+	: m_refTag(wxString::Format(s_refMultiQ, id.GetId()))
 	, m_pDoc(pDoc)
 	, m_Dog(inDog)
 	, m_Venue(inVenue)
@@ -334,28 +323,23 @@ CPointsDataMultiQs::CPointsDataMultiQs(
 }
 
 
-void CPointsDataMultiQs::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
+void CPointsDataMultiQs::GetHtml(wxString& data, bool bNoInternalLinks)
 {
-	fmt::format_to(
-		std::back_inserter(data),
-		L"<tr>\n<td colspan=\"3\">{}</td>\n<td colspan=\"3\"></td>\n<td>",
-		Sanitize(m_MultiQ->GetName(), true));
+	data << L"<tr>\n<td colspan=\"3\">" << Sanitize(m_MultiQ->GetName(), true)
+		 << L"</td>\n<td colspan=\"3\"></td>\n<td>";
 	if (!bNoInternalLinks)
 	{
-		fmt::format_to(std::back_inserter(data), L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, m_refTag);
+		data << L"<a href=\"" << ARB_PROTOCOL << m_refTag << L"\" name=\"" << m_refTag << L"\">";
 	}
-	fmt::format_to(
-		std::back_inserter(data),
-		L"{} {}",
-		ARBDouble::ToString(m_ExistingDblQs + static_cast<double>(m_MQs.size())),
-		Sanitize(m_MultiQ->GetShortName()));
+	data << ARBDouble::ToString(m_ExistingDblQs + static_cast<double>(m_MQs.size())) << L" "
+		 << Sanitize(m_MultiQ->GetShortName());
 	if (!bNoInternalLinks)
-		fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
-	fmt::format_to(std::back_inserter(data), L"{}", L"</td>\n</tr>\n");
+		data << L"</a>";
+	data << L"</td>\n</tr>\n";
 }
 
 
-bool CPointsDataMultiQs::Details(std::wstring const& link)
+bool CPointsDataMultiQs::Details(wxString const& link)
 {
 	if (link != m_refTag)
 		return false;
@@ -369,7 +353,7 @@ bool CPointsDataMultiQs::Details(std::wstring const& link)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataLifetime::CPointsDataLifetime(CAgilityBookDoc* pDoc, ARB::ARBConfigVenuePtr const& inVenue, CRefTag& id)
-	: m_refTag(fmt::format(s_refLifetime, id.GetId()))
+	: m_refTag(wxString::Format(s_refLifetime, id.GetId()))
 	, m_pDoc(pDoc)
 	, m_LifetimeName()
 	, m_Venue(inVenue)
@@ -384,7 +368,7 @@ CPointsDataLifetime::CPointsDataLifetime(
 	ARB::ARBConfigLifetimeNamePtr const& inLifetimeName,
 	ARB::ARBConfigVenuePtr const& inVenue,
 	CRefTag& id)
-	: m_refTag(fmt::format(s_refLifetime, id.GetId()))
+	: m_refTag(wxString::Format(s_refLifetime, id.GetId()))
 	, m_pDoc(pDoc)
 	, m_LifetimeName(inLifetimeName)
 	, m_Venue(inVenue)
@@ -395,8 +379,8 @@ CPointsDataLifetime::CPointsDataLifetime(
 
 
 void CPointsDataLifetime::AddLifetimeInfo(
-	std::wstring const& inDiv,
-	std::wstring const& inLevel,
+	wxString const& inDiv,
+	wxString const& inLevel,
 	double inLifetime,
 	double inFiltered)
 {
@@ -406,54 +390,50 @@ void CPointsDataLifetime::AddLifetimeInfo(
 }
 
 
-void CPointsDataLifetime::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
+void CPointsDataLifetime::GetHtml(wxString& data, bool bNoInternalLinks)
 {
-	fmt::format_to(std::back_inserter(data), L"{}", L"<tr>\n<td>");
+	data << L"<tr>\n<td>";
 	if (m_LifetimeName)
 	{
-		std::wstring lifetime = m_LifetimeName->GetName();
+		wxString lifetime = m_LifetimeName->GetName();
 		if (lifetime.empty())
 			lifetime = _("IDS_TITLEPOINT_LIFETIME_NAME");
-		fmt::format_to(std::back_inserter(data), _("IDS_LIFETIME_POINTS").wx_str(), Sanitize(lifetime, true));
+		data += wxString::Format(_("IDS_LIFETIME_POINTS"), Sanitize(lifetime, true));
 	}
 	else
-		fmt::format_to(std::back_inserter(data), L"{}", _("IDS_PLACEMENT_POINTS").wx_str());
-	fmt::format_to(std::back_inserter(data), L"{}", L"</td>\n<td align=\"right\">");
+		data << _("IDS_PLACEMENT_POINTS");
+	data << L"</td>\n<td align=\"right\">";
 	if (!bNoInternalLinks)
 	{
-		fmt::format_to(std::back_inserter(data), L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, m_refTag);
+		data << L"<a href=\"" << ARB_PROTOCOL << m_refTag << L"\" name=\"" << m_refTag << L"\">";
 	}
-	fmt::format_to(std::back_inserter(data), L"{}: ", _("IDS_TOTAL").wx_str());
+	data << _("IDS_TOTAL") << L": ";
 	if (0 < m_Filtered)
-		fmt::format_to(
-			std::back_inserter(data),
-			L"{} ({})",
-			ARBDouble::ToString(m_Lifetime - m_Filtered),
-			ARBDouble::ToString(m_Lifetime));
+		data << ARBDouble::ToString(m_Lifetime - m_Filtered) << L" (" << ARBDouble::ToString(m_Lifetime) << L")";
 	else
-		fmt::format_to(std::back_inserter(data), L"{}", ARBDouble::ToString(m_Lifetime));
+		data << ARBDouble::ToString(m_Lifetime);
 	if (!bNoInternalLinks)
-		fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
-	fmt::format_to(std::back_inserter(data), L"{}", L"</td>\n</tr>\n");
+		data << L"</a>";
+	data << L"</td>\n</tr>\n";
 }
 
 
-bool CPointsDataLifetime::Details(std::wstring const& link)
+bool CPointsDataLifetime::Details(wxString const& link)
 {
 	if (link != m_refTag)
 		return false;
 
-	std::wstring caption(m_Venue->GetName());
-	std::wstring str;
+	wxString caption(m_Venue->GetName());
+	wxString str;
 	if (m_LifetimeName)
 	{
-		std::wstring lifetime = m_LifetimeName->GetName();
+		wxString lifetime = m_LifetimeName->GetName();
 		if (lifetime.empty())
 			lifetime = _("IDS_TITLEPOINT_LIFETIME_NAME");
-		str = fmt::format(_("IDS_LIFETIME_POINTS").wx_str(), lifetime);
+		str = wxString::Format(_("IDS_LIFETIME_POINTS"), lifetime);
 	}
 	else
-		str = StringUtil::stringW(_("IDS_PLACEMENT_POINTS"));
+		str = _("IDS_PLACEMENT_POINTS");
 	caption += L" " + str;
 	CDlgListViewer dlg(m_pDoc, caption, m_Data);
 	dlg.ShowModal();
@@ -465,7 +445,7 @@ bool CPointsDataLifetime::Details(std::wstring const& link)
 CPointsDataLifetimeByName::CPointsDataLifetimeByName(
 	CAgilityBookDoc* pDoc,
 	ARB::ARBConfigVenuePtr const& inVenue,
-	std::wstring const& inName,
+	wxString const& inName,
 	CRefTag& id)
 	: CPointsDataLifetime(pDoc, inVenue, id)
 	, m_Name(inName)
@@ -476,7 +456,7 @@ CPointsDataLifetimeByName::CPointsDataLifetimeByName(
 	CAgilityBookDoc* pDoc,
 	ARB::ARBConfigLifetimeNamePtr const& inLifetimeName,
 	ARB::ARBConfigVenuePtr const& inVenue,
-	std::wstring const& inName,
+	wxString const& inName,
 	CRefTag& id)
 	: CPointsDataLifetime(pDoc, inLifetimeName, inVenue, id)
 	, m_Name(inName)
@@ -485,8 +465,8 @@ CPointsDataLifetimeByName::CPointsDataLifetimeByName(
 
 
 void CPointsDataLifetimeByName::AddLifetimeInfo(
-	std::wstring const& inSort1,
-	std::wstring const& inSort2,
+	wxString const& inSort1,
+	wxString const& inSort2,
 	double inLifetime,
 	double inFiltered)
 {
@@ -499,19 +479,15 @@ void CPointsDataLifetimeByName::AddLifetimeInfo(
 }
 
 
-void CPointsDataLifetimeByName::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
+void CPointsDataLifetimeByName::GetHtml(wxString& data, bool bNoInternalLinks)
 {
-	fmt::format_to(std::back_inserter(data), L"{}", L"<tr>\n<td>&nbsp;</td>\n<td align=\"right\">");
-	fmt::format_to(std::back_inserter(data), L"{}: ", Sanitize(m_Name, true));
+	data << L"<tr>\n<td>&nbsp;</td>\n<td align=\"right\">";
+	data << Sanitize(m_Name, true) << L": ";
 	if (0 < m_Filtered)
-		fmt::format_to(
-			std::back_inserter(data),
-			L"{} ({})",
-			ARBDouble::ToString(m_Lifetime - m_Filtered),
-			ARBDouble::ToString(m_Lifetime));
+		data << ARBDouble::ToString(m_Lifetime - m_Filtered) << L" (" << ARBDouble::ToString(m_Lifetime) << L")";
 	else
-		fmt::format_to(std::back_inserter(data), L"{}", ARBDouble::ToString(m_Lifetime));
-	fmt::format_to(std::back_inserter(data), L"{}", L"</td>\n</tr>\n");
+		data << ARBDouble::ToString(m_Lifetime);
+	data << L"</td>\n</tr>\n";
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -564,7 +540,7 @@ CPointsDataVenue::CPointsDataVenue(
 	ARBDogPtr const& inDog,
 	ARBConfigVenuePtr const inVenue,
 	CRefTag& id)
-	: m_refTag(fmt::format(s_refVenue, inVenue->GetName()))
+	: m_refTag(wxString::Format(s_refVenue, inVenue->GetName()))
 	, m_pDoc(pDoc)
 	, m_pDog(inDog)
 	, m_pVenue(inVenue)
@@ -647,10 +623,10 @@ CPointsDataVenue::CPointsDataVenue(
 					double nExistingPts = 0;
 					int nExistingSQ = 0;
 					std::list<RunInfo> allmatching;
-					std::set<std::wstring> judges;
-					std::set<std::wstring> judgesQ;
-					std::set<std::wstring> partners;
-					std::set<std::wstring> partnersQ;
+					std::set<wxString> judges;
+					std::set<wxString> judgesQ;
+					std::set<wxString> partners;
+					std::set<wxString> partnersQ;
 					for (ARBVector<ARBConfigScoringPtr>::iterator iterScoring = scoringItems.begin();
 						 iterScoring != scoringItems.end();
 						 ++iterScoring)
@@ -730,7 +706,7 @@ CPointsDataVenue::CPointsDataVenue(
 											 iterPartner != pRun->GetPartners().end();
 											 ++iterPartner)
 										{
-											std::wstring p = (*iterPartner)->GetDog();
+											wxString p = (*iterPartner)->GetDog();
 											p += (*iterPartner)->GetRegNum();
 											partners.insert(p);
 											if (pRun->GetQ().Qualified())
@@ -834,65 +810,48 @@ CPointsDataVenue::CPointsDataVenue(
 					// Now we deal with the visible runs.
 					if (0 < points || 0 < allmatching.size())
 					{
-						fmt::wmemory_buffer strRunCount;
+						wxString strRunCount;
 						if (0 < judges.size())
-							fmt::format_to(
-								std::back_inserter(strRunCount),
-								_("IDS_POINTS_RUNS_JUDGES").wx_str(),
-								allmatching.size(),
-								judges.size());
+							strRunCount
+								<< wxString::Format(_("IDS_POINTS_RUNS_JUDGES"), allmatching.size(), judges.size());
 						else
-							fmt::format_to(
-								std::back_inserter(strRunCount),
-								_("IDS_POINTS_RUNS").wx_str(),
-								allmatching.size());
+							strRunCount << wxString::Format(_("IDS_POINTS_RUNS"), allmatching.size());
 						if (pEvent->HasPartner() && 0 < partners.size())
 						{
-							fmt::format_to(
-								std::back_inserter(strRunCount),
-								_("IDS_POINTS_PARTNERS").wx_str(),
-								partners.size());
+							strRunCount << wxString::Format(_("IDS_POINTS_PARTNERS"), partners.size());
 						}
 						double percentQs = 0.0;
 						if (0 < allmatching.size())
 							percentQs
 								= (static_cast<double>(nCleanQ + nNotCleanQ) / static_cast<double>(allmatching.size()))
 								  * 100;
-						fmt::wmemory_buffer strQcount;
-						fmt::format_to(
-							std::back_inserter(strQcount),
-							_("IDS_POINTS_QS").wx_str(),
-							nCleanQ + nNotCleanQ,
-							static_cast<int>(percentQs));
+						wxString strQcount;
+						strQcount
+							<< wxString::Format(_("IDS_POINTS_QS"), nCleanQ + nNotCleanQ, static_cast<int>(percentQs));
 						if (0 < nCleanQ)
 						{
-							fmt::format_to(std::back_inserter(strQcount), _("IDS_POINTS_CLEAN").wx_str(), nCleanQ);
+							strQcount << wxString::Format(_("IDS_POINTS_CLEAN"), nCleanQ);
 						}
 						if (0 < judgesQ.size())
 						{
-							fmt::format_to(
-								std::back_inserter(strQcount),
-								_("IDS_POINTS_JUDGES").wx_str(),
-								judgesQ.size());
+							strQcount << wxString::Format(_("IDS_POINTS_JUDGES"), judgesQ.size());
 						}
 						if (pEvent->HasPartner() && 0 < partnersQ.size())
 						{
-							fmt::format_to(
-								std::back_inserter(strQcount),
-								_("IDS_POINTS_PARTNERS").wx_str(),
-								partnersQ.size());
+							strQcount << wxString::Format(_("IDS_POINTS_PARTNERS"), partnersQ.size());
 						}
-						std::wstring strPts = fmt::format(L"{}", ARBDouble::ToString(points + nExistingSQ));
-						std::wstring strSuperQ;
+						wxString strPts;
+						strPts << ARBDouble::ToString(points + nExistingSQ);
+						wxString strSuperQ;
 						if (hasSQs)
 						{
 							SQs += nExistingSQ;
-							strSuperQ = fmt::format(_("IDS_POINTS_SQS").wx_str(), SQs);
+							strSuperQ << wxString::Format(_("IDS_POINTS_SQS"), SQs);
 						}
-						std::wstring strSpeed;
+						wxString strSpeed;
 						if (bHasSpeedPts && 0 < speedPtsEvent)
 						{
-							strSpeed = fmt::format(_("IDS_POINTS_SPEED_SUBTOTAL").wx_str(), speedPtsEvent);
+							strSpeed << wxString::Format(_("IDS_POINTS_SPEED_SUBTOTAL"), speedPtsEvent);
 						}
 						m_events.push_back(std::make_shared<CPointsDataEvent>(
 							pDoc,
@@ -905,8 +864,8 @@ CPointsDataVenue::CPointsDataVenue(
 							idxLevel,
 							pEvent,
 							idxEvent,
-							fmt::to_string(strRunCount),
-							fmt::to_string(strQcount),
+							strRunCount,
+							strQcount,
 							strPts,
 							strSuperQ,
 							strSpeed,
@@ -959,7 +918,7 @@ CPointsDataVenue::CPointsDataVenue(
 							 iMultiQ != multiQs.end();
 							 ++iMultiQ)
 						{
-							std::wstring name;
+							wxString name;
 							if (pRun->GetClub())
 								name = pRun->GetClub()->GetName();
 							MQs[*iMultiQ].insert(MultiQdata(pRun->GetDate(), pTrial, name));
@@ -993,12 +952,12 @@ CPointsDataVenue::CPointsDataVenue(
 			 ++iterL)
 		{
 			CPointsDataLifetimePtr pData = std::make_shared<CPointsDataLifetime>(pDoc, (*iterL), m_pVenue, id);
-			typedef std::map<std::wstring, CPointsDataLifetimeByNamePtr> NamedLifetime;
+			typedef std::map<wxString, CPointsDataLifetimeByNamePtr> NamedLifetime;
 			NamedLifetime subgroups;
 			if (CAgilityBookOptions::GetViewLifetimePointsByEvent())
 			{
 				// Gather event names
-				std::set<std::wstring> names;
+				std::set<wxString> names;
 				for (LifeTimePointsList::iterator iter = lifetime.begin(); iter != lifetime.end(); ++iter)
 				{
 					std::map<ARBConfigLifetimeNamePtr, LifeTimePointList>::iterator iterName
@@ -1013,7 +972,7 @@ CPointsDataVenue::CPointsDataVenue(
 						}
 					}
 				}
-				for (std::set<std::wstring>::iterator iName = names.begin(); iName != names.end(); ++iName)
+				for (std::set<wxString>::iterator iName = names.begin(); iName != names.end(); ++iName)
 				{
 					double pts2 = 0.0;
 					double ptFiltered2 = 0;
@@ -1036,7 +995,7 @@ CPointsDataVenue::CPointsDataVenue(
 							}
 						}
 					}
-					pData->AddLifetimeInfo(*iName, std::wstring(), pts2, ptFiltered2);
+					pData->AddLifetimeInfo(*iName, wxString(), pts2, ptFiltered2);
 				}
 			}
 			for (LifeTimePointsList::iterator iter = lifetime.begin(); iter != lifetime.end(); ++iter)
@@ -1096,12 +1055,12 @@ CPointsDataVenue::CPointsDataVenue(
 	if (0 < placement.size())
 	{
 		CPointsDataLifetimePtr pData = std::make_shared<CPointsDataLifetime>(pDoc, m_pVenue, id);
-		typedef std::map<std::wstring, CPointsDataLifetimeByNamePtr> NamedLifetime;
+		typedef std::map<wxString, CPointsDataLifetimeByNamePtr> NamedLifetime;
 		NamedLifetime subgroups;
 		if (CAgilityBookOptions::GetViewLifetimePointsByEvent())
 		{
 			// Gather event names
-			std::set<std::wstring> names;
+			std::set<wxString> names;
 			for (PlacementPointsList::iterator iter = placement.begin(); iter != placement.end(); ++iter)
 			{
 				for (LifeTimePointList::iterator iter2 = (*iter).ptPlacement.begin();
@@ -1111,7 +1070,7 @@ CPointsDataVenue::CPointsDataVenue(
 					names.insert(iter2->eventName);
 				}
 			}
-			for (std::set<std::wstring>::iterator iName = names.begin(); iName != names.end(); ++iName)
+			for (std::set<wxString>::iterator iName = names.begin(); iName != names.end(); ++iName)
 			{
 				double pts2 = 0.0;
 				double ptFiltered2 = 0;
@@ -1129,7 +1088,7 @@ CPointsDataVenue::CPointsDataVenue(
 						}
 					}
 				}
-				pData->AddLifetimeInfo(*iName, std::wstring(), pts2, ptFiltered2);
+				pData->AddLifetimeInfo(*iName, wxString(), pts2, ptFiltered2);
 			}
 		}
 		for (PlacementPointsList::iterator iter = placement.begin(); iter != placement.end(); ++iter)
@@ -1182,7 +1141,7 @@ bool CPointsDataVenue::HasData() const
 }
 
 
-void CPointsDataVenue::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
+void CPointsDataVenue::GetHtml(wxString& data, bool bNoInternalLinks)
 {
 	if (!HasData())
 		return;
@@ -1190,56 +1149,48 @@ void CPointsDataVenue::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 	// Venue header
 	if (m_pVenue)
 	{
-		fmt::format_to(std::back_inserter(data), L"{}", L"<h2>");
+		data << L"<h2>";
 		if (m_pVenue->GetURL().empty())
 		{
-			fmt::format_to(std::back_inserter(data), L"{}", Sanitize(m_pVenue->GetName()));
+			data << Sanitize(m_pVenue->GetName());
 		}
 		else
 		{
-			fmt::format_to(
-				std::back_inserter(data),
-				L"<a href=\"{}\">{}</a>",
-				m_pVenue->GetURL(),
-				Sanitize(m_pVenue->GetName()));
+			data << L"<a href=\"" << m_pVenue->GetURL() << L"\">" << Sanitize(m_pVenue->GetName()) << L"</a>";
 		}
 		if (m_pDog)
 		{
 			ARBDogRegNumPtr pRegNum;
 			if (m_pDog->GetRegNums().FindRegNum(m_pVenue->GetName(), &pRegNum))
 			{
-				fmt::format_to(std::back_inserter(data), L"{}", L" [");
+				data << L" [";
 				if (!bNoInternalLinks)
 				{
-					fmt::format_to(
-						std::back_inserter(data),
-						L"<a href=\"{0}{1}\" name=\"{1}\">",
-						ARB_PROTOCOL,
-						m_refTag);
+					data << L"<a href=\"" << ARB_PROTOCOL << m_refTag << L"\" name=\"" << m_refTag << L"\">";
 				}
-				fmt::format_to(std::back_inserter(data), L"{}", Sanitize(pRegNum->GetNumber()));
+				data << Sanitize(pRegNum->GetNumber());
 				if (!bNoInternalLinks)
-					fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
-				fmt::format_to(std::back_inserter(data), L"{}", L"]\n");
+					data << L"</a>";
+				data << L"]\n";
 			}
 		}
-		fmt::format_to(std::back_inserter(data), L"{}", L"</h2>\n");
+		data << L"</h2>\n";
 	}
 
 	if (!m_titles.empty())
 	{
-		fmt::format_to(std::back_inserter(data), L"<h3>{}</h3>{}", _("IDS_TITLES").wx_str(), s_TableHeader);
+		data << L"<h3>" << _("IDS_TITLES") << L"</h3>" << s_TableHeader;
 
 		for (auto ptr : m_titles)
 		{
 			ptr->GetHtml(data, bNoInternalLinks);
 		}
-		fmt::format_to(std::back_inserter(data), L"{}", L"</table>");
+		data << L"</table>";
 	}
 
 	if (!m_events.empty() || !m_speedPts.empty() || !m_multiQs.empty() || !m_lifetime.empty())
 	{
-		fmt::format_to(std::back_inserter(data), L"<h3>{}</h3>{}", _("IDS_RUNS").wx_str(), s_TableHeader);
+		data << L"<h3>" << _("IDS_RUNS") << L"</h3>" << s_TableHeader;
 		for (auto ptr : m_events)
 		{
 			ptr->GetHtml(data, bNoInternalLinks);
@@ -1253,17 +1204,17 @@ void CPointsDataVenue::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
 			ptr->GetHtml(data, bNoInternalLinks);
 		}
 		if (!m_lifetime.empty())
-			fmt::format_to(std::back_inserter(data), L"{}", L"<tr><td>&nbsp;</td></tr>\n");
+			data << L"<tr><td>&nbsp;</td></tr>\n";
 		for (auto ptr : m_lifetime)
 		{
 			ptr->GetHtml(data, bNoInternalLinks);
 		}
-		fmt::format_to(std::back_inserter(data), L"{}", L"</table>");
+		data << L"</table>";
 	}
 }
 
 
-bool CPointsDataVenue::Details(std::wstring const& link)
+bool CPointsDataVenue::Details(wxString const& link)
 {
 	if (link == m_refTag)
 	{
@@ -1315,7 +1266,7 @@ CPointsDataOtherPoints::CPointsDataOtherPoints(
 	ARBConfigOtherPointsPtr pOther,
 	std::list<OtherPtInfo> const& inRunList,
 	CRefTag& id)
-	: m_refTag(fmt::format(s_refOther, id.GetId()))
+	: m_refTag(wxString::Format(s_refOther, id.GetId()))
 	, m_pDoc(pDoc)
 	, m_pOther(pOther)
 	, m_RunList(inRunList)
@@ -1339,29 +1290,26 @@ CPointsDataOtherPointsTallyAll::CPointsDataOtherPointsTallyAll(
 }
 
 
-void CPointsDataOtherPointsTallyAll::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
+void CPointsDataOtherPointsTallyAll::GetHtml(wxString& data, bool bNoInternalLinks)
 {
-	fmt::format_to(
-		std::back_inserter(data),
-		L"<tr>\n<td>{}</td>\n<td align=\"right\">",
-		Sanitize(m_pOther->GetName(), true));
+	data << L"<tr>\n<td>" << Sanitize(m_pOther->GetName(), true) << L"</td>\n<td align=\"right\">";
 	if (!bNoInternalLinks)
 	{
-		fmt::format_to(std::back_inserter(data), L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, m_refTag);
+		data << L"<a href=\"" << ARB_PROTOCOL << m_refTag << L"\" name=\"" << m_refTag << L"\">";
 	}
-	fmt::format_to(std::back_inserter(data), L"{}", ARBDouble::ToString(m_Points));
+	data << ARBDouble::ToString(m_Points);
 	if (!bNoInternalLinks)
-		fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
-	fmt::format_to(std::back_inserter(data), L"{}", L"</td>\n</tr>\n");
+		data << L"</a>";
+	data << L"</td>\n</tr>\n";
 }
 
 
-bool CPointsDataOtherPointsTallyAll::Details(std::wstring const& link)
+bool CPointsDataOtherPointsTallyAll::Details(wxString const& link)
 {
 	if (link != m_refTag)
 		return false;
 
-	CDlgListViewer dlg(m_pDoc, StringUtil::stringW(_("IDS_OTHERPOINTS")), m_RunList);
+	CDlgListViewer dlg(m_pDoc, _("IDS_OTHERPOINTS"), m_RunList);
 	dlg.ShowModal();
 	return true;
 }
@@ -1371,7 +1319,7 @@ bool CPointsDataOtherPointsTallyAll::Details(std::wstring const& link)
 CPointsDataOtherPointsTallyAllByEvent::CPointsDataOtherPointsTallyAllByEvent(
 	CAgilityBookDoc* pDoc,
 	ARBConfigOtherPointsPtr pOther,
-	std::wstring const& inEvent,
+	wxString const& inEvent,
 	std::list<OtherPtInfo> const& inRunList,
 	CRefTag& id)
 	: CPointsDataOtherPoints(pDoc, pOther, inRunList, id)
@@ -1380,29 +1328,27 @@ CPointsDataOtherPointsTallyAllByEvent::CPointsDataOtherPointsTallyAllByEvent(
 }
 
 
-void CPointsDataOtherPointsTallyAllByEvent::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
+void CPointsDataOtherPointsTallyAllByEvent::GetHtml(wxString& data, bool bNoInternalLinks)
 {
-	fmt::format_to(
-		std::back_inserter(data),
-		L"<tr>\n<td>&nbsp;</td>\n<td>{}</td>\n<td align=\"right\">",
-		Sanitize(m_RunList.begin()->m_Event, true));
+	data << L"<tr>\n<td>&nbsp;</td>\n<td>" << Sanitize(m_RunList.begin()->m_Event, true)
+		 << L"</td>\n<td align=\"right\">";
 	if (!bNoInternalLinks)
 	{
-		fmt::format_to(std::back_inserter(data), L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, m_refTag);
+		data << L"<a href=\"" << ARB_PROTOCOL << m_refTag << L"\" name=\"" << m_refTag << L"\">";
 	}
-	fmt::format_to(std::back_inserter(data), L"{}", ARBDouble::ToString(m_Points));
+	data << ARBDouble::ToString(m_Points);
 	if (!bNoInternalLinks)
-		fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
-	fmt::format_to(std::back_inserter(data), L"{}", L"</td>\n</tr>\n");
+		data << L"</a>";
+	data << L"</td>\n</tr>\n";
 }
 
 
-bool CPointsDataOtherPointsTallyAllByEvent::Details(std::wstring const& link)
+bool CPointsDataOtherPointsTallyAllByEvent::Details(wxString const& link)
 {
 	if (link != m_refTag)
 		return false;
 
-	CDlgListViewer dlg(m_pDoc, StringUtil::stringW(_("IDS_OTHERPOINTS")), m_RunList);
+	CDlgListViewer dlg(m_pDoc, _("IDS_OTHERPOINTS"), m_RunList);
 	dlg.ShowModal();
 	return true;
 }
@@ -1412,7 +1358,7 @@ bool CPointsDataOtherPointsTallyAllByEvent::Details(std::wstring const& link)
 CPointsDataOtherPointsTallyLevel::CPointsDataOtherPointsTallyLevel(
 	CAgilityBookDoc* pDoc,
 	ARBConfigOtherPointsPtr pOther,
-	std::wstring const& inLevel,
+	wxString const& inLevel,
 	std::list<OtherPtInfo> const& inRunList,
 	CRefTag& id)
 	: CPointsDataOtherPoints(pDoc, pOther, inRunList, id)
@@ -1421,29 +1367,27 @@ CPointsDataOtherPointsTallyLevel::CPointsDataOtherPointsTallyLevel(
 }
 
 
-void CPointsDataOtherPointsTallyLevel::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
+void CPointsDataOtherPointsTallyLevel::GetHtml(wxString& data, bool bNoInternalLinks)
 {
-	fmt::format_to(
-		std::back_inserter(data),
-		L"<tr>\n<td>&nbsp;</td>\n<td>{}</td>\n<td align=\"right\">",
-		Sanitize(m_RunList.begin()->m_Level, true));
+	data << L"<tr>\n<td>&nbsp;</td>\n<td>" << Sanitize(m_RunList.begin()->m_Level, true)
+		 << L"</td>\n<td align=\"right\">";
 	if (!bNoInternalLinks)
 	{
-		fmt::format_to(std::back_inserter(data), L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, m_refTag);
+		data << L"<a href=\"" << ARB_PROTOCOL << m_refTag << L"\" name=\"" << m_refTag << L"\">";
 	}
-	fmt::format_to(std::back_inserter(data), L"{}", ARBDouble::ToString(m_Points));
+	data << ARBDouble::ToString(m_Points);
 	if (!bNoInternalLinks)
-		fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
-	fmt::format_to(std::back_inserter(data), L"{}", L"</td>\n</tr>\n");
+		data << L"</a>";
+	data << L"</td>\n</tr>\n";
 }
 
 
-bool CPointsDataOtherPointsTallyLevel::Details(std::wstring const& link)
+bool CPointsDataOtherPointsTallyLevel::Details(wxString const& link)
 {
 	if (link != m_refTag)
 		return false;
 
-	CDlgListViewer dlg(m_pDoc, StringUtil::stringW(_("IDS_OTHERPOINTS")), m_RunList);
+	CDlgListViewer dlg(m_pDoc, _("IDS_OTHERPOINTS"), m_RunList);
 	dlg.ShowModal();
 	return true;
 }
@@ -1453,8 +1397,8 @@ bool CPointsDataOtherPointsTallyLevel::Details(std::wstring const& link)
 CPointsDataOtherPointsTallyLevelByEvent::CPointsDataOtherPointsTallyLevelByEvent(
 	CAgilityBookDoc* pDoc,
 	ARBConfigOtherPointsPtr pOther,
-	std::wstring const& inLevel,
-	std::wstring const& inEvent,
+	wxString const& inLevel,
+	wxString const& inEvent,
 	std::list<OtherPtInfo> const& inRunList,
 	CRefTag& id)
 	: CPointsDataOtherPoints(pDoc, pOther, inRunList, id)
@@ -1464,30 +1408,27 @@ CPointsDataOtherPointsTallyLevelByEvent::CPointsDataOtherPointsTallyLevelByEvent
 }
 
 
-void CPointsDataOtherPointsTallyLevelByEvent::GetHtml(fmt::wmemory_buffer& data, bool bNoInternalLinks)
+void CPointsDataOtherPointsTallyLevelByEvent::GetHtml(wxString& data, bool bNoInternalLinks)
 {
-	fmt::format_to(
-		std::back_inserter(data),
-		L"<tr>\n<td>&nbsp;</td>\n<td>{}</td>\n<td>{}</td>\n<td align=\"right\">",
-		Sanitize(m_RunList.begin()->m_Level, true),
-		Sanitize(m_RunList.begin()->m_Event, true));
+	data << L"<tr>\n<td>&nbsp;</td>\n<td>" << Sanitize(m_RunList.begin()->m_Level, true) << L"</td>\n<td>"
+		 << Sanitize(m_RunList.begin()->m_Event, true) << L"</td>\n<td align=\"right\">";
 	if (!bNoInternalLinks)
 	{
-		fmt::format_to(std::back_inserter(data), L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, m_refTag);
+		data << L"<a href=\"" << ARB_PROTOCOL << m_refTag << L"\" name=\"" << m_refTag << L"\">";
 	}
-	fmt::format_to(std::back_inserter(data), L"{}", ARBDouble::ToString(m_Points));
+	data << ARBDouble::ToString(m_Points);
 	if (!bNoInternalLinks)
-		fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
-	fmt::format_to(std::back_inserter(data), L"{}", L"</td>\n</tr>\n");
+		data << L"</a>";
+	data << L"</td>\n</tr>\n";
 }
 
 
-bool CPointsDataOtherPointsTallyLevelByEvent::Details(std::wstring const& link)
+bool CPointsDataOtherPointsTallyLevelByEvent::Details(wxString const& link)
 {
 	if (link != m_refTag)
 		return false;
 
-	CDlgListViewer dlg(m_pDoc, StringUtil::stringW(_("IDS_OTHERPOINTS")), m_RunList);
+	CDlgListViewer dlg(m_pDoc, _("IDS_OTHERPOINTS"), m_RunList);
 	dlg.ShowModal();
 	return true;
 }
@@ -1618,13 +1559,13 @@ void CPointsDataItems::LoadData(ARBDogPtr const& inDog)
 
 			case ARBOtherPointsTally::AllByEvent:
 			{
-				std::set<std::wstring> tally;
+				std::set<wxString> tally;
 				std::list<OtherPtInfo>::iterator iter;
 				for (iter = runs.begin(); iter != runs.end(); ++iter)
 				{
 					tally.insert((*iter).m_Event);
 				}
-				for (std::set<std::wstring>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
+				for (std::set<wxString>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
 				{
 					std::list<OtherPtInfo> validRuns;
 					for (iter = runs.begin(); iter != runs.end(); ++iter)
@@ -1644,13 +1585,13 @@ void CPointsDataItems::LoadData(ARBDogPtr const& inDog)
 
 			case ARBOtherPointsTally::Level:
 			{
-				std::set<std::wstring> tally;
+				std::set<wxString> tally;
 				std::list<OtherPtInfo>::iterator iter;
 				for (iter = runs.begin(); iter != runs.end(); ++iter)
 				{
 					tally.insert((*iter).m_Level);
 				}
-				for (std::set<std::wstring>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
+				for (std::set<wxString>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
 				{
 					std::list<OtherPtInfo> validRuns;
 					for (iter = runs.begin(); iter != runs.end(); ++iter)
@@ -1670,7 +1611,7 @@ void CPointsDataItems::LoadData(ARBDogPtr const& inDog)
 
 			case ARBOtherPointsTally::LevelByEvent:
 			{
-				typedef std::pair<std::wstring, std::wstring> LevelEvent;
+				typedef std::pair<wxString, wxString> LevelEvent;
 				std::set<LevelEvent> tally;
 				std::list<OtherPtInfo>::iterator iter;
 				for (iter = runs.begin(); iter != runs.end(); ++iter)
@@ -1704,35 +1645,28 @@ void CPointsDataItems::LoadData(ARBDogPtr const& inDog)
 wxString CPointsDataItems::GetHtml(bool bFragment, bool bNoInternalLinks)
 {
 	ARBDate today(ARBDate::Today());
-	fmt::wmemory_buffer data;
+	wxString data;
 
 	// Put header in...
 	if (!bFragment)
 	{
-		fmt::format_to(
-			std::back_inserter(data),
-			L"<html><head><title>{} {}</title></head><body>\n",
-			_("IDS_TITLING_POINTS").wx_str(),
-			today.GetString());
+		data << L"<html><head><title>" << _("IDS_TITLING_POINTS") << L" " << today.GetString()
+			 << L"</title></head><body>\n";
 	}
 
 	// Put general info about the dog in...
-	fmt::format_to(
-		std::back_inserter(data),
-		L"<h1 align=\"center\">{} {}</h1>",
-		_("IDS_TITLING_POINTS").wx_str(),
-		Sanitize(today.GetString()));
+	data << L"<h1 align=\"center\">" << _("IDS_TITLING_POINTS") << L" " << Sanitize(today.GetString()) << L"</h1>";
 	if (m_pDog)
 	{
-		fmt::format_to(std::back_inserter(data), L"{}", L"<h1>");
+		data << L"<h1>";
 		if (!bNoInternalLinks)
-			fmt::format_to(std::back_inserter(data), L"<a href=\"{0}{1}\" name=\"{1}\">", ARB_PROTOCOL, s_refDog);
-		fmt::format_to(std::back_inserter(data), L"{}", Sanitize(m_pDog->GetCallName()));
+			data << L"<a href=\"" << ARB_PROTOCOL << s_refDog << L"\" name=\"" << s_refDog << L"\">";
+		data << Sanitize(m_pDog->GetCallName());
 		if (!bNoInternalLinks)
-			fmt::format_to(std::back_inserter(data), L"{}", L"</a>");
+			data << L"</a>";
 		if (!m_pDog->GetRegisteredName().empty())
-			fmt::format_to(std::back_inserter(data), L" [{}]", Sanitize(m_pDog->GetRegisteredName()));
-		fmt::format_to(std::back_inserter(data), L"{}", L"</h1>\n");
+			data << L" [" << Sanitize(m_pDog->GetRegisteredName()) << "]";
+		data << L"</h1>\n";
 	}
 
 	// Venues
@@ -1744,7 +1678,7 @@ wxString CPointsDataItems::GetHtml(bool bFragment, bool bNoInternalLinks)
 	// Other Points
 	if (!m_otherPts.empty())
 	{
-		fmt::format_to(std::back_inserter(data), L"<h2>{}</h2>{}", _("IDS_OTHERPOINTS").wx_str(), s_TableHeader);
+		data << L"<h2>" << _("IDS_OTHERPOINTS") << L"</h2>" << s_TableHeader;
 		ARBOtherPointsTally last = static_cast<ARBOtherPointsTally>(-1);
 		for (auto other : m_otherPts)
 		{
@@ -1753,10 +1687,7 @@ wxString CPointsDataItems::GetHtml(bool bFragment, bool bNoInternalLinks)
 				last = other->GetOther()->GetTally();
 				if (ARBOtherPointsTally::All != last)
 				{
-					fmt::format_to(
-						std::back_inserter(data),
-						L"<tr>\n<td>{}</td>\n</tr>\n",
-						Sanitize(other->GetOther()->GetName(), true));
+					data << L"<tr>\n<td>" << Sanitize(other->GetOther()->GetName(), true) << L"</td>\n</tr>\n";
 				}
 			}
 			other->GetHtml(data, bNoInternalLinks);
@@ -1764,14 +1695,14 @@ wxString CPointsDataItems::GetHtml(bool bFragment, bool bNoInternalLinks)
 	}
 
 	if (!bFragment)
-		fmt::format_to(std::back_inserter(data), L"{}", L"</body></html>");
-	fmt::format_to(std::back_inserter(data), L"{}", L"\n");
+		data << L"</body></html>";
+	data << L"\n";
 
-	return StringUtil::stringWX(fmt::to_string(data));
+	return data;
 }
 
 
-bool CPointsDataItems::Details(std::wstring const& link)
+bool CPointsDataItems::Details(wxString const& link)
 {
 	if (link == s_refDog)
 	{

@@ -108,10 +108,10 @@ public:
 		m_item = item;
 	}
 	// Force an update
-	ARBInfoItemPtr UpdateItem(std::wstring const& name, ARBInfoItemList& info);
+	ARBInfoItemPtr UpdateItem(wxString const& name, ARBInfoItemList& info);
 
 	int OnCompare(CListDataPtr const& item, long iCol) const override;
-	std::wstring OnNeedText(long iCol) const override;
+	wxString OnNeedText(long iCol) const override;
 	void OnNeedListItem(long iCol, wxListItem& info) const override;
 	bool OnNeedCheck() const override
 	{
@@ -140,7 +140,7 @@ protected:
 };
 
 
-ARBInfoItemPtr InfoNoteListData::UpdateItem(std::wstring const& name, ARBInfoItemList& info)
+ARBInfoItemPtr InfoNoteListData::UpdateItem(wxString const& name, ARBInfoItemList& info)
 {
 	if (!info.FindItem(name, &m_item))
 	{
@@ -172,8 +172,8 @@ int InfoNoteListData::OnCompare(CListDataPtr const& item, long iCol) const
 	break;
 	case k_colName:
 	{
-		std::wstring n1 = m_parent->GetNames()[m_idxName].m_name;
-		std::wstring n2 = m_parent->GetNames()[pData2->m_idxName].m_name;
+		wxString n1 = m_parent->GetNames()[m_idxName].m_name;
+		wxString n2 = m_parent->GetNames()[pData2->m_idxName].m_name;
 		if (n1 < n2)
 			rc = -1;
 		else if (n1 > n2)
@@ -182,8 +182,8 @@ int InfoNoteListData::OnCompare(CListDataPtr const& item, long iCol) const
 	break;
 	case k_colComment:
 	{
-		std::wstring s1 = m_item ? m_item->GetComment() : L"";
-		std::wstring s2 = pData2->m_item ? pData2->m_item->GetComment() : L"";
+		wxString s1 = m_item ? m_item->GetComment() : L"";
+		wxString s2 = pData2->m_item ? pData2->m_item->GetComment() : L"";
 		if (s1 < s2)
 			rc = -1;
 		else if (s1 > s2)
@@ -198,9 +198,9 @@ int InfoNoteListData::OnCompare(CListDataPtr const& item, long iCol) const
 }
 
 
-std::wstring InfoNoteListData::OnNeedText(long iCol) const
+wxString InfoNoteListData::OnNeedText(long iCol) const
 {
-	std::wstring str;
+	wxString str;
 	switch (iCol)
 	{
 	case k_colIcon:
@@ -231,7 +231,7 @@ void InfoNoteListData::OnNeedListItem(long iCol, wxListItem& info) const
 		info.SetImage(GetIcon());
 		break;
 	default:
-		info.SetText(StringUtil::stringWX(OnNeedText(iCol)));
+		info.SetText(OnNeedText(iCol));
 	}
 }
 
@@ -265,7 +265,7 @@ wxBEGIN_EVENT_TABLE(CDlgInfoNote, wxDialog)
 	EVT_LIST_ITEM_FOCUSED(LIST_CTRL, CDlgInfoNote::OnItemFocused)
 wxEND_EVENT_TABLE()
 
-CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstring const& inSelect, wxWindow* parent)
+CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, wxString const& inSelect, wxWindow* parent)
 	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_type(inType)
@@ -289,8 +289,8 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	, m_textCount(nullptr)
 	, m_trace("CDlgInfoNote")
 {
-	std::wstring caption = L"?";
-	std::set<std::wstring> allNames;
+	wxString caption = L"?";
+	std::set<wxString> allNames;
 	switch (m_type)
 	{
 	case ARBInfoType::Club:
@@ -326,7 +326,7 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	}
 
 	m_Names.reserve(allNames.size());
-	for (std::set<std::wstring>::iterator iter = allNames.begin(); iter != allNames.end(); ++iter)
+	for (std::set<wxString>::iterator iter = allNames.begin(); iter != allNames.end(); ++iter)
 	{
 		NameInfo data(*iter);
 		ARBInfoItemPtr item;
@@ -344,7 +344,7 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, std::wstri
 	wxDialog::Create(
 		parent,
 		wxID_ANY,
-		caption.c_str(),
+		caption,
 		wxDefaultPosition,
 		wxDefaultSize,
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
@@ -571,13 +571,13 @@ wxString CDlgInfoNote::GetCaption() const
 }
 
 
-std::wstring CDlgInfoNote::CurrentSelection() const
+wxString CDlgInfoNote::CurrentSelection() const
 {
 	return m_CurSel;
 }
 
 
-bool CDlgInfoNote::NameExists(std::wstring const& name)
+bool CDlgInfoNote::NameExists(wxString const& name)
 {
 	auto iter = std::find(m_Names.begin(), m_Names.end(), name);
 	if (iter == m_Names.end())
@@ -587,7 +587,7 @@ bool CDlgInfoNote::NameExists(std::wstring const& name)
 }
 
 
-size_t CDlgInfoNote::AddName(std::wstring const& name, UpdateStatus& status)
+size_t CDlgInfoNote::AddName(wxString const& name, UpdateStatus& status)
 {
 	size_t idxName = 0;
 	auto iter = std::find(m_Names.begin(), m_Names.end(), name);
@@ -641,7 +641,7 @@ bool CDlgInfoNote::DeleteName(size_t idxName)
 }
 
 
-ARBInfoItemPtr CDlgInfoNote::FindName(std::wstring const& name) const
+ARBInfoItemPtr CDlgInfoNote::FindName(wxString const& name) const
 {
 	ARBInfoItemPtr item;
 	m_Info.FindItem(name, &item);
@@ -699,7 +699,7 @@ bool CDlgInfoNote::IsItemVisible(size_t idxName) const
 }
 
 
-void CDlgInfoNote::LoadItems(std::wstring const* inSelect)
+void CDlgInfoNote::LoadItems(wxString const* inSelect)
 {
 	std::vector<long> items;
 	m_ctrlList->GetSelection(items);
@@ -772,10 +772,10 @@ void CDlgInfoNote::LoadItems(std::wstring const* inSelect)
 void CDlgInfoNote::UpdateText()
 {
 	if (static_cast<int>(m_Names.size()) == m_ctrlList->GetItemCount())
-		m_textCount->SetLabel(fmt::format(_("IDS_INFONOTE_FMT_COUNT").wx_str(), m_ctrlList->GetItemCount()));
+		m_textCount->SetLabel(wxString::Format(_("IDS_INFONOTE_FMT_COUNT"), m_ctrlList->GetItemCount()));
 	else
 		m_textCount->SetLabel(
-			fmt::format(_("IDS_INFONOTE_FMT_COUNT_OF").wx_str(), m_ctrlList->GetItemCount(), m_Names.size()));
+			wxString::Format(_("IDS_INFONOTE_FMT_COUNT_OF"), m_ctrlList->GetItemCount(), m_Names.size()));
 }
 
 
@@ -845,7 +845,7 @@ void CDlgInfoNote::DoEdit()
 void CDlgInfoNote::DoEdit(long index)
 {
 	InfoNoteListDataPtr data;
-	std::wstring name, comment;
+	wxString name, comment;
 	bool isVisible = true;
 	if (wxNOT_FOUND != index)
 	{
@@ -1006,15 +1006,15 @@ void CDlgInfoNote::OnCopyItems(wxCommandEvent& evt)
 	if (!clpData.isOkay())
 		return;
 
-	std::wstring tableData;
-	std::wstring tableHtml;
+	wxString tableData;
+	wxString tableHtml;
 	CClipboardDataTable table(tableData, tableHtml);
 
 	table.StartLine();
-	table.Cell(0, _("IDC_INFONOTE_VIS_VIS").ToStdWstring());
-	table.Cell(1, _("IDC_INFONOTE_USE_INUSE").ToStdWstring());
-	table.Cell(2, _("IDS_COL_NAME").ToStdWstring());
-	table.Cell(3, _("IDS_COL_COMMENTS").ToStdWstring());
+	table.Cell(0, _("IDC_INFONOTE_VIS_VIS"));
+	table.Cell(1, _("IDC_INFONOTE_USE_INUSE"));
+	table.Cell(2, _("IDS_COL_NAME"));
+	table.Cell(3, _("IDS_COL_COMMENTS"));
 	table.EndLine();
 
 	for (size_t idx = 0; idx < items.size(); ++idx)
@@ -1022,11 +1022,11 @@ void CDlgInfoNote::OnCopyItems(wxCommandEvent& evt)
 		auto data = GetData(items[idx]);
 		assert(data);
 		table.StartLine();
-		table.Cell(0, data->IsVisible() ? _("IDS_INFONOTE_YES").ToStdWstring() : _("IDS_INFONOTE_NO").ToStdWstring());
+		table.Cell(0, data->IsVisible() ? _("IDS_INFONOTE_YES") : _("IDS_INFONOTE_NO"));
 		table.Cell(
 			1,
-			m_Names[data->GetIndex()].m_usage == NameInfo::Usage::NotInUse ? _("IDS_INFONOTE_NO").ToStdWstring()
-																		   : _("IDS_INFONOTE_YES").ToStdWstring());
+			m_Names[data->GetIndex()].m_usage == NameInfo::Usage::NotInUse ? _("IDS_INFONOTE_NO")
+																		   : _("IDS_INFONOTE_YES"));
 		table.Cell(2, data->OnNeedText(k_colName));
 		table.Cell(3, data->OnNeedText(k_colComment));
 		table.EndLine();

@@ -63,8 +63,8 @@ bool CLinkDropTarget::OnDropFiles(wxCoord x, wxCoord y, wxArrayString const& fil
 {
 	for (size_t n = 0; n < filenames.size(); ++n)
 	{
-		m_dlg->m_Run->AddLink(StringUtil::stringW(filenames[n]));
-		m_dlg->ListLinkFiles(StringUtil::stringW(filenames[n]).c_str());
+		m_dlg->m_Run->AddLink(filenames[n]);
+		m_dlg->ListLinkFiles(filenames[n]);
 	}
 	return true;
 }
@@ -186,12 +186,12 @@ void CDlgRunPanelLinks::ListLinkFiles(wchar_t const* pItem)
 {
 	wxBusyCursor wait;
 	m_ctrlLinks->DeleteAllItems();
-	std::set<std::wstring> links;
+	std::set<wxString> links;
 	m_Run->GetLinks(links);
 	long i = 0;
-	for (std::set<std::wstring>::iterator iter = links.begin(); iter != links.end(); ++iter)
+	for (std::set<wxString>::iterator iter = links.begin(); iter != links.end(); ++iter)
 	{
-		int idx = m_ctrlLinks->InsertItem(i++, StringUtil::stringWX(*iter), GetImageIndex(*iter));
+		int idx = m_ctrlLinks->InsertItem(i++, *iter, GetImageIndex(*iter));
 		if (pItem && *iter == pItem)
 			m_ctrlLinks->Select(idx);
 	}
@@ -200,7 +200,7 @@ void CDlgRunPanelLinks::ListLinkFiles(wchar_t const* pItem)
 }
 
 
-int CDlgRunPanelLinks::GetImageIndex(std::wstring const& inLink)
+int CDlgRunPanelLinks::GetImageIndex(wxString const& inLink)
 {
 	wxBusyCursor wait;
 	int img = m_imgEmpty;
@@ -220,17 +220,17 @@ void CDlgRunPanelLinks::EditLink()
 	int nItem = m_ctrlLinks->GetFirstSelected();
 	if (0 <= nItem)
 	{
-		std::wstring name = GetListColumnText(m_ctrlLinks, nItem, 0);
+		wxString name = GetListColumnText(m_ctrlLinks, nItem, 0);
 		CDlgSelectURL dlg(name, this);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			std::wstring newName = dlg.Name();
+			wxString newName = dlg.Name();
 			if (name != newName)
 			{
 				m_Run->RemoveLink(name);
 				if (0 < newName.length())
 					m_Run->AddLink(newName);
-				ListLinkFiles(newName.c_str());
+				ListLinkFiles(newName);
 			}
 		}
 	}
@@ -269,11 +269,11 @@ void CDlgRunPanelLinks::OnLinksNew(wxCommandEvent& evt)
 	CDlgSelectURL dlg(L"", this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		std::wstring newName = dlg.Name();
+		wxString newName = dlg.Name();
 		if (0 < newName.length())
 		{
 			m_Run->AddLink(newName);
-			ListLinkFiles(newName.c_str());
+			ListLinkFiles(newName);
 		}
 	}
 }
@@ -290,7 +290,7 @@ void CDlgRunPanelLinks::OnLinksDelete(wxCommandEvent& evt)
 	long nItem = m_ctrlLinks->GetFirstSelected();
 	if (0 <= nItem)
 	{
-		std::wstring name = GetListColumnText(m_ctrlLinks, nItem, 0);
+		wxString name = GetListColumnText(m_ctrlLinks, nItem, 0);
 		m_Run->RemoveLink(name);
 		m_ctrlLinks->DeleteItem(nItem);
 		if (nItem == m_ctrlLinks->GetItemCount())
@@ -306,8 +306,8 @@ void CDlgRunPanelLinks::OnLinksOpen(wxCommandEvent& evt)
 	int nItem = m_ctrlLinks->GetFirstSelected();
 	if (0 <= nItem)
 	{
-		std::wstring name = GetListColumnText(m_ctrlLinks, nItem, 0);
-		wxLaunchDefaultBrowser(StringUtil::stringWX(name));
+		wxString name = GetListColumnText(m_ctrlLinks, nItem, 0);
+		wxLaunchDefaultBrowser(name);
 	}
 }
 

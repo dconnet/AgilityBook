@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2017-08-03 Added basic read verification
  * 2012-03-16 Renamed LoadXML functions, added stream version.
@@ -45,17 +44,17 @@ TEST_CASE("Element")
 	{
 		ElementNodePtr tree = LoadXMLData();
 
-		std::wstring tmpFile(L"data.tmp");
+		wxString tmpFile(L"data.tmp");
 		std::stringstream tmp1;
 		REQUIRE(tree->SaveXML(tmpFile));
 		REQUIRE(tree->SaveXML(tmp1));
 
 		ElementNodePtr tree2(ElementNode::New());
-		fmt::wmemory_buffer errs;
-		REQUIRE(tree2->LoadXML(tmpFile.c_str(), errs));
+		wxString errs;
+		REQUIRE(tree2->LoadXML(tmpFile, errs));
 
 #if defined(__WXWINDOWS__)
-		wxRemoveFile(tmpFile.c_str());
+		wxRemoveFile(tmpFile);
 #else
 #pragma PRAGMA_TODO(remove file)
 #endif

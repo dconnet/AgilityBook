@@ -14,7 +14,6 @@
  * 2019-09-17 Fix last-entered on hidden fields. Fix run's club on creation.
  * 2019-08-18 Fix Bonus points (couldn't enter double).
  *            Auto-select event when there's only one.
- * 2018-12-16 Convert to fmt.
  * 2017-11-21 Update title points when InClass changes.
  * 2015-11-01 Compute score for NA runs also.
  * 2015-01-01 Changed pixels to dialog units.
@@ -94,7 +93,7 @@ CDlgRun::CDlgRun(
 	Create(
 		pParent,
 		wxID_ANY,
-		StringUtil::stringWX(pDoc->AddDogToCaption(StringUtil::stringW(_("IDS_RUN_PROPERTIES")))),
+		pDoc->AddDogToCaption(_("IDS_RUN_PROPERTIES")),
 		wxDefaultPosition,
 		wxDefaultSize,
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
@@ -160,7 +159,7 @@ CDlgRun::CDlgRun(
 }
 
 
-std::wstring CDlgRun::GetCurrentVenueName() const
+wxString CDlgRun::GetCurrentVenueName() const
 {
 	return m_panelScore->GetCurrentVenueName();
 }

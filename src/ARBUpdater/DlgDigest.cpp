@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2017-04-09 Fixed sizer flags, look for config on D:, then fallback to C:.
  * 2015-11-28 Cleaned up UI, added copy command.
  * 2010-02-09 Created
@@ -67,7 +66,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 		wxID_ANY,
 		wxString::Format(
 			L"MD5/SHA1/SHA256 Checksum %s",
-			CVersionNum(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD).GetVersionString(VER_PARTS).c_str()),
+			CVersionNum(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD).GetVersionString(VER_PARTS)),
 		wxDefaultPosition,
 		wxDefaultSize,
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
@@ -271,11 +270,11 @@ bool CDlgDigest::LoadConfig()
 
 	ElementNodePtr tree(ElementNode::New());
 
-	fmt::wmemory_buffer errMsg;
-	bool bOk = tree->LoadXML(m_Config.c_str(), errMsg);
+	wxString errMsg;
+	bool bOk = tree->LoadXML(m_Config, errMsg);
 	if (!bOk)
 	{
-		wxMessageBox(fmt::to_string(errMsg));
+		wxMessageBox(errMsg);
 		return false;
 	}
 	if (tree->GetName() != L"DefaultConfig")
@@ -286,12 +285,12 @@ bool CDlgDigest::LoadConfig()
 	ARBErrorCallback err(errMsg);
 	if (!config.Load(tree->GetElementNode(configIdx), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 	{
-		wxMessageBox(fmt::to_string(errMsg));
+		wxMessageBox(errMsg);
 		return false;
 	}
 
 	m_ConfigVersion = config.GetVersion();
-	m_ctrlConfigVersion->SetLabel(fmt::format(L"{}", m_ConfigVersion));
+	m_ctrlConfigVersion->SetLabel(wxString::Format(L"%hd", m_ConfigVersion));
 
 	m_ctrlCopy->Enable(true);
 
@@ -358,26 +357,20 @@ void CDlgDigest::OnCopy(wxCommandEvent& evt)
 
 	wxFileName filename(m_File);
 
-	fmt::wmemory_buffer str;
-	fmt::format_to(
-		std::back_inserter(str),
-		L"<Platform arch=\"?\" minOS=\"?\" ver=\"{}.{}.{}.{}\" config=\"{}\"\n",
-		ARB_VER_MAJOR,
-		ARB_VER_MINOR,
-		ARB_VER_DOT,
-		ARB_VER_BUILD,
-		m_ConfigVersion);
-	fmt::format_to(
-		std::back_inserter(str),
-		L"\tfile=\"https://www.agilityrecordbook.com/files/{}\"\n",
-		filename.GetFullName().wx_str());
-	fmt::format_to(std::back_inserter(str), L"\tmd5=\"{}\"\n", m_MD5.wx_str());
-	fmt::format_to(std::back_inserter(str), L"\tsha1=\"{}\"\n", m_SHA1.wx_str());
-	fmt::format_to(std::back_inserter(str), L"\tsize=\"{}\"\n\t/>\n", m_Size);
+	wxString str;
+	// clang-format off
+	str << L"<Platform arch=\"?\" minOS=\"?\""
+		<< L"ver=\"" << ARB_VER_MAJOR << L"." << ARB_VER_MINOR << L"." << ARB_VER_DOT << L"." << ARB_VER_BUILD
+		<< L"\" config=\"" << m_ConfigVersion << L"\"\n"
+		<< L"\tfile=\"https://www.agilityrecordbook.com/files/" << filename.GetFullName() << L"\"\n"
+		<< L"\tmd5=\"" << m_MD5 << "\"\n"
+		<< L"\tsha1=\"" << m_SHA1 << "\"\n"
+		<< L"\tsize=\"" << m_Size << "\"\n\t/>\n";
+	// clang-format on
 
 	if (wxClipboard::Get()->Open())
 	{
-		auto* dataObj = new wxTextDataObject(fmt::to_string(str));
+		auto* dataObj = new wxTextDataObject(str);
 		if (!wxClipboard::Get()->SetData(dataObj))
 			delete dataObj;
 		wxClipboard::Get()->Flush();

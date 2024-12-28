@@ -424,7 +424,7 @@ const std::vector<int> sc_toolbarItems = {
 
 std::unique_ptr<CMenuHelper> CAgilityBookApp::CreateMenus()
 {
-	std::unordered_map<int, std::wstring> menuIds;
+	std::unordered_map<int, wxString> menuIds;
 	menuIds[IdMenuNone] = wxGetTranslation(arbT("IDS_MENU_MAIN"));
 	menuIds[IdMenuDog] = wxGetTranslation(arbT("IDS_MENU_DOG"));
 	menuIds[IdMenuTrial] = wxGetTranslation(arbT("IDS_MENU_TRIAL"));

@@ -39,9 +39,9 @@ using namespace ARB;
 using namespace ARBCommon;
 using namespace ARBWin;
 
-CDlgSelectURL::CDlgSelectURL(std::wstring const& name, wxWindow* pParent)
+CDlgSelectURL::CDlgSelectURL(wxString const& name, wxWindow* pParent)
 	: wxDialog()
-	, m_Name(StringUtil::stringWX(name))
+	, m_Name(name)
 	, m_textCtrl(nullptr)
 	, m_trace("CDlgSelectURL")
 {
@@ -49,9 +49,9 @@ CDlgSelectURL::CDlgSelectURL(std::wstring const& name, wxWindow* pParent)
 }
 
 
-CDlgSelectURL::CDlgSelectURL(std::wstring const& name, bool bAllowEmpty, wxWindow* pParent)
+CDlgSelectURL::CDlgSelectURL(wxString const& name, bool bAllowEmpty, wxWindow* pParent)
 	: wxDialog()
-	, m_Name(StringUtil::stringWX(name))
+	, m_Name(name)
 	, m_textCtrl(nullptr)
 	, m_trace("CDlgSelectURL")
 {
@@ -117,9 +117,9 @@ void CDlgSelectURL::InitDlg(wxWindow* pParent, bool bAllowEmpty)
 }
 
 
-std::wstring CDlgSelectURL::Name() const
+wxString CDlgSelectURL::Name() const
 {
-	return StringUtil::stringW(m_Name);
+	return m_Name;
 }
 
 

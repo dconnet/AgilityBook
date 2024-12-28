@@ -12,7 +12,6 @@
  * Revision History
  * 2019-05-28 Suppress href warning when hiding a title.
  * 2019-05-04 Reworked PointsData usage.
- * 2018-12-16 Convert to fmt.
  * 2017-08-20 Alter how header is generated/handled.
  * 2014-04-23 Scroll to position of clicked link on page load.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -82,7 +81,7 @@ void CHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
 		// Remember, spaces are now %20. Other special chars may
 		// need fixing too. Just don't use those in our links.
 		bool bDidIt = false;
-		std::wstring index(StringUtil::stringW(url.substr(ProtocolARB.length())));
+		wxString index(url.substr(ProtocolARB.length()));
 		if (!index.empty())
 		{
 			m_tag = index;
@@ -186,14 +185,14 @@ bool CAgilityBookPointsView::IsFiltered() const
 }
 
 
-bool CAgilityBookPointsView::GetMessage(std::wstring& msg) const
+bool CAgilityBookPointsView::GetMessage(wxString& msg) const
 {
 	msg = _("IDS_INDICATOR_BLANK");
 	return true;
 }
 
 
-bool CAgilityBookPointsView::GetMessage2(std::wstring& msg) const
+bool CAgilityBookPointsView::GetMessage2(wxString& msg) const
 {
 	if (GetDocument()->GetCurrentDog())
 	{
@@ -297,8 +296,8 @@ void CAgilityBookPointsView::OnViewCmd(wxCommandEvent& evt)
 		if (clpData.isOkay())
 		{
 			wxString data = m_Items->GetHtml(true, true);
-			clpData.AddData(ARBClipFormat::Html, StringUtil::stringW(data));
-			clpData.AddData(StringUtil::stringW(m_Ctrl->ToText()));
+			clpData.AddData(ARBClipFormat::Html, data);
+			clpData.AddData(m_Ctrl->ToText());
 			clpData.CommitData();
 		}
 	}

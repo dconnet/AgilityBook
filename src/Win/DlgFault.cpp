@@ -38,9 +38,9 @@ using namespace ARB;
 using namespace ARBCommon;
 using namespace ARBWin;
 
-CDlgFault::CDlgFault(std::set<std::wstring>& inFaults, std::wstring const& fault, wxWindow* pParent)
+CDlgFault::CDlgFault(std::set<wxString>& inFaults, wxString const& fault, wxWindow* pParent)
 	: wxDialog()
-	, m_Fault(StringUtil::stringWX(fault))
+	, m_Fault(fault)
 	, m_trace("CDlgFault")
 {
 	if (!pParent)
@@ -54,9 +54,9 @@ CDlgFault::CDlgFault(std::set<std::wstring>& inFaults, std::wstring const& fault
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	wxArrayString faults;
-	for (std::set<std::wstring>::const_iterator iter = inFaults.begin(); iter != inFaults.end(); ++iter)
+	for (std::set<wxString>::const_iterator iter = inFaults.begin(); iter != inFaults.end(); ++iter)
 	{
-		faults.Add(StringUtil::stringWX(*iter));
+		faults.Add(*iter);
 	}
 	faults.Sort();
 
@@ -94,9 +94,9 @@ CDlgFault::CDlgFault(std::set<std::wstring>& inFaults, std::wstring const& fault
 }
 
 
-std::wstring CDlgFault::GetFault() const
+wxString CDlgFault::GetFault() const
 {
-	return StringUtil::stringW(m_Fault);
+	return m_Fault;
 }
 
 } // namespace dconSoft

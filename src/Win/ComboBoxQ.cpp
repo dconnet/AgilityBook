@@ -142,7 +142,7 @@ void CQualifyingComboBox::ResetContent(ARBConfigScoringPtr const& inScoring)
 		ARB_Q q = ARB_Q::GetValidType(index);
 		if (inScoring && !inScoring->Supports(q))
 			continue;
-		int idx = Append(StringUtil::stringWX(q.str()));
+		int idx = Append(q.str());
 		SetClientObject(idx, new CQualifyingComboData(q));
 		if (curQ == q)
 			SetSelection(idx);

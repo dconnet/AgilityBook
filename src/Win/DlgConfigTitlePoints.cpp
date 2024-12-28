@@ -210,7 +210,7 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 	std::vector<void*> data;
 	for (auto const& lifetime : m_Venue->GetLifetimeNames())
 	{
-		wxString str = StringUtil::stringWX(lifetime->GetName());
+		wxString str = lifetime->GetName();
 		bool bDefault = false;
 		if (str.empty())
 		{

@@ -181,7 +181,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 	{
 		m_Date = m_pExistingPoints->GetDate();
 		m_Points = m_pExistingPoints->GetPoints();
-		m_Comments = StringUtil::stringWX(m_pExistingPoints->GetComment());
+		m_Comments = m_pExistingPoints->GetComment();
 		// Do not initialize the text for the other combos.
 		// Otherwise the validators will try to select before we're ready.
 	}
@@ -449,8 +449,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 		ARBConfigVenuePtr pVenue = (*iterVenue);
 		if (0 < pVenue->GetMultiQs().size())
 		{
-			int index = m_ctrlType->Append(
-				StringUtil::stringWX(ARBDogExistingPoints::GetPointTypeName(ARBExistingPointType::MQ)));
+			int index = m_ctrlType->Append(ARBDogExistingPoints::GetPointTypeName(ARBExistingPointType::MQ));
 			m_ctrlType->SetClientData(index, reinterpret_cast<void*>(ARBExistingPointType::MQ));
 			if (m_pExistingPoints && m_pExistingPoints->GetType() == ARBExistingPointType::MQ)
 				m_ctrlType->SetSelection(index);
@@ -672,7 +671,7 @@ void CDlgExistingPoints::UpdateControls()
 
 void CDlgExistingPoints::FillVenues()
 {
-	std::wstring venue;
+	wxString venue;
 	int index = m_ctrlVenues->GetSelection();
 	if (wxNOT_FOUND != index)
 		venue = m_ctrlVenues->GetString(index);
@@ -709,7 +708,7 @@ void CDlgExistingPoints::FillVenues()
 void CDlgExistingPoints::FillDivMultiQ()
 {
 	ARBExistingPointType type = GetCurrentType();
-	std::wstring divMultiQ;
+	wxString divMultiQ;
 	int index = m_ctrlDivMultiQs->GetSelection();
 	if (wxNOT_FOUND != index)
 		divMultiQ = m_ctrlDivMultiQs->GetString(index);
@@ -764,7 +763,7 @@ void CDlgExistingPoints::FillDivMultiQ()
 
 void CDlgExistingPoints::FillLevels()
 {
-	std::wstring level;
+	wxString level;
 	int index = m_ctrlLevels->GetSelection();
 	if (wxNOT_FOUND != index)
 		level = m_ctrlLevels->GetString(index);
@@ -812,7 +811,7 @@ void CDlgExistingPoints::FillLevels()
 
 void CDlgExistingPoints::FillEvents()
 {
-	std::wstring evt;
+	wxString evt;
 	int index = m_ctrlEvents->GetSelection();
 	if (wxNOT_FOUND != index)
 		evt = m_ctrlEvents->GetString(index);
@@ -886,7 +885,7 @@ void CDlgExistingPoints::FillSubNames()
 		wxArrayString items;
 
 		m_ctrlSubNames->Enable(true);
-		std::set<std::wstring> names;
+		std::set<wxString> names;
 		m_pDoc->Book().GetAllEventSubNames(pVenue->GetName(), pEvent, names);
 		for (auto const& name : names)
 		{
@@ -1016,13 +1015,13 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 		return;
 
 	ARBExistingPointType type = GetCurrentType();
-	std::wstring typeName;
-	std::wstring venue;
-	std::wstring div;
-	std::wstring level;
-	std::wstring eventName;
-	std::wstring subName;
-	std::wstring multiQ;
+	wxString typeName;
+	wxString venue;
+	wxString div;
+	wxString level;
+	wxString eventName;
+	wxString subName;
+	wxString multiQ;
 	bool outVenue, outDivMQ, outLevel, outEvent, outSubName, outTypeName;
 	GetEnableLists(type, outVenue, outDivMQ, outLevel, outEvent, outSubName, outTypeName);
 
@@ -1073,10 +1072,10 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 		multiQ = m_TextDivMultiQ;
 		break;
 	}
-	std::wstring strMust = StringUtil::stringW(_("You must select a '{}' name."));
+	wxString strMust = _("You must select a '%s' name.");
 	if (outVenue && venue.empty())
 	{
-		wxMessageBox(fmt::format(strMust, wxStripMenuCodes(_("IDC_EXISTING_VENUES")).wc_str()), _("Warning"));
+		wxMessageBox(wxString::Format(strMust, wxStripMenuCodes(_("IDC_EXISTING_VENUES"))), _("Warning"));
 		m_ctrlVenues->SetFocus();
 		return;
 	}
@@ -1086,7 +1085,7 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 		{
 			if (multiQ.empty())
 			{
-				wxMessageBox(fmt::format(strMust, wxStripMenuCodes(_("IDC_EXISTING_MULTIQ")).wc_str()), _("Warning"));
+				wxMessageBox(wxString::Format(strMust, wxStripMenuCodes(_("IDC_EXISTING_MULTIQ"))), _("Warning"));
 				m_ctrlDivMultiQs->SetFocus();
 				return;
 			}
@@ -1095,7 +1094,7 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 		{
 			if (div.empty())
 			{
-				wxMessageBox(fmt::format(strMust, wxStripMenuCodes(_("IDC_EXISTING_DIVISION")).wc_str()), _("Warning"));
+				wxMessageBox(wxString::Format(strMust, wxStripMenuCodes(_("IDC_EXISTING_DIVISION"))), _("Warning"));
 				m_ctrlDivMultiQs->SetFocus();
 				return;
 			}
@@ -1103,25 +1102,25 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 	}
 	if (outLevel && level.empty())
 	{
-		wxMessageBox(fmt::format(strMust, wxStripMenuCodes(_("IDC_EXISTING_LEVEL")).wc_str()), _("Warning"));
+		wxMessageBox(wxString::Format(strMust, wxStripMenuCodes(_("IDC_EXISTING_LEVEL"))), _("Warning"));
 		m_ctrlLevels->SetFocus();
 		return;
 	}
 	if (outEvent && eventName.empty())
 	{
-		wxMessageBox(fmt::format(strMust, wxStripMenuCodes(_("IDC_EXISTING_EVENT")).wc_str()), _("Warning"));
+		wxMessageBox(wxString::Format(strMust, wxStripMenuCodes(_("IDC_EXISTING_EVENT"))), _("Warning"));
 		m_ctrlEvents->SetFocus();
 		return;
 	}
 	if (outSubName && subName.empty())
 	{
-		wxMessageBox(fmt::format(strMust, wxStripMenuCodes(_("IDC_EXISTING_SUBNAME")).wc_str()), _("Warning"));
+		wxMessageBox(wxString::Format(strMust, wxStripMenuCodes(_("IDC_EXISTING_SUBNAME"))), _("Warning"));
 		m_ctrlSubNames->SetFocus();
 		return;
 	}
 	if (outTypeName && typeName.empty())
 	{
-		wxMessageBox(fmt::format(strMust, wxStripMenuCodes(_("IDC_EXISTING_TYPENAME")).wc_str()), _("Warning"));
+		wxMessageBox(wxString::Format(strMust, wxStripMenuCodes(_("IDC_EXISTING_TYPENAME"))), _("Warning"));
 		m_ctrlTypeNames->SetFocus();
 		return;
 	}
@@ -1137,7 +1136,7 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 		m_pExistingPoints->SetLevel(level);
 		m_pExistingPoints->SetEvent(eventName);
 		m_pExistingPoints->SetSubName(subName);
-		m_pExistingPoints->SetComment(StringUtil::stringW(m_Comments));
+		m_pExistingPoints->SetComment(m_Comments);
 		m_pExistingPoints->SetPoints(m_Points);
 	}
 	else
@@ -1154,7 +1153,7 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 			pPoints->SetLevel(level);
 			pPoints->SetEvent(eventName);
 			pPoints->SetSubName(subName);
-			pPoints->SetComment(StringUtil::stringW(m_Comments));
+			pPoints->SetComment(m_Comments);
 			pPoints->SetPoints(m_Points);
 		}
 	}

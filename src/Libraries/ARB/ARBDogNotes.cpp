@@ -148,7 +148,7 @@ bool ARBDogNotes::operator==(ARBDogNotes const& rhs) const
 }
 
 
-size_t ARBDogNotes::GetSearchStrings(std::set<std::wstring>& ioStrings) const
+size_t ARBDogNotes::GetSearchStrings(std::set<wxString>& ioStrings) const
 {
 	size_t nItems = 0;
 	for (ARBDogFaultList::const_iterator iter = m_Faults.begin(); iter != m_Faults.end(); ++iter)
@@ -189,12 +189,12 @@ bool ARBDogNotes::Load(
 		}
 		else if (element->GetName() == TREE_CRCD_META2)
 		{
-			m_CRCDMeta = StringUtil::stringA(element->GetValue());
+			m_CRCDMeta = element->GetValue().utf8_string();
 		}
 		else if (element->GetName() == TREE_CRCD_META)
 		{
 			// Replaced by TREE_CRCD_META2, this translates.
-			std::string tmp = StringUtil::stringA(element->GetValue());
+			std::string tmp = element->GetValue().utf8_string();
 			std::vector<unsigned char> data;
 			if (ARBBase64::Decode(tmp, data))
 			{

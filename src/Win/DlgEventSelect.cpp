@@ -79,9 +79,9 @@ public:
 CDlgEventSelect::CDlgEventSelect(
 	ARBConfigVenuePtr const& inVenue,
 	ARBDate const& inDate,
-	std::wstring const& inDivision,
-	std::wstring const& inLevel,
-	std::wstring const& inEvent,
+	wxString const& inDivision,
+	wxString const& inLevel,
+	wxString const& inEvent,
 	wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlDivisions(nullptr)
@@ -91,8 +91,8 @@ CDlgEventSelect::CDlgEventSelect(
 	, m_Division()
 	, m_Level()
 	, m_Event()
-	, m_inLevel(StringUtil::stringWX(inLevel))
-	, m_inEvent(StringUtil::stringWX(inEvent))
+	, m_inLevel(inLevel)
+	, m_inEvent(inEvent)
 	, m_pVenue(inVenue)
 	, m_Date(inDate)
 	, m_trace("CDlgEventSelect")
@@ -214,21 +214,21 @@ CDlgEventSelect::CDlgEventSelect(
 }
 
 
-std::wstring CDlgEventSelect::GetDivision() const
+wxString CDlgEventSelect::GetDivision() const
 {
-	return StringUtil::stringW(m_Division);
+	return m_Division;
 }
 
 
-std::wstring CDlgEventSelect::GetLevel() const
+wxString CDlgEventSelect::GetLevel() const
 {
-	return StringUtil::stringW(m_Level);
+	return m_Level;
 }
 
 
-std::wstring CDlgEventSelect::GetEvent() const
+wxString CDlgEventSelect::GetEvent() const
 {
-	return StringUtil::stringW(m_Event);
+	return m_Event;
 }
 
 
@@ -249,7 +249,7 @@ void CDlgEventSelect::UpdateControls()
 
 void CDlgEventSelect::FillLevels()
 {
-	std::wstring level;
+	wxString level;
 	if (wxNOT_FOUND != m_ctrlLevels->GetSelection())
 	{
 		TransferDataFromWindow();
@@ -301,7 +301,7 @@ void CDlgEventSelect::FillLevels()
 
 void CDlgEventSelect::FillEvents()
 {
-	std::wstring evt;
+	wxString evt;
 	if (wxNOT_FOUND != m_ctrlEvents->GetSelection())
 	{
 		TransferDataFromWindow();

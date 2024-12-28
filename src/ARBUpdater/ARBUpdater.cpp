@@ -89,7 +89,7 @@ bool CARBUpdaterApp::OnInit()
 		info.cbSize = sizeof(info);
 		info.fMask = SEE_MASK_NOCLOSEPROCESS;
 		info.lpVerb = L"open";
-		info.lpFile = file.wx_str();
+		info.lpFile = file.wc_str();
 		info.lpParameters = L"/qb START_APP=1";
 		info.nShow = SW_SHOWNORMAL;
 		if (ShellExecuteEx(&info))
@@ -101,7 +101,7 @@ bool CARBUpdaterApp::OnInit()
 		else
 		{
 			DWORD x = GetLastError();
-			wxMessageBox(fmt::format(L"\"{}\" failed: {:08x}", file.wx_str(), x));
+			wxMessageBox(wxString::Format(L"\"%s\" failed: %08x", file, x));
 		}
 		// In theory, there could be timing issue here - if ARB starts really
 		// quickly, it could try deleting the file before we exit. ARB will

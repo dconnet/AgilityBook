@@ -12,7 +12,6 @@
  * Revision History
  * 2022-04-15 Use wx DPI support.
  * 2019-01-01 Fix selection on initial load.
- * 2018-12-16 Convert to fmt.
  * 2018-09-15 Refactored how tree/list handle common actions.
  * 2014-04-11 Fix switching dogs
  * 2013-04-22 Changing dogs didn't update runs when viewing all runs.
@@ -164,7 +163,7 @@ bool CAgilityBookTreeView::CFindData::Search(CDlgFind* pDlg)
 	}
 	while (!bFound && hItem.IsOk())
 	{
-		std::set<std::wstring> strings;
+		std::set<wxString> strings;
 		if (SearchAll())
 		{
 			CAgilityBookTreeData* pData = m_pView->GetTreeItem(hItem);
@@ -173,7 +172,7 @@ bool CAgilityBookTreeView::CFindData::Search(CDlgFind* pDlg)
 		}
 		else
 		{
-			strings.insert(StringUtil::stringW(m_pView->m_Ctrl->GetItemText(hItem)));
+			strings.insert(m_pView->m_Ctrl->GetItemText(hItem));
 		}
 		for (auto const& str : strings)
 		{
@@ -187,7 +186,7 @@ bool CAgilityBookTreeView::CFindData::Search(CDlgFind* pDlg)
 	}
 	if (!bFound)
 	{
-		std::wstring msg = fmt::format(_("IDS_CANNOT_FIND").wx_str(), m_search.wc_str());
+		auto msg = wxString::Format(_("IDS_CANNOT_FIND"), m_search);
 		wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	return bFound;
@@ -418,7 +417,7 @@ bool CAgilityBookTreeView::IsFiltered() const
 }
 
 
-bool CAgilityBookTreeView::GetMessage(std::wstring& msg) const
+bool CAgilityBookTreeView::GetMessage(wxString& msg) const
 {
 	CAgilityBookRunsView* pView = GetDocument()->GetRunsView();
 	if (pView)
@@ -428,12 +427,12 @@ bool CAgilityBookTreeView::GetMessage(std::wstring& msg) const
 }
 
 
-bool CAgilityBookTreeView::GetMessage2(std::wstring& msg) const
+bool CAgilityBookTreeView::GetMessage2(wxString& msg) const
 {
 	if (GetDocument()->GetCurrentDog())
 		msg = GetDocument()->GetCurrentDog()->GetCallName();
 	else
-		msg = StringUtil::stringW(_("IDS_INDICATOR_BLANK"));
+		msg = _("IDS_INDICATOR_BLANK");
 	// If there's no dog, still return true. Or we won't blank an existing name.
 	// We only need to worry about this here and the Runs view since this is the
 	// only place we can delete a dog.
@@ -595,12 +594,7 @@ wxTreeItemId CAgilityBookTreeView::InsertDog(ARBDogPtr const& inDog, bool bSelec
 	{
 		CAgilityBookTreeDataDog* pDataDog = new CAgilityBookTreeDataDog(this, inDog);
 		int idxImage = pDataDog->OnNeedIcon();
-		hItem = m_Ctrl->AppendItem(
-			m_Ctrl->GetRootItem(),
-			StringUtil::stringWX(pDataDog->OnNeedText()),
-			idxImage,
-			idxImage,
-			pDataDog);
+		hItem = m_Ctrl->AppendItem(m_Ctrl->GetRootItem(), pDataDog->OnNeedText(), idxImage, idxImage, pDataDog);
 		for (ARBDogTrialList::const_iterator iterTrial = inDog->GetTrials().begin();
 			 iterTrial != inDog->GetTrials().end();
 			 ++iterTrial)
@@ -623,9 +617,7 @@ wxTreeItemId CAgilityBookTreeView::InsertTrial(ARBDogTrialPtr const& inTrial, wx
 	{
 		CAgilityBookTreeDataTrial* pDataTrial = new CAgilityBookTreeDataTrial(this, inTrial);
 		int idxImage = pDataTrial->OnNeedIcon();
-		hTrial
-			= m_Ctrl
-				  ->AppendItem(hParent, StringUtil::stringWX(pDataTrial->OnNeedText()), idxImage, idxImage, pDataTrial);
+		hTrial = m_Ctrl->AppendItem(hParent, pDataTrial->OnNeedText(), idxImage, idxImage, pDataTrial);
 #ifdef WX_TREE_HAS_STATE
 		int state = pDataTrial->GetTrial()->IsVerified() ? m_idxChecked : m_idxEmpty;
 		m_Ctrl->SetItemState(hTrial, state);
@@ -650,7 +642,7 @@ wxTreeItemId CAgilityBookTreeView::InsertRun(
 	{
 		CAgilityBookTreeDataRun* pDataRun = new CAgilityBookTreeDataRun(this, inRun);
 		int idxImage = pDataRun->OnNeedIcon();
-		hRun = m_Ctrl->AppendItem(hParent, StringUtil::stringWX(pDataRun->OnNeedText()), idxImage, idxImage, pDataRun);
+		hRun = m_Ctrl->AppendItem(hParent, pDataRun->OnNeedText(), idxImage, idxImage, pDataRun);
 	}
 	return hRun;
 }
@@ -701,10 +693,7 @@ bool CAgilityBookTreeView::PasteDog(bool& bLoaded)
 					}
 				}
 				else if (0 < err.m_ErrMsg.size())
-					wxMessageBox(
-						StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-						_("Agility Record Book"),
-						wxOK | wxCENTRE | wxICON_WARNING);
+					wxMessageBox(err.m_ErrMsg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 			}
 		}
 		return true;
@@ -818,10 +807,7 @@ bool CAgilityBookTreeView::PasteRuns(
 				}
 			}
 			if (!bLoaded && 0 < err.m_ErrMsg.size())
-				wxMessageBox(
-					StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-					_("Agility Record Book"),
-					wxOK | wxCENTRE | wxICON_WARNING);
+				wxMessageBox(err.m_ErrMsg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 		}
 		return true;
 	}
@@ -830,11 +816,11 @@ bool CAgilityBookTreeView::PasteRuns(
 }
 
 
-std::wstring CAgilityBookTreeView::GetPrintLine(wxTreeItemId hItem) const
+wxString CAgilityBookTreeView::GetPrintLine(wxTreeItemId hItem) const
 {
 	if (hItem.IsOk() && m_Ctrl)
-		return StringUtil::stringW(m_Ctrl->GetItemText(hItem));
-	return std::wstring();
+		return m_Ctrl->GetItemText(hItem);
+	return wxString();
 }
 
 
@@ -847,7 +833,7 @@ void CAgilityBookTreeView::UpdateData(wxTreeItemId hItem)
 		CAgilityBookTreeData* pData = dynamic_cast<CAgilityBookTreeData*>(m_Ctrl->GetItemData(hItem));
 		if (pData && pData->GetId().IsOk())
 		{
-			m_Ctrl->SetItemText(pData->GetId(), StringUtil::stringWX(pData->OnNeedText()));
+			m_Ctrl->SetItemText(pData->GetId(), pData->OnNeedText());
 		}
 	}
 	wxTreeItemIdValue cookie;
@@ -928,7 +914,7 @@ void CAgilityBookTreeView::LoadData()
 
 	wxBusyCursor wait;
 	// Remember the currently selected item.
-	std::wstring strCallName;
+	wxString strCallName;
 	CAgilityBookTreeData const* pData = GetCurrentTreeItem();
 	if (!pData)
 	{
@@ -996,17 +982,14 @@ void CAgilityBookTreeView::LoadData()
 }
 
 
-void CAgilityBookTreeView::PrintLine(fmt::wmemory_buffer& data, wxTreeItemId id, int indent) const
+void CAgilityBookTreeView::PrintLine(wxString& data, wxTreeItemId id, int indent) const
 {
-	static std::wstring const spaces(L"&nbsp;&nbsp;&nbsp;");
+	static wxString const spaces(L"&nbsp;&nbsp;&nbsp;");
 	if (id.IsOk() && id != m_Ctrl->GetRootItem())
 	{
 		for (int idx = 0; idx < indent; ++idx)
-			fmt::format_to(std::back_inserter(data), L"{}", spaces);
-		fmt::format_to(
-			std::back_inserter(data),
-			L"{}<br />\n",
-			m_Ctrl->GetItemText(id).wx_str()); // Note, wxWidgets needs the space before the slash
+			data << spaces;
+		data << m_Ctrl->GetItemText(id) << L"<br />\n"; // Note, wxWidgets needs the space before the slash
 	}
 	wxTreeItemIdValue cookie;
 	wxTreeItemId hChildItem = m_Ctrl->GetFirstChild(id, cookie);
@@ -1018,13 +1001,13 @@ void CAgilityBookTreeView::PrintLine(fmt::wmemory_buffer& data, wxTreeItemId id,
 }
 
 
-std::wstring CAgilityBookTreeView::GetPrintDataAsHtmlTable() const
+wxString CAgilityBookTreeView::GetPrintDataAsHtmlTable() const
 {
-	fmt::wmemory_buffer data;
-	fmt::format_to(std::back_inserter(data), L"{}", L"<html><body><p>\n");
+	wxString data;
+	data << L"<html><body><p>\n";
 	PrintLine(data, m_Ctrl->GetRootItem(), -1);
-	fmt::format_to(std::back_inserter(data), L"{}", L"</p></body></html>\n");
-	return fmt::to_string(data);
+	data << L"</p></body></html>\n";
+	return data;
 }
 
 
@@ -1393,10 +1376,7 @@ bool CAgilityBookTreeView::OnCmd(int id)
 							}
 						}
 						else if (0 < err.m_ErrMsg.size())
-							wxMessageBox(
-								StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-								_("Agility Record Book"),
-								wxOK | wxCENTRE | wxICON_WARNING);
+							wxMessageBox(err.m_ErrMsg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 					}
 				}
 			}
@@ -1653,14 +1633,14 @@ void CAgilityBookTreeView::OnViewCmd(wxCommandEvent& evt)
 void CAgilityBookTreeView::OnPrintView(wxCommandEvent& evt)
 {
 	CLogger::Log(L"MENU: CAgilityBookTreeView::OnPrintView");
-	wxGetApp().GetHtmlPrinter()->PrintText(StringUtil::stringWX(GetPrintDataAsHtmlTable()));
+	wxGetApp().GetHtmlPrinter()->PrintText(GetPrintDataAsHtmlTable());
 }
 
 
 void CAgilityBookTreeView::OnPreview(wxCommandEvent& evt)
 {
 	CLogger::Log(L"MENU: CAgilityBookTreeView::OnPreview");
-	wxGetApp().GetHtmlPrinter()->PreviewText(StringUtil::stringWX(GetPrintDataAsHtmlTable()));
+	wxGetApp().GetHtmlPrinter()->PreviewText(GetPrintDataAsHtmlTable());
 }
 
 } // namespace dconSoft

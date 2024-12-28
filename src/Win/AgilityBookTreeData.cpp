@@ -11,7 +11,6 @@
  *
  * Revision History
  * 2021-05-04 Deleting a dog did not properly update views.
- * 2018-12-16 Convert to fmt.
  * 2018-09-15 Refactored how tree/list handle common actions.
  * 2015-11-27 Use subname for event, if set.
  * 2012-09-09 Added 'titlePts' to 'Placement'.
@@ -114,27 +113,27 @@ CAgilityBookTreeDataDog::~CAgilityBookTreeDataDog()
 }
 
 
-std::wstring CAgilityBookTreeDataDog::OnNeedText() const
+wxString CAgilityBookTreeDataDog::OnNeedText() const
 {
-	fmt::wmemory_buffer str;
+	wxString str;
 	for (size_t idx = 0; idx < GetDogColumns().size(); ++idx)
 	{
 		if (0 < idx)
-			fmt::format_to(std::back_inserter(str), L"{}", L" ");
+			str << L" ";
 		switch (GetDogColumns()[idx])
 		{
 		case IO_TREE_DOG_REGNAME:
-			fmt::format_to(std::back_inserter(str), L"{}", m_pDog->GetRegisteredName());
+			str << m_pDog->GetRegisteredName();
 			break;
 		case IO_TREE_DOG_CALLNAME:
-			fmt::format_to(std::back_inserter(str), L"{}", m_pDog->GetCallName());
+			str << m_pDog->GetCallName();
 			break;
 		case IO_TREE_DOG_BREED:
-			fmt::format_to(std::back_inserter(str), L"{}", m_pDog->GetBreed());
+			str << m_pDog->GetBreed();
 			break;
 		case IO_TREE_DOG_DOB:
 			if (m_pDog->GetDOB().IsValid())
-				fmt::format_to(std::back_inserter(str), L"{}", m_pDog->GetDOB().GetString());
+				str << m_pDog->GetDOB().GetString();
 			break;
 		case IO_TREE_DOG_AGE:
 			if (m_pDog->GetDOB().IsValid())
@@ -145,17 +144,14 @@ std::wstring CAgilityBookTreeDataDog::OnNeedText() const
 				if (m_pDog->GetDeceased().IsValid())
 					m_pDog->GetDeceased().GetDate(current);
 				wxTimeSpan age = current - dob;
-				fmt::format_to(
-					std::back_inserter(str),
-					_("IDS_YEARS").wx_str(),
-					ARBDouble::ToString(age.GetDays() / 365.0, 1));
+				str += wxString::Format(_("IDS_YEARS"), ARBDouble::ToString(age.GetDays() / 365.0, 1));
 			}
 			break;
 		default:
 			break;
 		}
 	}
-	return fmt::to_string(str);
+	return str;
 }
 
 
@@ -311,9 +307,9 @@ CAgilityBookTreeDataDog* CAgilityBookTreeDataTrial::GetDataDog()
 }
 
 
-std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
+wxString CAgilityBookTreeDataTrial::OnNeedText() const
 {
-	fmt::wmemory_buffer str;
+	wxString str;
 	bool bNeedSpace = false;
 	for (size_t idx = 0; idx < GetTrialColumns().size(); ++idx)
 	{
@@ -325,11 +321,11 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 				if (bNeedSpace)
 				{
 					if (IO_TREE_TRIAL_END == GetTrialColumns()[idx - 1])
-						fmt::format_to(std::back_inserter(str), L"{}", L"-");
+						str << L"-";
 					else
-						fmt::format_to(std::back_inserter(str), L"{}", L" ");
+						str << L" ";
 				}
-				fmt::format_to(std::back_inserter(str), L"{}", m_pTrial->GetStartDate().GetString());
+				str << m_pTrial->GetStartDate().GetString();
 				bNeedSpace = true;
 			}
 			break;
@@ -339,36 +335,36 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 				if (bNeedSpace)
 				{
 					if (IO_TREE_TRIAL_START == GetTrialColumns()[idx - 1])
-						fmt::format_to(std::back_inserter(str), L"{}", L"-");
+						str << L"-";
 					else
-						fmt::format_to(std::back_inserter(str), L"{}", L" ");
+						str << L" ";
 				}
-				fmt::format_to(std::back_inserter(str), L"{}", m_pTrial->GetEndDate().GetString());
+				str << m_pTrial->GetEndDate().GetString();
 				bNeedSpace = true;
 			}
 			break;
 		case IO_TREE_TRIAL_VERIFIED:
 			if (bNeedSpace)
-				fmt::format_to(std::back_inserter(str), L"{}", L" ");
+				str << L" ";
 			if (m_pTrial->IsVerified())
-				fmt::format_to(std::back_inserter(str), L"{}", L"*");
+				str << L"*";
 			else
-				fmt::format_to(std::back_inserter(str), L"{}", L"  "); // 2 spaces due to font (variable spacing)
+				str << L"  "; // 2 spaces due to font (variable spacing)
 			bNeedSpace = true;
 			break;
 		case IO_TREE_TRIAL_CLUB:
 		{
 			if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
-				fmt::format_to(std::back_inserter(str), L"{}", L" ");
-			fmt::format_to(std::back_inserter(str), L"{}", m_pTrial->GetClubs().GetClubList(true));
+				str << L" ";
+			str << m_pTrial->GetClubs().GetClubList(true);
 			bNeedSpace = true;
 		}
 		break;
 		case IO_TREE_TRIAL_VENUE:
 		{
 			if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
-				fmt::format_to(std::back_inserter(str), L"{}", L" ");
-			fmt::format_to(std::back_inserter(str), L"{}", m_pTrial->GetClubs().GetClubList(false));
+				str << L" ";
+			str << m_pTrial->GetClubs().GetClubList(false);
 			bNeedSpace = true;
 		}
 		break;
@@ -376,8 +372,8 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 			if (!m_pTrial->GetLocation().empty())
 			{
 				if (bNeedSpace)
-					fmt::format_to(std::back_inserter(str), L"{}", L" ");
-				fmt::format_to(std::back_inserter(str), L"{}", m_pTrial->GetLocation());
+					str << L" ";
+				str << m_pTrial->GetLocation();
 				bNeedSpace = true;
 			}
 			break;
@@ -385,8 +381,8 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 			if (!m_pTrial->GetNote().empty())
 			{
 				if (bNeedSpace)
-					fmt::format_to(std::back_inserter(str), L"{}", L" ");
-				fmt::format_to(std::back_inserter(str), L"{}", StringUtil::Replace(m_pTrial->GetNote(), L"\n", L" "));
+					str << L" ";
+				str << StringUtil::Replace(m_pTrial->GetNote(), L"\n", L" ");
 				bNeedSpace = true;
 			}
 			break;
@@ -394,7 +390,7 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 			break;
 		}
 	}
-	return fmt::to_string(str);
+	return str;
 }
 
 
@@ -554,21 +550,21 @@ CAgilityBookTreeDataTrial* CAgilityBookTreeDataRun::GetDataTrial()
 }
 
 
-std::wstring CAgilityBookTreeDataRun::OnNeedText() const
+wxString CAgilityBookTreeDataRun::OnNeedText() const
 {
-	fmt::wmemory_buffer str;
+	wxString str;
 	for (size_t idx = 0; idx < GetRunColumns().size(); ++idx)
 	{
 		if (0 < idx)
-			fmt::format_to(std::back_inserter(str), L"{}", L" ");
+			str << L" ";
 		switch (GetRunColumns()[idx])
 		{
 		case IO_TREE_RUN_DATE:
-			fmt::format_to(std::back_inserter(str), L"{}", m_pRun->GetDate().GetString());
+			str << m_pRun->GetDate().GetString();
 			break;
 		case IO_TREE_RUN_Q:
 		{
-			std::wstring q;
+			wxString q;
 			if (m_pRun->GetQ().Qualified())
 			{
 				std::vector<ARBConfigMultiQPtr> multiQs;
@@ -584,37 +580,36 @@ std::wstring CAgilityBookTreeDataRun::OnNeedText() const
 				}
 				if (Q::SuperQ == m_pRun->GetQ())
 				{
-					std::wstring tmp(StringUtil::stringW(_("IDS_SQ")));
 					if (!q.empty())
 						q += L"/";
-					q += tmp;
+					q += _("IDS_SQ");
 				}
 			}
 			if (q.empty())
 				q = m_pRun->GetQ().str();
-			fmt::format_to(std::back_inserter(str), L"{}", q);
+			str << q;
 		}
 		break;
 		case IO_TREE_RUN_EVENT:
 			if (m_pRun->GetSubName().empty())
-				fmt::format_to(std::back_inserter(str), L"{}", m_pRun->GetEvent());
+				str << m_pRun->GetEvent();
 			else
-				fmt::format_to(std::back_inserter(str), L"{}", m_pRun->GetSubName());
+				str << m_pRun->GetSubName();
 			break;
 		case IO_TREE_RUN_DIVISION:
-			fmt::format_to(std::back_inserter(str), L"{}", m_pRun->GetDivision());
+			str << m_pRun->GetDivision();
 			break;
 		case IO_TREE_RUN_LEVEL:
-			fmt::format_to(std::back_inserter(str), L"{}", m_pRun->GetLevel());
+			str << m_pRun->GetLevel();
 			break;
 		case IO_TREE_RUN_HEIGHT:
-			fmt::format_to(std::back_inserter(str), L"{}", m_pRun->GetHeight());
+			str << m_pRun->GetHeight();
 			break;
 		default:
 			break;
 		}
 	}
-	return fmt::to_string(str);
+	return str;
 }
 
 

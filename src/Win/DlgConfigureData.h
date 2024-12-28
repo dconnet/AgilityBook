@@ -32,11 +32,11 @@ class CDlgConfigureDataBase : public ARBWin::CTreeData
 public:
 	CDlgConfigureDataBase(CDlgConfigVenue* pDlg);
 
-	std::wstring OnNeedText() const override
+	wxString OnNeedText() const override
 	{
 		return wxEmptyString;
 	}
-	virtual std::wstring OnNeedText(int iColumn) const
+	virtual wxString OnNeedText(int iColumn) const
 	{
 		return wxEmptyString;
 	}
@@ -115,8 +115,8 @@ public:
 	{
 		return true;
 	}
-	std::wstring OnNeedText() const override;
-	std::wstring OnNeedText(int iColumn) const override;
+	wxString OnNeedText() const override;
+	wxString OnNeedText(int iColumn) const override;
 
 protected:
 	ARB::ARBConfigVenuePtr m_Venue;
@@ -144,8 +144,8 @@ public:
 	{
 		return true;
 	}
-	std::wstring OnNeedText() const override;
-	std::wstring OnNeedText(int iColumn) const override;
+	wxString OnNeedText() const override;
+	wxString OnNeedText(int iColumn) const override;
 
 protected:
 	ARB::ARBConfigFaultPtr m_Fault;
@@ -173,8 +173,8 @@ public:
 	{
 		return true;
 	}
-	std::wstring OnNeedText() const override;
-	std::wstring OnNeedText(int iColumn) const override;
+	wxString OnNeedText() const override;
+	wxString OnNeedText(int iColumn) const override;
 
 protected:
 	ARB::ARBConfigOtherPointsPtr m_OtherPoints;
@@ -190,8 +190,8 @@ public:
 	{
 		return m_Div;
 	}
-	std::wstring OnNeedText() const override;
-	std::wstring OnNeedText(int iColumn) const override;
+	wxString OnNeedText() const override;
+	wxString OnNeedText(int iColumn) const override;
 	void AddSubItems() override;
 	bool CanAdd() const override
 	{
@@ -235,8 +235,8 @@ public:
 	{
 		return m_Level;
 	}
-	std::wstring OnNeedText() const override;
-	std::wstring OnNeedText(int iColumn) const override;
+	wxString OnNeedText() const override;
+	wxString OnNeedText(int iColumn) const override;
 	void AddSubItems() override;
 	bool CanAdd() const override
 	{
@@ -286,8 +286,8 @@ public:
 	{
 		return m_SubLevel;
 	}
-	std::wstring OnNeedText() const override;
-	std::wstring OnNeedText(int iColumn) const override;
+	wxString OnNeedText() const override;
+	wxString OnNeedText(int iColumn) const override;
 	bool CanEdit() const override
 	{
 		return true;
@@ -320,8 +320,8 @@ public:
 	{
 		return m_Title;
 	}
-	std::wstring OnNeedText() const override;
-	std::wstring OnNeedText(int iColumn) const override;
+	wxString OnNeedText() const override;
+	wxString OnNeedText(int iColumn) const override;
 	bool CanEdit() const override
 	{
 		return true;
@@ -357,8 +357,8 @@ public:
 	{
 		return m_Event;
 	}
-	std::wstring OnNeedText() const override;
-	std::wstring OnNeedText(int iColumn) const override;
+	wxString OnNeedText() const override;
+	wxString OnNeedText(int iColumn) const override;
 	bool CanEdit() const override
 	{
 		return true;
@@ -394,8 +394,8 @@ public:
 	{
 		return m_pName;
 	}
-	std::wstring OnNeedText() const override;
-	std::wstring OnNeedText(int iColumn) const override;
+	wxString OnNeedText() const override;
+	wxString OnNeedText(int iColumn) const override;
 	bool CanEdit() const override
 	{
 		return true;
@@ -431,8 +431,8 @@ public:
 	{
 		return m_MultiQ;
 	}
-	std::wstring OnNeedText() const override;
-	std::wstring OnNeedText(int iColumn) const override;
+	wxString OnNeedText() const override;
+	wxString OnNeedText(int iColumn) const override;
 	bool CanEdit() const override
 	{
 		return true;

@@ -59,7 +59,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override
+	wxString GetGenericName() const override
 	{
 		return m_Name;
 	}
@@ -69,7 +69,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override
 	{
 		return 0;
 	}
@@ -102,31 +102,31 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(int indent, ARBConfigSubLevelPtr const& inLevelNew, std::wstring& ioInfo);
+	bool Update(int indent, ARBConfigSubLevelPtr const& inLevelNew, wxString& ioInfo);
 
 	/*
 	 * Getters/setters.
 	 */
-	std::wstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(std::wstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	std::wstring const& GetShortName() const
+	wxString const& GetShortName() const
 	{
 		return m_ShortName;
 	}
-	void SetShortName(std::wstring const& inName)
+	void SetShortName(wxString const& inName)
 	{
 		m_ShortName = inName;
 	}
 
 private:
-	std::wstring m_Name;
-	std::wstring m_ShortName;
+	wxString m_Name;
+	wxString m_ShortName;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -162,7 +162,7 @@ public:
 	 * @param outLevel Pointer to object, NULL if not found.
 	 * @return Whether name exists.
 	 */
-	bool FindSubLevel(std::wstring const& inName, ARBConfigSubLevelPtr* outLevel = nullptr) const;
+	bool FindSubLevel(wxString const& inName, ARBConfigSubLevelPtr* outLevel = nullptr) const;
 
 	/**
 	 * Find a sublevel.
@@ -170,14 +170,14 @@ public:
 	 * @param outLevel Pointer to object, NULL if not found.
 	 * @return Whether the object was added.
 	 */
-	bool AddSubLevel(std::wstring const& inName, ARBConfigSubLevelPtr* outLevel = nullptr);
+	bool AddSubLevel(wxString const& inName, ARBConfigSubLevelPtr* outLevel = nullptr);
 
 	/**
 	 * Delete a sublevel.
 	 * @param inName Name of sublevel to delete.
 	 * @return Whether sublevel was deleted or not.
 	 */
-	bool DeleteSubLevel(std::wstring const& inName);
+	bool DeleteSubLevel(wxString const& inName);
 };
 
 } // namespace ARB

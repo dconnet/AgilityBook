@@ -60,7 +60,7 @@ void SearchFor(CDlgARBHelp* pParent, wxString const& inFullPath, wxString const&
 	wxArrayString files;
 	wxDir::GetAllFiles(inFullPath, &files, pattern, wxDIR_DIRS | wxDIR_FILES);
 	for (size_t n = 0; n < files.GetCount(); ++n)
-		pParent->SetARBFileStatus(StringUtil::stringW(files[n]));
+		pParent->SetARBFileStatus(files[n]);
 }
 } // namespace
 
@@ -109,7 +109,7 @@ bool CDlgPageEncode::TransferDataFromWindow()
 	m_Parent->AddSysInfo(ARBDebug::GetSystemInfo(this, ver));
 
 	// Add registry info
-	m_Parent->AddRegistryInfo(ARBDebug::GetRegistryInfo().c_str());
+	m_Parent->AddRegistryInfo(ARBDebug::GetRegistryInfo());
 
 	std::set<wxString> directories;
 
@@ -133,18 +133,18 @@ bool CDlgPageEncode::TransferDataFromWindow()
 	// CAgilityBookOptions::GetBackupDirectory());
 	directories.insert(wxConfig::Get()->Read(CFG_SETTINGS_BACKUPDIR, wxString()));
 
-	std::vector<std::wstring> items;
+	std::vector<wxString> items;
 	ARBDebug::DumpRegistryGroup(L"Recent File List", nullptr, &items);
-	for (std::vector<std::wstring>::iterator iter = items.begin(); iter != items.end(); ++iter)
+	for (auto iter = items.begin(); iter != items.end(); ++iter)
 	{
-		std::wstring path = *iter;
+		wxString path = *iter;
 		if (path.empty())
 			continue;
-		wxFileName name(path.c_str());
+		wxFileName name(path);
 		bool bFound = false;
 		if (!wxFileName::IsCaseSensitive())
 		{
-			for (std::set<wxString>::iterator iDir = directories.begin(); !bFound && iDir != directories.end(); ++iDir)
+			for (auto iDir = directories.begin(); !bFound && iDir != directories.end(); ++iDir)
 			{
 				if (0 == name.GetPath().CmpNoCase(*iDir))
 					bFound = true;
@@ -154,7 +154,7 @@ bool CDlgPageEncode::TransferDataFromWindow()
 			directories.insert(name.GetPath());
 	}
 
-	for (std::set<wxString>::iterator i = directories.begin(); i != directories.end(); ++i)
+	for (auto i = directories.begin(); i != directories.end(); ++i)
 	{
 		if ((*i).empty())
 			continue;
@@ -163,7 +163,7 @@ bool CDlgPageEncode::TransferDataFromWindow()
 
 	// Gather logging files
 	CLogger logger;
-	logger.Initialize(wxGetApp().GetUpdateInfoKey().c_str(), false);
+	logger.Initialize(wxGetApp().GetUpdateInfoKey(), false);
 	// Note: This is GetUserLocalDataDir().
 	SearchFor(m_Parent, logger.GetCurrentLogDir(), L"*.log");
 

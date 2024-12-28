@@ -83,7 +83,7 @@ public:
 	{
 	}
 	int OnCompare(CListDataPtr const& item, long iCol) const override;
-	std::wstring OnNeedText(long iCol) const override;
+	wxString OnNeedText(long iCol) const override;
 	ARBDogExistingPointsPtr GetData() const
 	{
 		return m_Pts;
@@ -178,9 +178,9 @@ int CDlgDogDataPoint::OnCompare(CListDataPtr const& item, long iCol) const
 }
 
 
-std::wstring CDlgDogDataPoint::OnNeedText(long iCol) const
+wxString CDlgDogDataPoint::OnNeedText(long iCol) const
 {
-	std::wstring text;
+	wxString text;
 	switch (iCol)
 	{
 	case k_colDate:
@@ -190,7 +190,7 @@ std::wstring CDlgDogDataPoint::OnNeedText(long iCol) const
 		text = ARBDogExistingPoints::GetPointTypeName(m_Pts->GetType());
 		break;
 	case k_colPoints:
-		text = fmt::format(L"{}", m_Pts->GetPoints());
+		text << m_Pts->GetPoints();
 		break;
 	case k_colOther:
 		text = m_Pts->GetTypeName();
@@ -308,7 +308,7 @@ void CDlgDogPanelPoints::UpdateControls()
 
 	if (m_ctrlSelectedPts)
 	{
-		std::wstring str;
+		wxString str;
 		std::vector<long> indices;
 		if (0 < m_ctrlList->GetSelection(indices))
 		{
@@ -319,7 +319,7 @@ void CDlgDogPanelPoints::UpdateControls()
 				if (pData)
 					total += pData->GetData()->GetPoints();
 			}
-			str = fmt::format(L"{}", total);
+			str << total;
 		}
 		m_ctrlSelectedPts->SetLabel(str);
 	}

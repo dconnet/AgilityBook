@@ -76,7 +76,7 @@ public:
 	{
 	}
 	int OnCompare(CListDataPtr const& item, long iCol) const override;
-	std::wstring OnNeedText(long iCol) const override;
+	wxString OnNeedText(long iCol) const override;
 	void OnNeedListItem(long iCol, wxListItem& info) const override;
 	ARBDogTitlePtr GetData() const
 	{
@@ -124,8 +124,8 @@ int CDlgDogDataTitle::OnCompare(CListDataPtr const& item, long iCol) const
 		break;
 	case k_colTitle:
 	{
-		std::wstring n1 = pTitle1->GetGenericName();
-		std::wstring n2 = pTitle2->GetGenericName();
+		wxString n1 = pTitle1->GetGenericName();
+		wxString n2 = pTitle2->GetGenericName();
 		if (n1 < n2)
 			rc = -1;
 		else if (n1 > n2)
@@ -134,9 +134,9 @@ int CDlgDogDataTitle::OnCompare(CListDataPtr const& item, long iCol) const
 	break;
 	case k_colName:
 	{
-		std::wstring name1
+		wxString name1
 			= m_pDlg->m_pDoc->Book().GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetRawName());
-		std::wstring name2
+		wxString name2
 			= m_pDlg->m_pDoc->Book().GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetRawName());
 		if (name1 < name2)
 			rc = -1;
@@ -151,9 +151,9 @@ int CDlgDogDataTitle::OnCompare(CListDataPtr const& item, long iCol) const
 }
 
 
-std::wstring CDlgDogDataTitle::OnNeedText(long iCol) const
+wxString CDlgDogDataTitle::OnNeedText(long iCol) const
 {
-	std::wstring text;
+	wxString text;
 	switch (iCol)
 	{
 	case k_colDate:
@@ -210,7 +210,7 @@ void CDlgDogDataTitle::OnNeedListItem(long iCol, wxListItem& info) const
 		}
 		break;
 	default:
-		info.SetText(StringUtil::stringWX(OnNeedText(iCol)));
+		info.SetText(OnNeedText(iCol));
 		break;
 	}
 }

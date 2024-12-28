@@ -56,7 +56,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override
+	wxString GetGenericName() const override
 	{
 		return m_Name;
 	}
@@ -66,7 +66,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override
 	{
 		return 0;
 	}
@@ -94,70 +94,68 @@ public:
 	/**
 	 * Get the formatted URL to use to request data.
 	 */
-	std::wstring GetFormattedURL(
-		std::vector<std::wstring> const& inLocCodes,
-		std::vector<std::wstring> const& inVenueCodes) const;
+	wxString GetFormattedURL(std::vector<wxString> const& inLocCodes, std::vector<wxString> const& inVenueCodes) const;
 
 	/*
 	 * Getters/setters.
 	 */
-	std::wstring GetName() const
+	wxString GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(std::wstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	std::wstring GetDescription() const
+	wxString GetDescription() const
 	{
 		return m_Desc;
 	}
-	void SetDescription(std::wstring const& inDesc)
+	void SetDescription(wxString const& inDesc)
 	{
 		m_Desc = inDesc;
 	}
-	std::wstring GetSearchURL() const
+	wxString GetSearchURL() const
 	{
 		return m_urlSearch;
 	}
-	void SetSearchURL(std::wstring const& inURL)
+	void SetSearchURL(wxString const& inURL)
 	{
 		m_urlSearch = inURL;
 	}
-	std::wstring GetHelpURL() const
+	wxString GetHelpURL() const
 	{
 		return m_urlHelp;
 	}
-	void SetHelpURL(std::wstring const& inURL)
+	void SetHelpURL(wxString const& inURL)
 	{
 		m_urlHelp = inURL;
 	}
-	std::map<std::wstring, std::wstring> const& LocationCodes() const
+	std::map<wxString, wxString> const& LocationCodes() const
 	{
 		return m_Locations;
 	}
-	std::map<std::wstring, std::wstring> const& VenueCodes() const
+	std::map<wxString, wxString> const& VenueCodes() const
 	{
 		return m_Venues;
 	}
 
-	bool HasLocationCode(std::wstring const& inCode) const;
-	bool AddLocationCode(std::wstring const& inCode, std::wstring const& inName);
-	bool RemoveLocationCode(std::wstring const& inCode);
+	bool HasLocationCode(wxString const& inCode) const;
+	bool AddLocationCode(wxString const& inCode, wxString const& inName);
+	bool RemoveLocationCode(wxString const& inCode);
 	bool RemoveAllLocationCodes();
-	bool HasVenueCode(std::wstring const& inCode) const;
-	bool AddVenueCode(std::wstring const& inCode, std::wstring const& inVenue);
-	bool RemoveVenueCode(std::wstring const& inCode);
+	bool HasVenueCode(wxString const& inCode) const;
+	bool AddVenueCode(wxString const& inCode, wxString const& inVenue);
+	bool RemoveVenueCode(wxString const& inCode);
 	bool RemoveAllVenueCodes();
 
 private:
-	std::wstring m_Name;
-	std::wstring m_Desc;
-	std::wstring m_urlSearch;
-	std::wstring m_urlHelp;
-	std::map<std::wstring, std::wstring> m_Locations;
-	std::map<std::wstring, std::wstring> m_Venues;
+	wxString m_Name;
+	wxString m_Desc;
+	wxString m_urlSearch;
+	wxString m_urlHelp;
+	std::map<wxString, wxString> m_Locations;
+	std::map<wxString, wxString> m_Venues;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -192,7 +190,7 @@ public:
 	 * @param outSite Object that was found.
 	 * @return Whether the object was found.
 	 */
-	bool FindSite(std::wstring const& inSite, ARBConfigCalSitePtr* outSite = nullptr) const;
+	bool FindSite(wxString const& inSite, ARBConfigCalSitePtr* outSite = nullptr) const;
 
 	/**
 	 * Add a site.
@@ -200,7 +198,7 @@ public:
 	 * @param outSite Pointer to new object, NULL if name already exists or is empty.
 	 * @return Whether the object was added.
 	 */
-	bool AddSite(std::wstring const& inSite, ARBConfigCalSitePtr* outSite = nullptr);
+	bool AddSite(wxString const& inSite, ARBConfigCalSitePtr* outSite = nullptr);
 
 	/**
 	 * Add a site.
@@ -214,7 +212,7 @@ public:
 	 * @param inSite Name of site to delete.
 	 * @return Number of sites deleted (0 or 1).
 	 */
-	int DeleteSite(std::wstring const& inSite);
+	int DeleteSite(wxString const& inSite);
 };
 
 } // namespace dconSoft

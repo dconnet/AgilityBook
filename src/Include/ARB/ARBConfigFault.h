@@ -58,7 +58,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override
+	wxString GetGenericName() const override
 	{
 		return m_Name;
 	}
@@ -68,7 +68,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override
 	{
 		return 0;
 	}
@@ -97,17 +97,17 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	std::wstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(std::wstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
 
 private:
-	std::wstring m_Name;
+	wxString m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -137,7 +137,7 @@ public:
 	 * @param outFault Pointer to found object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindFault(std::wstring const& inName, ARBConfigFaultPtr* outFault = nullptr) const;
+	bool FindFault(wxString const& inName, ARBConfigFaultPtr* outFault = nullptr) const;
 
 	/**
 	 * Add a fault.
@@ -145,14 +145,14 @@ public:
 	 * @param outFault Pointer to object, NULL if name already exists or is empty.
 	 * @return Whether the fault was added.
 	 */
-	bool AddFault(std::wstring const& inName, ARBConfigFaultPtr* outFault = nullptr);
+	bool AddFault(wxString const& inName, ARBConfigFaultPtr* outFault = nullptr);
 
 	/**
 	 * Delete the fault.
 	 * @param inName Name of fault to delete.
 	 * @return Whether fault was deleted.
 	 */
-	bool DeleteFault(std::wstring const& inName);
+	bool DeleteFault(wxString const& inName);
 };
 
 } // namespace ARB

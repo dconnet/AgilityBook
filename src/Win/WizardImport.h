@@ -55,13 +55,13 @@ private:
 
 	CWizard* m_pSheet;
 	CAgilityBookDoc* m_pDoc;
-	std::wstring m_FileName;
-	std::vector<std::wstring> m_FileData;               ///< For reading generic text files.
-	std::vector<std::vector<std::wstring>> m_ExcelData; ///< For reading excel directly.
+	wxString m_FileName;
+	std::vector<wxString> m_FileData;               ///< For reading generic text files.
+	std::vector<std::vector<wxString>> m_ExcelData; ///< For reading excel directly.
 	long m_Row;
 	wxSpinCtrl* m_ctrlRow;
 	ARBImportExportDelim m_Delim;
-	std::wstring m_Delimiter;
+	wxString m_Delimiter;
 	wxStaticBox* m_boxDelimiters;
 	wxRadioButton* m_ctrlTab;
 	wxRadioButton* m_ctrlColon;

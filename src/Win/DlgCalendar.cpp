@@ -73,14 +73,14 @@ CDlgCalendar::CDlgCalendar(ARBCalendarPtr const& inCal, CAgilityBookDoc* pDoc, w
 	, m_bDrawingUnknown(true)
 	, m_dateCloses(ARBDate::Today())
 	, m_bClosingUnknown(true)
-	, m_OnlineUrl(StringUtil::stringWX(m_pCal->GetOnlineURL()))
+	, m_OnlineUrl(m_pCal->GetOnlineURL())
 	, m_Confirmation()
-	, m_PremiumUrl(StringUtil::stringWX(m_pCal->GetPremiumURL()))
-	, m_EMailSecAddr(StringUtil::stringWX(m_pCal->GetSecEmail()))
-	, m_Venue(StringUtil::stringWX(m_pCal->GetVenue()))
-	, m_Club(StringUtil::stringWX(m_pCal->GetClub()))
-	, m_Location(StringUtil::stringWX(m_pCal->GetLocation()))
-	, m_Notes(StringUtil::stringWX(m_pCal->GetNote()))
+	, m_PremiumUrl(m_pCal->GetPremiumURL())
+	, m_EMailSecAddr(m_pCal->GetSecEmail())
+	, m_Venue(m_pCal->GetVenue())
+	, m_Club(m_pCal->GetClub())
+	, m_Location(m_pCal->GetLocation())
+	, m_Notes(m_pCal->GetNote())
 	, m_ctrlEnd(nullptr)
 	, m_ctrlOpens(nullptr)
 	, m_ctrlDraws(nullptr)
@@ -355,7 +355,7 @@ CDlgCalendar::CDlgCalendar(ARBCalendarPtr const& inCal, CAgilityBookDoc* pDoc, w
 		break;
 	case ARBAccommodations::Confirmed:
 		m_ctrlAccomMade->SetValue(true);
-		m_Confirmation = StringUtil::stringWX(m_pCal->GetConfirmation());
+		m_Confirmation = m_pCal->GetConfirmation();
 		break;
 	}
 
@@ -397,7 +397,7 @@ CDlgCalendar::CDlgCalendar(ARBCalendarPtr const& inCal, CAgilityBookDoc* pDoc, w
 	if (m_EMailSecAddr.empty())
 		m_ctrlEMailSec->Enable(false);
 
-	std::set<std::wstring> addrs;
+	std::set<wxString> addrs;
 	for (auto const& cal : m_pDoc->Book().GetCalendar())
 	{
 		addrs.insert(cal->GetSecEmail());
@@ -656,9 +656,9 @@ void CDlgCalendar::UpdateLocationInfo(wxString const& location)
 	if (!location.empty())
 	{
 		ARBInfoItemPtr pItem;
-		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfoType::Location).FindItem(StringUtil::stringW(location), &pItem))
+		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfoType::Location).FindItem(location, &pItem))
 		{
-			str = StringUtil::stringWX(pItem->GetComment());
+			str = pItem->GetComment();
 		}
 	}
 	m_ctrlLocationInfo->SetValue(str);
@@ -667,11 +667,11 @@ void CDlgCalendar::UpdateLocationInfo(wxString const& location)
 
 void CDlgCalendar::ListLocations()
 {
-	std::set<std::wstring> locations;
+	std::set<wxString> locations;
 	m_pDoc->Book().GetAllTrialLocations(locations, true, true);
 	if (!m_pCal->GetLocation().empty())
 		locations.insert(m_pCal->GetLocation());
-	std::wstring loc(m_Location);
+	wxString loc(m_Location);
 	if (m_Location.empty())
 		loc = m_pCal->GetLocation();
 	m_ctrlLocation->Clear();
@@ -694,9 +694,9 @@ void CDlgCalendar::UpdateClubInfo(wxString const& club)
 	if (!club.empty())
 	{
 		ARBInfoItemPtr pItem;
-		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfoType::Club).FindItem(StringUtil::stringW(club), &pItem))
+		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfoType::Club).FindItem(club, &pItem))
 		{
-			str = StringUtil::stringWX(pItem->GetComment());
+			str = pItem->GetComment();
 		}
 	}
 	m_ctrlClubInfo->SetValue(str);
@@ -705,11 +705,11 @@ void CDlgCalendar::UpdateClubInfo(wxString const& club)
 
 void CDlgCalendar::ListClubs()
 {
-	std::set<std::wstring> clubs;
+	std::set<wxString> clubs;
 	m_pDoc->Book().GetAllClubNames(clubs, true, true);
 	if (!m_pCal->GetClub().empty())
 		clubs.insert(m_pCal->GetClub());
-	std::wstring club(m_Club);
+	wxString club(m_Club);
 	if (m_Club.empty())
 		club = m_pCal->GetClub();
 	m_ctrlClub->Clear();
@@ -835,10 +835,10 @@ void CDlgCalendar::OnSelchangeClub(wxCommandEvent& evt)
 void CDlgCalendar::OnClubNotes(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
-	CDlgInfoNote dlg(m_pDoc, ARBInfoType::Club, StringUtil::stringW(m_Club), this);
+	CDlgInfoNote dlg(m_pDoc, ARBInfoType::Club, m_Club, this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		m_Club = StringUtil::stringWX(dlg.CurrentSelection());
+		m_Club = dlg.CurrentSelection();
 		ListClubs();
 	}
 }
@@ -854,10 +854,10 @@ void CDlgCalendar::OnSelchangeLocation(wxCommandEvent& evt)
 void CDlgCalendar::OnLocationNotes(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
-	CDlgInfoNote dlg(m_pDoc, ARBInfoType::Location, StringUtil::stringW(m_Location), this);
+	CDlgInfoNote dlg(m_pDoc, ARBInfoType::Location, m_Location, this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		m_Location = StringUtil::stringWX(dlg.CurrentSelection());
+		m_Location = dlg.CurrentSelection();
 		ListLocations();
 	}
 }
@@ -918,9 +918,9 @@ void CDlgCalendar::OnOk(wxCommandEvent& evt)
 	else if (m_ctrlEntryEntered->GetValue())
 		m_pCal->SetEntered(ARBCalendarEntry::Entered);
 	m_pCal->SetIsTentative(m_bTentative);
-	m_pCal->SetLocation(StringUtil::stringW(m_Location));
-	m_pCal->SetVenue(StringUtil::stringW(m_Venue));
-	m_pCal->SetClub(StringUtil::stringW(m_Club));
+	m_pCal->SetLocation(m_Location);
+	m_pCal->SetVenue(m_Venue);
+	m_pCal->SetClub(m_Club);
 	if (m_bOpeningUnknown)
 		m_dateOpens.clear();
 	if (m_bDrawingUnknown)
@@ -930,9 +930,9 @@ void CDlgCalendar::OnOk(wxCommandEvent& evt)
 	m_pCal->SetOpeningDate(m_dateOpens);
 	m_pCal->SetDrawDate(m_dateDraws);
 	m_pCal->SetClosingDate(m_dateCloses);
-	m_pCal->SetOnlineURL(StringUtil::stringW(m_OnlineUrl));
-	m_pCal->SetPremiumURL(StringUtil::stringW(m_PremiumUrl));
-	m_pCal->SetSecEmail(StringUtil::stringW(m_EMailSecAddr));
+	m_pCal->SetOnlineURL(m_OnlineUrl);
+	m_pCal->SetPremiumURL(m_PremiumUrl);
+	m_pCal->SetSecEmail(m_EMailSecAddr);
 	if (m_ctrlAccomNot->GetValue())
 		m_pCal->SetAccommodation(ARBAccommodations::None);
 	else if (m_ctrlAccomNeeded->GetValue())
@@ -940,9 +940,9 @@ void CDlgCalendar::OnOk(wxCommandEvent& evt)
 	else if (m_ctrlAccomMade->GetValue())
 	{
 		m_pCal->SetAccommodation(ARBAccommodations::Confirmed);
-		m_pCal->SetConfirmation(StringUtil::stringW(m_Confirmation));
+		m_pCal->SetConfirmation(m_Confirmation);
 	}
-	m_pCal->SetNote(StringUtil::stringW(m_Notes));
+	m_pCal->SetNote(m_Notes);
 
 	m_pDoc->Modify(true);
 

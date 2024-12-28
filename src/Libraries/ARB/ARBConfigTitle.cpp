@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2018-04-26 Moved ShortToRoman to ARBCommon/ARBMisc.cpp
  * 2015-04-26 Fixed recurring title name on instance 0 (new title dialog)
  * 2013-01-13 Added new recurring title suffix style.
@@ -79,7 +78,7 @@ ARBAttribLookup LoadTitleStyle(
 	}
 	else
 	{
-		std::wstring tmp;
+		wxString tmp;
 		found = inTree->GetAttrib(inAttrib, tmp);
 		if (ARBAttribLookup::Found == found)
 		{
@@ -102,7 +101,7 @@ ARBAttribLookup LoadTitleStyle(
 
 void SaveTitleStyle(ElementNodePtr const& ioTree, wchar_t const* inAttrib, ARBTitleStyle inStyle)
 {
-	std::wstring style;
+	wxString style;
 	switch (inStyle)
 	{
 	case ARBTitleStyle::None:
@@ -129,7 +128,7 @@ ARBAttribLookup LoadTitleSeparator(
 	ARBTitleSeparator& ioSep)
 {
 	ioSep = ARBTitleSeparator::None;
-	std::wstring tmp;
+	wxString tmp;
 	ARBAttribLookup found = inTree->GetAttrib(inAttrib, tmp);
 	if (ARBAttribLookup::Found == found)
 	{
@@ -159,7 +158,7 @@ ARBAttribLookup LoadTitleSeparator(
 
 void SaveTitleSeparator(ElementNodePtr const& ioTree, wchar_t const* inAttrib, ARBTitleSeparator inSep)
 {
-	std::wstring sep;
+	wxString sep;
 	switch (inSep)
 	{
 	case ARBTitleSeparator::None:
@@ -177,9 +176,9 @@ void SaveTitleSeparator(ElementNodePtr const& ioTree, wchar_t const* inAttrib, A
 }
 
 
-static std::wstring GetSeparator(ARBTitleSeparator inSep)
+static wxString GetSeparator(ARBTitleSeparator inSep)
 {
-	std::wstring sep;
+	wxString sep;
 	switch (inSep)
 	{
 	case ARBTitleSeparator::None:
@@ -196,7 +195,7 @@ static std::wstring GetSeparator(ARBTitleSeparator inSep)
 
 /////////////////////////////////////////////////////////////////////////////
 
-std::wstring ARBTitleInstance::TitleInstance(
+wxString ARBTitleInstance::TitleInstance(
 	bool bShowInstanceOne,
 	short instance,
 	short startAt,
@@ -204,7 +203,7 @@ std::wstring ARBTitleInstance::TitleInstance(
 	ARBTitleStyle style,
 	ARBTitleSeparator sep) const
 {
-	std::wstring str;
+	wxString str;
 	if (bShowInstanceOne || 1 < instance)
 	{
 		// If we're showing in the selection menu (new title), there is no
@@ -217,10 +216,10 @@ std::wstring ARBTitleInstance::TitleInstance(
 		case ARBTitleStyle::None:
 			break;
 		case ARBTitleStyle::Number:
-			str = fmt::format(L"{}{}", GetSeparator(sep), value);
+			str << GetSeparator(sep) << value;
 			break;
 		case ARBTitleStyle::Roman:
-			str = fmt::format(L"{}{}", GetSeparator(sep), ShortToRoman(value));
+			str << GetSeparator(sep) << ShortToRoman(value);
 			break;
 		}
 	}
@@ -403,28 +402,26 @@ bool ARBConfigTitle::Load(ElementNodePtr const& inTree, ARBVersion const& inVers
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
 			TREE_TITLES,
 			ATTRIB_TITLES_PREFIX,
-			Localization()->ValidValuesBool().c_str()));
+			Localization()->ValidValuesBool()));
 		return false;
 	}
 
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_TITLES_VALIDFROM, m_ValidFrom))
 	{
-		std::wstring attrib;
+		wxString attrib;
 		inTree->GetAttrib(ATTRIB_TITLES_VALIDFROM, attrib);
-		std::wstring msg(Localization()->InvalidDate());
+		wxString msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(
-			Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDFROM, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDFROM, msg));
 		return false;
 	}
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_TITLES_VALIDTO, m_ValidTo))
 	{
-		std::wstring attrib;
+		wxString attrib;
 		inTree->GetAttrib(ATTRIB_TITLES_VALIDTO, attrib);
-		std::wstring msg(Localization()->InvalidDate());
+		wxString msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(
-			Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDTO, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDTO, msg));
 		return false;
 	}
 
@@ -495,63 +492,60 @@ bool ARBConfigTitle::Save(ElementNodePtr const& ioTree) const
 }
 
 
-std::wstring ARBConfigTitle::GetTitleName(short inInstance) const
+wxString ARBConfigTitle::GetTitleName(short inInstance) const
 {
-	return fmt::format(
-		L"{}{}",
-		m_Name,
-		TitleInstance(
-			0 > inInstance ? false : m_MultipleOnFirst,
-			inInstance,
-			m_MultipleStartAt,
-			m_MultipleIncrement,
-			m_MultipleStyle,
-			m_MultipleSeparator));
+	wxString str;
+	str << m_Name
+		<< TitleInstance(
+			   0 > inInstance ? false : m_MultipleOnFirst,
+			   inInstance,
+			   m_MultipleStartAt,
+			   m_MultipleIncrement,
+			   m_MultipleStyle,
+			   m_MultipleSeparator);
+	return str;
 }
 
 
-std::wstring ARBConfigTitle::GetCompleteName(short inInstance, bool bAbbrevFirst, bool bAddDates) const
+wxString ARBConfigTitle::GetCompleteName(short inInstance, bool bAbbrevFirst, bool bAddDates) const
 {
-	fmt::wmemory_buffer buffer;
-	fmt::format_to(
-		std::back_inserter(buffer),
-		L"{}",
-		TitleInstance(
-			0 > inInstance ? false : m_MultipleOnFirst,
-			inInstance,
-			m_MultipleStartAt,
-			m_MultipleIncrement,
-			m_MultipleStyle,
-			m_MultipleSeparator));
+	wxString buffer;
+	buffer << TitleInstance(
+		0 > inInstance ? false : m_MultipleOnFirst,
+		inInstance,
+		m_MultipleStartAt,
+		m_MultipleIncrement,
+		m_MultipleStyle,
+		m_MultipleSeparator);
 	// Special formatting used in configuration dialogs.
 	if (0 > inInstance && 0 < m_MultipleStartAt)
 	{
-		fmt::format_to(std::back_inserter(buffer), L"{}", L"+");
+		buffer << L"+";
 	}
-	fmt::wmemory_buffer name;
+	wxString name;
 	if (0 < m_LongName.length())
 	{
 		if (bAbbrevFirst)
 		{
-			fmt::format_to(std::back_inserter(name), L"[{}{}] ", m_Name, fmt::to_string(buffer));
+			name << L"[" << m_Name << L"" << buffer << L"] ";
 		}
-		fmt::format_to(std::back_inserter(name), L"{}", m_LongName);
+		name << m_LongName;
 		if (!bAbbrevFirst)
 		{
-			fmt::format_to(std::back_inserter(name), L" [{}{}]", m_Name, fmt::to_string(buffer));
+			name << L" [" << m_Name << L"" << buffer << L"]";
 		}
 	}
 	else
 	{
-		fmt::format_to(std::back_inserter(name), L"{}{}", m_Name, fmt::to_string(buffer));
+		name << m_Name << buffer;
 	}
 	if (bAddDates)
 	{
-		std::wstring dates = ARBDate::GetValidDateString(m_ValidFrom, m_ValidTo);
+		wxString dates = ARBDate::GetValidDateString(m_ValidFrom, m_ValidTo);
 		if (!dates.empty())
-			fmt::format_to(std::back_inserter(name), L" {}", dates);
+			name << L" " << dates;
 	}
-	return fmt::to_string(name);
+	return name;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -597,7 +591,7 @@ void ARBConfigTitleList::ReorderBy(ARBConfigTitleList const& inList)
 
 
 bool ARBConfigTitleList::FindTitleCompleteName(
-	std::wstring const& inName,
+	wxString const& inName,
 	short inInstance,
 	bool bAbbrevFirst,
 	ARBConfigTitlePtr* outTitle) const
@@ -617,7 +611,7 @@ bool ARBConfigTitleList::FindTitleCompleteName(
 }
 
 
-bool ARBConfigTitleList::FindTitle(std::wstring const& inName, ARBConfigTitlePtr* outTitle) const
+bool ARBConfigTitleList::FindTitle(wxString const& inName, ARBConfigTitlePtr* outTitle) const
 {
 	if (outTitle)
 		outTitle->reset();
@@ -634,7 +628,7 @@ bool ARBConfigTitleList::FindTitle(std::wstring const& inName, ARBConfigTitlePtr
 }
 
 
-bool ARBConfigTitleList::AddTitle(std::wstring const& inName, ARBConfigTitlePtr* outTitle)
+bool ARBConfigTitleList::AddTitle(wxString const& inName, ARBConfigTitlePtr* outTitle)
 {
 	if (outTitle)
 		outTitle->reset();
@@ -662,9 +656,9 @@ bool ARBConfigTitleList::AddTitle(ARBConfigTitlePtr const& inTitle)
 }
 
 
-bool ARBConfigTitleList::DeleteTitle(std::wstring const& inName)
+bool ARBConfigTitleList::DeleteTitle(wxString const& inName)
 {
-	std::wstring name(inName);
+	wxString name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

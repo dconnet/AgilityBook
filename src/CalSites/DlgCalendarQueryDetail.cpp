@@ -44,8 +44,8 @@ using namespace ARBCommon;
 
 CDlgCalendarQueryDetail::CDlgCalendarQueryDetail(
 	ARBConfigCalSiteList const& sites,
-	std::map<std::wstring, std::wstring> const& inLocCodes,
-	std::map<std::wstring, std::wstring> const& inVenueCodes,
+	std::map<wxString, wxString> const& inLocCodes,
+	std::map<wxString, wxString> const& inVenueCodes,
 	wxWindow* pParent)
 	: wxDialog()
 	, m_EditCodes(true)
@@ -69,10 +69,10 @@ CDlgCalendarQueryDetail::CDlgCalendarQueryDetail(
 
 CDlgCalendarQueryDetail::CDlgCalendarQueryDetail(
 	ARBConfigCalSiteList const& sites,
-	std::map<std::wstring, std::wstring> const& inLocCodes,
-	std::vector<std::wstring> const& inSelectedLocCodes,
-	std::map<std::wstring, std::wstring> const& inVenueCodes,
-	std::vector<std::wstring> const& inSelectedVenueCodes,
+	std::map<wxString, wxString> const& inLocCodes,
+	std::vector<wxString> const& inSelectedLocCodes,
+	std::map<wxString, wxString> const& inVenueCodes,
+	std::vector<wxString> const& inSelectedVenueCodes,
 	wxWindow* pParent)
 	: wxDialog()
 	, m_EditCodes(false)
@@ -119,13 +119,13 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 	m_ctrlLocations->SetToolTip(_("HIDC_QUERY_LOCATIONS"));
 	m_ctrlLocations->InsertColumn(0, _("IDS_COL_CODE"));
 	m_ctrlLocations->InsertColumn(1, _("IDS_COL_LOCATION"));
-	std::map<std::wstring, std::wstring>::const_iterator i;
+	std::map<wxString, wxString>::const_iterator i;
 	for (i = m_LocCodes.begin(); i != m_LocCodes.end(); ++i)
 	{
 		// If no checkboxes, 3rd arg is ignored
 		long idx = m_ctrlLocations->InsertItem(
 			m_ctrlLocations->GetItemCount(),
-			StringUtil::stringWX(i->first),
+			i->first,
 			(m_Locations.end() != std::find(m_Locations.begin(), m_Locations.end(), i->first)));
 		SetListColumnText(m_ctrlLocations, idx, 1, i->second);
 	}
@@ -168,7 +168,7 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 	{
 		int idx = m_ctrlVenues->InsertItem(
 			m_ctrlVenues->GetItemCount(),
-			StringUtil::stringWX(i->first),
+			i->first,
 			(m_Venues.end() != std::find(m_Venues.begin(), m_Venues.end(), i->first)));
 		SetListColumnText(m_ctrlVenues, idx, 1, i->second);
 	}
@@ -283,8 +283,8 @@ void CDlgCalendarQueryDetail::EditLocationCode()
 	{
 		CDlgQueryDetail dlg(
 			!m_EditCodes,
-			GetListColumnText(m_ctrlLocations, idx, 0).c_str(),
-			GetListColumnText(m_ctrlLocations, idx, 1).c_str(),
+			GetListColumnText(m_ctrlLocations, idx, 0),
+			GetListColumnText(m_ctrlLocations, idx, 1),
 			this);
 		if (wxID_OK == dlg.ShowModal())
 		{
@@ -303,8 +303,8 @@ void CDlgCalendarQueryDetail::EditVenueCode()
 	{
 		CDlgQueryDetail dlg(
 			!m_EditCodes,
-			GetListColumnText(m_ctrlVenues, idx, 0).c_str(),
-			GetListColumnText(m_ctrlVenues, idx, 1).c_str(),
+			GetListColumnText(m_ctrlVenues, idx, 0),
+			GetListColumnText(m_ctrlVenues, idx, 1),
 			this,
 			&m_sites);
 		if (wxID_OK == dlg.ShowModal())
@@ -346,8 +346,7 @@ void CDlgCalendarQueryDetail::OnNewLocationCode(wxCommandEvent& evt)
 	CDlgQueryDetail dlg(!m_EditCodes, L"", L"", this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		long idx
-			= m_ctrlLocations->InsertItem(m_ctrlLocations->GetItemCount(), StringUtil::stringWX(dlg.GetDetailCode()));
+		long idx = m_ctrlLocations->InsertItem(m_ctrlLocations->GetItemCount(), dlg.GetDetailCode());
 		SetListColumnText(m_ctrlLocations, idx, 1, dlg.GetDetailName());
 		UpdateButtons();
 	}
@@ -376,7 +375,7 @@ void CDlgCalendarQueryDetail::OnNewVenueCode(wxCommandEvent& evt)
 	CDlgQueryDetail dlg(!m_EditCodes, L"", L"", this, &m_sites);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		wxString code = StringUtil::stringWX(dlg.GetDetailCode());
+		wxString code = dlg.GetDetailCode();
 		if (!code.empty())
 		{
 			long idx = m_ctrlVenues->InsertItem(m_ctrlVenues->GetItemCount(), code);
@@ -418,16 +417,16 @@ void CDlgCalendarQueryDetail::OnOk(wxCommandEvent& evt)
 		int nItems = m_ctrlLocations->GetItemCount();
 		for (idx = 0; idx < nItems; ++idx)
 		{
-			std::wstring str1 = GetListColumnText(m_ctrlLocations, idx, 0);
-			std::wstring str2 = GetListColumnText(m_ctrlLocations, idx, 1);
+			wxString str1 = GetListColumnText(m_ctrlLocations, idx, 0);
+			wxString str2 = GetListColumnText(m_ctrlLocations, idx, 1);
 			m_LocCodes[str1] = str2;
 		}
 
 		nItems = m_ctrlVenues->GetItemCount();
 		for (idx = 0; idx < nItems; ++idx)
 		{
-			std::wstring str1 = GetListColumnText(m_ctrlVenues, idx, 0);
-			std::wstring str2 = GetListColumnText(m_ctrlVenues, idx, 1);
+			wxString str1 = GetListColumnText(m_ctrlVenues, idx, 0);
+			wxString str2 = GetListColumnText(m_ctrlVenues, idx, 1);
 			m_VenueCodes[str1] = str2;
 		}
 	}
@@ -443,7 +442,7 @@ void CDlgCalendarQueryDetail::OnOk(wxCommandEvent& evt)
 		{
 			if (m_ctrlLocations->IsChecked(idx))
 			{
-				std::wstring str1 = GetListColumnText(m_ctrlLocations, idx, 0);
+				wxString str1 = GetListColumnText(m_ctrlLocations, idx, 0);
 				m_Locations.push_back(str1);
 			}
 		}
@@ -453,7 +452,7 @@ void CDlgCalendarQueryDetail::OnOk(wxCommandEvent& evt)
 		{
 			if (m_ctrlVenues->IsChecked(idx))
 			{
-				std::wstring str1 = GetListColumnText(m_ctrlVenues, idx, 0);
+				wxString str1 = GetListColumnText(m_ctrlVenues, idx, 0);
 				m_Venues.push_back(str1);
 			}
 		}

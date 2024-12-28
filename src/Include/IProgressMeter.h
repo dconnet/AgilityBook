@@ -27,7 +27,7 @@ public:
 	 * Update a message.
 	 * (default is none)
 	 */
-	virtual void SetMessage(wchar_t const* pMessage) = 0;
+	virtual void SetMessage(wxString const& message) = 0;
 
 	/**
 	 * Set the range of the progress meter. If this is done in the middle

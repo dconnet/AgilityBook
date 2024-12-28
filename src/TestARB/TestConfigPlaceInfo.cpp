@@ -79,7 +79,7 @@ TEST_CASE("ConfigPlaceInfo")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	virtual std::wstring GetGenericName() const;
+			//	virtual wxString GetGenericName() const;
 		}
 	}
 

@@ -24,7 +24,6 @@
 #include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/Element.h"
 #include "LibARBWin/ResourceManager.h"
-#include "fmt/printf.h"
 
 #if defined(__WXWINDOWS__)
 #include <wx/app.h>
@@ -63,7 +62,7 @@ TEST_CASE("ARB")
 
 ElementNodePtr LoadXMLData(size_t id)
 {
-	fmt::wmemory_buffer errMsg;
+	wxString errMsg;
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
 	assert(tree);
@@ -73,7 +72,7 @@ ElementNodePtr LoadXMLData(size_t id)
 	assert(bOk);
 	if (!bOk || !tree->LoadXML(data, errMsg))
 	{
-		fmt::print(stdout, L"{}\n", fmt::to_string(errMsg));
+		std::wcout << errMsg.wc_str() << L"\n";
 		tree.reset();
 	}
 	return tree;
@@ -92,7 +91,7 @@ bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config)
 	tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
 	int idx = tree->FindElement(TREE_CONFIG);
 	assert(0 <= idx);
-	fmt::wmemory_buffer errMsg;
+	wxString errMsg;
 	ARBErrorCallback err(errMsg);
 	return config.Load(tree->GetElementNode(idx), version, err);
 }
@@ -184,11 +183,11 @@ ElementNodePtr CreateActionList()
 </RootNode>";
 
 	ElementNodePtr actions = ElementNode::New();
-	fmt::wmemory_buffer errmsg;
+	wxString errmsg;
 	bool bParse = actions->LoadXML(configData, static_cast<unsigned int>(strlen(configData)), errmsg);
 	if (!bParse)
 	{
-		fmt::print(stdout, L"{}\n", fmt::to_string(errmsg));
+		std::wcout << errmsg.wc_str() << L"\n";
 	}
 	assert(bParse);
 	return actions;

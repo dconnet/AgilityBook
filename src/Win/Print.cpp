@@ -11,7 +11,6 @@
  *
  * Revision History
  * 2023-05-15 Initialize From/To pages in CPrintPreview::Print
- * 2018-12-16 Convert to fmt.
  * 2018-10-09 Change PrintRuns view to autoclose after printing runs.
  * 2017-09-04 Change default DogsInClass to -1 (allows for DNR runs with 0 dogs)
  * 2017-07-16 Moved RingBinder to top of file (easier to find).
@@ -105,11 +104,7 @@ public:
 	bool OnPrintPage(int pageNum) override;
 
 private:
-	std::wstring GetFieldText(
-		ARBDogPtr const& inDog,
-		ARBDogTrialPtr const& inTrial,
-		ARBDogRunPtr const& inRun,
-		int code);
+	wxString GetFieldText(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTrial, ARBDogRunPtr const& inRun, int code);
 	void PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect);
 
 	double m_OneInch;
@@ -385,7 +380,7 @@ constexpr struct
 constexpr int sc_nLines = sizeof(sc_lines) / sizeof(sc_lines[0]);
 
 
-void RefRunHelper(fmt::wmemory_buffer& text, ARBDogReferenceRunPtr const& inRef, int code)
+void RefRunHelper(wxString& text, ARBDogReferenceRunPtr const& inRef, int code)
 {
 	switch (code)
 	{
@@ -394,14 +389,14 @@ void RefRunHelper(fmt::wmemory_buffer& text, ARBDogReferenceRunPtr const& inRef,
 	case CODE_REFPLACE3:
 	case CODE_REFPLACE4:
 		if (0 < inRef->GetPlace())
-			fmt::format_to(std::back_inserter(text), L"{}", inRef->GetPlace());
+			text << inRef->GetPlace();
 		break;
 	case CODE_REFQ1:
 	case CODE_REFQ2:
 	case CODE_REFQ3:
 	case CODE_REFQ4:
 		if (Q::UNK != inRef->GetQ() && Q::NA != inRef->GetQ())
-			fmt::format_to(std::back_inserter(text), L"{}", inRef->GetQ().str());
+			text << inRef->GetQ().str();
 		break;
 	case CODE_REFTIME1:
 	case CODE_REFTIME2:
@@ -410,30 +405,30 @@ void RefRunHelper(fmt::wmemory_buffer& text, ARBDogReferenceRunPtr const& inRef,
 	{
 		double val = inRef->GetTime();
 		if (0.0 < val)
-			fmt::format_to(std::back_inserter(text), L"{}", ARBDouble::ToString(val));
+			text << ARBDouble::ToString(val);
 	}
 	break;
 	case CODE_REFSCORE1:
 	case CODE_REFSCORE2:
 	case CODE_REFSCORE3:
 	case CODE_REFSCORE4:
-		fmt::format_to(std::back_inserter(text), L"{}", inRef->GetScore());
+		text << inRef->GetScore();
 		break;
 	case CODE_REFHT1:
 	case CODE_REFHT2:
 	case CODE_REFHT3:
 	case CODE_REFHT4:
-		fmt::format_to(std::back_inserter(text), L"{}", inRef->GetHeight());
+		text << inRef->GetHeight();
 		break;
 	case CODE_REF1:
 	case CODE_REF2:
 	case CODE_REF3:
 	case CODE_REF4:
-		fmt::format_to(std::back_inserter(text), L"{}", inRef->GetName());
+		text << inRef->GetName();
 		if (!inRef->GetBreed().empty())
-			fmt::format_to(std::back_inserter(text), L"/{}", inRef->GetBreed());
+			text << L"/" << inRef->GetBreed();
 		if (!inRef->GetNote().empty())
-			fmt::format_to(std::back_inserter(text), L"/{}", inRef->GetNote());
+			text << L"/" << inRef->GetNote();
 		break;
 	default:
 		break;
@@ -442,53 +437,53 @@ void RefRunHelper(fmt::wmemory_buffer& text, ARBDogReferenceRunPtr const& inRef,
 } // namespace
 
 
-std::wstring CPrintRuns::GetFieldText(
+wxString CPrintRuns::GetFieldText(
 	ARBDogPtr const& inDog,
 	ARBDogTrialPtr const& inTrial,
 	ARBDogRunPtr const& inRun,
 	int code)
 {
-	fmt::wmemory_buffer text;
+	wxString text;
 	switch (code)
 	{
 	default:
 		break;
 	case CODE_DOG:
 		if (inDog)
-			fmt::format_to(std::back_inserter(text), L"{}", inDog->GetCallName());
+			text << inDog->GetCallName();
 		break;
 	case CODE_DATE:
 		if (inRun)
-			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetDate().GetString());
+			text << inRun->GetDate().GetString();
 		break;
 	case CODE_VENUE:
 		if (inRun && inRun->GetClub())
-			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetClub()->GetVenue());
+			text << inRun->GetClub()->GetVenue();
 		else if (inTrial)
-			fmt::format_to(std::back_inserter(text), L"{}", inTrial->GetClubs().GetClubList(false, true));
+			text << inTrial->GetClubs().GetClubList(false, true);
 		break;
 	case CODE_CLUB:
 		if (inRun && inRun->GetClub())
-			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetClub()->GetName());
+			text << inRun->GetClub()->GetName();
 		else if (inTrial)
-			fmt::format_to(std::back_inserter(text), L"{}", inTrial->GetClubs().GetClubList(true, true));
+			text << inTrial->GetClubs().GetClubList(true, true);
 		break;
 	case CODE_DIV:
 		if (inRun)
 		{
-			std::wstring div = inRun->GetDivision();
-			std::wstring lvl = inRun->GetLevel();
-			std::wstring evt = inRun->GetEvent();
+			wxString div = inRun->GetDivision();
+			wxString lvl = inRun->GetLevel();
+			wxString evt = inRun->GetEvent();
 			if (m_config && inTrial)
 			{
-				std::wstring venue = inRun->GetClub()->GetVenue();
+				wxString venue = inRun->GetClub()->GetVenue();
 				ARBConfigVenuePtr pVenue;
 				if (m_config->GetVenues().FindVenue(venue, &pVenue))
 				{
 					ARBConfigEventPtr pEvent;
 					if (pVenue->GetEvents().FindEvent(inRun->GetEvent(), &pEvent))
 					{
-						std::wstring level(inRun->GetLevel());
+						wxString level(inRun->GetLevel());
 						ARBConfigDivisionPtr pDiv;
 						if (pVenue->GetDivisions().FindDivision(inRun->GetDivision(), &pDiv))
 						{
@@ -537,34 +532,34 @@ std::wstring CPrintRuns::GetFieldText(
 					}
 				}
 			}
-			fmt::format_to(std::back_inserter(text), L"{}/{}/{}", div, lvl, evt);
+			text << div << L"/" << lvl << L"/" << evt;
 		}
 		break;
 	case CODE_LOCATION:
 		if (inTrial)
-			fmt::format_to(std::back_inserter(text), L"{}", inTrial->GetLocation());
+			text << inTrial->GetLocation();
 		break;
 	case CODE_HEIGHT:
 		if (inRun)
-			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetHeight());
+			text << inRun->GetHeight();
 		break;
 	case CODE_JUDGE:
 		if (inRun)
-			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetJudge());
+			text << inRun->GetJudge();
 		break;
 	case CODE_HANDLER:
 		if (inRun)
-			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetHandler());
+			text << inRun->GetHandler();
 		break;
 	case CODE_CONDITIONS:
 		if (inRun)
-			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetConditions());
+			text << inRun->GetConditions();
 		break;
 	case CODE_Q:
 		if (inRun)
 		{
 			if (Q::UNK != inRun->GetQ() && Q::NA != inRun->GetQ())
-				fmt::format_to(std::back_inserter(text), L"{}", inRun->GetQ().str());
+				text << inRun->GetQ().str();
 		}
 		break;
 	case CODE_SCT:
@@ -575,17 +570,17 @@ std::wstring CPrintRuns::GetFieldText(
 			{
 				double sct2 = inRun->GetScoring().GetSCT2();
 				if (0.0 < sct)
-					fmt::format_to(std::back_inserter(text), L"{}", ARBDouble::ToString(sct));
+					text << ARBDouble::ToString(sct);
 				else
-					fmt::format_to(std::back_inserter(text), L"{}", L"  ");
-				fmt::format_to(std::back_inserter(text), L"{}", L" / ");
+					text << L"  ";
+				text << L" / ";
 				if (0.0 < sct2)
-					fmt::format_to(std::back_inserter(text), L"{}", ARBDouble::ToString(sct2));
+					text << ARBDouble::ToString(sct2);
 				else
-					fmt::format_to(std::back_inserter(text), L"{}", L"  ");
+					text << L"  ";
 			}
 			else if (0.0 < sct)
-				fmt::format_to(std::back_inserter(text), L"{}", ARBDouble::ToString(sct));
+				text << ARBDouble::ToString(sct);
 		}
 		break;
 	case CODE_YARDS:
@@ -593,7 +588,7 @@ std::wstring CPrintRuns::GetFieldText(
 		{
 			double val = inRun->GetScoring().GetYards();
 			if (0.0 < val)
-				fmt::format_to(std::back_inserter(text), L"{}", ARBDouble::ToString(val, 0));
+				text << ARBDouble::ToString(val, 0);
 		}
 		break;
 	case CODE_OPEN:
@@ -608,14 +603,14 @@ std::wstring CPrintRuns::GetFieldText(
 				break;
 			case ARBScoringType::ByOpenClose:
 				if (0 < inRun->GetScoring().GetNeedOpenPts())
-					fmt::format_to(std::back_inserter(text), L"{}", inRun->GetScoring().GetNeedOpenPts());
-				fmt::format_to(std::back_inserter(text), L"{}", L" / ");
+					text << inRun->GetScoring().GetNeedOpenPts();
+				text << L" / ";
 				if (0 < inRun->GetScoring().GetNeedClosePts())
-					fmt::format_to(std::back_inserter(text), L"{}", inRun->GetScoring().GetNeedClosePts());
+					text << inRun->GetScoring().GetNeedClosePts();
 				break;
 			case ARBScoringType::ByPoints:
 				if (0 < inRun->GetScoring().GetNeedOpenPts())
-					fmt::format_to(std::back_inserter(text), L"{}", inRun->GetScoring().GetNeedOpenPts());
+					text << inRun->GetScoring().GetNeedOpenPts();
 				break;
 			}
 		}
@@ -625,7 +620,7 @@ std::wstring CPrintRuns::GetFieldText(
 		{
 			double val = inRun->GetScoring().GetTime();
 			if (0.0 < val)
-				fmt::format_to(std::back_inserter(text), L"{}", ARBDouble::ToString(val));
+				text << ARBDouble::ToString(val);
 		}
 		break;
 	case CODE_FAULTS:
@@ -644,9 +639,9 @@ std::wstring CPrintRuns::GetFieldText(
 			double timeFaults = inRun->GetScoring().GetTimeFaults(pScoring);
 			if (inRun->GetQ().AllowTally() || (0 < inRun->GetScoring().GetCourseFaults() || 0.0 < timeFaults))
 			{
-				fmt::format_to(std::back_inserter(text), L"{}", inRun->GetScoring().GetCourseFaults());
+				text << inRun->GetScoring().GetCourseFaults();
 				if (0.0 < timeFaults)
-					fmt::format_to(std::back_inserter(text), L"+{}", ARBDouble::ToString(timeFaults, 0));
+					text << L"+" << ARBDouble::ToString(timeFaults, 0);
 			}
 		}
 		break;
@@ -662,33 +657,33 @@ std::wstring CPrintRuns::GetFieldText(
 				break;
 			case ARBScoringType::ByOpenClose:
 				if (0 < inRun->GetScoring().GetOpenPts())
-					fmt::format_to(std::back_inserter(text), L"{}", inRun->GetScoring().GetOpenPts());
-				fmt::format_to(std::back_inserter(text), L"{}", L" / ");
+					text << inRun->GetScoring().GetOpenPts();
+				text << L" / ";
 				if (0 < inRun->GetScoring().GetClosePts())
-					fmt::format_to(std::back_inserter(text), L"{}", inRun->GetScoring().GetClosePts());
+					text << inRun->GetScoring().GetClosePts();
 				break;
 			case ARBScoringType::ByPoints:
 				if (0 < inRun->GetScoring().GetOpenPts())
-					fmt::format_to(std::back_inserter(text), L"{}", inRun->GetScoring().GetOpenPts());
+					text << inRun->GetScoring().GetOpenPts();
 				break;
 			}
 		}
 		break;
 	case CODE_PLACE:
 		if (inRun && 0 < inRun->GetPlace())
-			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetPlace());
+			text << inRun->GetPlace();
 		break;
 	case CODE_INCLASS:
 		if (inRun && 0 <= inRun->GetInClass())
-			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetInClass());
+			text << inRun->GetInClass();
 		break;
 	case CODE_QD:
 		if (inRun && 0 <= inRun->GetDogsQd())
-			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetDogsQd());
+			text << inRun->GetDogsQd();
 		break;
 	case CODE_COMMENTS:
 		if (inRun)
-			fmt::format_to(std::back_inserter(text), L"{}", inRun->GetNote());
+			text << inRun->GetNote();
 		break;
 	case CODE_OTHER:
 		if (inRun && 0 < inRun->GetOtherPoints().size())
@@ -699,8 +694,8 @@ std::wstring CPrintRuns::GetFieldText(
 				 ++iter, ++i)
 			{
 				if (0 < i)
-					fmt::format_to(std::back_inserter(text), L"{}", L" ");
-				fmt::format_to(std::back_inserter(text), L"{}:{}", (*iter)->GetName(), (*iter)->GetPoints());
+					text << L" ";
+				text << (*iter)->GetName() << L":" << (*iter)->GetPoints();
 			}
 		}
 		break;
@@ -741,7 +736,7 @@ std::wstring CPrintRuns::GetFieldText(
 			RefRunHelper(text, inRun->GetReferenceRuns()[3], code);
 		break;
 	}
-	return fmt::to_string(text);
+	return text;
 }
 
 
@@ -820,7 +815,7 @@ void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect
 					pDC->DrawLine(rect.x, rect.y, rect.x, rect.GetBottom());
 				}
 
-				std::wstring str = GetFieldText(dog, trial, run, sc_lines[j].code);
+				wxString str = GetFieldText(dog, trial, run, sc_lines[j].code);
 
 				// Draw horizontal separator lines (on top)
 				if (0 < sc_lines[j].line && (str.empty() || !sc_lines[j].bContinuation))
@@ -856,12 +851,12 @@ void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect
 					{
 						rect.y += textHeight;
 						rect.height -= textHeight;
-						DrawBetterLabel(pDC, StringUtil::stringWX(str), rect, sc_lines[j].fmt, false);
+						DrawBetterLabel(pDC, str, rect, sc_lines[j].fmt, false);
 					}
 					else
 					{
 						wxDCClipper clip(*pDC, rect);
-						pDC->DrawLabel(StringUtil::stringWX(str), rect, sc_lines[j].fmt);
+						pDC->DrawLabel(str, rect, sc_lines[j].fmt);
 					}
 					pDC->SetFont(fontText);
 				}
@@ -1026,7 +1021,7 @@ CHtmlEasyPrinting::CHtmlEasyPrinting(wxWindow* parent)
 
 	CFontInfo info;
 	CAgilityBookOptions::GetPrinterFontInfo(info);
-	SetStandardFonts(info.size, StringUtil::stringWX(info.name));
+	SetStandardFonts(info.size, info.name);
 }
 
 

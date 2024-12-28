@@ -15,7 +15,6 @@
  * DW == dword, ST == string
  *
  * Revision History
- * 2018-12-25 Convert to fmt.
  * 2010-04-11 Separated from AgilityBookOptions.cpp.
  * 2018-10-11 Separated common items into LibARBWin
  */
@@ -91,9 +90,9 @@ namespace dconSoft
 //Columns
 #define CFG_KEY_COLUMNS					L"Columns"
 //	ST col[n]
-inline std::wstring CFG_COL_BASENAME(size_t n)
+inline wxString CFG_COL_BASENAME(size_t n)
 {
-	return fmt::format(L"col{}", n);
+	return wxString::Format(L"col%zu", n);
 }
 
 //ColumnInfo (NamedColumns.cpp)
@@ -104,9 +103,11 @@ inline std::wstring CFG_COL_BASENAME(size_t n)
 #define CFG_CI_NUMCONFIGS				CFG_KEY_COLUMNINFO L"/numConfigs"
 //	Config[n] (NamedColumns.cpp)
 #define CFG_KEY_CONFIG					L"Config"
-inline std::wstring CFG_CI_KEY_CONFIG(int n, bool bIncSep = true)
+inline wxString CFG_CI_KEY_CONFIG(int n, bool bIncSep = true)
 {
-	return fmt::format(CFG_KEY_COLUMNINFO L"/{}{}{}", CFG_KEY_CONFIG, n, bIncSep ? L"/" : L"");
+	wxString str;
+	str << CFG_KEY_COLUMNINFO  << L"/" << CFG_KEY_CONFIG << n << (bIncSep ? L"/" : L"");
+	return str;
 }
 //		ST name (NamedColumns.cpp)
 #define CFG_CI_CONFIG_NAME					L"name"
@@ -225,9 +226,11 @@ inline std::wstring CFG_CI_KEY_CONFIG(int n, bool bIncSep = true)
 
 //Filter[number]
 #define CFG_KEY_FILTER					L"Filter"
-inline std::wstring CFG_KEY_FILTER_N(int n, bool bIncSep = true)
+inline wxString CFG_KEY_FILTER_N(int n, bool bIncSep = true)
 {
-	return fmt::format(L"{}{}{}", CFG_KEY_FILTER, n, bIncSep ? L"/" : L"");
+	wxString str;
+	str << CFG_KEY_CONFIG << n << (bIncSep ? L"/" : L"");
+	return str;
 }
 //	DW AllDates (FilterOptions.cpp)
 #define CFG_FILTER_ITEM_ALLDATES			L"AllDates"

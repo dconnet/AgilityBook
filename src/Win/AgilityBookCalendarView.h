@@ -69,8 +69,8 @@ public:
 	bool SetCurrentDate(ARBCommon::ARBDate const& date, bool bEnsureVisible);
 
 	bool IsFiltered() const override;
-	bool GetMessage(std::wstring& msg) const override;
-	bool GetMessage2(std::wstring& msg) const override;
+	bool GetMessage(wxString& msg) const override;
+	bool GetMessage2(wxString& msg) const override;
 	bool AllowStatusContext(int field) const override;
 
 	bool OnCreate(wxDocument* doc, long flags) override;

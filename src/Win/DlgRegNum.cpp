@@ -73,11 +73,11 @@ CDlgRegNum::CDlgRegNum(
 
 	if (m_pRegNum)
 	{
-		m_Venue = StringUtil::stringWX(m_pRegNum->GetVenue());
-		m_RegNum = StringUtil::stringWX(m_pRegNum->GetNumber());
-		m_Height = StringUtil::stringWX(m_pRegNum->GetHeight());
+		m_Venue = m_pRegNum->GetVenue();
+		m_RegNum = m_pRegNum->GetNumber();
+		m_Height = m_pRegNum->GetHeight();
 		m_bReceived = m_pRegNum->GetReceived();
-		m_Note = StringUtil::stringWX(m_pRegNum->GetNote());
+		m_Note = m_pRegNum->GetNote();
 	}
 
 	// Controls (these are done first to control tab order)
@@ -195,20 +195,20 @@ void CDlgRegNum::OnOk(wxCommandEvent& evt)
 
 	if (m_pRegNum)
 	{
-		m_pRegNum->SetNumber(StringUtil::stringW(m_RegNum));
-		m_pRegNum->SetVenue(StringUtil::stringW(m_Venue));
-		m_pRegNum->SetHeight(StringUtil::stringW(m_Height));
+		m_pRegNum->SetNumber(m_RegNum);
+		m_pRegNum->SetVenue(m_Venue);
+		m_pRegNum->SetHeight(m_Height);
 		m_pRegNum->SetReceived(m_bReceived);
-		m_pRegNum->SetNote(StringUtil::stringW(m_Note));
+		m_pRegNum->SetNote(m_Note);
 	}
 	else
 	{
 		ARBDogRegNumPtr pRegNum;
-		if (m_RegNums.AddRegNum(StringUtil::stringW(m_Venue), StringUtil::stringW(m_RegNum), &pRegNum))
+		if (m_RegNums.AddRegNum(m_Venue, m_RegNum, &pRegNum))
 		{
-			pRegNum->SetHeight(StringUtil::stringW(m_Height));
+			pRegNum->SetHeight(m_Height);
 			pRegNum->SetReceived(m_bReceived);
-			pRegNum->SetNote(StringUtil::stringW(m_Note));
+			pRegNum->SetNote(m_Note);
 		}
 	}
 	EndDialog(wxID_OK);

@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-25 Convert to fmt.
  * 2014-12-31 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -73,7 +72,7 @@ public:
 		ARBDogPtr const& inDog,
 		ARBDogTrialPtr const& inTrial,
 		ARBDogRunPtr const& inRun,
-		std::wstring const& inLink,
+		wxString const& inLink,
 		int image)
 		: m_pDog(inDog)
 		, m_pTrial(inTrial)
@@ -84,14 +83,14 @@ public:
 	{
 	}
 	int OnCompare(CListDataPtr const& item, long iCol) const override;
-	std::wstring OnNeedText(long iCol) const override;
+	wxString OnNeedText(long iCol) const override;
 	void OnNeedListItem(long iCol, wxListItem& info) const override;
 
 	ARBDogPtr m_pDog;
 	ARBDogTrialPtr m_pTrial;
 	ARBDogRunPtr m_pRun;
-	std::wstring m_OldLink;
-	std::wstring m_Link;
+	wxString m_OldLink;
+	wxString m_Link;
 	int m_Image;
 };
 
@@ -102,7 +101,7 @@ int CDlgFindLinksData::OnCompare(CListDataPtr const& item, long iCol) const
 	if (!pData2)
 		return 1;
 
-	std::wstring str1, str2;
+	wxString str1, str2;
 	switch (iCol)
 	{
 	default:
@@ -135,7 +134,7 @@ int CDlgFindLinksData::OnCompare(CListDataPtr const& item, long iCol) const
 }
 
 
-std::wstring CDlgFindLinksData::OnNeedText(long iCol) const
+wxString CDlgFindLinksData::OnNeedText(long iCol) const
 {
 	switch (iCol)
 	{
@@ -159,7 +158,7 @@ std::wstring CDlgFindLinksData::OnNeedText(long iCol) const
 void CDlgFindLinksData::OnNeedListItem(long iCol, wxListItem& info) const
 {
 	info.SetMask(info.GetMask() | wxLIST_MASK_TEXT);
-	info.SetText(StringUtil::stringWX(OnNeedText(iCol)));
+	info.SetText(OnNeedText(iCol));
 	if (0 == iCol && 0 <= m_Image)
 	{
 		info.SetMask(info.GetMask() | wxLIST_MASK_IMAGE);
@@ -279,9 +278,9 @@ CDlgFindLinks::CDlgFindLinks(ARBDogList& inDogs, wxWindow* pParent)
 				 ++iterRun)
 			{
 				ARBDogRunPtr pRun = *iterRun;
-				std::set<std::wstring> links;
+				std::set<wxString> links;
 				pRun->GetLinks(links);
-				for (std::set<std::wstring>::iterator iter = links.begin(); iter != links.end(); ++iter)
+				for (std::set<wxString>::iterator iter = links.begin(); iter != links.end(); ++iter)
 				{
 					int image = GetImageIndex(*iter);
 					m_Data.push_back(std::make_shared<CDlgFindLinksData>(pDog, pTrial, pRun, *iter, image));
@@ -311,7 +310,7 @@ CDlgFindLinksDataPtr CDlgFindLinks::GetItemLinkData(long item)
 }
 
 
-int CDlgFindLinks::GetImageIndex(std::wstring const& inLink)
+int CDlgFindLinks::GetImageIndex(wxString const& inLink)
 {
 	wxBusyCursor wait;
 	int img = m_ctrlLinks->ImageEmpty();
@@ -344,7 +343,7 @@ void CDlgFindLinks::Edit()
 		CDlgSelectURL dlg(data->m_Link, true, this);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			std::wstring newName = dlg.Name();
+			wxString newName = dlg.Name();
 			if (data->m_Link != newName)
 			{
 				data->m_Link = newName;
@@ -364,7 +363,7 @@ void CDlgFindLinks::OnCopy(wxCommandEvent& evt)
 		if (!clpData.isOkay())
 			return;
 
-		std::wstring data;
+		wxString data;
 		for (size_t i = 0; i < m_Data.size(); ++i)
 		{
 			data += m_Data[i]->m_OldLink;
@@ -390,7 +389,7 @@ void CDlgFindLinks::OnOpen(wxCommandEvent& evt)
 	{
 		CDlgFindLinksDataPtr data = GetItemLinkData(nItem);
 		if (data)
-			wxLaunchDefaultBrowser(StringUtil::stringWX(data->m_Link));
+			wxLaunchDefaultBrowser(data->m_Link);
 	}
 }
 

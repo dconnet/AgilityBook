@@ -35,11 +35,11 @@ public:
 		return m_firstPage;
 	}
 
-	void AddSysInfo(std::wstring const& inData);
+	void AddSysInfo(wxString const& inData);
 	void AddRegistryInfo(wchar_t const* inData);
-	void SetARBFileStatus(std::wstring const& inFileName, bool bInclude = true);
+	void SetARBFileStatus(wxString const& inFileName, bool bInclude = true);
 
-	typedef std::map<std::wstring, bool> FileMap;
+	typedef std::map<wxString, bool> FileMap;
 	FileMap const& GetARBFiles() const
 	{
 		return m_IncFile;

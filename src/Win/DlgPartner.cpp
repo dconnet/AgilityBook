@@ -44,13 +44,13 @@ using namespace ARBWin;
 
 CDlgPartner::CDlgPartner(
 	ARBDogRunPartnerPtr const& inPartner,
-	std::set<std::wstring> const& inHandlers,
-	std::set<std::wstring> const& inDogs,
+	std::set<wxString> const& inHandlers,
+	std::set<wxString> const& inDogs,
 	wxWindow* pParent)
 	: wxDialog()
-	, m_Handler(StringUtil::stringWX(inPartner->GetHandler()))
-	, m_Dog(StringUtil::stringWX(inPartner->GetDog()))
-	, m_RegNum(StringUtil::stringWX(inPartner->GetRegNum()))
+	, m_Handler(inPartner->GetHandler())
+	, m_Dog(inPartner->GetDog())
+	, m_RegNum(inPartner->GetRegNum())
 	, m_Partner(inPartner)
 	, m_trace("CDlgPartner")
 {
@@ -65,17 +65,17 @@ CDlgPartner::CDlgPartner(
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	wxArrayString handlers;
-	std::set<std::wstring>::const_iterator iter;
+	std::set<wxString>::const_iterator iter;
 	for (iter = inHandlers.begin(); iter != inHandlers.end(); ++iter)
 	{
-		handlers.Add(StringUtil::stringWX(*iter));
+		handlers.Add(*iter);
 	}
 	handlers.Sort();
 
 	wxArrayString dogs;
 	for (iter = inDogs.begin(); iter != inDogs.end(); ++iter)
 	{
-		dogs.Add(StringUtil::stringWX(*iter));
+		dogs.Add(*iter);
 	}
 	dogs.Sort();
 
@@ -167,9 +167,9 @@ void CDlgPartner::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	m_Partner->SetHandler(StringUtil::stringW(m_Handler));
-	m_Partner->SetDog(StringUtil::stringW(m_Dog));
-	m_Partner->SetRegNum(StringUtil::stringW(m_RegNum));
+	m_Partner->SetHandler(m_Handler);
+	m_Partner->SetDog(m_Dog);
+	m_Partner->SetRegNum(m_RegNum);
 	EndDialog(wxID_OK);
 }
 

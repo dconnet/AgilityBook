@@ -87,7 +87,7 @@ enum class ARBImportExportDelim
 
 struct CFontInfo
 {
-	std::wstring name;
+	wxString name;
 	int size;
 	bool italic;
 	bool bold;
@@ -203,35 +203,35 @@ public:
 	static void GetCalendarFontInfo(CFontInfo& info);
 	static void SetCalendarFontInfo(CFontInfo const& info);
 	// Last entered options
-	static std::wstring GetLastEnteredDivision(ARB::ARBDogPtr const& inDog, ARB::ARBConfigVenuePtr const& inVenue);
+	static wxString GetLastEnteredDivision(ARB::ARBDogPtr const& inDog, ARB::ARBConfigVenuePtr const& inVenue);
 	static void SetLastEnteredDivision(
 		ARB::ARBDogPtr const& inDog,
 		ARB::ARBConfigVenuePtr const& inVenue,
 		wchar_t const* inLast);
-	static std::wstring GetLastEnteredLevel(ARB::ARBDogPtr const& inDog, ARB::ARBConfigVenuePtr const& inVenue);
+	static wxString GetLastEnteredLevel(ARB::ARBDogPtr const& inDog, ARB::ARBConfigVenuePtr const& inVenue);
 	static void SetLastEnteredLevel(
 		ARB::ARBDogPtr const& inDog,
 		ARB::ARBConfigVenuePtr const& inVenue,
 		wchar_t const* inLast);
-	static std::wstring GetLastEnteredHeight(ARB::ARBDogPtr const& inDog, ARB::ARBConfigVenuePtr const& inVenue);
+	static wxString GetLastEnteredHeight(ARB::ARBDogPtr const& inDog, ARB::ARBConfigVenuePtr const& inVenue);
 	static void SetLastEnteredHeight(
 		ARB::ARBDogPtr const& inDog,
 		ARB::ARBConfigVenuePtr const& inVenue,
 		wchar_t const* inLast);
-	static std::wstring GetLastEnteredRefHeight();
+	static wxString GetLastEnteredRefHeight();
 	static void SetLastEnteredRefHeight(wchar_t const* inLast);
-	static std::wstring GetLastEnteredJudge();
+	static wxString GetLastEnteredJudge();
 	static void SetLastEnteredJudge(wchar_t const* inLast);
-	static std::wstring GetLastEnteredHandler(ARB::ARBDogPtr const& inDog);
+	static wxString GetLastEnteredHandler(ARB::ARBDogPtr const& inDog);
 	static void SetLastEnteredHandler(ARB::ARBDogPtr const& inDog, wchar_t const* inLast);
-	static void CleanLastItems(std::wstring const& callName);
-	static void CleanLastItems(std::wstring const& oldCallName, std::wstring const& newCallName);
+	static void CleanLastItems(wxString const& callName);
+	static void CleanLastItems(wxString const& oldCallName, wxString const& newCallName);
 	static void CleanLastItems(ARB::ARBConfig const& inConfig);
 	// Import/Export options
 	static long GetImportStartRow();
 	static void SetImportStartRow(long row);
-	static void GetImportExportDelimiters(bool bImport, ARBImportExportDelim& delim, std::wstring& delimiter);
-	static void SetImportExportDelimiters(bool bImport, ARBImportExportDelim delim, std::wstring const& delimiter);
+	static void GetImportExportDelimiters(bool bImport, ARBImportExportDelim& delim, wxString& delimiter);
+	static void SetImportExportDelimiters(bool bImport, ARBImportExportDelim delim, wxString const& delimiter);
 	static void GetImportExportDateFormat(bool bImport, ARBCommon::ARBDateFormat& outFormat);
 	static void SetImportExportDateFormat(bool bImport, ARBCommon::ARBDateFormat inFormat);
 	enum ColumnOrder
@@ -269,13 +269,13 @@ public:
 	static void SetUseAlternateRowColor(bool bUse);
 	// Internet things
 	// -username/pw for accessing URLs thru ReadHTTP.cpp
-	static std::wstring GetUserName(std::wstring const& hint);
-	static void SetUserName(std::wstring const& hint, std::wstring const& userName);
+	static wxString GetUserName(wxString const& hint);
+	static void SetUserName(wxString const& hint, wxString const& userName);
 	static bool GetUseProxy();
 	static void SetUseProxy(bool inUseProxy);
-	static std::wstring GetProxyServer();
-	static void SetProxyServer(std::wstring const& inProxy);
-	static std::wstring GetProxy();
+	static wxString GetProxyServer();
+	static void SetProxyServer(wxString const& inProxy);
+	static wxString GetProxy();
 
 protected:
 	friend class CDlgAssignColumns;
@@ -283,13 +283,13 @@ protected:
 	static void GetColumnOrder(
 		ColumnOrder eOrder,
 		size_t idxColumn,
-		std::wstring const& namedColumn,
+		wxString const& namedColumn,
 		std::vector<long>& outValues,
 		bool bDefaultValues = false);
 	static void SetColumnOrder(
 		ColumnOrder eOrder,
 		size_t idxColumn,
-		std::wstring const& namedColumn,
+		wxString const& namedColumn,
 		std::vector<long> const& inValues);
 };
 

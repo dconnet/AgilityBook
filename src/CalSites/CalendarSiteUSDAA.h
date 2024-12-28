@@ -29,15 +29,15 @@ public:
 	CCalendarSiteUSDAA();
 	virtual ~CCalendarSiteUSDAA();
 
-	std::wstring GetID() const override;
+	wxString GetID() const override;
 	bool GetVersion(ARBCommon::CVersionNum& outVer) const override;
-	std::wstring GetName() const override;
-	std::wstring GetDescription() const override;
-	size_t GetLocationCodes(std::map<std::wstring, std::wstring>& locCodes) const override;
-	size_t GetVenueCodes(std::map<std::wstring, std::wstring>& venueCodes) const override;
+	wxString GetName() const override;
+	wxString GetDescription() const override;
+	size_t GetLocationCodes(std::map<wxString, wxString>& locCodes) const override;
+	size_t GetVenueCodes(std::map<wxString, wxString>& venueCodes) const override;
 	std::string Process(
-		std::vector<std::wstring> const& inLocCodes,
-		std::vector<std::wstring> const& inVenueCodes,
+		std::vector<wxString> const& inLocCodes,
+		std::vector<wxString> const& inVenueCodes,
 		IProgressMeter* progress) const override;
 };
 

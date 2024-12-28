@@ -35,31 +35,31 @@ public:
 	// For configuring what codes are available
 	CDlgCalendarQueryDetail(
 		ARBConfigCalSiteList const& sites,
-		std::map<std::wstring, std::wstring> const& inLocCodes,
-		std::map<std::wstring, std::wstring> const& inVenueCodes,
+		std::map<wxString, wxString> const& inLocCodes,
+		std::map<wxString, wxString> const& inVenueCodes,
 		wxWindow* pParent = nullptr);
 	// For selecting from available list
 	CDlgCalendarQueryDetail(
 		ARBConfigCalSiteList const& sites,
-		std::map<std::wstring, std::wstring> const& inLocCodes,
-		std::vector<std::wstring> const& inSelectedLocCodes,
-		std::map<std::wstring, std::wstring> const& inVenueCodes,
-		std::vector<std::wstring> const& inSelectedVenueCodes,
+		std::map<wxString, wxString> const& inLocCodes,
+		std::vector<wxString> const& inSelectedLocCodes,
+		std::map<wxString, wxString> const& inVenueCodes,
+		std::vector<wxString> const& inSelectedVenueCodes,
 		wxWindow* pParent = nullptr);
 
-	std::map<std::wstring, std::wstring> const& GetLocationCodes() const
+	std::map<wxString, wxString> const& GetLocationCodes() const
 	{
 		return m_LocCodes;
 	}
-	std::map<std::wstring, std::wstring> const& GetVenueCodes() const
+	std::map<wxString, wxString> const& GetVenueCodes() const
 	{
 		return m_VenueCodes;
 	}
-	std::vector<std::wstring> const& GetSelectedLocationCodes() const
+	std::vector<wxString> const& GetSelectedLocationCodes() const
 	{
 		return m_Locations;
 	}
-	std::vector<std::wstring> const& GetSelectedVenueCodes() const
+	std::vector<wxString> const& GetSelectedVenueCodes() const
 	{
 		return m_Venues;
 	}
@@ -72,10 +72,10 @@ private:
 
 	bool m_EditCodes;
 	ARBConfigCalSiteList const& m_sites;
-	std::map<std::wstring, std::wstring> m_LocCodes;
-	std::map<std::wstring, std::wstring> m_VenueCodes;
-	std::vector<std::wstring> m_Locations;
-	std::vector<std::wstring> m_Venues;
+	std::map<wxString, wxString> m_LocCodes;
+	std::map<wxString, wxString> m_VenueCodes;
+	std::vector<wxString> m_Locations;
+	std::vector<wxString> m_Venues;
 	CCheckListCtrl* m_ctrlLocations;
 	CCheckListCtrl* m_ctrlVenues;
 	wxButton* m_ctrlNewLoc;

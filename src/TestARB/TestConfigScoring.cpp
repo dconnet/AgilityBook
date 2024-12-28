@@ -37,7 +37,7 @@ TEST_CASE("ConfigScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	static std::wstring GetScoringStyleStr(ARBScoringStyle inStyle);
+			//	static wxString GetScoringStyleStr(ARBScoringStyle inStyle);
 		}
 	}
 
@@ -88,7 +88,7 @@ TEST_CASE("ConfigScoring")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	virtual std::wstring GetGenericName() const
+			//	virtual wxString GetGenericName() const
 		}
 	}
 
@@ -150,8 +150,8 @@ TEST_CASE("ConfigScoringList")
 		{
 			TODO_TEST
 			//	size_t FindAllEvents(
-			//			std::wstring const& inDivision,
-			//			std::wstring const& inLevel,
+			//			wxString const& inDivision,
+			//			wxString const& inLevel,
 			//			ARBDate const& inDate,
 			//			bool inTitlePoints,
 			//			ARBVector<ARBConfigScoringPtr>& outList) const;
@@ -165,8 +165,8 @@ TEST_CASE("ConfigScoringList")
 		{
 			TODO_TEST
 			//	bool FindEvent(
-			//			std::wstring const& inDivision,
-			//			std::wstring const& inLevel,
+			//			wxString const& inDivision,
+			//			wxString const& inLevel,
 			//			ARBDate const& inDate,
 			//			ARBConfigScoringPtr* outEvent = nullptr) const;
 		}
@@ -179,8 +179,8 @@ TEST_CASE("ConfigScoringList")
 		{
 			TODO_TEST
 			//	bool VerifyEvent(
-			//			std::wstring const& inDivision,
-			//			std::wstring const& inLevel,
+			//			wxString const& inDivision,
+			//			wxString const& inLevel,
 			//			ARBDate const& inDate) const;
 		}
 	}

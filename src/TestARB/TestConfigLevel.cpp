@@ -88,7 +88,7 @@ TEST_CASE("ConfigLevel")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	virtual std::wstring GetGenericName() const
+			//	virtual wxString GetGenericName() const
 		}
 	}
 
@@ -124,7 +124,7 @@ TEST_CASE("ConfigLevel")
 			//	bool Update(
 			//			int indent,
 			//			ARBConfigLevelPtr inLevelNew,
-			//			std::wstring& ioInfo);
+			//			wxString& ioInfo);
 		}
 	}
 }
@@ -151,7 +151,7 @@ TEST_CASE("ConfigLevelList")
 		{
 			TODO_TEST
 			//	bool VerifyLevel(
-			//			std::wstring const& inName,
+			//			wxString const& inName,
 			//			bool inAllowWildCard = true) const;
 		}
 	}
@@ -163,7 +163,7 @@ TEST_CASE("ConfigLevelList")
 		{
 			TODO_TEST
 			//	bool FindLevel(
-			//			std::wstring const& inName,
+			//			wxString const& inName,
 			//			ARBConfigLevelPtr* outLevel = nullptr);
 		}
 	}
@@ -175,7 +175,7 @@ TEST_CASE("ConfigLevelList")
 		{
 			TODO_TEST
 			//	bool FindSubLevel(
-			//			std::wstring const& inName,
+			//			wxString const& inName,
 			//			ARBConfigLevelPtr* outLevel = nullptr) const;
 		}
 	}
@@ -187,15 +187,15 @@ TEST_CASE("ConfigLevelList")
 		{
 			TODO_TEST
 			//	bool AddLevel(
-			//			std::wstring const& inName,
+			//			wxString const& inName,
 			//			ARBConfigLevelPtr* outLevel = nullptr);
 			//	bool AddLevel(ARBConfigLevelPtr inLevel);
 			//	bool DeleteLevel(
-			//			std::wstring const& inDiv,
-			//			std::wstring const& inName,
+			//			wxString const& inDiv,
+			//			wxString const& inName,
 			//			ARBConfigEventList& ioEvents);
 			//	bool DeleteSubLevel(
-			//			std::wstring const& inName,
+			//			wxString const& inName,
 			//			bool& outLevelModified);
 		}
 	}

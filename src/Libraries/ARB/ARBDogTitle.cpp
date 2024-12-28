@@ -186,21 +186,21 @@ bool ARBDogTitle::operator==(ARBDogTitle const& rhs) const
 }
 
 
-std::wstring ARBDogTitle::GetGenericName() const
+wxString ARBDogTitle::GetGenericName() const
 {
-	std::wstring name = m_Name
-						+ TitleInstance(
-							m_bShowInstanceOne,
-							m_Instance,
-							m_MultipleStartAt,
-							m_MultipleIncrement,
-							m_MultipleStyle,
-							m_MultipleSeparator);
+	wxString name = m_Name
+					+ TitleInstance(
+						m_bShowInstanceOne,
+						m_Instance,
+						m_MultipleStartAt,
+						m_MultipleIncrement,
+						m_MultipleStyle,
+						m_MultipleSeparator);
 	return name;
 }
 
 
-size_t ARBDogTitle::GetSearchStrings(std::set<std::wstring>& ioStrings) const
+size_t ARBDogTitle::GetSearchStrings(std::set<wxString>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -233,10 +233,10 @@ bool ARBDogTitle::Load(
 	}
 	if (!inConfig.GetVenues().FindVenue(m_Venue))
 	{
-		std::wstring msg(Localization()->InvalidVenueName());
+		wxString msg(Localization()->InvalidVenueName());
 		msg += m_Venue;
 		msg += L"'";
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_VENUE, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_VENUE, msg));
 		return false;
 	}
 
@@ -265,11 +265,11 @@ bool ARBDogTitle::Load(
 		break;
 	case ARBAttribLookup::Invalid:
 	{
-		std::wstring attrib;
+		wxString attrib;
 		inTree->GetAttrib(ATTRIB_TITLE_DATE, attrib);
-		std::wstring msg(Localization()->InvalidDate());
+		wxString msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_DATE, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_DATE, msg));
 		return false;
 	}
 	}
@@ -286,7 +286,7 @@ bool ARBDogTitle::Load(
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
 			TREE_TITLE,
 			ATTRIB_TITLE_RECEIVED,
-			Localization()->ValidValuesBool().c_str()));
+			Localization()->ValidValuesBool()));
 		return false;
 	}
 
@@ -312,12 +312,11 @@ bool ARBDogTitle::Load(
 		}
 		else
 		{
-			std::wstring msg(Localization()->InvalidTitle());
+			wxString msg(Localization()->InvalidTitle());
 			msg += m_Venue;
 			msg += L"/";
 			msg += m_Name;
-			ioCallback.LogMessage(
-				Localization()->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_NAME, msg.c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_NAME, msg));
 			return false;
 		}
 	}
@@ -361,7 +360,7 @@ bool ARBDogTitle::Save(ElementNodePtr const& ioTree) const
 }
 
 
-void ARBDogTitle::SetName(std::wstring const& inName, short inInstance, ARBConfigTitlePtr const& inConfigTitle)
+void ARBDogTitle::SetName(wxString const& inName, short inInstance, ARBConfigTitlePtr const& inConfigTitle)
 {
 	m_Name = inName;
 	m_Instance = inInstance;
@@ -417,7 +416,7 @@ void ARBDogTitleList::sort()
 }
 
 
-int ARBDogTitleList::NumTitlesInVenue(std::wstring const& inVenue) const
+int ARBDogTitleList::NumTitlesInVenue(wxString const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -429,8 +428,7 @@ int ARBDogTitleList::NumTitlesInVenue(std::wstring const& inVenue) const
 }
 
 
-bool ARBDogTitleList::FindTitle(std::wstring const& inVenue, std::wstring const& inTitle, ARBDogTitlePtr* outTitle)
-	const
+bool ARBDogTitleList::FindTitle(wxString const& inVenue, wxString const& inTitle, ARBDogTitlePtr* outTitle) const
 {
 	if (outTitle)
 		outTitle->reset();
@@ -453,10 +451,8 @@ bool ARBDogTitleList::FindTitle(std::wstring const& inVenue, std::wstring const&
 }
 
 
-short ARBDogTitleList::FindMaxInstance(
-	std::wstring const& inVenue,
-	std::wstring const& inTitle,
-	std::vector<short>* outMissing) const
+short ARBDogTitleList::FindMaxInstance(wxString const& inVenue, wxString const& inTitle, std::vector<short>* outMissing)
+	const
 {
 	std::set<short> instances;
 	short inst = 0;
@@ -487,7 +483,7 @@ short ARBDogTitleList::FindMaxInstance(
 }
 
 
-int ARBDogTitleList::RenameVenue(std::wstring const& inOldVenue, std::wstring const& inNewVenue)
+int ARBDogTitleList::RenameVenue(wxString const& inOldVenue, wxString const& inNewVenue)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -502,9 +498,9 @@ int ARBDogTitleList::RenameVenue(std::wstring const& inOldVenue, std::wstring co
 }
 
 
-int ARBDogTitleList::DeleteVenue(std::wstring const& inVenue)
+int ARBDogTitleList::DeleteVenue(wxString const& inVenue)
 {
-	std::wstring venue(inVenue);
+	wxString venue(inVenue);
 	int count = 0;
 	for (iterator iter = begin(); iter != end();)
 	{
@@ -520,7 +516,7 @@ int ARBDogTitleList::DeleteVenue(std::wstring const& inVenue)
 }
 
 
-int ARBDogTitleList::NumTitlesInUse(std::wstring const& inVenue, std::wstring const& inTitle) const
+int ARBDogTitleList::NumTitlesInUse(wxString const& inVenue, wxString const& inTitle) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -532,10 +528,7 @@ int ARBDogTitleList::NumTitlesInUse(std::wstring const& inVenue, std::wstring co
 }
 
 
-int ARBDogTitleList::RenameTitle(
-	std::wstring const& inVenue,
-	std::wstring const& inOldTitle,
-	std::wstring const& inNewTitle)
+int ARBDogTitleList::RenameTitle(wxString const& inVenue, wxString const& inOldTitle, wxString const& inNewTitle)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)

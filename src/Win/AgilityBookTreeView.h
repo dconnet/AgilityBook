@@ -12,7 +12,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-08 Ported to wxWidgets.
  * 2008-11-19 Added SelectDog()
@@ -80,8 +79,8 @@ public:
 	void DetachView() override;
 
 	bool IsFiltered() const override;
-	bool GetMessage(std::wstring& msg) const override;
-	bool GetMessage2(std::wstring& msg) const override;
+	bool GetMessage(wxString& msg) const override;
+	bool GetMessage2(wxString& msg) const override;
 	bool AllowStatusContext(int field) const override;
 
 	bool OnCreate(wxDocument* doc, long flags) override;
@@ -195,15 +194,15 @@ public:
 		m_bSuppressSelect = bSuppress;
 	}
 
-	std::wstring GetPrintLine(wxTreeItemId hItem) const;
+	wxString GetPrintLine(wxTreeItemId hItem) const;
 
 private:
 	void UpdateData(wxTreeItemId hItem);
 	void ChangeSelection(wxTreeItemId hItem, bool bEnsureVisible = true);
 	void DoSelectionChange(wxTreeItemId hItem);
 	void LoadData();
-	void PrintLine(fmt::wmemory_buffer& data, wxTreeItemId id, int indent) const;
-	std::wstring GetPrintDataAsHtmlTable() const;
+	void PrintLine(wxString& data, wxTreeItemId id, int indent) const;
+	wxString GetPrintDataAsHtmlTable() const;
 	bool OnCmd(int id);
 	// void PrintLine(
 	//		CDC* pDC,

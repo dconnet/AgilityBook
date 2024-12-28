@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2015-05-06 Updated for changed Q order.
  * 2015-03-15 Fixed Unknown-Q usage.
@@ -70,7 +69,7 @@ TEST_CASE("ARBQ")
 			REQUIRE(ARB_Q(Q::DNR) == ARB_Q::GetValidType(6));
 			REQUIRE(ARB_Q(Q::NA) == ARB_Q::GetValidType(7));
 
-			std::vector<std::wstring> types;
+			std::vector<wxString> types;
 			ARB_Q::GetValidTypes(types);
 			REQUIRE(8u == types.size());
 		}
@@ -138,7 +137,7 @@ TEST_CASE("ARBQ")
 		{
 #if defined(__WXWINDOWS__)
 			ARB_Q q;
-			fmt::wmemory_buffer errmsg;
+			wxString errmsg;
 			ARBErrorCallback callback(errmsg);
 			ARBVersion ver(1, 0);
 			REQUIRE(q.Load(L"SQ", ver, callback));
@@ -156,7 +155,7 @@ TEST_CASE("ARBQ")
 		{
 #if defined(__WXWINDOWS__)
 			ARB_Q q(Q::Q);
-			fmt::wmemory_buffer errmsg;
+			wxString errmsg;
 			ARBErrorCallback callback(errmsg);
 			ARBVersion ver(1, 0);
 			REQUIRE(!q.Load(L"attrib", ver, callback));
@@ -175,7 +174,7 @@ TEST_CASE("ARBQ")
 			ARB_Q q(Q::Q);
 			ElementNodePtr ele = ElementNode::New(L"test");
 			REQUIRE(q.Save(ele, L"attrib"));
-			std::wstring str;
+			wxString str;
 			REQUIRE(ARBAttribLookup::Found == ele->GetAttrib(L"attrib", str));
 			REQUIRE(L"Q" == str);
 		}
@@ -189,7 +188,7 @@ TEST_CASE("ARBQ")
 			ARB_Q q;
 			ElementNodePtr ele = ElementNode::New(L"test");
 			REQUIRE(q.Save(ele, L"attrib"));
-			std::wstring str;
+			wxString str;
 			REQUIRE(ARBAttribLookup::NotFound == ele->GetAttrib(L"attrib", str));
 			REQUIRE(L"" == str);
 		}

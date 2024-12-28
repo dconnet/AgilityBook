@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2017-12-31 Add support for using raw faults when determining title points.
  * 2017-11-30 Remove image list from placement list (not needed)
  * 2016-01-16 Cleaned up new/edit/delete buttons.
@@ -76,7 +75,7 @@ public:
 		, m_Value(inVal)
 	{
 	}
-	std::wstring OnNeedText(long iColumn) const override;
+	wxString OnNeedText(long iColumn) const override;
 	short Place() const
 	{
 		return m_Place;
@@ -100,18 +99,18 @@ protected:
 };
 
 
-std::wstring CDlgConfigureDataPlacement::OnNeedText(long iColumn) const
+wxString CDlgConfigureDataPlacement::OnNeedText(long iColumn) const
 {
-	std::wstring str;
+	wxString str;
 	switch (iColumn)
 	{
 	default:
 		break;
 	case 0:
-		str = fmt::format(L"{}", m_Place);
+		str << m_Place;
 		break;
 	case 1:
-		str = fmt::format(L"{}", m_Value);
+		str << m_Value;
 		break;
 	}
 	return str;
@@ -1133,7 +1132,7 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 	}
 
 	// Save it.
-	std::wstring str;
+	wxString str;
 	m_pScoring->SetValidFrom(m_dateFrom);
 	m_pScoring->SetValidTo(m_dateTo);
 	if (0 == idxDiv)

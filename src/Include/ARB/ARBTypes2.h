@@ -12,7 +12,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2016-01-06 Added ARBConfigLifetimeName.
  * 2013-04-15 Moved ARB specific things out of ARBTypes.h
  * 2012-09-09 Added ARBVectorNoSave.
@@ -22,7 +21,7 @@
 
 #include "ARBCommon/ARBTypes.h"
 #include "ARBCommon/Element.h"
-#include "fmt/xchar.h"
+#include <set>
 
 namespace dconSoft
 {
@@ -134,7 +133,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const
 	{
 		size_t nItems = 0;
 		for (typename ARBVectorNoSave<T>::const_iterator iter = ARBVectorNoSave<T>::begin();
@@ -246,7 +245,7 @@ public:
 class ARB_API ARBErrorCallback
 {
 public:
-	explicit ARBErrorCallback(fmt::wmemory_buffer& ioErrMsg)
+	explicit ARBErrorCallback(wxString& ioErrMsg)
 		: m_ErrMsg(ioErrMsg)
 	{
 	}
@@ -263,21 +262,21 @@ public:
 	{
 		return false;
 	}
-	virtual bool OnError(std::wstring const& msg)
+	virtual bool OnError(wxString const& msg)
 	{
-		return OnError(msg.c_str());
+		return OnError(msg);
 	}
 
 	/**
 	 * Log an error message.
 	 */
-	virtual void LogMessage(std::wstring const& inMsg)
+	virtual void LogMessage(wxString const& inMsg)
 	{
-		fmt::format_to(std::back_inserter(m_ErrMsg), L"{}", inMsg);
+		m_ErrMsg << inMsg;
 	}
 
 protected:
-	fmt::wmemory_buffer& m_ErrMsg;
+	wxString& m_ErrMsg;
 
 	DECLARE_NO_COPY_IMPLEMENTED(ARBErrorCallback);
 };

@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2016-09-02 Add support for scrolling on touch (or mouse drag).
  * 2013-01-01 Allow the mouse wheel to scroll beyond last entry.
  *            Add better keyboard navigation on Mac.
@@ -264,7 +263,8 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 		// Figure out which month we're on.
 		ARBDate curMonth = FirstDayOfVisibleMonth();
 		curMonth = LastDayOfWeek(curMonth);
-		std::wstring str = fmt::format(L"{} {}", m_Months[curMonth.GetMonth() - 1].wc_str(), curMonth.GetYear());
+		wxString str;
+		str << m_Months[curMonth.GetMonth() - 1] << L" " << curMonth.GetYear();
 
 		wxRect rHeader;
 		wxRect rWeekDays;
@@ -281,7 +281,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 			pDC->SetFont(m_fontMonth);
 		{
 			wxDCClipper clip(*pDC, rHeader);
-			pDC->DrawLabel(StringUtil::stringWX(str), rHeader, wxALIGN_TOP | wxALIGN_CENTRE_HORIZONTAL);
+			pDC->DrawLabel(str, rHeader, wxALIGN_TOP | wxALIGN_CENTRE_HORIZONTAL);
 		}
 
 		if (bIsPrinting)
@@ -376,10 +376,11 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 
 				// Display date (only day now, not full date)
 				// wxString str(day.GetString());
-				str = fmt::format(L"{}", day.GetDay());
+				str.clear();
+				str << day.GetDay();
 				{
 					wxDCClipper clip(*pDC, rect);
-					pDC->DrawLabel(StringUtil::stringWX(str), rect, wxALIGN_TOP | wxALIGN_RIGHT);
+					pDC->DrawLabel(str, rect, wxALIGN_TOP | wxALIGN_RIGHT);
 				}
 
 				// Display entries
@@ -473,7 +474,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 							}
 						}
 						wxDCClipper clip(*pDC, r);
-						pDC->DrawLabel(StringUtil::stringWX(str), r, wxALIGN_LEFT);
+						pDC->DrawLabel(str, r, wxALIGN_LEFT);
 						if (bReset)
 							pDC->SetTextForeground(oldText);
 					}
@@ -678,77 +679,77 @@ void CAgilityBookCalendar::OnCopy()
 	constexpr size_t COL_NOTES = 7;
 
 	int index = 0;
-	size_t maxLen[scNumColumns] = {0};
-	std::wstring columns[scNumColumns];
+	int maxLen[scNumColumns] = {0};
+	wxString columns[scNumColumns];
 	for (index = 0; index < scNumColumns; ++index)
 	{
 		wxString str = wxGetTranslation(scColumns[index]);
-		maxLen[index] = str.length();
+		maxLen[index] = static_cast<int>(str.length());
 		columns[index] = str;
 	}
 	std::vector<ARBCalendarPtr>::const_iterator iter;
 	for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 	{
 		ARBCalendarPtr cal = *iter;
-		size_t len = cal->GetStartDate().GetString().length();
+		int len = static_cast<int>(cal->GetStartDate().GetString().length());
 		if (len > maxLen[COL_START_DATE])
 			maxLen[COL_START_DATE] = len;
-		len = cal->GetEndDate().GetString().length();
+		len = static_cast<int>(cal->GetEndDate().GetString().length());
 		if (len > maxLen[COL_END_DATE])
 			maxLen[COL_END_DATE] = len;
-		len = cal->GetLocation().length();
+		len = static_cast<int>(cal->GetLocation().length());
 		if (len > maxLen[COL_LOCATION])
 			maxLen[COL_LOCATION] = len;
-		len = cal->GetClub().length();
+		len = static_cast<int>(cal->GetClub().length());
 		if (len > maxLen[COL_CLUB])
 			maxLen[COL_CLUB] = len;
-		len = cal->GetVenue().length();
+		len = static_cast<int>(cal->GetVenue().length());
 		if (len > maxLen[COL_VENUE])
 			maxLen[COL_VENUE] = len;
-		len = cal->GetOpeningDate().GetString().length();
+		len = static_cast<int>(cal->GetOpeningDate().GetString().length());
 		if (len > maxLen[COL_OPENS])
 			maxLen[COL_OPENS] = len;
-		len = cal->GetClosingDate().GetString().length();
+		len = static_cast<int>(cal->GetClosingDate().GetString().length());
 		if (len > maxLen[COL_CLOSES])
 			maxLen[COL_CLOSES] = len;
-		len = cal->GetNote().length();
+		len = static_cast<int>(cal->GetNote().length());
 		if (len > maxLen[COL_NOTES])
 			maxLen[COL_NOTES] = len;
 	}
 
-	const std::wstring fmtspec(L"{}{:>{}} - {:{}} {:{}} {:{}} {:{}} {:>{}}{}{:{}} {:{}}");
-	const std::wstring col1(L"  ");
-	const std::wstring opencloseSep(L"   ");
-	const std::wstring opencloseSep2(L" - ");
+	const wxString fmtspec(L"%s%*s - %-*s %-*s %-*s %-*s %*s%s%-*s %-*s");
+	const wxString col1(L"  ");
+	const wxString opencloseSep(L"   ");
+	const wxString opencloseSep2(L" - ");
 
 	// The header
-	std::wstring data = fmt::format(
+	auto data = wxString::Format(
 		fmtspec,
 		col1,
-		columns[COL_START_DATE],
 		maxLen[COL_START_DATE],
-		columns[COL_END_DATE],
+		columns[COL_START_DATE],
 		maxLen[COL_END_DATE],
-		columns[COL_VENUE],
+		columns[COL_END_DATE],
 		maxLen[COL_VENUE],
-		columns[COL_LOCATION],
+		columns[COL_VENUE],
 		maxLen[COL_LOCATION],
-		columns[COL_CLUB],
+		columns[COL_LOCATION],
 		maxLen[COL_CLUB],
-		columns[COL_OPENS],
+		columns[COL_CLUB],
 		maxLen[COL_OPENS],
+		columns[COL_OPENS],
 		opencloseSep,
-		columns[COL_CLOSES],
 		maxLen[COL_CLOSES],
-		columns[COL_NOTES],
-		maxLen[COL_NOTES]);
-	data = StringUtil::TrimRight(data) + L"\n";
+		columns[COL_CLOSES],
+		maxLen[COL_NOTES],
+		columns[COL_NOTES]);
+	data = data.Trim(true) + L"\n";
 
 	// The data
 	for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 	{
 		ARBCalendarPtr cal = *iter;
-		std::wstring items[scNumColumns];
+		wxString items[scNumColumns];
 		items[COL_START_DATE] = cal->GetStartDate().GetString();
 		items[COL_END_DATE] = cal->GetEndDate().GetString();
 		items[COL_LOCATION] = cal->GetLocation();
@@ -761,27 +762,27 @@ void CAgilityBookCalendar::OnCopy()
 		if (cal->IsTentative())
 			tentative = L"? ";
 		assert(col1.length() == tentative.length());
-		std::wstring str = fmt::format(
+		auto str = wxString::Format(
 			fmtspec,
-			tentative.wc_str(),
-			items[COL_START_DATE],
+			tentative,
 			maxLen[COL_START_DATE],
-			items[COL_END_DATE],
+			items[COL_START_DATE],
 			maxLen[COL_END_DATE],
-			items[COL_VENUE],
+			items[COL_END_DATE],
 			maxLen[COL_VENUE],
-			items[COL_LOCATION],
+			items[COL_VENUE],
 			maxLen[COL_LOCATION],
-			items[COL_CLUB],
+			items[COL_LOCATION],
 			maxLen[COL_CLUB],
-			items[COL_OPENS],
+			items[COL_CLUB],
 			maxLen[COL_OPENS],
+			items[COL_OPENS],
 			(0 < items[COL_OPENS].length() || 0 < items[COL_CLOSES].length()) ? opencloseSep2 : opencloseSep,
-			items[COL_CLOSES],
 			maxLen[COL_CLOSES],
-			items[COL_NOTES],
-			maxLen[COL_NOTES]);
-		data += StringUtil::TrimRight(str) + L"\n";
+			items[COL_CLOSES],
+			maxLen[COL_NOTES],
+			items[COL_NOTES]);
+		data += str.Trim(true) + L"\n";
 	}
 	clpData.AddData(data);
 	clpData.CommitData();
@@ -1340,18 +1341,18 @@ bool CAgilityBookCalendarView::IsFiltered() const
 }
 
 
-bool CAgilityBookCalendarView::GetMessage(std::wstring& msg) const
+bool CAgilityBookCalendarView::GetMessage(wxString& msg) const
 {
 	if (!m_Ctrl)
 		return false;
-	msg = fmt::format(_("IDS_NUM_EVENTS").wx_str(), m_Ctrl->NumEvents());
+	msg = wxString::Format(_("IDS_NUM_EVENTS"), m_Ctrl->NumEvents());
 	return true;
 }
 
 
-bool CAgilityBookCalendarView::GetMessage2(std::wstring& msg) const
+bool CAgilityBookCalendarView::GetMessage2(wxString& msg) const
 {
-	msg = StringUtil::stringW(_("IDS_INDICATOR_BLANK"));
+	msg = _("IDS_INDICATOR_BLANK");
 	return true;
 }
 

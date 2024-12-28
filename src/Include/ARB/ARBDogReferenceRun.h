@@ -59,7 +59,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override
+	wxString GetGenericName() const override
 	{
 		return m_Name;
 	}
@@ -69,7 +69,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override;
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override;
 
 	/**
 	 * Load an existing point.
@@ -113,27 +113,27 @@ public:
 	{
 		m_Place = inPlace;
 	}
-	std::wstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(std::wstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	std::wstring const& GetHeight() const
+	wxString const& GetHeight() const
 	{
 		return m_Height;
 	}
-	void SetHeight(std::wstring const& inHeight)
+	void SetHeight(wxString const& inHeight)
 	{
 		m_Height = inHeight;
 	}
-	std::wstring const& GetBreed() const
+	wxString const& GetBreed() const
 	{
 		return m_Breed;
 	}
-	void SetBreed(std::wstring const& inBreed)
+	void SetBreed(wxString const& inBreed)
 	{
 		m_Breed = inBreed;
 	}
@@ -145,19 +145,19 @@ public:
 	{
 		m_Time = inTime;
 	}
-	std::wstring const& GetScore() const
+	wxString const& GetScore() const
 	{
 		return m_Score;
 	}
-	void SetScore(std::wstring const& inScore)
+	void SetScore(wxString const& inScore)
 	{
 		m_Score = inScore;
 	}
-	std::wstring const& GetNote() const
+	wxString const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(std::wstring const& inNote)
+	void SetNote(wxString const& inNote)
 	{
 		m_Note = inNote;
 	}
@@ -165,12 +165,12 @@ public:
 private:
 	ARB_Q m_Q;
 	short m_Place;
-	std::wstring m_Name;
-	std::wstring m_Height;
-	std::wstring m_Breed;
+	wxString m_Name;
+	wxString m_Height;
+	wxString m_Breed;
 	double m_Time;
-	std::wstring m_Score;
-	std::wstring m_Note;
+	wxString m_Score;
+	wxString m_Note;
 };
 
 /////////////////////////////////////////////////////////////////////////////

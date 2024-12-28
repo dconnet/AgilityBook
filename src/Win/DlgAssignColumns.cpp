@@ -577,9 +577,9 @@ int CDlgAssignColumns::GetFormatFromColumnID(long column)
 }
 
 
-std::wstring CDlgAssignColumns::GetNameFromColumnID(long column)
+wxString CDlgAssignColumns::GetNameFromColumnID(long column)
 {
-	std::wstring name;
+	wxString name;
 	if (0 <= column && column < static_cast<long>(IO_MAX))
 		name = wxGetTranslation(sc_FieldNames[column].name);
 	return name;
@@ -601,7 +601,7 @@ bool CDlgAssignColumns::GetColumnOrder(
 bool CDlgAssignColumns::GetColumnOrder(
 	CAgilityBookOptions::ColumnOrder eOrder,
 	size_t idxColumn,
-	std::wstring const& namedColumn,
+	wxString const& namedColumn,
 	std::vector<long>& values,
 	bool bDefaultValues)
 {
@@ -621,7 +621,7 @@ bool CDlgAssignColumns::GetColumnOrder(
 bool CDlgAssignColumns::SetColumnOrder(
 	CAgilityBookOptions::ColumnOrder eOrder,
 	size_t idxColumn,
-	std::wstring const& namedColumn,
+	wxString const& namedColumn,
 	std::vector<long> const& values)
 {
 	bool bOk = false;
@@ -884,13 +884,13 @@ CDlgAssignColumns::CDlgAssignColumns(
 
 	wxArrayString items;
 	std::vector<wxClientData*> data;
-	std::vector<std::wstring> configNames;
+	std::vector<wxString> configNames;
 	m_Configs.GetAllConfigNames(configNames);
 	for (auto const& name : configNames)
 	{
 		items.Add(name);
 		if (name == m_Configs.GetCurrentConfig())
-			m_ConfigName = StringUtil::stringWX(m_Configs.GetCurrentConfig());
+			m_ConfigName = m_Configs.GetCurrentConfig();
 	}
 
 	m_ctrlConfig = new wxComboBox(
@@ -1097,8 +1097,8 @@ void CDlgAssignColumns::FillColumns()
 			if (0 <= m_Configs.Columns(idxType)[i])
 			{
 				bInUse[m_Configs.Columns(idxType)[i]] = true;
-				std::wstring name = GetNameFromColumnID(m_Configs.Columns(idxType)[i]);
-				int idx = m_ctrlColumns->Append(StringUtil::stringWX(name));
+				wxString name = GetNameFromColumnID(m_Configs.Columns(idxType)[i]);
+				int idx = m_ctrlColumns->Append(name);
 				if (0 <= idx)
 					m_ctrlColumns->SetClientObject(idx, new ColumnData(i, m_Configs.Columns(idxType)[i]));
 			}
@@ -1127,8 +1127,8 @@ void CDlgAssignColumns::FillColumns()
 			if (!(sc_FieldNames[sc_Fields[idxType][i]].valid & m_Configs.Order())
 				|| (bImport && !sc_FieldNames[sc_Fields[idxType][i]].bImportable) || bInUse[sc_Fields[idxType][i]])
 				continue;
-			std::wstring name = GetNameFromColumnID(sc_Fields[idxType][i]);
-			int idx = m_ctrlAvailable->Append(StringUtil::stringWX(name));
+			wxString name = GetNameFromColumnID(sc_Fields[idxType][i]);
+			int idx = m_ctrlAvailable->Append(name);
 			if (0 <= idx)
 				m_ctrlAvailable->SetClientObject(idx, new ColumnData(i, sc_Fields[idxType][i]));
 		}
@@ -1174,7 +1174,7 @@ void CDlgAssignColumns::OnSelchangeNames(wxCommandEvent& evt)
 	int idx = m_ctrlConfig->GetSelection();
 	if (0 <= idx)
 	{
-		m_Configs.SetCurrentConfig(StringUtil::stringW(m_ctrlConfig->GetString(idx)));
+		m_Configs.SetCurrentConfig(m_ctrlConfig->GetString(idx));
 		FillColumns();
 	}
 	else
@@ -1188,7 +1188,7 @@ void CDlgAssignColumns::OnClickedOptNamesSave(wxCommandEvent& evt)
 		return;
 	if (!m_ConfigName.empty())
 	{
-		if (m_Configs.AddConfig(StringUtil::stringW(m_ConfigName)))
+		if (m_Configs.AddConfig(m_ConfigName))
 			m_ctrlConfig->Append(m_ConfigName);
 		FillColumns();
 	}
@@ -1206,7 +1206,7 @@ void CDlgAssignColumns::OnClickedOptNamesDelete(wxCommandEvent& evt)
 		int idx = m_ctrlConfig->FindString(m_ConfigName, true);
 		if (0 <= idx)
 		{
-			m_Configs.DeleteConfig(StringUtil::stringW(m_ConfigName));
+			m_Configs.DeleteConfig(m_ConfigName);
 			m_ctrlConfig->Delete(idx);
 			m_ConfigName.clear();
 			m_ctrlConfig->SetSelection(wxNOT_FOUND);

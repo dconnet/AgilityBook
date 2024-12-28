@@ -46,7 +46,7 @@ class CErrorCallback : public ARB::ARBErrorCallback
 public:
 	CErrorCallback();
 	bool OnError(wchar_t const* const pMsg) override;
-	fmt::wmemory_buffer m_ErrMsg;
+	wxString m_ErrMsg;
 };
 
 } // namespace dconSoft

@@ -151,7 +151,6 @@ AC_CONFIG_FILES([NAM_rules.mk Makefile \
 	AgilityBookLibs/3rdParty/Makefile \
 	AgilityBookLibs/3rdParty/catch/Makefile \
 	AgilityBookLibs/3rdParty/catch/catch3/Makefile \
-	AgilityBookLibs/3rdParty/LibFmt/Makefile \
 	AgilityBookLibs/3rdParty/LibTidyHtml/Makefile \
 	AgilityBookLibs/ARBCommon/Makefile \
 	AgilityBookLibs/LibARBWin/Makefile \

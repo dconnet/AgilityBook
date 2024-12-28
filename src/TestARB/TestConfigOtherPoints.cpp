@@ -37,7 +37,7 @@ TEST_CASE("ConfigOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	static void GetTallyValidValues(std::vector<std::wstring>& outValues);
+			//	static void GetTallyValidValues(std::vector<wxString>& outValues);
 		}
 	}
 
@@ -98,7 +98,7 @@ TEST_CASE("ConfigOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	virtual std::wstring GetGenericName() const
+			//	virtual wxString GetGenericName() const
 		}
 	}
 
@@ -147,7 +147,7 @@ TEST_CASE("ConfigOtherPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	bool VerifyOtherPoints(std::wstring const& inName) const;
+			//	bool VerifyOtherPoints(wxString const& inName) const;
 		}
 	}
 
@@ -158,7 +158,7 @@ TEST_CASE("ConfigOtherPointsList")
 		{
 			TODO_TEST
 			//	bool FindOtherPoints(
-			//			std::wstring const& inName,
+			//			wxString const& inName,
 			//			ARBConfigOtherPointsPtr* outPoints = nullptr) const;
 		}
 	}
@@ -170,7 +170,7 @@ TEST_CASE("ConfigOtherPointsList")
 		{
 			TODO_TEST
 			//	bool AddOtherPoints(ARBConfigOtherPointsPtr inOther);
-			//	bool DeleteOtherPoints(std::wstring const& inName);
+			//	bool DeleteOtherPoints(wxString const& inName);
 		}
 	}
 }

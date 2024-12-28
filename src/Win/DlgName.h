@@ -26,10 +26,10 @@ namespace dconSoft
 class CDlgName : public wxDialog
 {
 public:
-	CDlgName(std::wstring const& name, wxWindow* pParent = nullptr);
-	CDlgName(std::wstring const& name, wxString const& caption, wxWindow* pParent = nullptr);
+	CDlgName(wxString const& name, wxWindow* pParent = nullptr);
+	CDlgName(wxString const& name, wxString const& caption, wxWindow* pParent = nullptr);
 
-	std::wstring Name() const;
+	wxString Name() const;
 
 private:
 	bool Create(wxString const& caption, wxWindow* pParent = nullptr);

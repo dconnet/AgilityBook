@@ -227,7 +227,7 @@ bool ARBConfigVenue::Load(
 	bool bAddLifetime = false;
 	if (inVersion < ARBVersion(14, 4))
 	{
-		std::wstring lifetimeName;
+		wxString lifetimeName;
 		if (ARBAttribLookup::Found == inTree->GetAttrib(L"LifetimeName", lifetimeName))
 			m_LifetimeNames.AddLifetimeName(lifetimeName);
 	}
@@ -238,7 +238,7 @@ bool ARBConfigVenue::Load(
 		ElementNodePtr element = inTree->GetElementNode(i);
 		if (!element)
 			continue;
-		std::wstring const& name = element->GetName();
+		wxString const& name = element->GetName();
 		if (name == TREE_VENUE_DESC)
 		{
 			m_Desc = element->GetValue();
@@ -317,7 +317,7 @@ bool ARBConfigVenue::Load(
 	{
 		if (1 == m_LifetimeNames.size() && !m_LifetimeNames.front()->GetName().empty())
 		{
-			std::wstring name = m_LifetimeNames.front()->GetName();
+			wxString name = m_LifetimeNames.front()->GetName();
 			for (ARBConfigEventList::iterator iter = m_Events.begin(); iter != m_Events.end(); ++iter)
 			{
 				for (ARBConfigScoringList::iterator iterS = (*iter)->GetScorings().begin();
@@ -397,13 +397,13 @@ bool ARBConfigVenue::Save(ElementNodePtr const& ioTree) const
 }
 
 
-bool ARBConfigVenue::Update(int indent, ARBConfigVenuePtr const& inVenueNew, std::wstring& ioInfo)
+bool ARBConfigVenue::Update(int indent, ARBConfigVenuePtr const& inVenueNew, wxString& ioInfo)
 {
-	std::wstring info;
+	wxString info;
 	if (GetName() != inVenueNew->GetName())
 		return false;
 
-	std::wstring indentBuffer, indentName;
+	wxString indentBuffer, indentName;
 	for (int i = 0; i < indent - 1; ++i)
 		indentName += L"   ";
 	indentBuffer = indentName + L"   ";
@@ -512,7 +512,7 @@ bool ARBConfigVenue::Update(int indent, ARBConfigVenuePtr const& inVenueNew, std
 	// If the order is different, we will fall into this...
 	if (GetDivisions() != inVenueNew->GetDivisions())
 	{
-		std::wstring info2;
+		wxString info2;
 		int nChanged = 0, nAdded = 0, nSkipped = 0;
 		for (ARBConfigDivisionList::const_iterator iterDiv = inVenueNew->GetDivisions().begin();
 			 iterDiv != inVenueNew->GetDivisions().end();
@@ -559,7 +559,7 @@ bool ARBConfigVenue::Update(int indent, ARBConfigVenuePtr const& inVenueNew, std
 	// If the order is different, we will fall into this...
 	if (GetEvents() != inVenueNew->GetEvents())
 	{
-		std::wstring info2;
+		wxString info2;
 		int nChanged = 0, nAdded = 0, nSkipped = 0;
 		for (ARBConfigEventList::const_iterator iterEvent = inVenueNew->GetEvents().begin();
 			 iterEvent != inVenueNew->GetEvents().end();
@@ -690,8 +690,7 @@ void ARBConfigVenueList::sort()
 }
 
 
-bool ARBConfigVenueList::VerifyMultiQ(std::wstring const& inVenue, std::wstring const& inMultiQ, bool inUseShortName)
-	const
+bool ARBConfigVenueList::VerifyMultiQ(wxString const& inVenue, wxString const& inMultiQ, bool inUseShortName) const
 {
 	ARBConfigVenuePtr pVenue;
 	if (FindVenue(inVenue, &pVenue))
@@ -700,10 +699,7 @@ bool ARBConfigVenueList::VerifyMultiQ(std::wstring const& inVenue, std::wstring 
 }
 
 
-bool ARBConfigVenueList::VerifyLevel(
-	std::wstring const& inVenue,
-	std::wstring const& inDivision,
-	std::wstring const& inLevel) const
+bool ARBConfigVenueList::VerifyLevel(wxString const& inVenue, wxString const& inDivision, wxString const& inLevel) const
 {
 	ARBConfigVenuePtr pVenue;
 	if (FindVenue(inVenue, &pVenue))
@@ -713,10 +709,10 @@ bool ARBConfigVenueList::VerifyLevel(
 
 
 bool ARBConfigVenueList::VerifyEvent(
-	std::wstring const& inVenue,
-	std::wstring const& inDivision,
-	std::wstring const& inLevel,
-	std::wstring const& inEvent,
+	wxString const& inVenue,
+	wxString const& inDivision,
+	wxString const& inLevel,
+	wxString const& inEvent,
 	ARBDate const& inDate) const
 {
 	ARBConfigVenuePtr pVenue;
@@ -739,8 +735,8 @@ bool ARBConfigVenueList::VerifyEvent(
 
 
 bool ARBConfigVenueList::FindTitleCompleteName(
-	std::wstring const& inVenue,
-	std::wstring const& inName,
+	wxString const& inVenue,
+	wxString const& inName,
 	bool bAbbrevFirst,
 	ARBConfigTitlePtr* outTitle) const
 {
@@ -762,10 +758,7 @@ bool ARBConfigVenueList::FindTitleCompleteName(
 }
 
 
-bool ARBConfigVenueList::FindTitle(
-	std::wstring const& inVenue,
-	std::wstring const& inTitle,
-	ARBConfigTitlePtr* outTitle) const
+bool ARBConfigVenueList::FindTitle(wxString const& inVenue, wxString const& inTitle, ARBConfigTitlePtr* outTitle) const
 {
 	if (outTitle)
 		outTitle->reset();
@@ -776,7 +769,7 @@ bool ARBConfigVenueList::FindTitle(
 }
 
 
-bool ARBConfigVenueList::DeleteTitle(std::wstring const& inTitle)
+bool ARBConfigVenueList::DeleteTitle(wxString const& inTitle)
 {
 	bool bDeleted = false;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -791,7 +784,7 @@ bool ARBConfigVenueList::DeleteTitle(std::wstring const& inTitle)
 }
 
 
-bool ARBConfigVenueList::FindVenue(std::wstring const& inVenue, ARBConfigVenuePtr* outVenue) const
+bool ARBConfigVenueList::FindVenue(wxString const& inVenue, ARBConfigVenuePtr* outVenue) const
 {
 	if (outVenue)
 		outVenue->reset();
@@ -808,7 +801,7 @@ bool ARBConfigVenueList::FindVenue(std::wstring const& inVenue, ARBConfigVenuePt
 }
 
 
-bool ARBConfigVenueList::AddVenue(std::wstring const& inVenue, ARBConfigVenuePtr* outVenue)
+bool ARBConfigVenueList::AddVenue(wxString const& inVenue, ARBConfigVenuePtr* outVenue)
 {
 	if (outVenue)
 		outVenue->reset();
@@ -838,9 +831,9 @@ bool ARBConfigVenueList::AddVenue(ARBConfigVenuePtr const& inVenue)
 }
 
 
-int ARBConfigVenueList::DeleteVenue(std::wstring const& inVenue)
+int ARBConfigVenueList::DeleteVenue(wxString const& inVenue)
 {
-	std::wstring venue(inVenue);
+	wxString venue(inVenue);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == venue)
@@ -857,10 +850,10 @@ int ARBConfigVenueList::DeleteVenue(std::wstring const& inVenue)
 // This is the only 'FindEvent' that takes a true level. All others take
 // a ARBConfigLevel.
 bool ARBConfigVenueList::FindEvent(
-	std::wstring const& inVenue,
-	std::wstring const& inEvent,
-	std::wstring const& inDivision,
-	std::wstring const& inLevel,
+	wxString const& inVenue,
+	wxString const& inEvent,
+	wxString const& inDivision,
+	wxString const& inLevel,
 	ARBDate const& inDate,
 	ARBConfigEventPtr* outEvent,
 	ARBConfigScoringPtr* outScoring) const

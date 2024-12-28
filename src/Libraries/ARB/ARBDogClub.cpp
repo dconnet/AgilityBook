@@ -132,7 +132,7 @@ bool ARBDogClub::operator==(ARBDogClub const& rhs) const
 }
 
 
-size_t ARBDogClub::GetSearchStrings(std::set<std::wstring>& ioStrings) const
+size_t ARBDogClub::GetSearchStrings(std::set<wxString>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -182,9 +182,9 @@ bool ARBDogClub::Load(
 
 	if (!inConfig.GetVenues().VerifyVenue(m_Venue))
 	{
-		std::wstring msg(Localization()->InvalidVenueName());
+		wxString msg(Localization()->InvalidVenueName());
 		msg += m_Venue;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CLUB, ATTRIB_CLUB_VENUE, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CLUB, ATTRIB_CLUB_VENUE, msg));
 		return false;
 	}
 
@@ -268,7 +268,7 @@ ARBDogClubPtr ARBDogClubList::GetMainClub() const
 }
 
 
-bool ARBDogClubList::GetPrimaryClub(std::wstring const& inVenue, ARBDogClubPtr* outClub) const
+bool ARBDogClubList::GetPrimaryClub(wxString const& inVenue, ARBDogClubPtr* outClub) const
 {
 	if (inVenue.empty())
 		return false;
@@ -287,44 +287,40 @@ bool ARBDogClubList::GetPrimaryClub(std::wstring const& inVenue, ARBDogClubPtr* 
 }
 
 
-std::wstring ARBDogClubList::GetClubList(bool bNames, bool bIncCosanction) const
+wxString ARBDogClubList::GetClubList(bool bNames, bool bIncCosanction) const
 {
-	std::set<std::wstring> dedup;
+	std::set<wxString> dedup;
 	int i = 0;
-	fmt::wmemory_buffer buf;
+	wxString buf;
 	for (ARBDogClubList::const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if (!bIncCosanction && (*iter)->GetPrimaryClub())
 			continue;
-		std::wstring str = bNames ? (*iter)->GetName() : (*iter)->GetVenue();
+		wxString str = bNames ? (*iter)->GetName() : (*iter)->GetVenue();
 		if (dedup.find(str) == dedup.end())
 		{
 			dedup.insert(str);
 			if (0 < i)
-				fmt::format_to(std::back_inserter(buf), L"{}", L"/");
+				buf << L"/";
 			++i;
-			fmt::format_to(std::back_inserter(buf), L"{}", str);
+			buf << str;
 		}
 	}
-	return fmt::to_string(buf);
+	return buf;
 }
 
 
-std::wstring ARBDogClubList::GetClubList(bool bNames, ARBDogRunPtr inRun) const
+wxString ARBDogClubList::GetClubList(bool bNames, ARBDogRunPtr inRun) const
 {
 	if (!inRun || !inRun->GetClub())
-		return std::wstring();
-	fmt::wmemory_buffer buf;
-	std::wstring str = bNames ? inRun->GetClub()->GetName() : inRun->GetClub()->GetVenue();
-	fmt::format_to(std::back_inserter(buf), L"{}", str);
+		return wxString();
+	wxString str = bNames ? inRun->GetClub()->GetName() : inRun->GetClub()->GetVenue();
 	ARBDogClubPtr pPrimary = FindCoSanctioningClub(inRun->GetClub());
 	if (pPrimary)
 	{
-		str = bNames ? pPrimary->GetName() : pPrimary->GetVenue();
-		fmt::format_to(std::back_inserter(buf), L"/{}", str);
+		str << L"/" << (bNames ? pPrimary->GetName() : pPrimary->GetVenue());
 	}
-
-	return fmt::to_string(buf);
+	return str;
 }
 
 
@@ -362,7 +358,7 @@ bool ARBDogClubList::FindClubIndex(ARBDogClubPtr const& inClub, size_t& outIndex
 }
 
 
-bool ARBDogClubList::FindClub(std::wstring const& inName, std::wstring const& inVenue, ARBDogClubPtr* outClub) const
+bool ARBDogClubList::FindClub(wxString const& inName, wxString const& inVenue, ARBDogClubPtr* outClub) const
 {
 	if (outClub)
 		outClub->reset();
@@ -381,9 +377,9 @@ bool ARBDogClubList::FindClub(std::wstring const& inName, std::wstring const& in
 
 bool ARBDogClubList::FindEvent(
 	ARBConfig const& inConfig,
-	std::wstring const& inEvent,
-	std::wstring const& inDivision,
-	std::wstring const& inLevel,
+	wxString const& inEvent,
+	wxString const& inDivision,
+	wxString const& inLevel,
 	ARBDate const& inDate,
 	ARBErrorCallback& ioCallback,
 	ARBConfigEventPtr* outEvent,
@@ -412,7 +408,7 @@ bool ARBDogClubList::FindEvent(
 	}
 	else
 	{
-		std::wstring msg(Localization()->InvalidEvent());
+		wxString msg(Localization()->InvalidEvent());
 		msg += inEvent;
 		msg += L" (";
 		msg += inDivision;
@@ -427,13 +423,13 @@ bool ARBDogClubList::FindEvent(
 			msg += (*iter)->GetVenue();
 			msg += L"]";
 		}
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_EVENT, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_EVENT, msg));
 	}
 	return bFound;
 }
 
 
-bool ARBDogClubList::FindVenue(std::wstring const& inVenue, ARBDogClubPtr* outClub) const
+bool ARBDogClubList::FindVenue(wxString const& inVenue, ARBDogClubPtr* outClub) const
 {
 	if (outClub)
 		outClub->reset();
@@ -450,7 +446,7 @@ bool ARBDogClubList::FindVenue(std::wstring const& inVenue, ARBDogClubPtr* outCl
 }
 
 
-bool ARBDogClubList::AddClub(std::wstring const& inName, std::wstring const& inVenue, ARBDogClubPtr* outClub)
+bool ARBDogClubList::AddClub(wxString const& inName, wxString const& inVenue, ARBDogClubPtr* outClub)
 {
 	if (FindClub(inName, inVenue))
 		return false;
@@ -464,10 +460,10 @@ bool ARBDogClubList::AddClub(std::wstring const& inName, std::wstring const& inV
 }
 
 
-bool ARBDogClubList::DeleteClub(std::wstring const& inName, std::wstring const& inVenue)
+bool ARBDogClubList::DeleteClub(wxString const& inName, wxString const& inVenue)
 {
-	std::wstring name(inName);
-	std::wstring venue(inVenue);
+	wxString name(inName);
+	wxString venue(inVenue);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name && (*iter)->GetVenue() == venue)

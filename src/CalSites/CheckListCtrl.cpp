@@ -16,7 +16,6 @@
  * 2020-12-05 In SetColumnSort, always set the icon.
  * 2020-01-27 Add option for row coloring.
  * 2019-05-17 Enable alternate row coloring.
- * 2018-12-16 Convert to fmt.
  * 2018-10-11 Moved to Win LibARBWin
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2010-03-28 Moved SetColumnWidth override to CListCtrl.
@@ -43,7 +42,6 @@
 #include "LibARBWin/ImageHelperBase.h"
 #include "LibARBWin/ListData.h"
 #include "LibARBWin/ResourceManager.h"
-#include "fmt/format.h"
 
 #if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>

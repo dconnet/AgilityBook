@@ -15,7 +15,6 @@
  * 2019-01-18 Change debugging to use ARB_WWW_ROOT instead of hardcoded path.
  *            Fix a config-only update (broken since moving to version2.xml)
  *            Fix loading local config file.
- * 2018-12-16 Convert to fmt.
  * 2014-03-05 Change wxFileSystem usage to CLibArchive.
  * 2013-12-05 Remove "?os=..." from url (website redesign)
  * 2013-10-30 Fixed a problem where arbupdater was spawned hidden.
@@ -176,10 +175,10 @@ void CUpdateInfo::CleanupUpdate()
 			// If we get here really quick, the updater may not have finished
 			// yet. Go to the Win API now.
 			Sleep(3000);
-			if (!DeleteFile(updateFile.wc_str()))
+			if (!DeleteFile(updateFile))
 			{
 				// Ok, delete failed after 3 seconds. Punt (quietly).
-				MoveFileEx(updateFile.wc_str(), nullptr, MOVEFILE_DELAY_UNTIL_REBOOT);
+				MoveFileEx(updateFile, nullptr, MOVEFILE_DELAY_UNTIL_REBOOT);
 			}
 		}
 	}
@@ -227,7 +226,7 @@ void CUpdateInfo::Initialize()
 		// Check for updates every 30 days.
 		if (CAgilityBookOptions::GetAutoUpdateCheck())
 		{
-			std::wstring ver = StringUtil::stringW(wxConfig::Get()->Read(CFG_SETTINGS_LASTVERCHECK, L""));
+			wxString ver = wxConfig::Get()->Read(CFG_SETTINGS_LASTVERCHECK, L"");
 			ARBDate date = ARBDate::FromString(ver, ARBDateFormat::ISO);
 			if (date.IsValid())
 			{
@@ -441,7 +440,7 @@ bool CUpdateInfo::ReadVersionFile(std::string const& data, bool bVerbose)
 		 *  -->
 		 *  <!ELEMENT Download (#PCDATA) >
 		 */
-		fmt::wmemory_buffer errMsg2;
+		wxString errMsg2;
 		ElementNodePtr tree(ElementNode::New());
 		bool bOk = false;
 		{
@@ -452,13 +451,12 @@ bool CUpdateInfo::ReadVersionFile(std::string const& data, bool bVerbose)
 		{
 			if (bVerbose)
 			{
-				fmt::wmemory_buffer msg;
-				fmt::format_to(std::back_inserter(msg), _("IDS_LOAD_FAILED").wc_str(), k_versionFile);
+				wxString msg = wxString::Format(_("IDS_LOAD_FAILED"), k_versionFile);
 				if (0 < errMsg2.size())
 				{
-					fmt::format_to(std::back_inserter(msg), L"\n\n{}", fmt::to_string(errMsg2));
+					msg << L"\n\n" << errMsg2;
 				}
-				wxMessageBox(fmt::to_string(msg), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
+				wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			}
 		}
 		else if (tree->GetName() == L"Data")
@@ -472,7 +470,7 @@ bool CUpdateInfo::ReadVersionFile(std::string const& data, bool bVerbose)
 				if (!bLoadedVersion && node->GetName() == L"Platform")
 				{
 					bool bSkip = true;
-					std::wstring value;
+					wxString value;
 					if (ARBAttribLookup::Found == node->GetAttrib(L"arch", value))
 					{
 						if (arbArch == value)
@@ -515,7 +513,7 @@ bool CUpdateInfo::ReadVersionFile(std::string const& data, bool bVerbose)
 					}
 					else
 					{
-						m_ConfigFileName = fmt::format(L"Config{}.txt", m_VerConfig);
+						m_ConfigFileName = wxString::Format(L"Config%hd.txt", m_VerConfig);
 						if (ARBAttribLookup::Found == node->GetAttrib(L"sha256", m_hash))
 							m_hashType = ARBMsgDigest::ARBDigest::SHA256;
 						else if (ARBAttribLookup::Found == node->GetAttrib(L"sha1", m_hash))
@@ -557,11 +555,7 @@ bool CUpdateInfo::ReadVersionFile(std::string const& data, bool bVerbose)
 /**
  * Check the version against the web.
  */
-bool CUpdateInfo::CheckProgram(
-	CAgilityBookDoc* pDoc,
-	std::wstring const& lang,
-	bool& outDownloadStarted,
-	bool& canInstall)
+bool CUpdateInfo::CheckProgram(CAgilityBookDoc* pDoc, wxString const& lang, bool& outDownloadStarted, bool& canInstall)
 {
 	outDownloadStarted = false;
 	canInstall = true;
@@ -604,8 +598,8 @@ bool CUpdateInfo::CheckProgram(
 			// Return that it needs updating, but don't record that we checked.
 			return bNeedsUpdating;
 		}
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTVERCHECK, today.GetString(ARBDateFormat::ISO).c_str());
-		std::wstring msg = fmt::format(_("IDS_VERSION_AVAILABLE").wc_str(), m_VersionNum.GetVersionString());
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTVERCHECK, today.GetString(ARBDateFormat::ISO));
+		auto msg = wxString::Format(_("IDS_VERSION_AVAILABLE"), m_VersionNum.GetVersionString());
 		if (wxYES == wxMessageBox(msg, _("Agility Record Book"), wxYES_NO | wxCENTRE | wxICON_QUESTION))
 		{
 			bool bGotoWeb = false;
@@ -614,7 +608,7 @@ bool CUpdateInfo::CheckProgram(
 				bGotoWeb = true;
 			else
 			{
-				wxFileName name(StringUtil::stringWX(m_SourceFile));
+				wxFileName name(m_SourceFile);
 				wxString filename;
 #if defined(__WXMAC__)
 				wxFileDialog dlg(
@@ -645,12 +639,12 @@ bool CUpdateInfo::CheckProgram(
 			}
 			if (bGotoWeb)
 			{
-				GotoUrl(StringUtil::stringWX(m_UpdateDownload));
+				GotoUrl(m_UpdateDownload);
 			}
 		}
 	}
 	else
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTVERCHECK, today.GetString(ARBDateFormat::ISO).c_str());
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTVERCHECK, today.GetString(ARBDateFormat::ISO));
 	return bNeedsUpdating;
 }
 
@@ -726,18 +720,17 @@ void CUpdateInfo::CheckConfig(CAgilityBookDoc* pDoc, bool bVerbose)
 bool CUpdateInfo::CheckConfig(CAgilityBookDoc* pDoc, wxString url, std::string const& strConfig, bool bVerbose)
 {
 	ElementNodePtr tree(ElementNode::New());
-	fmt::wmemory_buffer errMsg2;
+	wxString errMsg2;
 	{
 		wxBusyCursor wait;
 		if (!tree->LoadXML(strConfig.c_str(), strConfig.length(), errMsg2))
 		{
-			fmt::wmemory_buffer msg2;
-			fmt::format_to(std::back_inserter(msg2), _("IDS_LOAD_FAILED").wc_str(), url.wc_str());
+			wxString msg2 = wxString::Format(_("IDS_LOAD_FAILED"), url);
 			if (0 < errMsg2.size())
 			{
-				fmt::format_to(std::back_inserter(msg2), L"\n\n{}", fmt::to_string(errMsg2));
+				msg2 << L"\n\n" << errMsg2;
 			}
-			wxMessageBox(fmt::to_string(msg2), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
+			wxMessageBox(msg2, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
 		}
 	}
@@ -754,10 +747,7 @@ bool CUpdateInfo::CheckConfig(CAgilityBookDoc* pDoc, wxString url, std::string c
 		if (!book.GetConfig().Load(tree->GetElementNode(nConfig), version, err))
 		{
 			if (0 < err.m_ErrMsg.size())
-				wxMessageBox(
-					StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-					_("Agility Record Book"),
-					wxOK | wxCENTRE | wxICON_WARNING);
+				wxMessageBox(err.m_ErrMsg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 			return false;
 		}
 		else
@@ -779,18 +769,16 @@ bool CUpdateInfo::DownloadFile(wxString const& filename)
 	if (!output->IsOk())
 	{
 		delete output;
-		fmt::wmemory_buffer errMsg;
-		fmt::format_to(std::back_inserter(errMsg), _("IDS_CANNOT_OPEN").wc_str(), filename.wc_str());
-		wxMessageBox(fmt::to_string(errMsg));
+		wxMessageBox(wxString::Format(_("IDS_CANNOT_OPEN"), filename));
 		return false;
 	}
 
-	wxFileName name(StringUtil::stringWX(m_SourceFile));
+	wxFileName name(m_SourceFile);
 
 	IDlgProgress* progress = IDlgProgress::CreateProgress(1, wxGetApp().GetTopWindow());
-	progress->SetCaption(StringUtil::stringW(_("IDS_DOWNLOADING")));
+	progress->SetCaption(_("IDS_DOWNLOADING"));
 	progress->SetRange(1, m_size);
-	progress->SetMessage(StringUtil::stringW(name.GetFullName()));
+	progress->SetMessage(name.GetFullName());
 	progress->ShowProgress();
 	progress->SetForegroundWindow();
 
@@ -811,9 +799,9 @@ bool CUpdateInfo::DownloadFile(wxString const& filename)
 				{
 #if defined(__WXMAC__)
 					deleteFile = false;
-					wxMessageBox(fmt::format(_("IDS_DOWNLOAD_AND_RESTART").wc_str(), filename.wc_str()));
+					wxMessageBox(wxString::Format(_("IDS_DOWNLOAD_AND_RESTART"), filename));
 #elif defined(__WXMSW__)
-					progress->SetCaption(StringUtil::stringW(_("IDS_VALIDATING")));
+					progress->SetCaption(_("IDS_VALIDATING"));
 					wxFileInputStream file(filename);
 					wxStdInputStream stdfile(file);
 					if (ARBMsgDigest::Compute(stdfile, m_hashType) != m_hash)
@@ -872,11 +860,11 @@ bool CUpdateInfo::DownloadFile(wxString const& filename)
 						{
 							wxString updater = UpdateFile();
 							{
-								std::wstring outFile(StringUtil::stringW(updater));
+								wxString outFile(updater);
 #if defined(ARB_HAS_OSTREAM_WCHAR)
-								std::ofstream outputUpdater(outFile.c_str(), std::ios::out | std::ios::binary);
+								std::ofstream outputUpdater(outFile.wc_str(), std::ios::out | std::ios::binary);
 #else
-								std::string filenameA = StringUtil::stringA(outFile);
+								std::string filenameA = outFile.utf8_string();
 								std::ofstream output(filenameA.c_str(), std::ios::out | std::ios::binary);
 #endif
 								if (!CResourceManager::Get()->LoadFile(k_arbUpdater, outputUpdater))
@@ -887,13 +875,13 @@ bool CUpdateInfo::DownloadFile(wxString const& filename)
 							}
 							if (!gotoWeb)
 							{
-								std::wstring args = fmt::format(L"-f \"{}\"", msiFilename.wc_str());
+								wxString args = wxString::Format(L"-f \"%s\"", msiFilename);
 								SHELLEXECUTEINFO info;
 								ZeroMemory(&info, sizeof(info));
 								info.cbSize = sizeof(info);
 								info.lpVerb = L"open";
 								info.lpFile = updater.wc_str();
-								info.lpParameters = args.c_str();
+								info.lpParameters = args.wc_str();
 								info.nShow = SW_SHOWNORMAL;
 								if (ShellExecuteEx(&info))
 								{
@@ -923,7 +911,7 @@ bool CUpdateInfo::DownloadFile(wxString const& filename)
 				}
 				progress->Dismiss();
 				if (gotoWeb)
-					GotoUrl(StringUtil::stringWX(m_UpdateDownload));
+					GotoUrl(m_UpdateDownload);
 				if (deleteFile)
 				{
 					wxLogNull log; // In case file is slow in releasing lock (from zip extraction)

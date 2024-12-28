@@ -86,7 +86,7 @@ CDlgOptionsFilter::CDlgOptionsFilter(wxWindow* parent, CAgilityBookDoc* pDoc)
 
 	wxStaticBox* boxFilters = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_FILTER_NAMES"));
 
-	std::vector<std::wstring> filterNames;
+	std::vector<wxString> filterNames;
 	m_FilterOptions.GetAllFilterNames(filterNames, true);
 	int idxCur = wxNOT_FOUND;
 	wxArrayString items;
@@ -95,7 +95,7 @@ CDlgOptionsFilter::CDlgOptionsFilter(wxWindow* parent, CAgilityBookDoc* pDoc)
 		items.Add(name);
 		if (name == m_FilterOptions.GetCurrentFilter())
 		{
-			m_FilterName = StringUtil::stringWX(m_FilterOptions.GetCurrentFilter());
+			m_FilterName = m_FilterOptions.GetCurrentFilter();
 			idxCur = static_cast<int>(items.size()) - 1;
 		}
 	}
@@ -432,12 +432,12 @@ void CDlgOptionsFilter::FillControls()
 
 	// This is reset everytime just to make checking items easier
 	m_ctrlNames->Clear();
-	std::set<std::wstring> allLogNames;
+	std::set<wxString> allLogNames;
 	m_pDoc->Book().GetTraining().GetAllNames(allLogNames);
-	std::set<std::wstring> names;
+	std::set<wxString> names;
 	m_FilterOptions.GetTrainingFilterNames(names);
 	bool bFix = false;
-	for (std::set<std::wstring>::iterator iter = names.begin(); iter != names.end();)
+	for (std::set<wxString>::iterator iter = names.begin(); iter != names.end();)
 	{
 		if (allLogNames.end() == allLogNames.find((*iter)))
 		{
@@ -453,9 +453,9 @@ void CDlgOptionsFilter::FillControls()
 	}
 	if (bFix)
 		m_FilterOptions.SetTrainingFilterNames(names);
-	for (std::set<std::wstring>::iterator iterLog = allLogNames.begin(); iterLog != allLogNames.end(); ++iterLog)
+	for (std::set<wxString>::iterator iterLog = allLogNames.begin(); iterLog != allLogNames.end(); ++iterLog)
 	{
-		int item = m_ctrlNames->Append(StringUtil::stringWX(*iterLog));
+		int item = m_ctrlNames->Append(*iterLog);
 		if (names.end() != names.find((*iterLog)))
 			m_ctrlNames->Check(item, true);
 	}
@@ -487,7 +487,7 @@ void CDlgOptionsFilter::FillControls()
 			 ++iVenue)
 		{
 			ARBConfigVenuePtr pVenue = (*iVenue);
-			wxTreeItemId hVenue = m_ctrlVenue->AppendItem(root, StringUtil::stringWX(pVenue->GetName()));
+			wxTreeItemId hVenue = m_ctrlVenue->AppendItem(root, pVenue->GetName());
 			m_ctrlVenue->ShowCheckbox(hVenue, true);
 			if (m_FilterOptions.FilterExists(pVenue->GetName(), L"", L""))
 				m_ctrlVenue->SetChecked(hVenue, true);
@@ -496,7 +496,7 @@ void CDlgOptionsFilter::FillControls()
 				 ++iterDiv)
 			{
 				ARBConfigDivisionPtr pDiv = *iterDiv;
-				wxTreeItemId hDiv = m_ctrlVenue->AppendItem(hVenue, StringUtil::stringWX(pDiv->GetName()));
+				wxTreeItemId hDiv = m_ctrlVenue->AppendItem(hVenue, pDiv->GetName());
 				m_ctrlVenue->ShowCheckbox(hDiv, true);
 				if (m_FilterOptions.FilterExists(pVenue->GetName(), pDiv->GetName(), L""))
 				{
@@ -508,7 +508,7 @@ void CDlgOptionsFilter::FillControls()
 					 ++iterLevel)
 				{
 					ARBConfigLevelPtr pLevel = *iterLevel;
-					wxTreeItemId hLevel = m_ctrlVenue->AppendItem(hDiv, StringUtil::stringWX(pLevel->GetName()));
+					wxTreeItemId hLevel = m_ctrlVenue->AppendItem(hDiv, pLevel->GetName());
 					if (0 < pLevel->GetSubLevels().size())
 					{
 						m_ctrlVenue->ShowCheckbox(hLevel, false);
@@ -517,8 +517,7 @@ void CDlgOptionsFilter::FillControls()
 							 ++iterSubLevel)
 						{
 							ARBConfigSubLevelPtr pSubLevel = *iterSubLevel;
-							wxTreeItemId hSubLevel
-								= m_ctrlVenue->AppendItem(hLevel, StringUtil::stringWX(pSubLevel->GetName()));
+							wxTreeItemId hSubLevel = m_ctrlVenue->AppendItem(hLevel, pSubLevel->GetName());
 							m_ctrlVenue->ShowCheckbox(hSubLevel, true);
 							if (m_FilterOptions.FilterExists(pVenue->GetName(), pDiv->GetName(), pSubLevel->GetName()))
 							{
@@ -571,7 +570,7 @@ void CDlgOptionsFilter::FillControls()
 }
 
 
-void CDlgOptionsFilter::FillFilter(wxTreeItemId hItem, std::wstring path, std::vector<CVenueFilter>& outVenues)
+void CDlgOptionsFilter::FillFilter(wxTreeItemId hItem, wxString path, std::vector<CVenueFilter>& outVenues)
 {
 	if (hItem.IsOk() && hItem != m_ctrlVenue->GetRootItem())
 	{
@@ -592,9 +591,9 @@ void CDlgOptionsFilter::FillFilter(wxTreeItemId hItem, std::wstring path, std::v
 	if (!hChildItem.IsOk())
 	{
 		// We're at a leaf...
-		std::vector<std::wstring> rawFilter;
-		std::wstring::size_type pos;
-		while (std::wstring::npos != (pos = path.find('/')))
+		std::vector<wxString> rawFilter;
+		wxString::size_type pos;
+		while (wxString::npos != (pos = path.find('/')))
 		{
 			rawFilter.push_back(path.substr(0, pos));
 			path = path.substr(pos + 1);
@@ -647,7 +646,7 @@ void CDlgOptionsFilter::OnSelchangeFilterNames(wxCommandEvent& evt)
 	int idx = m_ctrlFilters->GetSelection();
 	if (0 <= idx)
 	{
-		m_FilterOptions.SetCurrentFilter(StringUtil::stringW(m_ctrlFilters->GetString(idx)));
+		m_FilterOptions.SetCurrentFilter(m_ctrlFilters->GetString(idx));
 		FillControls();
 		TransferDataToWindow();
 	}
@@ -663,7 +662,7 @@ void CDlgOptionsFilter::OnClickedOptFilterNamesSave(wxCommandEvent& evt)
 	CommitChanges();
 	if (!m_FilterName.empty())
 	{
-		if (m_FilterOptions.AddFilter(StringUtil::stringW(m_FilterName)))
+		if (m_FilterOptions.AddFilter(m_FilterName))
 			m_ctrlFilters->Append(m_FilterName);
 		// After saving, reset in case anything was changed.
 		FillControls();
@@ -683,7 +682,7 @@ void CDlgOptionsFilter::OnClickedOptFilterNamesDelete(wxCommandEvent& evt)
 		int idx = m_ctrlFilters->FindString(m_FilterName, true);
 		if (0 <= idx)
 		{
-			std::wstring name = StringUtil::stringW(m_FilterName);
+			wxString name = m_FilterName;
 			m_FilterOptions.DeleteFilter(name);
 			m_ctrlFilters->Delete(idx);
 			m_FilterName.clear();
@@ -723,12 +722,12 @@ void CDlgOptionsFilter::OnFilterLog(wxCommandEvent& evt)
 void CDlgOptionsFilter::OnFilterLogNames(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
-	std::set<std::wstring> names;
+	std::set<wxString> names;
 	for (unsigned int item = 0; item < m_ctrlNames->GetCount(); ++item)
 	{
 		if (m_ctrlNames->IsChecked(item))
 		{
-			names.insert(StringUtil::stringW(m_ctrlNames->GetString(item)));
+			names.insert(m_ctrlNames->GetString(item));
 		}
 	}
 	m_FilterOptions.SetTrainingFilterNames(names);

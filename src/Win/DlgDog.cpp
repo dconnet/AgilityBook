@@ -11,7 +11,6 @@
  *
  * Revision History
  * 2021-01-07 Separated panes from DlgDog.cpp
- * 2018-12-16 Convert to fmt.
  * 2014-12-31 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.

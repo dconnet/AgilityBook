@@ -44,7 +44,7 @@ public:
 
 private:
 	void SetFaultsText();
-	void GetAllCallNames(std::set<std::wstring>& outNames);
+	void GetAllCallNames(std::set<wxString>& outNames);
 
 	wxString m_Comments;
 	wxListBox* m_ctrlFaultsList;

@@ -67,14 +67,14 @@ public:
 	/**
 	 * Get a status message for the current view.
 	 */
-	virtual bool GetMessage(std::wstring& msg) const
+	virtual bool GetMessage(wxString& msg) const
 	{
 		return false;
 	}
 	/**
 	 * Get a second status message for the current view.
 	 */
-	virtual bool GetMessage2(std::wstring& msg) const
+	virtual bool GetMessage2(wxString& msg) const
 	{
 		return false;
 	}

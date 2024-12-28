@@ -48,7 +48,7 @@ enum class ARBOtherPointsTally
 class ARB_API ARBConfigOtherPoints : public ARBBase
 {
 public:
-	static void GetTallyValidValues(std::vector<std::wstring>& outValues);
+	static void GetTallyValidValues(std::vector<wxString>& outValues);
 
 protected:
 	ARBConfigOtherPoints();
@@ -78,7 +78,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override
+	wxString GetGenericName() const override
 	{
 		return GetName();
 	}
@@ -88,7 +88,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override
 	{
 		return 0;
 	}
@@ -117,19 +117,19 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	std::wstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(std::wstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	std::wstring const& GetDescription() const
+	wxString const& GetDescription() const
 	{
 		return m_Desc;
 	}
-	void SetDescription(std::wstring const& inDesc)
+	void SetDescription(wxString const& inDesc)
 	{
 		m_Desc = inDesc;
 	}
@@ -151,9 +151,9 @@ public:
 	}
 
 private:
-	std::wstring m_Name;
+	wxString m_Name;
 	ARBOtherPointsTally m_Tally;
-	std::wstring m_Desc;
+	wxString m_Desc;
 	double m_Default;
 };
 
@@ -183,7 +183,7 @@ public:
 	 * @param inName Name to verify.
 	 * @return Whether the OtherPoints exists.
 	 */
-	bool VerifyOtherPoints(std::wstring const& inName) const;
+	bool VerifyOtherPoints(wxString const& inName) const;
 
 	/**
 	 * Find an otherpoints object.
@@ -191,7 +191,7 @@ public:
 	 * @param outPoints Pointer to object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindOtherPoints(std::wstring const& inName, ARBConfigOtherPointsPtr* outPoints = nullptr) const;
+	bool FindOtherPoints(wxString const& inName, ARBConfigOtherPointsPtr* outPoints = nullptr) const;
 
 	/**
 	 * Add an otherpoints object.
@@ -205,7 +205,7 @@ public:
 	 * @param inName Name of object to delete.
 	 * @return Whether the object was deleted or not.
 	 */
-	bool DeleteOtherPoints(std::wstring const& inName);
+	bool DeleteOtherPoints(wxString const& inName);
 };
 
 } // namespace ARB

@@ -55,7 +55,7 @@ constexpr struct PointsEnum
 constexpr size_t sc_nPoints = sizeof(sc_Points) / sizeof(sc_Points[0]);
 
 
-ARBPointsType PointsToType(std::wstring const& str)
+ARBPointsType PointsToType(wxString const& str)
 {
 	for (size_t n = 0; n < sc_nPoints; ++n)
 	{
@@ -67,7 +67,7 @@ ARBPointsType PointsToType(std::wstring const& str)
 }
 
 
-std::wstring TypeToPoints(ARBPointsType type)
+wxString TypeToPoints(ARBPointsType type)
 {
 	for (size_t n = 0; n < sc_nPoints; ++n)
 	{
@@ -75,7 +75,7 @@ std::wstring TypeToPoints(ARBPointsType type)
 			return sc_Points[n].pPoints;
 	}
 	assert(0);
-	return std::wstring();
+	return wxString();
 }
 } // namespace
 
@@ -185,7 +185,7 @@ bool ARBConfigTitlePoints::operator==(ARBConfigTitlePoints const& rhs) const
 }
 
 
-std::wstring ARBConfigTitlePoints::GetGenericName() const
+wxString ARBConfigTitlePoints::GetGenericName() const
 {
 	return m_Calc->GetGenericName(m_Points, m_Faults);
 }
@@ -202,7 +202,7 @@ bool ARBConfigTitlePoints::Load(
 		return false;
 	// Added in ARBVersion 13.1. Made this a backwards incompatible change
 	// as the configuration will be damaged if this were saved in a 12.x form.
-	std::wstring type;
+	wxString type;
 	if (ARBAttribLookup::Found == inTree->GetAttrib(ATTRIB_TITLE_POINTS_TYPE, type))
 	{
 		m_Calc = ARBCalcPoints::New(PointsToType(type));

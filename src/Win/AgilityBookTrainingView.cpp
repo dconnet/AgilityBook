@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2012-12-29 Update training view properly after a paste.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -93,7 +92,7 @@ public:
 	{
 		return m_pTraining;
 	}
-	std::wstring OnNeedText(long iCol) const override;
+	wxString OnNeedText(long iCol) const override;
 	void OnNeedListItem(long iCol, wxListItem& info) const override;
 
 private:
@@ -102,9 +101,9 @@ private:
 };
 
 
-std::wstring CAgilityBookTrainingViewData::OnNeedText(long iCol) const
+wxString CAgilityBookTrainingViewData::OnNeedText(long iCol) const
 {
-	std::wstring str;
+	wxString str;
 	if (m_pTraining)
 	{
 		switch (m_pView->m_Columns[iCol])
@@ -134,7 +133,7 @@ void CAgilityBookTrainingViewData::OnNeedListItem(long iCol, wxListItem& info) c
 	if (m_pTraining)
 	{
 		info.SetMask(info.GetMask() | wxLIST_MASK_TEXT);
-		info.SetText(StringUtil::stringWX(OnNeedText(iCol)));
+		info.SetText(OnNeedText(iCol));
 		if (0 == iCol)
 		{
 			info.SetMask(info.GetMask() | wxLIST_MASK_IMAGE);
@@ -277,7 +276,7 @@ bool CAgilityBookTrainingView::CFindData::Search(CDlgFind* pDlg)
 		index = m_pView->m_Ctrl->GetItemCount() - 1;
 	for (; !bFound && 0 <= index && index < m_pView->m_Ctrl->GetItemCount(); index += inc)
 	{
-		std::set<std::wstring> strings;
+		std::set<wxString> strings;
 		if (SearchAll())
 		{
 			CAgilityBookTrainingViewDataPtr pData = m_pView->GetItemTrainingData(index);
@@ -294,7 +293,7 @@ bool CAgilityBookTrainingView::CFindData::Search(CDlgFind* pDlg)
 				info.SetMask(wxLIST_MASK_TEXT);
 				info.SetColumn(i);
 				m_pView->m_Ctrl->GetItem(info);
-				strings.insert(StringUtil::stringW(info.GetText()));
+				strings.insert(info.GetText());
 			}
 		}
 		for (auto const& str : strings)
@@ -309,7 +308,7 @@ bool CAgilityBookTrainingView::CFindData::Search(CDlgFind* pDlg)
 	}
 	if (!bFound)
 	{
-		std::wstring msg = fmt::format(_("IDS_CANNOT_FIND").wx_str(), m_search.wc_str());
+		auto msg = wxString::Format(_("IDS_CANNOT_FIND"), m_search);
 		wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	return bFound;
@@ -427,18 +426,18 @@ bool CAgilityBookTrainingView::IsFiltered() const
 }
 
 
-bool CAgilityBookTrainingView::GetMessage(std::wstring& msg) const
+bool CAgilityBookTrainingView::GetMessage(wxString& msg) const
 {
 	if (!m_Ctrl)
 		return false;
-	msg = fmt::format(_("IDS_NUM_TRAINING").wx_str(), m_Ctrl->GetItemCount());
+	msg = wxString::Format(_("IDS_NUM_TRAINING"), m_Ctrl->GetItemCount());
 	return true;
 }
 
 
-bool CAgilityBookTrainingView::GetMessage2(std::wstring& msg) const
+bool CAgilityBookTrainingView::GetMessage2(wxString& msg) const
 {
-	msg = StringUtil::stringW(_("IDS_INDICATOR_BLANK"));
+	msg = _("IDS_INDICATOR_BLANK");
 	return true;
 }
 
@@ -489,7 +488,7 @@ void CAgilityBookTrainingView::OnUpdate(wxView* sender, wxObject* inHint)
 }
 
 
-void CAgilityBookTrainingView::GetPrintLine(long item, std::vector<std::wstring>& line) const
+void CAgilityBookTrainingView::GetPrintLine(long item, std::vector<wxString>& line) const
 {
 	if (m_Ctrl)
 		m_Ctrl->GetPrintLine(item, line);
@@ -515,9 +514,9 @@ void CAgilityBookTrainingView::SetupColumns()
 	{
 		for (size_t iCol = 0; iCol < m_Columns.size(); ++iCol)
 		{
-			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[iCol]);
+			wxString str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[iCol]);
 			int fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[iCol]);
-			m_Ctrl->InsertColumn(static_cast<long>(iCol), StringUtil::stringWX(str), fmt);
+			m_Ctrl->InsertColumn(static_cast<long>(iCol), str, fmt);
 		}
 		m_SortColumn.Initialize();
 	}
@@ -749,14 +748,14 @@ bool CAgilityBookTrainingView::OnCmd(int id)
 			if (!clpData.isOkay())
 				return true;
 
-			std::wstring data;
-			std::wstring html;
+			wxString data;
+			wxString html;
 			CClipboardDataTable table(data, html);
 
 			// Take care of the header, but only if more than one line is selected.
 			if (1 < indices.size() || indices.size() == static_cast<size_t>(m_Ctrl->GetItemCount()))
 			{
-				std::vector<std::wstring> line;
+				std::vector<wxString> line;
 				m_Ctrl->GetPrintLine(-1, line);
 				table.StartLine();
 				for (int i = 0; i < static_cast<int>(line.size()); ++i)
@@ -774,7 +773,7 @@ bool CAgilityBookTrainingView::OnCmd(int id)
 				CAgilityBookTrainingViewDataPtr pData = GetItemTrainingData(*iter);
 				if (pData)
 					pData->GetTraining()->Save(tree);
-				std::vector<std::wstring> line;
+				std::vector<wxString> line;
 				m_Ctrl->GetPrintLine((*iter), line);
 				table.StartLine();
 				for (int i = 0; i < static_cast<int>(line.size()); ++i)
@@ -919,14 +918,14 @@ void CAgilityBookTrainingView::OnViewCmd(wxCommandEvent& evt)
 void CAgilityBookTrainingView::OnPrintView(wxCommandEvent& evt)
 {
 	CLogger::Log(L"MENU: CAgilityBookTrainingView::OnPrintView");
-	wxGetApp().GetHtmlPrinter()->PrintText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
+	wxGetApp().GetHtmlPrinter()->PrintText(m_Ctrl->GetPrintDataAsHtmlTable());
 }
 
 
 void CAgilityBookTrainingView::OnPreview(wxCommandEvent& evt)
 {
 	CLogger::Log(L"MENU: CAgilityBookTrainingView::OnPreview");
-	wxGetApp().GetHtmlPrinter()->PreviewText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
+	wxGetApp().GetHtmlPrinter()->PreviewText(m_Ctrl->GetPrintDataAsHtmlTable());
 }
 
 } // namespace dconSoft

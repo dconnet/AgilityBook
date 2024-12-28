@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2017-11-30 Remove image list from club list (not needed)
  * 2015-01-01 Changed pixels to dialog units.
  * 2014-02-20 Trial start date was not properly saved.
@@ -80,7 +79,7 @@ public:
 		: m_Club(inClub)
 	{
 	}
-	std::wstring OnNeedText(long iCol) const override;
+	wxString OnNeedText(long iCol) const override;
 	ARBDogClubPtr GetClub() const
 	{
 		return m_Club;
@@ -92,14 +91,14 @@ private:
 typedef std::shared_ptr<CListTrialData> CListTrialDataPtr;
 
 
-std::wstring CListTrialData::OnNeedText(long iCol) const
+wxString CListTrialData::OnNeedText(long iCol) const
 {
-	std::wstring text;
+	wxString text;
 	switch (iCol)
 	{
 	default:
 		assert(0);
-		return std::wstring();
+		return wxString();
 	case 0:
 		text = m_Club->GetName();
 		break;
@@ -120,8 +119,8 @@ CDlgTrial::CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrialPtr const& inTrial, wxWin
 	: wxDialog()
 	, m_dateStart(inTrial->GetStartDate())
 	, m_Verified(inTrial->IsVerified())
-	, m_Location(StringUtil::stringWX(inTrial->GetLocation()))
-	, m_Notes(StringUtil::stringWX(inTrial->GetNote()))
+	, m_Location(inTrial->GetLocation())
+	, m_Notes(inTrial->GetNote())
 	, m_ctrlLocationInfo(nullptr)
 	, m_ctrlEdit(nullptr)
 	, m_ctrlDelete(nullptr)
@@ -141,7 +140,7 @@ CDlgTrial::CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrialPtr const& inTrial, wxWin
 	Create(
 		pParent,
 		wxID_ANY,
-		StringUtil::stringWX(pDoc->AddDogToCaption(StringUtil::stringW(_("IDD_TRIAL")))),
+		pDoc->AddDogToCaption(_("IDD_TRIAL")),
 		wxDefaultPosition,
 		wxDefaultSize,
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
@@ -409,17 +408,17 @@ void CDlgTrial::UpdateNotes(wxString const& location, bool bLocation, bool bClub
 {
 	if (bLocation)
 	{
-		std::wstring str;
+		wxString str;
 		ARBInfoItemPtr pItem;
-		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfoType::Location).FindItem(StringUtil::stringW(location), &pItem))
+		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfoType::Location).FindItem(location, &pItem))
 		{
 			str = pItem->GetComment();
 		}
-		m_ctrlLocationInfo->SetValue(StringUtil::stringWX(str));
+		m_ctrlLocationInfo->SetValue(str);
 	}
 	if (bClub)
 	{
-		std::wstring str;
+		wxString str;
 		ARBDogClubPtr pClub = GetClubData(m_ctrlClubs->GetFirstSelected());
 		if (pClub)
 		{
@@ -429,18 +428,18 @@ void CDlgTrial::UpdateNotes(wxString const& location, bool bLocation, bool bClub
 				str = pItem->GetComment();
 			}
 		}
-		m_ctrlClubInfo->SetValue(StringUtil::stringWX(str));
+		m_ctrlClubInfo->SetValue(str);
 	}
 }
 
 
 void CDlgTrial::ListLocations()
 {
-	std::set<std::wstring> locations;
+	std::set<wxString> locations;
 	m_pDoc->Book().GetAllTrialLocations(locations, true, true);
 	if (!m_pTrial->GetLocation().empty())
 		locations.insert(m_pTrial->GetLocation());
-	std::wstring loc(m_Location);
+	wxString loc(m_Location);
 	if (m_Location.empty())
 		loc = m_pTrial->GetLocation();
 	m_ctrlLocation->Clear();
@@ -554,10 +553,10 @@ void CDlgTrial::OnLocationNotes(wxCommandEvent& evt)
 {
 	if (TransferDataFromWindow())
 	{
-		CDlgInfoNote dlg(m_pDoc, ARBInfoType::Location, StringUtil::stringW(m_Location), this);
+		CDlgInfoNote dlg(m_pDoc, ARBInfoType::Location, m_Location, this);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			m_Location = StringUtil::stringWX(dlg.CurrentSelection());
+			m_Location = dlg.CurrentSelection();
 			TransferDataToWindow();
 			ListLocations();
 			UpdateNotes(m_Location, true, false);
@@ -680,8 +679,8 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 	m_bRunsDeleted = false;
 	if (0 < m_pTrial->GetRuns().size())
 	{
-		std::set<std::wstring> oldVenues;
-		std::set<std::wstring> newVenues;
+		std::set<wxString> oldVenues;
+		std::set<wxString> newVenues;
 		ARBDogClubList::iterator iterClub;
 		for (iterClub = m_pTrial->GetClubs().begin(); iterClub != m_pTrial->GetClubs().end(); ++iterClub)
 		{
@@ -694,8 +693,7 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 			newVenues.insert(pClub->GetVenue());
 		}
 		bool bAllThere = true;
-		for (std::set<std::wstring>::iterator iterVenues = oldVenues.begin(); iterVenues != oldVenues.end();
-			 ++iterVenues)
+		for (std::set<wxString>::iterator iterVenues = oldVenues.begin(); iterVenues != oldVenues.end(); ++iterVenues)
 		{
 			if (newVenues.end() == newVenues.find((*iterVenues)))
 			{
@@ -711,7 +709,7 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 			{
 				ARBDogRunPtr pRun = *iterRun;
 				bool bFound = false;
-				for (std::set<std::wstring>::iterator iterVenues = newVenues.begin(); iterVenues != newVenues.end();
+				for (std::set<wxString>::iterator iterVenues = newVenues.begin(); iterVenues != newVenues.end();
 					 ++iterVenues)
 				{
 					if (m_pDoc->Book().GetConfig().GetVenues().FindEvent(
@@ -732,7 +730,7 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 			}
 			if (0 < nDelete)
 			{
-				std::wstring msg = fmt::format(_("IDS_CONFIG_DELETE_RUNS").wx_str(), m_pTrial->GetRuns().size());
+				auto msg = wxString::Format(_("IDS_CONFIG_DELETE_RUNS"), m_pTrial->GetRuns().size());
 				if (wxYES
 					!= wxMessageBox(msg, _("Agility Record Book"), wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_WARNING))
 					return;
@@ -777,8 +775,8 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 	}
 
 	m_pTrial->SetDefaultDate(m_dateStart);
-	m_pTrial->SetLocation(StringUtil::stringW(m_Location));
-	m_pTrial->SetNote(StringUtil::stringW(m_Notes));
+	m_pTrial->SetLocation(m_Location);
+	m_pTrial->SetNote(m_Notes);
 	m_pTrial->SetVerified(m_Verified);
 	m_pTrial->GetClubs() = m_Clubs;
 

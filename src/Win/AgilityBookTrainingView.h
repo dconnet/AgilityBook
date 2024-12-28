@@ -70,8 +70,8 @@ public:
 	void SetCurrentDate(ARBCommon::ARBDate const& inDate);
 
 	bool IsFiltered() const override;
-	bool GetMessage(std::wstring& msg) const override;
-	bool GetMessage2(std::wstring& msg) const override;
+	bool GetMessage(wxString& msg) const override;
+	bool GetMessage2(wxString& msg) const override;
 	bool AllowStatusContext(int field) const override;
 
 	bool OnCreate(wxDocument* doc, long flags) override;
@@ -79,7 +79,7 @@ public:
 	void OnDraw(wxDC* dc) override;
 	void OnUpdate(wxView* sender, wxObject* inHint = nullptr) override;
 
-	void GetPrintLine(long item, std::vector<std::wstring>& line) const;
+	void GetPrintLine(long item, std::vector<wxString>& line) const;
 
 private:
 	CAgilityBookTrainingViewDataPtr GetItemTrainingData(long index) const;

@@ -189,11 +189,11 @@ bool ARBConfigDivision::Save(ElementNodePtr const& ioTree) const
 }
 
 
-bool ARBConfigDivision::Update(int indent, ARBConfigDivisionPtr const& inDivNew, std::wstring& ioInfo)
+bool ARBConfigDivision::Update(int indent, ARBConfigDivisionPtr const& inDivNew, wxString& ioInfo)
 {
-	std::wstring info;
+	wxString info;
 
-	std::wstring indentBuffer, indentName;
+	wxString indentBuffer, indentName;
 	for (int i = 0; i < indent - 1; ++i)
 		indentName += L"   ";
 	indentBuffer = indentName + L"   ";
@@ -210,7 +210,7 @@ bool ARBConfigDivision::Update(int indent, ARBConfigDivisionPtr const& inDivNew,
 	// If the order is different, we will fall into this...
 	if (GetLevels() != inDivNew->GetLevels())
 	{
-		std::wstring info2;
+		wxString info2;
 		int nChanged = 0, nAdded = 0, nSkipped = 0;
 		for (ARBConfigLevelList::const_iterator iterLevel = inDivNew->GetLevels().begin();
 			 iterLevel != inDivNew->GetLevels().end();
@@ -303,7 +303,7 @@ void ARBConfigDivisionList::ReorderBy(ARBConfigDivisionList const& inList)
 }
 
 
-bool ARBConfigDivisionList::VerifyLevel(std::wstring const& inDiv, std::wstring const& inLevel) const
+bool ARBConfigDivisionList::VerifyLevel(wxString const& inDiv, wxString const& inLevel) const
 {
 	// Wildcards are only used in the ARBConfigScoring object.
 	bool bWildCard = (inDiv == WILDCARD_DIVISION);
@@ -321,7 +321,7 @@ bool ARBConfigDivisionList::VerifyLevel(std::wstring const& inDiv, std::wstring 
 }
 
 
-bool ARBConfigDivisionList::FindDivision(std::wstring const& inDiv, ARBConfigDivisionPtr* outDiv) const
+bool ARBConfigDivisionList::FindDivision(wxString const& inDiv, ARBConfigDivisionPtr* outDiv) const
 {
 	if (outDiv)
 		outDiv->reset();
@@ -338,7 +338,7 @@ bool ARBConfigDivisionList::FindDivision(std::wstring const& inDiv, ARBConfigDiv
 }
 
 
-bool ARBConfigDivisionList::AddDivision(std::wstring const& inDiv, ARBConfigDivisionPtr* outDiv)
+bool ARBConfigDivisionList::AddDivision(wxString const& inDiv, ARBConfigDivisionPtr* outDiv)
 {
 	if (outDiv)
 		outDiv->reset();
@@ -364,9 +364,9 @@ bool ARBConfigDivisionList::AddDivision(ARBConfigDivisionPtr const& inDiv)
 }
 
 
-int ARBConfigDivisionList::DeleteDivision(std::wstring const& inDiv, ARBConfigEventList& ioEvents)
+int ARBConfigDivisionList::DeleteDivision(wxString const& inDiv, ARBConfigEventList& ioEvents)
 {
-	std::wstring div(inDiv);
+	wxString div(inDiv);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == div)

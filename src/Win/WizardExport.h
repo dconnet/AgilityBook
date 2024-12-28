@@ -46,7 +46,7 @@ private:
 	CAgilityBookOptions::ColumnOrder GetColumnInfo() const;
 	wchar_t GetDelim() const;
 	void UpdateButtons();
-	std::wstring AddPreviewData(long inLine, long inCol, std::wstring inData);
+	wxString AddPreviewData(long inLine, long inCol, wxString inData);
 	void UpdatePreview();
 	bool DoWizardFinish();
 

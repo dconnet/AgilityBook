@@ -50,7 +50,7 @@ public:
 
 private:
 	CAgilityBookPointsView* m_pView;
-	std::wstring m_tag;
+	wxString m_tag;
 };
 
 
@@ -80,8 +80,8 @@ public:
 	void DetachView() override;
 
 	bool IsFiltered() const override;
-	bool GetMessage(std::wstring& msg) const override;
-	bool GetMessage2(std::wstring& msg) const override;
+	bool GetMessage(wxString& msg) const override;
+	bool GetMessage2(wxString& msg) const override;
 	bool AllowStatusContext(int field) const override;
 
 	bool OnCreate(wxDocument* doc, long flags) override;

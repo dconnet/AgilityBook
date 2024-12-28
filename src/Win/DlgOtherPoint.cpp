@@ -165,7 +165,7 @@ void CDlgOtherPoint::LoadPoints(ARBConfigOtherPointsPtr const& inOther)
 		if ((!inOther && pOther->GetName() == m_pRunOther->GetName()) || (inOther && *inOther == *pOther))
 		{
 			current = pOther->GetName();
-			m_ctrlDesc->SetValue(StringUtil::stringWX(pOther->GetDescription()));
+			m_ctrlDesc->SetValue(pOther->GetDescription());
 			if (0.0 == m_Points)
 				m_Points = pOther->GetDefault();
 			TransferDataToWindow();
@@ -182,7 +182,7 @@ void CDlgOtherPoint::OnSelchangeOtherpoints(wxCommandEvent& evt)
 	if (wxNOT_FOUND != index)
 	{
 		COtherPointData* pData = dynamic_cast<COtherPointData*>(m_ctrlOtherPoints->GetClientObject(index));
-		m_ctrlDesc->SetValue(StringUtil::stringWX(pData->pOther->GetDescription()));
+		m_ctrlDesc->SetValue(pData->pOther->GetDescription());
 		m_Points = pData->pOther->GetDefault();
 		TransferDataToWindow();
 	}

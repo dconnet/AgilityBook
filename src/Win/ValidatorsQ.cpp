@@ -81,7 +81,7 @@ bool CQualifyingValidator::TransferToWindow()
 		CQualifyingComboBox* pControl = dynamic_cast<CQualifyingComboBox*>(m_validatorWindow);
 		if (m_pQ)
 		{
-			int idx = pControl->FindString(StringUtil::stringWX(m_pQ->str()), true);
+			int idx = pControl->FindString(m_pQ->str(), true);
 			pControl->SetSelection(idx);
 			return true;
 		}

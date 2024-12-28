@@ -78,7 +78,7 @@ TEST_CASE("DogExistingPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	virtual std::wstring GetGenericName() const
+			//	virtual wxString GetGenericName() const
 		}
 	}
 
@@ -112,7 +112,7 @@ TEST_CASE("DogExistingPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	static std::wstring GetPointTypeName(ARBExistingPointType inType);
+			//	static wxString GetPointTypeName(ARBExistingPointType inType);
 		}
 	}
 }
@@ -158,7 +158,7 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	bool HasPoints(std::wstring const& inVenue) const;
+			//	bool HasPoints(wxString const& inVenue) const;
 			//	bool HasPoints(
 			//			ARBConfigVenuePtr inVenue,
 			//			ARBConfigDivisionPtr inDiv,
@@ -194,7 +194,7 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	int NumExistingPointsInVenue(std::wstring const& inVenue) const;
+			//	int NumExistingPointsInVenue(wxString const& inVenue) const;
 		}
 	}
 
@@ -205,8 +205,8 @@ TEST_CASE("DogExistingPointsList")
 		{
 			TODO_TEST
 			//	int RenameVenue(
-			//			std::wstring const& inOldVenue,
-			//			std::wstring const& inNewVenue);
+			//			wxString const& inOldVenue,
+			//			wxString const& inNewVenue);
 		}
 	}
 
@@ -216,7 +216,7 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	int DeleteVenue(std::wstring const& inVenue);
+			//	int DeleteVenue(wxString const& inVenue);
 		}
 	}
 
@@ -228,7 +228,7 @@ TEST_CASE("DogExistingPointsList")
 			TODO_TEST
 			//	int NumExistingPointsInDivision(
 			//			ARBConfigVenuePtr inVenue,
-			//			std::wstring const& inDiv) const;
+			//			wxString const& inDiv) const;
 		}
 	}
 
@@ -239,9 +239,9 @@ TEST_CASE("DogExistingPointsList")
 		{
 			TODO_TEST
 			//	int RenameDivision(
-			//			std::wstring const& inVenue,
-			//			std::wstring const& inOldDiv,
-			//			std::wstring const& inNewDiv);
+			//			wxString const& inVenue,
+			//			wxString const& inOldDiv,
+			//			wxString const& inNewDiv);
 		}
 	}
 
@@ -252,8 +252,8 @@ TEST_CASE("DogExistingPointsList")
 		{
 			TODO_TEST
 			//	int DeleteDivision(
-			//			std::wstring const& inVenue,
-			//			std::wstring const& inDiv);
+			//			wxString const& inVenue,
+			//			wxString const& inDiv);
 		}
 	}
 
@@ -264,9 +264,9 @@ TEST_CASE("DogExistingPointsList")
 		{
 			TODO_TEST
 			//	int NumLevelsInUse(
-			//			std::wstring const& inVenue,
-			//			std::wstring const& inDiv,
-			//			std::wstring const& inLevel) const;
+			//			wxString const& inVenue,
+			//			wxString const& inDiv,
+			//			wxString const& inLevel) const;
 		}
 	}
 
@@ -277,10 +277,10 @@ TEST_CASE("DogExistingPointsList")
 		{
 			TODO_TEST
 			//	int RenameLevel(
-			//			std::wstring const& inVenue,
-			//			std::wstring const& inDiv,
-			//			std::wstring const& inOldLevel,
-			//			std::wstring const& inNewLevel);
+			//			wxString const& inVenue,
+			//			wxString const& inDiv,
+			//			wxString const& inOldLevel,
+			//			wxString const& inNewLevel);
 		}
 	}
 
@@ -291,9 +291,9 @@ TEST_CASE("DogExistingPointsList")
 		{
 			TODO_TEST
 			//	int DeleteLevel(
-			//			std::wstring const& inVenue,
-			//			std::wstring const& inDiv,
-			//			std::wstring const& inLevel);
+			//			wxString const& inVenue,
+			//			wxString const& inDiv,
+			//			wxString const& inLevel);
 		}
 	}
 
@@ -304,8 +304,8 @@ TEST_CASE("DogExistingPointsList")
 		{
 			TODO_TEST
 			//	int NumEventsInUse(
-			//			std::wstring const& inVenue,
-			//			std::wstring const& inEvent) const;
+			//			wxString const& inVenue,
+			//			wxString const& inEvent) const;
 		}
 	}
 
@@ -316,9 +316,9 @@ TEST_CASE("DogExistingPointsList")
 		{
 			TODO_TEST
 			//	int RenameEvent(
-			//			std::wstring const& inVenue,
-			//			std::wstring const& inOldEvent,
-			//			std::wstring const& inNewEvent);
+			//			wxString const& inVenue,
+			//			wxString const& inOldEvent,
+			//			wxString const& inNewEvent);
 		}
 	}
 
@@ -329,8 +329,8 @@ TEST_CASE("DogExistingPointsList")
 		{
 			TODO_TEST
 			//	int DeleteEvent(
-			//			std::wstring const& inVenue,
-			//			std::wstring const& inEvent);
+			//			wxString const& inVenue,
+			//			wxString const& inEvent);
 		}
 	}
 
@@ -340,7 +340,7 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	int NumOtherPointsInUse(std::wstring const& inOther) const;
+			//	int NumOtherPointsInUse(wxString const& inOther) const;
 		}
 	}
 
@@ -351,8 +351,8 @@ TEST_CASE("DogExistingPointsList")
 		{
 			TODO_TEST
 			//	int RenameOtherPoints(
-			//			std::wstring const& inOldOther,
-			//			std::wstring const& inNewOther);
+			//			wxString const& inOldOther,
+			//			wxString const& inNewOther);
 		}
 	}
 
@@ -362,7 +362,7 @@ TEST_CASE("DogExistingPointsList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	int DeleteOtherPoints(std::wstring const& inOther);
+			//	int DeleteOtherPoints(wxString const& inOther);
 		}
 	}
 
@@ -373,8 +373,8 @@ TEST_CASE("DogExistingPointsList")
 		{
 			TODO_TEST
 			//	int NumMultiQsInUse(
-			//			std::wstring const& inVenue,
-			//			std::wstring const& inMultiQ) const;
+			//			wxString const& inVenue,
+			//			wxString const& inMultiQ) const;
 		}
 	}
 
@@ -385,9 +385,9 @@ TEST_CASE("DogExistingPointsList")
 		{
 			TODO_TEST
 			//	int RenameMultiQs(
-			//			std::wstring const& inVenue,
-			//			std::wstring const& inOldMultiQ,
-			//			std::wstring const& inNewMultiQ);
+			//			wxString const& inVenue,
+			//			wxString const& inOldMultiQ,
+			//			wxString const& inNewMultiQ);
 		}
 	}
 
@@ -399,7 +399,7 @@ TEST_CASE("DogExistingPointsList")
 			TODO_TEST
 			//	int DeleteMultiQs(
 			//			ARBConfig const& inConfig,
-			//			std::wstring const& inVenue);
+			//			wxString const& inVenue);
 		}
 	}
 

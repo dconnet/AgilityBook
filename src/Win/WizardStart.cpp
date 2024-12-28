@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2015-01-01 Changed pixels to dialog units.
  * 2012-03-16 Renamed LoadXML functions, added stream version.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -52,6 +51,7 @@
 #include "LibARBWin/Logger.h"
 #include <wx/config.h>
 #include <wx/wfstream.h>
+#include <sstream>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -415,7 +415,8 @@ void CWizardStart::UpdateList(bool bInit)
 		if (wxNOT_FOUND != index)
 			m_ctrlList->SetClientData(index, reinterpret_cast<void*>(static_cast<size_t>(i)));
 	}
-	std::wstring str = fmt::format(L"{}{}", LAST_STYLEITEM, m_Style);
+	wxString str;
+	str << LAST_STYLEITEM << m_Style;
 	long idx = wxConfig::Get()->Read(str, -1L);
 	m_ctrlList->SetSelection(idx);
 	DoUpdateExportList(bInit);
@@ -452,7 +453,8 @@ void CWizardStart::DoUpdateExportList(bool bInit)
 	wxString msg = wxGetTranslation(sc_Items[idx].data[m_Style].desc);
 	m_ctrlDesc->SetLabel(msg);
 
-	std::wstring str = fmt::format(L"{}{}", LAST_STYLEITEM, m_Style);
+	wxString str;
+	str << LAST_STYLEITEM << m_Style;
 	wxConfig::Get()->Write(str, index);
 }
 
@@ -531,7 +533,7 @@ bool CWizardStart::DoWizardFinish()
 	int index = m_ctrlList->GetSelection();
 	if (-1 != m_Style && wxNOT_FOUND != index)
 	{
-		fmt::wmemory_buffer errMsg;
+		wxString errMsg;
 		size_t data = reinterpret_cast<size_t>(m_ctrlList->GetClientData(index));
 		switch (data)
 		{
@@ -554,14 +556,14 @@ bool CWizardStart::DoWizardFinish()
 				bool bLoadOk = false;
 				{
 					wxBusyCursor wait;
-					bLoadOk = tree->LoadXML(file.GetPath().wc_str(), errMsg);
+					bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
 				}
 				if (!bLoadOk)
 				{
 					wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
 					if (0 < errMsg.size())
 					{
-						msg << L"\n\n" << fmt::to_string(errMsg);
+						msg << L"\n\n" << errMsg;
 					}
 					wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				}
@@ -587,14 +589,14 @@ bool CWizardStart::DoWizardFinish()
 				bool bLoadOk = false;
 				{
 					wxBusyCursor wait;
-					bLoadOk = tree->LoadXML(file.GetPath().wc_str(), errMsg);
+					bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
 				}
 				if (!bLoadOk)
 				{
 					wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
 					if (0 < errMsg.size())
 					{
-						msg << L"\n\n" << fmt::to_string(errMsg);
+						msg << L"\n\n" << errMsg;
 					}
 					wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				}
@@ -618,11 +620,11 @@ bool CWizardStart::DoWizardFinish()
 			{
 				wxBusyCursor wait;
 				CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
-				std::wstring verstr = ver.GetVersionString();
+				wxString verstr = ver.GetVersionString();
 				ElementNodePtr tree(ElementNode::New());
 				if (m_pDoc->Book().Save(tree, verstr, true, false, false, false, false))
 				{
-					tree->SaveXML(StringUtil::stringW(file.GetPath()));
+					tree->SaveXML(file.GetPath());
 				}
 				bOk = true;
 			}
@@ -707,14 +709,14 @@ bool CWizardStart::DoWizardFinish()
 				bool bLoadOk = false;
 				{
 					wxBusyCursor wait;
-					bLoadOk = tree->LoadXML(file.GetPath().wc_str(), errMsg);
+					bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
 				}
 				if (!bLoadOk)
 				{
 					wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
 					if (0 < errMsg.size())
 					{
-						msg << L"\n\n" << fmt::to_string(errMsg);
+						msg << L"\n\n" << errMsg;
 					}
 					wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				}
@@ -738,11 +740,11 @@ bool CWizardStart::DoWizardFinish()
 			{
 				wxBusyCursor wait;
 				CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
-				std::wstring verstr = ver.GetVersionString();
+				wxString verstr = ver.GetVersionString();
 				ElementNodePtr tree(ElementNode::New());
 				if (m_pDoc->Book().Save(tree, verstr, false, true, false, false, false))
 				{
-					tree->SaveXML(StringUtil::stringW(file.GetPath()));
+					tree->SaveXML(file.GetPath());
 				}
 				bOk = true;
 			}
@@ -770,11 +772,11 @@ bool CWizardStart::DoWizardFinish()
 			{
 				wxBusyCursor wait;
 				CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
-				std::wstring verstr = ver.GetVersionString();
+				wxString verstr = ver.GetVersionString();
 				ElementNodePtr tree(ElementNode::New());
 				if (m_pDoc->Book().Save(tree, verstr, false, false, true, false, false))
 				{
-					tree->SaveXML(StringUtil::stringW(file.GetPath()));
+					tree->SaveXML(file.GetPath());
 				}
 				bOk = true;
 			}
@@ -838,12 +840,12 @@ bool CWizardStart::DoWizardFinish()
 			{
 				wxBusyCursor wait;
 				CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
-				std::wstring verstr = ver.GetVersionString();
+				wxString verstr = ver.GetVersionString();
 				ElementNodePtr tree(ElementNode::New());
 				if (m_pDoc->Book().Save(tree, verstr, true, true, true, true, true))
 				{
 					CConfigHandler handler;
-					tree->SaveXML(StringUtil::stringW(file.GetPath()), ARBConfig::GetDTD(&handler));
+					tree->SaveXML(file.GetPath()), ARBConfig::GetDTD(&handler);
 				}
 				bOk = true;
 			}
@@ -868,7 +870,7 @@ bool CWizardStart::DoWizardFinish()
 				bool bLoadOk = false;
 				{
 					wxBusyCursor wait;
-					bLoadOk = tree->LoadXML(file.GetPath().wc_str(), errMsg);
+					bLoadOk = tree->LoadXML(file.GetPath(), errMsg);
 				}
 				if (bLoadOk && CAgilityBookOptions::ImportSettings(tree))
 				{
@@ -879,7 +881,7 @@ bool CWizardStart::DoWizardFinish()
 					wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
 					if (0 < errMsg.size())
 					{
-						msg << L"\n\n" << fmt::to_string(errMsg);
+						msg << L"\n\n" << errMsg;
 					}
 					wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				}
@@ -903,11 +905,10 @@ bool CWizardStart::DoWizardFinish()
 			{
 				wxBusyCursor wait;
 				CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
-				std::wstring verstr = ver.GetVersionString();
 				ElementNodePtr settings = CAgilityBookOptions::ExportSettings();
 				if (settings)
 				{
-					settings->SaveXML(StringUtil::stringW(file.GetPath()));
+					settings->SaveXML(file.GetPath());
 					bOk = true;
 				}
 			}

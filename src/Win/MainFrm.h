@@ -67,14 +67,14 @@ public:
 	bool DownloadInProgress();
 	bool CanClose();
 
-	void SetMessageText(std::wstring const& msg, bool bFiltered);
-	void SetMessageText2(std::wstring const& msg);
+	void SetMessageText(wxString const& msg, bool bFiltered);
+	void SetMessageText2(wxString const& msg);
 
 	void AutoCheckConfiguration(CAgilityBookDoc* pDoc);
 	void UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outDownloadStarted);
 
 private:
-	void SetMessage(std::wstring const& msg, int index, bool bResize);
+	void SetMessage(wxString const& msg, int index, bool bResize);
 
 	wxDocManager* m_manager;
 	ARBWin::CLogger m_logger;

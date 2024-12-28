@@ -169,7 +169,7 @@ bool ARBConfigEvent::Load(
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
 			TREE_EVENT,
 			ATTRIB_EVENT_HASPARTNER,
-			Localization()->ValidValuesBool().c_str()));
+			Localization()->ValidValuesBool()));
 		return false;
 	}
 
@@ -180,10 +180,8 @@ bool ARBConfigEvent::Load(
 		// Introduced in file version 8.6. Moved in 15.0
 		if (ARBAttribLookup::Invalid == inTree->GetAttrib(L"hasTable", bTable))
 		{
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-				TREE_EVENT,
-				L"hasTable",
-				Localization()->ValidValuesBool().c_str()));
+			ioCallback.LogMessage(
+				Localization()->ErrorInvalidAttributeValue(TREE_EVENT, L"hasTable", Localization()->ValidValuesBool()));
 			return false;
 		}
 
@@ -192,12 +190,12 @@ bool ARBConfigEvent::Load(
 			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
 				TREE_EVENT,
 				L"hasSubNames",
-				Localization()->ValidValuesBool().c_str()));
+				Localization()->ValidValuesBool()));
 			return false;
 		}
 	}
 
-	std::set<std::wstring> subNames;
+	std::set<wxString> subNames;
 	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{
 		ElementNodePtr element = inTree->GetElementNode(i);
@@ -261,11 +259,11 @@ bool ARBConfigEvent::Save(ElementNodePtr const& ioTree) const
 }
 
 
-bool ARBConfigEvent::Update(int indent, ARBConfigEventPtr const& inEventNew, std::wstring& ioInfo)
+bool ARBConfigEvent::Update(int indent, ARBConfigEventPtr const& inEventNew, wxString& ioInfo)
 {
-	std::wstring info;
+	wxString info;
 
-	std::wstring indentBuffer, indentName;
+	wxString indentBuffer, indentName;
 	for (int i = 0; i < indent - 1; ++i)
 		indentName += L"   ";
 	indentBuffer = indentName + L"   ";
@@ -387,9 +385,9 @@ void ARBConfigEventList::ReorderBy(ARBConfigEventList const& inList)
 
 
 bool ARBConfigEventList::VerifyEvent(
-	std::wstring const& inEvent,
-	std::wstring const& inDivision,
-	std::wstring const& inLevel,
+	wxString const& inEvent,
+	wxString const& inDivision,
+	wxString const& inLevel,
 	ARBDate const& inDate) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -402,9 +400,9 @@ bool ARBConfigEventList::VerifyEvent(
 
 
 bool ARBConfigEventList::FindEvent(
-	std::wstring const& inEvent,
-	std::wstring const& inDivision,
-	std::wstring const& inLevel,
+	wxString const& inEvent,
+	wxString const& inDivision,
+	wxString const& inLevel,
 	ARBDate const& inDate,
 	ARBConfigEventPtr* outEvent,
 	ARBConfigScoringPtr* outScoring) const
@@ -427,7 +425,7 @@ bool ARBConfigEventList::FindEvent(
 }
 
 
-int ARBConfigEventList::RenameDivision(std::wstring const& inOldDiv, std::wstring const& inNewDiv)
+int ARBConfigEventList::RenameDivision(wxString const& inOldDiv, wxString const& inNewDiv)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -447,9 +445,9 @@ int ARBConfigEventList::RenameDivision(std::wstring const& inOldDiv, std::wstrin
 }
 
 
-int ARBConfigEventList::DeleteDivision(std::wstring const& inDiv)
+int ARBConfigEventList::DeleteDivision(wxString const& inDiv)
 {
-	std::wstring div(inDiv);
+	wxString div(inDiv);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -469,10 +467,7 @@ int ARBConfigEventList::DeleteDivision(std::wstring const& inDiv)
 }
 
 
-int ARBConfigEventList::RenameLevel(
-	std::wstring const& inOldDiv,
-	std::wstring const& inOldLevel,
-	std::wstring const& inNewLevel)
+int ARBConfigEventList::RenameLevel(wxString const& inOldDiv, wxString const& inOldLevel, wxString const& inNewLevel)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -493,9 +488,9 @@ int ARBConfigEventList::RenameLevel(
 }
 
 
-int ARBConfigEventList::DeleteLevel(std::wstring const& inDiv, std::wstring const& inLevel)
+int ARBConfigEventList::DeleteLevel(wxString const& inDiv, wxString const& inLevel)
 {
-	std::wstring level(inLevel);
+	wxString level(inLevel);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -516,7 +511,7 @@ int ARBConfigEventList::DeleteLevel(std::wstring const& inDiv, std::wstring cons
 }
 
 
-int ARBConfigEventList::RenameLifetimeName(std::wstring const& inOldName, std::wstring const& inNewName)
+int ARBConfigEventList::RenameLifetimeName(wxString const& inOldName, wxString const& inNewName)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -541,7 +536,7 @@ int ARBConfigEventList::RenameLifetimeName(std::wstring const& inOldName, std::w
 }
 
 
-int ARBConfigEventList::DeleteLifetimeName(std::wstring const& inName)
+int ARBConfigEventList::DeleteLifetimeName(wxString const& inName)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -567,7 +562,7 @@ int ARBConfigEventList::DeleteLifetimeName(std::wstring const& inName)
 }
 
 
-bool ARBConfigEventList::FindEvent(std::wstring const& inEvent, ARBConfigEventPtr* outEvent) const
+bool ARBConfigEventList::FindEvent(wxString const& inEvent, ARBConfigEventPtr* outEvent) const
 {
 	if (outEvent)
 		outEvent->reset();
@@ -593,9 +588,9 @@ bool ARBConfigEventList::AddEvent(ARBConfigEventPtr const& inEvent)
 }
 
 
-bool ARBConfigEventList::DeleteEvent(std::wstring const& inEvent)
+bool ARBConfigEventList::DeleteEvent(wxString const& inEvent)
 {
-	std::wstring pEvent(inEvent);
+	wxString pEvent(inEvent);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == pEvent)

@@ -11,7 +11,6 @@
  *
  * Revision History
  * 2023-03-10 Removed DOCNA.
- * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2014-09-12 Add CKCSC.
  * 2013-01-13 Added more recurring tests for new style.
@@ -162,7 +161,7 @@ TEST_CASE("Config")
 		{
 			ElementNodePtr data = ElementNode::New();
 			ARBConfig config;
-			fmt::wmemory_buffer err;
+			wxString err;
 			ARBErrorCallback callback(err);
 			REQUIRE(!config.LoadFault(ElementNodePtr(), ARBVersion(1, 0), callback));
 			REQUIRE(!config.LoadFault(ElementNodePtr(), ARBVersion(2, 0), callback));
@@ -184,7 +183,7 @@ TEST_CASE("Config")
 		{
 			ElementNodePtr data = ElementNode::New();
 			ARBConfig config;
-			fmt::wmemory_buffer err;
+			wxString err;
 			ARBErrorCallback callback(err);
 			REQUIRE(!config.LoadOtherPoints(ElementNodePtr(), ARBVersion(1, 0), callback));
 			REQUIRE(!config.LoadOtherPoints(data, ARBVersion(1, 0), callback));
@@ -290,7 +289,7 @@ TEST_CASE("Config")
 			ARBConfig config;
 			CConfigHandler handler;
 			config.Default(&handler);
-			std::wstring nice = config.GetTitleNiceName(L"AKC", L"MX");
+			wxString nice = config.GetTitleNiceName(L"AKC", L"MX");
 			REQUIRE(0u != nice.length());
 		}
 	}
@@ -323,7 +322,7 @@ TEST_CASE("Config")
 				if (!configTitle)
 					continue;
 
-				std::wstring name = configTitle->GetCompleteName(-1);
+				wxString name = configTitle->GetCompleteName(-1);
 				REQUIRE(name == sc_Titles[i].pResult);
 			}
 		}
@@ -345,13 +344,13 @@ TEST_CASE("Config")
 			title->SetVenue(L"AKC");
 			title->SetName(L"MX", 1, configTitle);
 			// [MX] desc
-			std::wstring name1 = config.GetTitleCompleteName(title);
+			wxString name1 = config.GetTitleCompleteName(title);
 			REQUIRE(0u != name1.length());
 			// desc [MX]
-			std::wstring name2 = config.GetTitleCompleteName(title, false);
+			wxString name2 = config.GetTitleCompleteName(title, false);
 			REQUIRE(0u != name2.length());
 			REQUIRE(name1 != name2);
-			std::wstring nice = config.GetTitleNiceName(L"AKC", L"MX");
+			wxString nice = config.GetTitleNiceName(L"AKC", L"MX");
 			nice += L" [MX]";
 			REQUIRE(nice == name2);
 		}
@@ -402,7 +401,7 @@ TEST_CASE("Config")
 				title->SetVenue(sc_Titles[i].pVenue);
 
 				title->SetName(sc_Titles[i].pTitle, sc_Titles[i].repeat, configTitle);
-				std::wstring result = title->GetGenericName();
+				wxString result = title->GetGenericName();
 				REQUIRE(result == sc_Titles[i].pResult);
 			}
 		}
@@ -417,7 +416,7 @@ TEST_CASE("Config")
 			// bool Update(
 			//		int indent,
 			//		ARBConfig const& inConfigNew,
-			//		std::wstring& ioInfo);
+			//		wxString& ioInfo);
 		}
 	}
 }

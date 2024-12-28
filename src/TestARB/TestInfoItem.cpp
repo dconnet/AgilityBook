@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-13 Created
@@ -143,10 +142,10 @@ TEST_CASE("InfoItem")
 		if (!g_bMicroTest)
 		{
 			ARBInfoItemPtr info = ARBInfoItem::New();
-			fmt::wmemory_buffer errs;
+			wxString errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(info->Load(data.data, ARBVersion(1, 0), callback, TREE_CLUBINFO));
-			std::wstring name = info->GetGenericName();
+			wxString name = info->GetGenericName();
 			REQUIRE(!name.empty());
 		}
 	}
@@ -157,7 +156,7 @@ TEST_CASE("InfoItem")
 		if (!g_bMicroTest)
 		{
 			ARBInfoItemPtr info = ARBInfoItem::New();
-			fmt::wmemory_buffer errs;
+			wxString errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(info->Load(data.data, ARBVersion(2, 0), callback, TREE_CLUBINFO));
 			ElementNodePtr ele = ElementNode::New();
@@ -176,7 +175,7 @@ TEST_CASE("InfoItemList")
 		if (!g_bMicroTest)
 		{
 			ARBInfoItemList infolist(TREE_CLUBINFO);
-			fmt::wmemory_buffer errs;
+			wxString errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(infolist.Load(data.data, ARBVersion(2, 0), callback));
 			ElementNodePtr ele = ElementNode::New(L"Doesnt matter");
@@ -195,7 +194,7 @@ TEST_CASE("InfoItemList")
 			ElementNodePtr ele = ElementNode::New(L"InfoItem");
 			ele->SetValue(L"These are some notes");
 			ARBInfoItemList infolist(TREE_CLUBINFO);
-			fmt::wmemory_buffer errs;
+			wxString errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(!infolist.Load(ele, ARBVersion(2, 0), callback));
 		}
@@ -229,10 +228,10 @@ TEST_CASE("InfoItemList")
 		if (!g_bMicroTest)
 		{
 			ARBInfo info;
-			fmt::wmemory_buffer errs;
+			wxString errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(info.Load(data.tree, ARBVersion(1, 0), callback));
-			std::set<std::wstring> items;
+			std::set<wxString> items;
 			REQUIRE(4u == info.GetInfo(ARBInfoType::Club).GetAllItems(items, false));
 		}
 	}
@@ -243,10 +242,10 @@ TEST_CASE("InfoItemList")
 		if (!g_bMicroTest)
 		{
 			ARBInfo info;
-			fmt::wmemory_buffer errs;
+			wxString errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(info.Load(data.tree, ARBVersion(1, 0), callback));
-			std::set<std::wstring> items;
+			std::set<wxString> items;
 			items.insert(L"Club1");
 			items.insert(L"Club3");
 			info.GetInfo(ARBInfoType::Club).CondenseContent(items);
@@ -261,7 +260,7 @@ TEST_CASE("InfoItemList")
 		if (!g_bMicroTest)
 		{
 			ARBInfo info;
-			fmt::wmemory_buffer errs;
+			wxString errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(info.Load(data.tree, ARBVersion(1, 0), callback));
 			REQUIRE(info.GetInfo(ARBInfoType::Club).FindItem(L"Club3"));
@@ -317,7 +316,7 @@ TEST_CASE("Info")
 		if (!g_bMicroTest)
 		{
 			ARBInfo info;
-			fmt::wmemory_buffer errs;
+			wxString errs;
 			ARBErrorCallback callback(errs);
 			REQUIRE(info.Load(data.tree, ARBVersion(1, 0), callback));
 			REQUIRE(4u == info.GetInfo(ARBInfoType::Club).size());

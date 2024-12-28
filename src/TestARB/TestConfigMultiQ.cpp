@@ -78,7 +78,7 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	virtual std::wstring GetGenericName() const
+			//	virtual wxString GetGenericName() const
 		}
 	}
 
@@ -125,8 +125,8 @@ TEST_CASE("ConfigMultiQ")
 		{
 			TODO_TEST
 			//	int RenameDivision(
-			//			std::wstring const& inOldDiv,
-			//			std::wstring const& inNewDiv);
+			//			wxString const& inOldDiv,
+			//			wxString const& inNewDiv);
 		}
 	}
 
@@ -136,7 +136,7 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	int DeleteDivision(std::wstring const& inDiv);
+			//	int DeleteDivision(wxString const& inDiv);
 		}
 	}
 
@@ -147,9 +147,9 @@ TEST_CASE("ConfigMultiQ")
 		{
 			TODO_TEST
 			//	int RenameLevel(
-			//			std::wstring const& inDiv,
-			//			std::wstring const& inOldLevel,
-			//			std::wstring const& inNewLevel);
+			//			wxString const& inDiv,
+			//			wxString const& inOldLevel,
+			//			wxString const& inNewLevel);
 		}
 	}
 
@@ -159,7 +159,7 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	int DeleteLevel(std::wstring const& inLevel);
+			//	int DeleteLevel(wxString const& inLevel);
 		}
 	}
 
@@ -170,8 +170,8 @@ TEST_CASE("ConfigMultiQ")
 		{
 			TODO_TEST
 			//	int RenameEvent(
-			//			std::wstring const& inOldEvent,
-			//			std::wstring const& inNewEvent);
+			//			wxString const& inOldEvent,
+			//			wxString const& inNewEvent);
 		}
 	}
 
@@ -181,7 +181,7 @@ TEST_CASE("ConfigMultiQ")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	int DeleteEvent(std::wstring const& inEvent);
+			//	int DeleteEvent(wxString const& inEvent);
 		}
 	}
 
@@ -192,13 +192,13 @@ TEST_CASE("ConfigMultiQ")
 		{
 			TODO_TEST
 			//	bool AddItem(
-			//			std::wstring const& inDiv,
-			//			std::wstring const& inLevel,
-			//			std::wstring const& inEvent);
+			//			wxString const& inDiv,
+			//			wxString const& inLevel,
+			//			wxString const& inEvent);
 			//	bool RemoveItem(
-			//			std::wstring const& inDiv,
-			//			std::wstring const& inLevel,
-			//			std::wstring const& inEvent);
+			//			wxString const& inDiv,
+			//			wxString const& inLevel,
+			//			wxString const& inEvent);
 			//	bool RemoveAllItems();
 		}
 	}
@@ -227,7 +227,7 @@ TEST_CASE("ConfigMultiQList")
 		{
 			TODO_TEST
 			//	bool FindMultiQ(
-			//			std::wstring const& inName,
+			//			wxString const& inName,
 			//			bool inUseShortName = false,
 			//			ARBConfigMultiQPtr* outMultiQ = nullptr) const;
 			//	bool FindMultiQ(
@@ -243,8 +243,8 @@ TEST_CASE("ConfigMultiQList")
 		{
 			TODO_TEST
 			//	int RenameDivision(
-			//			std::wstring const& inOldDiv,
-			//			std::wstring const& inNewDiv);
+			//			wxString const& inOldDiv,
+			//			wxString const& inNewDiv);
 		}
 	}
 
@@ -254,7 +254,7 @@ TEST_CASE("ConfigMultiQList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	int DeleteDivision(std::wstring const& inDiv);
+			//	int DeleteDivision(wxString const& inDiv);
 		}
 	}
 
@@ -265,9 +265,9 @@ TEST_CASE("ConfigMultiQList")
 		{
 			TODO_TEST
 			//	int RenameLevel(
-			//			std::wstring const& inDiv,
-			//			std::wstring const& inOldLevel,
-			//			std::wstring const& inNewLevel);
+			//			wxString const& inDiv,
+			//			wxString const& inOldLevel,
+			//			wxString const& inNewLevel);
 		}
 	}
 
@@ -277,7 +277,7 @@ TEST_CASE("ConfigMultiQList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	int DeleteLevel(std::wstring const& inLevel);
+			//	int DeleteLevel(wxString const& inLevel);
 		}
 	}
 
@@ -288,8 +288,8 @@ TEST_CASE("ConfigMultiQList")
 		{
 			TODO_TEST
 			//	int RenameEvent(
-			//			std::wstring const& inOldEvent,
-			//			std::wstring const& inNewEvent);
+			//			wxString const& inOldEvent,
+			//			wxString const& inNewEvent);
 		}
 	}
 
@@ -299,7 +299,7 @@ TEST_CASE("ConfigMultiQList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	int DeleteEvent(std::wstring const& inEvent);
+			//	int DeleteEvent(wxString const& inEvent);
 		}
 	}
 

@@ -106,7 +106,7 @@ CDlgTitle::CDlgTitle(ARBConfig const& config, ARBDogTitleList& titles, ARBDogTit
 			m_bHidden = true;
 		if (m_pTitle->GetReceived())
 			m_bReceived = true;
-		m_Venue = StringUtil::stringWX(m_pTitle->GetVenue());
+		m_Venue = m_pTitle->GetVenue();
 	}
 
 	// Controls (these are done first to control tab order)
@@ -327,13 +327,13 @@ void CDlgTitle::FillTitleInfo()
 	if (wxNOT_FOUND != index)
 	{
 		ARBConfigTitlePtr pTitle = GetTitleData(index);
-		desc = StringUtil::stringWX(pTitle->GetDescription());
+		desc = pTitle->GetDescription();
 
 		caption << L": ";
 		if (m_pTitle)
-			caption << m_pTitle->GetGenericName().c_str();
+			caption << m_pTitle->GetGenericName();
 		else
-			caption << pTitle->GetTitleName(GetInstance(pTitle)).c_str();
+			caption << pTitle->GetTitleName(GetInstance(pTitle));
 	}
 
 	SetTitle(caption);

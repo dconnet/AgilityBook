@@ -31,10 +31,10 @@ class CTextCtrl;
 class CDlgSelectURL : public wxDialog
 {
 public:
-	CDlgSelectURL(std::wstring const& name, wxWindow* pParent = nullptr);
-	CDlgSelectURL(std::wstring const& name, bool bAllowEmpty, wxWindow* pParent = nullptr);
+	CDlgSelectURL(wxString const& name, wxWindow* pParent = nullptr);
+	CDlgSelectURL(wxString const& name, bool bAllowEmpty, wxWindow* pParent = nullptr);
 
-	std::wstring Name() const;
+	wxString Name() const;
 
 private:
 	void InitDlg(wxWindow* pParent, bool bAllowEmpty);

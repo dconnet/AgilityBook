@@ -59,14 +59,14 @@ constexpr int MIN_CAL_WIDTH = 100;
 } // namespace
 
 
-CBasePanel::CBasePanel(wxWindow* parent, std::wstring const& helpText)
+CBasePanel::CBasePanel(wxWindow* parent, wxString const& helpText)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | wxNO_BORDER)
 	, m_views()
 	, m_lastActiveView(nullptr)
 {
 #if wxUSE_HELP
 	if (!helpText.empty())
-		SetHelpText(helpText.c_str());
+		SetHelpText(helpText);
 #endif
 }
 
@@ -132,7 +132,7 @@ CAgilityBookPanelRuns::CAgilityBookPanelRuns(
 	wxDocument* doc,
 	long flags,
 	std::vector<CAgilityBookBaseExtraView*> const& inViews)
-	: CBasePanel(parent, StringUtil::stringW(_("PanelRuns")))
+	: CBasePanel(parent, _("PanelRuns"))
 	, m_bInit(false)
 	, m_splitter(nullptr)
 {
@@ -211,7 +211,7 @@ CAgilityBookPanelPoints::CAgilityBookPanelPoints(
 	wxDocument* doc,
 	long flags,
 	std::vector<CAgilityBookBaseExtraView*> const& inViews)
-	: CBasePanel(parent, StringUtil::stringW(_("PanelPoints")))
+	: CBasePanel(parent, _("PanelPoints"))
 {
 	m_views = inViews;
 	bool bAttachViews = m_views.empty();
@@ -236,7 +236,7 @@ CAgilityBookPanelCalendar::CAgilityBookPanelCalendar(
 	wxDocument* doc,
 	long flags,
 	std::vector<CAgilityBookBaseExtraView*> const& inViews)
-	: CBasePanel(parent, StringUtil::stringW(_("PanelCal")))
+	: CBasePanel(parent, _("PanelCal"))
 	, m_bInit(false)
 	, m_splitter(nullptr)
 {
@@ -313,7 +313,7 @@ CAgilityBookPanelTraining::CAgilityBookPanelTraining(
 	wxDocument* doc,
 	long flags,
 	std::vector<CAgilityBookBaseExtraView*> const& inViews)
-	: CBasePanel(parent, StringUtil::stringW(_("PanelTraining")))
+	: CBasePanel(parent, _("PanelTraining"))
 {
 	m_views = inViews;
 	bool bAttachViews = m_views.empty();

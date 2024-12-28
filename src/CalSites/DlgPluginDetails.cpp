@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2015-01-01 Changed pixels to dialog units.
  * 2012-02-16 Fix initial focus.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -70,10 +69,10 @@ CDlgPluginDetails::CDlgPluginDetails(
 	if (m_OrigCalSite)
 	{
 		m_CalSite = m_OrigCalSite->Clone();
-		m_strName = StringUtil::stringWX(m_OrigCalSite->GetName());
-		m_strDesc = StringUtil::stringWX(m_OrigCalSite->GetDescription());
-		m_strSearch = StringUtil::stringWX(m_OrigCalSite->GetSearchURL());
-		m_strHelp = StringUtil::stringWX(m_OrigCalSite->GetHelpURL());
+		m_strName = m_OrigCalSite->GetName();
+		m_strDesc = m_OrigCalSite->GetDescription();
+		m_strSearch = m_OrigCalSite->GetSearchURL();
+		m_strHelp = m_OrigCalSite->GetHelpURL();
 	}
 	else
 		m_CalSite = ARBConfigCalSite::New();
@@ -189,8 +188,8 @@ CDlgPluginDetails::CDlgPluginDetails(
 
 void CDlgPluginDetails::SetCodeText()
 {
-	std::wstring str = fmt::format(
-		_("IDC_PLUGINDETAIL_CODES_TEXT").wx_str(),
+	auto str = wxString::Format(
+		_("IDC_PLUGINDETAIL_CODES_TEXT"),
 		m_CalSite->LocationCodes().size(),
 		m_CalSite->VenueCodes().size());
 	m_ctrlCodes->SetLabel(str);
@@ -203,7 +202,7 @@ void CDlgPluginDetails::OnPluginDetailCodes(wxCommandEvent& evt)
 	if (wxID_OK == dlg.ShowModal())
 	{
 		m_CalSite->RemoveAllLocationCodes();
-		std::map<std::wstring, std::wstring>::const_iterator i;
+		std::map<wxString, wxString>::const_iterator i;
 		for (i = dlg.GetLocationCodes().begin(); i != dlg.GetLocationCodes().end(); ++i)
 		{
 			m_CalSite->AddLocationCode(i->first, i->second);
@@ -223,10 +222,10 @@ void CDlgPluginDetails::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	m_CalSite->SetName(StringUtil::stringW(m_strName));
-	m_CalSite->SetDescription(StringUtil::stringW(m_strDesc));
-	m_CalSite->SetSearchURL(StringUtil::stringW(m_strSearch));
-	m_CalSite->SetHelpURL(StringUtil::stringW(m_strHelp));
+	m_CalSite->SetName(m_strName);
+	m_CalSite->SetDescription(m_strDesc);
+	m_CalSite->SetSearchURL(m_strSearch);
+	m_CalSite->SetHelpURL(m_strHelp);
 
 	if ((!m_OrigCalSite || m_OrigCalSite->GetName() != m_CalSite->GetName()) && m_sites.FindSite(m_CalSite->GetName()))
 	{

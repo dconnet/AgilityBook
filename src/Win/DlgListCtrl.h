@@ -68,10 +68,10 @@ public:
 	// OtherPoints
 	CDlgListCtrl(ARB::ARBConfig& pConfig, ARB::ARBDogRunPtr const& inRun, wxWindow* pParent = nullptr);
 
-	void GetAllPartners(std::set<std::wstring>& ioPartners, std::set<std::wstring>& ioDogs) const;
+	void GetAllPartners(std::set<wxString>& ioPartners, std::set<wxString>& ioDogs) const;
 
 private:
-	bool Create(std::wstring const& inCaption, wxWindow* pParent, bool bHasImageList);
+	bool Create(wxString const& inCaption, wxWindow* pParent, bool bHasImageList);
 	void FinishCreate(int nCols, std::vector<CDlgListCtrlDataPtr>& items);
 	CDlgListCtrlDataPtr GetItemListData(long item) const;
 	void UpdateControls();

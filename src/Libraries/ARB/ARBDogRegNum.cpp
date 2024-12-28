@@ -143,7 +143,7 @@ bool ARBDogRegNum::operator==(ARBDogRegNum const& rhs) const
 }
 
 
-size_t ARBDogRegNum::GetSearchStrings(std::set<std::wstring>& ioStrings) const
+size_t ARBDogRegNum::GetSearchStrings(std::set<wxString>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -203,16 +203,15 @@ bool ARBDogRegNum::Load(
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
 			TREE_REG_NUM,
 			ATTRIB_REG_NUM_RECEIVED,
-			Localization()->ValidValuesBool().c_str()));
+			Localization()->ValidValuesBool()));
 		return false;
 	}
 
 	if (!inConfig.GetVenues().VerifyVenue(m_Venue))
 	{
-		std::wstring msg(Localization()->InvalidVenueName());
+		wxString msg(Localization()->InvalidVenueName());
 		msg += m_Venue;
-		ioCallback.LogMessage(
-			Localization()->ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE, msg));
 		return false;
 	}
 
@@ -263,7 +262,7 @@ void ARBDogRegNumList::sort()
 }
 
 
-int ARBDogRegNumList::NumRegNumsInVenue(std::wstring const& inVenue) const
+int ARBDogRegNumList::NumRegNumsInVenue(wxString const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -275,7 +274,7 @@ int ARBDogRegNumList::NumRegNumsInVenue(std::wstring const& inVenue) const
 }
 
 
-int ARBDogRegNumList::RenameVenue(std::wstring const& inOldVenue, std::wstring const& inNewVenue)
+int ARBDogRegNumList::RenameVenue(wxString const& inOldVenue, wxString const& inNewVenue)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -290,9 +289,9 @@ int ARBDogRegNumList::RenameVenue(std::wstring const& inOldVenue, std::wstring c
 }
 
 
-int ARBDogRegNumList::DeleteVenue(std::wstring const& inVenue)
+int ARBDogRegNumList::DeleteVenue(wxString const& inVenue)
 {
-	std::wstring venue(inVenue);
+	wxString venue(inVenue);
 	int count = 0;
 	for (iterator iter = begin(); iter != end();)
 	{
@@ -308,7 +307,7 @@ int ARBDogRegNumList::DeleteVenue(std::wstring const& inVenue)
 }
 
 
-bool ARBDogRegNumList::FindRegNum(std::wstring const& inVenue, ARBDogRegNumPtr* outRegNum) const
+bool ARBDogRegNumList::FindRegNum(wxString const& inVenue, ARBDogRegNumPtr* outRegNum) const
 {
 	if (outRegNum)
 		outRegNum->reset();
@@ -325,7 +324,7 @@ bool ARBDogRegNumList::FindRegNum(std::wstring const& inVenue, ARBDogRegNumPtr* 
 }
 
 
-bool ARBDogRegNumList::AddRegNum(std::wstring const& inVenue, std::wstring const& inNumber, ARBDogRegNumPtr* outRegNum)
+bool ARBDogRegNumList::AddRegNum(wxString const& inVenue, wxString const& inNumber, ARBDogRegNumPtr* outRegNum)
 {
 	ARBDogRegNumPtr pRegNum(ARBDogRegNum::New());
 	pRegNum->SetVenue(inVenue);
@@ -349,10 +348,10 @@ bool ARBDogRegNumList::AddRegNum(ARBDogRegNumPtr const& inRegNum)
 }
 
 
-int ARBDogRegNumList::DeleteRegNum(std::wstring const& inVenue, std::wstring const& inNumber)
+int ARBDogRegNumList::DeleteRegNum(wxString const& inVenue, wxString const& inNumber)
 {
-	std::wstring venue(inVenue);
-	std::wstring number(inNumber);
+	wxString venue(inVenue);
+	wxString number(inNumber);
 	int count = 0;
 	for (iterator iter = begin(); iter != end();)
 	{

@@ -79,7 +79,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override
+	wxString GetGenericName() const override
 	{
 		return m_Date.GetString(ARBCommon::ARBDateFormat::SlashMDY);
 	}
@@ -89,7 +89,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override;
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override;
 
 	/**
 	 * Load a training entry
@@ -123,36 +123,36 @@ public:
 	{
 		m_Date = inDate;
 	}
-	std::wstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(std::wstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	std::wstring const& GetSubName() const
+	wxString const& GetSubName() const
 	{
 		return m_SubName;
 	}
-	void SetSubName(std::wstring const& inName)
+	void SetSubName(wxString const& inName)
 	{
 		m_SubName = inName;
 	}
-	std::wstring const& GetNote() const
+	wxString const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(std::wstring const& inNote)
+	void SetNote(wxString const& inNote)
 	{
 		m_Note = inNote;
 	}
 
 private:
 	ARBCommon::ARBDate m_Date;
-	std::wstring m_Name;
-	std::wstring m_SubName;
-	std::wstring m_Note;
+	wxString m_Name;
+	wxString m_SubName;
+	wxString m_Note;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -186,14 +186,14 @@ public:
 	 * @param outNames A list of the unique training names.
 	 * @return Number of unique names.
 	 */
-	size_t GetAllNames(std::set<std::wstring>& outNames) const;
+	size_t GetAllNames(std::set<wxString>& outNames) const;
 
 	/**
 	 * Get a list of all the different sub-names in the list.
 	 * @param outSubNames A list of the unique training sub-names.
 	 * @return Number of unique sub-names.
 	 */
-	size_t GetAllSubNames(std::set<std::wstring>& outSubNames) const;
+	size_t GetAllSubNames(std::set<wxString>& outSubNames) const;
 
 	/**
 	 * Find a training object.

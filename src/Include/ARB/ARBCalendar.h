@@ -137,13 +137,13 @@ public:
 	 * Get a UID. Used when generating iCalendar entries.
 	 * @param inType UID type to generate.
 	 */
-	std::wstring GetUID(UidType inType) const;
+	wxString GetUID(UidType inType) const;
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override
+	wxString GetGenericName() const override
 	{
 		return m_Venue + L" " + m_Club + L" " + m_Location;
 	}
@@ -153,7 +153,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override;
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override;
 
 	/**
 	 * Load a calendar entry
@@ -287,27 +287,27 @@ public:
 	{
 		m_bTentative = inTentative;
 	}
-	std::wstring const& GetLocation() const
+	wxString const& GetLocation() const
 	{
 		return m_Location;
 	}
-	void SetLocation(std::wstring const& inLocation)
+	void SetLocation(wxString const& inLocation)
 	{
 		m_Location = inLocation;
 	}
-	std::wstring const& GetClub() const
+	wxString const& GetClub() const
 	{
 		return m_Club;
 	}
-	void SetClub(std::wstring const& inClub)
+	void SetClub(wxString const& inClub)
 	{
 		m_Club = inClub;
 	}
-	std::wstring const& GetVenue() const
+	wxString const& GetVenue() const
 	{
 		return m_Venue;
 	}
-	void SetVenue(std::wstring const& inVenue)
+	void SetVenue(wxString const& inVenue)
 	{
 		m_Venue = inVenue;
 	}
@@ -327,43 +327,43 @@ public:
 	{
 		m_eAccommodations = inAccom;
 	}
-	std::wstring const& GetConfirmation() const
+	wxString const& GetConfirmation() const
 	{
 		return m_Confirmation;
 	}
-	void SetConfirmation(std::wstring const& inConfirmation)
+	void SetConfirmation(wxString const& inConfirmation)
 	{
 		m_Confirmation = inConfirmation;
 	}
-	std::wstring const& GetSecEmail() const
+	wxString const& GetSecEmail() const
 	{
 		return m_SecEmail;
 	}
-	void SetSecEmail(std::wstring const& inAddr)
+	void SetSecEmail(wxString const& inAddr)
 	{
 		m_SecEmail = inAddr;
 	}
-	std::wstring const& GetPremiumURL() const
+	wxString const& GetPremiumURL() const
 	{
 		return m_PremiumURL;
 	}
-	void SetPremiumURL(std::wstring const& inURL)
+	void SetPremiumURL(wxString const& inURL)
 	{
 		m_PremiumURL = inURL;
 	}
-	std::wstring const& GetOnlineURL() const
+	wxString const& GetOnlineURL() const
 	{
 		return m_OnlineURL;
 	}
-	void SetOnlineURL(std::wstring const& inURL)
+	void SetOnlineURL(wxString const& inURL)
 	{
 		m_OnlineURL = inURL;
 	}
-	std::wstring const& GetNote() const
+	wxString const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(std::wstring const& inNote)
+	void SetNote(wxString const& inNote)
 	{
 		m_Note = inNote;
 	}
@@ -375,16 +375,16 @@ private:
 	ARBCommon::ARBDate m_DateDraw;
 	ARBCommon::ARBDate m_DateClosing;
 	bool m_bTentative;
-	std::wstring m_Location;
-	std::wstring m_Club;
-	std::wstring m_Venue;
+	wxString m_Location;
+	wxString m_Club;
+	wxString m_Venue;
 	ARBCalendarEntry m_eEntered;
 	ARBAccommodations m_eAccommodations;
-	std::wstring m_Confirmation;
-	std::wstring m_SecEmail;
-	std::wstring m_PremiumURL;
-	std::wstring m_OnlineURL;
-	std::wstring m_Note;
+	wxString m_Confirmation;
+	wxString m_SecEmail;
+	wxString m_PremiumURL;
+	wxString m_OnlineURL;
+	wxString m_Note;
 };
 
 /////////////////////////////////////////////////////////////////////////////

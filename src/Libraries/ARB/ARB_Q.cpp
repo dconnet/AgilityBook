@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2015-05-05 Reorder "NA" lower in list.
  * 2015-03-15 Fixed Unknown-Q usage.
  * 2015-02-13 Added Unknown state.
@@ -58,33 +57,33 @@ constexpr int sc_nQs = sizeof(sc_Qs) / sizeof(sc_Qs[0]);
 } // namespace
 
 
-std::wstring ARB_Q::GetValidTypes()
+wxString ARB_Q::GetValidTypes()
 {
-	fmt::wmemory_buffer types;
+	wxString types;
 	bool bComma = false;
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (sc_Qs[i].trans)
 		{
 			if (bComma)
-				fmt::format_to(std::back_inserter(types), L"{}", L", ");
+				types << L", ";
 			bComma = true;
-			fmt::format_to(std::back_inserter(types), L"{}", StringUtil::GetTranslation(sc_Qs[i].trans));
+			types << wxGetTranslation(sc_Qs[i].trans);
 		}
 	}
-	return fmt::to_string(types);
+	return types;
 }
 
 
-void ARB_Q::GetValidTypes(std::vector<std::wstring>& outTypes)
+void ARB_Q::GetValidTypes(std::vector<wxString>& outTypes)
 {
 	outTypes.clear();
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (sc_Qs[i].trans)
-			outTypes.push_back(StringUtil::GetTranslation(sc_Qs[i].trans));
+			outTypes.push_back(wxGetTranslation(sc_Qs[i].trans));
 		else
-			outTypes.push_back(std::wstring());
+			outTypes.push_back(wxString());
 	}
 }
 
@@ -106,17 +105,17 @@ ARB_Q ARB_Q::GetValidType(int inIndex)
 }
 
 
-std::wstring ARB_Q::str() const
+wxString ARB_Q::str() const
 {
-	std::wstring s;
+	wxString s;
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (sc_Qs[i].q == m_Q)
 		{
 			if (sc_Qs[i].trans)
-				s = StringUtil::GetTranslation(sc_Qs[i].trans);
+				s = wxGetTranslation(sc_Qs[i].trans);
 			else
-				s = std::wstring();
+				s = wxString();
 			break;
 		}
 	}
@@ -124,7 +123,7 @@ std::wstring ARB_Q::str() const
 }
 
 
-bool ARB_Q::Load(std::wstring const& inAttrib, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
+bool ARB_Q::Load(wxString const& inAttrib, ARBVersion const& inVersion, ARBErrorCallback& ioCallback)
 {
 	for (int i = 0; i < sc_nQs; ++i)
 	{
@@ -144,7 +143,7 @@ bool ARB_Q::Save(ElementNodePtr const& ioTree, wchar_t const* const inAttribName
 {
 	assert(!!inAttribName);
 	bool bOk = false;
-	std::wstring q;
+	wxString q;
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (m_Q == sc_Qs[i].q)

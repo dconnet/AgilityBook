@@ -72,20 +72,20 @@ public:
 	 * This is the generic name without a date.
 	 * @return The name of this object.
 	 */
-	std::wstring GetName() const;
+	wxString GetName() const;
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override;
+	wxString GetGenericName() const override;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override;
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override;
 
 	/**
 	 * Load a run.
@@ -120,7 +120,7 @@ public:
 	 * @param inOther Name of item to look for.
 	 * @return Number of objects, not points.
 	 */
-	int NumOtherPointsInUse(std::wstring const& inOther) const;
+	int NumOtherPointsInUse(wxString const& inOther) const;
 
 	/**
 	 * Rename an OtherPoint, rename any dependent objects.
@@ -128,14 +128,14 @@ public:
 	 * @param inNewName New OtherPoint name.
 	 * @return Number of items changed.
 	 */
-	int RenameOtherPoints(std::wstring const& inOldName, std::wstring const& inNewName);
+	int RenameOtherPoints(wxString const& inOldName, wxString const& inNewName);
 
 	/**
 	 * Delete an OtherPoint, remove any dependent objects.
 	 * @param inName OtherPoint name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteOtherPoints(std::wstring const& inName);
+	int DeleteOtherPoints(wxString const& inName);
 
 	/**
 	 * Get the number of Speed points earned in this run.
@@ -158,7 +158,7 @@ public:
 	 * @param inLifetimeName Name of Lifetime points to tally.
 	 * @return Number of lifetime points earned.
 	 */
-	double GetLifetimePoints(ARBConfigScoringPtr const& inScoring, std::wstring const& inLifetimeName) const;
+	double GetLifetimePoints(ARBConfigScoringPtr const& inScoring, wxString const& inLifetimeName) const;
 
 	/**
 	 * Get the number of lifetime placement points earned in this run.
@@ -196,35 +196,35 @@ public:
 	{
 		m_Club = club;
 	}
-	std::wstring const& GetDivision() const
+	wxString const& GetDivision() const
 	{
 		return m_Division;
 	}
-	void SetDivision(std::wstring const& inDiv)
+	void SetDivision(wxString const& inDiv)
 	{
 		m_Division = inDiv;
 	}
-	std::wstring const& GetLevel() const
+	wxString const& GetLevel() const
 	{
 		return m_Level;
 	}
-	void SetLevel(std::wstring const& inLevel)
+	void SetLevel(wxString const& inLevel)
 	{
 		m_Level = inLevel;
 	}
-	std::wstring const& GetEvent() const
+	wxString const& GetEvent() const
 	{
 		return m_Event;
 	}
-	void SetEvent(std::wstring const& inEvent)
+	void SetEvent(wxString const& inEvent)
 	{
 		m_Event = inEvent;
 	}
-	std::wstring const& GetSubName() const
+	wxString const& GetSubName() const
 	{
 		return m_SubName;
 	}
-	void SetSubName(std::wstring const& inSubName)
+	void SetSubName(wxString const& inSubName)
 	{
 		m_SubName = inSubName;
 	}
@@ -236,35 +236,35 @@ public:
 	{
 		m_isAtHome = value;
 	}
-	std::wstring const& GetHeight() const
+	wxString const& GetHeight() const
 	{
 		return m_Height;
 	}
-	void SetHeight(std::wstring const& inHeight)
+	void SetHeight(wxString const& inHeight)
 	{
 		m_Height = inHeight;
 	}
-	std::wstring const& GetConditions() const
+	wxString const& GetConditions() const
 	{
 		return m_Conditions;
 	}
-	void SetConditions(std::wstring const& inConditions)
+	void SetConditions(wxString const& inConditions)
 	{
 		m_Conditions = inConditions;
 	}
-	std::wstring const& GetJudge() const
+	wxString const& GetJudge() const
 	{
 		return m_Judge;
 	}
-	void SetJudge(std::wstring const& inJudge)
+	void SetJudge(wxString const& inJudge)
 	{
 		m_Judge = inJudge;
 	}
-	std::wstring const& GetHandler() const
+	wxString const& GetHandler() const
 	{
 		return m_Handler;
 	}
-	void SetHandler(std::wstring const& inHandler)
+	void SetHandler(wxString const& inHandler)
 	{
 		m_Handler = inHandler;
 	}
@@ -324,11 +324,11 @@ public:
 	{
 		return m_Notes.GetFaults();
 	}
-	std::wstring const& GetCRCD() const
+	wxString const& GetCRCD() const
 	{
 		return m_Notes.GetCRCD();
 	}
-	void SetCRCD(std::wstring const& inCRCD)
+	void SetCRCD(wxString const& inCRCD)
 	{
 		m_Notes.SetCRCD(inCRCD);
 	}
@@ -344,11 +344,11 @@ public:
 	{
 		m_Notes.SetCRCDMetaData(inCRCDMeta);
 	}
-	std::wstring const& GetNote() const
+	wxString const& GetNote() const
 	{
 		return m_Notes.GetNote();
 	}
-	void SetNote(std::wstring const& inNote)
+	void SetNote(wxString const& inNote)
 	{
 		m_Notes.SetNote(inNote);
 	}
@@ -372,24 +372,24 @@ public:
 	{
 		return m_Links.size();
 	}
-	size_t GetLinks(std::set<std::wstring>& outLinks) const;
-	bool HasLink(std::wstring const& inLink) const;
-	void AddLink(std::wstring const& inLink);
-	void RemoveLink(std::wstring const& inLink);
+	size_t GetLinks(std::set<wxString>& outLinks) const;
+	bool HasLink(wxString const& inLink) const;
+	void AddLink(wxString const& inLink);
+	void RemoveLink(wxString const& inLink);
 
 private:
 	std::set<ARBConfigMultiQPtr> m_pMultiQs; //< Not persisted.
 	ARBCommon::ARBDate m_Date;
 	ARBDogClubPtr m_Club;
-	std::wstring m_Division;
-	std::wstring m_Level;
-	std::wstring m_Height;
-	std::wstring m_Event;
-	std::wstring m_SubName; //< Only used if the config supports it.
+	wxString m_Division;
+	wxString m_Level;
+	wxString m_Height;
+	wxString m_Event;
+	wxString m_SubName; //< Only used if the config supports it.
 	bool m_isAtHome;
-	std::wstring m_Conditions;
-	std::wstring m_Judge;
-	std::wstring m_Handler;
+	wxString m_Conditions;
+	wxString m_Judge;
+	wxString m_Handler;
 	ARBDogRunPartnerList m_Partners;
 	ARBDogRunScoring m_Scoring;
 	ARB_Q m_Q;
@@ -399,7 +399,7 @@ private:
 	ARBDogRunOtherPointsList m_OtherPoints;
 	ARBDogNotes m_Notes;
 	ARBDogReferenceRunList m_RefRuns;
-	typedef std::set<std::wstring> ARBDogRunLinks;
+	typedef std::set<wxString> ARBDogRunLinks;
 	ARBDogRunLinks m_Links;
 };
 

@@ -68,7 +68,7 @@ bool CNameValidator::Validate(wxWindow* parent)
 	TransferFromWindow();
 	m_pString = tmpString;
 
-	if (!m_Dlg->IsNameOkay(StringUtil::stringW(tmp)))
+	if (!m_Dlg->IsNameOkay(tmp))
 	{
 		m_validatorWindow->SetFocus();
 		wxMessageBox(_("IDS_NAME_IN_USE"), _("Validation conflict"), wxOK | wxICON_EXCLAMATION, parent);
@@ -114,10 +114,10 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 	: wxDialog()
 	, m_Config(config)
 	, m_pOther(inOther)
-	, m_Name(StringUtil::stringWX(inOther->GetName()))
+	, m_Name(inOther->GetName())
 	, m_ctrlTally(nullptr)
 	, m_Default(inOther->GetDefault())
-	, m_Desc(StringUtil::stringWX(inOther->GetDescription()))
+	, m_Desc(inOther->GetDescription())
 	, m_trace("CDlgConfigOtherPoints")
 {
 	if (!pParent)
@@ -244,7 +244,7 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 }
 
 
-bool CDlgConfigOtherPoints::IsNameOkay(std::wstring const& name) const
+bool CDlgConfigOtherPoints::IsNameOkay(wxString const& name) const
 {
 	if (m_pOther->GetName() != name && m_Config.GetOtherPoints().FindOtherPoints(name))
 	{
@@ -259,14 +259,14 @@ void CDlgConfigOtherPoints::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	m_pOther->SetName(StringUtil::stringW(m_Name));
+	m_pOther->SetName(m_Name);
 	m_pOther->SetDefault(m_Default);
 	int index = m_ctrlTally->GetSelection();
 	if (index != wxNOT_FOUND)
 	{
 		m_pOther->SetTally(dynamic_cast<DlgConfigOtherPointData*>(m_ctrlTally->GetClientObject(index))->m_Tally);
 	}
-	m_pOther->SetDescription(StringUtil::stringW(m_Desc));
+	m_pOther->SetDescription(m_Desc);
 	EndDialog(wxID_OK);
 }
 

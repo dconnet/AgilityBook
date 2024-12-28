@@ -147,7 +147,7 @@ bool ARBConfigLifetimeNameList::Load(
 }
 
 
-bool ARBConfigLifetimeNameList::VerifyLifetimeName(std::wstring const& inName) const
+bool ARBConfigLifetimeNameList::VerifyLifetimeName(wxString const& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -158,7 +158,7 @@ bool ARBConfigLifetimeNameList::VerifyLifetimeName(std::wstring const& inName) c
 }
 
 
-bool ARBConfigLifetimeNameList::FindLifetimeName(std::wstring const& inName, ARBConfigLifetimeNamePtr* outLifetimeName)
+bool ARBConfigLifetimeNameList::FindLifetimeName(wxString const& inName, ARBConfigLifetimeNamePtr* outLifetimeName)
 	const
 {
 	if (outLifetimeName)
@@ -176,7 +176,7 @@ bool ARBConfigLifetimeNameList::FindLifetimeName(std::wstring const& inName, ARB
 }
 
 
-bool ARBConfigLifetimeNameList::AddLifetimeName(std::wstring const& inName, ARBConfigLifetimeNamePtr* outLifetimeName)
+bool ARBConfigLifetimeNameList::AddLifetimeName(wxString const& inName, ARBConfigLifetimeNamePtr* outLifetimeName)
 {
 	if (outLifetimeName)
 		outLifetimeName->reset();
@@ -191,9 +191,9 @@ bool ARBConfigLifetimeNameList::AddLifetimeName(std::wstring const& inName, ARBC
 }
 
 
-bool ARBConfigLifetimeNameList::DeleteLifetimeName(std::wstring const& inName)
+bool ARBConfigLifetimeNameList::DeleteLifetimeName(wxString const& inName)
 {
-	std::wstring name(inName);
+	wxString name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

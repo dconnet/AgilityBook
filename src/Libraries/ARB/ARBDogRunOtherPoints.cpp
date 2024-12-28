@@ -118,7 +118,7 @@ bool ARBDogRunOtherPoints::operator==(ARBDogRunOtherPoints const& rhs) const
 }
 
 
-size_t ARBDogRunOtherPoints::GetSearchStrings(std::set<std::wstring>& ioStrings) const
+size_t ARBDogRunOtherPoints::GetSearchStrings(std::set<wxString>& ioStrings) const
 {
 	ioStrings.insert(m_Name);
 	return 1;

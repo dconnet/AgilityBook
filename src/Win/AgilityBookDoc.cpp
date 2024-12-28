@@ -12,7 +12,6 @@
  * Revision History
  * 2023-12-12 Fix wrong view being set current on filter change.
  * 2019-12-26 Fixed file size in properties for new file.
- * 2018-12-16 Convert to fmt.
  * 2018-09-15 Refactored how tree/list handle common actions.
  * 2015-12-31 Add wx version to file-written-on section in File Properties.
  * 2015-11-25 Oops, Mac doesn't have '__super'.
@@ -258,7 +257,7 @@ public:
 	std::vector<ARBDogPtr> dogs;
 	// For filter menu
 	CFilterOptions filterOptions;
-	std::vector<std::wstring> filterNames;
+	std::vector<wxString> filterNames;
 };
 
 
@@ -330,8 +329,8 @@ bool CAgilityBookDoc::StatusBarContextMenu(wxWindow* parent, int id, wxPoint con
 				for (iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
 				{
 					parent->Bind(wxEVT_COMMAND_MENU_SELECTED, &CAgilityBookDoc::OnStatusDog, this, menuId);
-					std::wstring item = StringUtil::Replace((*iDog)->GetGenericName(), L"&", L"&&");
-					wxMenuItem* menuitem = menu.AppendCheckItem(menuId, StringUtil::stringWX(item));
+					wxString item = StringUtil::Replace((*iDog)->GetGenericName(), L"&", L"&&");
+					wxMenuItem* menuitem = menu.AppendCheckItem(menuId, item);
 					if (curDog && *(*iDog) == *curDog)
 						menuitem->Check(true);
 					data.dogs.push_back(*iDog);
@@ -354,15 +353,15 @@ bool CAgilityBookDoc::StatusBarContextMenu(wxWindow* parent, int id, wxPoint con
 			data.filterOptions.GetAllFilterNames(data.filterNames);
 			if (0 < data.filterNames.size())
 			{
-				std::wstring filterName = data.filterOptions.GetCurrentFilter();
+				wxString filterName = data.filterOptions.GetCurrentFilter();
 				wxMenu menu;
 				int menuId = baseID;
-				std::vector<std::wstring>::const_iterator iFilter;
+				std::vector<wxString>::const_iterator iFilter;
 				for (iFilter = data.filterNames.begin(); iFilter != data.filterNames.end(); ++iFilter, ++menuId)
 				{
 					parent->Bind(wxEVT_COMMAND_MENU_SELECTED, &CAgilityBookDoc::OnStatusFilter, this, menuId);
-					std::wstring item = StringUtil::Replace(*iFilter, L"&", L"&&");
-					wxMenuItem* menuitem = menu.AppendCheckItem(menuId, StringUtil::stringWX(item));
+					wxString item = StringUtil::Replace(*iFilter, L"&", L"&&");
+					wxMenuItem* menuitem = menu.AppendCheckItem(menuId, item);
 					if (*iFilter == filterName)
 						menuitem->Check(true);
 				}
@@ -385,7 +384,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(wxWindow* parent, int id, wxPoint con
 }
 
 
-std::wstring CAgilityBookDoc::AddDogToCaption(std::wstring const& caption) const
+wxString CAgilityBookDoc::AddDogToCaption(wxString const& caption) const
 {
 	if (GetCurrentDog())
 		return GetCurrentDog()->GetCallName() + L": " + caption;
@@ -633,7 +632,7 @@ bool CAgilityBookDoc::EditRun(ARBDogPtr const& inDog, ARBDogTrialPtr const& inTr
 			if (!Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue()))
 			{
 				wxMessageBox(
-					fmt::format(_("IDS_VENUE_CONFIG_MISSING").wc_str(), pClub->GetVenue()),
+					wxString::Format(_("IDS_VENUE_CONFIG_MISSING"), pClub->GetVenue()),
 					_("Agility Record Book"),
 					wxOK | wxCENTRE | wxICON_STOP);
 				return false;
@@ -828,16 +827,15 @@ public:
 	CConfigActionCallback()
 	{
 	}
-	void PreDelete(std::wstring const& inMsg) override;
-	void PostDelete(std::wstring const& inMsg) const override;
+	void PreDelete(wxString const& inMsg) override;
+	void PostDelete(wxString const& inMsg) const override;
 };
 
 
-void CConfigActionCallback::PreDelete(std::wstring const& inMsg)
+void CConfigActionCallback::PreDelete(wxString const& inMsg)
 {
-	wxString msg(StringUtil::stringWX(inMsg));
-	msg += L"\n\n";
-	msg += _("IDS_ARE_YOU_SURE_CONTINUE");
+	wxString msg;
+	msg << inMsg << L"\n\n" << _("IDS_ARE_YOU_SURE_CONTINUE");
 	if (wxNO == wxMessageBox(msg, _("Agility Record Book"), wxYES_NO | wxCENTRE | wxICON_WARNING))
 	{
 		m_bContinue = false;
@@ -845,16 +843,16 @@ void CConfigActionCallback::PreDelete(std::wstring const& inMsg)
 }
 
 
-void CConfigActionCallback::PostDelete(std::wstring const& msg) const
+void CConfigActionCallback::PostDelete(wxString const& msg) const
 {
-	wxMessageBox(StringUtil::stringWX(msg), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
+	wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 }
 
 
 bool CAgilityBookDoc::ImportConfiguration(ARBConfig const& update)
 {
 	unsigned int iHint = 0;
-	fmt::wmemory_buffer info;
+	wxString info;
 	CConfigActionCallback callback;
 	bool bChanges = false;
 	{
@@ -874,7 +872,7 @@ bool CAgilityBookDoc::ImportConfiguration(ARBConfig const& update)
 	if (bChanges)
 	{
 		CAgilityBookOptions::CleanLastItems(m_Records.GetConfig());
-		CDlgMessage dlg(fmt::to_string(info), wxString(), wxGetApp().GetTopWindow());
+		CDlgMessage dlg(info, wxString(), wxGetApp().GetTopWindow());
 		dlg.ShowModal();
 		Modify(true);
 		CUpdateHint hint(UPDATE_CONFIG | iHint);
@@ -894,7 +892,7 @@ bool CAgilityBookDoc::ImportConfiguration(bool bUseDefault)
 	if (bUseDefault)
 	{
 		bDoIt = true;
-		dlg.LoadConfig(nullptr);
+		dlg.LoadConfig(wxString());
 	}
 	else
 	{
@@ -982,10 +980,7 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr const& inTree, wxWindow* p
 	if (book.Load(inTree, false, false, true, true, true, err))
 	{
 		if (0 < err.m_ErrMsg.size())
-			wxMessageBox(
-				StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-				_("Agility Record Book"),
-				wxOK | wxCENTRE | wxICON_INFORMATION);
+			wxMessageBox(err.m_ErrMsg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 		int countDog = 0;
 		int countRegNumsAdded = 0;
 		int countRegNumsUpdated = 0;
@@ -1156,108 +1151,105 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr const& inTree, wxWindow* p
 		}
 		if (0 < countClubs)
 		{
-			std::set<std::wstring> namesInUse;
+			std::set<wxString> namesInUse;
 			m_Records.GetAllClubNames(namesInUse, false, false);
 			m_Records.GetInfo().GetInfo(ARBInfoType::Club).CondenseContent(namesInUse);
 		}
 		if (0 < countJudges)
 		{
-			std::set<std::wstring> namesInUse;
+			std::set<wxString> namesInUse;
 			m_Records.GetAllJudges(namesInUse, false, false);
 			m_Records.GetInfo().GetInfo(ARBInfoType::Judge).CondenseContent(namesInUse);
 		}
 		if (0 < countLocations)
 		{
-			std::set<std::wstring> namesInUse;
+			std::set<wxString> namesInUse;
 			m_Records.GetAllTrialLocations(namesInUse, false, false);
 			m_Records.GetInfo().GetInfo(ARBInfoType::Location).CondenseContent(namesInUse);
 		}
-		fmt::wmemory_buffer str;
-		fmt::format_to(std::back_inserter(str), L"{} ", _("IDS_ADDED").wc_str());
+		wxString str;
+		str << _("IDS_ADDED") << L" ";
 		bool bAdded = false;
 		if (0 < countDog)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L"{}", L", ");
+				str << L", ";
 			bAdded = true;
-			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_DOGS").wc_str(), countDog);
+			str << wxString::Format(_("IDS_ADDED_DOGS"), countDog);
 		}
 		if (0 < countRegNumsAdded)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L"{}", L", ");
+				str << L", ";
 			bAdded = true;
-			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_REGNUMS").wc_str(), countRegNumsAdded);
+			str << wxString::Format(_("IDS_ADDED_REGNUMS"), countRegNumsAdded);
 		}
 		if (0 < countExistingPts)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L"{}", L", ");
+				str << L", ";
 			bAdded = true;
-			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_EXISTINGPTS").wc_str(), countExistingPts);
+			str << wxString::Format(_("IDS_ADDED_EXISTINGPTS"), countExistingPts);
 		}
 		if (0 < countTitlesAdded)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L"{}", L", ");
+				str << L", ";
 			bAdded = true;
-			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_TITLES").wc_str(), countTitlesAdded);
+			str << wxString::Format(_("IDS_ADDED_TITLES"), countTitlesAdded);
 		}
 		if (0 < countTrials)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L"{}", L", ");
+				str << L", ";
 			bAdded = true;
-			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_TRIALS").wc_str(), countTrials);
+			str << wxString::Format(_("IDS_ADDED_TRIALS"), countTrials);
 		}
 		if (0 < countClubs)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L"{}", L", ");
+				str << L", ";
 			bAdded = true;
-			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_CLUBS").wc_str(), countClubs);
+			str << wxString::Format(_("IDS_ADDED_CLUBS"), countClubs);
 		}
 		if (0 < countJudges)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L"{}", L", ");
+				str << L", ";
 			bAdded = true;
-			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_JUDGES").wc_str(), countJudges);
+			str << wxString::Format(_("IDS_ADDED_JUDGES"), countJudges);
 		}
 		if (0 < countLocations)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L"{}", L", ");
+				str << L", ";
 			bAdded = true;
-			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_LOCATIONS").wc_str(), countLocations);
+			str << wxString::Format(_("IDS_ADDED_LOCATIONS"), countLocations);
 		}
 		bAdded = false;
 		if (0 < countRegNumsUpdated)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L"{}", L", ");
+				str << L", ";
 			else
-				fmt::format_to(std::back_inserter(str), L"\n{} ", _("IDS_UPDATED").wc_str());
+				str += wxString::Format(L"\n%s ", _("IDS_UPDATED"));
 			bAdded = true;
-			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_REGNUMS").wc_str(), countRegNumsUpdated);
+			str << wxString::Format(_("IDS_ADDED_REGNUMS"), countRegNumsUpdated);
 		}
 		if (0 < countTitlesUpdated)
 		{
 			if (bAdded)
-				fmt::format_to(std::back_inserter(str), L"{}", L", ");
+				str << L", ";
 			else
-				fmt::format_to(std::back_inserter(str), L"\n{} ", _("IDS_UPDATED").wc_str());
+				str += wxString::Format(L"\n%s ", _("IDS_UPDATED"));
 			bAdded = true;
-			fmt::format_to(std::back_inserter(str), _("IDS_ADDED_TITLES").wc_str(), countTitlesUpdated);
+			str << wxString::Format(_("IDS_ADDED_TITLES"), countTitlesUpdated);
 		}
-		wxMessageBox(fmt::to_string(str), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
+		wxMessageBox(str, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
 	else if (0 < err.m_ErrMsg.size())
-		wxMessageBox(
-			StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-			_("Agility Record Book"),
-			wxOK | wxCENTRE | wxICON_WARNING);
+		wxMessageBox(err.m_ErrMsg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 	return bOk;
 }
 
@@ -1271,10 +1263,7 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr const& inTree, wxWindow* p
 	if (book.Load(inTree, true, false, false, false, false, err))
 	{
 		if (0 < err.m_ErrMsg.size())
-			wxMessageBox(
-				StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-				_("Agility Record Book"),
-				wxOK | wxCENTRE | wxICON_INFORMATION);
+			wxMessageBox(err.m_ErrMsg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 
 		long nAdded = 0;
 		long nUpdated = 0;
@@ -1288,15 +1277,12 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr const& inTree, wxWindow* p
 			Modify(true);
 		}
 
-		std::wstring str = fmt::format(_("IDS_UPDATED_CAL_ITEMS").wc_str(), nAdded, nUpdated);
+		auto str = wxString::Format(_("IDS_UPDATED_CAL_ITEMS"), nAdded, nUpdated);
 		wxMessageBox(str, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
 	else if (0 < err.m_ErrMsg.size())
-		wxMessageBox(
-			StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-			_("Agility Record Book"),
-			wxOK | wxCENTRE | wxICON_WARNING);
+		wxMessageBox(err.m_ErrMsg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 	return bOk;
 }
 
@@ -1310,10 +1296,7 @@ bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr const& inTree, wxWindow* p
 	if (book.Load(inTree, false, true, false, false, false, err))
 	{
 		if (0 < err.m_ErrMsg.size())
-			wxMessageBox(
-				StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-				_("Agility Record Book"),
-				wxOK | wxCENTRE | wxICON_INFORMATION);
+			wxMessageBox(err.m_ErrMsg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 
 		long nAdded = 0;
 		long nUpdated = 0;
@@ -1327,15 +1310,12 @@ bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr const& inTree, wxWindow* p
 			Modify(true);
 		}
 
-		std::wstring str = fmt::format(_("IDS_UPDATED_TRAINING_ITEMS").wc_str(), nAdded, nUpdated);
+		auto str = wxString::Format(_("IDS_UPDATED_TRAINING_ITEMS"), nAdded, nUpdated);
 		wxMessageBox(str, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
 	else if (0 < err.m_ErrMsg.size())
-		wxMessageBox(
-			StringUtil::stringWX(fmt::to_string(err.m_ErrMsg)),
-			_("Agility Record Book"),
-			wxOK | wxCENTRE | wxICON_WARNING);
+		wxMessageBox(err.m_ErrMsg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 	return bOk;
 }
 
@@ -1345,7 +1325,7 @@ bool CAgilityBookDoc::ResetVisibility()
 	bool bChanged = false;
 	std::vector<CVenueFilter> venues;
 	CFilterOptions::Options().GetFilterVenue(venues);
-	std::set<std::wstring> names;
+	std::set<wxString> names;
 	CFilterOptions::Options().GetTrainingFilterNames(names);
 
 	for (ARBDogList::iterator iterDogs = m_Records.GetDogs().begin(); iterDogs != m_Records.GetDogs().end(); ++iterDogs)
@@ -1449,7 +1429,7 @@ bool CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter> const& venues, A
 }
 
 
-bool CAgilityBookDoc::ResetVisibility(std::set<std::wstring> const& names, ARB::ARBTrainingPtr const& inTraining)
+bool CAgilityBookDoc::ResetVisibility(std::set<wxString> const& names, ARB::ARBTrainingPtr const& inTraining)
 {
 	bool bChanged = false;
 	bool bVisTraining = CFilterOptions::Options().IsTrainingLogVisible(names, inTraining);
@@ -1573,7 +1553,7 @@ bool CAgilityBookDoc::DeleteContents()
 	if (!wxDocument::DeleteContents())
 		return false;
 	m_fileHash.clear();
-	std::wstring msg(_("IDS_INDICATOR_BLANK"));
+	wxString msg(_("IDS_INDICATOR_BLANK"));
 	wxGetApp().SetMessageText(msg, CFilterOptions::Options().IsFilterEnabled());
 	wxGetApp().SetMessageText2(msg);
 	m_Records.clear();
@@ -1597,7 +1577,7 @@ bool CAgilityBookDoc::OnNewDocument()
 		//			AfxGetMainWnd()->PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
 		// Instead, just create a "fake" dog.
 		ARBDogPtr dog(ARBDog::New());
-		dog->SetCallName(StringUtil::stringW(_("IDS_COL_DOG")));
+		dog->SetCallName(_("IDS_COL_DOG"));
 		dog->SetDOB(ARBDate::Today());
 		m_Records.GetDogs().AddDog(dog);
 		Modify(false);
@@ -1639,9 +1619,9 @@ bool CAgilityBookDoc::IsDocumentUpdatable(wxString const& filename) const
 }
 
 
-std::wstring CAgilityBookDoc::GenerateHash(wxString const& filename) const
+wxString CAgilityBookDoc::GenerateHash(wxString const& filename) const
 {
-	wxFileInputStream file(StringUtil::stringW(filename));
+	wxFileInputStream file(filename);
 	wxStdInputStream stdfile(file);
 	return ARBMsgDigest::Compute(stdfile, ARBMsgDigest::ARBDigest::SHA1, nullptr);
 }
@@ -1674,19 +1654,18 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		wxBusyCursor wait;
 
 		STACK_TICKLE(stack, L"PreLoadXML");
-		fmt::wmemory_buffer err;
+		wxString err;
 		ElementNodePtr tree(ElementNode::New());
 		// Translate the XML to a tree form.
-		if (!tree->LoadXML(filename.wc_str(), err))
+		if (!tree->LoadXML(filename, err))
 		{
 			wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
-			fmt::wmemory_buffer msg;
-			fmt::format_to(std::back_inserter(msg), _("Cannot open file '{}'.").wc_str(), filename.wc_str());
+			wxString msg = wxString::Format(_("Cannot open file '%s'."), filename);
 			if (0 < err.size())
 			{
-				fmt::format_to(std::back_inserter(msg), L"\n\n{}", fmt::to_string(err));
+				msg << L"\n\n" << err;
 			}
-			wxMessageBox(fmt::to_string(msg), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
+			wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
 		}
 		STACK_TICKLE(stack, L"PostLoadXML");
@@ -1696,19 +1675,17 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		if (!m_Records.Load(tree, callback))
 		{
 			wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
-			fmt::wmemory_buffer msg;
-			fmt::format_to(std::back_inserter(msg), _("Cannot open file '{}'.").wc_str(), filename.wc_str());
+			wxString msg = wxString::Format(_("Cannot open file '%s'."), filename);
 			if (0 < callback.m_ErrMsg.size())
 			{
-				fmt::format_to(std::back_inserter(msg), L"\n\n{}", fmt::to_string(callback.m_ErrMsg));
+				msg << L"\n\n" << callback.m_ErrMsg;
 			}
-			wxMessageBox(fmt::to_string(msg), _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
+			wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			return false;
 		}
 		else if (0 < callback.m_ErrMsg.size())
 		{
-			std::wstring msg
-				= fmt::format(L"{}\n\n{}", _("IDS_NONFATAL_MSGS").wc_str(), fmt::to_string(callback.m_ErrMsg));
+			auto msg = wxString::Format(L"%s\n\n%s", _("IDS_NONFATAL_MSGS"), callback.m_ErrMsg);
 			wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 		}
 		STACK_TICKLE(stack, L"PostLoad");
@@ -1745,7 +1722,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 	}
 	else
 	{
-		std::wstring strCallName = StringUtil::stringW(wxConfig::Get()->Read(CFG_SETTINGS_LASTDOG, wxString()));
+		wxString strCallName = wxConfig::Get()->Read(CFG_SETTINGS_LASTDOG, wxString());
 		if (!strCallName.empty())
 		{
 			for (ARBDogList::const_iterator iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end();
@@ -1808,7 +1785,7 @@ bool CAgilityBookDoc::Save()
 	// Check if file externally modified
 	if (!m_fileHash.empty() && !GetFilename().empty())
 	{
-		std::wstring hash = GenerateHash(GetFilename());
+		wxString hash = GenerateHash(GetFilename());
 		if (!hash.empty() && hash != m_fileHash)
 		{
 			if (wxYES != wxMessageBox(_("IDS_WARN_FILE_UPDATED"), _("Agility Record Book"), wxICON_WARNING | wxYES_NO))
@@ -1826,7 +1803,7 @@ bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 	STACK_TRACE(stack, L"CAgilityBookDoc::DoSave");
 
 	// Condense info
-	std::set<std::wstring> namesInUse;
+	std::set<wxString> namesInUse;
 	m_Records.GetAllClubNames(namesInUse, false, false);
 	m_Records.GetInfo().GetInfo(ARBInfoType::Club).CondenseContent(namesInUse);
 	namesInUse.clear();
@@ -1837,7 +1814,7 @@ bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 	m_Records.GetInfo().GetInfo(ARBInfoType::Location).CondenseContent(namesInUse);
 
 	CVersionNum ver(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD);
-	std::wstring verstr = ver.GetVersionString();
+	wxString verstr = ver.GetVersionString();
 	bool bAlreadyWarned = false;
 	bool bOk = false;
 	ElementNodePtr tree(ElementNode::New());
@@ -1848,7 +1825,7 @@ bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 
 		BackupFile(filename);
 		// Then we can stream that tree out as XML.
-		if (tree->SaveXML(StringUtil::stringW(filename)))
+		if (tree->SaveXML(filename))
 		{
 			wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, filename);
 			bOk = true;
@@ -1856,7 +1833,7 @@ bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 		else
 		{
 			bAlreadyWarned = true;
-			std::wstring errMsg = fmt::format(_("IDS_CANNOT_OPEN").wc_str(), filename.wc_str());
+			auto errMsg = wxString::Format(_("IDS_CANNOT_OPEN"), filename);
 			wxMessageBox(errMsg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 		}
 	}
@@ -1878,7 +1855,7 @@ bool CAgilityBookDoc::OnCloseDocument()
 
 	ARBDogPtr pDog = GetCurrentDog();
 	if (pDog)
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTDOG, pDog->GetCallName().c_str());
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTDOG, pDog->GetCallName());
 	else
 		wxConfig::Get()->Write(CFG_SETTINGS_LASTDOG, wxEmptyString);
 	return wxDocument::OnCloseDocument();
@@ -1901,7 +1878,7 @@ public:
 
 private:
 	CAgilityBookDoc* m_pDoc;
-	void Search(ARBInfoType inType, std::set<std::wstring> const& inUse, ARBInfo const& info) const;
+	void Search(ARBInfoType inType, std::set<wxString> const& inUse, ARBInfo const& info) const;
 };
 
 
@@ -1909,7 +1886,7 @@ bool CFindInfo::Search(CDlgFind* pDlg)
 {
 	m_Items.clear();
 	ARBInfo& info = m_pDoc->Book().GetInfo();
-	std::set<std::wstring> inUse;
+	std::set<wxString> inUse;
 	m_pDoc->Book().GetAllClubNames(inUse, false, false);
 	Search(ARBInfoType::Club, inUse, info);
 	m_pDoc->Book().GetAllJudges(inUse, false, false);
@@ -1923,14 +1900,14 @@ bool CFindInfo::Search(CDlgFind* pDlg)
 	}
 	else
 	{
-		std::wstring msg = fmt::format(_("IDS_CANNOT_FIND").wc_str(), m_search.wc_str());
+		auto msg = wxString::Format(_("IDS_CANNOT_FIND"), m_search);
 		wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 		return false;
 	}
 }
 
 
-void CFindInfo::Search(ARBInfoType inType, std::set<std::wstring> const& inUse, ARBInfo const& info) const
+void CFindInfo::Search(ARBInfoType inType, std::set<wxString> const& inUse, ARBInfo const& info) const
 {
 	for (auto const& str : inUse)
 	{
@@ -1948,7 +1925,7 @@ void CFindInfo::Search(ARBInfoType inType, std::set<std::wstring> const& inUse, 
 		 iterItem != info.GetInfo(inType).end();
 		 ++iterItem)
 	{
-		std::set<std::wstring> strings;
+		std::set<wxString> strings;
 		if (0 < (*iterItem)->GetSearchStrings(strings))
 		{
 			for (auto const& str : strings)
@@ -2062,14 +2039,14 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 			std::vector<CVenueFilter> venues;
 			CFilterOptions::Options().GetFilterVenue(venues);
 
-			std::wstring preTitles, postTitles;
+			wxString preTitles, postTitles;
 			for (ARBConfigVenueList::const_iterator iVenue = m_Records.GetConfig().GetVenues().begin();
 				 iVenue != m_Records.GetConfig().GetVenues().end();
 				 ++iVenue)
 			{
 				if (!CFilterOptions::Options().IsVenueVisible(venues, (*iVenue)->GetName()))
 					continue;
-				std::wstring preTitles2, postTitles2;
+				wxString preTitles2, postTitles2;
 				for (ARBConfigTitleList::const_iterator iTitle = (*iVenue)->GetTitles().begin();
 					 iTitle != (*iVenue)->GetTitles().end();
 					 ++iTitle)
@@ -2108,7 +2085,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 				}
 			}
 
-			std::wstring data(preTitles);
+			wxString data(preTitles);
 			if (!data.empty())
 				data += L" ";
 			data += pDog->GetCallName();
@@ -2216,7 +2193,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 	case ID_NOTES_CLUBS:
 	{
 		CLogger::Log(L"MENU: Doc ID_NOTES_CLUBS");
-		std::wstring select;
+		wxString select;
 		ARBDogRunPtr pRun = GetCurrentRun();
 		if (pRun)
 			select = pRun->GetClub()->GetName();
@@ -2228,7 +2205,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 	case ID_NOTES_JUDGES:
 	{
 		CLogger::Log(L"MENU: Doc ID_NOTES_JUDGES");
-		std::wstring select;
+		wxString select;
 		ARBDogRunPtr pRun = GetCurrentRun();
 		if (pRun)
 			select = pRun->GetJudge();
@@ -2240,7 +2217,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 	case ID_NOTES_LOCATIONS:
 	{
 		CLogger::Log(L"MENU: Doc ID_NOTES_LOCATIONS");
-		std::wstring select;
+		wxString select;
 		ARBDogTrialPtr pTrial = GetCurrentTrial();
 		if (pTrial)
 			select = pTrial->GetLocation();
@@ -2256,11 +2233,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 		CDlgFind dlg(callback, wxGetApp().GetTopWindow());
 		if (wxID_OK == dlg.ShowModal())
 		{
-			CDlgListViewer dlgList(
-				this,
-				StringUtil::stringW(_("IDS_COL_NOTES")),
-				callback.m_Items,
-				wxGetApp().GetTopWindow());
+			CDlgListViewer dlgList(this, _("IDS_COL_NOTES"), callback.m_Items, wxGetApp().GetTopWindow());
 			dlgList.ShowModal();
 		}
 	}
@@ -2308,7 +2281,7 @@ void CAgilityBookDoc::OnUpdateFileProperties(wxUpdateUIEvent& evt)
 
 void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 {
-	fmt::wmemory_buffer str;
+	wxString str;
 
 	wxString filename = GetFilename();
 	if (!filename.empty())
@@ -2316,91 +2289,76 @@ void CAgilityBookDoc::OnFileProperties(wxCommandEvent& evt)
 		wxFileName file(filename);
 		if (file.Exists())
 		{
-			fmt::format_to(std::back_inserter(str), _("IDS_FILEPROP_NAME").wc_str(), filename.wc_str());
+			str += wxString::Format(_("IDS_FILEPROP_NAME"), filename);
 
 			if (!wxFileName::IsFileWritable(filename))
-				fmt::format_to(std::back_inserter(str), L" {}", _("IDS_FILEPROP_NAME_READONLY").wc_str());
+				str << L" " << _("IDS_FILEPROP_NAME_READONLY");
 
 			if (IsModified())
-				fmt::format_to(std::back_inserter(str), L" {}", _("IDS_FILEPROP_NAME_MODIFIED").wc_str());
+				str << L" " << _("IDS_FILEPROP_NAME_MODIFIED");
 
-			fmt::format_to(
-				std::back_inserter(str),
-				L"\n{}\n",
-				fmt::format(_("IDS_FILEPROP_SIZE").wc_str(), file.GetSize().GetValue()));
+			str << L"\n" << wxString::Format(_("File size: %lld bytes"), file.GetSize().GetValue()) << L"\n";
 
 			wxDateTime timeCreate, timeMod;
 			if (GetFileTimes(file, nullptr, &timeMod, &timeCreate))
 			{
-				fmt::format_to(
-					std::back_inserter(str),
-					L"{}\n",
-					fmt::format(_("IDS_FILEPROP_CREATED").wc_str(), timeCreate.FormatISOCombined().wc_str()));
-				fmt::format_to(
-					std::back_inserter(str),
-					L"{}\n",
-					fmt::format(_("IDS_FILEPROP_MODIFIED").wc_str(), timeMod.FormatISOCombined().wc_str()));
+				str += wxString::Format(_("IDS_FILEPROP_CREATED"), timeCreate.FormatISOCombined());
+				str += L"\n";
+				str += wxString::Format(_("IDS_FILEPROP_MODIFIED"), timeMod.FormatISOCombined());
+				str += L"\n";
 			}
 		}
 		else
 		{
-			fmt::format_to(std::back_inserter(str), L"{}", filename.wc_str());
+			str << filename;
 			if (IsModified())
-				fmt::format_to(std::back_inserter(str), _("IDS_FILEPROP_NAME_MODIFIED").wc_str());
-			fmt::format_to(std::back_inserter(str), L"{}", L"\n");
+				str << _("IDS_FILEPROP_NAME_MODIFIED");
+			str << L"\n";
 		}
 	}
 
-	fmt::format_to(std::back_inserter(str), L"{}", L"\n");
+	str << L"\n";
 
 	if (Book().GetConfig().GetVersion() == GetCurrentConfigVersion())
-		fmt::format_to(
-			std::back_inserter(str),
-			L"{}\n",
-			fmt::format(_("IDS_FILEPROP_CONFIGURATION").wc_str(), Book().GetConfig().GetVersion()));
+		str << wxString::Format(_("IDS_FILEPROP_CONFIGURATION"), Book().GetConfig().GetVersion()) << L"\n";
 	else
-		fmt::format_to(
-			std::back_inserter(str),
-			L"{}\n",
-			fmt::format(
-				_("IDS_FILEPROP_CONFIGURATION_CURRENT").wc_str(),
-				Book().GetConfig().GetVersion(),
-				GetCurrentConfigVersion()));
+		str << wxString::Format(
+			_("IDS_FILEPROP_CONFIGURATION_CURRENT"),
+			Book().GetConfig().GetVersion(),
+			GetCurrentConfigVersion())
+			<< L"\n";
 
 	if (!Book().GetFileInfo(ARBFileInfo::Book).empty())
 	{
 		ARBVersion ver(Book().GetFileInfo(ARBFileInfo::Book));
 		if (ver == ARBAgilityRecordBook::GetCurrentDocVersion())
-			fmt::format_to(
-				std::back_inserter(str),
-				L"{}\n",
-				fmt::format(_("IDS_FILEPROP_VERSION").wc_str(), ver.str()));
+		{
+			str += wxString::Format(_("IDS_FILEPROP_VERSION"), ver.str());
+			str += L"\n";
+		}
 		else
-			fmt::format_to(
-				std::back_inserter(str),
-				L"{}\n",
-				fmt::format(
-					_("IDS_FILEPROP_VERSION_CURRENT").wc_str(),
-					ver.str(),
-					ARBAgilityRecordBook::GetCurrentDocVersion().str()));
+		{
+			str += wxString::Format(
+				_("IDS_FILEPROP_VERSION_CURRENT"),
+				ver.str(),
+				ARBAgilityRecordBook::GetCurrentDocVersion().str());
+			str += L"\n";
+		}
 	}
 
 	if (!Book().GetFileInfo(ARBFileInfo::OS).empty() || !Book().GetFileInfo(ARBFileInfo::Platform).empty()
 		|| !Book().GetFileInfo(ARBFileInfo::TimeStamp).empty() || !Book().GetFileInfo(ARBFileInfo::Version).empty())
 	{
-		fmt::format_to(
-			std::back_inserter(str),
-			L"\n{}\n{}\n",
-			fmt::format(
-				_("IDS_FILEPROP_FILEWRITTEN").wc_str(),
-				Book().GetFileInfo(ARBFileInfo::OS),
-				Book().GetFileInfo(ARBFileInfo::Platform),
-				Book().GetFileInfo(ARBFileInfo::TimeStamp),
-				Book().GetFileInfo(ARBFileInfo::Version)),
-			wxVERSION_STRING);
+		auto tmp = wxString::Format(
+			_("IDS_FILEPROP_FILEWRITTEN"),
+			Book().GetFileInfo(ARBFileInfo::OS),
+			Book().GetFileInfo(ARBFileInfo::Platform),
+			Book().GetFileInfo(ARBFileInfo::TimeStamp),
+			Book().GetFileInfo(ARBFileInfo::Version));
+		str << L"\n" << tmp << L"\n" << wxVERSION_STRING << L"\n";
 	}
 
-	CDlgMessage dlg(fmt::to_string(str), _("IDS_FILE_PROPERTIES"), wxGetApp().GetTopWindow());
+	CDlgMessage dlg(str, _("IDS_FILE_PROPERTIES"), wxGetApp().GetTopWindow());
 	dlg.ShowModal();
 }
 
@@ -2412,7 +2370,7 @@ void CAgilityBookDoc::OnHelpDebug(wxCommandEvent& evt)
 
 	wxSize x;
 	x = parent->ConvertPixelsToDialog(wxSize(400, 0));
-	std::wstring s = fmt::format(L"px->dlg {},{}\n", x.x, x.y);
+	auto s = wxString::Format(L"px->dlg %d,%d\n", x.x, x.y);
 	wxMessageBox(s);
 
 	//	dlg.ShowModal();

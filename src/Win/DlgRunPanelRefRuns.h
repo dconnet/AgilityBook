@@ -61,9 +61,9 @@ private:
 	void CreateRefRunMe();
 	void UpdateRefRunButtons();
 	void ListRefRuns();
-	void GetAllHeights(std::set<std::wstring>& outNames);
-	void GetAllCallNames(std::set<std::wstring>& outNames);
-	void GetAllBreeds(std::set<std::wstring>& outNames);
+	void GetAllHeights(std::set<wxString>& outNames);
+	void GetAllCallNames(std::set<wxString>& outNames);
+	void GetAllBreeds(std::set<wxString>& outNames);
 	void EditRefRun();
 
 	ARB::ARBDogReferenceRunPtr m_pRefRunMe;

@@ -44,37 +44,37 @@ public:
 	}
 	void Unload(bool bPermanently = false);
 
-	std::wstring GetID() const
+	wxString GetID() const
 	{
 		return m_pSite->GetID();
 	}
-	std::wstring GetName() const
+	wxString GetName() const
 	{
 		return m_pSite->GetName();
 	}
-	std::wstring GetDescription() const
+	wxString GetDescription() const
 	{
 		return m_pSite->GetDescription();
 	}
-	std::map<std::wstring, std::wstring> const& QueryLocationCodes() const
+	std::map<wxString, wxString> const& QueryLocationCodes() const
 	{
 		return m_LocCodes;
 	}
-	std::map<std::wstring, std::wstring> const& QueryVenueCodes() const
+	std::map<wxString, wxString> const& QueryVenueCodes() const
 	{
 		return m_VenueCodes;
 	}
 	std::string Process(
 		IProgressMeter* progress,
-		std::vector<std::wstring> const& inLocationCodes,
-		std::vector<std::wstring> const& inVenueCodes);
+		std::vector<wxString> const& inLocationCodes,
+		std::vector<wxString> const& inVenueCodes);
 
 private:
 	ICalendarSitePtr m_pSite;
-	std::wstring m_id;
+	wxString m_id;
 	ARBCommon::CVersionNum m_Version;
-	std::map<std::wstring, std::wstring> m_LocCodes;
-	std::map<std::wstring, std::wstring> m_VenueCodes;
+	std::map<wxString, wxString> m_LocCodes;
+	std::map<wxString, wxString> m_VenueCodes;
 };
 typedef std::shared_ptr<CalSiteData> CalSiteDataPtr;
 

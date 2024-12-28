@@ -172,15 +172,15 @@ private:
 	std::vector<long> m_Columns[IO_TYPE_MAX];
 
 	int m_numConfigs;
-	std::wstring m_curConfig;
+	wxString m_curConfig;
 	struct CNamedColumnsData
 	{
-		std::wstring configName;
+		wxString configName;
 		std::vector<long> m_Columns[IO_TYPE_MAX];
 	};
 	std::vector<CNamedColumnsData> m_Configs;
 
-	std::vector<CNamedColumnsData>::iterator FindConfig(std::wstring const& inName);
+	std::vector<CNamedColumnsData>::iterator FindConfig(wxString const& inName);
 
 public:
 	CNamedColumns(CAgilityBookOptions::ColumnOrder eOrder);
@@ -190,7 +190,7 @@ public:
 	{
 		return m_eOrder;
 	}
-	std::wstring GetCurrentConfig() const
+	wxString GetCurrentConfig() const
 	{
 		return m_curConfig;
 	}
@@ -199,10 +199,10 @@ public:
 		return m_Columns[idx];
 	}
 
-	size_t GetAllConfigNames(std::vector<std::wstring>& outNames) const;
-	bool SetCurrentConfig(std::wstring const& inName);
-	bool AddConfig(std::wstring const& inName); ///< Returns if a new one was added
-	bool DeleteConfig(std::wstring const& inName);
+	size_t GetAllConfigNames(std::vector<wxString>& outNames) const;
+	bool SetCurrentConfig(wxString const& inName);
+	bool AddConfig(wxString const& inName); ///< Returns if a new one was added
+	bool DeleteConfig(wxString const& inName);
 
 	void ResetDefault(int idxType);
 	void SetColumn(int idxType, std::vector<long> const& columns);

@@ -68,7 +68,7 @@ public:
 	{
 	}
 	int OnCompare(CListDataPtr const& item, long iCol) const override;
-	std::wstring OnNeedText(long iCol) const override;
+	wxString OnNeedText(long iCol) const override;
 	ARBDogRegNumPtr GetData() const
 	{
 		return m_RegNum;
@@ -128,9 +128,9 @@ int CDlgDogDataRegNum::OnCompare(CListDataPtr const& item, long iCol) const
 }
 
 
-std::wstring CDlgDogDataRegNum::OnNeedText(long iCol) const
+wxString CDlgDogDataRegNum::OnNeedText(long iCol) const
 {
-	std::wstring text;
+	wxString text;
 	switch (iCol)
 	{
 	case k_colVenue:

@@ -37,9 +37,9 @@ enum class ARBFilterViewRuns
 
 struct CVenueFilter
 {
-	std::wstring venue;
-	std::wstring division;
-	std::wstring level;
+	wxString venue;
+	wxString division;
+	wxString level;
 	bool operator==(CVenueFilter const& rhs) const
 	{
 		return venue == rhs.venue && division == rhs.division && level == rhs.level;
@@ -112,7 +112,7 @@ private:
 		std::vector<CVenueFilter> venueFilter;
 		ARBFilterViewRuns eRuns;
 		bool bViewAllNames;
-		std::set<std::wstring> nameFilter;
+		std::set<wxString> nameFilter;
 	};
 
 	CCalendarViewFilter m_calView;
@@ -125,13 +125,13 @@ private:
 	std::vector<CVenueFilter> m_venueFilter;
 	ARBFilterViewRuns m_eRuns;
 	bool m_bViewAllNames;
-	std::set<std::wstring> m_nameFilter;
+	std::set<wxString> m_nameFilter;
 
-	std::wstring m_curFilter;
+	wxString m_curFilter;
 	long m_nFilters;
 	std::vector<CFilterOptionData> m_filters;
 
-	std::vector<CFilterOptionData>::iterator FindFilter(std::wstring const& inName);
+	std::vector<CFilterOptionData>::iterator FindFilter(wxString const& inName);
 
 public:
 	static CFilterOptions& Options();
@@ -139,29 +139,27 @@ public:
 	bool Update(ARB::ARBConfig const& inConfigNew, short configVersionPreUpdate, ARB::ARBConfig const& inConfigCurrent);
 	void Load();
 	void Save();
-	std::wstring GetCurrentFilter() const
+	wxString GetCurrentFilter() const
 	{
 		return m_curFilter;
 	}
-	size_t GetAllFilterNames(std::vector<std::wstring>& outNames, bool bForEditing = false) const;
-	bool SetCurrentFilter(std::wstring const& inName);
-	bool AddFilter(std::wstring const& inName); ///< Returns if a new one was added
-	bool DeleteFilter(std::wstring const& inName);
+	size_t GetAllFilterNames(std::vector<wxString>& outNames, bool bForEditing = false) const;
+	bool SetCurrentFilter(wxString const& inName);
+	bool AddFilter(wxString const& inName); ///< Returns if a new one was added
+	bool DeleteFilter(wxString const& inName);
 
 	// Helper functions
 	bool IsFilterEnabled() const;
 	bool IsDateVisible(ARBCommon::ARBDate const& startDate, ARBCommon::ARBDate const& endDate) const;
 	bool IsTitleVisible(std::vector<CVenueFilter> const& venues, ARB::ARBDogTitlePtr const& inTitle) const;
-	bool IsVenueVisible(std::vector<CVenueFilter> const& venues, std::wstring const& venue) const;
-	bool IsVenueDivisionVisible(
-		std::vector<CVenueFilter> const& venues,
-		std::wstring const& venue,
-		std::wstring const& div) const;
+	bool IsVenueVisible(std::vector<CVenueFilter> const& venues, wxString const& venue) const;
+	bool IsVenueDivisionVisible(std::vector<CVenueFilter> const& venues, wxString const& venue, wxString const& div)
+		const;
 	bool IsVenueLevelVisible(
 		std::vector<CVenueFilter> const& venues,
-		std::wstring const& venue,
-		std::wstring const& div,
-		std::wstring const& level) const;
+		wxString const& venue,
+		wxString const& div,
+		wxString const& level) const;
 	bool IsTrialVisible(std::vector<CVenueFilter> const& venues, ARB::ARBDogTrialPtr const& inTrial) const;
 	unsigned short IsRunVisible(
 		std::vector<CVenueFilter> const& venues,
@@ -173,7 +171,7 @@ public:
 		ARB::ARBDogTrialPtr const& inTrial,
 		ARB::ARBDogRunPtr const& inRun) const;
 	bool IsCalendarVisible(std::vector<CVenueFilter> const& venues, ARB::ARBCalendarPtr const& inCal) const;
-	bool IsTrainingLogVisible(std::set<std::wstring> const& names, ARB::ARBTrainingPtr const& inTraining) const;
+	bool IsTrainingLogVisible(std::set<wxString> const& names, ARB::ARBTrainingPtr const& inTraining) const;
 
 	// Filtering: Calendar
 	CCalendarViewFilter FilterCalendarView() const
@@ -244,7 +242,7 @@ public:
 	{
 		m_venueFilter = venues;
 	}
-	bool FilterExists(std::wstring const& inVenue, std::wstring const& inDiv, std::wstring const& inLevel) const;
+	bool FilterExists(wxString const& inVenue, wxString const& inDiv, wxString const& inLevel) const;
 
 	ARBFilterViewRuns GetViewRuns() const
 	{
@@ -264,11 +262,11 @@ public:
 	{
 		m_bViewAllNames = bViewAll;
 	}
-	void GetTrainingFilterNames(std::set<std::wstring>& outNames) const
+	void GetTrainingFilterNames(std::set<wxString>& outNames) const
 	{
 		outNames = m_nameFilter;
 	}
-	void SetTrainingFilterNames(std::set<std::wstring> const& inNames)
+	void SetTrainingFilterNames(std::set<wxString> const& inNames)
 	{
 		m_nameFilter = inNames;
 	}

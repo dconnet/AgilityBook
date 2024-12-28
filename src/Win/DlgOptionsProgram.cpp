@@ -47,7 +47,7 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	, m_bAutoShow(CAgilityBookOptions::AutoShowPropertiesOnNewTitle())
 	, m_bShowCosanction(CAgilityBookOptions::ShowCoSanctioning())
 	, m_UseProxy(CAgilityBookOptions::GetUseProxy())
-	, m_Proxy(StringUtil::stringWX(CAgilityBookOptions::GetProxyServer()))
+	, m_Proxy(CAgilityBookOptions::GetProxyServer())
 	, m_ctrlProxy(nullptr)
 	, m_enableDarkMode(CAgilityBookOptions::EnableDarkMode())
 {
@@ -191,14 +191,14 @@ void CDlgOptionsProgram::Save()
 	CAgilityBookOptions::SetNumBackupFiles(m_Backups);
 	CAgilityBookOptions::AutoShowPropertiesOnNewTitle(m_bAutoShow);
 	CAgilityBookOptions::SetShowCoSanctioning(m_bShowCosanction);
-	std::wstring oldProxy(CAgilityBookOptions::GetProxy());
+	wxString oldProxy(CAgilityBookOptions::GetProxy());
 	if (m_Proxy.empty())
 		m_UseProxy = false;
 	CAgilityBookOptions::SetUseProxy(m_UseProxy);
-	CAgilityBookOptions::SetProxyServer(StringUtil::stringW(m_Proxy));
-	std::wstring newProxy = CAgilityBookOptions::GetProxy();
+	CAgilityBookOptions::SetProxyServer(m_Proxy);
+	wxString newProxy = CAgilityBookOptions::GetProxy();
 	if (newProxy != oldProxy)
-		wxURL::SetDefaultProxy(StringUtil::stringWX(newProxy));
+		wxURL::SetDefaultProxy(newProxy);
 #if wxCHECK_VERSION(3, 3, 0)
 	CAgilityBookOptions::SetEnableDarkMode(m_enableDarkMode);
 #endif

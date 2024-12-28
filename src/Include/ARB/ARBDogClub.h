@@ -63,7 +63,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override
+	wxString GetGenericName() const override
 	{
 		return m_Name;
 	}
@@ -73,7 +73,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override;
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override;
 
 	/**
 	 * Load a club.
@@ -109,19 +109,19 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	std::wstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(std::wstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	std::wstring const& GetVenue() const
+	wxString const& GetVenue() const
 	{
 		return m_Venue;
 	}
-	void SetVenue(std::wstring const& inVenue)
+	void SetVenue(wxString const& inVenue)
 	{
 		m_Venue = inVenue;
 	}
@@ -136,9 +136,9 @@ public:
 	}
 
 private:
-	std::wstring m_Name;
-	std::wstring m_Venue;
-	std::wstring m_PrimaryClubVenue; // Only used during loading.
+	wxString m_Name;
+	wxString m_Venue;
+	wxString m_PrimaryClubVenue; // Only used during loading.
 	ARBDogClubWPtr m_PrimaryClub;
 };
 
@@ -187,7 +187,7 @@ public:
 	 * @param outClub Pointer to first club.
 	 * @return Whether there is a primary club.
 	 */
-	bool GetPrimaryClub(std::wstring const& inVenue, ARBDogClubPtr* outClub = nullptr) const;
+	bool GetPrimaryClub(wxString const& inVenue, ARBDogClubPtr* outClub = nullptr) const;
 
 	/**
 	 * Get the list of all clubs.
@@ -195,7 +195,7 @@ public:
 	 * @param bIncCosanction Should co-sanctioning clubs be included?
 	 * @return All clubs.
 	 */
-	std::wstring GetClubList(bool bNames, bool bIncCosanction = true) const;
+	wxString GetClubList(bool bNames, bool bIncCosanction = true) const;
 
 	/**
 	 * Get the list of clubs for a run.
@@ -203,7 +203,7 @@ public:
 	 * @param inRun Run to get clubs for.
 	 * @return Primary and possible cosanctioning club.
 	 */
-	std::wstring GetClubList(bool bNames, ARBDogRunPtr inRun) const;
+	wxString GetClubList(bool bNames, ARBDogRunPtr inRun) const;
 
 	/**
 	 * Find the first cosanctioning club for a primary club.
@@ -231,7 +231,7 @@ public:
 	 * @param outClub Found club.
 	 * @return Whether the club was found.
 	 */
-	bool FindClub(std::wstring const& inName, std::wstring const& inVenue, ARBDogClubPtr* outClub = nullptr) const;
+	bool FindClub(wxString const& inName, wxString const& inVenue, ARBDogClubPtr* outClub = nullptr) const;
 
 	/**
 	 * Find the first scoring style to match.
@@ -248,9 +248,9 @@ public:
 	 */
 	bool FindEvent(
 		ARBConfig const& inConfig,
-		std::wstring const& inEvent,
-		std::wstring const& inDivision,
-		std::wstring const& inLevel,
+		wxString const& inEvent,
+		wxString const& inDivision,
+		wxString const& inLevel,
 		ARBCommon::ARBDate const& inDate,
 		ARBErrorCallback& ioCallback,
 		ARBConfigEventPtr* outEvent = nullptr,
@@ -262,7 +262,7 @@ public:
 	 * @param outClub Found club.
 	 * @return Whether the club was found.
 	 */
-	bool FindVenue(std::wstring const& inVenue, ARBDogClubPtr* outClub = nullptr) const;
+	bool FindVenue(wxString const& inVenue, ARBDogClubPtr* outClub = nullptr) const;
 
 	/**
 	 * Add a club.
@@ -271,7 +271,7 @@ public:
 	 * @param outClub Added club.
 	 * @return Whether the club was added.
 	 */
-	bool AddClub(std::wstring const& inName, std::wstring const& inVenue, ARBDogClubPtr* outClub = nullptr);
+	bool AddClub(wxString const& inName, wxString const& inVenue, ARBDogClubPtr* outClub = nullptr);
 
 	/**
 	 * Delete a club.
@@ -279,7 +279,7 @@ public:
 	 * @param inVenue Venue of club.
 	 * @return Whether club was deleted.
 	 */
-	bool DeleteClub(std::wstring const& inName, std::wstring const& inVenue);
+	bool DeleteClub(wxString const& inName, wxString const& inVenue);
 };
 
 } // namespace ARB

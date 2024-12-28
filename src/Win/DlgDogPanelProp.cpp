@@ -44,13 +44,13 @@ using namespace ARBWin;
 
 CDlgDogPanelProp::CDlgDogPanelProp(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog, wxWindow* parent)
 	: CDlgDogPanelBase(pDoc, inDog, parent)
-	, m_CallName(StringUtil::stringWX(inDog->GetCallName()))
-	, m_Breed(StringUtil::stringWX(inDog->GetBreed()))
-	, m_RegName(StringUtil::stringWX(inDog->GetRegisteredName()))
+	, m_CallName(inDog->GetCallName())
+	, m_Breed(inDog->GetBreed())
+	, m_RegName(inDog->GetRegisteredName())
 	, m_DOB(inDog->GetDOB())
 	, m_IsDeceased(inDog->GetDeceased().IsValid())
 	, m_Deceased(inDog->GetDeceased())
-	, m_Notes(StringUtil::stringWX(inDog->GetNote()))
+	, m_Notes(inDog->GetNote())
 	, m_ctrlName(nullptr)
 	, m_ctrlAge(nullptr)
 	, m_ctrlDDay(nullptr)
@@ -217,9 +217,9 @@ bool CDlgDogPanelProp::Save(unsigned int& hint)
 
 	bool bModified = false;
 
-	if (m_pDog->GetCallName() != StringUtil::stringW(m_CallName))
+	if (m_pDog->GetCallName() != m_CallName)
 	{
-		std::wstring newCallName = StringUtil::stringW(m_CallName);
+		wxString newCallName = m_CallName;
 		CAgilityBookOptions::CleanLastItems(m_pDog->GetCallName(), newCallName);
 		hint |= UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW;
 		m_pDog->SetCallName(newCallName);
@@ -237,20 +237,20 @@ bool CDlgDogPanelProp::Save(unsigned int& hint)
 		hint |= UPDATE_TREE_VIEW;
 		m_pDog->SetDeceased(m_Deceased);
 	}
-	if (m_pDog->GetBreed() != StringUtil::stringW(m_Breed))
+	if (m_pDog->GetBreed() != m_Breed)
 	{
 		bModified = true;
-		m_pDog->SetBreed(StringUtil::stringW(m_Breed));
+		m_pDog->SetBreed(m_Breed);
 	}
-	if (m_pDog->GetRegisteredName() != StringUtil::stringW(m_RegName))
+	if (m_pDog->GetRegisteredName() != m_RegName)
 	{
 		hint |= UPDATE_POINTS_VIEW;
-		m_pDog->SetRegisteredName(StringUtil::stringW(m_RegName));
+		m_pDog->SetRegisteredName(m_RegName);
 	}
-	if (m_pDog->GetNote() != StringUtil::stringW(m_Notes))
+	if (m_pDog->GetNote() != m_Notes)
 	{
 		bModified = true;
-		m_pDog->SetNote(StringUtil::stringW(m_Notes));
+		m_pDog->SetNote(m_Notes);
 	}
 
 	return bModified;
@@ -267,7 +267,7 @@ void CDlgDogPanelProp::UpdateAge()
 			current = m_Deceased;
 		ageDays = current - m_DOB;
 	}
-	m_ctrlAge->SetLabel(StringUtil::stringWX(ARBDouble::ToString(ageDays / 365.0, 1)));
+	m_ctrlAge->SetLabel(ARBDouble::ToString(ageDays / 365.0, 1));
 }
 
 

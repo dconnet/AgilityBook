@@ -147,7 +147,7 @@ void CAgilityBookDocManager::ActivateView(wxView* view, bool activate)
 
 void CAgilityBookDocManager::OnMRUFileNotExist(unsigned n, const wxString& filename)
 {
-	wxMessageBox(fmt::format(_("Cannot open file '{}'.").wc_str(), filename.wc_str()));
+	wxMessageBox(wxString::Format(_("Cannot open file '%s'."), filename));
 
 	wxDocManager::OnMRUFileNotExist(n, filename); // Removes from history
 }
@@ -236,7 +236,7 @@ CAgilityBookApp::CAgilityBookApp()
 }
 
 
-void CAgilityBookApp::SetMessageText(std::wstring const& msg, bool bFiltered)
+void CAgilityBookApp::SetMessageText(wxString const& msg, bool bFiltered)
 {
 	CMainFrame* pFrame = wxDynamicCast(GetTopWindow(), CMainFrame);
 	if (pFrame)
@@ -246,7 +246,7 @@ void CAgilityBookApp::SetMessageText(std::wstring const& msg, bool bFiltered)
 }
 
 
-void CAgilityBookApp::SetMessageText2(std::wstring const& msg)
+void CAgilityBookApp::SetMessageText2(wxString const& msg)
 {
 	CMainFrame* pFrame = wxDynamicCast(GetTopWindow(), CMainFrame);
 	if (pFrame)
@@ -412,9 +412,9 @@ bool CAgilityBookApp::OnInit()
 
 	frame->Show(true);
 
-	std::wstring proxy = CAgilityBookOptions::GetProxy();
+	wxString proxy = CAgilityBookOptions::GetProxy();
 	if (!proxy.empty())
-		wxURL::SetDefaultProxy(proxy.c_str());
+		wxURL::SetDefaultProxy(proxy);
 
 	// Cleanup ARBUpdater.exe from temp directory from previous auto-update.
 	CUpdateInfo::CleanupUpdate();
@@ -547,9 +547,9 @@ void CAgilityBookApp::OnSetLanguage(wxLanguage langId)
 {
 	if (!m_Localization.Load())
 	{
-		wxString str = wxString::Format(L"ERROR: Unable to load '%s.mo'.", OnGetCatalogName().c_str());
+		wxString str = wxString::Format(L"ERROR: Unable to load '%s.mo'.", OnGetCatalogName());
 		wxMessageBox(str, _("Agility Record Book"), wxICON_ERROR | wxOK);
-		throw std::runtime_error(str.ToStdString());
+		throw std::runtime_error(str.utf8_string());
 	}
 }
 

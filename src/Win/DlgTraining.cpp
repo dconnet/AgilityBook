@@ -49,9 +49,9 @@ CDlgTraining::CDlgTraining(ARBTrainingPtr const& inTraining, CAgilityBookDoc* pD
 	, m_pTraining(inTraining)
 	, m_pDoc(pDoc)
 	, m_datePicker(nullptr)
-	, m_Name(StringUtil::stringWX(inTraining->GetName()))
-	, m_SubName(StringUtil::stringWX(inTraining->GetSubName()))
-	, m_Notes(StringUtil::stringWX(inTraining->GetNote()))
+	, m_Name(inTraining->GetName())
+	, m_SubName(inTraining->GetSubName())
+	, m_Notes(inTraining->GetNote())
 	, m_trace("CDlgTraining")
 {
 	if (!pParent)
@@ -70,18 +70,18 @@ CDlgTraining::CDlgTraining(ARBTrainingPtr const& inTraining, CAgilityBookDoc* pD
 
 	wxArrayString names, subnames;
 
-	std::set<std::wstring> items;
+	std::set<wxString> items;
 	m_pDoc->Book().GetTraining().GetAllNames(items);
-	std::set<std::wstring>::iterator iter;
+	std::set<wxString>::iterator iter;
 	for (iter = items.begin(); iter != items.end(); ++iter)
 	{
-		names.Add(StringUtil::stringWX(*iter));
+		names.Add(*iter);
 	}
 	names.Sort();
 	m_pDoc->Book().GetTraining().GetAllSubNames(items);
 	for (iter = items.begin(); iter != items.end(); ++iter)
 	{
-		subnames.Add(StringUtil::stringWX(*iter));
+		subnames.Add(*iter);
 	}
 	subnames.Sort();
 
@@ -192,9 +192,9 @@ void CDlgTraining::OnOk(wxCommandEvent& evt)
 	wxDateTime date = m_datePicker->GetValue();
 
 	m_pTraining->SetDate(ARBDate(date.GetYear(), date.GetMonth() + 1, date.GetDay()));
-	m_pTraining->SetName(StringUtil::stringW(m_Name));
-	m_pTraining->SetSubName(StringUtil::stringW(m_SubName));
-	m_pTraining->SetNote(StringUtil::stringW(m_Notes));
+	m_pTraining->SetName(m_Name);
+	m_pTraining->SetSubName(m_SubName);
+	m_pTraining->SetNote(m_Notes);
 
 	m_pDoc->Modify(true);
 

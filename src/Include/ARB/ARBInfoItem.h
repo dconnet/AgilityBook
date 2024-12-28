@@ -69,7 +69,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override
+	wxString GetGenericName() const override
 	{
 		return m_Name;
 	}
@@ -79,7 +79,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override;
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override;
 
 	/**
 	 * Load a items entry
@@ -94,14 +94,14 @@ public:
 		ARBCommon::ElementNodePtr const& inTree,
 		ARBCommon::ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback,
-		std::wstring const& inItemName);
+		wxString const& inItemName);
 
 	/**
 	 * Save a items entry
 	 * @param ioTree Parent element.
 	 * @param inItemName Name of collection being saved.
 	 */
-	bool Save(ARBCommon::ElementNodePtr const& ioTree, std::wstring const& inItemName) const;
+	bool Save(ARBCommon::ElementNodePtr const& ioTree, wxString const& inItemName) const;
 
 	/**
 	 * Item has data. No data will be removed in CondenseContent.
@@ -111,19 +111,19 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	std::wstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(std::wstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	std::wstring const& GetComment() const
+	wxString const& GetComment() const
 	{
 		return m_Comment;
 	}
-	void SetComment(std::wstring const& inComment)
+	void SetComment(wxString const& inComment)
 	{
 		m_Comment = inComment;
 	}
@@ -137,8 +137,8 @@ public:
 	}
 
 private:
-	std::wstring m_Name;
-	std::wstring m_Comment;
+	wxString m_Name;
+	wxString m_Comment;
 	bool m_Visible;
 };
 
@@ -156,7 +156,7 @@ public:
 	 * Construct a club/judge/location info object.
 	 * @param inItemName Name of elements to be loaded.
 	 */
-	explicit ARBInfoItemList(std::wstring const& inItemName);
+	explicit ARBInfoItemList(wxString const& inItemName);
 	ARBInfoItemList(ARBInfoItemList const& rhs);
 	ARBInfoItemList(ARBInfoItemList&& rhs);
 	~ARBInfoItemList()
@@ -165,7 +165,7 @@ public:
 	ARBInfoItemList& operator=(ARBInfoItemList const& rhs);
 	ARBInfoItemList& operator=(ARBInfoItemList&& rhs);
 
-	std::wstring const& GetItemName() const
+	wxString const& GetItemName() const
 	{
 		return m_ItemName;
 	}
@@ -200,13 +200,13 @@ public:
 	 * @param inVisibleOnly Only get the visible names.
 	 * @return Number of items in list.
 	 */
-	size_t GetAllItems(std::set<std::wstring>& outNames, bool inVisibleOnly) const;
+	size_t GetAllItems(std::set<wxString>& outNames, bool inVisibleOnly) const;
 
 	/**
 	 * Remove entries from list that are in use but have no associated comments.
 	 * @param inNamesInUse Names of items from runs.
 	 */
-	void CondenseContent(std::set<std::wstring> const& inNamesInUse);
+	void CondenseContent(std::set<wxString> const& inNamesInUse);
 
 	/**
 	 * Find a item.
@@ -214,7 +214,7 @@ public:
 	 * @param outItem Found item.
 	 * @return Whether the object was found.
 	 */
-	bool FindItem(std::wstring const& inName, ARBInfoItemPtr* outItem = nullptr) const;
+	bool FindItem(wxString const& inName, ARBInfoItemPtr* outItem = nullptr) const;
 
 	/**
 	 * Add a new item.
@@ -222,7 +222,7 @@ public:
 	 * @param outItem New object, NULL if name already exists or is empty.
 	 * @return Whether object was added.
 	 */
-	bool AddItem(std::wstring const& inItem, ARBInfoItemPtr* outItem = nullptr);
+	bool AddItem(wxString const& inItem, ARBInfoItemPtr* outItem = nullptr);
 
 	/**
 	 * Add a new item.
@@ -239,7 +239,7 @@ public:
 	bool DeleteItem(ARBInfoItemPtr const& inItem);
 
 private:
-	std::wstring m_ItemName;
+	wxString m_ItemName;
 };
 
 } // namespace ARB

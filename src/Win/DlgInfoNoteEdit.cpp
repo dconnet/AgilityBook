@@ -41,8 +41,8 @@ using namespace ARBCommon;
 using namespace ARBWin;
 
 CDlgInfoNoteEdit::CDlgInfoNoteEdit(
-	std::wstring const& inName,
-	std::wstring const& inComment,
+	wxString const& inName,
+	wxString const& inComment,
 	bool isVisible,
 	CDlgInfoNote* parent)
 	: wxDialog()
@@ -121,7 +121,7 @@ void CDlgInfoNoteEdit::OnOk(wxCommandEvent& evt)
 
 	if (m_OrigName != m_Name)
 	{
-		if (m_parent->NameExists(StringUtil::stringW(m_Name)))
+		if (m_parent->NameExists(m_Name))
 		{
 			wxMessageBox(_("IDS_NAME_IN_USE"));
 			return;

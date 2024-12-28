@@ -88,7 +88,7 @@ TEST_CASE("ConfigDivision")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	virtual std::wstring GetGenericName() const
+			//	virtual wxString GetGenericName() const
 		}
 	}
 
@@ -125,7 +125,7 @@ TEST_CASE("ConfigDivision")
 			//	bool Update(
 			//			int indent,
 			//			ARBConfigDivisionPtr inDivNew,
-			//			std::wstring& ioInfo);
+			//			wxString& ioInfo);
 		}
 	}
 }
@@ -164,8 +164,8 @@ TEST_CASE("ConfigDivisionList")
 		{
 			TODO_TEST
 			//	bool VerifyLevel(
-			//			std::wstring const& inDiv,
-			//			std::wstring const& inLevel) const;
+			//			wxString const& inDiv,
+			//			wxString const& inLevel) const;
 		}
 	}
 
@@ -176,7 +176,7 @@ TEST_CASE("ConfigDivisionList")
 		{
 			TODO_TEST
 			//	bool FindDivision(
-			//			std::wstring const& inDiv,
+			//			wxString const& inDiv,
 			//			ARBConfigDivisionPtr* outDiv = nullptr) const;
 		}
 	}
@@ -188,11 +188,11 @@ TEST_CASE("ConfigDivisionList")
 		{
 			TODO_TEST
 			//	bool AddDivision(
-			//			std::wstring const& inDiv,
+			//			wxString const& inDiv,
 			//			ARBConfigDivisionPtr* outDiv = nullptr);
 			//	bool AddDivision(ARBConfigDivisionPtr inDiv);
 			//	int DeleteDivision(
-			//			std::wstring const& inDiv,
+			//			wxString const& inDiv,
 			//			ARBConfigEventList& ioEvents);
 		}
 	}

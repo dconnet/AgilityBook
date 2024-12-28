@@ -107,9 +107,11 @@ using namespace ARBWin;
 namespace
 {
 // This is just to get the text in a sunken static control to look better
-std::wstring Pad(std::wstring const& val)
+wxString Pad(wxString const& val)
 {
-	return fmt::format(L" {} ", val);
+	wxString str;
+	str << L" " << val << L" ";
+	return str;
 }
 } // namespace
 
@@ -173,22 +175,22 @@ CDlgRunPanelScore::CDlgRunPanelScore(
 	, m_ctrlEvents(nullptr)
 	, m_ctrlSubNamesText(nullptr)
 	, m_ctrlSubNames(nullptr)
-	, m_SubName(StringUtil::stringWX(inRun->GetSubName()))
+	, m_SubName(inRun->GetSubName())
 	, m_ctrlAtHome(nullptr)
 	, m_isAtHome(inRun->IsAtHome())
 	, m_ctrlTable(nullptr)
 	, m_Table(false)
 	, m_textHeight(nullptr)
 	, m_ctrlHeight(nullptr)
-	, m_Height(StringUtil::stringWX(inRun->GetHeight()))
+	, m_Height(inRun->GetHeight())
 	, m_textJudge(nullptr)
 	, m_ctrlJudge(nullptr)
 	, m_ctrlJudgeNote(nullptr)
-	, m_Judge(StringUtil::stringWX(inRun->GetJudge()))
+	, m_Judge(inRun->GetJudge())
 	, m_ctrlHandler(nullptr)
-	, m_Handler(StringUtil::stringWX(inRun->GetHandler()))
+	, m_Handler(inRun->GetHandler())
 	, m_ctrlConditions(nullptr)
-	, m_Conditions(StringUtil::stringWX(inRun->GetConditions()))
+	, m_Conditions(inRun->GetConditions())
 	, m_ctrlDesc(nullptr)
 	, m_ctrlPartnerEdit(nullptr)
 	, m_ctrlPartner(nullptr)
@@ -251,17 +253,17 @@ CDlgRunPanelScore::CDlgRunPanelScore(
 	{
 		if (m_Judge.empty())
 		{
-			std::wstring last = CAgilityBookOptions::GetLastEnteredJudge();
+			wxString last = CAgilityBookOptions::GetLastEnteredJudge();
 			if (!last.empty())
-				m_Judge = StringUtil::stringWX(last);
+				m_Judge = last;
 		}
 	}
 
 	if (m_Handler.empty())
 	{
-		std::wstring last = CAgilityBookOptions::GetLastEnteredHandler(m_pDog);
+		wxString last = CAgilityBookOptions::GetLastEnteredHandler(m_pDog);
 		if (!last.empty())
-			m_Handler = StringUtil::stringWX(last);
+			m_Handler = last;
 	}
 
 	switch (m_Run->GetScoring().GetType())
@@ -345,7 +347,7 @@ CDlgRunPanelScore::CDlgRunPanelScore(
 			continue;
 		ARBConfigVenuePtr pVenue;
 		m_pDoc->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue);
-		items.Add(fmt::format(L"[{}] {}", pClub->GetVenue(), pClub->GetName()));
+		items.Add(wxString::Format(L"[%s] %s", pClub->GetVenue(), pClub->GetName()));
 		data.push_back(new CDlgDogVenueData(pClub, pVenue));
 		if (m_Run->GetClub() && *(m_Run->GetClub()) == *pClub)
 			idxCur = static_cast<int>(items.size()) - 1;
@@ -485,7 +487,7 @@ CDlgRunPanelScore::CDlgRunPanelScore(
 		CTrimValidator(&m_Height, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlHeight->SetHelpText(_("HIDC_RUNSCORE_HEIGHT"));
 	m_ctrlHeight->SetToolTip(_("HIDC_RUNSCORE_HEIGHT"));
-	std::set<std::wstring> names;
+	std::set<wxString> names;
 	m_pDoc->Book().GetAllHeights(names);
 	items.clear();
 	for (auto iter = names.begin(); iter != names.end(); ++iter)
@@ -1108,7 +1110,7 @@ bool CDlgRunPanelScore::Validate()
 		m_ctrlDivisions->SetFocus();
 		return false;
 	}
-	std::wstring curDiv = StringUtil::stringW(m_ctrlDivisions->GetString(index));
+	wxString curDiv = m_ctrlDivisions->GetString(index);
 
 	index = m_ctrlLevels->GetSelection();
 	if (wxNOT_FOUND == index)
@@ -1127,7 +1129,7 @@ bool CDlgRunPanelScore::Validate()
 		m_ctrlEvents->SetFocus();
 		return false;
 	}
-	std::wstring curEvent = StringUtil::stringW(m_ctrlEvents->GetString(index));
+	wxString curEvent = m_ctrlEvents->GetString(index);
 
 	ARBConfigEventPtr pEvent;
 	pVenue->GetEvents().FindEvent(curEvent, &pEvent);
@@ -1164,14 +1166,14 @@ bool CDlgRunPanelScore::Save()
 
 #if defined(_DEBUG) || defined(__WXDEBUG__)
 	index = m_ctrlDivisions->GetSelection();
-	std::wstring curDiv = StringUtil::stringW(m_ctrlDivisions->GetString(index));
+	wxString curDiv = m_ctrlDivisions->GetString(index);
 
 	index = m_ctrlLevels->GetSelection();
 	CDlgDogLevelData* pLevel = GetLevelData(index);
 	assert(pLevel);
 
 	index = m_ctrlEvents->GetSelection();
-	std::wstring curEvent = StringUtil::stringW(m_ctrlEvents->GetString(index));
+	wxString curEvent = m_ctrlEvents->GetString(index);
 
 	ARBConfigEventPtr pEvent;
 	pVenue->GetEvents().FindEvent(curEvent, &pEvent);
@@ -1181,14 +1183,14 @@ bool CDlgRunPanelScore::Save()
 
 	m_Run->SetDate(m_Date);
 	if (m_ctrlSubNames->IsShown())
-		m_Run->SetSubName(StringUtil::stringW(m_SubName));
+		m_Run->SetSubName(m_SubName);
 	if (m_ctrlHeight->IsShown())
-		m_Run->SetHeight(StringUtil::stringW(m_Height));
+		m_Run->SetHeight(m_Height);
 	if (m_ctrlJudge->IsShown())
-		m_Run->SetJudge(StringUtil::stringW(m_Judge));
+		m_Run->SetJudge(m_Judge);
 	if (m_ctrlHandler->IsShown())
-		m_Run->SetHandler(StringUtil::stringW(m_Handler));
-	m_Run->SetConditions(StringUtil::stringW(m_Conditions));
+		m_Run->SetHandler(m_Handler);
+	m_Run->SetConditions(m_Conditions);
 	if (m_ctrlInClass->IsShown())
 		m_Run->SetInClass(m_InClass);
 	if (m_ctrlDogsQd->IsShown())
@@ -1208,22 +1210,22 @@ bool CDlgRunPanelScore::Save()
 #endif
 	// End TODO
 
-	CAgilityBookOptions::SetLastEnteredDivision(m_pDog, pVenue, m_Run->GetDivision().c_str());
-	CAgilityBookOptions::SetLastEnteredLevel(m_pDog, pVenue, m_Run->GetLevel().c_str());
+	CAgilityBookOptions::SetLastEnteredDivision(m_pDog, pVenue, m_Run->GetDivision());
+	CAgilityBookOptions::SetLastEnteredLevel(m_pDog, pVenue, m_Run->GetLevel());
 	if (m_ctrlHeight->IsShown())
-		CAgilityBookOptions::SetLastEnteredHeight(m_pDog, pVenue, m_Run->GetHeight().c_str());
+		CAgilityBookOptions::SetLastEnteredHeight(m_pDog, pVenue, m_Run->GetHeight());
 	if (m_ctrlJudge->IsShown())
-		CAgilityBookOptions::SetLastEnteredJudge(m_Run->GetJudge().c_str());
+		CAgilityBookOptions::SetLastEnteredJudge(m_Run->GetJudge());
 	if (m_ctrlHandler->IsShown())
-		CAgilityBookOptions::SetLastEnteredHandler(m_pDog, m_Run->GetHandler().c_str());
+		CAgilityBookOptions::SetLastEnteredHandler(m_pDog, m_Run->GetHandler());
 
 	return true;
 }
 
 
-std::wstring CDlgRunPanelScore::GetCurrentVenueName() const
+wxString CDlgRunPanelScore::GetCurrentVenueName() const
 {
-	std::wstring venue;
+	wxString venue;
 	int index = m_ctrlVenues->GetSelection();
 	if (wxNOT_FOUND != index)
 		venue = GetVenueData(index)->m_Venue->GetName();
@@ -1259,7 +1261,7 @@ bool CDlgRunPanelScore::GetEvent(ARBConfigEventPtr* outEvent) const
 	int idxEvent = m_ctrlEvents->GetSelection();
 	if (wxNOT_FOUND == idxEvent)
 		return false;
-	std::wstring str = StringUtil::stringW(m_ctrlEvents->GetString(idxEvent));
+	wxString str = m_ctrlEvents->GetString(idxEvent);
 	if (str.empty())
 		return false;
 	ARBConfigVenuePtr pVenue = GetVenueData(idxVenue)->m_Venue;
@@ -1272,7 +1274,7 @@ bool CDlgRunPanelScore::GetScoring(ARBConfigScoringPtr* outScoring) const
 	bool bFound = false;
 	if (outScoring)
 		outScoring->reset();
-	std::wstring div, level;
+	wxString div, level;
 	int index = m_ctrlDivisions->GetSelection();
 	if (wxNOT_FOUND != index)
 	{
@@ -1306,11 +1308,11 @@ void CDlgRunPanelScore::UpdateVenue(bool bOnEventChange)
 	{
 		if (bOnEventChange || m_Height.empty())
 		{
-			std::wstring last;
+			wxString last;
 			last = CAgilityBookOptions::GetLastEnteredHeight(m_pDog, pData->m_Venue);
 			if (!last.empty())
 			{
-				m_Height = StringUtil::stringWX(last);
+				m_Height = last;
 				if (bOnEventChange)
 					m_ctrlHeight->SetLabel(m_Height);
 			}
@@ -1328,7 +1330,7 @@ void CDlgRunPanelScore::FillDivisions(bool bOnEventChange)
 		return;
 	ARBConfigVenuePtr pVenue = GetVenueData(index)->m_Venue;
 
-	std::wstring div;
+	wxString div;
 	index = m_ctrlDivisions->GetSelection();
 	if (wxNOT_FOUND != index)
 	{
@@ -1370,17 +1372,17 @@ void CDlgRunPanelScore::FillDivisions(bool bOnEventChange)
 	// First try to find 'div' (in case the divisions changed)
 	if (wxNOT_FOUND == m_ctrlDivisions->GetSelection() && !div.empty())
 	{
-		index = m_ctrlDivisions->FindString(StringUtil::stringWX(div), true);
+		index = m_ctrlDivisions->FindString(div, true);
 		if (0 <= index)
 			m_ctrlDivisions->SetSelection(index);
 	}
 	// Then try to find the last entered
 	if (wxNOT_FOUND == m_ctrlDivisions->GetSelection())
 	{
-		std::wstring last = CAgilityBookOptions::GetLastEnteredDivision(m_pDog, pVenue);
+		wxString last = CAgilityBookOptions::GetLastEnteredDivision(m_pDog, pVenue);
 		if (0 < last.length())
 		{
-			index = m_ctrlDivisions->FindString(StringUtil::stringWX(last), true);
+			index = m_ctrlDivisions->FindString(last, true);
 			if (0 <= index)
 				m_ctrlDivisions->SetSelection(index);
 		}
@@ -1393,7 +1395,7 @@ void CDlgRunPanelScore::FillDivisions(bool bOnEventChange)
 	// Force the division into the run. SetSelection will not cause an update.
 	int idxDiv = m_ctrlDivisions->GetSelection();
 	if (wxNOT_FOUND != idxDiv)
-		m_Run->SetDivision(StringUtil::stringW(m_ctrlDivisions->GetString(idxDiv)));
+		m_Run->SetDivision(m_ctrlDivisions->GetString(idxDiv));
 	FillLevels(bOnEventChange);
 }
 
@@ -1405,7 +1407,7 @@ void CDlgRunPanelScore::FillLevels(bool bOnEventChange)
 		return;
 	ARBConfigVenuePtr pVenue = GetVenueData(index)->m_Venue;
 
-	std::wstring level;
+	wxString level;
 	index = m_ctrlLevels->GetSelection();
 	if (wxNOT_FOUND != index)
 	{
@@ -1463,10 +1465,10 @@ void CDlgRunPanelScore::FillLevels(bool bOnEventChange)
 		}
 		if (wxNOT_FOUND == m_ctrlLevels->GetSelection())
 		{
-			std::wstring last = CAgilityBookOptions::GetLastEnteredLevel(m_pDog, pVenue);
+			wxString last = CAgilityBookOptions::GetLastEnteredLevel(m_pDog, pVenue);
 			if (0 < last.length())
 			{
-				int idx = m_ctrlLevels->FindString(StringUtil::stringWX(last), true);
+				int idx = m_ctrlLevels->FindString(last, true);
 				if (0 <= idx)
 					m_ctrlLevels->SetSelection(idx);
 			}
@@ -1479,7 +1481,7 @@ void CDlgRunPanelScore::FillLevels(bool bOnEventChange)
 	}
 	int idxLvl = m_ctrlLevels->GetSelection();
 	if (wxNOT_FOUND != idxLvl)
-		m_Run->SetLevel(StringUtil::stringW(m_ctrlLevels->GetString(idxLvl)));
+		m_Run->SetLevel(m_ctrlLevels->GetString(idxLvl));
 	FillEvents(bOnEventChange);
 	SetTitlePoints();
 }
@@ -1492,7 +1494,7 @@ void CDlgRunPanelScore::FillEvents(bool bOnEventChange)
 		return;
 	ARBConfigVenuePtr pVenue = GetVenueData(index)->m_Venue;
 
-	std::wstring evt;
+	wxString evt;
 	index = m_ctrlEvents->GetSelection();
 	if (wxNOT_FOUND != index)
 	{
@@ -1565,11 +1567,11 @@ void CDlgRunPanelScore::FillSubNames()
 				return;
 			ARBConfigVenuePtr pVenue = GetVenueData(index)->m_Venue;
 
-			std::set<std::wstring> names;
+			std::set<wxString> names;
 			m_pDoc->Book().GetAllEventSubNames(pVenue->GetName(), pEvent, names);
 			m_ctrlSubNames->Clear();
 			wxArrayString choices;
-			for (std::set<std::wstring>::const_iterator iter = names.begin(); iter != names.end(); ++iter)
+			for (std::set<wxString>::const_iterator iter = names.begin(); iter != names.end(); ++iter)
 			{
 				choices.Add(*iter);
 			}
@@ -1594,13 +1596,13 @@ void CDlgRunPanelScore::FillSubNames()
 
 void CDlgRunPanelScore::FillJudges()
 {
-	std::set<std::wstring> names;
+	std::set<wxString> names;
 	m_pDoc->Book().GetAllJudges(names, true, true);
 	if (!m_Run->GetJudge().empty())
 		names.insert(m_Run->GetJudge());
 	m_ctrlJudge->Clear();
 	wxArrayString choices;
-	for (std::set<std::wstring>::const_iterator iter = names.begin(); iter != names.end(); ++iter)
+	for (std::set<wxString>::const_iterator iter = names.begin(); iter != names.end(); ++iter)
 	{
 		choices.Add(*iter);
 	}
@@ -1614,14 +1616,14 @@ void CDlgRunPanelScore::SetEventDesc(ARBConfigEventPtr const& inEvent)
 {
 	wxString desc;
 	if (inEvent)
-		desc += StringUtil::stringWX(inEvent->GetDesc());
+		desc += inEvent->GetDesc();
 	ARBConfigScoringPtr pScoring;
 	if (GetScoring(&pScoring))
 	{
-		std::wstring const& note = pScoring->GetNote();
+		wxString const& note = pScoring->GetNote();
 		if (!desc.empty() && 0 < note.length())
 			desc += L"\n==========\n";
-		desc += StringUtil::stringWX(note);
+		desc += note;
 	}
 	m_ctrlDesc->ChangeValue(desc);
 }
@@ -1641,9 +1643,9 @@ void CDlgRunPanelScore::SetPartnerText()
 			{
 				if (!partners.empty())
 					partners += L", ";
-				partners += StringUtil::stringWX((*iter)->GetHandler());
+				partners += (*iter)->GetHandler();
 				partners += L"/";
-				partners += StringUtil::stringWX((*iter)->GetDog());
+				partners += (*iter)->GetDog();
 			}
 		}
 	}
@@ -1659,7 +1661,7 @@ void CDlgRunPanelScore::SetMinYPS()
 		double yps;
 		if (m_Run->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 		{
-			str = StringUtil::stringWX(ARBDouble::ToString(yps, 3));
+			str = ARBDouble::ToString(yps, 3);
 		}
 		m_ctrlMinYPSClosingTime->ChangeValue(str);
 	}
@@ -1675,7 +1677,7 @@ void CDlgRunPanelScore::SetYPS()
 		double yps;
 		if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 		{
-			str = StringUtil::stringWX(ARBDouble::ToString(yps, 3));
+			str = ARBDouble::ToString(yps, 3);
 		}
 		m_ctrlYPSOpeningPts->ChangeValue(str);
 	}
@@ -1690,7 +1692,7 @@ void CDlgRunPanelScore::SetObstacles()
 	if (m_Run->GetScoring()
 			.GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), CAgilityBookOptions::GetRunTimeInOPS(), ops, prec))
 	{
-		str = StringUtil::stringWX(ARBDouble::ToString(ops, prec));
+		str = ARBDouble::ToString(ops, prec);
 	}
 	m_ctrlObstaclesPS->ChangeValue(str);
 }
@@ -1704,7 +1706,7 @@ void CDlgRunPanelScore::SetTotalFaults()
 		ARBConfigScoringPtr pScoring;
 		GetScoring(&pScoring);
 		double faults = m_Run->GetScoring().GetCourseFaults() + m_Run->GetScoring().GetTimeFaults(pScoring);
-		total = StringUtil::stringWX(ARBDouble::ToString(faults, 3));
+		total = ARBDouble::ToString(faults, 3);
 		m_ctrlClosingPtsTotalFaults->ChangeValue(total);
 	}
 }
@@ -1720,9 +1722,9 @@ void CDlgRunPanelScore::SetTitlePoints()
 	}
 	ARB_Q q = m_ctrlQ->GetQ(index);
 
-	std::wstring strSpeed(L"0");
-	std::wstring strTitle(L"0");
-	std::wstring strScore(L"");
+	wxString strSpeed(L"0");
+	wxString strTitle(L"0");
+	wxString strScore(L"");
 	ARBConfigScoringPtr pScoring;
 	if (GetScoring(&pScoring))
 	{
@@ -1731,9 +1733,9 @@ void CDlgRunPanelScore::SetTitlePoints()
 		{
 			if (pScoring->HasSpeedPts())
 			{
-				strSpeed = fmt::format(L"{}", m_Run->GetSpeedPoints(pScoring));
+				strSpeed << m_Run->GetSpeedPoints(pScoring);
 			}
-			strTitle = fmt::format(L"{}", m_Run->GetTitlePoints(pScoring));
+			strTitle << m_Run->GetTitlePoints(pScoring);
 		}
 		if (q.ShouldComputeScore())
 			strScore = ARBDouble::ToString(m_Run->GetScore(pScoring));
@@ -1887,7 +1889,7 @@ void CDlgRunPanelScore::UpdateControls(bool bOnEventChange)
 		m_textYardsReqOpeningPts->Show(true);
 		m_ctrlYardsReqOpeningPts->SetHelpText(_("HIDC_RUNSCORE_YARDS"));
 		m_ctrlYardsReqOpeningPts->SetToolTip(_("HIDC_RUNSCORE_YARDS"));
-		m_ctrlYardsReqOpeningPts->ChangeValue(StringUtil::stringWX(ARBDouble::ToString(m_Yards)));
+		m_ctrlYardsReqOpeningPts->ChangeValue(ARBDouble::ToString(m_Yards));
 		m_ctrlYardsReqOpeningPts->Show(true);
 		m_textMinYPSClosingTime->SetLabel(_("IDC_RUNSCORE_MIN_YPS"));
 		m_textMinYPSClosingTime->Show(true);
@@ -1939,7 +1941,7 @@ void CDlgRunPanelScore::UpdateControls(bool bOnEventChange)
 		m_ctrlMinYPSClosingTime->Show(true);
 		m_ctrlMinYPSClosingTime->SetHelpText(_("HIDC_RUNSCORE_SCT2"));
 		m_ctrlMinYPSClosingTime->SetToolTip(_("HIDC_RUNSCORE_SCT2"));
-		m_ctrlMinYPSClosingTime->ChangeValue(StringUtil::stringWX(ARBDouble::ToString(m_SCT2)));
+		m_ctrlMinYPSClosingTime->ChangeValue(ARBDouble::ToString(m_SCT2));
 		SetReadOnlyFlag(m_ctrlMinYPSClosingTime, false);
 		m_ctrlClosingText->Show(true);
 		str.Printf(L"%hd", m_Closing);
@@ -2004,7 +2006,7 @@ void CDlgRunPanelScore::UpdateControls(bool bOnEventChange)
 		m_textYardsReqOpeningPts->Show(true);
 		m_ctrlYardsReqOpeningPts->SetHelpText(_("HIDC_RUNSCORE_YARDS"));
 		m_ctrlYardsReqOpeningPts->SetToolTip(_("HIDC_RUNSCORE_YARDS"));
-		m_ctrlYardsReqOpeningPts->ChangeValue(StringUtil::stringWX(ARBDouble::ToString(m_Yards)));
+		m_ctrlYardsReqOpeningPts->ChangeValue(ARBDouble::ToString(m_Yards));
 		m_ctrlYardsReqOpeningPts->Show(true);
 		m_ctrlTimeText->Show(true);
 		m_ctrlTime->Show(true);
@@ -2109,7 +2111,7 @@ void CDlgRunPanelScore::OnSelchangeDivision(wxCommandEvent& evt)
 {
 	int index = m_ctrlDivisions->GetSelection();
 	if (wxNOT_FOUND != index)
-		m_Run->SetDivision(StringUtil::stringW(m_ctrlDivisions->GetString(index)));
+		m_Run->SetDivision(m_ctrlDivisions->GetString(index));
 	FillLevels(true);
 }
 
@@ -2118,7 +2120,7 @@ void CDlgRunPanelScore::OnSelchangeLevel(wxCommandEvent& evt)
 {
 	int index = m_ctrlLevels->GetSelection();
 	if (wxNOT_FOUND != index)
-		m_Run->SetLevel(StringUtil::stringW(m_ctrlLevels->GetString(index)));
+		m_Run->SetLevel(m_ctrlLevels->GetString(index));
 	FillEvents(true);
 }
 
@@ -2127,7 +2129,7 @@ void CDlgRunPanelScore::OnSelchangeEvent(wxCommandEvent& evt)
 {
 	int index = m_ctrlEvents->GetSelection();
 	if (wxNOT_FOUND != index)
-		m_Run->SetEvent(StringUtil::stringW(m_ctrlEvents->GetString(index)));
+		m_Run->SetEvent(m_ctrlEvents->GetString(index));
 	FillSubNames();
 	UpdateControls(true);
 	ARBConfigEventPtr pEvent;
@@ -2139,10 +2141,10 @@ void CDlgRunPanelScore::OnSelchangeEvent(wxCommandEvent& evt)
 void CDlgRunPanelScore::OnJudgeNotes(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
-	CDlgInfoNote dlg(m_pDoc, ARBInfoType::Judge, StringUtil::stringW(m_Judge), this);
+	CDlgInfoNote dlg(m_pDoc, ARBInfoType::Judge, m_Judge, this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		m_Judge = StringUtil::stringWX(dlg.CurrentSelection());
+		m_Judge = dlg.CurrentSelection();
 		FillJudges();
 	}
 }
@@ -2189,7 +2191,7 @@ void CDlgRunPanelScore::OnSelchangeQ(wxCommandEvent& evt)
 void CDlgRunPanelScore::OnSCTChange(wxCommandEvent& evt)
 {
 	// See DlgCalendar.cpp on why TransferDataFromWindow is bad here!
-	StringUtil::ToDouble(StringUtil::stringW(m_ctrlSCT->GetValue()), m_SCT);
+	StringUtil::ToDouble(m_ctrlSCT->GetValue(), m_SCT);
 	m_Run->GetScoring().SetSCT(m_SCT);
 	SetMinYPS();
 	SetObstacles();
@@ -2200,7 +2202,7 @@ void CDlgRunPanelScore::OnSCTChange(wxCommandEvent& evt)
 
 void CDlgRunPanelScore::OnClosingTimeChange(wxCommandEvent& evt)
 {
-	StringUtil::ToDouble(StringUtil::stringW(m_ctrlMinYPSClosingTime->GetValue()), m_SCT2);
+	StringUtil::ToDouble(m_ctrlMinYPSClosingTime->GetValue(), m_SCT2);
 	m_Run->GetScoring().SetSCT2(m_SCT2);
 	SetObstacles();
 }
@@ -2261,7 +2263,7 @@ void CDlgRunPanelScore::OnReqClosingChange(wxCommandEvent& evt)
 
 void CDlgRunPanelScore::OnTimeChange(wxCommandEvent& evt)
 {
-	StringUtil::ToDouble(StringUtil::stringW(m_ctrlTime->GetValue()), m_Time);
+	StringUtil::ToDouble(m_ctrlTime->GetValue(), m_Time);
 	m_Run->GetScoring().SetTime(m_Time);
 	SetYPS();
 	SetObstacles();
@@ -2313,7 +2315,7 @@ void CDlgRunPanelScore::OnInClassChange(wxCommandEvent& evt)
 
 void CDlgRunPanelScore::OnBonusChange(wxCommandEvent& evt)
 {
-	StringUtil::ToDouble(StringUtil::stringW(m_ctrlBonusTitlePts->GetValue()), m_BonusTitlePts);
+	StringUtil::ToDouble(m_ctrlBonusTitlePts->GetValue(), m_BonusTitlePts);
 	m_Run->GetScoring().SetBonusTitlePts(m_BonusTitlePts);
 	SetTitlePoints();
 }

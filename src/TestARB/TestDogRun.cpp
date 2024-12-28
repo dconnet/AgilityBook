@@ -86,7 +86,7 @@ TEST_CASE("DogRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	virtual std::wstring GetGenericName() const;
+			//	virtual wxString GetGenericName() const;
 		}
 	}
 
@@ -121,7 +121,7 @@ TEST_CASE("DogRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	int NumOtherPointsInUse(std::wstring const& inOther) const;
+			//	int NumOtherPointsInUse(wxString const& inOther) const;
 		}
 	}
 
@@ -132,8 +132,8 @@ TEST_CASE("DogRun")
 		{
 			TODO_TEST
 			//	int RenameOtherPoints(
-			//			std::wstring const& inOldName,
-			//			std::wstring const& inNewName);
+			//			wxString const& inOldName,
+			//			wxString const& inNewName);
 		}
 	}
 
@@ -143,7 +143,7 @@ TEST_CASE("DogRun")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	int DeleteOtherPoints(std::wstring const& inName);
+			//	int DeleteOtherPoints(wxString const& inName);
 		}
 	}
 
@@ -181,9 +181,9 @@ TEST_CASE("DogRun")
 			config.Default(&handler);
 
 			ARBDate date(2014, 8, 31);
-			std::wstring venue(L"NADAC");
-			std::wstring division(L"Std Skilled");
-			std::wstring level(L"Intro");
+			wxString venue(L"NADAC");
+			wxString division(L"Std Skilled");
+			wxString level(L"Intro");
 
 			ARBConfigVenuePtr pVenue;
 			REQUIRE(config.GetVenues().FindVenue(venue, &pVenue));
@@ -196,16 +196,16 @@ TEST_CASE("DogRun")
 
 			const struct RealUserData
 			{
-				std::wstring event;
-				std::wstring courseFaults;
-				std::wstring sct;
-				std::wstring time;
-				std::wstring yards;
-				std::wstring bonus;
-				std::wstring place;
-				std::wstring q;
-				std::wstring scorepts;
-				std::wstring titlepts;
+				wxString event;
+				wxString courseFaults;
+				wxString sct;
+				wxString time;
+				wxString yards;
+				wxString bonus;
+				wxString place;
+				wxString q;
+				wxString scorepts;
+				wxString titlepts;
 				double computedpts;
 			} runs[] = {
 				// Extreme Chances is T+F, 0 title points, so all is done with bonus
@@ -248,7 +248,7 @@ TEST_CASE("DogRun")
 				pPlace->AddAttrib(L"titlePts", runs[n].titlepts);
 
 				ARBDogRunPtr pRun = ARBDogRun::New();
-				fmt::wmemory_buffer errMsg;
+				wxString errMsg;
 				ARBErrorCallback err(errMsg);
 				REQUIRE(pRun->Load(config, clubs, pData, ARBVersion(14, 5), err));
 
@@ -291,14 +291,14 @@ TEST_CASE("DogRun")
 
 			static const struct
 			{
-				std::wstring venue;
-				std::wstring division;
-				std::wstring level;
-				std::wstring evt;
+				wxString venue;
+				wxString division;
+				wxString level;
+				wxString evt;
 				double yards;
 				double time;
-				std::wstring yps;
-				std::wstring mph;
+				wxString yps;
+				wxString mph;
 			} tests[] = {
 				{L"FCAT", L"FCAT", L"FCAT", L"FCAT", 100.0, 7.96, L"12.56", L"25.70"},
 				{L"SW", L"Standard", L"Standard", L"Drag Race 100", 100.0, 20.2, L"4.95", L"10.13"},

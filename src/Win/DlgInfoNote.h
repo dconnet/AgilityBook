@@ -54,7 +54,7 @@ public:
 		, m_usage(Usage::NotInUse)
 	{
 	}
-	NameInfo(std::wstring const& inName)
+	NameInfo(wxString const& inName)
 		: m_name(inName)
 		, m_usage(Usage::NotInUse)
 	{
@@ -100,7 +100,7 @@ public:
 		return !operator==(rhs);
 	}
 
-	std::wstring m_name;
+	wxString m_name;
 	Usage m_usage;
 };
 
@@ -111,30 +111,26 @@ class CDlgInfoNote : public wxDialog
 	friend class InfoNoteListData;
 
 public:
-	CDlgInfoNote(
-		CAgilityBookDoc* pDoc,
-		ARB::ARBInfoType inType,
-		std::wstring const& inSelect,
-		wxWindow* pParent = nullptr);
+	CDlgInfoNote(CAgilityBookDoc* pDoc, ARB::ARBInfoType inType, wxString const& inSelect, wxWindow* pParent = nullptr);
 
 	wxString GetCaption() const;
-	std::wstring CurrentSelection() const;
+	wxString CurrentSelection() const;
 
-	bool NameExists(std::wstring const& name);
+	bool NameExists(wxString const& name);
 	enum class UpdateStatus
 	{
 		Exists,
 		Added,
 		ReAdded,
 	};
-	size_t AddName(std::wstring const& name, UpdateStatus& status);
+	size_t AddName(wxString const& name, UpdateStatus& status);
 	bool DeleteName(size_t idxName);
 
 	size_t GetAddedCount() const
 	{
 		return m_nAdded;
 	}
-	ARB::ARBInfoItemPtr FindName(std::wstring const& name) const;
+	ARB::ARBInfoItemPtr FindName(wxString const& name) const;
 
 	std::vector<NameInfo> const& GetNames() const
 	{
@@ -144,7 +140,7 @@ public:
 private:
 	InfoNoteListDataPtr GetData(long index) const;
 	bool IsItemVisible(size_t idxName) const;
-	void LoadItems(std::wstring const* inSelect = nullptr);
+	void LoadItems(wxString const* inSelect = nullptr);
 	void UpdateText();
 	bool UpdateItem(long index, size_t idxName);
 	void UpdateControls();
@@ -153,12 +149,12 @@ private:
 
 	CAgilityBookDoc* m_pDoc;
 	ARB::ARBInfoType m_type;
-	std::set<std::wstring> m_NamesInUse;
+	std::set<wxString> m_NamesInUse;
 	ARB::ARBInfoItemList const& m_InfoOrig;
 	ARB::ARBInfoItemList m_Info;
 	std::vector<NameInfo> m_Names;
 	size_t m_nAdded;
-	std::wstring m_CurSel;
+	wxString m_CurSel;
 	enum class ViewVis
 	{
 		All,

@@ -105,7 +105,7 @@ private:
 	void clear();
 	ARBWin::CReadHttp::ReturnCode ReadVersionFile(bool bVerbose, OnReadComplete callback = nullptr);
 	bool ReadVersionFile(std::string const& data, bool bVerbose);
-	bool CheckProgram(CAgilityBookDoc* pDoc, std::wstring const& lang, bool& outDownloadStarted, bool& canInstall);
+	bool CheckProgram(CAgilityBookDoc* pDoc, wxString const& lang, bool& outDownloadStarted, bool& canInstall);
 	void CheckConfig(CAgilityBookDoc* pDoc, bool bVerbose);
 	bool CheckConfig(CAgilityBookDoc* pDoc, wxString url, std::string const& strConfig, bool bVerbose);
 	bool DownloadFile(wxString const& filename);
@@ -115,12 +115,12 @@ private:
 
 	ARBCommon::CVersionNum m_VersionNum;
 	long m_size;
-	std::wstring m_hash;
+	wxString m_hash;
 	ARBCommon::ARBMsgDigest::ARBDigest m_hashType;
-	std::wstring m_SourceFile;
+	wxString m_SourceFile;
 	short m_VerConfig;
-	std::wstring m_ConfigFileName;
-	std::wstring m_UpdateDownload;
+	wxString m_ConfigFileName;
+	wxString m_UpdateDownload;
 };
 
 } // namespace dconSoft

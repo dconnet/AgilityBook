@@ -32,7 +32,7 @@ class CDlgInfoNote;
 class CDlgInfoNoteEdit : public wxDialog
 {
 public:
-	CDlgInfoNoteEdit(std::wstring const& inName, std::wstring const& inComment, bool isVisible, CDlgInfoNote* parent);
+	CDlgInfoNoteEdit(wxString const& inName, wxString const& inComment, bool isVisible, CDlgInfoNote* parent);
 
 	wxString const& Name() const
 	{
@@ -49,7 +49,7 @@ public:
 
 private:
 	CDlgInfoNote* m_parent;
-	std::wstring m_OrigName;
+	wxString m_OrigName;
 	wxString m_Name;
 	wxString m_Comment;
 	bool m_isVisible;

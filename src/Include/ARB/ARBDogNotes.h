@@ -32,7 +32,7 @@ namespace dconSoft
 namespace ARB
 {
 
-typedef std::vector<std::wstring> ARBDogFaultList;
+typedef std::vector<wxString> ARBDogFaultList;
 
 
 class ARBMetaData;
@@ -83,7 +83,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const;
 
 	/**
 	 * Load an existing point.
@@ -119,11 +119,11 @@ public:
 	{
 		return m_Faults;
 	}
-	std::wstring const& GetCRCD() const
+	wxString const& GetCRCD() const
 	{
 		return m_CRCD;
 	}
-	void SetCRCD(std::wstring const& inCRCD)
+	void SetCRCD(wxString const& inCRCD)
 	{
 		m_CRCD = inCRCD;
 	}
@@ -133,20 +133,20 @@ public:
 	}
 	ARBMetaDataPtr GetCRCDMetaData() const;
 	void SetCRCDMetaData(std::vector<unsigned char> const& inCRCDMeta);
-	std::wstring const& GetNote() const
+	wxString const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(std::wstring const& inNote)
+	void SetNote(wxString const& inNote)
 	{
 		m_Note = inNote;
 	}
 
 private:
 	ARBDogFaultList m_Faults;
-	std::wstring m_CRCD;
+	wxString m_CRCD;
 	std::string m_CRCDMeta;
-	std::wstring m_Note;
+	wxString m_Note;
 };
 
 } // namespace ARB

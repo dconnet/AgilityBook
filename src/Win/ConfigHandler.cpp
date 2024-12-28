@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2013-01-30 Moved zip code into LibArchive.
  * 2012-03-16 Renamed LoadXML functions, added stream version.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -25,6 +24,7 @@
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ResourceManager.h"
+#include <sstream>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -50,7 +50,7 @@ CConfigHandler::~CConfigHandler()
 ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 {
 	bool bOk = false;
-	fmt::wmemory_buffer errMsg;
+	wxString errMsg;
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
 

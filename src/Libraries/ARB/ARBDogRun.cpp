@@ -272,9 +272,9 @@ bool ARBDogRun::operator==(ARBDogRun const& rhs) const
 }
 
 
-std::wstring ARBDogRun::GetName() const
+wxString ARBDogRun::GetName() const
 {
-	std::wstring name = m_Division + L" " + m_Level + L" " + m_Event;
+	wxString name = m_Division + L" " + m_Level + L" " + m_Event;
 	if (0 < m_SubName.length())
 	{
 		name += L" " + m_SubName;
@@ -283,9 +283,9 @@ std::wstring ARBDogRun::GetName() const
 }
 
 
-std::wstring ARBDogRun::GetGenericName() const
+wxString ARBDogRun::GetGenericName() const
 {
-	std::wstring name = m_Date.GetString(ARBDateFormat::DashYMD) + L" ";
+	wxString name = m_Date.GetString(ARBDateFormat::DashYMD) + L" ";
 	if (0 < m_SubName.length())
 		name = m_Division + L" " + m_Level + L" " + m_SubName;
 	else
@@ -294,7 +294,7 @@ std::wstring ARBDogRun::GetGenericName() const
 }
 
 
-size_t ARBDogRun::GetSearchStrings(std::set<std::wstring>& ioStrings) const
+size_t ARBDogRun::GetSearchStrings(std::set<wxString>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -386,11 +386,11 @@ bool ARBDogRun::Load(
 		return false;
 	case ARBAttribLookup::Invalid:
 	{
-		std::wstring attrib;
+		wxString attrib;
 		inTree->GetAttrib(ATTRIB_RUN_DATE, attrib);
-		std::wstring msg(Localization()->InvalidDate());
+		wxString msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_DATE, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_DATE, msg));
 		return false;
 	}
 	}
@@ -456,7 +456,7 @@ bool ARBDogRun::Load(
 		ElementNodePtr element = inTree->GetElementNode(i);
 		if (!element)
 			continue;
-		std::wstring const& name = element->GetName();
+		wxString const& name = element->GetName();
 		if (name == TREE_CONDITIONS)
 		{
 			m_Conditions = element->GetValue();
@@ -485,7 +485,7 @@ bool ARBDogRun::Load(
 		{
 			// If we have a placement element, ignore any missing errors.
 			// When we save, we save if place>0 OR attribQ.
-			std::wstring attrib;
+			wxString attrib;
 			if (ARBAttribLookup::Found == element->GetAttrib(ATTRIB_PLACEMENT_Q, attrib) || 0 == attrib.length())
 			{
 				m_Q.Load(attrib, inVersion, ioCallback);
@@ -627,7 +627,7 @@ bool ARBDogRun::Save(ElementNodePtr const& ioTree, ARBDogTrial const* pTrial, AR
 }
 
 
-int ARBDogRun::NumOtherPointsInUse(std::wstring const& inOther) const
+int ARBDogRun::NumOtherPointsInUse(wxString const& inOther) const
 {
 	int count = 0;
 	for (ARBDogRunOtherPointsList::const_iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end(); ++iter)
@@ -639,7 +639,7 @@ int ARBDogRun::NumOtherPointsInUse(std::wstring const& inOther) const
 }
 
 
-int ARBDogRun::RenameOtherPoints(std::wstring const& inOldName, std::wstring const& inNewName)
+int ARBDogRun::RenameOtherPoints(wxString const& inOldName, wxString const& inNewName)
 {
 	int count = 0;
 	for (ARBDogRunOtherPointsList::iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end(); ++iter)
@@ -654,9 +654,9 @@ int ARBDogRun::RenameOtherPoints(std::wstring const& inOldName, std::wstring con
 }
 
 
-int ARBDogRun::DeleteOtherPoints(std::wstring const& inName)
+int ARBDogRun::DeleteOtherPoints(wxString const& inName)
 {
-	std::wstring name(inName);
+	wxString name(inName);
 	int count = 0;
 	for (ARBDogRunOtherPointsList::iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end();)
 	{
@@ -874,7 +874,7 @@ double ARBDogRun::GetTitlePoints(ARBConfigScoringPtr const& inScoring, bool* out
 }
 
 
-double ARBDogRun::GetLifetimePoints(ARBConfigScoringPtr const& inScoring, std::wstring const& inLifetimeName) const
+double ARBDogRun::GetLifetimePoints(ARBConfigScoringPtr const& inScoring, wxString const& inLifetimeName) const
 {
 	double pts = 0.0;
 	double bonusTitlePts = inScoring->HasBonusTitlePts() ? m_Scoring.GetBonusTitlePts() : 0.0;
@@ -1058,7 +1058,7 @@ void ARBDogRun::AddMultiQ(ARBConfigMultiQPtr const& inMultiQ)
 }
 
 
-size_t ARBDogRun::GetLinks(std::set<std::wstring>& outLinks) const
+size_t ARBDogRun::GetLinks(std::set<wxString>& outLinks) const
 {
 	outLinks.clear();
 	outLinks = m_Links;
@@ -1066,19 +1066,19 @@ size_t ARBDogRun::GetLinks(std::set<std::wstring>& outLinks) const
 }
 
 
-bool ARBDogRun::HasLink(std::wstring const& inLink) const
+bool ARBDogRun::HasLink(wxString const& inLink) const
 {
 	return m_Links.find(inLink) != m_Links.end();
 }
 
 
-void ARBDogRun::AddLink(std::wstring const& inLink)
+void ARBDogRun::AddLink(wxString const& inLink)
 {
 	m_Links.insert(inLink);
 }
 
 
-void ARBDogRun::RemoveLink(std::wstring const& inLink)
+void ARBDogRun::RemoveLink(wxString const& inLink)
 {
 	ARBDogRunLinks::iterator iter = m_Links.find(inLink);
 	if (iter != m_Links.end())

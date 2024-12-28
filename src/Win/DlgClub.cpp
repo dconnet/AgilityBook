@@ -86,13 +86,13 @@ CDlgClub::CDlgClub(
 
 	if (m_pClub)
 	{
-		m_Club = StringUtil::stringWX(m_pClub->GetName());
-		m_Venue = StringUtil::stringWX(m_pClub->GetVenue());
+		m_Club = m_pClub->GetName();
+		m_Venue = m_pClub->GetVenue();
 	}
 	bool bEditingCosanction = false;
 	bool bEnableCosanction = true;
 	ARBDogClubPtr pPrimary;
-	std::set<std::wstring> clubnames;
+	std::set<wxString> clubnames;
 	for (ARBDogClubList::const_iterator iClub = inClubs.begin(); iClub != inClubs.end(); ++iClub)
 	{
 		if ((*iClub)->GetPrimaryClub())
@@ -119,9 +119,9 @@ CDlgClub::CDlgClub(
 		bEnableCosanction = false;
 
 	wxArrayString clubs;
-	for (std::set<std::wstring>::const_iterator iter = clubnames.begin(); iter != clubnames.end(); ++iter)
+	for (std::set<wxString>::const_iterator iter = clubnames.begin(); iter != clubnames.end(); ++iter)
 	{
-		clubs.Add(StringUtil::stringWX(*iter));
+		clubs.Add(*iter);
 	}
 	clubs.Sort();
 
@@ -192,7 +192,7 @@ CDlgClub::CDlgClub(
 				continue;
 			if (m_pClub && *m_pClub == *item)
 				continue;
-			items.Add(fmt::format(L"[{}] {}", item->GetVenue(), item->GetName()));
+			items.Add(wxString::Format(L"[%s] %s", item->GetVenue(), item->GetName()));
 			data.push_back(new CDlgClubData(item));
 			if (m_pClub->GetPrimaryClub() && m_pClub->GetPrimaryClub()->GetVenue() == item->GetVenue())
 				idxCur = static_cast<int>(items.size()) - 1;
@@ -249,7 +249,7 @@ CDlgClub::CDlgClub(
 ARBDogClubPtr CDlgClub::AddClub(ARBDogClubList& clubs) const
 {
 	ARBDogClubPtr club;
-	if (clubs.AddClub(StringUtil::stringW(m_Club), StringUtil::stringW(m_Venue), &club))
+	if (clubs.AddClub(m_Club, m_Venue, &club))
 		SetPrimaryClub(club);
 	else
 		club.reset();
@@ -313,8 +313,8 @@ void CDlgClub::OnOk(wxCommandEvent& evt)
 
 	if (m_pClub)
 	{
-		m_pClub->SetName(StringUtil::stringW(m_Club));
-		m_pClub->SetVenue(StringUtil::stringW(m_Venue));
+		m_pClub->SetName(m_Club);
+		m_pClub->SetVenue(m_Venue);
 		SetPrimaryClub(m_pClub);
 	}
 	EndDialog(wxID_OK);

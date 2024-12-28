@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2008-01-18 Created empty file
@@ -41,10 +40,10 @@ public:
 	ActionCallbackStop()
 	{
 	}
-	void PreDelete(std::wstring const& inMsg) override
+	void PreDelete(wxString const& inMsg) override
 	{
 	}
-	void PostDelete(std::wstring const& inMsg) const override
+	void PostDelete(wxString const& inMsg) const override
 	{
 	}
 	bool CanContinue() const override
@@ -60,10 +59,10 @@ public:
 	ActionCallbackContinue()
 	{
 	}
-	void PreDelete(std::wstring const& inMsg) override
+	void PreDelete(wxString const& inMsg) override
 	{
 	}
-	void PostDelete(std::wstring const& inMsg) const override
+	void PostDelete(wxString const& inMsg) const override
 	{
 	}
 	bool CanContinue() const override
@@ -105,7 +104,7 @@ TEST_CASE("ConfigAction")
 			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
-			//		std::wstring& ioInfo,
+			//		wxString& ioInfo,
 			//		IConfigActionCallback& ioCallBack) const;
 		}
 	}
@@ -141,7 +140,7 @@ TEST_CASE("ConfigAction")
 			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
-			//		std::wstring& ioInfo,
+			//		wxString& ioInfo,
 			//		IConfigActionCallback& ioCallBack) const;
 		}
 	}
@@ -177,7 +176,7 @@ TEST_CASE("ConfigAction")
 			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
-			//		std::wstring& ioInfo,
+			//		wxString& ioInfo,
 			//		IConfigActionCallback& ioCallBack) const;
 		}
 	}
@@ -213,7 +212,7 @@ TEST_CASE("ConfigAction")
 			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
-			//		std::wstring& ioInfo,
+			//		wxString& ioInfo,
 			//		IConfigActionCallback& ioCallBack) const;
 		}
 	}
@@ -249,7 +248,7 @@ TEST_CASE("ConfigAction")
 			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
-			//		std::wstring& ioInfo,
+			//		wxString& ioInfo,
 			//		IConfigActionCallback& ioCallBack) const;
 		}
 	}
@@ -285,7 +284,7 @@ TEST_CASE("ConfigAction")
 			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
-			//		std::wstring& ioInfo,
+			//		wxString& ioInfo,
 			//		IConfigActionCallback& ioCallBack) const;
 		}
 	}
@@ -321,7 +320,7 @@ TEST_CASE("ConfigAction")
 			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
-			//		std::wstring& ioInfo,
+			//		wxString& ioInfo,
 			//		IConfigActionCallback& ioCallBack) const;
 		}
 	}
@@ -357,7 +356,7 @@ TEST_CASE("ConfigAction")
 			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
-			//		std::wstring& ioInfo,
+			//		wxString& ioInfo,
 			//		IConfigActionCallback& ioCallBack) const;
 		}
 	}
@@ -400,7 +399,7 @@ TEST_CASE("ConfigAction")
 			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
-			//		std::wstring& ioInfo,
+			//		wxString& ioInfo,
 			//		IConfigActionCallback& ioCallBack) const;
 		}
 	}
@@ -443,7 +442,7 @@ TEST_CASE("ConfigAction")
 			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
-			//		std::wstring& ioInfo,
+			//		wxString& ioInfo,
 			//		IConfigActionCallback& ioCallBack) const;
 		}
 	}
@@ -479,7 +478,7 @@ TEST_CASE("ConfigAction")
 			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
-			//		std::wstring& ioInfo,
+			//		wxString& ioInfo,
 			//		IConfigActionCallback& ioCallBack) const;
 		}
 	}
@@ -515,7 +514,7 @@ TEST_CASE("ConfigAction")
 			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
-			//		std::wstring& ioInfo,
+			//		wxString& ioInfo,
 			//		IConfigActionCallback& ioCallBack) const;
 		}
 	}
@@ -551,7 +550,7 @@ TEST_CASE("ConfigAction")
 			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
-			//		std::wstring& ioInfo,
+			//		wxString& ioInfo,
 			//		IConfigActionCallback& ioCallBack) const;
 		}
 	}
@@ -587,7 +586,7 @@ TEST_CASE("ConfigAction")
 			// virtual bool Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
-			//		std::wstring& ioInfo,
+			//		wxString& ioInfo,
 			//		IConfigActionCallback& ioCallBack) const;
 		}
 	}
@@ -599,7 +598,7 @@ TEST_CASE("ConfigAction")
 		{
 			ElementNodePtr actions = CreateActionList();
 			ARBConfigActionList lst;
-			fmt::wmemory_buffer err;
+			wxString err;
 			ARBErrorCallback callback(err);
 			for (int i = 0; i < actions->GetElementCount(); ++i)
 			{
@@ -619,7 +618,7 @@ TEST_CASE("ConfigAction")
 			// int Apply(
 			//		ARBConfig& ioConfig,
 			//		ARBDogList* ioDogs,
-			//		std::wstring& ioInfo,
+			//		wxString& ioInfo,
 			//		IConfigActionCallback& ioCallBack) const;
 		}
 	}

@@ -32,7 +32,7 @@ public:
 		ARB::ARBConfigOtherPointsPtr const& inOther,
 		wxWindow* pParent = nullptr);
 
-	bool IsNameOkay(std::wstring const& name) const;
+	bool IsNameOkay(wxString const& name) const;
 
 private:
 	ARB::ARBConfig& m_Config;

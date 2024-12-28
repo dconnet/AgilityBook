@@ -17,7 +17,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/AgilityBookLibs/Include -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/AgilityBookLibs/3rdParty/LibFmt/include
+INCLUDES += -I$(TOPSRCDIR)/AgilityBookLibs/Include -I$(TOPSRCDIR)/src/Include
 
 ##########
 # List of programs and archives to link

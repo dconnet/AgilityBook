@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2015-11-01 Added ARBVersion to Default().
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
@@ -149,7 +148,7 @@ bool ARBConfig::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, 
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
 			TREE_CONFIG,
 			ATTRIB_CONFIG_UPDATE,
-			Localization()->ValidValuesBool().c_str()));
+			Localization()->ValidValuesBool()));
 		return false;
 	}
 	inTree->GetAttrib(ATTRIB_CONFIG_VERSION, m_Version);
@@ -158,7 +157,7 @@ bool ARBConfig::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, 
 		ElementNodePtr element = inTree->GetElementNode(i);
 		if (!element)
 			continue;
-		std::wstring const& name = element->GetName();
+		wxString const& name = element->GetName();
 		if (name == TREE_ACTION)
 		{
 			// Ignore any errors...
@@ -235,7 +234,7 @@ void ARBConfig::Default(IARBConfigHandler const* inHandler, ARBVersion* pVersion
 			int config = tree->FindElement(TREE_CONFIG);
 			if (0 <= config)
 			{
-				fmt::wmemory_buffer errMsg;
+				wxString errMsg;
 				ARBErrorCallback err(errMsg);
 				Load(tree->GetElementNode(config), version, err);
 			}
@@ -253,12 +252,12 @@ std::string ARBConfig::GetDTD(IARBConfigHandler const* inHandler)
 }
 
 
-std::wstring ARBConfig::GetTitleNiceName(std::wstring const& inVenue, std::wstring const& inTitle) const
+wxString ARBConfig::GetTitleNiceName(wxString const& inVenue, wxString const& inTitle) const
 {
 	ARBConfigTitlePtr pTitle;
 	if (m_Venues.FindTitle(inVenue, inTitle, &pTitle))
 	{
-		std::wstring name = pTitle->GetNiceName();
+		wxString name = pTitle->GetNiceName();
 		return name;
 	}
 	else
@@ -266,10 +265,10 @@ std::wstring ARBConfig::GetTitleNiceName(std::wstring const& inVenue, std::wstri
 }
 
 
-std::wstring ARBConfig::GetTitleCompleteName(ARBDogTitlePtr const& inTitle, bool bAbbrevFirst) const
+wxString ARBConfig::GetTitleCompleteName(ARBDogTitlePtr const& inTitle, bool bAbbrevFirst) const
 {
 	if (!inTitle)
-		return std::wstring();
+		return wxString();
 	ARBConfigTitlePtr pTitle;
 	if (m_Venues.FindTitle(inTitle->GetVenue(), inTitle->GetRawName(), &pTitle))
 		return pTitle->GetCompleteName(inTitle->GetInstance(), bAbbrevFirst);
@@ -278,7 +277,7 @@ std::wstring ARBConfig::GetTitleCompleteName(ARBDogTitlePtr const& inTitle, bool
 }
 
 
-bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, fmt::wmemory_buffer& ioInfo)
+bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, wxString& ioInfo)
 {
 	int nChanges = 0; // A simple count of changes that have occurred.
 
@@ -303,7 +302,7 @@ bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, fmt::wmemory_bu
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		fmt::format_to(std::back_inserter(ioInfo), L"{}\n", Localization()->UpdateFaults(nNew, nSkipped));
+		ioInfo << Localization()->UpdateFaults(nNew, nSkipped) << L"\n";
 	}
 
 	// Update OtherPoints.
@@ -338,7 +337,7 @@ bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, fmt::wmemory_bu
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		fmt::format_to(std::back_inserter(ioInfo), L"{}\n", Localization()->UpdateOtherPts(nNew, nUpdated, nSkipped));
+		ioInfo << Localization()->UpdateOtherPts(nNew, nUpdated, nSkipped) << L"\n";
 	}
 
 	// Update Venues.
@@ -346,7 +345,7 @@ bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, fmt::wmemory_bu
 	nNew = 0;
 	nUpdated = 0;
 	nSkipped = 0;
-	std::wstring venueInfo;
+	wxString venueInfo;
 	for (ARBConfigVenueList::const_iterator iterVenue = inConfigNew.GetVenues().begin();
 		 iterVenue != inConfigNew.GetVenues().end();
 		 ++iterVenue)
@@ -377,11 +376,11 @@ bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, fmt::wmemory_bu
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		fmt::format_to(std::back_inserter(ioInfo), L"{}\n", Localization()->UpdateVenues(nNew, nUpdated, nSkipped));
+		ioInfo << Localization()->UpdateVenues(nNew, nUpdated, nSkipped) << L"\n";
 	}
 	if (0 < venueInfo.length())
 	{
-		fmt::format_to(std::back_inserter(ioInfo), L"{}", venueInfo);
+		ioInfo << venueInfo;
 	}
 	// Even if there are no changes, update the version number so we don't
 	// prompt anymore.

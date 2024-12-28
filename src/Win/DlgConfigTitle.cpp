@@ -83,10 +83,10 @@ bool CMultipleValidator::Validate(wxWindow* parent)
 CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pParent)
 	: wxDialog()
 	, m_Title(inTitle)
-	, m_Name(StringUtil::stringWX(inTitle->GetName()))
+	, m_Name(inTitle->GetName())
 	, m_Prefix(inTitle->GetPrefix())
-	, m_LongName(StringUtil::stringWX(inTitle->GetLongName()))
-	, m_Desc(StringUtil::stringWX(inTitle->GetDescription()))
+	, m_LongName(inTitle->GetLongName())
+	, m_Desc(inTitle->GetDescription())
 	, m_AllowMany(inTitle->IsRecurring())
 	, m_MultipleStartAt(inTitle->GetMultipleStartAt())
 	, m_MultipleInc(inTitle->GetMultipleIncrement())
@@ -465,9 +465,9 @@ void CDlgConfigTitle::OnOk(wxCommandEvent& evt)
 	}
 
 	m_Title->clear();
-	m_Title->SetName(StringUtil::stringW(m_Name));
-	m_Title->SetLongName(StringUtil::stringW(m_LongName));
-	m_Title->SetDescription(StringUtil::stringW(m_Desc));
+	m_Title->SetName(m_Name);
+	m_Title->SetLongName(m_LongName);
+	m_Title->SetDescription(m_Desc);
 	m_Title->SetPrefix(m_Prefix);
 	m_Title->SetMultipleStartAt(m_MultipleStartAt);
 	if (0 < m_MultipleStartAt)

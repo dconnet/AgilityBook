@@ -8,9 +8,6 @@
       location = "group:../../../AgilityBookLibs/Projects/xcode10/LibTidyHtml/LibTidyHtml.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../../../AgilityBookLibs/Projects/xcode10/LibFmt/LibFmt.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:../../../AgilityBookLibs/Projects/xcode10/LibARBWin/LibARBWin.xcodeproj">
    </FileRef>
    <FileRef

@@ -56,7 +56,7 @@ public:
 private:
 	void UpdateLinksButtons();
 	void ListLinkFiles(wchar_t const* pItem);
-	int GetImageIndex(std::wstring const& inLink);
+	int GetImageIndex(wxString const& inLink);
 	void EditLink();
 
 	ARBWin::CListCtrl* m_ctrlLinks;

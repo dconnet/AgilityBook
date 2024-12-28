@@ -25,7 +25,6 @@
  * 2019-09-17 File version 15.1
  * 2019-08-31 File version 15.0
  * 2019-08-18 File version 14.6
- * 2018-12-16 Convert to fmt.
  * 2017-12-31 File version 14.5
  * 2016-01-06 File version 14.4
  * 2015-11-27 Fix Qs on runs when titling points are removed from config.
@@ -183,7 +182,7 @@ bool ARBAgilityRecordBook::Load(
 		return false;
 	}
 
-	m_FileInfo.insert(m_FileInfo.end(), static_cast<size_t>(ARBFileInfo::Max), std::wstring());
+	m_FileInfo.insert(m_FileInfo.end(), static_cast<size_t>(ARBFileInfo::Max), wxString());
 	inTree->GetAttrib(ATTRIB_BOOK_VERSION, m_FileInfo[static_cast<size_t>(ARBFileInfo::Book)]);
 	inTree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, m_FileInfo[static_cast<size_t>(ARBFileInfo::Version)]);
 	inTree->GetAttrib(ATTRIB_BOOK_PGM_PLATFORM, m_FileInfo[static_cast<size_t>(ARBFileInfo::Platform)]);
@@ -209,7 +208,7 @@ bool ARBAgilityRecordBook::Load(
 			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
 				TREE_BOOK,
 				ATTRIB_BOOK_VERSION,
-				Localization()->UnknownVersion().c_str()));
+				Localization()->UnknownVersion()));
 			return false;
 		}
 	}
@@ -323,7 +322,7 @@ bool ARBAgilityRecordBook::Load(
 }
 
 
-static std::wstring GetTimeStamp()
+static wxString GetTimeStamp()
 {
 	time_t t;
 	time(&t);
@@ -340,13 +339,13 @@ static std::wstring GetTimeStamp()
 	{
 		szBuffer[0] = '\0';
 	}
-	return std::wstring(szBuffer);
+	return wxString(szBuffer);
 }
 
 
 bool ARBAgilityRecordBook::Save(
 	ElementNodePtr const& outTree,
-	std::wstring const& inPgmVer,
+	wxString const& inPgmVer,
 	bool inCalendar,
 	bool inTraining,
 	bool inConfig,
@@ -363,7 +362,7 @@ bool ARBAgilityRecordBook::Save(
 	outTree->AddAttrib(ATTRIB_BOOK_PGM_VERSION, inPgmVer);
 	outTree->AddAttrib(ATTRIB_BOOK_PGM_PLATFORM, GetARBArch());
 #if defined(__WXWINDOWS__)
-	outTree->AddAttrib(ATTRIB_BOOK_PGM_OS, StringUtil::stringW(::wxGetOsDescription()));
+	outTree->AddAttrib(ATTRIB_BOOK_PGM_OS, ::wxGetOsDescription());
 #else
 	outTree->AddAttrib(ATTRIB_BOOK_PGM_OS, L"TODO");
 #endif
@@ -371,7 +370,7 @@ bool ARBAgilityRecordBook::Save(
 
 	// Refresh cached "write-only" file info
 	if (m_FileInfo.empty()) // A new file didn't initialize this
-		m_FileInfo.insert(m_FileInfo.end(), static_cast<size_t>(ARBFileInfo::Max), std::wstring());
+		m_FileInfo.insert(m_FileInfo.end(), static_cast<size_t>(ARBFileInfo::Max), wxString());
 	outTree->GetAttrib(ATTRIB_BOOK_VERSION, m_FileInfo[static_cast<size_t>(ARBFileInfo::Book)]);
 	outTree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, m_FileInfo[static_cast<size_t>(ARBFileInfo::Version)]);
 	outTree->GetAttrib(ATTRIB_BOOK_PGM_PLATFORM, m_FileInfo[static_cast<size_t>(ARBFileInfo::Platform)]);
@@ -428,7 +427,7 @@ void ARBAgilityRecordBook::Default(IARBConfigHandler const* inHandler)
 bool ARBAgilityRecordBook::Update(
 	int indent,
 	ARBConfig const& inConfigNew,
-	fmt::wmemory_buffer& ioInfo,
+	wxString& ioInfo,
 	IConfigActionCallback& ioCallBack)
 {
 	int curConfigVersion = m_Config.GetVersion();
@@ -478,7 +477,7 @@ bool ARBAgilityRecordBook::Update(
 		// This actually just synchronizes multiQs.
 		m_Dogs.DeleteMultiQs(m_Config, (*iterVenue)->GetName());
 	}
-	fmt::wmemory_buffer msgPairsRuns, msgDelRuns, msgTable, msgSubname;
+	wxString msgPairsRuns, msgDelRuns, msgTable, msgSubname;
 	int nUpdatedPairsRuns = 0;
 	int nDeletedRuns = 0;
 	int nUpdatedTable = 0;
@@ -507,20 +506,15 @@ bool ARBAgilityRecordBook::Update(
 			for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin(); iterRun != pTrial->GetRuns().end();)
 			{
 				ARBDogRunPtr pRun = *iterRun;
-				std::wstring venue = pRun->GetClub()->GetVenue();
+				wxString venue = pRun->GetClub()->GetVenue();
 				if (bFixUSDAAPairs && venue == L"USDAA" && pRun->GetEvent() == L"Pairs"
 					&& (pRun->GetLevel() == L"Tournament" || pRun->GetLevel() == L"Nationals"))
 				{
 					// Move pairs run to new team
 					pRun->SetEvent(L"Team");
-					fmt::format_to(
-						std::back_inserter(msgPairsRuns),
-						L"   {} {} {} {}/{}\n",
-						pRun->GetDate().GetString(ARBDateFormat::ISO),
-						venue,
-						pRun->GetEvent(),
-						pRun->GetDivision(),
-						pRun->GetLevel());
+					msgPairsRuns << L"   " << pRun->GetDate().GetString(ARBDateFormat::ISO) << L" " << venue << L" "
+								 << pRun->GetEvent() << L" " << pRun->GetDivision() << L"/" << pRun->GetLevel()
+								 << L"\n";
 					++nUpdatedPairsRuns;
 				}
 				ARBConfigScoringPtr pScoring;
@@ -557,41 +551,25 @@ bool ARBAgilityRecordBook::Update(
 					if (!pScoring->HasTable() && pRun->GetScoring().HasTable())
 					{
 						pRun->GetScoring().SetHasTable(false);
-						fmt::format_to(
-							std::back_inserter(msgTable),
-							L"   {} {} {} {}/{}\n",
-							pRun->GetDate().GetString(ARBDateFormat::ISO),
-							venue,
-							pRun->GetEvent(),
-							pRun->GetDivision(),
-							pRun->GetLevel());
+						msgTable << L"   " << pRun->GetDate().GetString(ARBDateFormat::ISO) << L" " << venue << L" "
+								 << pRun->GetEvent() << L" " << pRun->GetDivision() << L"/" << pRun->GetLevel()
+								 << L"\n";
 						++nUpdatedTable;
 					}
 					if (!pScoring->HasSubNames() && !pRun->GetSubName().empty())
 					{
-						pRun->SetSubName(std::wstring());
-						fmt::format_to(
-							std::back_inserter(msgSubname),
-							L"   {} {} {} {}/{}\n",
-							pRun->GetDate().GetString(ARBDateFormat::ISO),
-							venue,
-							pRun->GetEvent(),
-							pRun->GetDivision(),
-							pRun->GetLevel());
+						pRun->SetSubName(wxString());
+						msgSubname << L"   " << pRun->GetDate().GetString(ARBDateFormat::ISO) << L" " << venue << L" "
+								   << pRun->GetEvent() << L" " << pRun->GetDivision() << L"/" << pRun->GetLevel()
+								   << L"\n";
 						++nUpdatedSubname;
 					}
 					++iterRun;
 				}
 				else
 				{
-					fmt::format_to(
-						std::back_inserter(msgDelRuns),
-						L"   {} {} {} {}/{}\n",
-						pRun->GetDate().GetString(ARBDateFormat::ISO),
-						venue,
-						pRun->GetEvent(),
-						pRun->GetDivision(),
-						pRun->GetLevel());
+					msgDelRuns << L"   " << pRun->GetDate().GetString(ARBDateFormat::ISO) << L" " << venue << L" "
+							   << pRun->GetEvent() << L" " << pRun->GetDivision() << L"/" << pRun->GetLevel() << L"\n";
 					++nDeletedRuns;
 					iterRun = pTrial->GetRuns().erase(iterRun);
 				}
@@ -601,27 +579,27 @@ bool ARBAgilityRecordBook::Update(
 	if (0 < nUpdatedPairsRuns)
 	{
 		nChanges += nUpdatedPairsRuns;
-		std::wstring msg = Localization()->UpdateTeamRuns(nUpdatedPairsRuns, fmt::to_string(msgPairsRuns));
-		fmt::format_to(std::back_inserter(ioInfo), L"\n{}\n", msg);
+		auto msg = Localization()->UpdateTeamRuns(nUpdatedPairsRuns, msgPairsRuns);
+		ioInfo << L"\n" << msg << L"\n";
 	}
 	if (0 < nDeletedRuns)
 	{
 		nChanges += nDeletedRuns;
-		std::wstring msg = Localization()->WarnDeletedRuns(nDeletedRuns, fmt::to_string(msgDelRuns));
+		auto msg = Localization()->WarnDeletedRuns(nDeletedRuns, msgDelRuns);
 		ioCallBack.PostDelete(msg);
-		fmt::format_to(std::back_inserter(ioInfo), L"\n{}\n", msg);
+		ioInfo << L"\n" << msg << L"\n";
 	}
 	if (0 < nUpdatedTable)
 	{
 		nChanges += nUpdatedTable;
-		std::wstring msg = Localization()->UpdateTableRuns(nUpdatedTable, fmt::to_string(msgTable));
-		fmt::format_to(std::back_inserter(ioInfo), L"\n{}\n", msg);
+		auto msg = Localization()->UpdateTableRuns(nUpdatedTable, msgTable);
+		ioInfo << L"\n" << msg << L"\n";
 	}
 	if (0 < nUpdatedSubname)
 	{
 		nChanges += nUpdatedSubname;
-		std::wstring msg = Localization()->UpdateSubnameRuns(nUpdatedSubname, fmt::to_string(msgSubname));
-		fmt::format_to(std::back_inserter(ioInfo), L"\n{}\n", msg);
+		auto msg = Localization()->UpdateSubnameRuns(nUpdatedSubname, msgSubname);
+		ioInfo << L"\n" << msg << L"\n";
 	}
 
 	// This fixup is only done when upgrading from Config version 2 to 3.
@@ -660,7 +638,7 @@ bool ARBAgilityRecordBook::Update(
 								ARBDogRunPtr pRun = *iterRun;
 								if (pRun->GetEvent() == pEvent->GetName() && pRun->GetScoring().TableNeedsConverting())
 								{
-									std::wstring level(pRun->GetLevel());
+									wxString level(pRun->GetLevel());
 									ARBConfigDivisionPtr div;
 									if (pVenue->GetDivisions().FindDivision(pRun->GetDivision(), &div))
 									{
@@ -692,7 +670,7 @@ bool ARBAgilityRecordBook::Update(
 		if (0 < nUpdated)
 		{
 			nChanges += nUpdated;
-			fmt::format_to(std::back_inserter(ioInfo), L"{}\n", Localization()->UpdateTableRuns(nUpdated));
+			ioInfo << Localization()->UpdateTableRuns(nUpdated) << L"\n";
 		}
 	}
 
@@ -706,7 +684,7 @@ bool ARBAgilityRecordBook::Update(
 }
 
 
-size_t ARBAgilityRecordBook::GetAllClubNames(std::set<std::wstring>& outClubs, bool bInfo, bool bVisibleOnly) const
+size_t ARBAgilityRecordBook::GetAllClubNames(std::set<wxString>& outClubs, bool bInfo, bool bVisibleOnly) const
 {
 	outClubs.clear();
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin(); iterDog != m_Dogs.end(); ++iterDog)
@@ -739,8 +717,7 @@ size_t ARBAgilityRecordBook::GetAllClubNames(std::set<std::wstring>& outClubs, b
 }
 
 
-size_t ARBAgilityRecordBook::GetAllTrialLocations(std::set<std::wstring>& outLocations, bool bInfo, bool bVisibleOnly)
-	const
+size_t ARBAgilityRecordBook::GetAllTrialLocations(std::set<wxString>& outLocations, bool bInfo, bool bVisibleOnly) const
 {
 	outLocations.clear();
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin(); iterDog != m_Dogs.end(); ++iterDog)
@@ -768,9 +745,9 @@ size_t ARBAgilityRecordBook::GetAllTrialLocations(std::set<std::wstring>& outLoc
 
 
 size_t ARBAgilityRecordBook::GetAllEventSubNames(
-	std::wstring const& inVenue,
+	wxString const& inVenue,
 	ARBConfigEventPtr const& inEvent,
-	std::set<std::wstring>& outNames) const
+	std::set<wxString>& outNames) const
 {
 	outNames.clear();
 	if (!inEvent || 0 == inEvent->GetScorings().size())
@@ -808,7 +785,7 @@ size_t ARBAgilityRecordBook::GetAllEventSubNames(
 }
 
 
-size_t ARBAgilityRecordBook::GetAllHeights(std::set<std::wstring>& outHeights) const
+size_t ARBAgilityRecordBook::GetAllHeights(std::set<wxString>& outHeights) const
 {
 	outHeights.clear();
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin(); iterDog != m_Dogs.end(); ++iterDog)
@@ -840,7 +817,7 @@ size_t ARBAgilityRecordBook::GetAllHeights(std::set<std::wstring>& outHeights) c
 }
 
 
-size_t ARBAgilityRecordBook::GetAllCallNames(std::set<std::wstring>& outNames) const
+size_t ARBAgilityRecordBook::GetAllCallNames(std::set<wxString>& outNames) const
 {
 	outNames.clear();
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin(); iterDog != m_Dogs.end(); ++iterDog)
@@ -871,7 +848,7 @@ size_t ARBAgilityRecordBook::GetAllCallNames(std::set<std::wstring>& outNames) c
 }
 
 
-size_t ARBAgilityRecordBook::GetAllBreeds(std::set<std::wstring>& outBreeds) const
+size_t ARBAgilityRecordBook::GetAllBreeds(std::set<wxString>& outBreeds) const
 {
 	outBreeds.clear();
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin(); iterDog != m_Dogs.end(); ++iterDog)
@@ -903,7 +880,7 @@ size_t ARBAgilityRecordBook::GetAllBreeds(std::set<std::wstring>& outBreeds) con
 }
 
 
-size_t ARBAgilityRecordBook::GetAllJudges(std::set<std::wstring>& outJudges, bool bInfo, bool bVisibleOnly) const
+size_t ARBAgilityRecordBook::GetAllJudges(std::set<wxString>& outJudges, bool bInfo, bool bVisibleOnly) const
 {
 	outJudges.clear();
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin(); iterDog != m_Dogs.end(); ++iterDog)
@@ -929,7 +906,7 @@ size_t ARBAgilityRecordBook::GetAllJudges(std::set<std::wstring>& outJudges, boo
 }
 
 
-size_t ARBAgilityRecordBook::GetAllHandlers(std::set<std::wstring>& outHandlers) const
+size_t ARBAgilityRecordBook::GetAllHandlers(std::set<wxString>& outHandlers) const
 {
 	outHandlers.clear();
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin(); iterDog != m_Dogs.end(); ++iterDog)
@@ -953,7 +930,7 @@ size_t ARBAgilityRecordBook::GetAllHandlers(std::set<std::wstring>& outHandlers)
 }
 
 
-void ARBAgilityRecordBook::GetAllPartners(std::set<std::wstring>& outPartners, std::set<std::wstring>& outDogs) const
+void ARBAgilityRecordBook::GetAllPartners(std::set<wxString>& outPartners, std::set<wxString>& outDogs) const
 {
 	outPartners.clear();
 	outDogs.clear();
@@ -985,7 +962,7 @@ void ARBAgilityRecordBook::GetAllPartners(std::set<std::wstring>& outPartners, s
 }
 
 
-size_t ARBAgilityRecordBook::GetAllFaultTypes(std::set<std::wstring>& outFaults) const
+size_t ARBAgilityRecordBook::GetAllFaultTypes(std::set<wxString>& outFaults) const
 {
 	outFaults.clear();
 	for (ARBConfigFaultList::const_iterator iterFault = m_Config.GetFaults().begin();

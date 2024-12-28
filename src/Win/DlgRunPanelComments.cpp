@@ -44,7 +44,7 @@ CDlgRunPanelComments::CDlgRunPanelComments(
 	ARBDogRunPtr const& inRun,
 	wxWindow* parent)
 	: CDlgRunPanelBase(pDlg, pDoc, inDog, inTrial, inRun, parent)
-	, m_Comments(StringUtil::stringWX(inRun->GetNote()))
+	, m_Comments(inRun->GetNote())
 	, m_ctrlFaultsList(nullptr)
 {
 	CSpellCheckCtrl* ctrlComments = new CSpellCheckCtrl(
@@ -99,7 +99,7 @@ void CDlgRunPanelComments::SetFaultsText()
 	m_ctrlFaultsList->Clear();
 	for (ARBDogFaultList::const_iterator iter = m_Run->GetFaults().begin(); iter != m_Run->GetFaults().end(); ++iter)
 	{
-		m_ctrlFaultsList->Append(StringUtil::stringWX(*iter));
+		m_ctrlFaultsList->Append(*iter);
 	}
 }
 
@@ -120,7 +120,7 @@ bool CDlgRunPanelComments::Validate()
 
 bool CDlgRunPanelComments::Save()
 {
-	m_Run->SetNote(StringUtil::stringW(m_Comments));
+	m_Run->SetNote(m_Comments);
 	return true;
 }
 

@@ -138,7 +138,7 @@ bool ARBConfigPlaceInfo::operator==(ARBConfigPlaceInfo const& rhs) const
 }
 
 
-std::wstring ARBConfigPlaceInfo::GetGenericName() const
+wxString ARBConfigPlaceInfo::GetGenericName() const
 {
 	return Localization()->PlacementPointsNameFormat(m_Value, m_Place);
 }
@@ -164,7 +164,7 @@ bool ARBConfigPlaceInfo::Load(ElementNodePtr const& inTree, ARBVersion const& in
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
 			TREE_PLACE_INFO,
 			ATTRIB_PLACE_INFO_MUSTQ,
-			Localization()->ValidValuesBool().c_str()));
+			Localization()->ValidValuesBool()));
 		return false;
 	}
 	return true;

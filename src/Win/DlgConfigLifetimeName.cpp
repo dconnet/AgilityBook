@@ -64,12 +64,12 @@ CDlgConfigLifetimeName::CDlgConfigLifetimeName(ARB::ARBConfigVenuePtr const& inV
 
 CDlgConfigLifetimeName::CDlgConfigLifetimeName(
 	ARB::ARBConfigVenuePtr const& inVenue,
-	std::wstring const& inName,
+	wxString const& inName,
 	wxWindow* pParent)
 	: wxDialog()
 	, m_Venue(inVenue)
 	, m_bCheckOldName(true)
-	, m_Name(StringUtil::stringW(inName))
+	, m_Name(inName)
 	, m_NewName(inName)
 	, m_trace("CDlgConfigLifetimeName")
 {
@@ -128,8 +128,8 @@ void CDlgConfigLifetimeName::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	std::wstring oldName = m_NewName;
-	m_NewName = StringUtil::stringW(m_Name);
+	wxString oldName = m_NewName;
+	m_NewName = m_Name;
 
 	if (!m_bCheckOldName || m_NewName != oldName)
 	{

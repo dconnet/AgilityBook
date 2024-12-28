@@ -78,7 +78,7 @@ TEST_CASE("DogRunOtherPoints")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	virtual std::wstring GetGenericName() const
+			//	virtual wxString GetGenericName() const
 		}
 	}
 

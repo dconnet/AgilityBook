@@ -59,7 +59,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override
+	wxString GetGenericName() const override
 	{
 		return m_ShortName;
 	}
@@ -69,7 +69,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override
 	{
 		return 0;
 	}
@@ -111,14 +111,14 @@ public:
 	 * @param inNewDiv New division name.
 	 * @return Number of ARBConfigScoring items updated.
 	 */
-	int RenameDivision(std::wstring const& inOldDiv, std::wstring const& inNewDiv);
+	int RenameDivision(wxString const& inOldDiv, wxString const& inNewDiv);
 
 	/**
 	 * Delete a division.
 	 * @param inDiv Division name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteDivision(std::wstring const& inDiv);
+	int DeleteDivision(wxString const& inDiv);
 
 	/**
 	 * Rename a level.
@@ -127,14 +127,14 @@ public:
 	 * @param inNewLevel New level name.
 	 * @return Number of ARBConfigScoring items updated.
 	 */
-	int RenameLevel(std::wstring const& inDiv, std::wstring const& inOldLevel, std::wstring const& inNewLevel);
+	int RenameLevel(wxString const& inDiv, wxString const& inOldLevel, wxString const& inNewLevel);
 
 	/**
 	 * Delete a level.
 	 * @param inLevel Level name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteLevel(std::wstring const& inLevel);
+	int DeleteLevel(wxString const& inLevel);
 
 	/**
 	 * Rename an event.
@@ -142,14 +142,14 @@ public:
 	 * @param inNewEvent New event name.
 	 * @return Number of ARBConfigScoring items updated.
 	 */
-	int RenameEvent(std::wstring const& inOldEvent, std::wstring const& inNewEvent);
+	int RenameEvent(wxString const& inOldEvent, wxString const& inNewEvent);
 
 	/**
 	 * Delete an event.
 	 * @param inEvent Event name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteEvent(std::wstring const& inEvent);
+	int DeleteEvent(wxString const& inEvent);
 
 	/**
 	 * Add an item.
@@ -158,7 +158,7 @@ public:
 	 * @param inEvent Event.
 	 * @return Whether object was added.
 	 */
-	bool AddItem(std::wstring const& inDiv, std::wstring const& inLevel, std::wstring const& inEvent);
+	bool AddItem(wxString const& inDiv, wxString const& inLevel, wxString const& inEvent);
 
 	/**
 	 * Remove an item.
@@ -167,7 +167,7 @@ public:
 	 * @param inEvent Event.
 	 * @return Whether object was removed.
 	 */
-	bool RemoveItem(std::wstring const& inDiv, std::wstring const& inLevel, std::wstring const& inEvent);
+	bool RemoveItem(wxString const& inDiv, wxString const& inLevel, wxString const& inEvent);
 
 	/**
 	 * Remove all configuration items.
@@ -177,19 +177,19 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	std::wstring GetName() const
+	wxString GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(std::wstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	std::wstring GetShortName() const
+	wxString GetShortName() const
 	{
 		return m_ShortName;
 	}
-	void SetShortName(std::wstring const& inName)
+	void SetShortName(wxString const& inName)
 	{
 		m_ShortName = inName;
 	}
@@ -213,14 +213,14 @@ public:
 	{
 		return m_Items.size();
 	}
-	bool GetItem(size_t inIndex, std::wstring& outDivision, std::wstring& outLevel, std::wstring& outEvent) const;
+	bool GetItem(size_t inIndex, wxString& outDivision, wxString& outLevel, wxString& outEvent) const;
 
 private:
 	struct MultiQItem
 	{
-		std::wstring m_Div;
-		std::wstring m_Level;
-		std::wstring m_Event;
+		wxString m_Div;
+		wxString m_Level;
+		wxString m_Event;
 		bool operator<(MultiQItem const& rhs) const
 		{
 			if (m_Div != rhs.m_Div)
@@ -235,8 +235,8 @@ private:
 		}
 	};
 
-	std::wstring m_Name;
-	std::wstring m_ShortName;
+	wxString m_Name;
+	wxString m_ShortName;
 	ARBCommon::ARBDate m_ValidFrom;
 	ARBCommon::ARBDate m_ValidTo;
 	std::set<MultiQItem> m_Items;
@@ -271,8 +271,7 @@ public:
 	 * @param inUseShortName Search by shortname instead of longname.
 	 * @param outMultiQ Pointer to object, NULL if not found.
 	 */
-	bool FindMultiQ(std::wstring const& inName, bool inUseShortName = false, ARBConfigMultiQPtr* outMultiQ = nullptr)
-		const;
+	bool FindMultiQ(wxString const& inName, bool inUseShortName = false, ARBConfigMultiQPtr* outMultiQ = nullptr) const;
 
 	/**
 	 * Find a MultiQ by value.
@@ -287,14 +286,14 @@ public:
 	 * @param inNewDiv New division name.
 	 * @return Number of ARBConfigScoring items updated.
 	 */
-	int RenameDivision(std::wstring const& inOldDiv, std::wstring const& inNewDiv);
+	int RenameDivision(wxString const& inOldDiv, wxString const& inNewDiv);
 
 	/**
 	 * Delete a division.
 	 * @param inDiv Division name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteDivision(std::wstring const& inDiv);
+	int DeleteDivision(wxString const& inDiv);
 
 	/**
 	 * Rename a level.
@@ -303,14 +302,14 @@ public:
 	 * @param inNewLevel New level name.
 	 * @return Number of ARBConfigScoring items updated.
 	 */
-	int RenameLevel(std::wstring const& inDiv, std::wstring const& inOldLevel, std::wstring const& inNewLevel);
+	int RenameLevel(wxString const& inDiv, wxString const& inOldLevel, wxString const& inNewLevel);
 
 	/**
 	 * Delete a level.
 	 * @param inLevel Level name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteLevel(std::wstring const& inLevel);
+	int DeleteLevel(wxString const& inLevel);
 
 	/**
 	 * Rename an event.
@@ -318,14 +317,14 @@ public:
 	 * @param inNewEvent New event name.
 	 * @return Number of ARBConfigScoring items updated.
 	 */
-	int RenameEvent(std::wstring const& inOldEvent, std::wstring const& inNewEvent);
+	int RenameEvent(wxString const& inOldEvent, wxString const& inNewEvent);
 
 	/**
 	 * Delete an event.
 	 * @param inEvent Event name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteEvent(std::wstring const& inEvent);
+	int DeleteEvent(wxString const& inEvent);
 
 	/**
 	 * Add a MultiQ.

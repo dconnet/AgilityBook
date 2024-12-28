@@ -93,7 +93,7 @@ TEST_CASE("ConfigVenue")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	virtual std::wstring GetGenericName() const
+			//	virtual wxString GetGenericName() const
 		}
 	}
 
@@ -130,7 +130,7 @@ TEST_CASE("ConfigVenue")
 			//	bool Update(
 			//			int indent,
 			//			ARBConfigVenuePtr inVenueNew,
-			//			std::wstring& ioInfo);
+			//			wxString& ioInfo);
 		}
 	}
 }
@@ -167,7 +167,7 @@ TEST_CASE("ConfigVenueList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	bool VerifyVenue(std::wstring const& inVenue) const
+			//	bool VerifyVenue(wxString const& inVenue) const
 		}
 	}
 
@@ -178,8 +178,8 @@ TEST_CASE("ConfigVenueList")
 		{
 			TODO_TEST
 			//	bool VerifyMultiQ(
-			//			std::wstring const& inVenue,
-			//			std::wstring const& inMultiQ,
+			//			wxString const& inVenue,
+			//			wxString const& inMultiQ,
 			//			bool inUseShortName = false) const;
 		}
 	}
@@ -191,9 +191,9 @@ TEST_CASE("ConfigVenueList")
 		{
 			TODO_TEST
 			//	bool VerifyLevel(
-			//			std::wstring const& inVenue,
-			//			std::wstring const& inDivision,
-			//			std::wstring const& inLevel) const;
+			//			wxString const& inVenue,
+			//			wxString const& inDivision,
+			//			wxString const& inLevel) const;
 		}
 	}
 
@@ -204,10 +204,10 @@ TEST_CASE("ConfigVenueList")
 		{
 			TODO_TEST
 			//	bool VerifyEvent(
-			//			std::wstring const& inVenue,
-			//			std::wstring const& inDivision,
-			//			std::wstring const& inLevel,
-			//			std::wstring const& inEvent,
+			//			wxString const& inVenue,
+			//			wxString const& inDivision,
+			//			wxString const& inLevel,
+			//			wxString const& inEvent,
 			//			ARBDate const& inDate) const;
 		}
 	}
@@ -234,8 +234,8 @@ TEST_CASE("ConfigVenueList")
 		{
 			TODO_TEST
 			//	bool FindTitle(
-			//			std::wstring const& inVenue,
-			//			std::wstring const& inTitle,
+			//			wxString const& inVenue,
+			//			wxString const& inTitle,
 			//			ARBConfigTitlePtr* outTitle = nullptr) const;
 		}
 	}
@@ -246,7 +246,7 @@ TEST_CASE("ConfigVenueList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	bool DeleteTitle(std::wstring const& inTitle);
+			//	bool DeleteTitle(wxString const& inTitle);
 		}
 	}
 
@@ -257,7 +257,7 @@ TEST_CASE("ConfigVenueList")
 		{
 			TODO_TEST
 			//	bool FindVenue(
-			//			std::wstring const& inVenue,
+			//			wxString const& inVenue,
 			//			ARBConfigVenuePtr* outVenue = nullptr) const;
 		}
 	}
@@ -269,10 +269,10 @@ TEST_CASE("ConfigVenueList")
 		{
 			TODO_TEST
 			//	bool FindEvent(
-			//			std::wstring const& inVenue,
-			//			std::wstring const& inEvent,
-			//			std::wstring const& inDivision,
-			//			std::wstring const& inLevel,
+			//			wxString const& inVenue,
+			//			wxString const& inEvent,
+			//			wxString const& inDivision,
+			//			wxString const& inLevel,
 			//			ARBDate const& inDate,
 			//			ARBConfigEventPtr* outEvent = nullptr,
 			//			ARBConfigScoringPtr* outScoring = nullptr) const;
@@ -286,10 +286,10 @@ TEST_CASE("ConfigVenueList")
 		{
 			TODO_TEST
 			//	bool AddVenue(
-			//			std::wstring const& inVenue,
+			//			wxString const& inVenue,
 			//			ARBConfigVenuePtr* outVenue = nullptr);
 			//	bool AddVenue(ARBConfigVenuePtr inVenue);
-			//	int DeleteVenue(std::wstring const& inVenue);
+			//	int DeleteVenue(wxString const& inVenue);
 		}
 	}
 }

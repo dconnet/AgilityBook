@@ -147,9 +147,9 @@ bool ARBConfigSubLevel::Save(ElementNodePtr const& ioTree) const
 }
 
 
-bool ARBConfigSubLevel::Update(int indent, ARBConfigSubLevelPtr const& inLevelNew, std::wstring& ioInfo)
+bool ARBConfigSubLevel::Update(int indent, ARBConfigSubLevelPtr const& inLevelNew, wxString& ioInfo)
 {
-	std::wstring info;
+	wxString info;
 	if (GetName() != inLevelNew->GetName())
 		return false;
 
@@ -203,7 +203,7 @@ void ARBConfigSubLevelList::ReorderBy(ARBConfigSubLevelList const& inList)
 }
 
 
-bool ARBConfigSubLevelList::FindSubLevel(std::wstring const& inName, ARBConfigSubLevelPtr* outLevel) const
+bool ARBConfigSubLevelList::FindSubLevel(wxString const& inName, ARBConfigSubLevelPtr* outLevel) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -218,7 +218,7 @@ bool ARBConfigSubLevelList::FindSubLevel(std::wstring const& inName, ARBConfigSu
 }
 
 
-bool ARBConfigSubLevelList::AddSubLevel(std::wstring const& inName, ARBConfigSubLevelPtr* outLevel)
+bool ARBConfigSubLevelList::AddSubLevel(wxString const& inName, ARBConfigSubLevelPtr* outLevel)
 {
 	if (outLevel)
 		outLevel->reset();
@@ -234,9 +234,9 @@ bool ARBConfigSubLevelList::AddSubLevel(std::wstring const& inName, ARBConfigSub
 }
 
 
-bool ARBConfigSubLevelList::DeleteSubLevel(std::wstring const& inName)
+bool ARBConfigSubLevelList::DeleteSubLevel(wxString const& inName)
 {
-	std::wstring name(inName);
+	wxString name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

@@ -88,7 +88,7 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 {
 	bool bAdded = false;
 	bool done = false;
-	std::wstring name;
+	wxString name;
 	switch (m_Action)
 	{
 	case CDlgConfigVenue::Action::None:
@@ -98,7 +98,7 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 		while (!done)
 		{
 			done = true;
-			CDlgName dlg(name, StringUtil::stringW(_("IDS_DIVISION_NAME")), m_pDlg);
+			CDlgName dlg(name, _("IDS_DIVISION_NAME"), m_pDlg);
 			if (wxID_OK == dlg.ShowModal())
 			{
 				name = dlg.Name();
@@ -112,9 +112,7 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 				if (m_pDlg->m_pVenue->GetDivisions().AddDivision(name, &pNewDiv))
 				{
 					CDlgConfigureDataDivision* pData = new CDlgConfigureDataDivision(m_pDlg, pNewDiv);
-					wxTreeItemId div
-						= m_pDlg->m_ctrlItems
-							  ->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+					wxTreeItemId div = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
 					pData->AddSubItems();
 					m_pDlg->m_ctrlItems->SelectItem(div);
 					bAdded = true;
@@ -134,8 +132,7 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 			if (m_pDlg->m_pVenue->GetEvents().AddEvent(pEvent))
 			{
 				CDlgConfigureDataEvent* pData = new CDlgConfigureDataEvent(m_pDlg, pEvent);
-				wxTreeItemId evt = m_pDlg->m_ctrlItems
-									   ->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+				wxTreeItemId evt = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
 				pData->AddSubItems();
 				m_pDlg->m_ctrlItems->SelectItem(evt);
 				bAdded = true;
@@ -144,12 +141,8 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 				{
 					CDlgConfigureDataLifetimeName* pDataLifetime
 						= new CDlgConfigureDataLifetimeName(m_pDlg, *m_pDlg->m_pVenue->GetLifetimeNames().begin());
-					m_pDlg->m_ctrlItems->AppendItem(
-						m_pDlg->m_lifetimeNames,
-						StringUtil::stringWX(pDataLifetime->OnNeedText()),
-						-1,
-						-1,
-						pDataLifetime);
+					m_pDlg->m_ctrlItems
+						->AppendItem(m_pDlg->m_lifetimeNames, pDataLifetime->OnNeedText(), -1, -1, pDataLifetime);
 				}
 			}
 		}
@@ -166,8 +159,7 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 			if (m_pDlg->m_pVenue->GetLifetimeNames().AddLifetimeName(dlg.GetLifetimeName(), &pName))
 			{
 				CDlgConfigureDataLifetimeName* pData = new CDlgConfigureDataLifetimeName(m_pDlg, pName);
-				wxTreeItemId evt = m_pDlg->m_ctrlItems
-									   ->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+				wxTreeItemId evt = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
 				pData->AddSubItems();
 				m_pDlg->m_ctrlItems->SelectItem(evt);
 				bAdded = true;
@@ -186,8 +178,7 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 			if (m_pDlg->m_pVenue->GetMultiQs().AddMultiQ(multiq))
 			{
 				CDlgConfigureDataMultiQ* pData = new CDlgConfigureDataMultiQ(m_pDlg, multiq);
-				wxTreeItemId mq = m_pDlg->m_ctrlItems
-									  ->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+				wxTreeItemId mq = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
 				pData->AddSubItems();
 				m_pDlg->m_ctrlItems->SelectItem(mq);
 				bAdded = true;
@@ -220,9 +211,7 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 					// pTitle->SetLongName(dlg.GetLongName());
 					// pTitle->SetDescription(dlg.GetDesc());
 					CDlgConfigureDataTitle* pData = new CDlgConfigureDataTitle(m_pDlg, pTitle);
-					wxTreeItemId titleId
-						= m_pDlg->m_ctrlItems
-							  ->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+					wxTreeItemId titleId = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
 					pData->AddSubItems();
 					m_pDlg->m_ctrlItems->SelectItem(titleId);
 					bAdded = true;
@@ -247,10 +236,10 @@ CDlgConfigVenue::CDlgConfigVenue(
 	, m_pVenueOrig(inVenue)
 	, m_pVenue(inVenue->Clone())
 	, m_DlgFixup()
-	, m_Name(StringUtil::stringWX(m_pVenue->GetName()))
-	, m_LongName(StringUtil::stringWX(m_pVenue->GetLongName()))
-	, m_URL(StringUtil::stringWX(m_pVenue->GetURL()))
-	, m_Desc(StringUtil::stringWX(m_pVenue->GetDesc()))
+	, m_Name(m_pVenue->GetName())
+	, m_LongName(m_pVenue->GetLongName())
+	, m_URL(m_pVenue->GetURL())
+	, m_Desc(m_pVenue->GetDesc())
 	, m_ctrlItems(nullptr)
 	, m_lifetimeNames()
 	, m_ctrlNew(nullptr)
@@ -430,7 +419,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 		 ++iterDiv)
 	{
 		CDlgConfigureDataDivision* pData = new CDlgConfigureDataDivision(this, *iterDiv);
-		m_ctrlItems->AppendItem(divs, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+		m_ctrlItems->AppendItem(divs, pData->OnNeedText(), -1, -1, pData);
 		pData->AddSubItems();
 	}
 	m_ctrlItems->Expand(divs);
@@ -446,7 +435,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 		 ++iterEvent)
 	{
 		CDlgConfigureDataEvent* pData = new CDlgConfigureDataEvent(this, *iterEvent);
-		m_ctrlItems->AppendItem(events, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+		m_ctrlItems->AppendItem(events, pData->OnNeedText(), -1, -1, pData);
 		pData->AddSubItems();
 	}
 	m_ctrlItems->Expand(events);
@@ -462,7 +451,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 		 ++iter)
 	{
 		CDlgConfigureDataLifetimeName* pData = new CDlgConfigureDataLifetimeName(this, *iter);
-		m_ctrlItems->AppendItem(m_lifetimeNames, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+		m_ctrlItems->AppendItem(m_lifetimeNames, pData->OnNeedText(), -1, -1, pData);
 		pData->AddSubItems();
 	}
 
@@ -477,7 +466,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 		 ++iter)
 	{
 		CDlgConfigureDataMultiQ* pData = new CDlgConfigureDataMultiQ(this, *iter);
-		m_ctrlItems->AppendItem(multiQs, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+		m_ctrlItems->AppendItem(multiQs, pData->OnNeedText(), -1, -1, pData);
 		pData->AddSubItems();
 	}
 
@@ -492,7 +481,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 		 ++iterTitle)
 	{
 		CDlgConfigureDataTitle* pData = new CDlgConfigureDataTitle(this, *iterTitle);
-		m_ctrlItems->AppendItem(titles, StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+		m_ctrlItems->AppendItem(titles, pData->OnNeedText(), -1, -1, pData);
 		pData->AddSubItems();
 	}
 
@@ -649,12 +638,9 @@ void CDlgConfigVenue::OnMoveUp(wxCommandEvent& evt)
 				wxTreeItemId itemPrev2 = m_ctrlItems->GetPrevSibling(itemPrev);
 				wxTreeItemId itemNew;
 				if (itemPrev2.IsOk())
-					itemNew
-						= m_ctrlItems
-							  ->InsertItem(parent, itemPrev2, StringUtil::stringWX(pDup->OnNeedText()), -1, -1, pDup);
+					itemNew = m_ctrlItems->InsertItem(parent, itemPrev2, pDup->OnNeedText(), -1, -1, pDup);
 				else
-					itemNew
-						= m_ctrlItems->InsertItem(parent, 0, StringUtil::stringWX(pDup->OnNeedText()), -1, -1, pDup);
+					itemNew = m_ctrlItems->InsertItem(parent, 0, pDup->OnNeedText(), -1, -1, pDup);
 				m_ctrlItems->Delete(item);
 				pDup->AddSubItems();
 				m_ctrlItems->SelectItem(itemNew);
@@ -678,8 +664,7 @@ void CDlgConfigVenue::OnMoveDown(wxCommandEvent& evt)
 			if (pDup)
 			{
 				wxTreeItemId parent = m_ctrlItems->GetItemParent(item);
-				wxTreeItemId itemNew
-					= m_ctrlItems->InsertItem(parent, itemNext, StringUtil::stringWX(pDup->OnNeedText()), -1, -1, pDup);
+				wxTreeItemId itemNew = m_ctrlItems->InsertItem(parent, itemNext, pDup->OnNeedText(), -1, -1, pDup);
 				m_ctrlItems->Delete(item);
 				pDup->AddSubItems();
 				m_ctrlItems->SelectItem(itemNew);
@@ -696,8 +681,8 @@ void CDlgConfigVenue::OnOk(wxCommandEvent& evt)
 		return;
 	m_URL.Replace(L"\"", L"");
 
-	std::wstring name(m_Name);
-	std::wstring oldName = m_pVenue->GetName();
+	wxString name(m_Name);
+	wxString oldName = m_pVenue->GetName();
 	if (oldName != name)
 	{
 		if (m_Config.GetVenues().FindVenue(name))
@@ -708,9 +693,9 @@ void CDlgConfigVenue::OnOk(wxCommandEvent& evt)
 		m_pVenue->SetName(name);
 	}
 
-	m_pVenue->SetLongName(StringUtil::stringW(m_LongName));
-	m_pVenue->SetURL(StringUtil::stringW(m_URL));
-	m_pVenue->SetDesc(StringUtil::stringW(m_Desc));
+	m_pVenue->SetLongName(m_LongName);
+	m_pVenue->SetURL(m_URL);
+	m_pVenue->SetDesc(m_Desc);
 
 	if (oldName != name)
 		m_DlgFixup.push_back(ARBConfigActionRenameVenue::New(0, oldName, name));

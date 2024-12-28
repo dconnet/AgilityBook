@@ -916,7 +916,6 @@ RECURSIVE              = YES
 # run.
 
 EXCLUDE                = AgilityBookLibs/3rdParty/catch \
-                         AgilityBookLibs/3rdParty/LibFmt \
                          AgilityBookLibs/3rdParty/LibTidyHtml/tidy
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or

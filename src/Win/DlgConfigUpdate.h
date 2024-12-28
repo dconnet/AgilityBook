@@ -39,8 +39,8 @@ public:
 	// This should not be called if the dialog was flown. It is intended
 	// to allow loading config data without flying the dialog (for instance,
 	// from the import menu item).
-	// NULL will load the default configuration.
-	bool LoadConfig(wchar_t const* pFile);
+	// emptystring will load the default configuration.
+	bool LoadConfig(wxString const& file);
 
 private:
 	void EnableControls();

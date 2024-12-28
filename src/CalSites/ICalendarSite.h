@@ -50,7 +50,7 @@ public:
 	 * for registry access purposes.
 	 * @return ID
 	 */
-	virtual std::wstring GetID() const = 0;
+	virtual wxString GetID() const = 0;
 
 	/**
 	 * Get the version of the plugin.
@@ -63,13 +63,13 @@ public:
 	 * Get a short name of the site this parses.
 	 * @return Name of plugin, must release with releaseBuffer()
 	 */
-	virtual std::wstring GetName() const = 0;
+	virtual wxString GetName() const = 0;
 
 	/**
 	 * Get a description of the site this parses.
 	 * @return Description of plugin, must release with releaseBuffer()
 	 */
-	virtual std::wstring GetDescription() const = 0;
+	virtual wxString GetDescription() const = 0;
 
 	/**
 	 * Get a list of location codes.
@@ -77,7 +77,7 @@ public:
 	 * @note First item is the value that will be passed
 	 *       in the query. Second item is a pretty name.
 	 */
-	virtual size_t GetLocationCodes(std::map<std::wstring, std::wstring>& locCodes) const = 0;
+	virtual size_t GetLocationCodes(std::map<wxString, wxString>& locCodes) const = 0;
 
 	/**
 	 * Get a list of venue codes.
@@ -86,7 +86,7 @@ public:
 	 *       item is the mapping to ARBs venue code. If they are the same,
 	 *       specifying the 2nd item is optional.
 	 */
-	virtual size_t GetVenueCodes(std::map<std::wstring, std::wstring>& venueCodes) const = 0;
+	virtual size_t GetVenueCodes(std::map<wxString, wxString>& venueCodes) const = 0;
 
 	/**
 	 * Get the processed data. The returned data should be in the form of
@@ -100,8 +100,8 @@ public:
 	 * updates (during the executable's current session)
 	 */
 	virtual std::string Process(
-		std::vector<std::wstring> const& inLocCodes,
-		std::vector<std::wstring> const& inVenueCodes,
+		std::vector<wxString> const& inLocCodes,
+		std::vector<wxString> const& inVenueCodes,
 		IProgressMeter* progress) const
 		= 0;
 };

@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2015-09-30 Dbl-click on Filter status area invokes Preferences.
  * 2015-09-12 Clean up status bar sizing. SetStatusBarWidths was broken on Mac.
  * 2015-08-11 Status bar gripper is too small on hiDPI. Kludge.
@@ -255,7 +254,7 @@ void CMainFrame::EnableLogWindow()
 #else
 		bool show = false;
 #endif
-		m_logger.EnableLogWindow(this, show, wxGetApp().GetUpdateInfoKey().c_str(), show);
+		m_logger.EnableLogWindow(this, show, wxGetApp().GetUpdateInfoKey(), show);
 	}
 }
 
@@ -272,17 +271,17 @@ bool CMainFrame::CanClose()
 }
 
 
-void CMainFrame::SetMessageText(std::wstring const& msg, bool bFiltered)
+void CMainFrame::SetMessageText(wxString const& msg, bool bFiltered)
 {
 	SetMessage(msg, STATUS_STATUS, true);
-	std::wstring filtered;
+	wxString filtered;
 	if (bFiltered)
 		filtered = _("ID_INDICATOR_FILTERED");
 	SetMessage(filtered, STATUS_FILTERED, false);
 }
 
 
-void CMainFrame::SetMessageText2(std::wstring const& msg)
+void CMainFrame::SetMessageText2(wxString const& msg)
 {
 	SetMessage(msg, STATUS_DOG, true);
 }
@@ -302,12 +301,12 @@ void CMainFrame::UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outDownloadSta
 }
 
 
-void CMainFrame::SetMessage(std::wstring const& msg, int index, bool bResize)
+void CMainFrame::SetMessage(wxString const& msg, int index, bool bResize)
 {
 	wxStatusBar* statusbar = GetStatusBar();
 	if (!statusbar)
 		return;
-	wxString str = StringUtil::stringWX(msg);
+	wxString str = msg;
 	if (bResize)
 		m_statusBar.Update(index, str);
 	else
@@ -385,8 +384,8 @@ void CMainFrame::OnDPIChanged(wxDPIChangedEvent& evt)
 #if defined(WIN32) && defined(_DEBUG)
 	wxSize old = evt.GetOldDPI();
 	wxSize newsz = evt.GetNewDPI();
-	std::wstring str = fmt::format(L"DPI Old: {},{}  New: {},{}\n", old.x, old.y, newsz.x, newsz.y);
-	CLogger::Log(str.c_str());
+	auto str = wxString::Format(L"DPI Old: %d,%d  New: %d,%d\n", old.x, old.y, newsz.x, newsz.y);
+	CLogger::Log(str);
 #endif
 
 	evt.Skip();
@@ -489,7 +488,7 @@ void CMainFrame::OnFileLanguageChoose(wxCommandEvent& evt)
 		wxGetApp().GetMenus().UpdateMenu();
 
 		CAgilityBookBaseView* pView = wxDynamicCast(GetDocumentManager()->GetCurrentView(), CAgilityBookBaseView);
-		std::wstring msg;
+		wxString msg;
 		bool bFiltered = false;
 		if (pView && pView->GetMessage(msg))
 			bFiltered = pView->IsFiltered();
@@ -618,12 +617,12 @@ void CMainFrame::OnHelpAbout(wxCommandEvent& evt)
 	subject.Replace(L"%VERSION%", ver.GetVersionString(VER_PARTS));
 
 	ARBCommon::CMailTo mailto;
-	mailto.AddTo(_("LinkHelpAddress").wc_str());
-	mailto.SetSubject(subject.wc_str());
-	mailto.SetBody(_("LinkHelpUrlBody").wc_str());
+	mailto.AddTo(_("LinkHelpAddress"));
+	mailto.SetSubject(subject);
+	mailto.SetBody(_("LinkHelpUrlBody"));
 
 	auto caption = _("IDD_ABOUTBOX");
-	auto desc = fmt::format(_("AboutText").wc_str(), caption.wc_str());
+	auto desc = wxString::Format(_("AboutText"), caption);
 
 	AboutInfo info;
 	info.SetImage(this, ImageMgrApp, 32);

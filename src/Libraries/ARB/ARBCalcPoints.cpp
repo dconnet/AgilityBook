@@ -80,7 +80,7 @@ ARBCalcPointsNormal::ARBCalcPointsNormal()
 }
 
 
-std::wstring ARBCalcPointsNormal::GetGenericName(double points, double faults) const
+wxString ARBCalcPointsNormal::GetGenericName(double points, double faults) const
 {
 	return Localization()->TitlePointsNameFormat(points, faults);
 }
@@ -113,9 +113,9 @@ ARBCalcPointsT2B::ARBCalcPointsT2B()
 }
 
 
-std::wstring ARBCalcPointsT2B::GetGenericName(double points, double faults) const
+wxString ARBCalcPointsT2B::GetGenericName(double points, double faults) const
 {
-	return StringUtil::GetTranslation(arbT("IDS_TITLEPOINT_NORMAL_T2B"));
+	return wxGetTranslation(arbT("IDS_TITLEPOINT_NORMAL_T2B"));
 }
 
 
@@ -166,9 +166,9 @@ ARBCalcPointsUKI::ARBCalcPointsUKI()
 }
 
 
-std::wstring ARBCalcPointsUKI::GetGenericName(double points, double faults) const
+wxString ARBCalcPointsUKI::GetGenericName(double points, double faults) const
 {
-	return StringUtil::GetTranslation(arbT("IDS_TITLEPOINT_NORMAL_UKI"));
+	return wxGetTranslation(arbT("IDS_TITLEPOINT_NORMAL_UKI"));
 }
 
 
@@ -242,9 +242,9 @@ ARBCalcPointsTop10USDAA::ARBCalcPointsTop10USDAA()
 }
 
 
-std::wstring ARBCalcPointsTop10USDAA::GetGenericName(double points, double faults) const
+wxString ARBCalcPointsTop10USDAA::GetGenericName(double points, double faults) const
 {
-	return StringUtil::GetTranslation(arbT("IDS_TITLEPOINT_TOP10_USDAA"));
+	return wxGetTranslation(arbT("IDS_TITLEPOINT_TOP10_USDAA"));
 }
 
 

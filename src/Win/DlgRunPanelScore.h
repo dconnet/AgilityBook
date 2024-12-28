@@ -67,7 +67,7 @@ public:
 	bool Validate() override;
 	bool Save() override;
 
-	std::wstring GetCurrentVenueName() const;
+	wxString GetCurrentVenueName() const;
 
 private:
 	CDlgDogVenueData* GetVenueData(int index) const;

@@ -44,7 +44,7 @@ constexpr wchar_t OTHERPTS_COUNT_LEVELBYEVENT[] = L"LevelByEvent";
 } // namespace
 
 
-void ARBConfigOtherPoints::GetTallyValidValues(std::vector<std::wstring>& outValues)
+void ARBConfigOtherPoints::GetTallyValidValues(std::vector<wxString>& outValues)
 {
 	outValues.clear();
 	outValues.push_back(OTHERPTS_COUNT_ALL);
@@ -172,7 +172,7 @@ bool ARBConfigOtherPoints::Load(ElementNodePtr const& inTree, ARBVersion const& 
 		return false;
 	}
 	inTree->GetAttrib(ATTRIB_OTHERPTS_DEFAULT, m_Default);
-	std::wstring attrib;
+	wxString attrib;
 	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_OTHERPTS_COUNT, attrib) || 0 == attrib.length())
 	{
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT));
@@ -188,7 +188,7 @@ bool ARBConfigOtherPoints::Load(ElementNodePtr const& inTree, ARBVersion const& 
 		m_Tally = ARBOtherPointsTally::LevelByEvent;
 	else
 	{
-		std::wstring msg(Localization()->ValidValues());
+		wxString msg(Localization()->ValidValues());
 		msg += OTHERPTS_COUNT_ALL;
 		msg += L", ";
 		msg += OTHERPTS_COUNT_ALLBYEVENT;
@@ -196,8 +196,7 @@ bool ARBConfigOtherPoints::Load(ElementNodePtr const& inTree, ARBVersion const& 
 		msg += OTHERPTS_COUNT_LEVEL;
 		msg += L", ";
 		msg += OTHERPTS_COUNT_LEVELBYEVENT;
-		ioCallback.LogMessage(
-			Localization()->ErrorInvalidAttributeValue(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT, msg));
 		return false;
 	}
 	m_Desc = inTree->GetValue();
@@ -248,7 +247,7 @@ bool ARBConfigOtherPointsList::Load(
 }
 
 
-bool ARBConfigOtherPointsList::VerifyOtherPoints(std::wstring const& inName) const
+bool ARBConfigOtherPointsList::VerifyOtherPoints(wxString const& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -259,7 +258,7 @@ bool ARBConfigOtherPointsList::VerifyOtherPoints(std::wstring const& inName) con
 }
 
 
-bool ARBConfigOtherPointsList::FindOtherPoints(std::wstring const& inName, ARBConfigOtherPointsPtr* outPoints) const
+bool ARBConfigOtherPointsList::FindOtherPoints(wxString const& inName, ARBConfigOtherPointsPtr* outPoints) const
 {
 	if (outPoints)
 		outPoints->reset();
@@ -289,9 +288,9 @@ bool ARBConfigOtherPointsList::AddOtherPoints(ARBConfigOtherPointsPtr const& inO
 }
 
 
-bool ARBConfigOtherPointsList::DeleteOtherPoints(std::wstring const& inName)
+bool ARBConfigOtherPointsList::DeleteOtherPoints(wxString const& inName)
 {
-	std::wstring name(inName);
+	wxString name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

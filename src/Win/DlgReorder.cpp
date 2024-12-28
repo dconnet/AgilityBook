@@ -187,7 +187,7 @@ void CDlgReorder::InitDlg(wxWindow* pParent)
 	{
 		for (ARBDogList::iterator iter = m_Dogs->begin(); iter != m_Dogs->end(); ++iter)
 		{
-			m_ctrlList->Append(StringUtil::stringWX((*iter)->GetGenericName()), new CReorderListData((*iter)));
+			m_ctrlList->Append((*iter)->GetGenericName(), new CReorderListData((*iter)));
 		}
 	}
 	else if (m_Trial && m_ctrlTree)
@@ -199,14 +199,9 @@ void CDlgReorder::InitDlg(wxWindow* pParent)
 		{
 			ARBDogRunPtr pRun = *iter;
 			if (dates.end() == dates.find(pRun->GetDate()))
-				dates[pRun->GetDate()]
-					= m_ctrlTree->AppendItem(root, StringUtil::stringWX(pRun->GetDate().GetString()));
-			wxTreeItemId item = m_ctrlTree->AppendItem(
-				dates[pRun->GetDate()],
-				StringUtil::stringWX(pRun->GetName()),
-				-1,
-				1,
-				new CReorderTreeData(pRun));
+				dates[pRun->GetDate()] = m_ctrlTree->AppendItem(root, pRun->GetDate().GetString());
+			wxTreeItemId item
+				= m_ctrlTree->AppendItem(dates[pRun->GetDate()], pRun->GetName(), -1, 1, new CReorderTreeData(pRun));
 			if (m_Run == pRun || (!m_Run && !idSelect.IsOk()))
 				idSelect = item;
 		}

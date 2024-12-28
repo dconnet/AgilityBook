@@ -78,7 +78,7 @@ TEST_CASE("DogClub")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	virtual std::wstring GetGenericName() const
+			//	virtual wxString GetGenericName() const
 		}
 	}
 
@@ -148,7 +148,7 @@ TEST_CASE("DogClubList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	std::wstring GetPrimaryClubName() const;
+			//	wxString GetPrimaryClubName() const;
 		}
 	}
 
@@ -158,7 +158,7 @@ TEST_CASE("DogClubList")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	std::wstring GetPrimaryClubVenue() const;
+			//	wxString GetPrimaryClubVenue() const;
 		}
 	}
 
@@ -170,9 +170,9 @@ TEST_CASE("DogClubList")
 			TODO_TEST
 			//	bool FindEvent(
 			//			ARBConfig const& inConfig,
-			//			std::wstring const& inEvent,
-			//			std::wstring const& inDivision,
-			//			std::wstring const& inLevel,
+			//			wxString const& inEvent,
+			//			wxString const& inDivision,
+			//			wxString const& inLevel,
 			//			ARBDate const& inDate,
 			//			ARBErrorCallback& ioCallback,
 			//			ARBConfigEventPtr* outEvent = nullptr,
@@ -187,7 +187,7 @@ TEST_CASE("DogClubList")
 		{
 			TODO_TEST
 			//	bool FindVenue(
-			//			std::wstring const& inVenue,
+			//			wxString const& inVenue,
 			//			ARBDogClubPtr* outClub = nullptr) const;
 		}
 	}
@@ -199,12 +199,12 @@ TEST_CASE("DogClubList")
 		{
 			TODO_TEST
 			//	bool AddClub(
-			//			std::wstring const& inName,
-			//			std::wstring const& inVenue,
+			//			wxString const& inName,
+			//			wxString const& inVenue,
 			//			ARBDogClubPtr* outClub = nullptr);
 			//	bool DeleteClub(
-			//			std::wstring const& inName,
-			//			std::wstring const& inVenue);
+			//			wxString const& inName,
+			//			wxString const& inVenue);
 		}
 	}
 }

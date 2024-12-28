@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2015-01-01 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2010-01-21 Fixed calendar font selection.
@@ -50,9 +49,9 @@ using namespace ARBWin;
 
 namespace
 {
-std::wstring ForDisplay(std::wstring const& text)
+wxString ForDisplay(wxString const& text)
 {
-	return fmt::format(_("IDS_CALENDAR_DISPLAY_COLOR").wx_str(), text);
+	return wxString::Format(_("IDS_CALENDAR_DISPLAY_COLOR"), text);
 }
 } // namespace
 
@@ -307,7 +306,7 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 	m_ctrlCalEntries->SetToolTip(_("HIDC_OPT_CAL_ENTRIES"));
 	for (iColor = m_CalColors.begin(); iColor != m_CalColors.end(); ++iColor)
 	{
-		m_ctrlCalEntries->Append(StringUtil::stringWX(GetCalText((*iColor).first, false)));
+		m_ctrlCalEntries->Append(GetCalText((*iColor).first, false));
 	}
 	m_ctrlCalEntries->SetSelection(0);
 
@@ -468,9 +467,9 @@ void CDlgOptionsCalendar::Save()
 }
 
 
-std::wstring CDlgOptionsCalendar::GetCalText(ARBCalColorItem type, bool bForDisplay) const
+wxString CDlgOptionsCalendar::GetCalText(ARBCalColorItem type, bool bForDisplay) const
 {
-	std::wstring text;
+	wxString text;
 	switch (type)
 	{
 	case ARBCalColorItem::Past:
@@ -544,7 +543,7 @@ void CDlgOptionsCalendar::SetRichText()
 	std::vector<long> endLines;
 	endLines.push_back(0);
 
-	std::wstring data;
+	wxString data;
 	for (std::vector<tColorInfo>::iterator iColor = m_CalColors.begin(); iColor != m_CalColors.end(); ++iColor)
 	{
 		data += GetCalText((*iColor).first, true);
@@ -552,7 +551,7 @@ void CDlgOptionsCalendar::SetRichText()
 		endLines.push_back(static_cast<long>(data.length()));
 	}
 
-	m_ctrlCalView->ChangeValue(StringUtil::stringWX(data));
+	m_ctrlCalView->ChangeValue(data);
 
 	for (size_t i = 1; i < endLines.size(); ++i)
 	{

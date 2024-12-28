@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2015-04-22 Specifically use std::abs, on mac it used abs(int).
  * 2011-12-22 Switch to using Bind on wx2.9+.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -62,6 +61,7 @@
 #include <wx/config.h>
 #include <wx/mstream.h>
 #include <wx/settings.h>
+#include <sstream>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -99,7 +99,7 @@ public:
 	{
 		return m_pCal;
 	}
-	std::wstring OnNeedText(long iCol) const override;
+	wxString OnNeedText(long iCol) const override;
 	void OnNeedListItem(long iCol, wxListItem& info) const override;
 
 private:
@@ -110,9 +110,9 @@ private:
 };
 
 
-std::wstring CAgilityBookCalendarListViewData::OnNeedText(long iCol) const
+wxString CAgilityBookCalendarListViewData::OnNeedText(long iCol) const
 {
-	std::wstring str;
+	wxString str;
 	if (m_pCal)
 	{
 		switch (m_pView->m_Columns[iCol])
@@ -160,7 +160,7 @@ void CAgilityBookCalendarListViewData::OnNeedListItem(long iCol, wxListItem& inf
 	if (m_pCal)
 	{
 		info.SetMask(info.GetMask() | wxLIST_MASK_TEXT);
-		info.SetText(StringUtil::stringWX(OnNeedText(iCol)));
+		info.SetText(OnNeedText(iCol));
 		int idxImage = -1;
 		if (IO_CAL_START_DATE == m_pView->m_Columns[iCol])
 		{
@@ -445,7 +445,7 @@ bool CAgilityBookCalendarListView::CFindData::Search(CDlgFind* pDlg)
 		index = m_pView->m_Ctrl->GetItemCount() - 1;
 	for (; !bFound && 0 <= index && index < m_pView->m_Ctrl->GetItemCount(); index += inc)
 	{
-		std::set<std::wstring> strings;
+		std::set<wxString> strings;
 		if (SearchAll())
 		{
 			CAgilityBookCalendarListViewDataPtr pData = m_pView->GetItemCalData(index);
@@ -462,7 +462,7 @@ bool CAgilityBookCalendarListView::CFindData::Search(CDlgFind* pDlg)
 				info.SetMask(wxLIST_MASK_TEXT);
 				info.SetColumn(i);
 				m_pView->m_Ctrl->GetItem(info);
-				strings.insert(StringUtil::stringW(info.GetText()));
+				strings.insert(info.GetText());
 			}
 		}
 		for (auto const& str : strings)
@@ -476,7 +476,7 @@ bool CAgilityBookCalendarListView::CFindData::Search(CDlgFind* pDlg)
 	}
 	if (!bFound)
 	{
-		std::wstring msg = fmt::format(_("IDS_CANNOT_FIND").wx_str(), m_search.wc_str());
+		auto msg = wxString::Format(_("IDS_CANNOT_FIND"), m_search);
 		wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	return bFound;
@@ -627,16 +627,16 @@ bool CAgilityBookCalendarListView::IsFiltered() const
 }
 
 
-bool CAgilityBookCalendarListView::GetMessage(std::wstring& msg) const
+bool CAgilityBookCalendarListView::GetMessage(wxString& msg) const
 {
 	if (!m_Ctrl)
 		return false;
-	msg = fmt::format(_("IDS_NUM_EVENTS").wx_str(), m_Ctrl->GetItemCount());
+	msg = wxString::Format(_("IDS_NUM_EVENTS"), m_Ctrl->GetItemCount());
 	return true;
 }
 
 
-bool CAgilityBookCalendarListView::GetMessage2(std::wstring& msg) const
+bool CAgilityBookCalendarListView::GetMessage2(wxString& msg) const
 {
 	msg = _("IDS_INDICATOR_BLANK");
 	return true;
@@ -687,7 +687,7 @@ void CAgilityBookCalendarListView::OnUpdate(wxView* sender, wxObject* inHint)
 }
 
 
-void CAgilityBookCalendarListView::GetPrintLine(long item, std::vector<std::wstring>& line) const
+void CAgilityBookCalendarListView::GetPrintLine(long item, std::vector<wxString>& line) const
 {
 	if (m_Ctrl)
 		m_Ctrl->GetPrintLine(item, line);
@@ -713,9 +713,9 @@ void CAgilityBookCalendarListView::SetupColumns()
 	{
 		for (size_t iCol = 0; iCol < m_Columns.size(); ++iCol)
 		{
-			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[iCol]);
+			wxString str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[iCol]);
 			int fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[iCol]);
-			m_Ctrl->InsertColumn(static_cast<long>(iCol), StringUtil::stringWX(str), fmt);
+			m_Ctrl->InsertColumn(static_cast<long>(iCol), str, fmt);
 		}
 		m_SortColumn.Initialize();
 	}
@@ -1022,7 +1022,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 			GetDocument()->UpdateAllViews(this, &hint);
 			if (0 < nNewIsNotVisible)
 			{
-				std::wstring msg = fmt::format(_("IDS_NOT_VISIBLE").wx_str(), nNewIsNotVisible);
+				auto msg = wxString::Format(_("IDS_NOT_VISIBLE"), nNewIsNotVisible);
 				wxMessageBox(msg, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_WARNING);
 			}
 		}
@@ -1043,14 +1043,14 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 			if (!clpData.isOkay())
 				return true;
 
-			std::wstring data;
-			std::wstring html;
+			wxString data;
+			wxString html;
 			CClipboardDataTable table(data, html);
 
 			// Take care of the header, but only if more than one line is selected.
 			if (1 < indices.size() || indices.size() == static_cast<size_t>(m_Ctrl->GetItemCount()))
 			{
-				std::vector<std::wstring> line;
+				std::vector<wxString> line;
 				GetPrintLine(-1, line);
 				table.StartLine();
 				for (int i = 0; i < static_cast<int>(line.size()); ++i)
@@ -1074,7 +1074,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 					pData->GetCalendar()->Save(tree);
 					pData->GetCalendar()->iCalendar(iCalendar, nWarning);
 				}
-				std::vector<std::wstring> line;
+				std::vector<wxString> line;
 				GetPrintLine((*iter), line);
 				table.StartLine();
 				for (int i = 0; i < static_cast<int>(line.size()); ++i)
@@ -1087,7 +1087,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 
 			clpData.AddData(ARBClipFormat::Calendar, tree);
 			clpData.AddData(table);
-			clpData.AddData(ARBClipFormat::iCalendar, StringUtil::stringW(iCal.str()));
+			clpData.AddData(ARBClipFormat::iCalendar, iCal.str());
 			clpData.CommitData();
 		}
 	}
@@ -1283,14 +1283,14 @@ void CAgilityBookCalendarListView::OnViewCmd(wxCommandEvent& evt)
 void CAgilityBookCalendarListView::OnPrintView(wxCommandEvent& evt)
 {
 	CLogger::Log(L"MENU: CAgilityBookCalendarListView::OnPrintView");
-	wxGetApp().GetHtmlPrinter()->PrintText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
+	wxGetApp().GetHtmlPrinter()->PrintText(m_Ctrl->GetPrintDataAsHtmlTable());
 }
 
 
 void CAgilityBookCalendarListView::OnPreview(wxCommandEvent& evt)
 {
 	CLogger::Log(L"MENU: CAgilityBookCalendarListView::OnPreview");
-	wxGetApp().GetHtmlPrinter()->PreviewText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
+	wxGetApp().GetHtmlPrinter()->PreviewText(m_Ctrl->GetPrintDataAsHtmlTable());
 }
 
 } // namespace dconSoft

@@ -59,7 +59,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override
+	wxString GetGenericName() const override
 	{
 		return GetVenue() + L" " + GetNumber();
 	}
@@ -69,7 +69,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override;
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override;
 
 	/**
 	 * Load an existing point.
@@ -97,27 +97,27 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	std::wstring const& GetVenue() const
+	wxString const& GetVenue() const
 	{
 		return m_Venue;
 	}
-	void SetVenue(std::wstring const& inVenue)
+	void SetVenue(wxString const& inVenue)
 	{
 		m_Venue = inVenue;
 	}
-	std::wstring const& GetNumber() const
+	wxString const& GetNumber() const
 	{
 		return m_Number;
 	}
-	void SetNumber(std::wstring const& inNumber)
+	void SetNumber(wxString const& inNumber)
 	{
 		m_Number = inNumber;
 	}
-	std::wstring const& GetHeight() const
+	wxString const& GetHeight() const
 	{
 		return m_Height;
 	}
-	void SetHeight(std::wstring const& inHeight)
+	void SetHeight(wxString const& inHeight)
 	{
 		m_Height = inHeight;
 	}
@@ -129,21 +129,21 @@ public:
 	{
 		m_bReceived = inReceived;
 	}
-	std::wstring const& GetNote() const
+	wxString const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(std::wstring const& inNote)
+	void SetNote(wxString const& inNote)
 	{
 		m_Note = inNote;
 	}
 
 private:
-	std::wstring m_Venue;
-	std::wstring m_Number;
-	std::wstring m_Height;
+	wxString m_Venue;
+	wxString m_Number;
+	wxString m_Height;
 	bool m_bReceived;
-	std::wstring m_Note;
+	wxString m_Note;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -179,7 +179,7 @@ public:
 	 * @param inVenue Venue to tally.
 	 * @return Number of registration numbers found.
 	 */
-	int NumRegNumsInVenue(std::wstring const& inVenue) const;
+	int NumRegNumsInVenue(wxString const& inVenue) const;
 
 	/**
 	 * Rename a venue.
@@ -187,14 +187,14 @@ public:
 	 * @param inNewVenue New venue name.
 	 * @return Number of items updated.
 	 */
-	int RenameVenue(std::wstring const& inOldVenue, std::wstring const& inNewVenue);
+	int RenameVenue(wxString const& inOldVenue, wxString const& inNewVenue);
 
 	/**
 	 * Delete a venue.
 	 * @param inVenue Venue name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteVenue(std::wstring const& inVenue);
+	int DeleteVenue(wxString const& inVenue);
 
 	/**
 	 * Find a registration number.
@@ -202,7 +202,7 @@ public:
 	 * @param outRegNum Pointer to found object.
 	 * @return Whether the object was found.
 	 */
-	bool FindRegNum(std::wstring const& inVenue, ARBDogRegNumPtr* outRegNum = nullptr) const;
+	bool FindRegNum(wxString const& inVenue, ARBDogRegNumPtr* outRegNum = nullptr) const;
 
 	/**
 	 * Add a registration number, duplicates are allowed.
@@ -211,7 +211,7 @@ public:
 	 * @param outRegNum Pointer to new object.
 	 * @return Whether the object was added.
 	 */
-	bool AddRegNum(std::wstring const& inVenue, std::wstring const& inNumber, ARBDogRegNumPtr* outRegNum = nullptr);
+	bool AddRegNum(wxString const& inVenue, wxString const& inNumber, ARBDogRegNumPtr* outRegNum = nullptr);
 
 	/**
 	 * Add a registration number, duplicates are allowed.
@@ -226,7 +226,7 @@ public:
 	 * @param inNumber Registration number.
 	 * @return Number of objects deleted.
 	 */
-	int DeleteRegNum(std::wstring const& inVenue, std::wstring const& inNumber);
+	int DeleteRegNum(wxString const& inVenue, wxString const& inNumber);
 };
 
 } // namespace ARB

@@ -49,7 +49,7 @@ public:
 
 private:
 	CDlgFindLinksDataPtr GetItemLinkData(long item);
-	int GetImageIndex(std::wstring const& inLink);
+	int GetImageIndex(wxString const& inLink);
 	void UpdateButtons();
 	void Edit();
 

@@ -108,7 +108,7 @@ public:
 	}
 
 	virtual MenuIdentityPopup GetMenuID() const = 0;
-	virtual std::wstring OnNeedText() const = 0;
+	virtual wxString OnNeedText() const = 0;
 	virtual int OnNeedIcon() const = 0;
 
 	virtual void Properties() = 0;
@@ -166,7 +166,7 @@ public:
 	{
 		return IdMenuDog;
 	}
-	std::wstring OnNeedText() const override;
+	wxString OnNeedText() const override;
 	int OnNeedIcon() const override;
 
 	void Properties() override;
@@ -224,7 +224,7 @@ public:
 	{
 		return IdMenuTrial;
 	}
-	std::wstring OnNeedText() const override;
+	wxString OnNeedText() const override;
 	int OnNeedIcon() const override;
 
 	void Properties() override;
@@ -288,7 +288,7 @@ public:
 	{
 		return IdMenuRun;
 	}
-	std::wstring OnNeedText() const override;
+	wxString OnNeedText() const override;
 	int OnNeedIcon() const override;
 
 	void Properties() override;

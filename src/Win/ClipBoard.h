@@ -77,7 +77,7 @@ public:
 
 	bool GetData(ARBClipFormat clpFmt, ARBCommon::ElementNodePtr const& outTree);
 
-	bool GetData(std::wstring& outData);
+	bool GetData(wxString& outData);
 };
 
 
@@ -90,17 +90,17 @@ class CClipboardDataTable
 {
 	DECLARE_NO_COPY_IMPLEMENTED(CClipboardDataTable)
 public:
-	CClipboardDataTable(std::wstring& ioText, std::wstring& ioHtml);
+	CClipboardDataTable(wxString& ioText, wxString& ioHtml);
 	void Reset();
 	void StartLine();
 	void EndLine();
-	void Cell(int nCol, std::wstring const& inData);
+	void Cell(int nCol, wxString const& inData);
 	bool Write(CClipboardDataWriter& writer, bool bCommit);
 
 private:
 	bool m_Closed;
-	std::wstring& m_ioText;
-	std::wstring& m_ioHtml;
+	wxString& m_ioText;
+	wxString& m_ioHtml;
 };
 
 /**
@@ -116,9 +116,9 @@ public:
 	bool AddData(ARBClipFormat clpFmt, ARBCommon::ElementNodePtr const& inTree);
 
 	// Used to write special data.
-	bool AddData(ARBClipFormat clpFmt, std::wstring const& inData);
+	bool AddData(ARBClipFormat clpFmt, wxString const& inData);
 
-	bool AddData(std::wstring const& inData);
+	bool AddData(wxString const& inData);
 
 	bool AddData(CClipboardDataTable& inData);
 

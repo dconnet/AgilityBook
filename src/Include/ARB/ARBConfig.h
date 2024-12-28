@@ -12,7 +12,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2006-02-16 Cleaned up memory usage with smart pointers.
  * 2005-10-26 Added option to prevent auto-update user query.
@@ -29,8 +28,6 @@
 #include "ARBConfigVenue.h"
 #include "ARBTypes2.h"
 #include "LibwxARB.h"
-
-#include "fmt/xchar.h"
 
 
 namespace dconSoft
@@ -150,7 +147,7 @@ public:
 	 * @param inTitle Name of title.
 	 * @return Nice name (longname) of a title.
 	 */
-	std::wstring GetTitleNiceName(std::wstring const& inVenue, std::wstring const& inTitle) const;
+	wxString GetTitleNiceName(wxString const& inVenue, wxString const& inTitle) const;
 
 	/**
 	 * Convenience function to get the complete name of a title.
@@ -158,7 +155,7 @@ public:
 	 * @param bAbbrevFirst List Name before or after Longname.
 	 * @return Complete name of title (name + longname).
 	 */
-	std::wstring GetTitleCompleteName(ARBDogTitlePtr const& inTitle, bool bAbbrevFirst = true) const;
+	wxString GetTitleCompleteName(ARBDogTitlePtr const& inTitle, bool bAbbrevFirst = true) const;
 
 	/**
 	 * Update this configuration from inConfigNew.
@@ -167,7 +164,7 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(int indent, ARBConfig const& inConfigNew, fmt::wmemory_buffer& ioInfo);
+	bool Update(int indent, ARBConfig const& inConfigNew, wxString& ioInfo);
 
 	/*
 	 * Getters.

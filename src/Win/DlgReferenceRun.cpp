@@ -54,9 +54,9 @@ using namespace ARBWin;
 CDlgReferenceRun::CDlgReferenceRun(
 	CAgilityBookDoc* pDoc,
 	ARBDogRunPtr const& inRun,
-	std::set<std::wstring> const& inHeights,
-	std::set<std::wstring> const& inNames,
-	std::set<std::wstring> const& inBreeds,
+	std::set<wxString> const& inHeights,
+	std::set<wxString> const& inNames,
+	std::set<wxString> const& inBreeds,
 	ARBDogReferenceRunPtr const& inRef,
 	wxWindow* pParent)
 	: wxDialog()
@@ -68,11 +68,11 @@ CDlgReferenceRun::CDlgReferenceRun(
 	, m_Time(inRef->GetTime())
 	, m_ctrlTime(nullptr)
 	, m_ctrlYPS(nullptr)
-	, m_Points(StringUtil::stringWX(inRef->GetScore()))
-	, m_Height(StringUtil::stringWX(inRef->GetHeight()))
-	, m_Name(StringUtil::stringWX(inRef->GetName()))
-	, m_Breed(StringUtil::stringWX(inRef->GetBreed()))
-	, m_Notes(StringUtil::stringWX(inRef->GetNote()))
+	, m_Points(inRef->GetScore())
+	, m_Height(inRef->GetHeight())
+	, m_Name(inRef->GetName())
+	, m_Breed(inRef->GetBreed())
+	, m_Notes(inRef->GetNote())
 	, m_trace("CDlgReferenceRun")
 {
 	if (!pParent)
@@ -88,9 +88,9 @@ CDlgReferenceRun::CDlgReferenceRun(
 	if (m_Points.empty())
 		m_Points = L"0";
 	if (m_Height.empty())
-		m_Height = StringUtil::stringWX(CAgilityBookOptions::GetLastEnteredRefHeight());
+		m_Height = CAgilityBookOptions::GetLastEnteredRefHeight();
 
-	std::wstring strYPS;
+	wxString strYPS;
 	double yps;
 	if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), m_Time, yps))
 	{
@@ -143,7 +143,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	m_ctrlYPS = new wxStaticText(
 		this,
 		wxID_ANY,
-		strYPS.c_str(),
+		strYPS,
 		wxDefaultPosition,
 		wxSize(wxDLG_UNIT_X(this, 25), -1),
 		wxALIGN_CENTRE | wxSTATIC_BORDER);
@@ -169,10 +169,10 @@ CDlgReferenceRun::CDlgReferenceRun(
 	textHt->Wrap(-1);
 
 	wxArrayString choices;
-	std::set<std::wstring>::const_iterator iter;
+	std::set<wxString>::const_iterator iter;
 	for (iter = inHeights.begin(); iter != inHeights.end(); ++iter)
 	{
-		choices.Add(StringUtil::stringWX(*iter));
+		choices.Add(*iter);
 	}
 	choices.Sort();
 	wxComboBox* ctrlHt = new wxComboBox(
@@ -195,7 +195,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	choices.Clear();
 	for (iter = inNames.begin(); iter != inNames.end(); ++iter)
 	{
-		choices.Add(StringUtil::stringWX(*iter));
+		choices.Add(*iter);
 	}
 	choices.Sort();
 	wxComboBox* ctrlName = new wxComboBox(
@@ -218,7 +218,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	choices.Clear();
 	for (iter = inBreeds.begin(); iter != inBreeds.end(); ++iter)
 	{
-		choices.Add(StringUtil::stringWX(*iter));
+		choices.Add(*iter);
 	}
 	choices.Sort();
 	wxComboBox* ctrlBreed = new wxComboBox(
@@ -303,8 +303,8 @@ void CDlgReferenceRun::OnEnChangeRefRunTime(wxCommandEvent& evt)
 {
 	wxString strTime = m_ctrlTime->GetValue();
 	double time = 0.0;
-	std::wstring strYPS;
-	if (StringUtil::ToDouble(StringUtil::stringW(strTime), time))
+	wxString strYPS;
+	if (StringUtil::ToDouble(strTime, time))
 	{
 		double yps;
 		if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), time, yps))
@@ -312,7 +312,7 @@ void CDlgReferenceRun::OnEnChangeRefRunTime(wxCommandEvent& evt)
 			strYPS = ARBDouble::ToString(yps, 3);
 		}
 	}
-	m_ctrlYPS->SetLabel(StringUtil::stringWX(strYPS));
+	m_ctrlYPS->SetLabel(strYPS);
 	evt.Skip();
 }
 
@@ -322,16 +322,16 @@ void CDlgReferenceRun::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	CAgilityBookOptions::SetLastEnteredRefHeight(m_Height.wc_str());
+	CAgilityBookOptions::SetLastEnteredRefHeight(m_Height);
 
 	m_Ref->SetQ(m_Q);
 	m_Ref->SetPlace(m_Place);
-	m_Ref->SetScore(StringUtil::stringW(m_Points));
+	m_Ref->SetScore(m_Points);
 	m_Ref->SetTime(m_Time); // Letting the prec default to 2 is fine.
-	m_Ref->SetName(StringUtil::stringW(m_Name));
-	m_Ref->SetHeight(StringUtil::stringW(m_Height));
-	m_Ref->SetBreed(StringUtil::stringW(m_Breed));
-	m_Ref->SetNote(StringUtil::stringW(m_Notes));
+	m_Ref->SetName(m_Name);
+	m_Ref->SetHeight(m_Height);
+	m_Ref->SetBreed(m_Breed);
+	m_Ref->SetNote(m_Notes);
 
 	EndDialog(wxID_OK);
 }

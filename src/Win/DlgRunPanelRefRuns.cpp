@@ -84,7 +84,7 @@ public:
 	{
 	}
 	int OnCompare(CListDataPtr const& item, long iCol) const override;
-	std::wstring OnNeedText(long iCol) const override;
+	wxString OnNeedText(long iCol) const override;
 	ARBDogReferenceRunPtr GetData() const
 	{
 		return m_RefRun;
@@ -177,18 +177,18 @@ int CDlgDogRefRunData::OnCompare(CListDataPtr const& item, long iCol) const
 }
 
 
-std::wstring CDlgDogRefRunData::OnNeedText(long iCol) const
+wxString CDlgDogRefRunData::OnNeedText(long iCol) const
 {
-	std::wstring str;
+	wxString str;
 	switch (iCol)
 	{
 	default:
 		break;
 	case k_colQ:
-		str = fmt::format(L"{}", m_RefRun->GetQ().str());
+		str << m_RefRun->GetQ().str();
 		break;
 	case k_colPlace:
-		str = fmt::format(L"{}", m_RefRun->GetPlace());
+		str << m_RefRun->GetPlace();
 		break;
 	case k_colScore:
 		str = m_RefRun->GetScore();
@@ -345,7 +345,7 @@ bool CDlgRunPanelRefRuns::IsRefRunMe()
 
 void CDlgRunPanelRefRuns::CreateRefRunMe()
 {
-	std::wstring venue;
+	wxString venue;
 	if (m_Run->GetClub())
 		venue = m_Run->GetClub()->GetVenue();
 	else
@@ -440,7 +440,7 @@ void CDlgRunPanelRefRuns::ListRefRuns()
 }
 
 
-void CDlgRunPanelRefRuns::GetAllHeights(std::set<std::wstring>& outNames)
+void CDlgRunPanelRefRuns::GetAllHeights(std::set<wxString>& outNames)
 {
 	m_pDoc->Book().GetAllHeights(outNames);
 	for (long index = 0; index < m_ctrlRefRuns->GetItemCount(); ++index)
@@ -448,7 +448,7 @@ void CDlgRunPanelRefRuns::GetAllHeights(std::set<std::wstring>& outNames)
 		ARBDogReferenceRunPtr pRefRun = GetReferenceData(index)->GetData();
 		if (pRefRun)
 		{
-			std::wstring const& ht = pRefRun->GetHeight();
+			wxString const& ht = pRefRun->GetHeight();
 			if (0 < ht.length())
 				outNames.insert(ht);
 		}
@@ -456,7 +456,7 @@ void CDlgRunPanelRefRuns::GetAllHeights(std::set<std::wstring>& outNames)
 }
 
 
-void CDlgRunPanelRefRuns::GetAllCallNames(std::set<std::wstring>& outNames)
+void CDlgRunPanelRefRuns::GetAllCallNames(std::set<wxString>& outNames)
 {
 	m_pDoc->Book().GetAllCallNames(outNames);
 	for (int index = 0; index < m_ctrlRefRuns->GetItemCount(); ++index)
@@ -464,7 +464,7 @@ void CDlgRunPanelRefRuns::GetAllCallNames(std::set<std::wstring>& outNames)
 		ARBDogReferenceRunPtr pRefRun = GetReferenceData(index)->GetData();
 		if (pRefRun)
 		{
-			std::wstring const& ht = pRefRun->GetName();
+			wxString const& ht = pRefRun->GetName();
 			if (0 < ht.length())
 				outNames.insert(ht);
 		}
@@ -472,7 +472,7 @@ void CDlgRunPanelRefRuns::GetAllCallNames(std::set<std::wstring>& outNames)
 }
 
 
-void CDlgRunPanelRefRuns::GetAllBreeds(std::set<std::wstring>& outNames)
+void CDlgRunPanelRefRuns::GetAllBreeds(std::set<wxString>& outNames)
 {
 	m_pDoc->Book().GetAllBreeds(outNames);
 	for (int index = 0; index < m_ctrlRefRuns->GetItemCount(); ++index)
@@ -480,7 +480,7 @@ void CDlgRunPanelRefRuns::GetAllBreeds(std::set<std::wstring>& outNames)
 		ARBDogReferenceRunPtr pRefRun = GetReferenceData(index)->GetData();
 		if (pRefRun)
 		{
-			std::wstring const& ht = pRefRun->GetBreed();
+			wxString const& ht = pRefRun->GetBreed();
 			if (0 < ht.length())
 				outNames.insert(ht);
 		}
@@ -493,7 +493,7 @@ void CDlgRunPanelRefRuns::EditRefRun()
 	long nItem = m_ctrlRefRuns->GetFirstSelected();
 	if (0 <= nItem)
 	{
-		std::set<std::wstring> heights, names, breeds;
+		std::set<wxString> heights, names, breeds;
 		GetAllHeights(heights);
 		GetAllCallNames(names);
 		GetAllBreeds(breeds);
@@ -537,7 +537,7 @@ void CDlgRunPanelRefRuns::OnRefRunNew(wxCommandEvent& evt)
 	ARBDogReferenceRunPtr ref(ARBDogReferenceRun::New());
 	if (ARBScoringType::ByTime == m_Run->GetScoring().GetType())
 	{
-		std::wstring venue;
+		wxString venue;
 		if (m_Run->GetClub())
 			venue = m_Run->GetClub()->GetVenue();
 		else
@@ -553,7 +553,7 @@ void CDlgRunPanelRefRuns::OnRefRunNew(wxCommandEvent& evt)
 				nullptr,
 				&pScoring))
 		{
-			std::wstring nScore;
+			wxString nScore;
 			switch (pScoring->GetScoringStyle())
 			{
 			case ARBScoringStyle::Unknown:
@@ -576,7 +576,7 @@ void CDlgRunPanelRefRuns::OnRefRunNew(wxCommandEvent& evt)
 		}
 	}
 	ref->SetQ(Q::Q);
-	std::set<std::wstring> heights, names, breeds;
+	std::set<wxString> heights, names, breeds;
 	GetAllHeights(heights);
 	GetAllCallNames(names);
 	GetAllBreeds(breeds);

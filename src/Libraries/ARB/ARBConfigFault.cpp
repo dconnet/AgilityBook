@@ -150,7 +150,7 @@ bool ARBConfigFaultList::Load(ElementNodePtr const& inTree, ARBVersion const& in
 }
 
 
-bool ARBConfigFaultList::FindFault(std::wstring const& inName, ARBConfigFaultPtr* outFault) const
+bool ARBConfigFaultList::FindFault(wxString const& inName, ARBConfigFaultPtr* outFault) const
 {
 	if (outFault)
 		outFault->reset();
@@ -167,7 +167,7 @@ bool ARBConfigFaultList::FindFault(std::wstring const& inName, ARBConfigFaultPtr
 }
 
 
-bool ARBConfigFaultList::AddFault(std::wstring const& inName, ARBConfigFaultPtr* outFault)
+bool ARBConfigFaultList::AddFault(wxString const& inName, ARBConfigFaultPtr* outFault)
 {
 	if (outFault)
 		outFault->reset();
@@ -182,9 +182,9 @@ bool ARBConfigFaultList::AddFault(std::wstring const& inName, ARBConfigFaultPtr*
 }
 
 
-bool ARBConfigFaultList::DeleteFault(std::wstring const& inName)
+bool ARBConfigFaultList::DeleteFault(wxString const& inName)
 {
-	std::wstring name(inName);
+	wxString name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

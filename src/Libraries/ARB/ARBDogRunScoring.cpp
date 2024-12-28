@@ -229,7 +229,7 @@ bool ARBDogRunScoring::Load(
 	ARBErrorCallback& ioCallback)
 {
 	assert(inTree);
-	std::wstring const& name = inTree->GetName();
+	wxString const& name = inTree->GetName();
 	if (!inTree
 		|| !(
 			name == TREE_BY_TIME || name == TREE_BY_OPENCLOSE || name == TREE_BY_POINTS || name == TREE_BY_SPEED
@@ -274,7 +274,7 @@ bool ARBDogRunScoring::Load(
 					ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
 						TREE_SCORING,
 						ATTRIB_SCORING_HAS_TABLE,
-						Localization()->ValidValuesBool().c_str()));
+						Localization()->ValidValuesBool()));
 					// Report the error, but keep going.
 					m_Table = false;
 				}

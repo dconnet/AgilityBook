@@ -158,7 +158,7 @@ bool ARBDogReferenceRun::operator==(ARBDogReferenceRun const& rhs) const
 }
 
 
-size_t ARBDogReferenceRun::GetSearchStrings(std::set<std::wstring>& ioStrings) const
+size_t ARBDogReferenceRun::GetSearchStrings(std::set<wxString>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -200,7 +200,7 @@ bool ARBDogReferenceRun::Load(
 	if (!inTree || inTree->GetName() != TREE_REF_RUN)
 		return false;
 
-	std::wstring attrib;
+	wxString attrib;
 
 	if (ARBAttribLookup::Found != inTree->GetAttrib(ATTRIB_REF_RUN_Q, attrib))
 	{

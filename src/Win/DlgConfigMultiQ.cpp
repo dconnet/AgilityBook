@@ -58,8 +58,8 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 	, m_pVenue(inVenue)
 	, m_pOrigMultiQ(inMultiQ)
 	, m_pMultiQ(inMultiQ->Clone())
-	, m_Name(StringUtil::stringWX(inMultiQ->GetName()))
-	, m_ShortName(StringUtil::stringWX(inMultiQ->GetShortName()))
+	, m_Name(inMultiQ->GetName())
+	, m_ShortName(inMultiQ->GetShortName())
 	, m_bFrom(inMultiQ->GetValidFrom().IsValid())
 	, m_ctrlDateFrom(nullptr)
 	, m_DateFrom(inMultiQ->GetValidFrom())
@@ -227,10 +227,10 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 	size_t n = m_pMultiQ->GetNumItems();
 	for (size_t i = 0; i < n; ++i)
 	{
-		std::wstring div, level, evt;
+		wxString div, level, evt;
 		if (m_pMultiQ->GetItem(i, div, level, evt))
 		{
-			int idx = m_ctrlItems->InsertItem(static_cast<int>(i), StringUtil::stringWX(div));
+			int idx = m_ctrlItems->InsertItem(static_cast<int>(i), div);
 			SetListColumnText(m_ctrlItems, idx, 1, level);
 			SetListColumnText(m_ctrlItems, idx, 2, evt);
 		}
@@ -266,9 +266,9 @@ void CDlgConfigMultiQ::EditItem()
 	int idx = m_ctrlItems->GetFirstSelected();
 	if (0 <= idx)
 	{
-		std::wstring div = GetListColumnText(m_ctrlItems, idx, 0);
-		std::wstring level = GetListColumnText(m_ctrlItems, idx, 1);
-		std::wstring evt = GetListColumnText(m_ctrlItems, idx, 2);
+		wxString div = GetListColumnText(m_ctrlItems, idx, 0);
+		wxString level = GetListColumnText(m_ctrlItems, idx, 1);
+		wxString evt = GetListColumnText(m_ctrlItems, idx, 2);
 		ARBDate date = ARBDate::Today();
 		if (m_bFrom)
 			date = m_DateFrom;
@@ -281,7 +281,7 @@ void CDlgConfigMultiQ::EditItem()
 				m_ctrlItems->DeleteItem(idx);
 			if (m_pMultiQ->AddItem(dlg.GetDivision(), dlg.GetLevel(), dlg.GetEvent()))
 			{
-				idx = m_ctrlItems->InsertItem(idx, StringUtil::stringWX(dlg.GetDivision()));
+				idx = m_ctrlItems->InsertItem(idx, dlg.GetDivision());
 				SetListColumnText(m_ctrlItems, idx, 1, dlg.GetLevel());
 				SetListColumnText(m_ctrlItems, idx, 2, dlg.GetEvent());
 				m_ctrlItems->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
@@ -350,7 +350,7 @@ void CDlgConfigMultiQ::OnAdd(wxCommandEvent& evt)
 	{
 		if (m_pMultiQ->AddItem(dlg.GetDivision(), dlg.GetLevel(), dlg.GetEvent()))
 		{
-			int idx = m_ctrlItems->InsertItem(m_ctrlItems->GetItemCount(), StringUtil::stringWX(dlg.GetDivision()));
+			int idx = m_ctrlItems->InsertItem(m_ctrlItems->GetItemCount(), dlg.GetDivision());
 			SetListColumnText(m_ctrlItems, idx, 1, dlg.GetLevel());
 			SetListColumnText(m_ctrlItems, idx, 2, dlg.GetEvent());
 			m_ctrlItems->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
@@ -375,9 +375,9 @@ void CDlgConfigMultiQ::OnRemove(wxCommandEvent& evt)
 	int idx = m_ctrlItems->GetFirstSelected();
 	if (0 <= idx)
 	{
-		std::wstring div = GetListColumnText(m_ctrlItems, idx, 0);
-		std::wstring level = GetListColumnText(m_ctrlItems, idx, 1);
-		std::wstring evnt = GetListColumnText(m_ctrlItems, idx, 2);
+		wxString div = GetListColumnText(m_ctrlItems, idx, 0);
+		wxString level = GetListColumnText(m_ctrlItems, idx, 1);
+		wxString evnt = GetListColumnText(m_ctrlItems, idx, 2);
 		if (m_pMultiQ->RemoveItem(div, level, evnt))
 			m_ctrlItems->DeleteItem(idx);
 		else
@@ -391,7 +391,7 @@ void CDlgConfigMultiQ::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	std::wstring stdName(StringUtil::stringW(m_Name));
+	wxString stdName(m_Name);
 	if (m_pMultiQ->GetName() != stdName)
 	{
 		if (m_pVenue->GetMultiQs().FindMultiQ(stdName))
@@ -402,8 +402,8 @@ void CDlgConfigMultiQ::OnOk(wxCommandEvent& evt)
 		}
 	}
 
-	m_pMultiQ->SetName(StringUtil::stringW(m_Name));
-	m_pMultiQ->SetShortName(StringUtil::stringW(m_ShortName));
+	m_pMultiQ->SetName(m_Name);
+	m_pMultiQ->SetShortName(m_ShortName);
 	if (!m_bFrom)
 		m_DateFrom.clear();
 	m_pMultiQ->SetValidFrom(m_DateFrom);
@@ -413,9 +413,9 @@ void CDlgConfigMultiQ::OnOk(wxCommandEvent& evt)
 	m_pMultiQ->RemoveAllItems();
 	for (int idx = m_ctrlItems->GetItemCount() - 1; idx >= 0; --idx)
 	{
-		std::wstring div = GetListColumnText(m_ctrlItems, idx, 0);
-		std::wstring level = GetListColumnText(m_ctrlItems, idx, 1);
-		std::wstring evnt = GetListColumnText(m_ctrlItems, idx, 2);
+		wxString div = GetListColumnText(m_ctrlItems, idx, 0);
+		wxString level = GetListColumnText(m_ctrlItems, idx, 1);
+		wxString evnt = GetListColumnText(m_ctrlItems, idx, 2);
 		m_pMultiQ->AddItem(div, level, evnt);
 	}
 	*m_pOrigMultiQ = *m_pMultiQ;

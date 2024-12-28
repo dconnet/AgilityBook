@@ -12,7 +12,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2015-10-29 Add Save override.
  * 2012-09-29 Strip the Runs View.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -101,7 +100,7 @@ class CErrorCallback : public ARB::ARBErrorCallback
 public:
 	CErrorCallback();
 	bool OnError(wchar_t const* const pMsg) override;
-	fmt::wmemory_buffer m_ErrMsg;
+	wxString m_ErrMsg;
 };
 
 
@@ -115,7 +114,7 @@ public:
 
 	bool StatusBarContextMenu(wxWindow* parent, int id, wxPoint const& point);
 
-	std::wstring AddDogToCaption(std::wstring const& caption) const;
+	wxString AddDogToCaption(wxString const& caption) const;
 
 	// Data
 	ARB::ARBDogPtr GetCurrentDog() const;
@@ -172,7 +171,7 @@ public:
 		ARB::ARBDogTrialPtr const& inTrial,
 		ARB::ARBDogRunPtr const& inRun);
 	bool ResetVisibility(std::vector<CVenueFilter> const& venues, ARB::ARBDogTitlePtr const& inTitle);
-	bool ResetVisibility(std::set<std::wstring> const& names, ARB::ARBTrainingPtr const& inTraining);
+	bool ResetVisibility(std::set<wxString> const& names, ARB::ARBTrainingPtr const& inTraining);
 
 	bool ShowPointsAsHtml(bool bHtml);
 	void BackupFile(wxString const& lpszPathName);
@@ -187,9 +186,9 @@ private:
 	CAgilityBookCalendarView* GetCalendarView() const;
 	CAgilityBookTrainingView* GetTrainingView() const;
 	bool IsDocumentUpdatable(wxString const& filename) const;
-	std::wstring GenerateHash(wxString const& filename) const;
+	wxString GenerateHash(wxString const& filename) const;
 
-	std::wstring m_fileHash;
+	wxString m_fileHash;
 	ARB::ARBAgilityRecordBook m_Records; ///< The real records.
 	CStatusHandler* m_StatusData;
 	ARB::ARBDogPtr m_pCurrentDog;

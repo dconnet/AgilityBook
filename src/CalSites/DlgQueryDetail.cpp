@@ -159,15 +159,15 @@ CDlgQueryDetail::CDlgQueryDetail(
 }
 
 
-std::wstring CDlgQueryDetail::GetDetailCode() const
+wxString CDlgQueryDetail::GetDetailCode() const
 {
-	return StringUtil::stringW(m_Code);
+	return m_Code;
 }
 
 
-std::wstring CDlgQueryDetail::GetDetailName() const
+wxString CDlgQueryDetail::GetDetailName() const
 {
-	return StringUtil::stringW(m_Name);
+	return m_Name;
 }
 
 
@@ -179,7 +179,7 @@ void CDlgQueryDetail::OnSelchangeVenues(wxCommandEvent& evt)
 		ARBConfigVenuePtr pVenue = m_ctrlVenues->GetVenue(idx);
 		if (pVenue)
 		{
-			wxString wxName(StringUtil::stringWX(pVenue->GetName()));
+			wxString wxName(pVenue->GetName());
 			if (m_strCode != wxName)
 			{
 				TransferDataFromWindow();

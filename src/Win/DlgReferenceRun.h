@@ -39,9 +39,9 @@ public:
 	CDlgReferenceRun(
 		CAgilityBookDoc* pDoc,
 		ARB::ARBDogRunPtr const& inRun,
-		std::set<std::wstring> const& inHeights,
-		std::set<std::wstring> const& inNames,
-		std::set<std::wstring> const& inBreeds,
+		std::set<wxString> const& inHeights,
+		std::set<wxString> const& inNames,
+		std::set<wxString> const& inBreeds,
 		ARB::ARBDogReferenceRunPtr const& inRef,
 		wxWindow* pParent = nullptr);
 

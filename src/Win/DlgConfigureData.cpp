@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2016-06-19 Add support for Lifetime names.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-02-11 Ported to wxWidgets.
@@ -68,12 +67,12 @@ CDlgConfigureDataVenue::CDlgConfigureDataVenue(ARBConfigVenuePtr const& inVenue)
 }
 
 
-std::wstring CDlgConfigureDataVenue::OnNeedText() const
+wxString CDlgConfigureDataVenue::OnNeedText() const
 {
-	std::wstring str(OnNeedText(0));
+	wxString str(OnNeedText(0));
 	for (int i = 1; i <= 2; ++i)
 	{
-		std::wstring s(OnNeedText(i));
+		wxString s(OnNeedText(i));
 		if (!s.empty())
 		{
 			str += L"  " + s;
@@ -83,9 +82,9 @@ std::wstring CDlgConfigureDataVenue::OnNeedText() const
 }
 
 
-std::wstring CDlgConfigureDataVenue::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 {
-	std::wstring str;
+	wxString str;
 	switch (iColumn)
 	{
 	case 0:
@@ -112,13 +111,13 @@ CDlgConfigureDataFault::CDlgConfigureDataFault(ARBConfigFaultPtr const& inFault)
 }
 
 
-std::wstring CDlgConfigureDataFault::OnNeedText() const
+wxString CDlgConfigureDataFault::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-std::wstring CDlgConfigureDataFault::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataFault::OnNeedText(int iColumn) const
 {
 	return m_Fault->GetName();
 }
@@ -132,13 +131,13 @@ CDlgConfigureDataOtherPoints::CDlgConfigureDataOtherPoints(ARBConfigOtherPointsP
 }
 
 
-std::wstring CDlgConfigureDataOtherPoints::OnNeedText() const
+wxString CDlgConfigureDataOtherPoints::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-std::wstring CDlgConfigureDataOtherPoints::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataOtherPoints::OnNeedText(int iColumn) const
 {
 	return m_OtherPoints->GetName();
 }
@@ -152,13 +151,13 @@ CDlgConfigureDataDivision::CDlgConfigureDataDivision(CDlgConfigVenue* pDlg, ARBC
 }
 
 
-std::wstring CDlgConfigureDataDivision::OnNeedText() const
+wxString CDlgConfigureDataDivision::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-std::wstring CDlgConfigureDataDivision::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataDivision::OnNeedText(int iColumn) const
 {
 	return m_Div->GetName();
 }
@@ -170,7 +169,7 @@ void CDlgConfigureDataDivision::AddSubItems()
 		 ++iterLevel)
 	{
 		CDlgConfigureDataLevel* pLevData = new CDlgConfigureDataLevel(m_pDlg, m_Div, *iterLevel);
-		m_pDlg->m_ctrlItems->AppendItem(GetId(), StringUtil::stringWX(pLevData->OnNeedText()), -1, -1, pLevData);
+		m_pDlg->m_ctrlItems->AppendItem(GetId(), pLevData->OnNeedText(), -1, -1, pLevData);
 		pLevData->AddSubItems();
 	}
 }
@@ -180,7 +179,7 @@ bool CDlgConfigureDataDivision::DoAdd()
 {
 	bool added = false;
 	bool done = false;
-	std::wstring name;
+	wxString name;
 	while (!done)
 	{
 		done = true;
@@ -198,9 +197,7 @@ bool CDlgConfigureDataDivision::DoAdd()
 			if (m_Div->GetLevels().AddLevel(name, &pNewLevel))
 			{
 				CDlgConfigureDataLevel* pData = new CDlgConfigureDataLevel(m_pDlg, m_Div, pNewLevel);
-				wxTreeItemId level
-					= m_pDlg->m_ctrlItems
-						  ->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+				wxTreeItemId level = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
 				m_pDlg->m_ctrlItems->SelectItem(level);
 				added = true;
 			}
@@ -211,8 +208,8 @@ bool CDlgConfigureDataDivision::DoAdd()
 
 bool CDlgConfigureDataDivision::DoEdit()
 {
-	std::wstring oldName = m_Div->GetName();
-	std::wstring name(oldName);
+	wxString oldName = m_Div->GetName();
+	wxString name(oldName);
 	if (0 < m_pDlg->m_Book.GetDogs()
 				.NumMultiHostedTrialsInDivision(m_pDlg->m_Book.GetConfig(), m_pDlg->m_pVenue->GetName(), name))
 	{
@@ -256,7 +253,7 @@ bool CDlgConfigureDataDivision::DoEdit()
 
 bool CDlgConfigureDataDivision::DoDelete()
 {
-	std::wstring div = m_Div->GetName();
+	wxString div = m_Div->GetName();
 	// If we were able to delete it...
 	if (m_pDlg->m_pVenue->GetDivisions().DeleteDivision(div, m_pDlg->m_pVenue->GetEvents()))
 	{
@@ -289,13 +286,13 @@ CDlgConfigureDataLevel::CDlgConfigureDataLevel(
 }
 
 
-std::wstring CDlgConfigureDataLevel::OnNeedText() const
+wxString CDlgConfigureDataLevel::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-std::wstring CDlgConfigureDataLevel::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataLevel::OnNeedText(int iColumn) const
 {
 	return m_Level->GetName();
 }
@@ -311,8 +308,7 @@ void CDlgConfigureDataLevel::AddSubItems()
 		{
 			CDlgConfigureDataSubLevel* pSubLevelData
 				= new CDlgConfigureDataSubLevel(m_pDlg, m_Division, m_Level, *iterSubLevel);
-			m_pDlg->m_ctrlItems
-				->AppendItem(GetId(), StringUtil::stringWX(pSubLevelData->OnNeedText()), -1, -1, pSubLevelData);
+			m_pDlg->m_ctrlItems->AppendItem(GetId(), pSubLevelData->OnNeedText(), -1, -1, pSubLevelData);
 			pSubLevelData->AddSubItems();
 		}
 	}
@@ -323,7 +319,7 @@ bool CDlgConfigureDataLevel::DoAdd()
 {
 	bool added = false;
 	bool done = false;
-	std::wstring name;
+	wxString name;
 	while (!done)
 	{
 		done = true;
@@ -342,9 +338,7 @@ bool CDlgConfigureDataLevel::DoAdd()
 			{
 				CDlgConfigureDataSubLevel* pData
 					= new CDlgConfigureDataSubLevel(m_pDlg, m_Division, m_Level, pNewSubLevel);
-				wxTreeItemId level
-					= m_pDlg->m_ctrlItems
-						  ->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
+				wxTreeItemId level = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
 				pData->AddSubItems();
 				m_pDlg->m_ctrlItems->SelectItem(level);
 				added = true;
@@ -359,8 +353,8 @@ bool CDlgConfigureDataLevel::DoEdit()
 {
 	bool bEdited = false;
 	bool done = false;
-	std::wstring oldName = m_Level->GetName();
-	std::wstring name(oldName);
+	wxString oldName = m_Level->GetName();
+	wxString name(oldName);
 	// If there are sublevels, don't ask the following question. If a level has
 	// sublevels, the level name isn't allowed to be used for an event.
 	if (0 == m_Level->GetSubLevels().size())
@@ -428,7 +422,7 @@ bool CDlgConfigureDataLevel::DoEdit()
 
 bool CDlgConfigureDataLevel::DoDelete()
 {
-	std::wstring level = m_Level->GetName();
+	wxString level = m_Level->GetName();
 	if (m_Division->GetLevels().DeleteLevel(m_Division->GetName(), level, m_pDlg->m_pVenue->GetEvents()))
 	{
 		m_pDlg->m_pVenue->GetMultiQs().DeleteLevel(level);
@@ -463,13 +457,13 @@ CDlgConfigureDataSubLevel::CDlgConfigureDataSubLevel(
 }
 
 
-std::wstring CDlgConfigureDataSubLevel::OnNeedText() const
+wxString CDlgConfigureDataSubLevel::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-std::wstring CDlgConfigureDataSubLevel::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataSubLevel::OnNeedText(int iColumn) const
 {
 	return m_SubLevel->GetName();
 }
@@ -479,8 +473,8 @@ bool CDlgConfigureDataSubLevel::DoEdit()
 {
 	bool bEdited = false;
 	bool done = false;
-	std::wstring oldName = m_SubLevel->GetName();
-	std::wstring name(oldName);
+	wxString oldName = m_SubLevel->GetName();
+	wxString name(oldName);
 	if (0 < m_pDlg->m_Book.GetDogs().NumMultiHostedTrialsInDivision(
 			m_pDlg->m_Book.GetConfig(),
 			m_pDlg->m_pVenue->GetName(),
@@ -529,8 +523,8 @@ bool CDlgConfigureDataSubLevel::DoEdit()
 
 bool CDlgConfigureDataSubLevel::DoDelete()
 {
-	std::wstring level = m_Level->GetName();
-	std::wstring subLevel = m_SubLevel->GetName();
+	wxString level = m_Level->GetName();
+	wxString subLevel = m_SubLevel->GetName();
 	bool bLevelModified = false;
 	if (m_Division->GetLevels().DeleteSubLevel(subLevel, bLevelModified))
 	{
@@ -567,13 +561,13 @@ CDlgConfigureDataTitle::CDlgConfigureDataTitle(CDlgConfigVenue* pDlg, ARBConfigT
 }
 
 
-std::wstring CDlgConfigureDataTitle::OnNeedText() const
+wxString CDlgConfigureDataTitle::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-std::wstring CDlgConfigureDataTitle::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataTitle::OnNeedText(int iColumn) const
 {
 	return m_Title->GetCompleteName(-1, true, true);
 }
@@ -583,10 +577,10 @@ bool CDlgConfigureDataTitle::DoEdit()
 {
 	bool bEdited = false;
 	bool done = false;
-	std::wstring oldName = m_Title->GetName();
-	std::wstring oldLongName = m_Title->GetLongName();
-	std::wstring name(oldName);
-	std::wstring longname(oldLongName);
+	wxString oldName = m_Title->GetName();
+	wxString oldLongName = m_Title->GetLongName();
+	wxString name(oldName);
+	wxString longname(oldLongName);
 	while (!done)
 	{
 		done = true;
@@ -650,11 +644,11 @@ bool CDlgConfigureDataTitle::DoEdit()
 
 bool CDlgConfigureDataTitle::DoDelete()
 {
-	std::wstring title = m_Title->GetName();
+	wxString title = m_Title->GetName();
 	if (m_pDlg->m_pVenue->GetTitles().DeleteTitle(title))
 	{
 		m_pDlg->m_DlgFixup.push_back(
-			ARBConfigActionDeleteTitle::New(0, m_pDlg->m_pVenue->GetName(), std::wstring(), title, std::wstring()));
+			ARBConfigActionDeleteTitle::New(0, m_pDlg->m_pVenue->GetName(), wxString(), title, wxString()));
 		m_pDlg->m_ctrlItems->Delete(GetId());
 		return true;
 	}
@@ -665,12 +659,12 @@ bool CDlgConfigureDataTitle::DoDelete()
 bool CDlgConfigureDataTitle::DoCopy()
 {
 	bool bAdded = false;
-	std::wstring name(m_Title->GetName());
-	std::wstring longname(m_Title->GetLongName());
+	wxString name(m_Title->GetName());
+	wxString longname(m_Title->GetLongName());
 	while (m_pDlg->m_pVenue->GetTitles().FindTitle(name))
 	{
-		name = fmt::format(_("IDS_COPYOF").wx_str(), name);
-		longname = fmt::format(_("IDS_COPYOF").wx_str(), longname);
+		name = wxString::Format(_("IDS_COPYOF"), name);
+		longname = wxString::Format(_("IDS_COPYOF"), longname);
 	}
 	ARBConfigTitlePtr title = m_Title->Clone();
 	title->SetName(name);
@@ -678,12 +672,9 @@ bool CDlgConfigureDataTitle::DoCopy()
 	if (m_pDlg->m_pVenue->GetTitles().AddTitle(title))
 	{
 		CDlgConfigureDataTitle* pData = new CDlgConfigureDataTitle(m_pDlg, title);
-		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(
-			m_pDlg->m_ctrlItems->GetItemParent(GetId()),
-			StringUtil::stringWX(pData->OnNeedText()),
-			-1,
-			-1,
-			pData);
+		wxTreeItemId id
+			= m_pDlg->m_ctrlItems
+				  ->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), pData->OnNeedText(), -1, -1, pData);
 		pData->AddSubItems();
 		m_pDlg->m_ctrlItems->SelectItem(id);
 		bAdded = true;
@@ -708,13 +699,13 @@ CDlgConfigureDataEvent::CDlgConfigureDataEvent(CDlgConfigVenue* pDlg, ARBConfigE
 }
 
 
-std::wstring CDlgConfigureDataEvent::OnNeedText() const
+wxString CDlgConfigureDataEvent::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-std::wstring CDlgConfigureDataEvent::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataEvent::OnNeedText(int iColumn) const
 {
 	return m_Event->GetName();
 }
@@ -723,7 +714,7 @@ std::wstring CDlgConfigureDataEvent::OnNeedText(int iColumn) const
 bool CDlgConfigureDataEvent::DoEdit()
 {
 	bool bEdited = false;
-	std::wstring oldName = m_Event->GetName();
+	wxString oldName = m_Event->GetName();
 	auto numLifetime = m_pDlg->m_pVenue->GetLifetimeNames().size();
 	CDlgConfigEvent dlg(false, m_pDlg->m_pVenue, m_Event, m_pDlg);
 	if (wxID_OK == dlg.ShowModal())
@@ -737,12 +728,8 @@ bool CDlgConfigureDataEvent::DoEdit()
 		{
 			CDlgConfigureDataLifetimeName* pDataLifetime
 				= new CDlgConfigureDataLifetimeName(m_pDlg, *m_pDlg->m_pVenue->GetLifetimeNames().begin());
-			m_pDlg->m_ctrlItems->AppendItem(
-				m_pDlg->m_lifetimeNames,
-				StringUtil::stringWX(pDataLifetime->OnNeedText()),
-				-1,
-				-1,
-				pDataLifetime);
+			m_pDlg->m_ctrlItems
+				->AppendItem(m_pDlg->m_lifetimeNames, pDataLifetime->OnNeedText(), -1, -1, pDataLifetime);
 		}
 	}
 	return bEdited;
@@ -751,7 +738,7 @@ bool CDlgConfigureDataEvent::DoEdit()
 
 bool CDlgConfigureDataEvent::DoDelete()
 {
-	std::wstring evt = m_Event->GetName();
+	wxString evt = m_Event->GetName();
 	if (m_pDlg->m_pVenue->GetEvents().DeleteEvent(evt))
 	{
 		m_pDlg->m_pVenue->GetMultiQs().DeleteEvent(evt);
@@ -766,22 +753,19 @@ bool CDlgConfigureDataEvent::DoDelete()
 bool CDlgConfigureDataEvent::DoCopy()
 {
 	bool bAdded = false;
-	std::wstring name(m_Event->GetName());
+	wxString name(m_Event->GetName());
 	while (m_pDlg->m_pVenue->GetEvents().FindEvent(name))
 	{
-		name = fmt::format(_("IDS_COPYOF").wx_str(), name);
+		name = wxString::Format(_("IDS_COPYOF"), name);
 	}
 	ARBConfigEventPtr pEvent = m_Event->Clone();
 	pEvent->SetName(name);
 	if (m_pDlg->m_pVenue->GetEvents().AddEvent(pEvent))
 	{
 		CDlgConfigureDataEvent* pData = new CDlgConfigureDataEvent(m_pDlg, pEvent);
-		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(
-			m_pDlg->m_ctrlItems->GetItemParent(GetId()),
-			StringUtil::stringWX(pData->OnNeedText()),
-			-1,
-			-1,
-			pData);
+		wxTreeItemId id
+			= m_pDlg->m_ctrlItems
+				  ->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), pData->OnNeedText(), -1, -1, pData);
 		pData->AddSubItems();
 		m_pDlg->m_ctrlItems->SelectItem(id);
 		bAdded = true;
@@ -808,17 +792,17 @@ CDlgConfigureDataLifetimeName::CDlgConfigureDataLifetimeName(
 }
 
 
-std::wstring CDlgConfigureDataLifetimeName::OnNeedText() const
+wxString CDlgConfigureDataLifetimeName::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-std::wstring CDlgConfigureDataLifetimeName::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataLifetimeName::OnNeedText(int iColumn) const
 {
-	std::wstring str = m_pName->GetName();
+	wxString str = m_pName->GetName();
 	if (str.empty())
-		str = StringUtil::stringW(_("IDS_TITLEPOINT_LIFETIME_NAME"));
+		str = _("IDS_TITLEPOINT_LIFETIME_NAME");
 	return str;
 }
 
@@ -826,8 +810,8 @@ std::wstring CDlgConfigureDataLifetimeName::OnNeedText(int iColumn) const
 bool CDlgConfigureDataLifetimeName::DoEdit()
 {
 	bool bEdited = false;
-	std::wstring oldName = m_pName->GetName();
-	std::wstring name(oldName);
+	wxString oldName = m_pName->GetName();
+	wxString name(oldName);
 	bool done = false;
 	while (!done)
 	{
@@ -849,7 +833,7 @@ bool CDlgConfigureDataLifetimeName::DoEdit()
 
 bool CDlgConfigureDataLifetimeName::DoDelete()
 {
-	std::wstring name = m_pName->GetName();
+	wxString name = m_pName->GetName();
 	if (m_pDlg->m_pVenue->GetLifetimeNames().DeleteLifetimeName(name))
 	{
 		m_pDlg->m_pVenue->GetEvents().DeleteLifetimeName(name);
@@ -864,21 +848,18 @@ bool CDlgConfigureDataLifetimeName::DoDelete()
 bool CDlgConfigureDataLifetimeName::DoCopy()
 {
 	bool bAdded = false;
-	std::wstring name(m_pName->GetName());
+	wxString name(m_pName->GetName());
 	while (m_pDlg->m_pVenue->GetLifetimeNames().FindLifetimeName(name))
 	{
-		name = fmt::format(_("IDS_COPYOF").wx_str(), name);
+		name = wxString::Format(_("IDS_COPYOF"), name);
 	}
 	ARBConfigLifetimeNamePtr lifetimename;
 	if (m_pDlg->m_pVenue->GetLifetimeNames().AddLifetimeName(name, &lifetimename))
 	{
 		CDlgConfigureDataLifetimeName* pData = new CDlgConfigureDataLifetimeName(m_pDlg, lifetimename);
-		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(
-			m_pDlg->m_ctrlItems->GetItemParent(GetId()),
-			StringUtil::stringWX(pData->OnNeedText()),
-			-1,
-			-1,
-			pData);
+		wxTreeItemId id
+			= m_pDlg->m_ctrlItems
+				  ->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), pData->OnNeedText(), -1, -1, pData);
 		pData->AddSubItems();
 		m_pDlg->m_ctrlItems->SelectItem(id);
 		bAdded = true;
@@ -903,13 +884,13 @@ CDlgConfigureDataMultiQ::CDlgConfigureDataMultiQ(CDlgConfigVenue* pDlg, ARBConfi
 }
 
 
-std::wstring CDlgConfigureDataMultiQ::OnNeedText() const
+wxString CDlgConfigureDataMultiQ::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-std::wstring CDlgConfigureDataMultiQ::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataMultiQ::OnNeedText(int iColumn) const
 {
 	return m_MultiQ->GetName();
 }
@@ -918,7 +899,7 @@ std::wstring CDlgConfigureDataMultiQ::OnNeedText(int iColumn) const
 bool CDlgConfigureDataMultiQ::DoEdit()
 {
 	bool bEdited = false;
-	std::wstring oldName = m_MultiQ->GetName();
+	wxString oldName = m_MultiQ->GetName();
 	bool done = false;
 	while (!done)
 	{
@@ -926,7 +907,7 @@ bool CDlgConfigureDataMultiQ::DoEdit()
 		CDlgConfigMultiQ dlg(m_pDlg->m_pVenue, m_MultiQ, m_pDlg);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			std::wstring name = m_MultiQ->GetName();
+			wxString name = m_MultiQ->GetName();
 			if (name != oldName)
 				m_pDlg->m_DlgFixup.push_back(
 					ARBConfigActionRenameMultiQ::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
@@ -940,7 +921,7 @@ bool CDlgConfigureDataMultiQ::DoEdit()
 
 bool CDlgConfigureDataMultiQ::DoDelete()
 {
-	std::wstring multiQ = m_MultiQ->GetName();
+	wxString multiQ = m_MultiQ->GetName();
 	if (m_pDlg->m_pVenue->GetMultiQs().DeleteMultiQ(m_MultiQ))
 	{
 		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteMultiQ::New(0, m_pDlg->m_pVenue->GetName(), multiQ));
@@ -954,22 +935,19 @@ bool CDlgConfigureDataMultiQ::DoDelete()
 bool CDlgConfigureDataMultiQ::DoCopy()
 {
 	bool bAdded = false;
-	std::wstring name(m_MultiQ->GetName());
+	wxString name(m_MultiQ->GetName());
 	while (m_pDlg->m_pVenue->GetMultiQs().FindMultiQ(name))
 	{
-		name = fmt::format(_("IDS_COPYOF").wx_str(), name);
+		name = wxString::Format(_("IDS_COPYOF"), name);
 	}
 	ARBConfigMultiQPtr multiq = m_MultiQ->Clone();
 	multiq->SetName(name);
 	if (m_pDlg->m_pVenue->GetMultiQs().AddMultiQ(multiq))
 	{
 		CDlgConfigureDataMultiQ* pData = new CDlgConfigureDataMultiQ(m_pDlg, multiq);
-		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(
-			m_pDlg->m_ctrlItems->GetItemParent(GetId()),
-			StringUtil::stringWX(pData->OnNeedText()),
-			-1,
-			-1,
-			pData);
+		wxTreeItemId id
+			= m_pDlg->m_ctrlItems
+				  ->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), pData->OnNeedText(), -1, -1, pData);
 		pData->AddSubItems();
 		m_pDlg->m_ctrlItems->SelectItem(id);
 		bAdded = true;

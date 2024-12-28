@@ -58,12 +58,12 @@ public:
 	/**
 	 * Get a single string listing all valid types.
 	 */
-	static std::wstring GetValidTypes();
+	static wxString GetValidTypes();
 
 	/**
 	 * Get a list of all valid types.
 	 */
-	static void GetValidTypes(std::vector<std::wstring>& outTypes);
+	static void GetValidTypes(std::vector<wxString>& outTypes);
 
 	/**
 	 * Get the number of valid types.
@@ -174,7 +174,7 @@ public:
 	/**
 	 * Translate the enum value to a string
 	 */
-	std::wstring str() const;
+	wxString str() const;
 
 	/**
 	 * Load a Q
@@ -183,7 +183,7 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(std::wstring const& inAttrib, ARBCommon::ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
+	bool Load(wxString const& inAttrib, ARBCommon::ARBVersion const& inVersion, ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.

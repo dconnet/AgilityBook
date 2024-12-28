@@ -45,7 +45,7 @@ public:
 		wxWindow* pParent = nullptr,
 		int iSelectPage = 0);
 
-	std::wstring GetCurrentVenueName() const;
+	wxString GetCurrentVenueName() const;
 
 private:
 	CAgilityBookDoc* m_pDoc;

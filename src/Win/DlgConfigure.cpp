@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2016-06-19 Add a blank icon to fix issue on Mac.
  * 2015-01-01 Changed pixels to dialog units.
  * 2011-12-22 Switch to using Bind on wx2.9+.
@@ -71,9 +70,9 @@ public:
 		, m_Action(action)
 	{
 	}
-	std::wstring OnNeedText() const override
+	wxString OnNeedText() const override
 	{
-		return std::wstring();
+		return wxString();
 	}
 	CDlgConfigure::Action GetAction() const
 	{
@@ -110,7 +109,7 @@ protected:
 
 void CDetails::OnDetails(wxWindow* pParent)
 {
-	std::wstring str = StringUtil::stringW(_("IDS_AFFECTED_RUNS"));
+	wxString str = _("IDS_AFFECTED_RUNS");
 	CDlgListViewer dlg(m_pDoc, str, m_ScoringRuns, pParent);
 	dlg.ShowModal();
 }
@@ -352,7 +351,7 @@ void CDlgConfigure::LoadData(Action dataToLoad)
 				idx = m_ImageList.IndexEmpty();
 			assert(0 <= idx && idx < m_ImageList.GetImageCount());
 			CDlgConfigureDataVenue* pData = new CDlgConfigureDataVenue(*iterVenue);
-			m_ctrlItems->AppendItem(hParent, StringUtil::stringWX(pData->OnNeedText()), idx, idx, pData);
+			m_ctrlItems->AppendItem(hParent, pData->OnNeedText(), idx, idx, pData);
 		}
 	}
 	break;
@@ -363,8 +362,7 @@ void CDlgConfigure::LoadData(Action dataToLoad)
 			 ++iterFault)
 		{
 			CDlgConfigureDataFault* pData = new CDlgConfigureDataFault(*iterFault);
-			m_ctrlItems
-				->AppendItem(hParent, StringUtil::stringWX(pData->OnNeedText()), m_idxFaults, m_idxFaults, pData);
+			m_ctrlItems->AppendItem(hParent, pData->OnNeedText(), m_idxFaults, m_idxFaults, pData);
 		}
 	}
 	break;
@@ -375,12 +373,8 @@ void CDlgConfigure::LoadData(Action dataToLoad)
 			 ++iterOther)
 		{
 			CDlgConfigureDataOtherPoints* pData = new CDlgConfigureDataOtherPoints(*iterOther);
-			m_ctrlItems->AppendItem(
-				hParent,
-				StringUtil::stringWX(pData->OnNeedText()),
-				m_ImageList.IndexRun(),
-				m_ImageList.IndexRun(),
-				pData);
+			m_ctrlItems
+				->AppendItem(hParent, pData->OnNeedText(), m_ImageList.IndexRun(), m_ImageList.IndexRun(), pData);
 		}
 	}
 	break;
@@ -418,8 +412,8 @@ void CDlgConfigure::DoEdit()
 	{
 		CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
 		bool done = false;
-		std::wstring oldName = pFaultData->GetFault()->GetName();
-		std::wstring name(oldName);
+		wxString oldName = pFaultData->GetFault()->GetName();
+		wxString name(oldName);
 		while (!done)
 		{
 			done = true;
@@ -451,7 +445,7 @@ void CDlgConfigure::DoEdit()
 	case Action::OtherPoints:
 	{
 		CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
-		std::wstring oldName = pOtherData->GetOtherPoints()->GetName();
+		wxString oldName = pOtherData->GetOtherPoints()->GetName();
 		CDlgConfigOtherPoints dlg(m_Config, pOtherData->GetOtherPoints(), this);
 		if (wxID_OK == dlg.ShowModal())
 		{
@@ -573,7 +567,7 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 				CDlgConfigureDataVenue* pData = new CDlgConfigureDataVenue(pVenue);
 				m_ctrlItems->AppendItem(
 					m_hItemVenues,
-					StringUtil::stringWX(pData->OnNeedText()),
+					pData->OnNeedText(),
 					m_ImageList.IndexARB(),
 					m_ImageList.IndexARB(),
 					pData);
@@ -586,10 +580,10 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 
 	case Action::Faults:
 	{
-		CDlgName dlg(std::wstring(), _("IDS_FAULT_TYPE_NAME"), this);
+		CDlgName dlg(wxString(), _("IDS_FAULT_TYPE_NAME"), this);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			std::wstring name = dlg.Name();
+			wxString name = dlg.Name();
 			// We could check for uniqueness, but if the user wants 2
 			// strings the same, why argue! Afterall, these strings
 			// are only "helper" items to fill in other data.
@@ -599,12 +593,7 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 				if (m_Config.GetFaults().AddFault(name, &pNewFault))
 				{
 					CDlgConfigureDataFault* pData = new CDlgConfigureDataFault(pNewFault);
-					m_ctrlItems->AppendItem(
-						m_hItemFaults,
-						StringUtil::stringWX(pData->OnNeedText()),
-						m_idxFaults,
-						m_idxFaults,
-						pData);
+					m_ctrlItems->AppendItem(m_hItemFaults, pData->OnNeedText(), m_idxFaults, m_idxFaults, pData);
 					m_ctrlItems->SortChildren(m_hItemFaults);
 					FindCurrentFault(pNewFault, true);
 				}
@@ -625,7 +614,7 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 				CDlgConfigureDataOtherPoints* pData = new CDlgConfigureDataOtherPoints(pOther);
 				m_ctrlItems->AppendItem(
 					m_hItemOtherPts,
-					StringUtil::stringWX(pData->OnNeedText()),
+					pData->OnNeedText(),
 					m_ImageList.IndexRun(),
 					m_ImageList.IndexRun(),
 					pData);
@@ -654,7 +643,7 @@ void CDlgConfigure::OnDelete(wxCommandEvent& evt)
 	case Action::Venues:
 	{
 		CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
-		std::wstring venue = pVenueData->GetVenue()->GetName();
+		wxString venue = pVenueData->GetVenue()->GetName();
 		// If we were able to delete it...
 		if (m_Config.GetVenues().DeleteVenue(venue))
 		{
@@ -678,7 +667,7 @@ void CDlgConfigure::OnDelete(wxCommandEvent& evt)
 	case Action::OtherPoints:
 	{
 		CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
-		std::wstring otherPoints = pOtherData->GetOtherPoints()->GetName();
+		wxString otherPoints = pOtherData->GetOtherPoints()->GetName();
 		if (m_Config.GetOtherPoints().DeleteOtherPoints(otherPoints))
 		{
 			m_Config.GetActions().push_back(ARBConfigActionDeleteOtherPoints::New(0, otherPoints));
@@ -711,10 +700,10 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 	case Action::Venues:
 	{
 		CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
-		std::wstring name(pVenueData->GetVenue()->GetName());
+		wxString name(pVenueData->GetVenue()->GetName());
 		while (m_Config.GetVenues().FindVenue(name))
 		{
-			name = fmt::format(_("IDS_COPYOF").wx_str(), name);
+			name = wxString::Format(_("IDS_COPYOF"), name);
 		}
 		ARBConfigVenuePtr pNewVenue;
 		if (m_Config.GetVenues().AddVenue(name, &pNewVenue))
@@ -724,7 +713,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 			CDlgConfigureDataBase* pNewData = new CDlgConfigureDataVenue(pNewVenue);
 			m_ctrlItems->AppendItem(
 				m_hItemVenues,
-				StringUtil::stringWX(pData->OnNeedText()),
+				pData->OnNeedText(),
 				m_ImageList.IndexARB(),
 				m_ImageList.IndexARB(),
 				pNewData);
@@ -737,17 +726,12 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 	case Action::Faults:
 	{
 		CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
-		std::wstring name(pFaultData->GetFault()->GetName());
+		wxString name(pFaultData->GetFault()->GetName());
 		ARBConfigFaultPtr pNewFault;
 		if (m_Config.GetFaults().AddFault(name, &pNewFault))
 		{
 			CDlgConfigureDataBase* pNewData = new CDlgConfigureDataFault(pNewFault);
-			m_ctrlItems->AppendItem(
-				m_hItemFaults,
-				StringUtil::stringWX(pData->OnNeedText()),
-				m_idxFaults,
-				m_idxFaults,
-				pNewData);
+			m_ctrlItems->AppendItem(m_hItemFaults, pData->OnNeedText(), m_idxFaults, m_idxFaults, pNewData);
 			m_ctrlItems->SortChildren(m_hItemFaults);
 			FindCurrentFault(pNewFault, true);
 		}
@@ -757,10 +741,10 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 	case Action::OtherPoints:
 	{
 		CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
-		std::wstring name(pOtherData->GetOtherPoints()->GetName());
+		wxString name(pOtherData->GetOtherPoints()->GetName());
 		while (m_Config.GetOtherPoints().FindOtherPoints(name))
 		{
-			name = fmt::format(_("IDS_COPYOF").wx_str(), name);
+			name = wxString::Format(_("IDS_COPYOF"), name);
 		}
 		ARBConfigOtherPointsPtr pOther = pOtherData->GetOtherPoints()->Clone();
 		pOther->SetName(name);
@@ -769,7 +753,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 			CDlgConfigureDataBase* pNewData = new CDlgConfigureDataOtherPoints(pOther);
 			m_ctrlItems->AppendItem(
 				m_hItemOtherPts,
-				StringUtil::stringWX(pData->OnNeedText()),
+				pData->OnNeedText(),
 				m_ImageList.IndexRun(),
 				m_ImageList.IndexRun(),
 				pNewData);
@@ -789,10 +773,10 @@ public:
 	CDlgConfigCallback()
 	{
 	}
-	void PreDelete(std::wstring const& inMsg) override
+	void PreDelete(wxString const& inMsg) override
 	{
 	}
-	void PostDelete(std::wstring const& inMsg) const override
+	void PostDelete(wxString const& inMsg) const override
 	{
 	}
 };
@@ -807,7 +791,7 @@ void CDlgConfigure::OnUpdate(wxCommandEvent& evt)
 		ARBConfig& update = dlg.GetConfig();
 		// Update our current config (not runs, later)
 		bool bUpdated = false;
-		fmt::wmemory_buffer info;
+		wxString info;
 		CDlgConfigCallback callback;
 		if (0 < update.GetActions().Apply(m_Config, nullptr, info, callback))
 		{
@@ -823,7 +807,7 @@ void CDlgConfigure::OnUpdate(wxCommandEvent& evt)
 		// Update the config.
 		if (m_Config.Update(0, update, info) || bUpdated)
 		{
-			CDlgMessage dlgMsg(fmt::to_string(info), wxString(), this);
+			CDlgMessage dlgMsg(info, wxString(), this);
 			dlgMsg.ShowModal();
 			LoadData(Action::Venues);
 			LoadData(Action::Faults);

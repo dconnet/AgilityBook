@@ -41,8 +41,8 @@ class CAgilityBookApp : public ARBWin::CBaseApp
 public:
 	CAgilityBookApp();
 
-	void SetMessageText(std::wstring const& msg, bool bFiltered);
-	void SetMessageText2(std::wstring const& msg);
+	void SetMessageText(wxString const& msg, bool bFiltered);
+	void SetMessageText2(wxString const& msg);
 
 	wxPrintDialogData* GetPrintData();
 	void SavePrintData(wxPrintDialogData const& data);

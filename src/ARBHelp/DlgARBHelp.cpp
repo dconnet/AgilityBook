@@ -10,7 +10,6 @@
  * @author David Connet
  *
  * Revision History
- * 2018-12-16 Convert to fmt.
  * 2012-07-10 Fix serialization. Broken in 4/15 wxString checkin.
  * 2011-10-19 Add timestamp info on skipped files. Add file size.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
@@ -33,7 +32,6 @@
 #include "ARBCommon/StringUtil.h"
 #include "ARBCommon/VersionNum.h"
 #include "LibARBWin/ResourceManager.h"
-#include "fmt/xchar.h"
 #include <wx/ffile.h>
 #include <wx/filename.h>
 
@@ -53,9 +51,7 @@ CDlgARBHelp::CDlgARBHelp()
 		  wxID_ANY,
 		  wxString::Format(
 			  L"Agility Record Book Helper %s",
-			  CVersionNum(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD)
-				  .GetVersionString(VER_PARTS)
-				  .c_str()),
+			  CVersionNum(ARB_VER_MAJOR, ARB_VER_MINOR, ARB_VER_DOT, ARB_VER_BUILD).GetVersionString(VER_PARTS)),
 		  wxNullBitmap,
 		  wxDefaultPosition,
 		  wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
@@ -76,11 +72,11 @@ CDlgARBHelp::CDlgARBHelp()
 }
 
 
-void CDlgARBHelp::AddSysInfo(std::wstring const& inData)
+void CDlgARBHelp::AddSysInfo(wxString const& inData)
 {
 	m_SysInfo.clear();
 	if (!inData.empty())
-		m_SysInfo = StringUtil::stringA(inData);
+		m_SysInfo = inData.utf8_string();
 }
 
 
@@ -88,11 +84,11 @@ void CDlgARBHelp::AddRegistryInfo(wchar_t const* inData)
 {
 	m_RegInfo.clear();
 	if (inData)
-		m_RegInfo = StringUtil::stringA(inData, wcslen(inData));
+		m_RegInfo = wxString(inData, wcslen(inData)).utf8_string();
 }
 
 
-void CDlgARBHelp::SetARBFileStatus(std::wstring const& inFileName, bool bInclude)
+void CDlgARBHelp::SetARBFileStatus(wxString const& inFileName, bool bInclude)
 {
 	m_IncFile[inFileName] = bInclude;
 }
@@ -102,56 +98,56 @@ void CDlgARBHelp::SetARBFileStatus(std::wstring const& inFileName, bool bInclude
 // DlgPageDecode (decoder)
 std::string CDlgARBHelp::GetEncodedData()
 {
-	fmt::memory_buffer rawdata;
+	wxString rawdata;
 	wxLogNull logSuppressor;
 
 	// System information.
 	{
 		std::string data;
 		BinaryData::EncodeString(m_SysInfo, data);
-		fmt::format_to(std::back_inserter(rawdata), "\n{}\n{}\n{}\n", STREAM_SYSTEM_BEGIN, data, STREAM_SYSTEM_END);
+		rawdata << "\n" << STREAM_SYSTEM_BEGIN << "\n" << data << "\n" << STREAM_SYSTEM_END << "\n";
 	}
 
 	// Registry information.
 	{
 		std::string data;
 		BinaryData::EncodeString(m_RegInfo, data);
-		fmt::format_to(std::back_inserter(rawdata), "\n{}\n{}\n{}\n", STREAM_REGISTRY_BEGIN, data, STREAM_REGISTRY_END);
+		rawdata << "\n" << STREAM_REGISTRY_BEGIN << "\n" << data << "\n" << STREAM_REGISTRY_END << "\n";
 	}
 
 	// Data files.
 	for (FileMap::iterator iFile = m_IncFile.begin(); iFile != m_IncFile.end(); ++iFile)
 	{
-		fmt::format_to(std::back_inserter(rawdata), "\n{}", StringUtil::stringA((*iFile).first));
-		wxFileName fileName((*iFile).first.c_str());
+		rawdata << "\n" << (*iFile).first.utf8_string();
+		wxFileName fileName((*iFile).first);
 		wxDateTime dtMod, dtCreate;
 		if (!(*iFile).second)
-			fmt::format_to(std::back_inserter(rawdata), "{}", ": Skipped");
-		fmt::format_to(std::back_inserter(rawdata), "{}", "\n");
+			rawdata << ": Skipped";
+		rawdata << "\n";
 		if (fileName.GetTimes(nullptr, &dtMod, &dtCreate))
 		{
-			fmt::format_to(std::back_inserter(rawdata), "Created: {}\n", dtCreate.Format().utf8_string());
-			fmt::format_to(std::back_inserter(rawdata), "Modified: {}\n", dtMod.Format().utf8_string());
+			rawdata << "Created: " << dtCreate.Format().utf8_string() << "\n";
+			rawdata << "Modified: " << dtMod.Format().utf8_string() << "\n";
 		}
 		wxULongLong size = fileName.GetSize();
 		if (wxInvalidSize != size)
-			fmt::format_to(std::back_inserter(rawdata), "Size: {}\n", StringUtil::stringA(size.ToString()));
+			rawdata << "Size: " << size.ToString().utf8_string() << "\n";
 		if ((*iFile).second)
 		{
 			std::string data;
 			if (BinaryData::EncodeFile((*iFile).first, data))
 			{
-				fmt::format_to(std::back_inserter(rawdata), "{}\n{}\n{}\n", STREAM_FILE_BEGIN, data, STREAM_FILE_END);
+				rawdata << STREAM_FILE_BEGIN << "\n" << data << "\n" << STREAM_FILE_END << "\n";
 			}
 			else
-				fmt::format_to(std::back_inserter(rawdata), "{}", "Error: Cannot read file\n");
+				rawdata << "Error: Cannot read file\n";
 		}
 	}
 
 	std::string data;
-	BinaryData::EncodeString(fmt::to_string(rawdata), data);
+	BinaryData::EncodeString(rawdata.ToStdString(), data);
 
-	return fmt::format("\n{}\n{}\n{}\n", STREAM_DATA_BEGIN, data, STREAM_DATA_END);
+	return wxString::Format("\n%s\n%s\n%s\n", STREAM_DATA_BEGIN, data, STREAM_DATA_END).ToStdString();
 }
 
 } // namespace dconSoft

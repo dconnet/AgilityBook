@@ -55,7 +55,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override
+	wxString GetGenericName() const override
 	{
 		return m_Name;
 	}
@@ -65,7 +65,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override
 	{
 		return 0;
 	}
@@ -94,17 +94,17 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	std::wstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(std::wstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
 
 private:
-	std::wstring m_Name;
+	wxString m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -133,7 +133,7 @@ public:
 	 * @param inName Name to verify.
 	 * @return Whether the name exists.
 	 */
-	bool VerifyLifetimeName(std::wstring const& inName) const;
+	bool VerifyLifetimeName(wxString const& inName) const;
 
 	/**
 	 * Find a fault.
@@ -141,7 +141,7 @@ public:
 	 * @param outLifetimeName Pointer to found object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindLifetimeName(std::wstring const& inName, ARBConfigLifetimeNamePtr* outLifetimeName = nullptr) const;
+	bool FindLifetimeName(wxString const& inName, ARBConfigLifetimeNamePtr* outLifetimeName = nullptr) const;
 
 	/**
 	 * Add a Lifetime name.
@@ -149,14 +149,14 @@ public:
 	 * @param outLifetimeName Pointer to object, NULL if name already exists or is empty.
 	 * @return Whether the fault was added.
 	 */
-	bool AddLifetimeName(std::wstring const& inName, ARBConfigLifetimeNamePtr* outLifetimeName = nullptr);
+	bool AddLifetimeName(wxString const& inName, ARBConfigLifetimeNamePtr* outLifetimeName = nullptr);
 
 	/**
 	 * Delete the Lifetime name.
 	 * @param inName Name of fault to delete.
 	 * @return Whether fault was deleted.
 	 */
-	bool DeleteLifetimeName(std::wstring const& inName);
+	bool DeleteLifetimeName(wxString const& inName);
 };
 
 } // namespace ARB

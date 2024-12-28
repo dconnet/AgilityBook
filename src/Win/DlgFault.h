@@ -29,8 +29,8 @@ namespace dconSoft
 class CDlgFault : public wxDialog
 {
 public:
-	CDlgFault(std::set<std::wstring>& faults, std::wstring const& fault, wxWindow* pParent = nullptr);
-	std::wstring GetFault() const;
+	CDlgFault(std::set<wxString>& faults, wxString const& fault, wxWindow* pParent = nullptr);
+	wxString GetFault() const;
 
 private:
 	wxString m_Fault;

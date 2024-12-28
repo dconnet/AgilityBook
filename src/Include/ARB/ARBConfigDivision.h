@@ -67,7 +67,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override
+	wxString GetGenericName() const override
 	{
 		return m_Name;
 	}
@@ -77,7 +77,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override
 	{
 		return 0;
 	}
@@ -112,24 +112,24 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(int indent, ARBConfigDivisionPtr const& inDivNew, std::wstring& ioInfo);
+	bool Update(int indent, ARBConfigDivisionPtr const& inDivNew, wxString& ioInfo);
 
 	/*
 	 * Getters/setters.
 	 */
-	std::wstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(std::wstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	std::wstring const& GetShortName() const
+	wxString const& GetShortName() const
 	{
 		return m_ShortName;
 	}
-	void SetShortName(std::wstring const& inName)
+	void SetShortName(wxString const& inName)
 	{
 		m_ShortName = inName;
 	}
@@ -143,8 +143,8 @@ public:
 	}
 
 private:
-	std::wstring m_Name;
-	std::wstring m_ShortName;
+	wxString m_Name;
+	wxString m_ShortName;
 	ARBConfigLevelList m_Levels;
 };
 
@@ -183,7 +183,7 @@ public:
 	 * @param inLevel Level to verify.
 	 * @return Level exists.
 	 */
-	bool VerifyLevel(std::wstring const& inDiv, std::wstring const& inLevel) const;
+	bool VerifyLevel(wxString const& inDiv, wxString const& inLevel) const;
 
 	/**
 	 * Find the named division.
@@ -191,7 +191,7 @@ public:
 	 * @param outDiv Pointer to found object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindDivision(std::wstring const& inDiv, ARBConfigDivisionPtr* outDiv = nullptr) const;
+	bool FindDivision(wxString const& inDiv, ARBConfigDivisionPtr* outDiv = nullptr) const;
 
 	/**
 	 * Add a division.
@@ -199,7 +199,7 @@ public:
 	 * @param outDiv Pointer to new object, NULL if name already exists or is empty.
 	 * @return Whether the object was added.
 	 */
-	bool AddDivision(std::wstring const& inDiv, ARBConfigDivisionPtr* outDiv = nullptr);
+	bool AddDivision(wxString const& inDiv, ARBConfigDivisionPtr* outDiv = nullptr);
 
 	/**
 	 * Add a division.
@@ -214,7 +214,7 @@ public:
 	 * @param ioEvents List of events to be updated.
 	 * @return Number of divisions deleted (0 or 1).
 	 */
-	int DeleteDivision(std::wstring const& inDiv, ARBConfigEventList& ioEvents);
+	int DeleteDivision(wxString const& inDiv, ARBConfigEventList& ioEvents);
 };
 
 } // namespace ARB

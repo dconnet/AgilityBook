@@ -12,7 +12,6 @@
  * Revision History
  * 2022-12-20 Do not use TextDataObject with custom objects.
  *            While it works on Windows, it does not work on Mac.
- * 2018-12-16 Convert to fmt.
  * 2012-03-16 Renamed LoadXML functions, added stream version.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2009-01-26 Ported to wxWidgets.
@@ -142,7 +141,7 @@ bool CClipboardDataReader::GetData(ARBClipFormat clpFmt, ARBCommon::ElementNodeP
 		// Don't include that when recreating the string.
 		data = std::string(static_cast<const char*>(txtData.GetData()), txtData.GetSize() - 1);
 	}
-	fmt::wmemory_buffer err;
+	wxString err;
 	bool bOk = false;
 	{
 		wxBusyCursor wait;
@@ -150,16 +149,13 @@ bool CClipboardDataReader::GetData(ARBClipFormat clpFmt, ARBCommon::ElementNodeP
 	}
 	if (!bOk && 0 < err.size())
 	{
-		wxMessageBox(
-			StringUtil::stringWX(fmt::to_string(err)),
-			_("Agility Record Book"),
-			wxOK | wxCENTRE | wxICON_EXCLAMATION);
+		wxMessageBox(err, _("Agility Record Book"), wxOK | wxCENTRE | wxICON_EXCLAMATION);
 	}
 	return bOk;
 }
 
 
-bool CClipboardDataReader::GetData(std::wstring& outData)
+bool CClipboardDataReader::GetData(wxString& outData)
 {
 	outData.clear();
 	if (!wxClipboard::Get()->IsSupported(wxDF_TEXT) || !Open())
@@ -172,7 +168,7 @@ bool CClipboardDataReader::GetData(std::wstring& outData)
 
 ////////////////////////////////////////////////////////////////////////////
 
-CClipboardDataTable::CClipboardDataTable(std::wstring& ioText, std::wstring& ioHtml)
+CClipboardDataTable::CClipboardDataTable(wxString& ioText, wxString& ioHtml)
 	: m_Closed(false)
 	, m_ioText(ioText)
 	, m_ioHtml(ioHtml)
@@ -202,7 +198,7 @@ void CClipboardDataTable::EndLine()
 }
 
 
-void CClipboardDataTable::Cell(int iCol, std::wstring const& inData)
+void CClipboardDataTable::Cell(int iCol, wxString const& inData)
 {
 	if (0 < iCol)
 		m_ioText += L"\t";
@@ -253,19 +249,19 @@ bool CClipboardDataWriter::AddData(ARBClipFormat clpFmt, ARBCommon::ElementNodeP
 	if (!m_bOkay)
 		return false;
 
-	std::wstring data;
+	wxString data;
 	{
 		std::stringstream out;
 		inTree->SaveXML(out);
-		data = StringUtil::stringW(out.str());
+		data = out.str();
 	}
 	return AddData(clpFmt, data);
 }
 
 
-bool CClipboardDataWriter::AddData(ARBClipFormat clpFmt, std::wstring const& inData)
+bool CClipboardDataWriter::AddData(ARBClipFormat clpFmt, wxString const& inData)
 {
-	std::string data = StringUtil::stringA(inData);
+	std::string data = inData.utf8_string();
 	if (ARBClipFormat::Html == clpFmt)
 	{
 		{
@@ -289,25 +285,18 @@ bool CClipboardDataWriter::AddData(ARBClipFormat clpFmt, std::wstring const& inD
 			size_t lenStartFragment = startFragment.length();
 			size_t lenEndFragment = endFragment.length();
 #endif
-			fmt::memory_buffer out;
-			fmt::format_to(std::back_inserter(out), "Version:0.9\r\nStartHTML:{:08d}\r\n", lenHeader);
-			fmt::format_to(
-				std::back_inserter(out),
-				"EndHTML:{:08d}\r\n",
+			wxString out;
+			out << wxString::Format("Version:0.9\r\nStartHTML:%08d\r\n", lenHeader);
+			out << wxString::Format(
+				"EndHTML:%08d\r\n",
 				lenHeader + lenStartHtml + lenStartFragment + lenData + lenEndFragment + lenEndHtml);
-			fmt::format_to(
-				std::back_inserter(out),
-				"StartFragment:{:08d}\r\n",
-				lenHeader + lenStartHtml + lenStartFragment);
-			fmt::format_to(
-				std::back_inserter(out),
-				"EndFragment:{:08d}\r\n",
-				lenHeader + lenStartHtml + lenStartFragment + lenData);
+			out << wxString::Format("StartFragment:%08d\r\n", lenHeader + lenStartHtml + lenStartFragment);
+			out << wxString::Format("EndFragment:%08d\r\n", lenHeader + lenStartHtml + lenStartFragment + lenData);
 #if defined(_DEBUG) || defined(__WXDEBUG__)
 			assert(out.size() == static_cast<std::string::size_type>(lenHeader));
 #endif
-			fmt::format_to(std::back_inserter(out), "{}{}{}{}{}", startHtml, startFragment, data, endFragment, endHtml);
-			data = fmt::to_string(out);
+			out << startHtml << startFragment << data << endFragment << endHtml;
+			data = out.utf8_string();
 		}
 		wxCustomDataObject* dataObj = new wxCustomDataObject(wxDataFormat(L"HTML Format"));
 		dataObj->SetData(data.length() + 1, data.c_str());
@@ -328,11 +317,11 @@ bool CClipboardDataWriter::AddData(ARBClipFormat clpFmt, std::wstring const& inD
 }
 
 
-bool CClipboardDataWriter::AddData(std::wstring const& inData)
+bool CClipboardDataWriter::AddData(wxString const& inData)
 {
 	if (!m_Object)
 		m_Object = new wxDataObjectComposite();
-	m_Object->Add(new wxTextDataObject(inData.c_str()));
+	m_Object->Add(new wxTextDataObject(inData));
 	return true;
 }
 

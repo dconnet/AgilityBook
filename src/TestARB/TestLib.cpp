@@ -11,7 +11,6 @@
  * Revision History
  * 2019-10-13 Separated ARB specific things from TestLib.
  * 2019-08-15 wx3.1.2 (maybe earlier) has fixed GetExecutablePath on Mac cmdline
- * 2018-12-16 Convert to fmt.
  * 2017-11-09 Convert from UnitTest++ to Catch
  * 2015-11-27 Added test duration to verbose option.
  * 2013-08-18 Reuse Win/LanguageManager
@@ -37,7 +36,6 @@
 #include "ARBCommon/Element.h"
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/ResourceManager.h"
-#include "fmt/printf.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -71,7 +69,7 @@ wxString GetDataFile()
 #ifdef WIN32
 	wchar_t fileName[MAX_PATH];
 	GetModuleFileNameW(nullptr, fileName, _countof(fileName));
-	std::wstring datafile(fileName);
+	wxString datafile(fileName);
 	size_t n = datafile.find_last_of('.');
 	datafile = datafile.substr(0, n);
 	datafile += L".dat";
@@ -139,14 +137,14 @@ private:
 	{
 		if (!m_Localization.Load())
 		{
-			std::string msg = fmt::format("ERROR: Unable to load '{}.mo'.", OnGetCatalogName().ToStdString());
-			fmt::print(stderr, "{}\n", msg);
+			auto msg = wxString::Format(L"ERROR: Unable to load '%s.mo'.", OnGetCatalogName()).utf8_string();
+			std::cerr << msg << "\n";
 			throw std::runtime_error(msg);
 		}
 	}
 	void OnErrorMessage(wxString const& msg) const override
 	{
-		fmt::print(stderr, L"{}\n", msg.wx_str());
+		std::wcerr << msg.wc_str() << L"\n";
 	}
 	std::unique_ptr<CLanguageManager> m_langMgr;
 #else // __WXWINDOWS__
@@ -252,7 +250,7 @@ int main(int argc, char** argv)
 #endif
 #endif
 
-	std::wstring errs;
+	wxString errs;
 	if (!Element::Initialize(errs))
 	{
 		return 1;

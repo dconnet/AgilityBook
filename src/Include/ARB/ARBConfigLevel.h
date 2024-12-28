@@ -65,7 +65,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override
+	wxString GetGenericName() const override
 	{
 		return m_Name;
 	}
@@ -75,7 +75,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override
 	{
 		return 0;
 	}
@@ -108,24 +108,24 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(int indent, ARBConfigLevelPtr const& inLevelNew, std::wstring& ioInfo);
+	bool Update(int indent, ARBConfigLevelPtr const& inLevelNew, wxString& ioInfo);
 
 	/*
 	 * Getters/setters.
 	 */
-	std::wstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(std::wstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	std::wstring const& GetShortName() const
+	wxString const& GetShortName() const
 	{
 		return m_ShortName;
 	}
-	void SetShortName(std::wstring const& inName)
+	void SetShortName(wxString const& inName)
 	{
 		m_ShortName = inName;
 	}
@@ -139,8 +139,8 @@ public:
 	}
 
 private:
-	std::wstring m_Name;
-	std::wstring m_ShortName;
+	wxString m_Name;
+	wxString m_ShortName;
 	ARBConfigSubLevelList m_SubLevels;
 };
 
@@ -178,7 +178,7 @@ public:
 	 * @param inAllowWildCard Do we allow wildcards during verification?
 	 * @return Whether there is a level that matches.
 	 */
-	bool VerifyLevel(std::wstring const& inName, bool inAllowWildCard = true) const;
+	bool VerifyLevel(wxString const& inName, bool inAllowWildCard = true) const;
 
 	/**
 	 * Find a level.
@@ -186,7 +186,7 @@ public:
 	 * @param outLevel Pointer to object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindLevel(std::wstring const& inName, ARBConfigLevelPtr* outLevel = nullptr) const;
+	bool FindLevel(wxString const& inName, ARBConfigLevelPtr* outLevel = nullptr) const;
 
 	/**
 	 * Find a level, only looks at leaf nodes.
@@ -195,7 +195,7 @@ public:
 	 * @param outLevel Pointer to object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindSubLevel(std::wstring const& inName, ARBConfigLevelPtr* outLevel = nullptr) const;
+	bool FindSubLevel(wxString const& inName, ARBConfigLevelPtr* outLevel = nullptr) const;
 
 	/**
 	 * Add a level.
@@ -203,7 +203,7 @@ public:
 	 * @param outLevel Pointer to new object, NULL if name already exists or is empty.
 	 * @return Whether the object was added.
 	 */
-	bool AddLevel(std::wstring const& inName, ARBConfigLevelPtr* outLevel = nullptr);
+	bool AddLevel(wxString const& inName, ARBConfigLevelPtr* outLevel = nullptr);
 
 	/**
 	 * Add a level.
@@ -219,7 +219,7 @@ public:
 	 * @param ioEvents List of events to be updated.
 	 * @return Whether level was deleted or not.
 	 */
-	bool DeleteLevel(std::wstring const& inDiv, std::wstring const& inName, ARBConfigEventList& ioEvents);
+	bool DeleteLevel(wxString const& inDiv, wxString const& inName, ARBConfigEventList& ioEvents);
 
 	/**
 	 * Delete a sublevel.
@@ -228,7 +228,7 @@ public:
 	 * @return Whether a sublevel was deleted.
 	 * @post Deleting a sublevel may cause the parent level name to change.
 	 */
-	bool DeleteSubLevel(std::wstring const& inName, bool& outLevelModified);
+	bool DeleteSubLevel(wxString const& inName, bool& outLevelModified);
 };
 
 } // namespace ARB

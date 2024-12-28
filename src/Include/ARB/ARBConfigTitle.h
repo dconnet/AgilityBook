@@ -76,7 +76,7 @@ ARB_API void SaveTitleSeparator(
 class ARB_API ARBTitleInstance
 {
 protected:
-	std::wstring TitleInstance(
+	wxString TitleInstance(
 		bool bShowInstanceOne,
 		short instance,
 		short startAt,
@@ -122,7 +122,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	std::wstring GetGenericName() const override
+	wxString GetGenericName() const override
 	{
 		return GetNiceName();
 	}
@@ -132,7 +132,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const override
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const override
 	{
 		return 0;
 	}
@@ -176,7 +176,7 @@ public:
 	 * Get the nice (long) name.
 	 * @return the nice (long) name.
 	 */
-	std::wstring const& GetNiceName() const
+	wxString const& GetNiceName() const
 	{
 		if (0 == m_LongName.length())
 			return m_Name;
@@ -189,7 +189,7 @@ public:
 	 * @param inInstance Instance of the title to allow for multiple.
 	 * @return The title name.
 	 */
-	std::wstring GetTitleName(short inInstance = 0) const;
+	wxString GetTitleName(short inInstance = 0) const;
 
 	/**
 	 * Get the complete name (name + nicename).
@@ -198,32 +198,32 @@ public:
 	 * @param bAddDates Add the valid date ranges, if applicable.
 	 * @return The complete name.
 	 */
-	std::wstring GetCompleteName(short inInstance = 0, bool bAbbrevFirst = true, bool bAddDates = false) const;
+	wxString GetCompleteName(short inInstance = 0, bool bAbbrevFirst = true, bool bAddDates = false) const;
 
 	/*
 	 * Getters/setters.
 	 */
-	std::wstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(std::wstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	std::wstring const& GetLongName() const
+	wxString const& GetLongName() const
 	{
 		return m_LongName;
 	}
-	void SetLongName(std::wstring const& inName)
+	void SetLongName(wxString const& inName)
 	{
 		m_LongName = inName;
 	}
-	std::wstring const& GetDescription() const
+	wxString const& GetDescription() const
 	{
 		return m_Desc;
 	}
-	void SetDescription(std::wstring const& inDesc)
+	void SetDescription(wxString const& inDesc)
 	{
 		m_Desc = inDesc;
 	}
@@ -295,9 +295,9 @@ public:
 	}
 
 private:
-	std::wstring m_Name;
-	std::wstring m_LongName;
-	std::wstring m_Desc;
+	wxString m_Name;
+	wxString m_LongName;
+	wxString m_Desc;
 	bool m_Prefix;
 	ARBCommon::ARBDate m_ValidFrom;
 	ARBCommon::ARBDate m_ValidTo;
@@ -348,7 +348,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitleCompleteName(
-		std::wstring const& inName,
+		wxString const& inName,
 		short inInstance,
 		bool bAbbrevFirst = true,
 		ARBConfigTitlePtr* outTitle = nullptr) const;
@@ -359,7 +359,7 @@ public:
 	 * @param outTitle Pointer to found object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
-	bool FindTitle(std::wstring const& inName, ARBConfigTitlePtr* outTitle = nullptr) const;
+	bool FindTitle(wxString const& inName, ARBConfigTitlePtr* outTitle = nullptr) const;
 
 	/**
 	 * Add a title.
@@ -367,7 +367,7 @@ public:
 	 * @param outTitle Pointer to new object, NULL if name already exists or is empty.
 	 * @return Whether the object was added.
 	 */
-	bool AddTitle(std::wstring const& inName, ARBConfigTitlePtr* outTitle = nullptr);
+	bool AddTitle(wxString const& inName, ARBConfigTitlePtr* outTitle = nullptr);
 
 	/**
 	 * Add a title.
@@ -381,7 +381,7 @@ public:
 	 * @param inName Name of title to delete.
 	 * @return Whether title was deleted.
 	 */
-	bool DeleteTitle(std::wstring const& inName);
+	bool DeleteTitle(wxString const& inName);
 };
 
 } // namespace ARB

@@ -17,7 +17,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES += -I$(TOPSRCDIR)/AgilityBookLibs/Include -I$(TOPSRCDIR)/src/Include -I$(SRCDIR)/../Win -I$(TOPSRCDIR)/AgilityBookLibs/3rdParty/LibTidyHtml/include -I$(TOPSRCDIR)/AgilityBookLibs/3rdParty/LibFmt/include
+INCLUDES += -I$(TOPSRCDIR)/AgilityBookLibs/Include -I$(TOPSRCDIR)/src/Include -I$(SRCDIR)/../Win -I$(TOPSRCDIR)/AgilityBookLibs/3rdParty/LibTidyHtml/include
 
 ##########
 # List of programs and archives to link
@@ -47,7 +47,7 @@ PROGRAMS = @PACKAGE_CAL_SHORTNAME@
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-@PACKAGE_CAL_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/Libraries/ARB -larb -L$(TOPBUILDDIR)/AgilityBookLibs/LibARBWin -larbwin -L$(TOPBUILDDIR)/AgilityBookLibs/ARBCommon -larbcommon -L$(TOPBUILDDIR)/AgilityBookLibs/3rdParty/LibTidyHtml -ltidyhtml -L$(TOPBUILDDIR)/AgilityBookLibs/3rdParty/LibFmt -lfmt
+@PACKAGE_CAL_SHORTNAME@_LIBS = -L$(TOPBUILDDIR)/src/Libraries/ARB -larb -L$(TOPBUILDDIR)/AgilityBookLibs/LibARBWin -larbwin -L$(TOPBUILDDIR)/AgilityBookLibs/ARBCommon -larbcommon -L$(TOPBUILDDIR)/AgilityBookLibs/3rdParty/LibTidyHtml -ltidyhtml
 
 ##########
 # Precompiled headers

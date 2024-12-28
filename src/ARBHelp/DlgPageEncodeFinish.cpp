@@ -77,7 +77,7 @@ CDlgPageEncodeFinish::CDlgPageEncodeFinish(CDlgARBHelp* pParent)
 bool CDlgPageEncodeFinish::TransferDataToWindow()
 {
 	wxBusyCursor wait;
-	m_ctrlText->SetValue(m_Parent->GetEncodedData().c_str());
+	m_ctrlText->SetValue(m_Parent->GetEncodedData());
 	return true;
 }
 

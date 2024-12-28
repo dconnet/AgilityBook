@@ -97,7 +97,7 @@ bool CDlgPageEncodeFiles::TransferDataToWindow()
 	for (CDlgARBHelp::FileMap::const_iterator i = m_Parent->GetARBFiles().begin(); i != m_Parent->GetARBFiles().end();
 		 ++i)
 	{
-		int idx = m_ctrlList->Append((*i).first.c_str());
+		int idx = m_ctrlList->Append((*i).first);
 		m_ctrlList->Check(idx, (*i).second);
 	}
 	return true;
@@ -108,7 +108,7 @@ bool CDlgPageEncodeFiles::TransferDataFromWindow()
 {
 	for (unsigned int i = 0; i < m_ctrlList->GetCount(); ++i)
 	{
-		std::wstring filename = StringUtil::stringW(m_ctrlList->GetString(i));
+		wxString filename = m_ctrlList->GetString(i);
 		m_Parent->SetARBFileStatus(filename, m_ctrlList->IsChecked(i));
 	}
 	return true;

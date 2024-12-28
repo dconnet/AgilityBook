@@ -113,7 +113,7 @@ CMetaDataDisplay::CMetaDataDisplay(wxWindow* parent, ARBDogRunPtr const& inRun)
 	CTextCtrl::Create(
 		parent,
 		wxID_ANY,
-		StringUtil::stringWX(m_Run->GetCRCD()),
+		m_Run->GetCRCD(),
 		wxDefaultPosition,
 		wxDefaultSize,
 		wxTE_MULTILINE | wxTE_READONLY);
@@ -213,14 +213,14 @@ void CMetaDataDisplay::OnCopy()
 				if (bText)
 				{
 					m_ViewText = true;
-					std::wstring str;
+					wxString str;
 					clpData.GetData(str);
 					str = StringUtil::Trim(str);
 					// We do the replace since CRCD3 has "\n\nhdrs\r\netc"
 					// Standardize to \n.
 					str = StringUtil::Replace(str, L"\r\n", L"\n");
 					m_Run->SetCRCD(str);
-					SetLabel(StringUtil::stringWX(str));
+					SetLabel(str);
 					if (0 < str.length())
 						m_Insert = false;
 					// Only create the metafile if we pasted text. Otherwise

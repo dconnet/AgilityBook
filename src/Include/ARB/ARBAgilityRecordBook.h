@@ -13,7 +13,6 @@
  *
  * Revision History
  * 2020-09-15 Remove CalSite from ARB.
- * 2018-12-16 Convert to fmt.
  * 2014-06-09 Add access to write-only data for file-properties purpose.
  * 2009-09-13 Add support for wxWidgets 2.9, deprecate tstring.
  * 2007-08-14 Separated DTD defines into ARBStructure.h
@@ -55,7 +54,6 @@
 #include "ARBTypes2.h"
 #include "LibwxARB.h"
 
-#include "fmt/xchar.h"
 #include <set>
 
 
@@ -142,7 +140,7 @@ public:
 	 */
 	bool Save(
 		ARBCommon::ElementNodePtr const& outTree,
-		std::wstring const& inPgmVer,
+		wxString const& inPgmVer,
 		bool inCalendar,
 		bool inTraining,
 		bool inConfig,
@@ -166,11 +164,7 @@ public:
 	 * @post Sometimes there are side affects from a configuration update.
 	 *       Existing runs may be modified or deleted.
 	 */
-	bool Update(
-		int indent,
-		ARBConfig const& inConfigNew,
-		fmt::wmemory_buffer& ioInfo,
-		IConfigActionCallback& ioCallBack);
+	bool Update(int indent, ARBConfig const& inConfigNew, wxString& ioInfo, IConfigActionCallback& ioCallBack);
 
 	//
 	// Convenience functions that do some data accumulation.
@@ -183,7 +177,7 @@ public:
 	 * @param bVisibleOnly When including ARBInfo, only get visible items.
 	 * @return Number of clubs.
 	 */
-	size_t GetAllClubNames(std::set<std::wstring>& outClubs, bool bInfo, bool bVisibleOnly) const;
+	size_t GetAllClubNames(std::set<wxString>& outClubs, bool bInfo, bool bVisibleOnly) const;
 
 	/**
 	 * Get all trial locations in use from existing trials and calendar entries.
@@ -192,7 +186,7 @@ public:
 	 * @param bVisibleOnly When including ARBInfo, only get visible items.
 	 * @return Number of locations.
 	 */
-	size_t GetAllTrialLocations(std::set<std::wstring>& outLocations, bool bInfo, bool bVisibleOnly) const;
+	size_t GetAllTrialLocations(std::set<wxString>& outLocations, bool bInfo, bool bVisibleOnly) const;
 
 	/**
 	 * Get all the subnames in use for the given event.
@@ -201,31 +195,29 @@ public:
 	 * @param outNames List of Sub-Names in use.
 	 * @return Number of subnames.
 	 */
-	size_t GetAllEventSubNames(
-		std::wstring const& inVenue,
-		ARBConfigEventPtr const& inEvent,
-		std::set<std::wstring>& outNames) const;
+	size_t GetAllEventSubNames(wxString const& inVenue, ARBConfigEventPtr const& inEvent, std::set<wxString>& outNames)
+		const;
 
 	/**
 	 * Get all heights in use from existing runs.
 	 * @param outHeights List of heights.
 	 * @return Number of heights.
 	 */
-	size_t GetAllHeights(std::set<std::wstring>& outHeights) const;
+	size_t GetAllHeights(std::set<wxString>& outHeights) const;
 
 	/**
 	 * Get all callnames in use from existing runs.
 	 * @param outNames List of names.
 	 * @return Number of names.
 	 */
-	size_t GetAllCallNames(std::set<std::wstring>& outNames) const;
+	size_t GetAllCallNames(std::set<wxString>& outNames) const;
 
 	/**
 	 * Get all breeds in use from existing runs.
 	 * @param outBreeds List of breeds.
 	 * @return Number of breeds.
 	 */
-	size_t GetAllBreeds(std::set<std::wstring>& outBreeds) const;
+	size_t GetAllBreeds(std::set<wxString>& outBreeds) const;
 
 	/**
 	 * Get all judges in use from existing runs and Judges information.
@@ -234,28 +226,28 @@ public:
 	 * @param bVisibleOnly When including ARBInfo, only get visible items.
 	 * @return Number of judges.
 	 */
-	size_t GetAllJudges(std::set<std::wstring>& outJudges, bool bInfo, bool bVisibleOnly) const;
+	size_t GetAllJudges(std::set<wxString>& outJudges, bool bInfo, bool bVisibleOnly) const;
 
 	/**
 	 * Get all handlers in use from existing runs.
 	 * @param outHandlers List of handlers.
 	 * @return Number of handlers.
 	 */
-	size_t GetAllHandlers(std::set<std::wstring>& outHandlers) const;
+	size_t GetAllHandlers(std::set<wxString>& outHandlers) const;
 
 	/**
 	 * Get all pairs partners in use from existing runs.
 	 * @param outPartners List of handlers.
 	 * @param outDogs List of dogs.
 	 */
-	void GetAllPartners(std::set<std::wstring>& outPartners, std::set<std::wstring>& outDogs) const;
+	void GetAllPartners(std::set<wxString>& outPartners, std::set<wxString>& outDogs) const;
 
 	/**
 	 * Get all fault types in use from existing runs and configuration.
 	 * @param outFaults List of faults.
 	 * @return Number of faults.
 	 */
-	size_t GetAllFaultTypes(std::set<std::wstring>& outFaults) const;
+	size_t GetAllFaultTypes(std::set<wxString>& outFaults) const;
 
 	/*
 	 * Getters.
@@ -274,11 +266,11 @@ public:
 	/*
 	 * Access to write-only data.
 	 */
-	std::wstring GetFileInfo(ARBFileInfo type) const
+	wxString GetFileInfo(ARBFileInfo type) const
 	{
 		if (static_cast<size_t>(type) < m_FileInfo.size())
 			return m_FileInfo[static_cast<size_t>(type)];
-		return std::wstring();
+		return wxString();
 	}
 
 private:
@@ -287,7 +279,7 @@ private:
 	ARBConfig m_Config;
 	ARBInfo m_Info;
 	ARBDogList m_Dogs;
-	mutable std::vector<std::wstring> m_FileInfo;
+	mutable std::vector<wxString> m_FileInfo;
 
 	DECLARE_NO_COPY_IMPLEMENTED(ARBAgilityRecordBook);
 };

@@ -92,7 +92,7 @@ TEST_CASE("AgilityRecordBook")
 			TODO_TEST
 			//	bool Save(
 			//		ElementNodePtr outTree,
-			//		std::wstring const& inPgmVer,
+			//		wxString const& inPgmVer,
 			//		bool inCalendar,
 			//		bool inTraining,
 			//		bool inConfig,
@@ -120,7 +120,7 @@ TEST_CASE("AgilityRecordBook")
 			//	bool Update(
 			//			int indent,
 			//			ARBConfig const& inConfigNew,
-			//			std::wstring& ioInfo,
+			//			wxString& ioInfo,
 			//			IConfigActionCallback& ioCallBack);
 		}
 	}
@@ -132,7 +132,7 @@ TEST_CASE("AgilityRecordBook")
 		{
 			TODO_TEST
 			//	size_t GetAllClubNames(
-			//			std::set<std::wstring>& outClubs,
+			//			std::set<wxString>& outClubs,
 			//			bool bInfo,
 			//			bool bVisibleOnly) const;
 		}
@@ -145,7 +145,7 @@ TEST_CASE("AgilityRecordBook")
 		{
 			TODO_TEST
 			//	size_t GetAllTrialLocations(
-			//			std::set<std::wstring>& outLocations,
+			//			std::set<wxString>& outLocations,
 			//			bool bInfo,
 			//			bool bVisibleOnly) const;
 		}
@@ -158,9 +158,9 @@ TEST_CASE("AgilityRecordBook")
 		{
 			TODO_TEST
 			//	size_t GetAllEventSubNames(
-			//			std::wstring const& inVenue,
+			//			wxString const& inVenue,
 			//			ARBConfigEventPtr inEvent,
-			//			std::set<std::wstring>& outNames) const;
+			//			std::set<wxString>& outNames) const;
 		}
 	}
 
@@ -170,7 +170,7 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	size_t GetAllHeights(std::set<std::wstring>& outHeights) const;
+			//	size_t GetAllHeights(std::set<wxString>& outHeights) const;
 		}
 	}
 
@@ -180,7 +180,7 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	size_t GetAllCallNames(std::set<std::wstring>& outNames) const;
+			//	size_t GetAllCallNames(std::set<wxString>& outNames) const;
 		}
 	}
 
@@ -190,7 +190,7 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	size_t GetAllBreeds(std::set<std::wstring>& outBreeds) const;
+			//	size_t GetAllBreeds(std::set<wxString>& outBreeds) const;
 		}
 	}
 
@@ -201,7 +201,7 @@ TEST_CASE("AgilityRecordBook")
 		{
 			TODO_TEST
 			//	size_t GetAllJudges(
-			//			std::set<std::wstring>& outJudges,
+			//			std::set<wxString>& outJudges,
 			//			bool bInfo,
 			//			bool bVisibleOnly) const;
 		}
@@ -213,7 +213,7 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	size_t GetAllHandlers(std::set<std::wstring>& outHandlers) const;
+			//	size_t GetAllHandlers(std::set<wxString>& outHandlers) const;
 		}
 	}
 
@@ -224,8 +224,8 @@ TEST_CASE("AgilityRecordBook")
 		{
 			TODO_TEST
 			//	void GetAllPartners(
-			//			std::set<std::wstring>& outPartners,
-			//			std::set<std::wstring>& outDogs) const;
+			//			std::set<wxString>& outPartners,
+			//			std::set<wxString>& outDogs) const;
 		}
 	}
 
@@ -235,7 +235,7 @@ TEST_CASE("AgilityRecordBook")
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//	size_t GetAllFaultTypes(std::set<std::wstring>& outFaults) const;
+			//	size_t GetAllFaultTypes(std::set<wxString>& outFaults) const;
 		}
 	}
 }
@@ -259,7 +259,7 @@ TEST_CASE("HttpRead")
 #endif
 		wxInputStream* stream = url.GetInputStream();
 		CHECK(stream && stream->IsOk());
-		std::wstring res;
+		wxString res;
 		wxStringOutputStream outStream(&res);
 		stream->Read(outStream);
 		delete stream;

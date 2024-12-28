@@ -38,7 +38,7 @@ public:
 	void Save();
 
 private:
-	std::wstring GetCalText(ARBCalColorItem type, bool bForDisplay) const;
+	wxString GetCalText(ARBCalColorItem type, bool bForDisplay) const;
 	void UpdateControls();
 	void SetCalColor();
 	void SetRichText();
