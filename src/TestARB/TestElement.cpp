@@ -23,6 +23,7 @@
 
 #include "ARBCommon/Element.h"
 #include "TestARB.h"
+#include <sstream>
 
 #if defined(__WXWINDOWS__)
 #include <wx/filefn.h>

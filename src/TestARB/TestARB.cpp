@@ -24,6 +24,7 @@
 #include "ARBCommon/ARBUtils.h"
 #include "ARBCommon/Element.h"
 #include "LibARBWin/ResourceManager.h"
+#include <sstream>
 
 #if defined(__WXWINDOWS__)
 #include <wx/app.h>
