@@ -1733,8 +1733,10 @@ void CDlgRunPanelScore::SetTitlePoints()
 		{
 			if (pScoring->HasSpeedPts())
 			{
+				strSpeed.clear();
 				strSpeed << m_Run->GetSpeedPoints(pScoring);
 			}
+			strTitle.clear();
 			strTitle << m_Run->GetTitlePoints(pScoring);
 		}
 		if (q.ShouldComputeScore())
