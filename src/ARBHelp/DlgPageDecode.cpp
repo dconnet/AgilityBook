@@ -220,7 +220,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 		editData << "Error in data: Unable to find " << STREAM_DATA_BEGIN;
 	}
 
-	m_ctrlDecoded->SetValue(editData.ToStdString());
+	m_ctrlDecoded->SetValue(editData.utf8_string());
 }
 
 

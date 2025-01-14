@@ -118,7 +118,7 @@ std::string CDlgARBHelp::GetEncodedData()
 	// Data files.
 	for (FileMap::iterator iFile = m_IncFile.begin(); iFile != m_IncFile.end(); ++iFile)
 	{
-		rawdata << "\n" << (*iFile).first.utf8_string();
+		rawdata << "\n" << (*iFile).first;
 		wxFileName fileName((*iFile).first);
 		wxDateTime dtMod, dtCreate;
 		if (!(*iFile).second)
@@ -126,12 +126,12 @@ std::string CDlgARBHelp::GetEncodedData()
 		rawdata << "\n";
 		if (fileName.GetTimes(nullptr, &dtMod, &dtCreate))
 		{
-			rawdata << "Created: " << dtCreate.Format().utf8_string() << "\n";
-			rawdata << "Modified: " << dtMod.Format().utf8_string() << "\n";
+			rawdata << "Created: " << dtCreate.Format() << "\n";
+			rawdata << "Modified: " << dtMod.Format() << "\n";
 		}
 		wxULongLong size = fileName.GetSize();
 		if (wxInvalidSize != size)
-			rawdata << "Size: " << size.ToString().utf8_string() << "\n";
+			rawdata << "Size: " << size.ToString() << "\n";
 		if ((*iFile).second)
 		{
 			std::string data;
@@ -145,9 +145,9 @@ std::string CDlgARBHelp::GetEncodedData()
 	}
 
 	std::string data;
-	BinaryData::EncodeString(rawdata.ToStdString(), data);
+	BinaryData::EncodeString(rawdata.utf8_string(), data);
 
-	return wxString::Format("\n%s\n%s\n%s\n", STREAM_DATA_BEGIN, data, STREAM_DATA_END).ToStdString();
+	return wxString::Format("\n%s\n%s\n%s\n", STREAM_DATA_BEGIN, data, STREAM_DATA_END).utf8_string();
 }
 
 } // namespace dconSoft

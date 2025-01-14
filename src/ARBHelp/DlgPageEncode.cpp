@@ -135,9 +135,8 @@ bool CDlgPageEncode::TransferDataFromWindow()
 
 	std::vector<wxString> items;
 	ARBDebug::DumpRegistryGroup(L"Recent File List", nullptr, &items);
-	for (auto iter = items.begin(); iter != items.end(); ++iter)
+	for (auto const& path : items)
 	{
-		wxString path = *iter;
 		if (path.empty())
 			continue;
 		wxFileName name(path);
@@ -154,11 +153,11 @@ bool CDlgPageEncode::TransferDataFromWindow()
 			directories.insert(name.GetPath());
 	}
 
-	for (auto i = directories.begin(); i != directories.end(); ++i)
+	for (auto const& dir : directories)
 	{
-		if ((*i).empty())
+		if (dir.empty())
 			continue;
-		SearchFor(m_Parent, *i, L"*.arb*");
+		SearchFor(m_Parent, dir, L"*.arb*");
 	}
 
 	// Gather logging files
