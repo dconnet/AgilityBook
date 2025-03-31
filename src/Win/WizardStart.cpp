@@ -845,7 +845,7 @@ bool CWizardStart::DoWizardFinish()
 				if (m_pDoc->Book().Save(tree, verstr, true, true, true, true, true))
 				{
 					CConfigHandler handler;
-					tree->SaveXML(file.GetPath()), ARBConfig::GetDTD(&handler);
+					tree->SaveXML(file.GetPath(), ARBConfig::GetDTD(&handler));
 				}
 				bOk = true;
 			}

@@ -203,7 +203,7 @@ public:
 	virtual wxString ErrorInvalidDocStructure(wchar_t const* const inMsg) const = 0;
 	virtual wxString ErrorInvalidDocStructure(wxString const& inMsg) const
 	{
-		return ErrorInvalidDocStructure(inMsg);
+		return ErrorInvalidDocStructure(inMsg.wc_str());
 	}
 
 	/**

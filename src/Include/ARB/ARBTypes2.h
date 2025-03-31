@@ -264,7 +264,7 @@ public:
 	}
 	virtual bool OnError(wxString const& msg)
 	{
-		return OnError(msg);
+		return OnError(msg.wc_str());
 	}
 
 	/**

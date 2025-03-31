@@ -26,9 +26,9 @@ option, run 'git submodule update --init' to also get all dependent code.
 --------------------
 
 python: https://www.python.org
-Currently using version 3.11.7.
+Currently using version 3.13.2.
 - Include pip in install
-- "pip install pywin32"
+- "pip install pywin32" (currently "build 310")
 
 wxWidgets: http://www.wxwidgets.org/
 Currently using version 3.2.7. Min supported is 3.1.6.
@@ -161,7 +161,7 @@ To build for Mac/Unix, see ./build/BuildUnix.sh
 
 poedit: http://www.poedit.net
 Cross platform editor for modifying .po files.
-Currently using version 3.4.2.
+Currently using version 3.6.0.
 - includes gettext
   - on Mac, probably want to include MacPorts version
 Use this to keep the catalog in sync with the source code.
@@ -184,7 +184,7 @@ Useful for figuring out how to lay a dialog out.
 --------------------
 
 Windows Installer XML toolset: http://wixtoolset.org/
-Currently using version 3.11.2.
+Currently using version 3.14.1.
 - Install votive [optional]
 - (1), run WiX installer. That will set the environment variable WIX.
   (GenMSI.py looks for "WIX" and appends "\bin")
@@ -202,16 +202,15 @@ Currently using version 1.9.3. (Note: Newer versions cause issues in wx)
 
 GraphViz: http://www.graphviz.org
 Used to create source code documentation.
-Currently using version 9.0.0.
+Currently using version 12.2.1.
 Earlier versions may work. (I used 2.14.1 with no problems for a while)
 [Install to default location]
 
 --------------------
 LLVM: https://releases.llvm.org/download.html
-Currently using version 17.0.6 (ubuntu18: v10, ubuntu20: v12, ubuntu22: v14)
+Currently using version 20.1.1 (ubuntu22: v14, ubuntu24: v18)
 [Install to default location, ubuntu: apt install]
 - clang-format -i *.h *.cpp
-  (ubuntu: clang-format-14 -i *.h *.cpp)
 This will run the formatter and rewrite the files.
 (VS2019/22 automatically detected the .clang-format file.
   Edit->Advanced->Format Document)
@@ -269,7 +268,7 @@ OSX 10.9:
   Must reboot after modifying.
 ===
 setenv WXBASE /Users/dconnet/devtools/wx
-setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.2.4
+setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.2.7
 ====
 OSX 10.10+:
 - launchd.conf has been deprecated.
@@ -290,7 +289,7 @@ OSX 10.10+:
     <string>-c</string>
     <string>
     launchctl setenv WXBASE /Users/dconnet/devtools/wx
-    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.2.4
+    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.2.7
     </string>
   </array>
   <key>RunAtLoad</key>
