@@ -57,6 +57,11 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Set wxUSE_STD_CONTAINERS to wxUSE_STD_DEFAULT
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
 
+=== Changes to 3.2.7 only on Mac (xcode 16.3, unknown about others):
+  - Remove the "defined(TARGET_OS_MAC)" check from:
+    src/zlib/zutil.h, line 140
+    src/png/pngpriv.h, line 530
+
 === Changes to 3.2.3 only
 >diff -c wxWidgets-3.2.3.orig\src\msw\thread.cpp wxWidgets-3.2.3\src\msw\thread.cpp
 *** wxWidgets-3.2.3.orig\src\msw\thread.cpp     Sat Oct 07 07:28:50 2023
