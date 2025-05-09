@@ -26,18 +26,19 @@ option, run 'git submodule update --init' to also get all dependent code.
 --------------------
 
 python: https://www.python.org
-Currently using version 3.13.2.
+Currently using version 3.13.3.
 - Include pip in install
 - "pip install pywin32" (currently "build 310")
 
 wxWidgets: http://www.wxwidgets.org/
-Currently using version 3.2.7. Min supported is 3.1.6.
+Currently using version 3.2.8. Min supported is 3.1.6.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in AgilityBookLibs/lang/res/fr_FR) IMPORTANT: This means the directory name
    in fr_FR must match the wx version number being used.
 - Mac/Unix: Use .../build/BuildUnix.sh to setup WX build. And ". setwxpath.sh"
-  to set the ARB compile environment.
+  to set the ARB compile environment. (Note: on unix, make sure apt packages
+  'curl' and 'libcurl4-openssl-dev' are installed or wxWebRequest won't work.)
 
 === Changes to 3.3.0 (trunk)
   (include/wx/msw/setup.h)
@@ -166,7 +167,7 @@ To build for Mac/Unix, see ./build/BuildUnix.sh
 
 poedit: http://www.poedit.net
 Cross platform editor for modifying .po files.
-Currently using version 3.6.0.
+Currently using version 3.6.2.
 - includes gettext
   - on Mac, probably want to include MacPorts version
 Use this to keep the catalog in sync with the source code.
@@ -213,7 +214,7 @@ Earlier versions may work. (I used 2.14.1 with no problems for a while)
 
 --------------------
 LLVM: https://releases.llvm.org/download.html
-Currently using version 20.1.1 (ubuntu22: v14, ubuntu24: v18)
+Currently using version 20.1.4 (ubuntu22: v14, ubuntu24: v18)
 [Install to default location, ubuntu: apt install]
 - clang-format -i *.h *.cpp
 This will run the formatter and rewrite the files.
@@ -242,9 +243,12 @@ Unix
 ====
 (targeting GTK3, GTK2 with wx3.1 crashes when the new-doc button is pressed)
 Needs (note, some aren't strictly needed):
-sudo apt install git python3 python3-pip
-sudo apt install libgtk-3-dev
-sudo apt install libcanberra-gtk-module
+apt packages:
+- build-essential
+- git (git-man git-lfs)
+- libgtk-3-dev
+- curl libcurl4-openssl-dev
+- python3 python3-pip (not needed on ubuntu22/24)
 - Not strictly needed, but unit tests will fail otherwise
 sudo dpkg-reconfigure locales
  - Pick fr_FR and en_GB at a minimum (I only picked the UTF8 variants)
