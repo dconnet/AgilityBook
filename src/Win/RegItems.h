@@ -229,7 +229,7 @@ inline wxString CFG_CI_KEY_CONFIG(int n, bool bIncSep = true)
 inline wxString CFG_KEY_FILTER_N(int n, bool bIncSep = true)
 {
 	wxString str;
-	str << CFG_KEY_CONFIG << n << (bIncSep ? L"/" : L"");
+	str << CFG_KEY_FILTER << n << (bIncSep ? L"/" : L"");
 	return str;
 }
 //	DW AllDates (FilterOptions.cpp)
