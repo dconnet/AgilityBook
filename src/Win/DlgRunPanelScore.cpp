@@ -866,8 +866,8 @@ CDlgRunPanelScore::CDlgRunPanelScore(
 	sizerEvent->Add(m_ctrlSubNames, 0, wxRESERVE_SPACE_EVEN_IF_HIDDEN);
 
 	sizerDivHtTable->Add(sizerEvent, 0, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxEXPAND);
-	sizerDivHtTable->Add(m_ctrlAtHome, 0, wxALIGN_RIGHT);
-	sizerDivHtTable->Add(m_ctrlTable, 0, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxALIGN_RIGHT | wxTOP, padding.Controls());
+	sizerDivHtTable->Add(m_ctrlAtHome, 0, wxALIGN_RIGHT | wxTOP, padding.Controls());
+	sizerDivHtTable->Add(m_ctrlTable, 0, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxALIGN_RIGHT);
 	sizerDivHt->Add(sizerDivHtTable, 0, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxEXPAND | wxRIGHT, padding.Controls());
 
 	wxBoxSizer* sizerHtCond = new wxBoxSizer(wxVERTICAL);

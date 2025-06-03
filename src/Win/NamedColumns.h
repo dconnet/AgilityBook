@@ -163,6 +163,9 @@ constexpr size_t IO_RUNS_OBSTACLES = 113;
 constexpr size_t IO_RUNS_OPS = 114;
 constexpr size_t IO_RUNS_SUBNAME = 115;
 constexpr size_t IO_MAX = 116;
+// Note: When adding new items, make sure they end up in:
+// - IO_TREE_*: AgilityBookTreeData.cpp
+// - All others: AgiltyBookViewRuns,cpp, WizardExport.cpp
 
 
 class CNamedColumns

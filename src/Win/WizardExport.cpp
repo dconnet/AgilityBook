@@ -597,6 +597,7 @@ void CWizardExport::UpdatePreview()
 							{
 								// Note: All columns must have data written
 								// or export columns won't line up.
+								wxString fld;
 								switch (columns[idxType][idx])
 								{
 								default:
@@ -613,7 +614,6 @@ void CWizardExport::UpdatePreview()
 									break;
 								case IO_RUNS_VENUE:
 								{
-									wxString fld;
 									long i = 0;
 									for (ARBDogClubList::const_iterator iter = pTrial->GetClubs().begin();
 										 iter != pTrial->GetClubs().end();
@@ -628,7 +628,6 @@ void CWizardExport::UpdatePreview()
 								break;
 								case IO_RUNS_CLUB:
 								{
-									wxString fld;
 									long i = 0;
 									for (ARBDogClubList::const_iterator iter = pTrial->GetClubs().begin();
 										 iter != pTrial->GetClubs().end();
@@ -799,42 +798,37 @@ void CWizardExport::UpdatePreview()
 									break;
 								case IO_RUNS_PLACE:
 								{
-									wxString str;
 									short place = pRun->GetPlace();
 									if (0 > place)
-										str = L"?";
+										fld = L"?";
 									else if (0 == place)
-										str = L"-";
+										fld = L"-";
 									else
-										str = wxString::Format(L"%hd", place);
-									data += AddPreviewData(iLine, idx, str);
+										fld = wxString::Format(L"%hd", place);
+									data += AddPreviewData(iLine, idx, fld);
 								}
 								break;
 								case IO_RUNS_IN_CLASS:
 								{
-									wxString str;
 									short inClass = pRun->GetInClass();
 									if (0 > inClass)
-										str = L"?";
+										fld = L"?";
 									else
-										str = wxString::Format(L"%hd", inClass);
-									data += AddPreviewData(iLine, idx, str);
+										fld = wxString::Format(L"%hd", inClass);
+									data += AddPreviewData(iLine, idx, fld);
 								}
 								break;
 								case IO_RUNS_DOGSQD:
 								{
-									wxString str;
 									short qd = pRun->GetDogsQd();
 									if (0 > qd)
-										str = L"?";
+										fld = L"?";
 									else
-										str = wxString::Format(L"%hd", qd);
-									data += AddPreviewData(iLine, idx, str);
+										fld = wxString::Format(L"%hd", qd);
+									data += AddPreviewData(iLine, idx, fld);
 								}
 								break;
 								case IO_RUNS_Q:
-								{
-									wxString q;
 									if (pRun->GetQ().Qualified())
 									{
 										std::vector<ARBConfigMultiQPtr> multiQs;
@@ -844,23 +838,22 @@ void CWizardExport::UpdatePreview()
 												 iMultiQ != multiQs.end();
 												 ++iMultiQ)
 											{
-												if (!q.empty())
-													q += L"/";
-												q += (*iMultiQ)->GetShortName();
+												if (!fld.empty())
+													fld += L"/";
+												fld += (*iMultiQ)->GetShortName();
 											}
 										}
 										if (Q::SuperQ == pRun->GetQ())
 										{
-											if (!q.empty())
-												q += L"/";
-											q += _("IDS_SQ");
+											if (!fld.empty())
+												fld += L"/";
+											fld += _("IDS_SQ");
 										}
 									}
-									if (q.empty())
-										q = pRun->GetQ().str();
-									data += AddPreviewData(iLine, idx, q);
-								}
-								break;
+									if (fld.empty())
+										fld = pRun->GetQ().str();
+									data += AddPreviewData(iLine, idx, fld);
+									break;
 								case IO_RUNS_SCORE:
 									if (pRun->GetQ().Qualified() || Q::NQ == pRun->GetQ())
 									{
@@ -887,7 +880,6 @@ void CWizardExport::UpdatePreview()
 									break;
 								case IO_RUNS_FAULTS:
 								{
-									wxString fld;
 									long i = 0;
 									for (ARBDogFaultList::const_iterator iter = pRun->GetFaults().begin();
 										 iter != pRun->GetFaults().end();
@@ -900,6 +892,14 @@ void CWizardExport::UpdatePreview()
 									data += AddPreviewData(iLine, idx, fld);
 								}
 								break;
+								case IO_RUNS_SPEED:
+									if (pScoring->HasSpeedPts() && pRun->GetQ().Qualified())
+										fld << pRun->GetSpeedPoints(pScoring);
+									data += AddPreviewData(iLine, idx, fld);
+									break;
+								case IO_RUNS_SUBNAME:
+									data += AddPreviewData(iLine, idx, pRun->GetSubName());
+									break;
 								}
 							}
 							if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
@@ -974,6 +974,11 @@ void CWizardExport::UpdatePreview()
 					break;
 				case IO_CAL_NOTES:
 					data += AddPreviewData(iLine, idx, pCal->GetNote());
+					break;
+				case IO_CAL_DRAWS:
+					date = pCal->GetDrawDate();
+					if (date.IsValid())
+						data += AddPreviewData(iLine, idx, date.GetString(format));
 					break;
 				default:
 					break;

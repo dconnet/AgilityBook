@@ -445,6 +445,9 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			}
 		}
 		break;
+		case IO_RUNS_SUBNAME:
+			str << m_pRun->GetSubName();
+			break;
 		}
 	}
 	return str;

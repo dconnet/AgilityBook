@@ -264,7 +264,7 @@ wxString CLocalization::UpdateSubLevelsReordered() const
 wxString CLocalization::UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const
 {
 	wxString str;
-	str << _("IDS_UPDATE_RULES") << L": " << wxString::Format(_("IDS_UPDATE_ADDED"), nAdded) << L", "
+	str << L" " << _("IDS_UPDATE_RULES") << L": " << wxString::Format(_("IDS_UPDATE_ADDED"), nAdded) << L", "
 		<< wxString::Format(_("IDS_UPDATE_DELETED"), nDeleted) << L", "
 		<< wxString::Format(_("IDS_UPDATE_UPDATED"), nUpdated) << L", "
 		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped);

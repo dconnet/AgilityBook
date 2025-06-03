@@ -1,9 +1,10 @@
-2025-4-25: v4.0.0.<dev>
+2025-6-3: v4.0.0.<dev>
 - New features / Enhancements:
   - Updated to wxWidgets 3.2.8
   - Revamped internals to remove 'fmt' usage and drop non-WX supoort.
 - Bug fix:
-  - Fix a couple recursive call issues found by xcode.
+  - Fixed a couple recursive call issues found by xcode.
+  - Fixed export of (run: SubName, SpeedPts), (cal: DrawDate), alignment of SubName in Run dialog.
 
 8/18/2024: v3.8.9.127
 - Bumped Configuration v72:
