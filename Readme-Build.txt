@@ -31,7 +31,7 @@ Currently using version 3.13.3.
 - "pip install pywin32" (currently "build 310")
 
 wxWidgets: http://www.wxwidgets.org/
-Currently using version 3.2.8. Min supported is 3.1.6.
+Currently using version 3.3.0. Min supported is 3.1.6.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in AgilityBookLibs/lang/res/fr_FR) IMPORTANT: This means the directory name
@@ -40,13 +40,20 @@ Make sure WXWIN is set to wxWidgets root directory.
   to set the ARB compile environment. (Note: on unix, make sure apt packages
   'curl' and 'libcurl4-openssl-dev' are installed or wxWebRequest won't work.)
 
-=== Changes to 3.3.0 (trunk)
+=== Changes to (master)
   (include/wx/msw/setup.h)
-  - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)
   - Set wxWIN_COMPATIBILITY_3_2 to 0 (currently 1)
-  - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
     the library is compiled one way and the users do something different.)
+  - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
+  - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
+
+=== Changes to 3.3.0
+  (include/wx/msw/setup.h)
+  - Set wxWIN_COMPATIBILITY_3_2 to 0 (currently 1)
+  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
+    the library is compiled one way and the users do something different.)
+  - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
 
 === Changes to 3.2.7, 3.2.6, 3.2.5, 3.2.4, 3.2.3, Changes to 3.2.2.1, Changes to 3.2.1, Changes to 3.2.0

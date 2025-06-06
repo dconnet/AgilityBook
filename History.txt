@@ -1,6 +1,6 @@
-2025-6-3: v4.0.0.<dev>
+2025-6-6: v4.0.0.<dev>
 - New features / Enhancements:
-  - Updated to wxWidgets 3.2.8
+  - Updated to wxWidgets 3.3.0
   - Revamped internals to remove 'fmt' usage and drop non-WX supoort.
 - Bug fix:
   - Fixed a couple recursive call issues found by xcode.
