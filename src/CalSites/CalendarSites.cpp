@@ -648,7 +648,8 @@ public:
 	void Disable() override
 	{
 		m_CalData->Unload(true);
-		m_Name = wxString::Format(L"{} [{}]", m_Filename, _("IDS_DISABLED"));
+		m_Name.clear();
+		m_Name << m_Filename << L" [" << _("IDS_DISABLED") << L"]";
 	}
 
 private:
@@ -661,7 +662,8 @@ private:
 		}
 		else
 		{
-			m_Name = wxString::Format(L"{} [{}]", m_Filename, _("IDS_DISABLED"));
+			m_Name.clear();
+			m_Name << m_Filename << L" [" << _("IDS_DISABLED") << L"]";
 			m_Desc = L"";
 		}
 	}

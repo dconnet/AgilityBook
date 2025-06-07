@@ -853,23 +853,24 @@ CPointsDataVenue::CPointsDataVenue(
 						{
 							strSpeed << wxString::Format(_("IDS_POINTS_SPEED_SUBTOTAL"), speedPtsEvent);
 						}
-						m_events.push_back(std::make_shared<CPointsDataEvent>(
-							pDoc,
-							!ARBDouble::equal(0.0, nExistingPts + nExistingSQ) ? inDog : ARBDogPtr(),
-							allmatching,
-							m_pVenue,
-							pDiv,
-							idxDiv,
-							pLevel,
-							idxLevel,
-							pEvent,
-							idxEvent,
-							strRunCount,
-							strQcount,
-							strPts,
-							strSuperQ,
-							strSpeed,
-							id));
+						m_events.push_back(
+							std::make_shared<CPointsDataEvent>(
+								pDoc,
+								!ARBDouble::equal(0.0, nExistingPts + nExistingSQ) ? inDog : ARBDogPtr(),
+								allmatching,
+								m_pVenue,
+								pDiv,
+								idxDiv,
+								pLevel,
+								idxLevel,
+								pEvent,
+								idxEvent,
+								strRunCount,
+								strQcount,
+								strPts,
+								strSuperQ,
+								strSpeed,
+								id));
 					}
 				}
 				if (bHasSpeedPts)
@@ -932,13 +933,9 @@ CPointsDataVenue::CPointsDataVenue(
 				auto iterMQ = MQs.find((*iMulti));
 				if (iterMQ != MQs.end())
 				{
-					m_multiQs.push_back(std::make_shared<CPointsDataMultiQs>(
-						pDoc,
-						inDog,
-						m_pVenue,
-						(*iterMQ).first,
-						(*iterMQ).second,
-						id));
+					m_multiQs.push_back(
+						std::make_shared<
+							CPointsDataMultiQs>(pDoc, inDog, m_pVenue, (*iterMQ).first, (*iterMQ).second, id));
 				}
 			}
 		}
@@ -1573,12 +1570,13 @@ void CPointsDataItems::LoadData(ARBDogPtr const& inDog)
 						if ((*iter).m_Event == (*iterTally))
 							validRuns.push_back(*iter);
 					}
-					m_otherPts.push_back(std::make_shared<CPointsDataOtherPointsTallyAllByEvent>(
-						m_pDoc,
-						pOther,
-						(*iterTally),
-						validRuns,
-						id));
+					m_otherPts.push_back(
+						std::make_shared<CPointsDataOtherPointsTallyAllByEvent>(
+							m_pDoc,
+							pOther,
+							(*iterTally),
+							validRuns,
+							id));
 				}
 			}
 			break;
@@ -1599,12 +1597,13 @@ void CPointsDataItems::LoadData(ARBDogPtr const& inDog)
 						if ((*iter).m_Level == (*iterTally))
 							validRuns.push_back(*iter);
 					}
-					m_otherPts.push_back(std::make_shared<CPointsDataOtherPointsTallyLevel>(
-						m_pDoc,
-						pOther,
-						(*iterTally),
-						validRuns,
-						id));
+					m_otherPts.push_back(
+						std::make_shared<CPointsDataOtherPointsTallyLevel>(
+							m_pDoc,
+							pOther,
+							(*iterTally),
+							validRuns,
+							id));
 				}
 			}
 			break;
@@ -1626,13 +1625,14 @@ void CPointsDataItems::LoadData(ARBDogPtr const& inDog)
 						if ((*iter).m_Level == (*iterTally).first && (*iter).m_Event == (*iterTally).second)
 							validRuns.push_back(*iter);
 					}
-					m_otherPts.push_back(std::make_shared<CPointsDataOtherPointsTallyLevelByEvent>(
-						m_pDoc,
-						pOther,
-						(*iterTally).first,
-						(*iterTally).second,
-						validRuns,
-						id));
+					m_otherPts.push_back(
+						std::make_shared<CPointsDataOtherPointsTallyLevelByEvent>(
+							m_pDoc,
+							pOther,
+							(*iterTally).first,
+							(*iterTally).second,
+							validRuns,
+							id));
 				}
 			}
 			break;

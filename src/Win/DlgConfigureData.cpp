@@ -405,12 +405,13 @@ bool CDlgConfigureDataLevel::DoEdit()
 					m_pDlg->m_pVenue->GetEvents().RenameLevel(m_Division->GetName(), oldName, name);
 					m_pDlg->m_pVenue->GetMultiQs().RenameLevel(m_Division->GetName(), oldName, name);
 				}
-				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameLevel::NewLevel(
-					0,
-					m_pDlg->m_pVenue->GetName(),
-					m_Division->GetName(),
-					oldName,
-					m_Level->GetName()));
+				m_pDlg->m_DlgFixup.push_back(
+					ARBConfigActionRenameLevel::NewLevel(
+						0,
+						m_pDlg->m_pVenue->GetName(),
+						m_Division->GetName(),
+						oldName,
+						m_Level->GetName()));
 				RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
 				bEdited = true;
 			}
@@ -505,13 +506,14 @@ bool CDlgConfigureDataSubLevel::DoEdit()
 				m_SubLevel->SetName(name);
 				// No need to fix ARBConfigEventList cause we don't do sublevel names in events.
 				m_pDlg->m_pVenue->GetMultiQs().RenameLevel(m_Division->GetName(), oldName, m_SubLevel->GetName());
-				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameLevel::NewSubLevel(
-					0,
-					m_pDlg->m_pVenue->GetName(),
-					m_Division->GetName(),
-					m_Level->GetName(),
-					oldName,
-					m_SubLevel->GetName()));
+				m_pDlg->m_DlgFixup.push_back(
+					ARBConfigActionRenameLevel::NewSubLevel(
+						0,
+						m_pDlg->m_pVenue->GetName(),
+						m_Division->GetName(),
+						m_Level->GetName(),
+						oldName,
+						m_SubLevel->GetName()));
 				RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
 				bEdited = true;
 			}
@@ -532,12 +534,13 @@ bool CDlgConfigureDataSubLevel::DoDelete()
 		// Note, if deleting the sublevel caused the level's name
 		// to change, just leave it. It causes more trouble to
 		// try modifing the name to the old sublevel name.
-		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteLevel::NewSubLevel(
-			0,
-			m_pDlg->m_pVenue->GetName(),
-			m_Division->GetName(),
-			level,
-			subLevel));
+		m_pDlg->m_DlgFixup.push_back(
+			ARBConfigActionDeleteLevel::NewSubLevel(
+				0,
+				m_pDlg->m_pVenue->GetName(),
+				m_Division->GetName(),
+				level,
+				subLevel));
 		m_pDlg->m_ctrlItems->Delete(GetId());
 		return true;
 	}

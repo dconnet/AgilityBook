@@ -787,8 +787,7 @@ void CDlgConfigEvent::FillControls()
 					}
 					if (pScoring->ComputeTimeFaultsUnder() || pScoring->ComputeTimeFaultsOver())
 					{
-						info << L"; " << _("IDS_CONFIGEVENT_TIMEFAULTMULT") << L": {}"
-							 << pScoring->TimeFaultMultiplier();
+						info << L"; " << _("IDS_CONFIGEVENT_TIMEFAULTMULT") << L": " << pScoring->TimeFaultMultiplier();
 					}
 					if (pScoring->ComputeTimeFaultsUnder())
 					{
@@ -796,7 +795,7 @@ void CDlgConfigEvent::FillControls()
 					}
 					if (pScoring->ComputeTimeFaultsOver())
 					{
-						info << L"; {}" << _("IDS_CONFIGEVENT_TF_OVER");
+						info << L"; " << _("IDS_CONFIGEVENT_TF_OVER");
 					}
 					break;
 				case ARBScoringStyle::TimeNoPlaces:

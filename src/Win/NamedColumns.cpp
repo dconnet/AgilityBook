@@ -52,11 +52,7 @@ CNamedColumns::CNamedColumns(CAgilityBookOptions::ColumnOrder eOrder)
 		data.configName = wxConfig::Get()->Read(name + CFG_CI_CONFIG_NAME, wxEmptyString);
 		for (size_t i = 0; i < IO_TYPE_MAX; ++i)
 		{
-			CDlgAssignColumns::GetColumnOrder(
-				m_eOrder,
-				i,
-				wxString::Format(L"{}{}", name, data.configName),
-				data.m_Columns[i]);
+			CDlgAssignColumns::GetColumnOrder(m_eOrder, i, name + data.configName, data.m_Columns[i]);
 		}
 		m_Configs.push_back(data);
 	}
@@ -105,11 +101,7 @@ void CNamedColumns::Save()
 		wxConfig::Get()->Write(name + CFG_CI_CONFIG_NAME, (*iConfig).configName);
 		for (size_t i = 0; i < IO_TYPE_MAX; ++i)
 		{
-			CDlgAssignColumns::SetColumnOrder(
-				m_eOrder,
-				i,
-				wxString::Format(L"{}{}", name, (*iConfig).configName),
-				(*iConfig).m_Columns[i]);
+			CDlgAssignColumns::SetColumnOrder(m_eOrder, i, name + (*iConfig).configName, (*iConfig).m_Columns[i]);
 		}
 	}
 	m_numConfigs = nConfigs;
