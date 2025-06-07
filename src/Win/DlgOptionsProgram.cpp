@@ -25,6 +25,7 @@
 
 #include "ARBCommon/StringUtil.h"
 #include "LibARBWin/DlgPadding.h"
+#include "LibARBWin/ReportListCtrl.h"
 #include "LibARBWin/Widgets.h"
 #include <wx/url.h>
 #include <wx/valgen.h>
@@ -49,7 +50,8 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	, m_UseProxy(CAgilityBookOptions::GetUseProxy())
 	, m_Proxy(CAgilityBookOptions::GetProxyServer())
 	, m_ctrlProxy(nullptr)
-	, m_enableDarkMode(CAgilityBookOptions::EnableDarkMode())
+	, m_enableUseAlternating(CAgilityBookOptions::GetAlternateRowColor())
+	, m_enableDarkMode(CAgilityBookOptions::GetDarkMode())
 {
 	// Controls (these are done first to control tab order)
 
@@ -133,17 +135,81 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	m_ctrlProxy->SetToolTip(_("HIDC_OPT_PGM_PROXY"));
 	m_ctrlProxy->Enable(m_UseProxy);
 
-#if wxCHECK_VERSION(3, 3, 0)
-	wxCheckBox* ctrlDarkMode = new wxCheckBox(
+
+	wxStaticBox* boxAlternating = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_PGM_ALTERNATING"));
+
+	auto* ctrlAlternatingOn = new wxRadioButton(
 		this,
 		wxID_ANY,
-		_("IDC_OPT_PGM_DARKMODE"),
+		_("IDC_OPT_PGM_ALTERNATING_ENABLED"),
 		wxDefaultPosition,
 		wxDefaultSize,
-		0,
-		wxGenericValidator(&m_enableDarkMode));
-	ctrlDarkMode->SetHelpText(_("HIDC_OPT_PGM_ENABLEDARKMODE"));
-	ctrlDarkMode->SetToolTip(_("HIDC_OPT_PGM_ENABLEDARKMODE"));
+		wxRB_GROUP);
+	ctrlAlternatingOn->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, [this](wxCommandEvent& evt) {
+		m_enableUseAlternating = true;
+	});
+	ctrlAlternatingOn->SetHelpText(_("HIDC_OPT_PGM_ALTERNATING_ENABLED"));
+	ctrlAlternatingOn->SetToolTip(_("HIDC_OPT_PGM_ALTERNATING_ENABLED"));
+
+	auto* ctrlAlternatingOff
+		= new wxRadioButton(this, wxID_ANY, _("IDC_OPT_PGM_ALTERNATING_DISABLED"), wxDefaultPosition, wxDefaultSize, 0);
+	ctrlAlternatingOff->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, [this](wxCommandEvent& evt) {
+		m_enableUseAlternating = false;
+	});
+	ctrlAlternatingOff->SetHelpText(_("HIDC_OPT_PGM_ALTERNATING_DISABLED"));
+	ctrlAlternatingOff->SetToolTip(_("HIDC_OPT_PGM_ALTERNATING_DISABLED"));
+
+	auto* ctrlAlternatingDefault
+		= new wxRadioButton(this, wxID_ANY, _("IDC_OPT_PGM_ALTERNATING_DEFAULT"), wxDefaultPosition, wxDefaultSize, 0);
+	ctrlAlternatingDefault->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, [this](wxCommandEvent& evt) {
+		m_enableUseAlternating.reset();
+	});
+	ctrlAlternatingDefault->SetHelpText(_("HIDC_OPT_PGM_ALTERNATING_DEFAULT"));
+	ctrlAlternatingDefault->SetToolTip(_("HIDC_OPT_PGM_ALTERNATING_DEFAULT"));
+
+	if (m_enableUseAlternating.has_value())
+		if (m_enableUseAlternating.value())
+			ctrlAlternatingOn->SetValue(true);
+		else
+			ctrlAlternatingOff->SetValue(true);
+	else
+		ctrlAlternatingDefault->SetValue(true);
+
+#if wxCHECK_VERSION(3, 3, 0)
+	wxStaticBox* boxDarkMode = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_PGM_DARKMODE"));
+
+	auto* ctrlModeDark = new wxRadioButton(
+		this,
+		wxID_ANY,
+		_("IDC_OPT_PGM_DARKMODE_DARK"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxRB_GROUP);
+	ctrlModeDark->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, [this](wxCommandEvent& evt) { m_enableDarkMode = true; });
+	ctrlModeDark->SetHelpText(_("HIDC_OPT_PGM_DARKMODE_DARK"));
+	ctrlModeDark->SetToolTip(_("HIDC_OPT_PGM_DARKMODE_DARK"));
+
+	auto* ctrlModeLight
+		= new wxRadioButton(this, wxID_ANY, _("IDC_OPT_PGM_DARKMODE_LIGHT"), wxDefaultPosition, wxDefaultSize, 0);
+	ctrlModeLight->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, [this](wxCommandEvent& evt) { m_enableDarkMode = false; });
+	ctrlModeLight->SetHelpText(_("HIDC_OPT_PGM_DARKMODE_LIGHT"));
+	ctrlModeLight->SetToolTip(_("HIDC_OPT_PGM_DARKMODE_LIGHT"));
+
+	auto* ctrlModeDefault
+		= new wxRadioButton(this, wxID_ANY, _("IDC_OPT_PGM_DARKMODE_DEFAULT"), wxDefaultPosition, wxDefaultSize, 0);
+	ctrlModeDefault->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, [this](wxCommandEvent& evt) {
+		m_enableDarkMode.reset();
+	});
+	ctrlModeDefault->SetHelpText(_("HIDC_OPT_PGM_DARKMODE_DEFAULT"));
+	ctrlModeDefault->SetToolTip(_("HIDC_OPT_PGM_DARKMODE_DEFAULT"));
+
+	if (m_enableDarkMode.has_value())
+		if (m_enableDarkMode.value())
+			ctrlModeDark->SetValue(true);
+		else
+			ctrlModeLight->SetValue(true);
+	else
+		ctrlModeDefault->SetValue(true);
 #endif
 
 	// Sizers
@@ -168,8 +234,18 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	sizerProxy->Add(m_ctrlProxy, 1, wxEXPAND);
 	bSizer->Add(sizerProxy, 0, wxEXPAND | wxALL, padding.Controls());
 
+	wxStaticBoxSizer* sizerAlternating = new wxStaticBoxSizer(boxAlternating, wxVERTICAL);
+	sizerAlternating->Add(ctrlAlternatingOn, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
+	sizerAlternating->Add(ctrlAlternatingOff, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
+	sizerAlternating->Add(ctrlAlternatingDefault, 0, wxALL, padding.Inner());
+	bSizer->Add(sizerAlternating, 0, wxLEFT | wxRIGHT | wxBOTTOM, padding.Controls());
+
 #if wxCHECK_VERSION(3, 3, 0)
-	bSizer->Add(ctrlDarkMode, 0, wxLEFT | wxRIGHT | wxBOTTOM, padding.Controls());
+	wxStaticBoxSizer* sizerDarkMode = new wxStaticBoxSizer(boxDarkMode, wxVERTICAL);
+	sizerDarkMode->Add(ctrlModeDark, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
+	sizerDarkMode->Add(ctrlModeLight, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
+	sizerDarkMode->Add(ctrlModeDefault, 0, wxALL, padding.Inner());
+	bSizer->Add(sizerDarkMode, 0, wxLEFT | wxRIGHT | wxBOTTOM, padding.Controls());
 #endif
 
 	SetSizer(bSizer);
@@ -199,6 +275,8 @@ void CDlgOptionsProgram::Save()
 	wxString newProxy = CAgilityBookOptions::GetProxy();
 	if (newProxy != oldProxy)
 		wxURL::SetDefaultProxy(newProxy);
+	CAgilityBookOptions::SetUseAlternateRowColor(m_enableUseAlternating);
+	CReportListCtrl::EnableRowColors(CAgilityBookOptions::UseAlternateRowColor());
 #if wxCHECK_VERSION(3, 3, 0)
 	CAgilityBookOptions::SetEnableDarkMode(m_enableDarkMode);
 #endif

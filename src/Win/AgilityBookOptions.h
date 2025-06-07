@@ -37,6 +37,7 @@
 #include <wx/colour.h>
 #include <wx/font.h>
 #include <wx/fontdlg.h>
+#include <optional>
 #include <set>
 #include <vector>
 
@@ -263,10 +264,12 @@ public:
 	static void SetBackupDirectory(wxString const& dir);
 	static bool AutoShowPropertiesOnNewTitle();
 	static void AutoShowPropertiesOnNewTitle(bool bShow);
+	static std::optional<bool> GetDarkMode();
 	static bool EnableDarkMode();
-	static void SetEnableDarkMode(bool enable);
+	static void SetEnableDarkMode(std::optional<bool> enable);
+	static std::optional<bool> GetAlternateRowColor();
 	static bool UseAlternateRowColor();
-	static void SetUseAlternateRowColor(bool bUse);
+	static void SetUseAlternateRowColor(std::optional<bool> use);
 	// Internet things
 	// -username/pw for accessing URLs thru ReadHTTP.cpp
 	static wxString GetUserName(wxString const& hint);

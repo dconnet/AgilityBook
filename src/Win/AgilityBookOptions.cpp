@@ -177,7 +177,9 @@ constexpr long sc_AutoUpdateCheckInterval = 30;
 constexpr long sc_NumBackup = 3;
 constexpr bool sc_ShowPropOnNewTitle = false;
 constexpr bool sc_UseProxy = false;
+// Alternating row default is different in dark mode
 constexpr bool sc_UseAltRowColor = true;
+constexpr bool sc_UseAltRowColorDark = false;
 
 
 void ExportConfigItem(wxString const& entry, ElementNodePtr const& inTree)
@@ -1937,37 +1939,67 @@ void CAgilityBookOptions::AutoShowPropertiesOnNewTitle(bool bShow)
 }
 
 
-bool CAgilityBookOptions::EnableDarkMode()
+std::optional<bool> CAgilityBookOptions::GetDarkMode()
 {
 #if wxCHECK_VERSION(3, 3, 0)
-	bool val = wxSystemSettings::GetAppearance().AreAppsDark();
-	wxConfig::Get()->Read(CFG_SETTINGS_ENABLEDARKMODE, &val);
-	return val;
+	bool val = false; // Default value doesn't matter
+	if (!wxConfig::Get()->Read(CFG_SETTINGS_ENABLEDARKMODE, &val))
+		return std::optional<bool>();
+	return val ? true : false;
+#else
+	return std::optional<bool>();
+#endif
+}
+
+
+bool CAgilityBookOptions::EnableDarkMode()
+{
+	auto val = GetDarkMode();
+	if (val.has_value())
+		return val.value();
+#if wxCHECK_VERSION(3, 3, 0)
+	return wxSystemSettings::GetAppearance().AreAppsDark();
 #else
 	return false;
 #endif
 }
 
 
-void CAgilityBookOptions::SetEnableDarkMode(bool enable)
+void CAgilityBookOptions::SetEnableDarkMode(std::optional<bool> enable)
 {
 #if wxCHECK_VERSION(3, 3, 0)
-	wxConfig::Get()->Write(CFG_SETTINGS_ENABLEDARKMODE, enable);
+	if (enable.has_value())
+		wxConfig::Get()->Write(CFG_SETTINGS_ENABLEDARKMODE, enable.value());
+	else
+		wxConfig::Get()->DeleteEntry(CFG_SETTINGS_ENABLEDARKMODE);
 #endif
+}
+
+
+std::optional<bool> CAgilityBookOptions::GetAlternateRowColor()
+{
+	bool val = false; // Default value doesn't matter
+	if (!wxConfig::Get()->Read(CFG_SETTINGS_USEALTROWCOLOR, &val))
+		return std::optional<bool>();
+	return val ? true : false;
 }
 
 
 bool CAgilityBookOptions::UseAlternateRowColor()
 {
-	bool val = sc_UseAltRowColor;
-	wxConfig::Get()->Read(CFG_SETTINGS_USEALTROWCOLOR, &val);
-	return val;
+	auto val = GetAlternateRowColor();
+	if (val.has_value())
+		return val.value();
+	return EnableDarkMode() ? sc_UseAltRowColorDark : sc_UseAltRowColor;
 }
 
 
-void CAgilityBookOptions::SetUseAlternateRowColor(bool bUse)
+void CAgilityBookOptions::SetUseAlternateRowColor(std::optional<bool> use)
 {
-	wxConfig::Get()->Write(CFG_SETTINGS_USEALTROWCOLOR, bUse);
+	if (use.has_value())
+		wxConfig::Get()->Write(CFG_SETTINGS_USEALTROWCOLOR, use.value());
+	else
+		wxConfig::Get()->DeleteEntry(CFG_SETTINGS_USEALTROWCOLOR);
 }
 
 /////////////////////////////////////////////////////////////////////////////

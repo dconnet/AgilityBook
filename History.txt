@@ -1,6 +1,8 @@
 2025-6-6: v4.0.0.<dev>
 - New features / Enhancements:
   - Updated to wxWidgets 3.3.0
+    - Dark mode is now supported
+  - Add option to turn off alternating row colors.
   - Revamped internals to remove 'fmt' usage and drop non-WX supoort.
 - Bug fix:
   - Fixed a couple recursive call issues found by xcode.

@@ -677,6 +677,7 @@ void CAgilityBookCalendarListView::OnUpdate(wxView* sender, wxObject* inHint)
 		hint = wxDynamicCast(inHint, CUpdateHint);
 	if (!hint || hint->IsSet(UPDATE_CALENDAR_VIEW) || hint->IsEqual(UPDATE_OPTIONS))
 	{
+		m_Ctrl->EnableAlternateRowColours(CAgilityBookOptions::UseAlternateRowColor());
 		LoadData();
 	}
 	else if (hint && (hint->IsEqual(UPDATE_LANG_CHANGE) || hint->IsEqual(UPDATE_CUSTOMIZE)))

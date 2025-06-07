@@ -18,6 +18,8 @@
  * 2004-04-08 Created
  */
 
+#include <optional>
+
 namespace dconSoft
 {
 namespace ARBWin
@@ -41,7 +43,11 @@ private:
 	bool m_UseProxy;
 	wxString m_Proxy;
 	ARBWin::CTextCtrl* m_ctrlProxy;
-	bool m_enableDarkMode;
+	wxRadioButton* m_ctrlModeDark;
+	wxRadioButton* m_ctrlModeLight;
+	wxRadioButton* m_ctrlModeDefault;
+	std::optional<bool> m_enableUseAlternating;
+	std::optional<bool> m_enableDarkMode;
 
 	void OnUseProxy(wxCommandEvent& evt);
 };
