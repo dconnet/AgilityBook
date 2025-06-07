@@ -788,14 +788,16 @@ void WriteColor(wxString const& key, wxColour const& inColor)
 
 wxColour CAgilityBookOptions::CalendarColor(ARBCalColorItem inItem)
 {
-	auto key = wxString::Format(L"{}/{}", CFG_KEY_CALENDAR, CalItemName(inItem));
+	wxString key;
+	key << CFG_KEY_CALENDAR << L"/" << CalItemName(inItem);
 	return ReadColor(key, CalItemColor(inItem));
 }
 
 
 void CAgilityBookOptions::SetCalendarColor(ARBCalColorItem inItem, wxColour inColor)
 {
-	auto key = wxString::Format(L"{}/{}", CFG_KEY_CALENDAR, CalItemName(inItem));
+	wxString key;
+	key << CFG_KEY_CALENDAR << L"/" << CalItemName(inItem);
 	WriteColor(key, inColor);
 }
 
@@ -2006,14 +2008,16 @@ void CAgilityBookOptions::SetUseAlternateRowColor(std::optional<bool> use)
 
 wxString CAgilityBookOptions::GetUserName(wxString const& hint)
 {
-	auto section = wxString::Format(L"{}/{}", CFG_KEY_USERNAMES, hint);
+	wxString section;
+	section << CFG_KEY_USERNAMES << L"/" << hint;
 	return wxConfig::Get()->Read(section, wxString());
 }
 
 
 void CAgilityBookOptions::SetUserName(wxString const& hint, wxString const& userName)
 {
-	auto section = wxString::Format(L"{}/{}", CFG_KEY_USERNAMES, hint);
+	wxString section;
+	section << CFG_KEY_USERNAMES << L"/" << hint;
 	wxConfig::Get()->Write(section, userName);
 }
 
