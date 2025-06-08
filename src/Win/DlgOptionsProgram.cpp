@@ -139,7 +139,7 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	wxStaticBox* boxAlternating = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_PGM_ALTERNATING"));
 
 	auto* ctrlAlternatingOn = new wxRadioButton(
-		this,
+		boxAlternating,
 		wxID_ANY,
 		_("IDC_OPT_PGM_ALTERNATING_ENABLED"),
 		wxDefaultPosition,
@@ -151,16 +151,26 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	ctrlAlternatingOn->SetHelpText(_("HIDC_OPT_PGM_ALTERNATING_ENABLED"));
 	ctrlAlternatingOn->SetToolTip(_("HIDC_OPT_PGM_ALTERNATING_ENABLED"));
 
-	auto* ctrlAlternatingOff
-		= new wxRadioButton(this, wxID_ANY, _("IDC_OPT_PGM_ALTERNATING_DISABLED"), wxDefaultPosition, wxDefaultSize, 0);
+	auto* ctrlAlternatingOff = new wxRadioButton(
+		boxAlternating,
+		wxID_ANY,
+		_("IDC_OPT_PGM_ALTERNATING_DISABLED"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		0);
 	ctrlAlternatingOff->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, [this](wxCommandEvent& evt) {
 		m_enableUseAlternating = false;
 	});
 	ctrlAlternatingOff->SetHelpText(_("HIDC_OPT_PGM_ALTERNATING_DISABLED"));
 	ctrlAlternatingOff->SetToolTip(_("HIDC_OPT_PGM_ALTERNATING_DISABLED"));
 
-	auto* ctrlAlternatingDefault
-		= new wxRadioButton(this, wxID_ANY, _("IDC_OPT_PGM_ALTERNATING_DEFAULT"), wxDefaultPosition, wxDefaultSize, 0);
+	auto* ctrlAlternatingDefault = new wxRadioButton(
+		boxAlternating,
+		wxID_ANY,
+		_("IDC_OPT_PGM_ALTERNATING_DEFAULT"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		0);
 	ctrlAlternatingDefault->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, [this](wxCommandEvent& evt) {
 		m_enableUseAlternating.reset();
 	});
@@ -179,7 +189,7 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	wxStaticBox* boxDarkMode = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_PGM_DARKMODE"));
 
 	auto* ctrlModeDark = new wxRadioButton(
-		this,
+		boxDarkMode,
 		wxID_ANY,
 		_("IDC_OPT_PGM_DARKMODE_DARK"),
 		wxDefaultPosition,
@@ -189,14 +199,24 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	ctrlModeDark->SetHelpText(_("HIDC_OPT_PGM_DARKMODE_DARK"));
 	ctrlModeDark->SetToolTip(_("HIDC_OPT_PGM_DARKMODE_DARK"));
 
-	auto* ctrlModeLight
-		= new wxRadioButton(this, wxID_ANY, _("IDC_OPT_PGM_DARKMODE_LIGHT"), wxDefaultPosition, wxDefaultSize, 0);
+	auto* ctrlModeLight = new wxRadioButton(
+		boxDarkMode,
+		wxID_ANY,
+		_("IDC_OPT_PGM_DARKMODE_LIGHT"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		0);
 	ctrlModeLight->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, [this](wxCommandEvent& evt) { m_enableDarkMode = false; });
 	ctrlModeLight->SetHelpText(_("HIDC_OPT_PGM_DARKMODE_LIGHT"));
 	ctrlModeLight->SetToolTip(_("HIDC_OPT_PGM_DARKMODE_LIGHT"));
 
-	auto* ctrlModeDefault
-		= new wxRadioButton(this, wxID_ANY, _("IDC_OPT_PGM_DARKMODE_DEFAULT"), wxDefaultPosition, wxDefaultSize, 0);
+	auto* ctrlModeDefault = new wxRadioButton(
+		boxDarkMode,
+		wxID_ANY,
+		_("IDC_OPT_PGM_DARKMODE_DEFAULT"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		0);
 	ctrlModeDefault->Bind(wxEVT_COMMAND_RADIOBUTTON_SELECTED, [this](wxCommandEvent& evt) {
 		m_enableDarkMode.reset();
 	});
