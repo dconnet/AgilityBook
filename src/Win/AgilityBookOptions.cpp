@@ -177,9 +177,7 @@ constexpr long sc_AutoUpdateCheckInterval = 30;
 constexpr long sc_NumBackup = 3;
 constexpr bool sc_ShowPropOnNewTitle = false;
 constexpr bool sc_UseProxy = false;
-// Alternating row default is different in dark mode
 constexpr bool sc_UseAltRowColor = true;
-constexpr bool sc_UseAltRowColorDark = false;
 
 
 void ExportConfigItem(wxString const& entry, ElementNodePtr const& inTree)
@@ -1992,7 +1990,7 @@ bool CAgilityBookOptions::UseAlternateRowColor()
 	auto val = GetAlternateRowColor();
 	if (val.has_value())
 		return val.value();
-	return EnableDarkMode() ? sc_UseAltRowColorDark : sc_UseAltRowColor;
+	return sc_UseAltRowColor;
 }
 
 

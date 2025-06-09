@@ -1419,7 +1419,7 @@ void CAgilityBookRunsView::OnUpdate(wxView* sender, wxObject* inHint)
 			bLoad = true;
 			if (hint->IsSet(UPDATE_RUNS_SELECTION_VIEW))
 				pRun = std::dynamic_pointer_cast<ARBDogRun, ARBBase>(hint->GetObj());
-			m_Ctrl->EnableAlternateRowColours(CAgilityBookOptions::UseAlternateRowColor());
+			m_Ctrl->UpdateAlternateRowColor(CAgilityBookOptions::UseAlternateRowColor());
 		}
 		else if (hint->IsSet(UPDATE_RUNS_SELECTION_VIEW))
 		{
