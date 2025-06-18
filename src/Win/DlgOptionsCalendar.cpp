@@ -60,8 +60,8 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL)
 	, m_fontCalViewInfo()
 	, m_fontCalView()
-	, m_OpeningNear(CAgilityBookOptions::CalendarOpeningNearColor())
-	, m_ClosingNear(CAgilityBookOptions::CalendarClosingNearColor())
+	, m_OpeningNear(CAgilityBookOptions::CalendarColor(ARBCalColorItem::OpeningNear))
+	, m_ClosingNear(CAgilityBookOptions::CalendarColor(ARBCalColorItem::ClosingNear))
 	, m_CalColors()
 	, m_bOpeningNear(true)
 	, m_nOpeningNear(CAgilityBookOptions::CalendarOpeningNear())
@@ -333,6 +333,7 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 		wxDefaultSize,
 		wxTE_MULTILINE | wxTE_READONLY | wxTE_RICH2);
 	m_ctrlCalView->SetFont(m_fontCalView);
+	m_ctrlCalView->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
 	SetRichText();
 
 	wxButton* ctrlFont = new wxButton(this, wxID_ANY, _("IDC_OPT_CAL_FONT"), wxDefaultPosition, wxDefaultSize, 0);
@@ -444,8 +445,8 @@ void CDlgOptionsCalendar::Save()
 	if (!m_bOpeningNear)
 		m_nOpeningNear = -1;
 
-	CAgilityBookOptions::SetCalendarOpeningNearColor(m_OpeningNear);
-	CAgilityBookOptions::SetCalendarClosingNearColor(m_ClosingNear);
+	CAgilityBookOptions::SetCalendarColor(ARBCalColorItem::OpeningNear, m_OpeningNear);
+	CAgilityBookOptions::SetCalendarColor(ARBCalColorItem::ClosingNear, m_ClosingNear);
 	for (std::vector<tColorInfo>::iterator iColor = m_CalColors.begin(); iColor != m_CalColors.end(); ++iColor)
 	{
 		CAgilityBookOptions::SetCalendarColor((*iColor).first, (*iColor).second);
@@ -472,6 +473,11 @@ wxString CDlgOptionsCalendar::GetCalText(ARBCalColorItem type, bool bForDisplay)
 	wxString text;
 	switch (type)
 	{
+	case ARBCalColorItem::OpeningNear:
+	case ARBCalColorItem::ClosingNear:
+		// These are not needed here.
+		// This is only used for populating the Calendar Entries section.
+		break;
 	case ARBCalColorItem::Past:
 		text = Localization()->CalendarPast();
 		if (bForDisplay)

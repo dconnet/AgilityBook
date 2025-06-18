@@ -88,44 +88,10 @@ constexpr long sc_DaysTillEntryIsPast = 5;
 constexpr bool sc_HideOverlapping = false;
 
 // xcode5 dies on any static wx objects
-const wxColour sc_CalColorPast()
-{
-	return wxColour(128, 128, 128);
-} // gray
-const wxColour sc_CalColorNotEntered()
-{
-	return wxColour(0, 0, 0);
-} // Black
-const wxColour sc_CalColorPlanning()
-{
-	return wxColour(255, 128, 0);
-} // Orange
-const wxColour sc_CalColorPending()
-{
-	return wxColour(128, 0, 255);
-} // Blue-ish
-const wxColour sc_CalColorEntered()
-{
-	return wxColour(0, 0, 255);
-} // Blue
-const wxColour sc_CalColorOpening()
-{
-	return wxColour(0, 128, 0);
-} // Dk Green
-const wxColour sc_CalColorClosing()
-{
-	return wxColour(255, 0, 0);
-} // Red
+// See CalItemColor for hardcoded colors.
+
 constexpr long sc_CalOpeningNear = 4;
 constexpr long sc_CalClosingNear = 10;
-const wxColour sc_CalColorOpeningNear()
-{
-	return wxColour(0, 0, 255);
-}
-const wxColour sc_CalColorClosingNear()
-{
-	return wxColour(255, 0, 0);
-}
 
 // Common
 constexpr ARBDayOfWeek sc_FirstDayOfWeek = ARBDayOfWeek::Sunday;
@@ -713,51 +679,119 @@ void CAgilityBookOptions::SetHideOverlappingCalendarEntries(bool bHide)
 
 namespace
 {
-wchar_t const* CalItemName(ARBCalColorItem inItem)
+wxString CalItemName(ARBCalColorItem inItem)
 {
+	wxString name;
 	switch (inItem)
 	{
+	case ARBCalColorItem::OpeningNear:
+		name = CFG_CAL_OPENNEARCOLOR;
+		break;
+	case ARBCalColorItem::ClosingNear:
+		name = CFG_CAL_CLOSENEARCOLOR;
+		break;
 	case ARBCalColorItem::Past:
-		return CFG_CAL_ITEM_PASTCOLOR;
+		name = CFG_CAL_ITEM_PASTCOLOR;
+		break;
 	case ARBCalColorItem::NotEntered:
-		return CFG_CAL_ITEM_NOTENTEREDCOLOR;
+		name = CFG_CAL_ITEM_NOTENTEREDCOLOR;
+		break;
 	case ARBCalColorItem::Planning:
-		return CFG_CAL_ITEM_PLANNINGCOLOR;
+		name = CFG_CAL_ITEM_PLANNINGCOLOR;
+		break;
 	case ARBCalColorItem::Pending:
-		return CFG_CAL_ITEM_PENDINGCOLOR;
+		name = CFG_CAL_ITEM_PENDINGCOLOR;
+		break;
 	case ARBCalColorItem::Entered:
-		return CFG_CAL_ITEM_ENTEREDCOLOR;
+		name = CFG_CAL_ITEM_ENTEREDCOLOR;
+		break;
 	case ARBCalColorItem::Opening:
-		return CFG_CAL_ITEM_OPENCOLOR;
+		name = CFG_CAL_ITEM_OPENCOLOR;
+		break;
 	case ARBCalColorItem::Closing:
-		return CFG_CAL_ITEM_CLOSECOLOR;
+		name = CFG_CAL_ITEM_CLOSECOLOR;
+		break;
 	}
-	assert(0);
-	return L"";
+	if (CAgilityBookOptions::EnableDarkMode())
+		name += CFG_DARKMODE;
+	return name;
 }
 
 
 wxColour CalItemColor(ARBCalColorItem inItem)
 {
+	// Colors that are the same for light/dark modes actually look okay on both.
+	static const wxColour sc_CalColorPast[2]{
+		{128, 128, 128}, // gray
+		{160, 160, 160}, // lighter gray
+	};
+	static const wxColour sc_CalColorNotEntered[2]{
+		{0, 0, 0},       // Black
+		{255, 255, 255}, // White
+	};
+	static const wxColour sc_CalColorPlanning[2]{
+		{255, 128, 0}, // Orange
+		{255, 128, 0},
+	};
+	static const wxColour sc_CalColorPending[2]{
+		{128, 0, 255},   // Purple-ish
+		{180, 100, 255}, // Light purple
+	};
+	static const wxColour sc_CalColorEntered[2]{
+		{0, 0, 255},     // Blue
+		{128, 128, 255}, // Lighter blue
+	};
+	static const wxColour sc_CalColorOpening[2]{
+		{0, 128, 0}, // Dk Green
+		{0, 128, 0},
+	};
+	static const wxColour sc_CalColorClosing[2]{
+		{255, 0, 0}, // Red
+		{255, 0, 0},
+	};
+	static const wxColour sc_CalColorOpeningNear[2]{
+		{0, 0, 255},
+		{0, 0, 255},
+	};
+	static const wxColour sc_CalColorClosingNear[2]{
+		{255, 0, 0},
+		{255, 0, 0},
+	};
+	size_t index = 0;
+	if (CAgilityBookOptions::EnableDarkMode())
+		index = 1;
+	wxColour clr;
 	switch (inItem)
 	{
+	case ARBCalColorItem::OpeningNear:
+		clr = sc_CalColorOpeningNear[index];
+		break;
+	case ARBCalColorItem::ClosingNear:
+		clr = sc_CalColorClosingNear[index];
+		break;
 	case ARBCalColorItem::Past:
-		return sc_CalColorPast();
+		clr = sc_CalColorPast[index];
+		break;
 	case ARBCalColorItem::NotEntered:
-		return sc_CalColorNotEntered();
+		clr = sc_CalColorNotEntered[index];
+		break;
 	case ARBCalColorItem::Planning:
-		return sc_CalColorPlanning();
+		clr = sc_CalColorPlanning[index];
+		break;
 	case ARBCalColorItem::Pending:
-		return sc_CalColorPending();
+		clr = sc_CalColorPending[index];
+		break;
 	case ARBCalColorItem::Entered:
-		return sc_CalColorEntered();
+		clr = sc_CalColorEntered[index];
+		break;
 	case ARBCalColorItem::Opening:
-		return sc_CalColorOpening();
+		clr = sc_CalColorOpening[index];
+		break;
 	case ARBCalColorItem::Closing:
-		return sc_CalColorClosing();
+		clr = sc_CalColorClosing[index];
+		break;
 	}
-	assert(0);
-	return wxColour(0, 0, 0);
+	return clr;
 }
 
 
@@ -825,30 +859,6 @@ long CAgilityBookOptions::CalendarClosingNear()
 void CAgilityBookOptions::SetCalendarClosingNear(long inDays)
 {
 	wxConfig::Get()->Write(CFG_CAL_CLOSENEAR, inDays);
-}
-
-
-wxColour CAgilityBookOptions::CalendarOpeningNearColor()
-{
-	return ReadColor(CFG_CAL_OPENNEARCOLOR, sc_CalColorOpeningNear());
-}
-
-
-void CAgilityBookOptions::SetCalendarOpeningNearColor(wxColour inColor)
-{
-	WriteColor(CFG_CAL_OPENNEARCOLOR, inColor);
-}
-
-
-wxColour CAgilityBookOptions::CalendarClosingNearColor()
-{
-	return ReadColor(CFG_CAL_CLOSENEARCOLOR, sc_CalColorClosingNear());
-}
-
-
-void CAgilityBookOptions::SetCalendarClosingNearColor(wxColour inColor)
-{
-	WriteColor(CFG_CAL_CLOSENEARCOLOR, inColor);
 }
 
 /////////////////////////////////////////////////////////////////////////////

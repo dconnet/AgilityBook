@@ -51,6 +51,8 @@ class CVersionNum;
 
 enum class ARBCalColorItem
 {
+	OpeningNear,
+	ClosingNear,
 	Past,
 	NotEntered,
 	Planning,
@@ -131,10 +133,6 @@ public:
 	static void SetCalendarOpeningNear(long inDays);
 	static long CalendarClosingNear();
 	static void SetCalendarClosingNear(long inDays);
-	static wxColour CalendarOpeningNearColor();
-	static void SetCalendarOpeningNearColor(wxColour inColor);
-	static wxColour CalendarClosingNearColor();
-	static void SetCalendarClosingNearColor(wxColour inColor);
 	// Common options
 	static ARBCommon::ARBDayOfWeek GetFirstDayOfWeek();
 	static void SetFirstDayOfWeek(ARBCommon::ARBDayOfWeek day);

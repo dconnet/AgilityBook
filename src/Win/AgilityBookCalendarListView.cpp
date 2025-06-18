@@ -219,12 +219,12 @@ void CAgilityBookCalendarListViewData::OnNeedListItem(long iCol, wxListItem& inf
 		}
 		if (HighlightClosingNear(iCol))
 		{
-			info.SetTextColour(CAgilityBookOptions::CalendarClosingNearColor());
+			info.SetTextColour(CAgilityBookOptions::CalendarColor(ARBCalColorItem::ClosingNear));
 			info.SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
 		}
 		else if (HighlightOpeningNear(iCol))
 		{
-			info.SetTextColour(CAgilityBookOptions::CalendarOpeningNearColor());
+			info.SetTextColour(CAgilityBookOptions::CalendarColor(ARBCalColorItem::OpeningNear));
 			info.SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
 		}
 	}

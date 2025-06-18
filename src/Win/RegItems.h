@@ -26,6 +26,8 @@ namespace dconSoft
 {
 
 // clang-format off
+// Appended to color keys when in darkmode
+#define CFG_DARKMODE					L"Dark"
 //Calendar
 #define CFG_KEY_CALENDAR				L"Calendar"
 //	DW CloseColor
