@@ -1954,10 +1954,11 @@ std::optional<bool> CAgilityBookOptions::GetDarkMode()
 #if wxCHECK_VERSION(3, 3, 0)
 	bool val = false; // Default value doesn't matter
 	if (!wxConfig::Get()->Read(CFG_SETTINGS_ENABLEDARKMODE, &val))
-		return std::optional<bool>();
+		return false; // For now, default to false. User must specifically enable dark mode.
+					  // return std::optional<bool>();
 	return val ? true : false;
 #else
-	return std::optional<bool>();
+	return false;
 #endif
 }
 
