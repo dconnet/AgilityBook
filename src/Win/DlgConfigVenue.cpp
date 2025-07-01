@@ -493,7 +493,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgConfigVenue, ctrlName)
+	IMPLEMENT_ON_INIT(ctrlName)
 }
 
 

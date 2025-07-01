@@ -153,7 +153,7 @@ CDlgRun::CDlgRun(
 	std::vector<wxWindow*> ctrls;
 	for (auto panel : m_panels)
 		ctrls.push_back(panel->GetInitialControl());
-	IMPLEMENT_ON_INIT(CDlgRun, ctrls[iSelectPage])
+	IMPLEMENT_ON_INIT(ctrls[iSelectPage])
 
 	notebook->ChangeSelection(iSelectPage);
 }

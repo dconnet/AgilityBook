@@ -242,7 +242,7 @@ CDlgClub::CDlgClub(
 	SetSizeHints(sz, wxSize(-1, sz.y));
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgClub, m_ctrlClubs)
+	IMPLEMENT_ON_INIT(m_ctrlClubs)
 }
 
 

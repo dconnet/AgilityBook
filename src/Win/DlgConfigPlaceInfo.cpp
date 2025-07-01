@@ -193,7 +193,7 @@ CDlgConfigPlaceInfo::CDlgConfigPlaceInfo(
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgConfigPlaceInfo, ctrlPlace)
+	IMPLEMENT_ON_INIT(ctrlPlace)
 }
 
 } // namespace dconSoft

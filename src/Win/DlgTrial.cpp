@@ -391,7 +391,7 @@ CDlgTrial::CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrialPtr const& inTrial, wxWin
 	ListClubs();
 	UpdateNotes(m_Location, true, true);
 
-	IMPLEMENT_ON_INIT(CDlgTrial, m_ctrlLocation)
+	IMPLEMENT_ON_INIT(m_ctrlLocation)
 }
 
 

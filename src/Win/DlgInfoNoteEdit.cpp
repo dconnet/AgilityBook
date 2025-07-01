@@ -110,7 +110,7 @@ CDlgInfoNoteEdit::CDlgInfoNoteEdit(
 	SetSizeHints(sz, wxSize(-1, sz.y));
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgInfoNoteEdit, ctrlName)
+	IMPLEMENT_ON_INIT(ctrlName)
 }
 
 

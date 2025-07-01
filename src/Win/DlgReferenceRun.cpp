@@ -295,7 +295,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgReferenceRun, ctrlPlace)
+	IMPLEMENT_ON_INIT(ctrlPlace)
 }
 
 

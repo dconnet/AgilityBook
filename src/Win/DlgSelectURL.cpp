@@ -113,7 +113,7 @@ void CDlgSelectURL::InitDlg(wxWindow* pParent, bool bAllowEmpty)
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgSelectURL, m_textCtrl)
+	IMPLEMENT_ON_INIT(m_textCtrl)
 }
 
 

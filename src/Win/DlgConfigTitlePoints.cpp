@@ -279,7 +279,7 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 	SetSizeHints(sz, sz);
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgConfigTitlePoints, m_ctrlValue)
+	IMPLEMENT_ON_INIT(m_ctrlValue)
 }
 
 

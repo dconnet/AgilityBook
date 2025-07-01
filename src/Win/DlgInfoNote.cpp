@@ -548,7 +548,7 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, wxString c
 	CConfigInfoNote pos;
 	pos.Set(this, true);
 
-	IMPLEMENT_ON_INIT(CDlgInfoNote, m_ctrlList)
+	IMPLEMENT_ON_INIT(m_ctrlList)
 }
 
 

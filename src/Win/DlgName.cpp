@@ -94,7 +94,7 @@ bool CDlgName::Create(wxString const& caption, wxWindow* pParent)
 	SetSizeHints(sz, wxSize(-1, sz.y));
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgName, textCtrl)
+	IMPLEMENT_ON_INIT(textCtrl)
 
 	return true;
 }

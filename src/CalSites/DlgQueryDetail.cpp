@@ -155,7 +155,7 @@ CDlgQueryDetail::CDlgQueryDetail(
 	SetSizeHints(sz, wxSize(-1, sz.y));
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgQueryDetail, m_ctrlCode)
+	IMPLEMENT_ON_INIT(m_ctrlCode)
 }
 
 

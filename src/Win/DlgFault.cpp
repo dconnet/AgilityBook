@@ -90,7 +90,7 @@ CDlgFault::CDlgFault(std::set<wxString>& inFaults, wxString const& fault, wxWind
 	SetSizeHints(sz, wxSize(-1, sz.y));
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgFault, comboBox)
+	IMPLEMENT_ON_INIT(comboBox)
 }
 
 

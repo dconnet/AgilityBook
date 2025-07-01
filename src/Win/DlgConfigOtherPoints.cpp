@@ -240,7 +240,7 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgConfigOtherPoints, ctrlName)
+	IMPLEMENT_ON_INIT(ctrlName)
 }
 
 

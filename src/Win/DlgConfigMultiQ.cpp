@@ -247,7 +247,7 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgConfigMultiQ, m_ctrlName)
+	IMPLEMENT_ON_INIT(m_ctrlName)
 }
 
 

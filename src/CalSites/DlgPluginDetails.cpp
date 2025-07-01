@@ -180,7 +180,7 @@ CDlgPluginDetails::CDlgPluginDetails(
 	SetSizeHints(sz, wxSize(-1, sz.y));
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgPluginDetails, m_ctrlName)
+	IMPLEMENT_ON_INIT(m_ctrlName)
 
 	SetCodeText();
 }

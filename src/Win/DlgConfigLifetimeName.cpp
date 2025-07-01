@@ -119,7 +119,7 @@ void CDlgConfigLifetimeName::InitDlg(wxWindow* pParent)
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgConfigLifetimeName, ctrlName)
+	IMPLEMENT_ON_INIT(ctrlName)
 }
 
 

@@ -144,7 +144,7 @@ CDlgOtherPoint::CDlgOtherPoint(ARBConfig& config, ARBDogRunOtherPointsPtr const&
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgOtherPoint, m_ctrlOtherPoints)
+	IMPLEMENT_ON_INIT(m_ctrlOtherPoints)
 
 	LoadPoints(ARBConfigOtherPointsPtr());
 }

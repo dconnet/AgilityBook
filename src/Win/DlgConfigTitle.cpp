@@ -420,7 +420,7 @@ CDlgConfigTitle::CDlgConfigTitle(ARBConfigTitlePtr const& inTitle, wxWindow* pPa
 
 	UpdateButtons();
 
-	IMPLEMENT_ON_INIT(CDlgConfigTitle, ctrlName)
+	IMPLEMENT_ON_INIT(ctrlName)
 }
 
 

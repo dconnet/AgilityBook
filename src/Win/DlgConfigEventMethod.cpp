@@ -692,7 +692,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgConfigEventMethod, m_ctrlDivision)
+	IMPLEMENT_ON_INIT(m_ctrlDivision)
 }
 
 

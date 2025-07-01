@@ -177,7 +177,7 @@ CDlgRegNum::CDlgRegNum(
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgRegNum, m_ctrlVenues)
+	IMPLEMENT_ON_INIT(m_ctrlVenues)
 }
 
 

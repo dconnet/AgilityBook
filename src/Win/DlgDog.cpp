@@ -119,7 +119,7 @@ CDlgDog::CDlgDog(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog, wxWindow* pParen
 	ctrls.push_back(m_panelTitles->GetInitialControl());
 	ctrls.push_back(m_panelRegNums->GetInitialControl());
 	ctrls.push_back(m_panelPoints->GetInitialControl());
-	IMPLEMENT_ON_INIT(CDlgDog, ctrls[iSelectPage])
+	IMPLEMENT_ON_INIT(ctrls[iSelectPage])
 
 	notebook->ChangeSelection(iSelectPage);
 }

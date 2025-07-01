@@ -158,7 +158,7 @@ CDlgPartner::CDlgPartner(
 	SetSizeHints(sz, wxSize(-1, sz.y));
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgPartner, ctrlHandler)
+	IMPLEMENT_ON_INIT(ctrlHandler)
 }
 
 
