@@ -1,7 +1,7 @@
-2025-6-6: v4.0.0.<dev>
+2025-7-21: v4.0.0.<dev>
 - New features / Enhancements:
-  - Updated to wxWidgets 3.3.0
-    - Dark mode is now supported
+  - Updated to wxWidgets 3.3.1
+    - Dark mode is now (semi)supported
   - Add option to turn off alternating row colors.
   - Revamped internals to remove 'fmt' usage and drop non-WX supoort.
 - Bug fix:
