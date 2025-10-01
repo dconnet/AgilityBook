@@ -163,7 +163,6 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 	m_ctrlType->SetToolTip(_("HIDC_CONFIG_TITLEPTS_TITLE_POINTS"));
 	m_ctrlType->SetSelection(static_cast<int>(m_Type));
 
-	wxArrayString typesNorm;
 	struct
 	{
 		wxString text;
