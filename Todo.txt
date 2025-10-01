@@ -1,3 +1,7 @@
+Updates: 2025-10-1
+- Venue icons are not loading on a users machine. (Cannot repro)
+  This is the same machine that using gsl::narrow caused an exception at startup. (Couldn't repro this either)
+
 Updates: 2025-8-19
 - CPE Speedway points
   1) Placement box
