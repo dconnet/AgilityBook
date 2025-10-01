@@ -149,7 +149,6 @@ bool ARBConfigSubLevel::Save(ElementNodePtr const& ioTree) const
 
 bool ARBConfigSubLevel::Update(int indent, ARBConfigSubLevelPtr const& inLevelNew, wxString& ioInfo)
 {
-	wxString info;
 	if (GetName() != inLevelNew->GetName())
 		return false;
 
