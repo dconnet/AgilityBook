@@ -1,4 +1,4 @@
-2025-7-21: v4.0.0.<dev>
+2025-10-2: v4.0.0.<dev>
 - New features / Enhancements:
   - Updated to wxWidgets 3.3.1
     - Dark mode is now (semi)supported
@@ -7,6 +7,9 @@
 - Bug fix:
   - Fixed a couple recursive call issues found by xcode.
   - Fixed export of (run: SubName, SpeedPts), (cal: DrawDate), alignment of SubName in Run dialog.
+  - Fix custom DPI issues (it broke at 110%)
+    - gsl exception at startup
+    - image rescaling (png rescaled wrong)
 
 8/18/2024: v3.8.9.127
 - Bumped Configuration v72:
