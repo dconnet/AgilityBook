@@ -249,7 +249,7 @@ void CMainFrame::EnableLogWindow()
 	{
 		// 'show' is used for default showing of the log window
 		// AND enabling of CStackLogger messages.
-#ifdef _DEBUG
+#ifdef __WXDEBUG__
 		bool show = true;
 #else
 		bool show = false;
