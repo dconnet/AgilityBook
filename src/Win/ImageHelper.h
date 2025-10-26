@@ -25,11 +25,8 @@
 
 namespace dconSoft
 {
-
-
 #define ImageMgrRuns                wxART_MAKE_ART_ID(ImageMgrRuns)
 #define ImageMgrPoints              wxART_MAKE_ART_ID(ImageMgrPoints)
-#define ImageMgrCalendar            wxART_MAKE_ART_ID(ImageMgrCalendar)
 #define ImageMgrTraining            wxART_MAKE_ART_ID(ImageMgrTraining)
 #define ImageMgrDog                 wxART_MAKE_ART_ID(ImageMgrDog)
 #define ImageMgrTrial               wxART_MAKE_ART_ID(ImageMgrTrial)
@@ -76,18 +73,5 @@ namespace dconSoft
 #define ImageMgrInfoNote          wxART_MAKE_ART_ID(ImageMgrInfoNote)
 #define ImageMgrInfoNoteAdded     wxART_MAKE_ART_ID(ImageMgrInfoNoteAdded)
 #define ImageMgrInfoNoteNoteAdded wxART_MAKE_ART_ID(ImageMgrInfoNoteNoteAdded)
-
-#define ImageMgrAbout    wxART_MAKE_ART_ID(ImageMgrAbout)
-#define ImageMgrCopy     wxART_MAKE_ART_ID(ImageMgrCopy)
-#define ImageMgrCut      wxART_MAKE_ART_ID(ImageMgrCut)
-#define ImageMgrDelete   wxART_MAKE_ART_ID(ImageMgrDelete)
-#define ImageMgrFind     wxART_MAKE_ART_ID(ImageMgrFind)
-#define ImageMgrNew      wxART_MAKE_ART_ID(ImageMgrNew)
-#define ImageMgrOpen     wxART_MAKE_ART_ID(ImageMgrOpen)
-#define ImageMgrPaste    wxART_MAKE_ART_ID(ImageMgrPaste)
-#define ImageMgrPreview  wxART_MAKE_ART_ID(ImageMgrPreview)
-#define ImageMgrPrint    wxART_MAKE_ART_ID(ImageMgrPrint)
-#define ImageMgrSave     wxART_MAKE_ART_ID(ImageMgrSave)
-#define ImageMgrSettings wxART_MAKE_ART_ID(ImageMgrSettings)
 
 } // namespace dconSoft

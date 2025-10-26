@@ -6,6 +6,7 @@
 ../../../AgilityBookLibs/Include/images/toolbarCopy.svg
 ../../../AgilityBookLibs/Include/images/toolbarCut.svg
 ../../../AgilityBookLibs/Include/images/toolbarDelete.svg
+../../../AgilityBookLibs/Include/images/toolbarDuplicate.svg
 ../../../AgilityBookLibs/Include/images/toolbarFind.svg
 ../../../AgilityBookLibs/Include/images/toolbarFolderOpened.svg
 ../../../AgilityBookLibs/Include/images/toolbarNew.svg

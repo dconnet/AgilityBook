@@ -805,6 +805,10 @@ bool CAgilityBookApp::GetResImageName(wxArtID const& id, wxArtClient const& clie
 	{
 		outName = L"toolbarDelete";
 	}
+	else if (id == ImageMgrDuplicate)
+	{
+		outName = L"toolbarDuplicate";
+	}
 	else if (id == ImageMgrFind)
 	{
 		outName = L"toolbarFind";
