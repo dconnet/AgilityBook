@@ -2174,7 +2174,7 @@ msgstr "Points puis Temps"
 
 #: Win/DlgAssignColumns.cpp:141
 msgid "IDS_ASSCOL_RUNS_POINTS_DESC"
-msgstr "Des parcours comme Snooker"
+msgstr "Des parcours comme FAST et Snooker"
 
 #: Win/DlgAssignColumns.cpp:144
 msgid "IDS_ASSCOL_CALENDAR"

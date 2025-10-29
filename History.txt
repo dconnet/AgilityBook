@@ -4,6 +4,7 @@
     - Dark mode is now (semi)supported
   - Add option to turn off alternating row colors.
   - Revamped internals to remove 'fmt' usage and drop non-WX supoort.
+  - Add 'FAST' into description for customizing columns during export.
 - Bug fix:
   - Fixed a couple recursive call issues found by xcode.
   - Fixed export of (run: SubName, SpeedPts), (cal: DrawDate), alignment of SubName in Run dialog.
