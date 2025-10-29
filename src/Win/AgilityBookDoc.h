@@ -194,6 +194,7 @@ private:
 	ARB::ARBDogPtr m_pCurrentDog;
 
 protected:
+	void OnChangedViewList() override;
 	bool DeleteContents() override;
 	bool OnNewDocument() override;
 	bool OnOpenDocument(const wxString& file) override;

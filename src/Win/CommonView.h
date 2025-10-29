@@ -47,7 +47,6 @@ public:
 	// (wxView override)
 	bool OnClose(bool /*deleteWindow*/) override
 	{
-		Activate(false);
 		return true;
 	}
 
