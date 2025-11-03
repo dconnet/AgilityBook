@@ -1553,7 +1553,8 @@ void CAgilityBookDoc::OnChangedViewList()
 	// Same as base class, but added OnCloseDocument because it's not happening.
 	if (m_documentViews.empty() && OnSaveModified())
 	{
-#if wxCHECK_VERSION(3, 3, 0)
+#if wxCHECK_VERSION(3, 3, 0) && !wxCHECK_VERSION(3, 3, 2)
+#pragma PRAGMA_TODO(Check if this has been fixed)
 		OnCloseDocument();
 #endif
 		delete this;
