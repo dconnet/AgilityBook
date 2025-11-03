@@ -43,7 +43,9 @@ public:
 	{
 		return dynamic_cast<CAgilityBookDoc*>(wxView::GetDocument());
 	}
-	// Prevent the view from calling wxDocument::DeleteDocument
+	// Prevent the view from calling wxDocument::DeleteDocument (via wxDocument::OnClose)
+	// when each view is closed. Because of this, OnCloseDocument will no longer be called
+	// as of wx3.3.0 due to a bug fix that occured.
 	// (wxView override)
 	bool OnClose(bool /*deleteWindow*/) override
 	{

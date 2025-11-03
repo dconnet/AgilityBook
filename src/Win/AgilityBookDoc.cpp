@@ -1550,11 +1550,15 @@ void CAgilityBookDoc::BackupFile(wxString const& lpszPathName)
 
 void CAgilityBookDoc::OnChangedViewList()
 {
-	// Same as base class, but added OnCloseDocument because it's not happening.
+	// Same as base class, except added OnCloseDocument for wx3.3.0+.
 	if (m_documentViews.empty() && OnSaveModified())
 	{
-#if wxCHECK_VERSION(3, 3, 0) && !wxCHECK_VERSION(3, 3, 2)
-#pragma PRAGMA_TODO(Check if this has been fixed)
+#if wxCHECK_VERSION(3, 3, 0)
+		// A bug fix in wx3.3.0 now causes the document to not be closed. Normally, the document would autoclose on a
+		// view closing, but since this is a multiview/single-doc setup, I override the wxView::OnClose and prevented
+		// the doc closure. So before deleting the document, do the final cleanup.
+		// Note: I could just not override OnCloseDocument and move that code here... Since OnCloseDocument can no
+		// longer prevent the frame from closing.
 		OnCloseDocument();
 #endif
 		delete this;
