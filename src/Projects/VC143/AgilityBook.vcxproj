@@ -54,7 +54,6 @@
     <ProjectGuid>{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>AgilityBook</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">

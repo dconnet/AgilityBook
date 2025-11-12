@@ -54,7 +54,6 @@
     <ProjectGuid>{DA3555E9-9D25-4E49-A36C-CBB88F0D2469}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>TestwxARB</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">

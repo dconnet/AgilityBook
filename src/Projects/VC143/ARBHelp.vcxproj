@@ -54,7 +54,6 @@
     <ProjectGuid>{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ARBHelp</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">

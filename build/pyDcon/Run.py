@@ -5,6 +5,7 @@
 #  Run the cmd
 #
 # 2016-06-10 Made into library
+# 2023-10-30 Add unix support
 #
 
 import os
@@ -17,7 +18,10 @@ def Run(cmd, onlyTest = False):
 	if onlyTest:
 		return 0
 	newenv = os.environ.copy()
-	proc = subprocess.Popen(cmd, env=newenv)
+	if os.name == 'nt':
+		proc = subprocess.Popen(cmd, env=newenv)
+	else:
+		proc = subprocess.Popen(cmd, env=newenv, shell=True)
 	proc.wait()
 	return proc.returncode
 
@@ -33,9 +37,15 @@ def RunCmds(cmds, onlyTest = False, filename = 'runcmds.bat'):
 def RunFile(file, remove = True, onlyTest = False):
 	newenv = os.environ.copy()
 	if onlyTest:
-		proc = subprocess.Popen('cmd /c type ' + file, env=newenv)
+		if os.name == 'nt':
+			proc = subprocess.Popen('cmd /c type ' + file, env=newenv)
+		else:
+			proc = subprocess.Popen('cat ' + file, env=newenv, shell=True)
 	else:
-		proc = subprocess.Popen(file, env=newenv)
+		if os.name == 'nt':
+			proc = subprocess.Popen(file, env=newenv)
+		else:
+			proc = subprocess.Popen(file, env=newenv, shell=True)
 	proc.wait()
 	if remove:
 		os.remove(file)

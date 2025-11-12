@@ -6,6 +6,8 @@
 #  returns tuple (vcDir, vcvarsall cmd, platformDir, platform)
 #    baseDir, baseDir+r'\VC\vcvarsall.bat target', vcNNN, x64/x86
 #
+# 2025-11-11 Add vc145 support (vc18)
+#            (also flipped if-else testing to put newest at the top)
 # 2022-12-19 Added vc143arm support.
 # 2021-11-09 Add vc143 support
 # 2020-11-28 Make target names case insensitive.
@@ -77,61 +79,83 @@ def GetCompilerPaths(c, verbose = True):
 	platform = ''
 
 	comp = c.lower()
-	if comp == 'vc10':
-		baseDir = GetVSDir("10.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
+
+	if comp == 'vc145':
+		baseDir = GetVSDir("18.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = GetTarget(baseDir, False, False)
-		platformDir = 'vc100'
+		platformDir = 'vc145'
 		platform = 'x86'
 
-	elif comp == 'vc10x64':
-		baseDir = GetVSDir("10.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
+	elif comp == 'vc145x64':
+		baseDir = GetVSDir("18.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = GetTarget(baseDir, True, False)
-		platformDir = 'vc100'
+		platformDir = 'vc145'
 		platform = 'x64'
 
-	elif comp == 'vc11':
-		baseDir = GetVSDir("11.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
+	elif comp == 'vc145arm':
+		baseDir = GetVSDir("18.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = GetTarget(baseDir, False, True)
+		platformDir = 'vc145'
+		platform = 'ARM'
+
+	elif comp == 'vc145arm64':
+		baseDir = GetVSDir("18.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = GetTarget(baseDir, True, True)
+		platformDir = 'vc145'
+		platform = 'ARM64'
+
+	elif comp == 'vc143':
+		baseDir = GetVSDir("17.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = GetTarget(baseDir, False, False)
-		platformDir = 'vc110'
+		platformDir = 'vc143'
 		platform = 'x86'
 
-	elif comp == 'vc11x64':
-		baseDir = GetVSDir("11.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
+	elif comp == 'vc143x64':
+		baseDir = GetVSDir("17.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = GetTarget(baseDir, True, False)
-		platformDir = 'vc110'
+		platformDir = 'vc143'
 		platform = 'x64'
 
-	elif comp == 'vc12':
-		baseDir = GetVSDir("12.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
+	elif comp == 'vc143arm':
+		baseDir = GetVSDir("17.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = GetTarget(baseDir, False, True)
+		platformDir = 'vc143'
+		platform = 'ARM'
+
+	elif comp == 'vc143arm64':
+		baseDir = GetVSDir("17.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = GetTarget(baseDir, True, True)
+		platformDir = 'vc143'
+		platform = 'ARM64'
+
+	elif comp == 'vc142':
+		baseDir = GetVSDir("16.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = GetTarget(baseDir, False, False)
-		platformDir = 'vc120'
+		platformDir = 'vc142'
 		platform = 'x86'
 
-	elif comp == 'vc12x64':
-		baseDir = GetVSDir("12.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
+	elif comp == 'vc142x64':
+		baseDir = GetVSDir("16.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
 		target = GetTarget(baseDir, True, False)
-		platformDir = 'vc120'
+		platformDir = 'vc142'
 		platform = 'x64'
 
-	elif comp == 'vc14':
-		baseDir = GetVSDir("14.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = GetTarget(baseDir, False, False)
-		platformDir = 'vc140'
-		platform = 'x86'
-
-	elif comp == 'vc14x64':
-		baseDir = GetVSDir("14.0")
-		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
-		target = GetTarget(baseDir, True, False)
-		platformDir = 'vc140'
-		platform = 'x64'
+	elif comp == 'vc142arm64':
+		baseDir = GetVSDir("16.0")
+		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+		target = GetTarget(baseDir, True, True)
+		platformDir = 'vc142'
+		platform = 'ARM64'
 
 	elif comp == 'vc141':
 		#vcvarsall [arch]
@@ -175,54 +199,61 @@ def GetCompilerPaths(c, verbose = True):
 		platformDir = 'vc141'
 		platform = 'ARM64'
 
-	elif comp == 'vc142':
-		baseDir = GetVSDir("16.0")
-		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+	elif comp == 'vc14':
+		baseDir = GetVSDir("14.0")
+		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetTarget(baseDir, False, False)
-		platformDir = 'vc142'
+		platformDir = 'vc140'
 		platform = 'x86'
 
-	elif comp == 'vc142x64':
-		baseDir = GetVSDir("16.0")
-		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+	elif comp == 'vc14x64':
+		baseDir = GetVSDir("14.0")
+		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetTarget(baseDir, True, False)
-		platformDir = 'vc142'
+		platformDir = 'vc140'
 		platform = 'x64'
 
-	elif comp == 'vc142arm64':
-		baseDir = GetVSDir("16.0")
-		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
-		target = GetTarget(baseDir, True, True)
-		platformDir = 'vc142'
-		platform = 'ARM64'
-
-	elif comp == 'vc143':
-		baseDir = GetVSDir("17.0")
-		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+	elif comp == 'vc12':
+		baseDir = GetVSDir("12.0")
+		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetTarget(baseDir, False, False)
-		platformDir = 'vc143'
+		platformDir = 'vc120'
 		platform = 'x86'
 
-	elif comp == 'vc143x64':
-		baseDir = GetVSDir("17.0")
-		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
+	elif comp == 'vc12x64':
+		baseDir = GetVSDir("12.0")
+		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
 		target = GetTarget(baseDir, True, False)
-		platformDir = 'vc143'
+		platformDir = 'vc120'
 		platform = 'x64'
 
-	elif comp == 'vc143arm':
-		baseDir = GetVSDir("17.0")
-		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
-		target = GetTarget(baseDir, False, True)
-		platformDir = 'vc143'
-		platform = 'ARM'
+	elif comp == 'vc11':
+		baseDir = GetVSDir("11.0")
+		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
+		target = GetTarget(baseDir, False, False)
+		platformDir = 'vc110'
+		platform = 'x86'
 
-	elif comp == 'vc143arm64':
-		baseDir = GetVSDir("17.0")
-		vcvarsall = baseDir + r'\VC\Auxiliary\Build\vcvarsall.bat'
-		target = GetTarget(baseDir, True, True)
-		platformDir = 'vc143'
-		platform = 'ARM64'
+	elif comp == 'vc11x64':
+		baseDir = GetVSDir("11.0")
+		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
+		target = GetTarget(baseDir, True, False)
+		platformDir = 'vc110'
+		platform = 'x64'
+
+	elif comp == 'vc10':
+		baseDir = GetVSDir("10.0")
+		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
+		target = GetTarget(baseDir, False, False)
+		platformDir = 'vc100'
+		platform = 'x86'
+
+	elif comp == 'vc10x64':
+		baseDir = GetVSDir("10.0")
+		vcvarsall = baseDir + r'\VC\vcvarsall.bat'
+		target = GetTarget(baseDir, True, False)
+		platformDir = 'vc100'
+		platform = 'x64'
 
 	else:
 		if verbose:

@@ -61,7 +61,7 @@
 	-s name:  Compile sample 'name'
 	-u name:  Compile util 'name'
 	-r config: config: release/debug
-	compiler: vc142, vc142x64, vc142arm64, vc143, vc143x64, vc143arm64
+	compiler: vc143, vc143x64, vc143arm64, vc145, vc145x64, vc145arm64
 """
 
 import getopt
@@ -95,7 +95,7 @@ def AddCompiler(compilersMSBuild, compilersNMake, c):
 		return False
 
 	# TODO: Test this on older compiler, if not installed, the above dies first
-	if platformDir != 'vc142' and platformDir != 'vc143':
+	if platformDir != 'vc145' and platformDir != 'vc143' and platformDir != 'vc142':
 		print('ERROR: Unsupported compiler:', platformDir)
 		return False
 
@@ -266,6 +266,8 @@ def BuildMSBuild(compilers, samples, utils, release, debug):
 			solution = 'wx_vc16.sln'
 		elif platformDir == 'vc143':
 			solution = 'wx_vc17.sln'
+		elif platformDir == 'vc145':
+			solution = 'wx_vc18.sln'
 		else:
 			print('ERROR: Unsupported compiler:', platformDir)
 			return False

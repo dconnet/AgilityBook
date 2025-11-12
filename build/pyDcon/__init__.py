@@ -1,4 +1,8 @@
-from . import GetVSDir
+import os
+
 from . import RmMinusRF
 from . import Run
-from . import VSPaths
+
+if os.name == 'nt':
+	from . import GetVSDir
+	from . import VSPaths

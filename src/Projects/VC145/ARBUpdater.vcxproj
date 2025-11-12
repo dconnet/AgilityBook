@@ -51,76 +51,76 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{09C48F16-0C9D-4A44-925D-7C02E33341DD}</ProjectGuid>
+    <ProjectGuid>{E7CFFCF1-C043-4443-9F24-8CCBEBFBA690}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>LibwxARB</RootNamespace>
+    <RootNamespace>ARBUpdater</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -201,105 +201,196 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
+    <CustomBuildBeforeTargets>ResourceCompile</CustomBuildBeforeTargets>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
-      <PreprocessorDefinitions>ARB_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>ARB_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>ARB_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|ARM64'">
     <ClCompile>
-      <PreprocessorDefinitions>ARB_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>ARB_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>ARB_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
-      <PreprocessorDefinitions>ARB_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>python "$(BuildScriptDir)SignStuff.py" "$(TargetPath)"</Command>
+    </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>ARB_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>python "$(BuildScriptDir)SignStuff.py" "$(TargetPath)"</Command>
+    </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>ARB_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>python "$(BuildScriptDir)SignStuff.py" "$(TargetPath)"</Command>
+    </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|ARM64'">
     <ClCompile>
-      <PreprocessorDefinitions>ARB_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>python "$(BuildScriptDir)SignStuff.py" "$(TargetPath)"</Command>
+    </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>ARB_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>python "$(BuildScriptDir)SignStuff.py" "$(TargetPath)"</Command>
+    </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>ARB_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>python "$(BuildScriptDir)SignStuff.py" "$(TargetPath)"</Command>
+    </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>python "$(BuildScriptDir)CompileDatafile.py" -x "$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt" "$(IntDir)." "$(TargetName)"</Command>
+      <Message>Generating Data File</Message>
+      <Outputs>$(IntDir)$(TargetName).dat</Outputs>
+      <Inputs>$(ProjectDir)..\..\ARBUpdater\res\CompileDatList.txt;%(Inputs)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Libraries\ARB\ARBAgilityRecordBook.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBBase.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBCalcPoints.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBCalendar.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBConfig.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBConfigAction.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBConfigDivision.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBConfigEvent.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBConfigFault.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBConfigLevel.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBConfigLifetimeName.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBConfigLifetimePoints.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBConfigMultiQ.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBConfigOtherPoints.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBConfigPlaceInfo.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBConfigScoring.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBConfigSubLevel.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBConfigTitle.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBConfigTitlePoints.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBConfigVenue.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBDog.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBDogClub.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBDogExistingPoints.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBDogNotes.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBDogReferenceRun.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBDogRegNum.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBDogRun.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBDogRunOtherPoints.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBDogRunPartner.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBDogRunScoring.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBDogTitle.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBDogTrial.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBInfo.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBInfoItem.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBLocalization.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARBTraining.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\ARB_Q.cpp" />
-    <ClCompile Include="..\..\Libraries\ARB\stdafx.cpp">
+    <ClCompile Include="..\..\ARBUpdater\ARBUpdater.cpp" />
+    <ClCompile Include="..\..\ARBUpdater\DlgDigest.cpp" />
+    <ClCompile Include="..\..\ARBUpdater\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -325,6 +416,13 @@
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">false</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">false</MultiProcessorCompilation>
     </ClCompile>
+    <ClCompile Include="..\..\Win\Localization.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Win\res\AgilityBook.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\ARBUpdater\ARBUpdater.rc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\arbWarningPop.h" />
@@ -335,59 +433,24 @@
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\Platform\SetupWX.h" />
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\VersionInfoARB.h" />
     <ClInclude Include="..\..\..\AgilityBookLibs\Include\VersionNumber.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBAgilityRecordBook.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBBase.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBCalcPoints.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBCalendar.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBConfig.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBConfigAction.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBConfigDivision.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBConfigEvent.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBConfigFault.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBConfigLevel.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBConfigLifetimeName.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBConfigLifetimePoints.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBConfigMultiQ.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBConfigOtherPoints.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBConfigPlaceInfo.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBConfigScoring.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBConfigSubLevel.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBConfigTitle.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBConfigTitlePoints.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBConfigVenue.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBDog.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBDogClub.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBDogExistingPoints.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBDogNotes.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBDogReferenceRun.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBDogRegNum.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBDogRun.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBDogRunOtherPoints.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBDogRunPartner.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBDogRunScoring.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBDogTitle.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBDogTrial.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBInfo.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBInfoItem.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBLocalization.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBStructure.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBTraining.h" />
-    <ClInclude Include="..\..\Include\ARB\ARBTypes2.h" />
-    <ClInclude Include="..\..\Include\ARB\ARB_Q.h" />
-    <ClInclude Include="..\..\Include\ARB\LibwxARB.h" />
+    <ClInclude Include="..\..\ARBUpdater\ARBUpdater.h" />
     <ClInclude Include="..\..\Include\IProgressMeter.h" />
-    <ClInclude Include="..\..\Libraries\ARB\stdafx.h" />
+    <ClInclude Include="..\..\ARBUpdater\DlgDigest.h" />
+    <ClInclude Include="..\..\ARBUpdater\stdafx.h" />
+    <ClInclude Include="..\..\Win\ImageHelper.h" />
+    <ClInclude Include="..\..\Win\Localization.h" />
+    <ClInclude Include="..\..\Win\SetupAppARB.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\AgilityBookLibs\Projects\VC143\LibwxARBCommon.vcxproj">
+    <ProjectReference Include="..\..\..\AgilityBookLibs\Projects\VC145\LibwxARBCommon.vcxproj">
       <Project>{b8e4cee7-cd97-4355-b998-c5c37fa2f285}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="..\..\Libraries\ARB\ARB.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Libraries\ARB\res\ARB.rc2" />
+    <ProjectReference Include="..\..\..\AgilityBookLibs\Projects\VC145\LibwxARBWin.vcxproj">
+      <Project>{73c15f6d-530f-4b95-9a2c-81ad1958573f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="LibwxARB.vcxproj">
+      <Project>{09c48f16-0c9d-4a44-925d-7c02e33341dd}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
