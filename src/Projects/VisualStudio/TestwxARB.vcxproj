@@ -590,13 +590,13 @@
     <Text Include="..\..\TestARB\res\CompileDatList.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\AgilityBookLibs\Projects\VC143\LibwxARBCommon.vcxproj">
+    <ProjectReference Include="..\..\..\AgilityBookLibs\Projects\VisualStudio\LibwxARBCommon.vcxproj">
       <Project>{b8e4cee7-cd97-4355-b998-c5c37fa2f285}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\AgilityBookLibs\Projects\VC143\LibwxARBWin.vcxproj">
+    <ProjectReference Include="..\..\..\AgilityBookLibs\Projects\VisualStudio\LibwxARBWin.vcxproj">
       <Project>{73c15f6d-530f-4b95-9a2c-81ad1958573f}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\AgilityBookLibs\Projects\VC143\UTcatch3.vcxproj">
+    <ProjectReference Include="..\..\..\AgilityBookLibs\Projects\VisualStudio\UTcatch3.vcxproj">
       <Project>{98390979-9e94-4a4f-80e6-d686270cbb98}</Project>
     </ProjectReference>
     <ProjectReference Include="LibwxARB.vcxproj">

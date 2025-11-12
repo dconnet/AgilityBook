@@ -23,13 +23,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AgilityBookLibs", "AgilityBookLibs", "{E839E6C0-C724-47E3-8019-30AE660ED24E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibTidyHtml", "..\..\..\AgilityBookLibs\Projects\VC143\LibTidyHtml.vcxproj", "{05967875-9726-4F06-8EC8-DB6170C00BF3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibTidyHtml", "..\..\..\AgilityBookLibs\Projects\VisualStudio\LibTidyHtml.vcxproj", "{05967875-9726-4F06-8EC8-DB6170C00BF3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibwxARBCommon", "..\..\..\AgilityBookLibs\Projects\VC143\LibwxARBCommon.vcxproj", "{B8E4CEE7-CD97-4355-B998-C5C37FA2F285}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibwxARBCommon", "..\..\..\AgilityBookLibs\Projects\VisualStudio\LibwxARBCommon.vcxproj", "{B8E4CEE7-CD97-4355-B998-C5C37FA2F285}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibwxARBWin", "..\..\..\AgilityBookLibs\Projects\VC143\LibwxARBWin.vcxproj", "{73C15F6D-530F-4B95-9A2C-81AD1958573F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibwxARBWin", "..\..\..\AgilityBookLibs\Projects\VisualStudio\LibwxARBWin.vcxproj", "{73C15F6D-530F-4B95-9A2C-81AD1958573F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestARBLib", "..\..\..\AgilityBookLibs\Projects\VC143\TestARBLib.vcxproj", "{E1B661F3-F1C6-4A8C-9F37-F951D5EF8CFE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestARBLib", "..\..\..\AgilityBookLibs\Projects\VisualStudio\TestARBLib.vcxproj", "{E1B661F3-F1C6-4A8C-9F37-F951D5EF8CFE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lang", "lang", "{42EA80BE-E591-4198-A812-1F34FE196E80}"
 EndProject
@@ -43,7 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fr_FR", "fr_FR", "{68B72B3D
 		..\..\..\AgilityBookLibs\lang\fr_FR\arblib.po = ..\..\..\AgilityBookLibs\lang\fr_FR\arblib.po
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UTcatch3", "..\..\..\AgilityBookLibs\Projects\VC143\UTcatch3.vcxproj", "{98390979-9E94-4A4F-80E6-D686270CBB98}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UTcatch3", "..\..\..\AgilityBookLibs\Projects\VisualStudio\UTcatch3.vcxproj", "{98390979-9E94-4A4F-80E6-D686270CBB98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
