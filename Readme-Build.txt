@@ -31,7 +31,7 @@ Currently using version 3.13.3.
 - "pip install pywin32" (currently "build 310")
 
 wxWidgets: http://www.wxwidgets.org/
-Currently using version 3.3.0. Min supported is 3.1.6.
+Currently using version 3.3.1. Min supported is 3.1.6.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in AgilityBookLibs/lang/res/fr_FR) IMPORTANT: This means the directory name
@@ -47,14 +47,28 @@ Make sure WXWIN is set to wxWidgets root directory.
     the library is compiled one way and the users do something different.)
   - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
+ - (plus VS2026 changes from 3.3.1)
 
-=== Changes to 3.3.0
+=== Changes to 3.3.1, 3.3.0
   (include/wx/msw/setup.h)
   - Set wxWIN_COMPATIBILITY_3_2 to 0 (currently 1)
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
     the library is compiled one way and the users do something different.)
   - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
+ - Changes required for Visual Studio 2026
+  (build/msw/wx_config.props)
+  - add: <PlatformToolset Condition="'$(VisualStudioVersion)' == '18.0'">v145</PlatformToolset>
+  (build/msw/wx_vc18.sln)
+  - copy wx_vc17.sln to wx_vc18.sln, change lines 2 and 3 to:
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11205.157 d18.0
+  (include/msw/wx)
+  - Line 63: Change "2000" to "1950"
+  - After line 64, add:
+            #elif _MSC_VER >= 1950 && _MSC_VER < 2000
+                #define wxCOMPILER_PREFIX vc145
+
 
 === Changes to 3.2.7, 3.2.6, 3.2.5, 3.2.4, 3.2.3, Changes to 3.2.2.1, Changes to 3.2.1, Changes to 3.2.0
   (include/wx/msw/setup.h)
@@ -234,11 +248,15 @@ Compiler notes
 
 Compiler: requires C++17 support.
 
-Microsoft Visual Studio 2022 (VC14.3)
+Microsoft Visual Studio 2026 (VC18, V14.5)
 ===================================
    It works, no additional notes.
 
-Microsoft Visual Studio 2019 (VC14.2)
+Microsoft Visual Studio 2022 (VC17, V14.3)
+===================================
+   It works, no additional notes.
+
+Microsoft Visual Studio 2019 (VC16, V14.2)
 ===================================
    It works, no additional notes.
 
