@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2025-12-06 Added GetExportFilter
  * 2021-06-22 Added AutoUpdateCheckInterval.
  * 2020-01-27 Add alternate row color setting.
  * 2013-06-15 Make default for GetNewestDatesFirst true.
@@ -132,6 +133,7 @@ constexpr bool sc_FontCalBold = false;
 constexpr long sc_ImportStartRow = 1;
 constexpr ARBImportExportDelim sc_ImportExportDelim = ARBImportExportDelim::Tab;
 constexpr ARBDateFormat sc_ImportExportFormat = ARBDateFormat::ISO;
+constexpr bool sc_UseFilter = false;
 // Note: Default column order is defined in GetColumnOrder()
 
 // Program
@@ -1521,6 +1523,20 @@ void CAgilityBookOptions::SetImportExportDateFormat(bool bImport, ARBDateFormat 
 }
 
 
+bool CAgilityBookOptions::GetExportFilter()
+{
+	bool val = sc_UseFilter;
+	wxConfig::Get()->Read(CFG_EXPORT_USEFILTER, &val);
+	return val;
+}
+
+
+void CAgilityBookOptions::SetExportFilter(bool filter)
+{
+	wxConfig::Get()->Write(CFG_EXPORT_USEFILTER, filter);
+}
+
+
 namespace
 {
 wchar_t const* GetColumnName(CAgilityBookOptions::ColumnOrder eOrder)
@@ -1599,6 +1615,7 @@ void CAgilityBookOptions::GetColumnOrder(
 			switch (idxColumn)
 			{
 			case IO_TYPE_RUNS_FAULTS_TIME:
+				outValues.push_back(IO_RUNS_CALL_NAME);
 				outValues.push_back(IO_RUNS_DATE);
 				outValues.push_back(IO_RUNS_LOCATION);
 				outValues.push_back(IO_RUNS_VENUE);
@@ -1606,6 +1623,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_DIVISION);
 				outValues.push_back(IO_RUNS_LEVEL);
 				outValues.push_back(IO_RUNS_EVENT);
+				outValues.push_back(IO_RUNS_HEIGHT);
 				outValues.push_back(IO_RUNS_JUDGE);
 				outValues.push_back(IO_RUNS_COURSE_FAULTS);
 				outValues.push_back(IO_RUNS_TIME);
@@ -1622,6 +1640,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				break;
 
 			case IO_TYPE_RUNS_TIME_FAULTS:
+				outValues.push_back(IO_RUNS_CALL_NAME);
 				outValues.push_back(IO_RUNS_DATE);
 				outValues.push_back(IO_RUNS_LOCATION);
 				outValues.push_back(IO_RUNS_VENUE);
@@ -1629,6 +1648,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_DIVISION);
 				outValues.push_back(IO_RUNS_LEVEL);
 				outValues.push_back(IO_RUNS_EVENT);
+				outValues.push_back(IO_RUNS_HEIGHT);
 				outValues.push_back(IO_RUNS_JUDGE);
 				outValues.push_back(IO_RUNS_COURSE_FAULTS);
 				outValues.push_back(IO_RUNS_TIME);
@@ -1645,6 +1665,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				break;
 
 			case IO_TYPE_RUNS_OPEN_CLOSE:
+				outValues.push_back(IO_RUNS_CALL_NAME);
 				outValues.push_back(IO_RUNS_DATE);
 				outValues.push_back(IO_RUNS_LOCATION);
 				outValues.push_back(IO_RUNS_VENUE);
@@ -1652,6 +1673,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_DIVISION);
 				outValues.push_back(IO_RUNS_LEVEL);
 				outValues.push_back(IO_RUNS_EVENT);
+				outValues.push_back(IO_RUNS_HEIGHT);
 				outValues.push_back(IO_RUNS_JUDGE);
 				outValues.push_back(IO_RUNS_COURSE_FAULTS);
 				outValues.push_back(IO_RUNS_TIME);
@@ -1668,6 +1690,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				break;
 
 			case IO_TYPE_RUNS_POINTS:
+				outValues.push_back(IO_RUNS_CALL_NAME);
 				outValues.push_back(IO_RUNS_DATE);
 				outValues.push_back(IO_RUNS_LOCATION);
 				outValues.push_back(IO_RUNS_VENUE);
@@ -1675,6 +1698,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_DIVISION);
 				outValues.push_back(IO_RUNS_LEVEL);
 				outValues.push_back(IO_RUNS_EVENT);
+				outValues.push_back(IO_RUNS_HEIGHT);
 				outValues.push_back(IO_RUNS_JUDGE);
 				outValues.push_back(IO_RUNS_COURSE_FAULTS);
 				outValues.push_back(IO_RUNS_TIME);

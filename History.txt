@@ -1,10 +1,13 @@
-2025-10-2: v4.0.0.<dev>
+2025-12-6: v4.0.0.<dev>
 - New features / Enhancements:
   - Updated to wxWidgets 3.3.1
     - Dark mode is now (semi)supported
   - Add option to turn off alternating row colors.
   - Revamped internals to remove 'fmt' usage and drop non-WX supoort.
   - Add 'FAST' into description for customizing columns during export.
+  - Added CallName/Height into default export.
+  - Added ability to use current filter during export.
+    If no filter is set and option is enabled, only the current dog is exported.
 - Bug fix:
   - Fixed a couple recursive call issues found by xcode.
   - Fixed export of (run: SubName, SpeedPts), (cal: DrawDate), alignment of SubName in Run dialog.

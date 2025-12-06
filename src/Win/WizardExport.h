@@ -65,6 +65,7 @@ private:
 	wxButton* m_ctrlAssign;
 	wxComboBox* m_ctrlDateFormat;
 	ARBWin::CListCtrl* m_ctrlPreview;
+	bool m_useFilter;
 
 	void OnDelimTab(wxCommandEvent& evt);
 	void OnDelimSpace(wxCommandEvent& evt);

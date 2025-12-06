@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2025-12-06 Added filtering (if enabled but no filter active, exports only currennt dog)
  * 2017-09-04 Change default DogsInClass to -1 (allows for DNR runs with 0 dogs)
  * 2015-01-01 Changed pixels to dialog units.
  * 2012-07-25 Adhere to RFC4180 and use CRLF between records.
@@ -88,6 +89,7 @@ CWizardExport::CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 	, m_ctrlAssign(nullptr)
 	, m_ctrlDateFormat(nullptr)
 	, m_ctrlPreview(nullptr)
+	, m_useFilter(CAgilityBookOptions::GetExportFilter())
 {
 	Bind(wxEVT_WIZARD_PAGE_CHANGING, &CWizardExport::OnWizardChanging, this);
 	Bind(wxEVT_WIZARD_PAGE_CHANGED, &CWizardExport::OnWizardChanged, this);
@@ -226,6 +228,20 @@ CWizardExport::CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 	m_ctrlDateFormat->SetHelpText(_("HIDC_WIZARD_EXPORT_DATE"));
 	m_ctrlDateFormat->SetToolTip(_("HIDC_WIZARD_EXPORT_DATE"));
 
+	auto* useFilter = new wxCheckBox(
+		this,
+		wxID_ANY,
+		_("Use Current Filter"),
+		wxDefaultPosition,
+		wxDefaultSize,
+		0,
+		wxGenericValidator(&m_useFilter));
+	useFilter->SetHelpText(_("Use the current filter."));
+	useFilter->SetToolTip(_("Use the current filter."));
+	useFilter->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, [this](wxCommandEvent&) {
+		TransferDataFromWindow();
+		UpdatePreview();
+	});
 	wxStaticText* textPreview
 		= new wxStaticText(this, wxID_ANY, _("IDC_WIZARD_EXPORT_PREVIEW"), wxDefaultPosition, wxDefaultSize, 0);
 	textPreview->Wrap(-1);
@@ -262,6 +278,8 @@ CWizardExport::CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 
 	sizerOptions->Add(sizerDelimiters, 0, wxEXPAND | wxRIGHT, padding.Controls());
 
+	wxBoxSizer* sizerExport = new wxBoxSizer(wxVERTICAL);
+
 	wxBoxSizer* sizerAssign = new wxBoxSizer(wxHORIZONTAL);
 	sizerAssign->Add(m_ctrlAssign, 0, wxRIGHT, padding.Controls());
 
@@ -271,8 +289,11 @@ CWizardExport::CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 
 	sizerAssign->Add(sizerFormat, 0, wxALIGN_TOP);
 
+	sizerExport->Add(sizerAssign);
+	sizerExport->Add(useFilter, 0, wxTOP, padding.Inner());
+
 	sizerOptions->AddStretchSpacer();
-	sizerOptions->Add(sizerAssign, 0, wxEXPAND | wxTOP, padding.Inner());
+	sizerOptions->Add(sizerExport, 0, wxEXPAND | wxTOP, padding.Inner());
 
 	bSizer->Add(sizerOptions, 0, wxEXPAND);
 	bSizer->Add(textPreview, 0, wxTOP, padding.Controls());
@@ -544,16 +565,22 @@ void CWizardExport::UpdatePreview()
 			 ++iterDog)
 		{
 			ARBDogPtr pDog = *iterDog;
+			if (m_useFilter && pDog != m_pDoc->GetCurrentDog())
+				continue;
 			for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 				 iterTrial != pDog->GetTrials().end();
 				 ++iterTrial)
 			{
 				ARBDogTrialPtr pTrial = *iterTrial;
+				if (m_useFilter && pTrial->IsFiltered())
+					continue;
 				for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 					 iterRun != pTrial->GetRuns().end();
 					 ++iterRun)
 				{
 					ARBDogRunPtr pRun = *iterRun;
+					if (m_useFilter && pRun->IsFiltered())
+						continue;
 					ARBConfigScoringPtr pScoring;
 					if (pRun->GetClub())
 						m_pDoc->Book().GetConfig().GetVenues().FindEvent(
@@ -1478,6 +1505,7 @@ bool CWizardExport::DoWizardFinish()
 	}
 	ARBDateFormat format = static_cast<ARBDateFormat>(reinterpret_cast<size_t>(m_ctrlDateFormat->GetClientData(index)));
 	CAgilityBookOptions::SetImportExportDateFormat(false, format);
+	CAgilityBookOptions::SetExportFilter(m_useFilter);
 
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle() || WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 	{

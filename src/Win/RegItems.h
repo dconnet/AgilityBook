@@ -209,6 +209,8 @@ inline wxString CFG_CI_KEY_CONFIG(int n, bool bIncSep = true)
 #define CFG_IMPORT_EXPORT_DELIM				L"delim"
 //	ST delimiter
 #define CFG_IMPORT_EXPORT_DELIMITER			L"delimiter"
+//  DW filter
+#define CFG_EXPORT_USEFILTER				L"useFilter"
 
 //ExportCal
 #define CFG_KEY_EXPORTCAL				L"ExportCal"

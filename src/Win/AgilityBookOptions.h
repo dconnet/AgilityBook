@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2025-12-06 Added GetExportFilter
  * 2020-01-27 Add alternate row color setting.
  * 2013-05-19 Make last div/level/height/handler context aware.
  * 2010-03-28 Added ability to import/export program settings.
@@ -249,6 +250,8 @@ public:
 		eAllColumns		= 0x01ff
 		// clang-format on
 	};
+	static bool GetExportFilter();
+	static void SetExportFilter(bool filter);
 	// General program options
 	static long GetMRUFileCount();
 	static void SetMRUFileCount(long nFiles);
