@@ -345,6 +345,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		ARBScoringStyle::ScoreThenTime,
 		ARBScoringStyle::TimePlusFaults,
 		ARBScoringStyle::TimeNoPlaces,
+		ARBScoringStyle::TimePlaces,
 		ARBScoringStyle::PassFail,
 	};
 	items.clear();
@@ -849,6 +850,7 @@ void CDlgConfigEventMethod::UpdateControls()
 			m_ctrlMultiply->Show(true);
 			break;
 		case ARBScoringStyle::TimeNoPlaces:
+		case ARBScoringStyle::TimePlaces:
 			m_ctrlSuperQ->Show(true);
 			m_ctrlSpeedPts->Show(true);
 			m_ctrlPointsOpeningText->Show(false);
@@ -1197,6 +1199,7 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 		m_pScoring->SetTimeFaultMultiplier(m_Multiply);
 		break;
 	case ARBScoringStyle::TimeNoPlaces:
+	case ARBScoringStyle::TimePlaces:
 		break;
 	case ARBScoringStyle::PassFail:
 		break;

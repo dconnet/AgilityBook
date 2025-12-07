@@ -120,7 +120,7 @@ public:
 	bool GetYPS(bool inTableInYPS, double inTime, double& outYPS) const;
 
 	/**
-	 * Get the Obstacles per second for the run.
+	 * Get the Obstacles per second for the run. (or MPH for Time[No]Places)
 	 * @param inTableInYPS Include table in computation.
 	 * @param inRunTimeInOPS Use runtime instead of opening time in OPS.
 	 * @param outOPS OPS for the run.

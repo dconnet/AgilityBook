@@ -184,6 +184,7 @@ public:
 	virtual wxString ScoreStyleScoreTime() const = 0;
 	virtual wxString ScoreStyleTimePlusFaults() const = 0;
 	virtual wxString ScoreStyleTimeNoPlaces() const = 0;
+	virtual wxString ScoreStyleTimePlaces() const = 0;
 	virtual wxString ScoreStylePassFail() const = 0;
 
 	// Used in ARBDogExistingPoints.cpp

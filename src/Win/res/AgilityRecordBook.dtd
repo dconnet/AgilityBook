@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2025-12-07 File version 15.6
+           Add scoring type 'TimePlaces' for CPE Speedway.
 2024-04-15 File version 15.5
            Added 'PassFail' to scoring 'type'.
 2023-07-06 File version 15.4
@@ -433,7 +435,7 @@ Placements is used to count the number of places earned (used in FCI, SCC)
 		ValidTo CDATA #IMPLIED
 		Division CDATA #REQUIRED
 		Level CDATA #REQUIRED
-		type (FaultsThenTime|Faults100ThenTime|Faults200ThenTime|OCScoreThenTime|ScoreThenTime|TimePlusFaults|TimeNoPlaces|PassFail) #REQUIRED
+		type (FaultsThenTime|Faults100ThenTime|Faults200ThenTime|OCScoreThenTime|ScoreThenTime|TimePlusFaults|TimeNoPlaces|TimePlaces|PassFail) #REQUIRED
 		hasTable (y|n) 'n'
 		hasSubNames (y|n) 'n'
 		dropFractions (y|n) 'n'

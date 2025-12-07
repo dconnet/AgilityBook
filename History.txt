@@ -1,4 +1,8 @@
 2025-12-7: v4.0.0.<dev>
+- Bumped Configuration v73:
+  - Updated CPE Speedway
+- Bumped file version to 15.6:
+  - Added TimePlaces to scoring type
 - New features / Enhancements:
   - Updated to wxWidgets 3.3.1
     - Dark mode is now (semi)supported
@@ -9,6 +13,7 @@
   - Added ability to use current filter during export.
     If no filter is set and option is enabled, only the current dog is exported.
   - Made Venue's long name visible in Configuration dialog.
+  - Updated CPE Speedway to allow placements and added Lifetime points.
 - Bug fix:
   - Fixed a couple recursive call issues found by xcode.
   - Fixed export of (run: SubName, SpeedPts), (cal: DrawDate), alignment of SubName in Run dialog.

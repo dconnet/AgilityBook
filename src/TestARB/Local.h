@@ -270,6 +270,10 @@ public:
 	{
 		return m_ScoreStyleTimeNoPlaces;
 	}
+	wxString ScoreStyleTimePlaces() const override
+	{
+		return m_ScoreStyleTimePlaces;
+	}
 	wxString ScoreStylePassFail() const override
 	{
 		return m_ScoreStylePassFail;
@@ -356,6 +360,7 @@ private:
 	wxString m_ScoreStyleScoreTime;
 	wxString m_ScoreStyleTimePlusFaults;
 	wxString m_ScoreStyleTimeNoPlaces;
+	wxString m_ScoreStyleTimePlaces;
 	wxString m_ScoreStylePassFail;
 
 	wxString m_QTypeNA;

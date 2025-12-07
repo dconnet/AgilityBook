@@ -886,8 +886,9 @@ double ARBDogRun::GetLifetimePoints(ARBConfigScoringPtr const& inScoring, wxStri
 	case ARBScoringType::BySpeed:
 	{
 		double score = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
-		if (ARBScoringStyle::TimePlusFaults == inScoring->GetScoringStyle())
+		switch (inScoring->GetScoringStyle())
 		{
+		case ARBScoringStyle::TimePlusFaults:
 			if (!(inScoring && inScoring->QsMustBeClean() && score > 0.0))
 			{
 				// If SCT is 0, don't compute anything.
@@ -904,11 +905,24 @@ double ARBDogRun::GetLifetimePoints(ARBConfigScoringPtr const& inScoring, wxStri
 				pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, score, GetSpeedPoints(inScoring))
 					  + bonusTitlePts;
 			}
-		}
-		else
-		{
+			break;
+		case ARBScoringStyle::TimeNoPlaces:
+		case ARBScoringStyle::TimePlaces:
+			pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, score, GetSpeedPoints(inScoring));
+			if (pts == 0.0)
+				pts = bonusTitlePts;
+			break;
+		case ARBScoringStyle::Unknown:
+		case ARBScoringStyle::FaultsThenTime:
+		case ARBScoringStyle::Faults100ThenTime:
+		case ARBScoringStyle::Faults200ThenTime:
+		case ARBScoringStyle::OCScoreThenTime:
+		case ARBScoringStyle::ScoreThenTime:
+		case ARBScoringStyle::PassFail:
+			// TODO: Should this (and TimePlusFaults) be like Time*Places?
 			pts = inScoring->GetLifetimePoints().GetLifetimePoints(inLifetimeName, score, GetSpeedPoints(inScoring))
 				  + bonusTitlePts;
+			break;
 		}
 	}
 	break;
@@ -1001,6 +1015,7 @@ double ARBDogRun::GetScore(ARBConfigScoringPtr const& inScoring) const
 		case ARBScoringStyle::OCScoreThenTime:
 		case ARBScoringStyle::ScoreThenTime:
 		case ARBScoringStyle::TimeNoPlaces:
+		case ARBScoringStyle::TimePlaces:
 		case ARBScoringStyle::PassFail:
 			break;
 		case ARBScoringStyle::TimePlusFaults:

@@ -2003,6 +2003,7 @@ void CDlgRunPanelScore::UpdateControls(bool bOnEventChange)
 		SetReadOnlyFlag(m_ctrlYPSOpeningPts, false);
 		break;
 	case ARBScoringStyle::TimeNoPlaces:
+	case ARBScoringStyle::TimePlaces:
 		m_Run->GetScoring().SetType(ARBScoringType::BySpeed, pScoring->DropFractions());
 		m_textYardsReqOpeningPts->SetLabel(_("IDC_RUNSCORE_YARDS"));
 		m_textYardsReqOpeningPts->Show(true);
@@ -2033,13 +2034,16 @@ void CDlgRunPanelScore::UpdateControls(bool bOnEventChange)
 
 	if (ARBScoringStyle::TimeNoPlaces != scoreStyle && ARBScoringStyle::PassFail != scoreStyle)
 	{
-		m_textHeight->Show(true);
-		m_ctrlHeight->Show(true);
-		m_textJudge->Show(true);
-		m_ctrlJudge->Show(true);
-		m_ctrlJudgeNote->Show(true);
-		m_ctrlObstaclesText->Show(true);
-		m_ctrlObstacles->Show(true);
+		if (ARBScoringStyle::TimePlaces != scoreStyle)
+		{
+			m_textHeight->Show(true);
+			m_ctrlHeight->Show(true);
+			m_textJudge->Show(true);
+			m_ctrlJudge->Show(true);
+			m_ctrlJudgeNote->Show(true);
+			m_ctrlObstaclesText->Show(true);
+			m_ctrlObstacles->Show(true);
+		}
 		m_textPlace->Show(true);
 		m_ctrlPlace->Show(true);
 		m_textPlaceOf->Show(true);
@@ -2047,13 +2051,16 @@ void CDlgRunPanelScore::UpdateControls(bool bOnEventChange)
 		m_textDogsQd->Show(true);
 		m_ctrlDogsQd->Show(true);
 		m_ctrlDogsQd->Enable(0 < pScoring->GetTitlePoints().size() || 0 < pScoring->GetLifetimePoints().size());
-		m_ctrlObstaclesPSText->SetLabel(_("IDC_RUNSCORE_OBSTACLES_PER_SEC"));
-		m_ctrlObstaclesPSText->Show(true);
-		m_ctrlObstaclesPS->Show(true);
-		m_ctrlObstaclesPS->SetHelpText(_("HIDC_RUNSCORE_OBSTACLES_PER_SEC"));
-		m_ctrlObstaclesPS->SetToolTip(_("HIDC_RUNSCORE_OBSTACLES_PER_SEC"));
-		m_textScore->Show(true);
-		m_ctrlScore->Show(true);
+		if (ARBScoringStyle::TimePlaces != scoreStyle)
+		{
+			m_ctrlObstaclesPSText->SetLabel(_("IDC_RUNSCORE_OBSTACLES_PER_SEC"));
+			m_ctrlObstaclesPSText->Show(true);
+			m_ctrlObstaclesPS->Show(true);
+			m_ctrlObstaclesPS->SetHelpText(_("HIDC_RUNSCORE_OBSTACLES_PER_SEC"));
+			m_ctrlObstaclesPS->SetToolTip(_("HIDC_RUNSCORE_OBSTACLES_PER_SEC"));
+			m_textScore->Show(true);
+			m_ctrlScore->Show(true);
+		}
 	}
 	m_ctrlQ->Enable(true);
 	m_ctrlQ->ResetContent(pScoring);
@@ -2244,9 +2251,11 @@ void CDlgRunPanelScore::OnReqOpeningYPSChange(wxCommandEvent& evt)
 			SetTitlePoints();
 			break;
 		case ARBScoringStyle::TimeNoPlaces:
+		case ARBScoringStyle::TimePlaces:
 			m_Yards = val;
 			m_Run->GetScoring().SetYards(m_Yards);
 			SetYPS();
+			SetObstacles(); // Sets MPH
 			break;
 		case ARBScoringStyle::PassFail:
 			break;

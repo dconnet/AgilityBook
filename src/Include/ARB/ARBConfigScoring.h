@@ -58,6 +58,7 @@ enum class ARBScoringStyle
 	ScoreThenTime,     ///< Points then time.
 	TimePlusFaults,    ///< Time plus faults.
 	TimeNoPlaces,      ///< Time, no placement (AKC FCAT).
+	TimePlaces,        ///< Time, (CPE Speedway).
 	PassFail,          ///< Simple pass/fail (AKC Fetch).
 };
 

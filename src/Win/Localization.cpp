@@ -103,6 +103,7 @@ bool CLocalization::Load()
 	m_ScoreStyleScoreTime = _("IDS_SCORE_STYLE_SCORE_TIME");
 	m_ScoreStyleTimePlusFaults = _("IDS_SCORE_STYLE_TIME_PLUS_FAULTS");
 	m_ScoreStyleTimeNoPlaces = _("IDS_SCORE_STYLE_TIME_NO_PLACES");
+	m_ScoreStyleTimePlaces = _("IDS_SCORE_STYLE_TIME_PLACES");
 	m_ScoreStylePassFail = _("IDS_SCORE_STYLE_PASS_FAIL");
 	m_ExistingPointsOther = _("IDS_EXISTING_POINTS_OTHER");
 	m_ExistingPointsLifetime = _("IDS_EXISTING_POINTS_LIFETIME");

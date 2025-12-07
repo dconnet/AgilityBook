@@ -106,6 +106,7 @@ bool CLocalization::Load()
 	m_ScoreStyleScoreTime = wxGetTranslation(arbT("IDS_SCORE_STYLE_SCORE_TIME"));
 	m_ScoreStyleTimePlusFaults = wxGetTranslation(arbT("IDS_SCORE_STYLE_TIME_PLUS_FAULTS"));
 	m_ScoreStyleTimeNoPlaces = wxGetTranslation(arbT("IDS_SCORE_STYLE_TIME_NO_PLACES"));
+	m_ScoreStyleTimePlaces = wxGetTranslation(arbT("IDS_SCORE_STYLE_TIME_PLACES"));
 	m_ScoreStylePassFail = wxGetTranslation(arbT("IDS_SCORE_STYLE_PASS_FAIL"));
 	m_ExistingPointsOther = wxGetTranslation(arbT("IDS_EXISTING_POINTS_OTHER"));
 	m_ExistingPointsLifetime = wxGetTranslation(arbT("IDS_EXISTING_POINTS_LIFETIME"));

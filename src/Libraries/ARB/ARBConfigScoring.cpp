@@ -77,6 +77,7 @@ constexpr wchar_t SCORING_TYPE_OCT[] = L"OCScoreThenTime";
 constexpr wchar_t SCORING_TYPE_ST[] = L"ScoreThenTime";
 constexpr wchar_t SCORING_TYPE_TF[] = L"TimePlusFaults";
 constexpr wchar_t SCORING_TYPE_NP[] = L"TimeNoPlaces";
+constexpr wchar_t SCORING_TYPE_P[] = L"TimePlaces";
 constexpr wchar_t SCORING_TYPE_PF[] = L"PassFail";
 } // namespace
 
@@ -109,6 +110,9 @@ wxString ARBConfigScoring::GetScoringStyleStr(ARBScoringStyle inStyle)
 		break;
 	case ARBScoringStyle::TimeNoPlaces:
 		style = Localization()->ScoreStyleTimeNoPlaces();
+		break;
+	case ARBScoringStyle::TimePlaces:
+		style = Localization()->ScoreStyleTimePlaces();
 		break;
 	case ARBScoringStyle::PassFail:
 		style = Localization()->ScoreStylePassFail();
@@ -434,6 +438,8 @@ bool ARBConfigScoring::Load(
 		m_Style = ARBScoringStyle::TimePlusFaults;
 	else if (attrib == SCORING_TYPE_NP)
 		m_Style = ARBScoringStyle::TimeNoPlaces;
+	else if (attrib == SCORING_TYPE_P)
+		m_Style = ARBScoringStyle::TimePlaces;
 	else if (attrib == SCORING_TYPE_PF)
 		m_Style = ARBScoringStyle::PassFail;
 	else
@@ -720,6 +726,9 @@ bool ARBConfigScoring::Save(ElementNodePtr const& ioTree) const
 		break;
 	case ARBScoringStyle::TimeNoPlaces:
 		scoring->AddAttrib(ATTRIB_SCORING_TYPE, SCORING_TYPE_NP);
+		break;
+	case ARBScoringStyle::TimePlaces:
+		scoring->AddAttrib(ATTRIB_SCORING_TYPE, SCORING_TYPE_P);
 		break;
 	case ARBScoringStyle::PassFail:
 		scoring->AddAttrib(ATTRIB_SCORING_TYPE, SCORING_TYPE_PF);

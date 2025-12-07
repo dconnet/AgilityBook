@@ -562,6 +562,7 @@ void CDlgRunPanelRefRuns::OnRefRunNew(wxCommandEvent& evt)
 			case ARBScoringStyle::ScoreThenTime:
 			case ARBScoringStyle::TimePlusFaults:
 			case ARBScoringStyle::TimeNoPlaces:
+			case ARBScoringStyle::TimePlaces:
 			case ARBScoringStyle::PassFail:
 				nScore = L"0";
 				break;

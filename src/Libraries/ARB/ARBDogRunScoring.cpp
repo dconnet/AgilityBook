@@ -78,6 +78,7 @@ ARBScoringType ARBDogRunScoring::TranslateConfigScoring(ARBScoringStyle inType)
 	case ARBScoringStyle::ScoreThenTime:
 		return ARBScoringType::ByPoints;
 	case ARBScoringStyle::TimeNoPlaces:
+	case ARBScoringStyle::TimePlaces:
 		return ARBScoringType::BySpeed;
 	case ARBScoringStyle::PassFail:
 		return ARBScoringType::ByPass;

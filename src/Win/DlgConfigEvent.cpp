@@ -799,6 +799,7 @@ void CDlgConfigEvent::FillControls()
 					}
 					break;
 				case ARBScoringStyle::TimeNoPlaces:
+				case ARBScoringStyle::TimePlaces:
 					break;
 				case ARBScoringStyle::PassFail:
 					break;

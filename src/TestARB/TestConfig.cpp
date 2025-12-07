@@ -109,6 +109,7 @@ const wchar_t* const gc_Configs[] = {
 	L"Config70_v15_4.xml",
 	L"Config71_v15_5.xml",
 	L"Config72_v15_5.xml",
+	L"Config73_v15_6.xml",
 	// clang-format on
 };
 size_t gc_NumConfigs = sizeof(gc_Configs) / sizeof(gc_Configs[0]);

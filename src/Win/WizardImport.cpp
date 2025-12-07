@@ -889,6 +889,7 @@ bool CWizardImport::DoWizardFinish()
 			case ARBScoringStyle::Faults100ThenTime:
 			case ARBScoringStyle::Faults200ThenTime:
 			case ARBScoringStyle::TimeNoPlaces:
+			case ARBScoringStyle::TimePlaces:
 			case ARBScoringStyle::PassFail:
 				i = IO_TYPE_RUNS_FAULTS_TIME;
 				break;
