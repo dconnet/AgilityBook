@@ -74,6 +74,7 @@ private:
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlDelete;
 	wxButton* m_ctrlCopy;
+	wxStaticText* m_textLongName;
 	wxTreeItemId m_hItemVenues;
 	wxTreeItemId m_hItemFaults;
 	wxTreeItemId m_hItemOtherPts;

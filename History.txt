@@ -1,4 +1,4 @@
-2025-12-6: v4.0.0.<dev>
+2025-12-7: v4.0.0.<dev>
 - New features / Enhancements:
   - Updated to wxWidgets 3.3.1
     - Dark mode is now (semi)supported
@@ -8,6 +8,7 @@
   - Added CallName/Height into default export.
   - Added ability to use current filter during export.
     If no filter is set and option is enabled, only the current dog is exported.
+  - Made Venue's long name visible in Configuration dialog.
 - Bug fix:
   - Fixed a couple recursive call issues found by xcode.
   - Fixed export of (run: SubName, SpeedPts), (cal: DrawDate), alignment of SubName in Run dialog.

@@ -129,6 +129,7 @@ CDlgConfigure::CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book, 
 	, m_ctrlEdit(nullptr)
 	, m_ctrlDelete(nullptr)
 	, m_ctrlCopy(nullptr)
+	, m_textLongName(nullptr)
 	, m_hItemVenues()
 	, m_hItemFaults()
 	, m_hItemOtherPts()
@@ -184,6 +185,8 @@ CDlgConfigure::CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book, 
 	m_ctrlCopy->SetHelpText(_("HIDC_CONFIG_COPY"));
 	m_ctrlCopy->SetToolTip(_("HIDC_CONFIG_COPY"));
 
+	m_textLongName = new wxStaticText(this, wxID_ANY, wxString(), wxDefaultPosition, wxDefaultSize, 0);
+
 	wxButton* btnUpdate = new wxButton(this, wxID_ANY, _("IDC_CONFIG_UPDATE"), wxDefaultPosition, wxDefaultSize, 0);
 	btnUpdate->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigure::OnUpdate, this);
 	btnUpdate->SetHelpText(_("HIDC_CONFIG_UPDATE"));
@@ -208,8 +211,8 @@ CDlgConfigure::CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book, 
 	bSizer->Add(sizerConfig, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerUpdate = new wxBoxSizer(wxHORIZONTAL);
-	sizerUpdate->AddStretchSpacer();
-	sizerUpdate->Add(btnUpdate);
+	sizerUpdate->Add(m_textLongName, 1, wxALIGN_CENTER_VERTICAL);
+	sizerUpdate->Add(btnUpdate, 0, wxALIGN_CENTER_VERTICAL);
 
 	bSizer->Add(sizerUpdate, 0, wxEXPAND | wxALL, padding.Controls());
 
@@ -299,17 +302,23 @@ void CDlgConfigure::UpdateButtons()
 	bool bCopy = false;
 	if (Action::None != GetAction())
 		bNew = true;
+	wxString str;
 	CDlgConfigureDataBase* pData = GetData(m_ctrlItems->GetSelection());
 	if (pData)
 	{
 		bEdit = pData->CanEdit();
 		bDelete = pData->CanDelete();
 		bCopy = pData->CanCopy();
+		auto* pDataVenue = dynamic_cast<CDlgConfigureDataVenue*>(pData);
+		if (pDataVenue && pDataVenue->GetVenue())
+			str = pDataVenue->GetVenue()->GetLongName();
 	}
 	m_ctrlNew->Enable(bNew);
 	m_ctrlEdit->Enable(bEdit);
 	m_ctrlDelete->Enable(bDelete);
 	m_ctrlCopy->Enable(bCopy);
+
+	m_textLongName->SetLabel(str);
 }
 
 
