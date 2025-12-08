@@ -5,6 +5,7 @@
 #
 # Revision History
 # 2025-12-08 Change default compiler, update script for changed VS directory.
+#            Note: Currently broken for running multiple compilers
 # 2022-06-08 Remove msbuild /m, add /p (see comment below)
 # 2022-04-10 Fix path to 'official.props'
 # 2022-04-10 Only add 'official.props' on fullupdate build.
@@ -39,6 +40,7 @@
    -w wxwin:    Root of wx tree (default: %WXWIN%)'
    -b type:     type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
    -c config:   'release' or 'debug' (default, release)
+   -s:          Solution name (default: AgilityBook18.sln - must agree with compiler)
    -t:          Testing, just print commands to run
    compiler:    vc143, vc145 (default: vc145)
 """
@@ -51,7 +53,7 @@ import sys
 import pyDcon
 
 defCompiler = 'vc145'
-solution = 'AgilityBook.sln'
+solution = 'AgilityBook18.sln'
 
 # Verbosity:detailed, multiprocessors(/m:parallel_project_count)
 # Verbosity:q/m/n/d/diag
@@ -116,7 +118,7 @@ def main():
 	onlyTest = False
 
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], 'w:b:c:t')
+		opts, args = getopt.getopt(sys.argv[1:], 'w:b:c:s:t')
 	except getopt.error as msg:
 		print(msg)
 		print('Usage:', __doc__)
@@ -145,6 +147,8 @@ def main():
 			else:
 				print('Usage:', __doc__)
 				return 1
+		elif '-s' == o:
+			solution = a
 		elif '-t' == o:
 			onlyTest = True
 
