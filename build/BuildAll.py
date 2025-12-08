@@ -4,6 +4,7 @@
 # Must be run from the directory this file is in.
 #
 # Revision History
+# 2025-12-08 Change default compiler, update script for changed VS directory.
 # 2022-06-08 Remove msbuild /m, add /p (see comment below)
 # 2022-04-10 Fix path to 'official.props'
 # 2022-04-10 Only add 'official.props' on fullupdate build.
@@ -49,7 +50,7 @@ import sys
 
 import pyDcon
 
-defCompiler = 'vc143'
+defCompiler = 'vc145'
 solution = 'AgilityBook.sln'
 
 # Verbosity:detailed, multiprocessors(/m:parallel_project_count)
@@ -88,7 +89,7 @@ def DoCompile(projectDir, compiler, config, clean, onlyTest):
 
 	cmds = [
 		'title ' + compiler + ' ' + config + ' ' + platform,
-		'cd ' + curDir + '\\..\\src\\Projects\\' + projectDir,
+		'cd ' + curDir + '\\..\\src\\Projects\\VisualStudio',
 		'set "VSCMD_START_DIR=%CD%"',
 		'call ' + vcvarsall,
 		'msbuild ' + solution + ' ' + msbuildOpts + ' /t:Build /p:Configuration=' + config + ';Platform=' + platform]
