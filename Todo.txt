@@ -1,16 +1,3 @@
-Updates: 2025-10-1
-- Venue icons are not loading on a users machine. (Cannot repro)
-  This is the same machine that using gsl::narrow caused an exception at startup. (Couldn't repro this either)
-
-Updates: 2025-8-19
-- CPE Speedway points
-  1) Placement box
-  2) Class Points (Score)
-  3) Q-Points, which are correctly labeled as Title Points show accumulative Total Points. So similar to the Agility setup for games. 
-  4) MPH would be nice as manual input since CPE does not provide the yardage at this time.
-  FYI….all Q-Points for SW are 20 points regardless of class/game.
-
-
 Updates: 2023-3-13
 
 - USDAA SuperQ:

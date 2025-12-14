@@ -6,7 +6,7 @@
 ################################################################################
 # Initialise autoconf, set package name, version number and contact details.   #
 ################################################################################
-AC_INIT(Agility Record Book, 3.8.9.127, [help@agilityrecordbook.com])
+AC_INIT(Agility Record Book, 4.0.0.128, [help@agilityrecordbook.com])
 
 AC_ARG_ENABLE(official, [--enable-official official build], USE_OFFICIAL_BUILD=$enableval, USE_OFFICIAL_BUILD=no)
 

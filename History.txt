@@ -1,4 +1,4 @@
-2025-12-7: v4.0.0.<dev>
+2025-12-14: v4.0.0.128
 - Bumped Configuration v73:
   - Updated CPE Speedway
 - Bumped file version to 15.6:

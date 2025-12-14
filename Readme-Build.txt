@@ -72,20 +72,6 @@ VisualStudioVersion = 18.0.11205.157 d18.0
             #elif _MSC_VER >= 1950 && _MSC_VER < 2000
                 #define wxCOMPILER_PREFIX vc145
 
-  (build\msw\wx_vc17.sln)
-  - Copy to build\msw\wx_vc18.sln
-    Remove top blank line
-	Change lines 2/3 to (between '===' markers)
-===
-# Visual Studio Version 18
-VisualStudioVersion = 18.0.11205.157 d18.0
-===
-
-  (build\msw\wx_config.props)
-  - Add:
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '18.0'">v145</PlatformToolset>
-
-
 === Changes to 3.2.7, 3.2.6, 3.2.5, 3.2.4, 3.2.3, Changes to 3.2.2.1, Changes to 3.2.1, Changes to 3.2.0
   (include/wx/msw/setup.h)
   - Set wxWIN_COMPATIBILITY_3_0 to 0 (currently 1)

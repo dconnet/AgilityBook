@@ -8,6 +8,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2022-12-14 Change default compiler to vc145
 # 2023-06-29 Replace msilib usage with direct COM (msilib is deprecated in py3.13)
 # 2022-04-10 Change default compiler to vc143
 # 2021-11-11 Add vc143 support, changed default (no args) to '-b all'
@@ -68,7 +69,7 @@
 	    all: Create all of them (default)
 	-x: Do not clean up generated files
 	-e: Generate .msi for test purposes (don't write to InstallGUIDs.csv)
-	-t target: Generate msi using specified vc version (Default: vc143)
+	-t target: Generate msi using specified vc version (Default: vc145)
 	-d distrib: Directory to write distribution files to (Default: ./distrib)
 """
 
@@ -416,7 +417,7 @@ def main():
 	b64 = False
 	tidy = True
 	testing = False
-	vcver = '143'
+	vcver = '145'
 	distrib = DistribDir
 
 	try:
@@ -450,6 +451,8 @@ def main():
 				vcver = '142'
 			elif a == 'vc143':
 				vcver = '143'
+			elif a == 'vc145':
+				vcver = '145'
 			else:
 				usage = True
 		elif '-x' == o:

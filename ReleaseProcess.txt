@@ -35,13 +35,13 @@ Commit all changes to GitHub.
 
 Switch to build machine, do a full rebuild and verify it.
 - cd ...\build
-- 'BuildAll.py -w %WXBASE%\wxWidgets-3.2.7 -b fullupdate' [runs VC143 compile]
+- 'BuildAll.py -w %WXBASE%\wxWidgets-3.3.1 -b fullupdate' [runs VC143 compile]
   - BuildAll options: -w wxwin [-b fullupdate | clean] compiler*
-      -w wxwin: Root of wx tree, normally %WXBASE%\wxWidgets-3.2.7'
+      -w wxwin: Root of wx tree, normally %WXBASE%\wxWidgets-3.3.1'
                 Default is %WXWIN%
       -b type:  type is 'fullupdate', 'clean', or 'dirty' (default, dirty)
       -t:       Testing, just print commands to run
-      compiler: vc143 (default: vc143)
+      compiler: vc143, vc145 (default: vc145)
     (note: If this needs to be re-run, revert
     .../AgilityBookLibs/configure.in, .../AgilityBookLibs/Include/VersionNumber.h, .../configure.in)
 - cd ...\src\Projects\Installer
@@ -56,7 +56,7 @@ Switch to build machine, do a full rebuild and verify it.
 Commit all changes to GitHub. (First push AgilityBookLibs changes, then push
 AgilityBook changes with that submodule update.)
 
-Pull files onto Mac and build there (see MAC_BUILD.txt)
+Pull files onto Mac and build there
 - Build:
   - cd .../AgilityBook/build
   - . ./setwxpath x.y.z release fat
