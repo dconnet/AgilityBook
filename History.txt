@@ -1,4 +1,6 @@
 2025-12-14: v4.0.1.<dev>
+- Bug fix:
+  - (internal tool) Add missing space in version2.xml generation
 
 2025-12-14: v4.0.0.128
 - Bumped Configuration v73:

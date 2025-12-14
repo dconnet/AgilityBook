@@ -360,7 +360,7 @@ void CDlgDigest::OnCopy(wxCommandEvent& evt)
 	wxString str;
 	// clang-format off
 	str << L"<Platform arch=\"?\" minOS=\"?\""
-		<< L"ver=\"" << ARB_VER_MAJOR << L"." << ARB_VER_MINOR << L"." << ARB_VER_DOT << L"." << ARB_VER_BUILD
+		<< L" ver=\"" << ARB_VER_MAJOR << L"." << ARB_VER_MINOR << L"." << ARB_VER_DOT << L"." << ARB_VER_BUILD
 		<< L"\" config=\"" << m_ConfigVersion << L"\"\n"
 		<< L"\tfile=\"https://www.agilityrecordbook.com/files/" << filename.GetFullName() << L"\"\n"
 		<< L"\tmd5=\"" << m_MD5 << "\"\n"
