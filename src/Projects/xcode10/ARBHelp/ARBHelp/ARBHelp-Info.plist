@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>${PRODUCT_NAME} version 4.0.1, (c) 2012-2025 David Connet</string>
+	<string>${PRODUCT_NAME} version 4.0.1, (c) 2012-2026 David Connet</string>
 	<key>CFBundleIconFile</key>
 	<string>AgilityBook.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleLongVersionString</key>
-	<string>4.0.1, (c) 2012-2025 David Connet</string>
+	<string>4.0.1, (c) 2012-2026 David Connet</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
@@ -25,7 +25,7 @@
 	<key>CFBundleVersion</key>
 	<string>128</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2012-2025 David Connet. All rights reserved.</string>
+	<string>Copyright © 2012-2026 David Connet. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
 	<string>wxNSApplication</string>
 </dict>
