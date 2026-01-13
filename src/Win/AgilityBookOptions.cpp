@@ -1625,6 +1625,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_EVENT);
 				outValues.push_back(IO_RUNS_HEIGHT);
 				outValues.push_back(IO_RUNS_JUDGE);
+				outValues.push_back(IO_RUNS_HANDLER);
 				outValues.push_back(IO_RUNS_COURSE_FAULTS);
 				outValues.push_back(IO_RUNS_TIME);
 				outValues.push_back(IO_RUNS_YARDS);
@@ -1637,6 +1638,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_IN_CLASS);
 				outValues.push_back(IO_RUNS_DOGSQD);
 				outValues.push_back(IO_RUNS_Q);
+				outValues.push_back(IO_RUNS_COMMENTS);
 				break;
 
 			case IO_TYPE_RUNS_TIME_FAULTS:
@@ -1650,6 +1652,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_EVENT);
 				outValues.push_back(IO_RUNS_HEIGHT);
 				outValues.push_back(IO_RUNS_JUDGE);
+				outValues.push_back(IO_RUNS_HANDLER);
 				outValues.push_back(IO_RUNS_COURSE_FAULTS);
 				outValues.push_back(IO_RUNS_TIME);
 				outValues.push_back(IO_RUNS_YARDS);
@@ -1662,6 +1665,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_IN_CLASS);
 				outValues.push_back(IO_RUNS_DOGSQD);
 				outValues.push_back(IO_RUNS_Q);
+				outValues.push_back(IO_RUNS_COMMENTS);
 				break;
 
 			case IO_TYPE_RUNS_OPEN_CLOSE:
@@ -1675,6 +1679,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_EVENT);
 				outValues.push_back(IO_RUNS_HEIGHT);
 				outValues.push_back(IO_RUNS_JUDGE);
+				outValues.push_back(IO_RUNS_HANDLER);
 				outValues.push_back(IO_RUNS_COURSE_FAULTS);
 				outValues.push_back(IO_RUNS_TIME);
 				outValues.push_back(IO_RUNS_REQ_OPENING);
@@ -1687,6 +1692,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_IN_CLASS);
 				outValues.push_back(IO_RUNS_DOGSQD);
 				outValues.push_back(IO_RUNS_Q);
+				outValues.push_back(IO_RUNS_COMMENTS);
 				break;
 
 			case IO_TYPE_RUNS_POINTS:
@@ -1700,6 +1706,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_EVENT);
 				outValues.push_back(IO_RUNS_HEIGHT);
 				outValues.push_back(IO_RUNS_JUDGE);
+				outValues.push_back(IO_RUNS_HANDLER);
 				outValues.push_back(IO_RUNS_COURSE_FAULTS);
 				outValues.push_back(IO_RUNS_TIME);
 				outValues.push_back(IO_RUNS_REQ_POINTS);
@@ -1712,6 +1719,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_IN_CLASS);
 				outValues.push_back(IO_RUNS_DOGSQD);
 				outValues.push_back(IO_RUNS_Q);
+				outValues.push_back(IO_RUNS_COMMENTS);
 				break;
 
 			default:
