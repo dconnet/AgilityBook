@@ -253,6 +253,7 @@ Compiler: requires C++17 support.
 Microsoft Visual Studio 2026 (VC18, V14.5)
 ===================================
    It works, no additional notes.
+   <Note: When adding newer compilers, update AgilityBookLibs\Projects\props\CommonConfig.props>
 
 Microsoft Visual Studio 2022 (VC17, V14.3)
 ===================================
@@ -260,7 +261,7 @@ Microsoft Visual Studio 2022 (VC17, V14.3)
 
 Microsoft Visual Studio 2019 (VC16, V14.2)
 ===================================
-   It works, no additional notes.
+   Not supported. (But could be revived by creating new SLN files)
 
 VS-2017 and before
 ===================================
