@@ -1,4 +1,7 @@
-Updates: 2023-3-13
+Updates: 2026-2-1
+
+- Update makefiles to move from catch2 to catch3 (inline to linked lib)
+  (remove catch2 at that time)
 
 - USDAA SuperQ:
   [as of 1/1/2020]
