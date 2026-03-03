@@ -267,7 +267,7 @@ def BuildMSBuild(compilers, samples, utils, release, debug):
 		elif platformDir == 'vc143':
 			solution = 'wx_vc17.sln'
 		elif platformDir == 'vc145':
-			solution = 'wx_vc18.sln'
+			solution = 'wx_vc18.slnx'
 		else:
 			print('ERROR: Unsupported compiler:', platformDir)
 			return False
