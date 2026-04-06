@@ -1,4 +1,6 @@
-Updates: 2026-2-1
+Updates: 2026-4-6
+
+- Add ability to change fonts for all views (not just Calendar)
 
 - Update makefiles to move from catch2 to catch3 (inline to linked lib)
   (remove catch2 at that time)
