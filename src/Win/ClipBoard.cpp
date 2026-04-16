@@ -269,31 +269,21 @@ bool CClipboardDataWriter::AddData(ARBClipFormat clpFmt, wxString const& inData)
 			std::string endHtml("</body>\r\n</html>\r\n");
 			std::string startFragment("<!--StartFragment-->");
 			std::string endFragment("<!--EndFragment-->");
-#if _MSC_VER >= 1300 && _MSC_VER < 1400
-			// VC7 has issues streaming size_t: warnings about 'size_t' to 'unsigned int' conversion
-			int lenData = static_cast<int>(data.length());
-			int lenHeader = 97;
-			int lenStartHtml = static_cast<int>(startHtml.length());
-			int lenEndHtml = static_cast<int>(endHtml.length());
-			int lenStartFragment = static_cast<int>(startFragment.length());
-			int lenEndFragment = static_cast<int>(endFragment.length());
-#else
 			size_t lenData = data.length();
 			size_t lenHeader = 97;
 			size_t lenStartHtml = startHtml.length();
 			size_t lenEndHtml = endHtml.length();
 			size_t lenStartFragment = startFragment.length();
 			size_t lenEndFragment = endFragment.length();
-#endif
 			wxString out;
-			out << wxString::Format("Version:0.9\r\nStartHTML:%08d\r\n", lenHeader);
+			out << wxString::Format("Version:0.9\r\nStartHTML:%08zu\r\n", lenHeader);
 			out << wxString::Format(
-				"EndHTML:%08d\r\n",
+				"EndHTML:%08zu\r\n",
 				lenHeader + lenStartHtml + lenStartFragment + lenData + lenEndFragment + lenEndHtml);
-			out << wxString::Format("StartFragment:%08d\r\n", lenHeader + lenStartHtml + lenStartFragment);
-			out << wxString::Format("EndFragment:%08d\r\n", lenHeader + lenStartHtml + lenStartFragment + lenData);
+			out << wxString::Format("StartFragment:%08zu\r\n", lenHeader + lenStartHtml + lenStartFragment);
+			out << wxString::Format("EndFragment:%08zu\r\n", lenHeader + lenStartHtml + lenStartFragment + lenData);
 #if defined(_DEBUG) || defined(__WXDEBUG__)
-			assert(out.size() == static_cast<std::string::size_type>(lenHeader));
+			assert(out.size() == lenHeader);
 #endif
 			out << startHtml << startFragment << data << endFragment << endHtml;
 			data = out.utf8_string();

@@ -21,6 +21,7 @@
 #include "ARB/ARBCalendar.h"
 #include "ARB/ARBStructure.h"
 #include "ARBCommon/Element.h"
+#include "ARBCommon/StringUtil.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -44,6 +45,28 @@ ElementNodePtr CreateNode()
 	data->AddAttrib(ATTRIB_CAL_CLUB, L"Bay Team");
 	data->AddAttrib(ATTRIB_CAL_VENUE, L"USDAA");
 	return data;
+}
+
+// Note: If there are multiple entries for 'tag', only the first is removed.
+std::string StripICal(std::string const& inStr, std::string const tag)
+{
+	auto pos = inStr.find(tag);
+	if (std::string::npos == pos)
+		return inStr;
+	std::string str;
+	if (0 < pos)
+	{
+		auto tag2 = std::string("\n") + tag;
+		pos = inStr.find(tag2);
+		if (std::string::npos == pos)
+			return inStr;
+		str = inStr.substr(0, pos + 1);
+	}
+	pos = inStr.find("\r\n", pos);
+	if (std::string::npos == pos)
+		return str;
+	str += inStr.substr(pos + 2);
+	return str;
 }
 
 
@@ -500,6 +523,115 @@ TEST_CASE("CalendarList")
 			REQUIRE(callist == callist2);
 			REQUIRE(callist[0].get() != callist2[0].get());
 			REQUIRE(*callist[0] == *callist2[0]);
+		}
+	}
+
+
+	SECTION("VerifyStrip")
+	{
+		constexpr char k_iCal1[] = "BEGIN:VCALENDAR\r\n\
+PRODID:-//dcon Software//Agility Record Book//EN\r\n\
+VERSION:1.0\r\n\
+BEGIN:VEVENT\r\n\
+UID:e2006090420060905202604162026041620260416\r\n\
+DTSTART:20060904T070000\r\n\
+DTEND:20060905T180000\r\n\
+SUMMARY;ENCODING=QUOTED-PRINTABLE:ASCA PASA Hollister\r\n\
+LOCATION;ENCODING=QUOTED-PRINTABLE:Hollister\r\n\
+DESCRIPTION;ENCODING=QUOTED-PRINTABLE:Status: Not entered \r\n\
+END:VEVENT\r\n\
+END:VCALENDAR";
+
+		constexpr char k_iCal2[] = "PRODID:-//dcon Software//Agility Record Book//EN\r\n\
+VERSION:1.0\r\n\
+BEGIN:VEVENT\r\n\
+UID:e2006090420060905202604162026041620260416\r\n\
+DTSTART:20060904T070000\r\n\
+DTEND:20060905T180000\r\n\
+SUMMARY;ENCODING=QUOTED-PRINTABLE:ASCA PASA Hollister\r\n\
+LOCATION;ENCODING=QUOTED-PRINTABLE:Hollister\r\n\
+DESCRIPTION;ENCODING=QUOTED-PRINTABLE:Status: Not entered \r\n\
+END:VEVENT\r\n\
+END:VCALENDAR";
+
+		constexpr char k_iCal3[] = "BEGIN:VCALENDAR\r\n\
+PRODID:-//dcon Software//Agility Record Book//EN\r\n\
+VERSION:1.0\r\n\
+BEGIN:VEVENT\r\n\
+DTSTART:20060904T070000\r\n\
+DTEND:20060905T180000\r\n\
+SUMMARY;ENCODING=QUOTED-PRINTABLE:ASCA PASA Hollister\r\n\
+LOCATION;ENCODING=QUOTED-PRINTABLE:Hollister\r\n\
+DESCRIPTION;ENCODING=QUOTED-PRINTABLE:Status: Not entered \r\n\
+END:VEVENT\r\n\
+END:VCALENDAR";
+
+		REQUIRE(StripICal(k_iCal1, "BEGIN") == k_iCal2);
+		REQUIRE(StripICal(k_iCal1, "UID") == k_iCal3);
+	}
+
+
+	SECTION("CreateICal")
+	{
+		if (!g_bMicroTest)
+		{
+			std::stringstream outData1;
+			ICalendarPtr iCalendar1 = ICalendar::iCalendarBegin(outData1, 1);
+			std::stringstream outData2;
+			ICalendarPtr iCalendar2 = ICalendar::iCalendarBegin(outData2, 2);
+			// Only v1 and v2 supported.
+			std::stringstream outData;
+			REQUIRE(!ICalendar::iCalendarBegin(outData, 0));
+			REQUIRE(iCalendar1);
+			REQUIRE(iCalendar2);
+			REQUIRE(!ICalendar::iCalendarBegin(outData, 3));
+
+			ARBCalendarPtr cal1 = ARBCalendar::New();
+			cal1->SetStartDate(ARBDate(2006, 9, 4));
+			cal1->SetEndDate(ARBDate(2006, 9, 5));
+			cal1->SetLocation(L"Hollister");
+			cal1->SetClub(L"PASA");
+			cal1->SetVenue(L"ASCA");
+
+			constexpr char k_iCal1[] = "BEGIN:VCALENDAR\r\n\
+PRODID:-//dcon Software//Agility Record Book//EN\r\n\
+VERSION:1.0\r\n\
+BEGIN:VEVENT\r\n\
+UID:e2006090420060905202604162026041620260416\r\n\
+DTSTART:20060904T070000\r\n\
+DTEND:20060905T180000\r\n\
+SUMMARY;ENCODING=QUOTED-PRINTABLE:ASCA PASA Hollister\r\n\
+LOCATION;ENCODING=QUOTED-PRINTABLE:Hollister\r\n\
+DESCRIPTION;ENCODING=QUOTED-PRINTABLE:Status: Not entered \r\n\
+END:VEVENT\r\n\
+END:VCALENDAR";
+			// Note: DTSTAMP is current time. So we have to ignore it.
+			// It's not listed here (would be between UID and DTSTART)
+			constexpr char k_iCal2[] = "BEGIN:VCALENDAR\r\n\
+PRODID:-//dcon Software//Agility Record Book//EN\r\n\
+VERSION:2.0\r\n\
+METHOD:PUBLISH\r\n\
+BEGIN:VEVENT\r\n\
+UID:e2006090420060905202604162026041620260416\r\n\
+DTSTART;VALUE=DATE:20060904\r\n\
+DTEND;VALUE=DATE:20060906\r\n\
+SUMMARY:ASCA PASA Hollister\r\n\
+LOCATION:Hollister\r\n\
+DESCRIPTION:Status: Not entered \r\n\
+END:VEVENT\r\n\
+END:VCALENDAR";
+
+			cal1->iCalendar(iCalendar1, 0);
+			iCalendar1.reset();
+			auto str1 = StringUtil::Trim(outData1.str());
+			REQUIRE(!str1.empty());
+			REQUIRE(str1 == k_iCal1);
+
+			cal1->iCalendar(iCalendar2, 0);
+			iCalendar2.reset();
+			auto str2 = StripICal(StringUtil::Trim(outData2.str()), "DTSTAMP");
+			REQUIRE(!str2.empty());
+			REQUIRE(str2 == k_iCal2);
 		}
 	}
 }
