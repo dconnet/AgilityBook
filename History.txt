@@ -1,8 +1,9 @@
-2026-4-16: v4.0.2.<dev>
+2026-4-22: v4.0.2.<dev>
 - New features / Enhancements:
   - Updated to wxWidgets 3.3.2
 - Bug fix:
   - Fix a crash when copying a Calendar entry.
+  - Removing a venue from a trial incorrectly deleted all runs, not just associated ones.
 
 2026-2-1: v4.0.1.129
 - New features / Enhancements:

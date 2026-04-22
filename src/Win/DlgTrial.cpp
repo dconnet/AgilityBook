@@ -703,7 +703,7 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 		}
 		if (!bAllThere)
 		{
-			int nDelete = 0;
+			std::vector<ARBDogRunPtr> toDelete;
 			for (ARBDogRunList::iterator iterRun = m_pTrial->GetRuns().begin(); iterRun != m_pTrial->GetRuns().end();
 				 ++iterRun)
 			{
@@ -725,16 +725,19 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 				}
 				if (!bFound)
 				{
-					++nDelete;
+					toDelete.push_back(pRun);
 				}
 			}
-			if (0 < nDelete)
+			if (!toDelete.empty())
 			{
-				auto msg = wxString::Format(_("IDS_CONFIG_DELETE_RUNS"), m_pTrial->GetRuns().size());
+				auto msg = wxString::Format(_("IDS_CONFIG_DELETE_RUNS"), toDelete.size());
 				if (wxYES
 					!= wxMessageBox(msg, _("Agility Record Book"), wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_WARNING))
 					return;
-				m_pTrial->GetRuns().clear();
+				for (auto run : toDelete)
+				{
+					m_pTrial->GetRuns().DeleteRun(run);
+				}
 				m_bRunsDeleted = true;
 			}
 		}
