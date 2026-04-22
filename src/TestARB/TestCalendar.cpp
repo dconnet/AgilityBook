@@ -530,11 +530,12 @@ TEST_CASE("CalendarList")
 
 	SECTION("VerifyStrip")
 	{
+		// Note "UID" is specifically stripped because it is date-based.
+		// It lives between "BEGIN" and "DTSTART"
 		constexpr char k_iCal1[] = "BEGIN:VCALENDAR\r\n\
 PRODID:-//dcon Software//Agility Record Book//EN\r\n\
 VERSION:1.0\r\n\
 BEGIN:VEVENT\r\n\
-UID:e2006090420060905202604162026041620260416\r\n\
 DTSTART:20060904T070000\r\n\
 DTEND:20060905T180000\r\n\
 SUMMARY;ENCODING=QUOTED-PRINTABLE:ASCA PASA Hollister\r\n\
@@ -546,7 +547,6 @@ END:VCALENDAR";
 		constexpr char k_iCal2[] = "PRODID:-//dcon Software//Agility Record Book//EN\r\n\
 VERSION:1.0\r\n\
 BEGIN:VEVENT\r\n\
-UID:e2006090420060905202604162026041620260416\r\n\
 DTSTART:20060904T070000\r\n\
 DTEND:20060905T180000\r\n\
 SUMMARY;ENCODING=QUOTED-PRINTABLE:ASCA PASA Hollister\r\n\
@@ -594,11 +594,12 @@ END:VCALENDAR";
 			cal1->SetClub(L"PASA");
 			cal1->SetVenue(L"ASCA");
 
+			// Note "UID" is specifically stripped because it is date-based.
+			// It lives between "BEGIN" and "DTSTART"
 			constexpr char k_iCal1[] = "BEGIN:VCALENDAR\r\n\
 PRODID:-//dcon Software//Agility Record Book//EN\r\n\
 VERSION:1.0\r\n\
 BEGIN:VEVENT\r\n\
-UID:e2006090420060905202604162026041620260416\r\n\
 DTSTART:20060904T070000\r\n\
 DTEND:20060905T180000\r\n\
 SUMMARY;ENCODING=QUOTED-PRINTABLE:ASCA PASA Hollister\r\n\
@@ -613,7 +614,6 @@ PRODID:-//dcon Software//Agility Record Book//EN\r\n\
 VERSION:2.0\r\n\
 METHOD:PUBLISH\r\n\
 BEGIN:VEVENT\r\n\
-UID:e2006090420060905202604162026041620260416\r\n\
 DTSTART;VALUE=DATE:20060904\r\n\
 DTEND;VALUE=DATE:20060906\r\n\
 SUMMARY:ASCA PASA Hollister\r\n\
@@ -626,13 +626,13 @@ END:VCALENDAR";
 			iCalendar1.reset();
 			auto str1 = StringUtil::Trim(outData1.str());
 			REQUIRE(!str1.empty());
-			REQUIRE(str1 == k_iCal1);
+			REQUIRE(StripICal(str1, "UID") == k_iCal1);
 
 			cal1->iCalendar(iCalendar2, 0);
 			iCalendar2.reset();
 			auto str2 = StripICal(StringUtil::Trim(outData2.str()), "DTSTAMP");
 			REQUIRE(!str2.empty());
-			REQUIRE(str2 == k_iCal2);
+			REQUIRE(StripICal(str2, "UID") == k_iCal2);
 		}
 	}
 }
