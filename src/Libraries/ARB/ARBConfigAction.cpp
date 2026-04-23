@@ -15,6 +15,7 @@
  * maintain our data integrity, we need to update things to deal with this.
  *
  * Revision History
+ * 2026-04-22 Add RenameSubLevel action verb.
  * 2016-06-19 Add support for Lifetime names.
  * 2013-01-11 Fix filters on configuration import.
  * 2012-11-21 Add RenameLevel action verb.
@@ -51,6 +52,7 @@ constexpr wchar_t ACTION_VERB_RENAME_TITLE[] = L"RenameTitle";
 constexpr wchar_t ACTION_VERB_DELETE_EVENT[] = L"DeleteEvent";
 constexpr wchar_t ACTION_VERB_RENAME_EVENT[] = L"RenameEvent";
 constexpr wchar_t ACTION_VERB_RENAME_LEVEL[] = L"RenameLevel";
+constexpr wchar_t ACTION_VERB_RENAME_SUBLEVEL[] = L"RenameSubLevel";
 constexpr wchar_t ACTION_VERB_RENAME_DIV[] = L"RenameDivision";
 constexpr wchar_t ACTION_VERB_RENAME_VENUE[] = L"RenameVenue";
 } // namespace
@@ -848,6 +850,7 @@ ARBConfigActionRenameLevel::ARBConfigActionRenameLevel(
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_Div(inDiv)
+	, m_Level(inLevel)
 	, m_OldName(inOldName)
 	, m_NewName(inNewName)
 {
@@ -883,62 +886,75 @@ bool ARBConfigActionRenameLevel::Apply(
 	wxString& ioInfo,
 	IConfigActionCallback& ioCallBack) const
 {
-	bool bChanged = false;
 	ARBConfigVenuePtr venue;
-	if (ioConfig.GetVenues().FindVenue(m_Venue, &venue))
+	if (!ioConfig.GetVenues().FindVenue(m_Venue, &venue))
+		return false;
+
+	ARBConfigDivisionPtr div;
+	if (!venue->GetDivisions().FindDivision(m_Div, &div))
+		return false;
+
+	bool bChanged = false;
+	if (m_Level.empty())
 	{
-		ARBConfigDivisionPtr div;
-		if (venue->GetDivisions().FindDivision(m_Div, &div))
+		ARBConfigLevelPtr oldLevel;
+		bool bLeaf = false;
+		bool bOk = div->GetLevels().FindLevel(m_OldName, &oldLevel);
+		if (bOk)
+			bLeaf = (0 == oldLevel->GetSubLevels().size());
+		if (bOk)
 		{
-			ARBConfigLevelPtr oldLevel;
-			bool bLeaf = false;
-			bool bOk = false;
-			// If level is not empty, we're dealing with a sublevel
-			if (m_Level.empty())
+			bChanged = true;
+			int nRuns = 0;
+			// Note: Only run the update on leaf nodes
+			if (ioDogs && bLeaf)
 			{
-				bOk = div->GetLevels().FindLevel(m_OldName, &oldLevel);
-				if (bOk)
-					bLeaf = (0 == oldLevel->GetSubLevels().size());
+				nRuns += ioDogs->NumLevelsInUse(m_Venue, m_Div, m_OldName);
+				ioDogs->RenameLevel(m_Venue, m_Div, m_OldName, m_NewName);
 			}
+			ioInfo << Localization()->ActionRenameLevel(m_Venue, m_OldName, m_NewName, nRuns) << L"\n";
+			// Only update when the actual level (not sublevel) changes
+			venue->GetEvents().RenameLevel(m_Div, m_OldName, m_NewName);
+			// Only update on leafs
+			if (bLeaf)
+				venue->GetMultiQs().RenameLevel(m_Div, m_OldName, m_NewName);
+			// If the new level exists, just delete the old.
+			// Otherwise, rename the old to new.
+			if (div->GetLevels().FindLevel(m_NewName))
+				div->GetLevels().DeleteLevel(div->GetName(), m_OldName, venue->GetEvents());
 			else
-			{
-				bOk = div->GetLevels().FindLevel(m_Level, &oldLevel);
-				bLeaf = true;
-			}
-			if (bOk)
-			{
-				bChanged = true;
-				int nRuns = 0;
-				// Note: Only run the update on leaf nodes
-				if (ioDogs && bLeaf)
-				{
-					nRuns += ioDogs->NumLevelsInUse(m_Venue, m_Div, m_OldName);
-					ioDogs->RenameLevel(m_Venue, m_Div, m_OldName, m_NewName);
-				}
-				ioInfo << Localization()->ActionRenameLevel(m_Venue, m_OldName, m_NewName, nRuns) << L"\n";
-				// Only update when the actual level (not sublevel) changes
-				if (m_Level.empty())
-					venue->GetEvents().RenameLevel(m_Div, m_OldName, m_NewName);
-				// Only update on leafs
-				if (bLeaf)
-					venue->GetMultiQs().RenameLevel(m_Div, m_OldName, m_NewName);
-				// If the new level exists, just delete the old.
-				// Otherwise, rename the old to new.
-				if (div->GetLevels().FindLevel(m_NewName))
-				{
-					if (m_Level.empty())
-						div->GetLevels().DeleteLevel(div->GetName(), m_OldName, venue->GetEvents());
-					else
-					{
-						bool bModified;
-						div->GetLevels().DeleteSubLevel(m_OldName, bModified);
-					}
-				}
-				else
-					oldLevel->SetName(m_NewName);
-			}
+				oldLevel->SetName(m_NewName);
 		}
 	}
+
+	else
+	{
+		ARBConfigLevelPtr level;
+		if (!div->GetLevels().FindLevel(m_Level, &level))
+			return false;
+
+		ARBConfigSubLevelPtr oldLevel;
+		if (!level->GetSubLevels().FindSubLevel(m_OldName, &oldLevel))
+			return false;
+
+		bChanged = true;
+		int nRuns = 0;
+		if (ioDogs)
+		{
+			nRuns += ioDogs->NumLevelsInUse(m_Venue, m_Div, m_OldName);
+			ioDogs->RenameLevel(m_Venue, m_Div, m_OldName, m_NewName);
+		}
+		ioInfo << Localization()->ActionRenameLevel(m_Venue, m_OldName, m_NewName, nRuns) << L"\n";
+		venue->GetMultiQs().RenameLevel(m_Div, m_OldName, m_NewName);
+
+		// If the new level exists, just delete the old.
+		// Otherwise, rename the old to new.
+		if (level->GetSubLevels().FindSubLevel(m_NewName))
+			level->GetSubLevels().DeleteSubLevel(m_OldName);
+		else
+			oldLevel->SetName(m_NewName);
+	}
+
 	return bChanged;
 }
 
@@ -959,7 +975,7 @@ bool ARBConfigActionRenameLevel::Update(
 			if (venue->GetDivisions().FindDivision(m_Div, &div))
 			{
 				// If level is not empty, we're dealing with a sublevel
-				if (m_Level.empty())
+				if (!m_Level.empty())
 				{
 					ARBConfigLevelPtr level;
 					if (div->GetLevels().FindLevel(m_Level, &level))
@@ -1712,9 +1728,10 @@ bool ARBConfigActionList::Load(ElementNodePtr const& inTree, ARBVersion const& i
 			return false;
 		}
 	}
-	wxString venue, div, oldName, newName;
+	wxString venue, div, level, oldName, newName;
 	inTree->GetAttrib(ATTRIB_ACTION_VENUE, venue);
 	inTree->GetAttrib(ATTRIB_ACTION_DIVISION, div);
+	inTree->GetAttrib(ATTRIB_ACTION_LEVEL, level);
 	inTree->GetAttrib(ATTRIB_ACTION_OLDNAME, oldName);
 	inTree->GetAttrib(ATTRIB_ACTION_NEWNAME, newName);
 
@@ -1743,6 +1760,10 @@ bool ARBConfigActionList::Load(ElementNodePtr const& inTree, ARBVersion const& i
 	{
 		item = ARBConfigActionRenameLevel::NewLevel(configVer, venue, div, oldName, newName);
 	}
+	else if (ACTION_VERB_RENAME_SUBLEVEL == verb)
+	{
+		item = ARBConfigActionRenameLevel::NewSubLevel(configVer, venue, div, level, oldName, newName);
+	}
 	else if (ACTION_VERB_RENAME_DIV == verb)
 	{
 		item = ARBConfigActionRenameDivision::New(configVer, venue, oldName, newName);
@@ -1763,6 +1784,8 @@ bool ARBConfigActionList::Load(ElementNodePtr const& inTree, ARBVersion const& i
 		msg += ACTION_VERB_RENAME_EVENT;
 		msg += L", ";
 		msg += ACTION_VERB_RENAME_LEVEL;
+		msg += L", ";
+		msg += ACTION_VERB_RENAME_SUBLEVEL;
 		msg += L", ";
 		msg += ACTION_VERB_RENAME_DIV;
 		msg += L", ";

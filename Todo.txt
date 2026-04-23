@@ -1,4 +1,7 @@
-Updates: 2026-4-6
+Updates: 2026-4-22
+
+- Changing the name of a Level that has sublevels via the configuration dialog
+  will cause data loss (user is warned).
 
 - Add ability to change fonts for all views (not just Calendar)
 

@@ -127,6 +127,7 @@ namespace ARB
 #define ATTRIB_ACTION_VERB					L"Verb"
 #define ATTRIB_ACTION_VENUE					L"Venue"
 #define ATTRIB_ACTION_DIVISION				L"Div"
+#define ATTRIB_ACTION_LEVEL					L"Level"
 #define ATTRIB_ACTION_OLDNAME				L"OldName"
 #define ATTRIB_ACTION_NEWNAME				L"NewName"
 #define ATTRIB_ACTION_CONFIG				L"Config"

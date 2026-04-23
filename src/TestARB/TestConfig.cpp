@@ -243,7 +243,7 @@ TEST_CASE("Config")
 			REQUIRE(0u == config.GetVenues().size());
 			CConfigHandler handler;
 			config.Default(&handler);
-			REQUIRE(231u == config.GetActions().size());
+			REQUIRE(233u == config.GetActions().size());
 			REQUIRE(0u == config.GetFaults().size());
 			REQUIRE(5u == config.GetOtherPoints().size());
 			REQUIRE(18u == config.GetVenues().size());

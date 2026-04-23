@@ -233,6 +233,15 @@ bool ARBConfigSubLevelList::AddSubLevel(wxString const& inName, ARBConfigSubLeve
 }
 
 
+bool ARBConfigSubLevelList::AddSubLevel(ARBConfigSubLevelPtr const& inLevel)
+{
+	if (!inLevel || 0 == inLevel->GetName().length())
+		return false;
+	push_back(inLevel);
+	return true;
+}
+
+
 bool ARBConfigSubLevelList::DeleteSubLevel(wxString const& inName)
 {
 	wxString name(inName);

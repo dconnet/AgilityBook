@@ -4,6 +4,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2026-04-22 Configuration version 74.
+           Fix AKC Preferred Novice.
 2025-12-07 Configuration version 73.
            Updated CPE Speedway.
 2024-07-09 Configuration version 72.
@@ -242,7 +244,7 @@ Reminder to self: Action/@Config: Only apply this action up to this config
 (non-inclusive, 0 == always) Basically, this is when the action was added.
 -->
 
-  <Configuration version="73">
+  <Configuration version="74">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -476,6 +478,8 @@ Reminder to self: Action/@Config: Only apply this action up to this config
     <Action Config="68" Div="ISC" OldName="Master" NewName="Level 3" Venue="AKC" Verb="RenameLevel" />
     <Action Config="69" OldName="ACT" NewName="Standard" Venue="AKC" Verb="RenameEvent" />
     <Action Config="71" OldName="TMAD" NewName="TAM" Venue="TDAA" Verb="RenameTitle" />
+    <Action Config="74" Div="Preferred" Level="Novice" OldName="Novice A" NewName="Novice" Venue="AKC" Verb="RenameSubLevel" />
+    <Action Config="74" Div="Preferred" Level="Novice" OldName="Novice B" NewName="Novice" Venue="AKC" Verb="RenameSubLevel" />
     <Venue LongName="Agility Association of Canada" Name="AAC" URL="https://www.aac.ca/" icon="3">
       <LifetimeNames/>
       <Titles LongName="Agility Dog of Canada" Name="ADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
@@ -776,8 +780,7 @@ Repeat titles are MFPC + 75 Qs</Titles>
       </Division>
       <Division Name="Preferred" ShortName="Pf">
         <Level Name="Novice">
-          <SubLevel Name="Novice A" ShortName="NovA"/>
-          <SubLevel Name="Novice B" ShortName="NovB"/>
+          <SubLevel Name="Novice" ShortName="Nov"/>
         </Level>
         <Level Name="Open"/>
         <Level Name="Excellent" ShortName="Ex"/>

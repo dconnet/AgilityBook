@@ -220,7 +220,7 @@ bool ARBConfigLevel::Update(int indent, ARBConfigLevelPtr const& inLevelNew, wxS
 			else
 			{
 				++nAdded;
-				GetSubLevels().AddSubLevel((*iterSub)->GetName());
+				GetSubLevels().AddSubLevel(*iterSub);
 				info2 += indentBuffer;
 				info2 += L"+";
 				info2 += (*iterSub)->GetName();

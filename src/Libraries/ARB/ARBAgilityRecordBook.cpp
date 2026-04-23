@@ -16,6 +16,8 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * 2026-04-22 File version 15.7
+ *            Add RenameSubLevel action.
  * 2025-12-07 File version 15.6
  *            Add scoring type 'TimePlaces' for CPE Speedway.
  * 2024-04-15 File version 15.5
@@ -138,7 +140,7 @@ namespace ARB
 
 ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 {
-	static ARBVersion const curVersion(15, 6);
+	static ARBVersion const curVersion(15, 7);
 	return curVersion;
 }
 

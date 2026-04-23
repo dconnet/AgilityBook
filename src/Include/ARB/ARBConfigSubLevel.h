@@ -173,6 +173,13 @@ public:
 	bool AddSubLevel(wxString const& inName, ARBConfigSubLevelPtr* outLevel = nullptr);
 
 	/**
+	 * Find a sublevel.
+	 * @param inLevel Level to add.
+	 * @return Whether the object was added.
+	 */
+	bool AddSubLevel(ARBConfigSubLevelPtr const& inLevel);
+
+	/**
 	 * Delete a sublevel.
 	 * @param inName Name of sublevel to delete.
 	 * @return Whether sublevel was deleted or not.
