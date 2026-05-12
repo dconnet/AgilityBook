@@ -26,9 +26,9 @@ option, run 'git submodule update --init' to also get all dependent code.
 --------------------
 
 python: https://www.python.org
-Currently using version 3.13.3.
+Currently using version 3.14.4.
 - Include pip in install
-- "pip install pywin32" (currently "build 310")
+- "pip install pywin32" (currently "build 311")
 
 wxWidgets: http://www.wxwidgets.org/
 Currently using version 3.3.2. Min supported is 3.1.6.
@@ -198,7 +198,7 @@ To build for Mac/Unix, see ./build/BuildUnix.sh
 
 poedit: http://www.poedit.net
 Cross platform editor for modifying .po files.
-Currently using version 3.6.2.
+Currently using version 3.9.
 - includes gettext
   - on Mac, probably want to include MacPorts version
 Use this to keep the catalog in sync with the source code.
@@ -232,20 +232,20 @@ Currently using version 3.14.1.
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen
 Used to create source code documentation.
-Currently using version 1.9.3. (Note: Newer versions cause issues in wx)
+Currently using version 1.15.0. (Note: version wx uses)
 [Install to default location]
 
 --------------------
 
 GraphViz: http://www.graphviz.org
 Used to create source code documentation.
-Currently using version 12.2.1.
+Currently using version 14.1.5.
 Earlier versions may work. (I used 2.14.1 with no problems for a while)
 [Install to default location]
 
 --------------------
 LLVM: https://releases.llvm.org/download.html
-Currently using version 20.1.4 (ubuntu22: v14, ubuntu24: v18)
+Currently using version 22.1.5 (ubuntu22: v14, u24: v18, u26: v21)
 [Install to default location, ubuntu: apt install]
 - clang-format -i *.h *.cpp
 This will run the formatter and rewrite the files.
@@ -313,7 +313,7 @@ OSX 10.9:
   Must reboot after modifying.
 ===
 setenv WXBASE /Users/dconnet/devtools/wx
-setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.2.7
+setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.3.2
 ====
 OSX 10.10+:
 - launchd.conf has been deprecated.
@@ -334,7 +334,7 @@ OSX 10.10+:
     <string>-c</string>
     <string>
     launchctl setenv WXBASE /Users/dconnet/devtools/wx
-    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.2.7
+    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.3.2
     </string>
   </array>
   <key>RunAtLoad</key>
