@@ -153,7 +153,7 @@ public:
 	 * Get the value based on place.
 	 * @param inPlace Placement.
 	 * @param outValue Value of placement.
-	 * @return inPlace has a value.`
+	 * @return inPlace has a value.
 	 */
 	bool GetPlaceInfo(short inPlace, double& outValue) const;
 
