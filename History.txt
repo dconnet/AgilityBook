@@ -1,11 +1,11 @@
-2026-4-22: v4.0.2.<dev>
+2026-5-22: v4.0.2.130
 - Bumped Configuration v74:
   - Fix AKC Preferred Novice (no A/B)
-- Bumped file version to 15.6:
+- Bumped file version to 15.7:
   - Added RenameSubLevel action.
 - New features / Enhancements:
   - Updated to wxWidgets 3.3.2
-- Bug fix:
+- Bug fixes:
   - Fix a crash when copying a Calendar entry.
   - Removing a venue from a trial incorrectly deleted all runs, not just associated ones.
   - Fix merging a sublevel (lost the shortname).
@@ -14,7 +14,7 @@
 2026-2-1: v4.0.1.129
 - New features / Enhancements:
   - Added Handler/Comments into default export.
-- Bug fix:
+- Bug fixes:
   - (internal tool) Add missing space in version2.xml generation
 
 2025-12-14: v4.0.0.128
@@ -33,7 +33,7 @@
     If no filter is set and option is enabled, only the current dog is exported.
   - Made Venue's long name visible in Configuration dialog.
   - Updated CPE Speedway to allow placements and added Lifetime points.
-- Bug fix:
+- Bug fixes:
   - Fixed a couple recursive call issues found by xcode.
   - Fixed export of (run: SubName, SpeedPts), (cal: DrawDate), alignment of SubName in Run dialog.
   - Fix custom DPI issues (it broke at 110%)
@@ -49,7 +49,7 @@
     Std/JWW even tho it is not allowed until 2024-7-1. Not changing that)
 - New features / Enhancements:
   - Add feedback when RecentFile open fails.
-- Bug fix:
+- Bug fixes:
   - Fixed USDAA PDCHT abbreviation (was added in c65 as PDCHD).
   - Fix importing calendar entries with empty dates.
 
@@ -62,13 +62,13 @@
   - Add FEO support to event config (was assumed true for all events)
 - New features / Enhancements:
   - Updated to wxWidgets 3.2.5
-- Bug fix:
+- Bug fixes:
   - Adding Lifetime points in a venue with no existing ones was wonky.
 
 3/19/2024: v3.8.7.125
 - Bumped Configuration v70:
   - Rename TDAA's TMAD to TAM.
-- Bug fix:
+- Bug fixes:
   - SetSelection(0) on an empty wxComboBox can crash on Mac
 
 12/29/2023: v3.8.6.124
