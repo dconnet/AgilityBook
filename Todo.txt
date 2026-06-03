@@ -1,12 +1,12 @@
-Updates: 2026-4-22
+Updates: 2026-6-3
 
 - Changing the name of a Level that has sublevels via the configuration dialog
   will cause data loss (user is warned).
 
 - Add ability to change fonts for all views (not just Calendar)
 
-- Update makefiles to move from catch2 to catch3 (inline to linked lib)
-  (remove catch2 at that time)
+- Create xcode project for catch3 (remove catch2 at that time)
+  (makefiles have been updated to catch3, only xcode project still used catch2)
 
 - USDAA SuperQ:
   [as of 1/1/2020]
