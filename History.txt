@@ -1,4 +1,6 @@
-2026-5-22: v4.0.3.<dev>
+2026-7-7: v4.0.3.<dev>
+- New features / Enhancements:
+  - Updated to wxWidgets 3.3.3
 
 2026-5-22: v4.0.2.130
 - Bumped Configuration v74:
