@@ -26,12 +26,15 @@ option, run 'git submodule update --init' to also get all dependent code.
 --------------------
 
 python: https://www.python.org
-Currently using version 3.14.4.
+Currently using version 3.14.6.
 - Include pip in install
-- "pip install pywin32" (currently "build 311")
+- "pip install pywin32" (currently "build 312")
 
 wxWidgets: http://www.wxwidgets.org/
-Currently using version 3.3.2. Min supported is 3.1.6.
+Currently using version 3.3.3. Min supported is 3.1.6.
+ - Note: Rename Win from wxWidgets-3.3.3 to wxWidgets-3.3.3.1
+         Raname unix/mac from wxWidgets-v3.3.3.1 to wxWidgets-3.3.3.1
+		 (needed for consistency with i18n lang directories)
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in AgilityBookLibs/lang/res/fr_FR) IMPORTANT: This means the directory name
@@ -48,14 +51,14 @@ Make sure WXWIN is set to wxWidgets root directory.
     the library is compiled one way and the users do something different.)
   - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
- - (plus VS2026 changes for include/msw/wx/setup.h)
 
-=== All versions of wx from 3.3.2 back.
-  (include/msw/wx/setup.h)
-  - Line 63: Change "2000" to "1950"
-  - After line 64, add:
-            #elif _MSC_VER >= 1950 && _MSC_VER < 2000
-                #define wxCOMPILER_PREFIX vc145
+=== Changes to 3.3.3
+  (include/wx/msw/setup.h)
+  - Set wxWIN_COMPATIBILITY_3_2 to 0 (currently 1)
+  - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
+    the library is compiled one way and the users do something different.)
+  - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
+  - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
 
 === Changes to 3.3.2
   (include/wx/msw/setup.h)
@@ -64,6 +67,11 @@ Make sure WXWIN is set to wxWidgets root directory.
     the library is compiled one way and the users do something different.)
   - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
+  (include/msw/wx/setup.h) (needed in all prior versions too)
+  - Line 63: Change "2000" to "1950"
+  - After line 64, add:
+            #elif _MSC_VER >= 1950 && _MSC_VER < 2000
+                #define wxCOMPILER_PREFIX vc145
 
 === Changes to 3.3.1, 3.3.0
   (include/wx/msw/setup.h)
@@ -198,7 +206,7 @@ To build for Mac/Unix, see ./build/BuildUnix.sh
 
 poedit: http://www.poedit.net
 Cross platform editor for modifying .po files.
-Currently using version 3.9.
+Currently using version 3.9.1.
 - includes gettext
   - on Mac, probably want to include MacPorts version
 Use this to keep the catalog in sync with the source code.
@@ -239,17 +247,17 @@ Currently using version 1.15.0. (Note: version wx uses)
 
 GraphViz: http://www.graphviz.org
 Used to create source code documentation.
-Currently using version 14.1.5.
+Currently using version 15.1.0.
 Earlier versions may work. (I used 2.14.1 with no problems for a while)
 [Install to default location]
 
 --------------------
 LLVM: https://releases.llvm.org/download.html
-Currently using version 22.1.5 (ubuntu22: v14, u24: v18, u26: v21)
+Currently using version 22.1.8 (ubuntu22: v14, u24: v18, u26: v21)
 [Install to default location, ubuntu: apt install]
 - clang-format -i *.h *.cpp
 This will run the formatter and rewrite the files.
-(VS2019/22 automatically detected the .clang-format file.
+(VS2019/22/etc automatically detected the .clang-format file.
   Edit->Advanced->Format Document)
 
 
@@ -313,7 +321,7 @@ OSX 10.9:
   Must reboot after modifying.
 ===
 setenv WXBASE /Users/dconnet/devtools/wx
-setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.3.2
+setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.3.3.1
 ====
 OSX 10.10+:
 - launchd.conf has been deprecated.
@@ -334,7 +342,7 @@ OSX 10.10+:
     <string>-c</string>
     <string>
     launchctl setenv WXBASE /Users/dconnet/devtools/wx
-    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.3.2
+    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.3.3.1
     </string>
   </array>
   <key>RunAtLoad</key>
