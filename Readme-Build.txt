@@ -32,9 +32,7 @@ Currently using version 3.14.6.
 
 wxWidgets: http://www.wxwidgets.org/
 Currently using version 3.3.3. Min supported is 3.1.6.
- - Note: Rename Win from wxWidgets-3.3.3 to wxWidgets-3.3.3.1
-         Raname unix/mac from wxWidgets-v3.3.3.1 to wxWidgets-3.3.3.1
-		 (needed for consistency with i18n lang directories)
+ - Note: Raname unix/mac from wxWidgets-v3.3.3.1 to wxWidgets-3.3.3
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in AgilityBookLibs/lang/res/fr_FR) IMPORTANT: This means the directory name
