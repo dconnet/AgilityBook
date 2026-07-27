@@ -29,7 +29,7 @@ namespace dconSoft
 {
 namespace ARBWin
 {
-class CListCtrl;
+class CReportListCtrl;
 class CTextCtrl;
 } // namespace ARBWin
 class CAgilityBookDoc;
@@ -39,6 +39,7 @@ class CWizard;
 class CWizardExport : public wxWizardPageSimple
 {
 	DECLARE_CLASS(CWizardExport)
+
 public:
 	CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPage* prev);
 
@@ -46,7 +47,6 @@ private:
 	CAgilityBookOptions::ColumnOrder GetColumnInfo() const;
 	wchar_t GetDelim() const;
 	void UpdateButtons();
-	wxString AddPreviewData(long inLine, long inCol, wxString inData);
 	void UpdatePreview();
 	bool DoWizardFinish();
 
@@ -64,7 +64,7 @@ private:
 	ARBWin::CTextCtrl* m_ctrlOtherChar;
 	wxButton* m_ctrlAssign;
 	wxComboBox* m_ctrlDateFormat;
-	ARBWin::CListCtrl* m_ctrlPreview;
+	ARBWin::CReportListCtrl* m_ctrlPreview;
 	bool m_useFilter;
 
 	void OnDelimTab(wxCommandEvent& evt);

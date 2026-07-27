@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * 2026-07-27 Convert to CReportListCtrl for preview. Windows list controls limit the amount of text per column.
  * 2025-12-06 Added filtering (if enabled but no filter active, exports only currennt dog)
  * 2017-09-04 Change default DogsInClass to -1 (allows for DNR runs with 0 dogs)
  * 2015-01-01 Changed pixels to dialog units.
@@ -53,6 +54,7 @@
 #include "LibARBWin/ARBWinUtilities.h"
 #include "LibARBWin/DlgPadding.h"
 #include "LibARBWin/DlgProgress.h"
+#include "LibARBWin/ListData.h"
 #include "LibARBWin/Logger.h"
 #include "LibARBWin/ReportListCtrl.h"
 #include <wx/valgen.h>
@@ -68,6 +70,38 @@ namespace dconSoft
 using namespace ARB;
 using namespace ARBCommon;
 using namespace ARBWin;
+
+namespace
+{
+class CWizardExportListData : public CListData
+{
+public:
+	CWizardExportListData(wchar_t delim, int colCount, std::vector<wxString> const& cols)
+		: m_cols(cols)
+	{
+		if (colCount == 1)
+		{
+			m_cols.clear();
+			m_cols.push_back(wxString());
+			for (size_t i = 0; i < cols.size(); ++i)
+			{
+				if (0 < i)
+					m_cols[0] += delim;
+				m_cols[0] += WriteCSVField(delim, cols[i]);
+			}
+		}
+	}
+	wxString OnNeedText(long iCol) const override
+	{
+		if (iCol < static_cast<long>(m_cols.size()))
+			return m_cols[iCol];
+		return wxString();
+	}
+
+private:
+	std::vector<wxString> m_cols;
+};
+}; // namespace
 
 wxIMPLEMENT_CLASS(CWizardExport, wxWizardPageSimple)
 
@@ -246,7 +280,7 @@ CWizardExport::CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 		= new wxStaticText(this, wxID_ANY, _("IDC_WIZARD_EXPORT_PREVIEW"), wxDefaultPosition, wxDefaultSize, 0);
 	textPreview->Wrap(-1);
 
-	m_ctrlPreview = new CListCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_NO_HEADER | wxLC_REPORT);
+	m_ctrlPreview = new CReportListCtrl(this, true, CReportListCtrl::SortHeader::None, false, false);
 	m_ctrlPreview->SetHelpText(_("HIDC_WIZARD_EXPORT_PREVIEW"));
 	m_ctrlPreview->SetToolTip(_("HIDC_WIZARD_EXPORT_PREVIEW"));
 
@@ -410,26 +444,6 @@ void CWizardExport::UpdateButtons()
 }
 
 
-wxString CWizardExport::AddPreviewData(long inLine, long inCol, wxString inData)
-{
-	wxString data;
-	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle() || WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
-	{
-		if (0 == inCol)
-			m_ctrlPreview->InsertItem(inLine, inData);
-		else
-			SetListColumnText(m_ctrlPreview, inLine, inCol, inData);
-	}
-	else
-	{
-		if (0 < inCol)
-			data += GetDelim();
-		data += WriteCSVField(GetDelim(), inData);
-	}
-	return data;
-}
-
-
 void CWizardExport::UpdatePreview()
 {
 	wxBusyCursor wait;
@@ -454,7 +468,6 @@ void CWizardExport::UpdatePreview()
 	{
 		wxString nodelim(_("IDS_NO_DELIM_SPECIFIED"));
 		m_ctrlPreview->InsertColumn(0, L"");
-		m_ctrlPreview->InsertItem(0, nodelim);
 		m_ctrlPreview->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
 		m_ctrlPreview->Thaw();
 		m_ctrlPreview->Refresh();
@@ -529,28 +542,18 @@ void CWizardExport::UpdatePreview()
 	}
 
 	// Now start writing the data.
-	long iLine = 0;
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle() || WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 	{
 		for (iCol = 0; iCol < static_cast<long>(cols.size()); ++iCol)
 			m_ctrlPreview->InsertColumn(iCol, L"");
-		m_ctrlPreview->InsertItem(iLine, cols[0]);
-		for (iCol = 1; iCol < static_cast<long>(cols.size()); ++iCol)
-			SetListColumnText(m_ctrlPreview, iLine, iCol, cols[iCol]);
-		++iLine;
+		m_ctrlPreview->InsertItem(
+			std::make_shared<CWizardExportListData>(GetDelim(), m_ctrlPreview->GetColumnCount(), cols));
 	}
 	else
 	{
 		m_ctrlPreview->InsertColumn(0, L"");
-		wxString data;
-		for (iCol = 0; iCol < static_cast<long>(cols.size()); ++iCol)
-		{
-			if (0 < iCol)
-				data += delim;
-			data += WriteCSVField(delim, cols[iCol]);
-		}
-		m_ctrlPreview->InsertItem(iLine, data);
-		++iLine;
+		m_ctrlPreview->InsertItem(
+			std::make_shared<CWizardExportListData>(GetDelim(), m_ctrlPreview->GetColumnCount(), cols));
 	}
 
 	switch (m_pSheet->GetImportExportItem())
@@ -620,7 +623,7 @@ void CWizardExport::UpdatePreview()
 						assert(-1 != idxType);
 						if (0 <= idxType)
 						{
-							wxString data;
+							std::vector<wxString> data;
 							for (long idx = 0; idx < static_cast<long>(columns[idxType].size()); ++idx)
 							{
 								// Note: All columns must have data written
@@ -629,16 +632,16 @@ void CWizardExport::UpdatePreview()
 								switch (columns[idxType][idx])
 								{
 								default:
-									data += AddPreviewData(iLine, idx, wxString());
+									data.push_back(wxString());
 									break;
 								case IO_RUNS_REG_NAME:
-									data += AddPreviewData(iLine, idx, pDog->GetRegisteredName());
+									data.push_back(pDog->GetRegisteredName());
 									break;
 								case IO_RUNS_CALL_NAME:
-									data += AddPreviewData(iLine, idx, pDog->GetCallName());
+									data.push_back(pDog->GetCallName());
 									break;
 								case IO_RUNS_DATE:
-									data += AddPreviewData(iLine, idx, pRun->GetDate().GetString(format));
+									data.push_back(pRun->GetDate().GetString(format));
 									break;
 								case IO_RUNS_VENUE:
 								{
@@ -651,7 +654,7 @@ void CWizardExport::UpdatePreview()
 											fld += L"/";
 										fld += (*iter)->GetVenue();
 									}
-									data += AddPreviewData(iLine, idx, fld);
+									data.push_back(fld);
 								}
 								break;
 								case IO_RUNS_CLUB:
@@ -665,64 +668,55 @@ void CWizardExport::UpdatePreview()
 											fld += L"/";
 										fld += (*iter)->GetName();
 									}
-									data += AddPreviewData(iLine, idx, fld);
+									data.push_back(fld);
 								}
 								break;
 								case IO_RUNS_LOCATION:
-									data += AddPreviewData(iLine, idx, pTrial->GetLocation());
+									data.push_back(pTrial->GetLocation());
 									break;
 								case IO_RUNS_TRIAL_NOTES:
-									data += AddPreviewData(iLine, idx, pTrial->GetNote());
+									data.push_back(pTrial->GetNote());
 									break;
 								case IO_RUNS_DIVISION:
-									data += AddPreviewData(iLine, idx, pRun->GetDivision());
+									data.push_back(pRun->GetDivision());
 									break;
 								case IO_RUNS_LEVEL:
-									data += AddPreviewData(iLine, idx, pRun->GetLevel());
+									data.push_back(pRun->GetLevel());
 									break;
 								case IO_RUNS_EVENT:
-									data += AddPreviewData(iLine, idx, pRun->GetEvent());
+									data.push_back(pRun->GetEvent());
 									break;
 								case IO_RUNS_HEIGHT:
-									data += AddPreviewData(iLine, idx, pRun->GetHeight());
+									data.push_back(pRun->GetHeight());
 									break;
 								case IO_RUNS_JUDGE:
-									data += AddPreviewData(iLine, idx, pRun->GetJudge());
+									data.push_back(pRun->GetJudge());
 									break;
 								case IO_RUNS_HANDLER:
-									data += AddPreviewData(iLine, idx, pRun->GetHandler());
+									data.push_back(pRun->GetHandler());
 									break;
 								case IO_RUNS_CONDITIONS:
-									data += AddPreviewData(iLine, idx, pRun->GetConditions());
+									data.push_back(pRun->GetConditions());
 									break;
 								case IO_RUNS_COURSE_FAULTS:
-									data += AddPreviewData(
-										iLine,
-										idx,
-										wxString::Format(L"%hd", pRun->GetScoring().GetCourseFaults()));
+									data.push_back(wxString::Format(L"%hd", pRun->GetScoring().GetCourseFaults()));
 									break;
 								case IO_RUNS_TIME:
-									data += AddPreviewData(
-										iLine,
-										idx,
-										ARBDouble::ToString(pRun->GetScoring().GetTime()));
+									data.push_back(ARBDouble::ToString(pRun->GetScoring().GetTime()));
 									break;
 								case IO_RUNS_YARDS:
-									data += AddPreviewData(
-										iLine,
-										idx,
-										ARBDouble::ToString(pRun->GetScoring().GetYards(), 3));
+									data.push_back(ARBDouble::ToString(pRun->GetScoring().GetYards(), 3));
 									break;
 								case IO_RUNS_MIN_YPS:
 								{
 									double yps;
 									if (pRun->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 									{
-										data += AddPreviewData(iLine, idx, ARBDouble::ToString(yps, 3));
+										data.push_back(ARBDouble::ToString(yps, 3));
 									}
 									else
 									{
-										data += AddPreviewData(iLine, idx, wxString());
+										data.push_back(wxString());
 									}
 								}
 								break;
@@ -731,11 +725,11 @@ void CWizardExport::UpdatePreview()
 									double yps;
 									if (pRun->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 									{
-										data += AddPreviewData(iLine, idx, ARBDouble::ToString(yps, 3));
+										data.push_back(ARBDouble::ToString(yps, 3));
 									}
 									else
 									{
-										data += AddPreviewData(iLine, idx, wxString());
+										data.push_back(wxString());
 									}
 								}
 								break;
@@ -744,11 +738,11 @@ void CWizardExport::UpdatePreview()
 									short ob = pRun->GetScoring().GetObstacles();
 									if (0 < ob)
 									{
-										data += AddPreviewData(iLine, idx, wxString::Format(L"%hd", ob));
+										data.push_back(wxString::Format(L"%hd", ob));
 									}
 									else
 									{
-										data += AddPreviewData(iLine, idx, wxString());
+										data.push_back(wxString());
 									}
 								}
 								break;
@@ -762,17 +756,16 @@ void CWizardExport::UpdatePreview()
 											ops,
 											prec))
 									{
-										data += AddPreviewData(iLine, idx, ARBDouble::ToString(ops, prec));
+										data.push_back(ARBDouble::ToString(ops, prec));
 									}
 									else
 									{
-										data += AddPreviewData(iLine, idx, wxString());
+										data.push_back(wxString());
 									}
 								}
 								break;
 								case IO_RUNS_SCT:
-									data
-										+= AddPreviewData(iLine, idx, ARBDouble::ToString(pRun->GetScoring().GetSCT()));
+									data.push_back(ARBDouble::ToString(pRun->GetScoring().GetSCT()));
 									break;
 								case IO_RUNS_TOTAL_FAULTS:
 								{
@@ -780,49 +773,31 @@ void CWizardExport::UpdatePreview()
 									{
 										double faults = pRun->GetScoring().GetCourseFaults()
 														+ pRun->GetScoring().GetTimeFaults(pScoring);
-										data += AddPreviewData(iLine, idx, ARBDouble::ToString(faults, 3));
+										data.push_back(ARBDouble::ToString(faults, 3));
 									}
 									else
 									{
-										data += AddPreviewData(iLine, idx, wxString());
+										data.push_back(wxString());
 									}
 								}
 								break;
 								case IO_RUNS_REQ_OPENING:
-									data += AddPreviewData(
-										iLine,
-										idx,
-										wxString::Format(L"%hd", pRun->GetScoring().GetNeedOpenPts()));
+									data.push_back(wxString::Format(L"%hd", pRun->GetScoring().GetNeedOpenPts()));
 									break;
 								case IO_RUNS_REQ_CLOSING:
-									data += AddPreviewData(
-										iLine,
-										idx,
-										wxString::Format(L"%hd", pRun->GetScoring().GetNeedClosePts()));
+									data.push_back(wxString::Format(L"%hd", pRun->GetScoring().GetNeedClosePts()));
 									break;
 								case IO_RUNS_OPENING:
-									data += AddPreviewData(
-										iLine,
-										idx,
-										wxString::Format(L"%hd", pRun->GetScoring().GetOpenPts()));
+									data.push_back(wxString::Format(L"%hd", pRun->GetScoring().GetOpenPts()));
 									break;
 								case IO_RUNS_CLOSING:
-									data += AddPreviewData(
-										iLine,
-										idx,
-										wxString::Format(L"%hd", pRun->GetScoring().GetClosePts()));
+									data.push_back(wxString::Format(L"%hd", pRun->GetScoring().GetClosePts()));
 									break;
 								case IO_RUNS_REQ_POINTS:
-									data += AddPreviewData(
-										iLine,
-										idx,
-										wxString::Format(L"%hd", pRun->GetScoring().GetNeedOpenPts()));
+									data.push_back(wxString::Format(L"%hd", pRun->GetScoring().GetNeedOpenPts()));
 									break;
 								case IO_RUNS_POINTS:
-									data += AddPreviewData(
-										iLine,
-										idx,
-										wxString::Format(L"%hd", pRun->GetScoring().GetOpenPts()));
+									data.push_back(wxString::Format(L"%hd", pRun->GetScoring().GetOpenPts()));
 									break;
 								case IO_RUNS_PLACE:
 								{
@@ -833,7 +808,7 @@ void CWizardExport::UpdatePreview()
 										fld = L"-";
 									else
 										fld = wxString::Format(L"%hd", place);
-									data += AddPreviewData(iLine, idx, fld);
+									data.push_back(fld);
 								}
 								break;
 								case IO_RUNS_IN_CLASS:
@@ -843,7 +818,7 @@ void CWizardExport::UpdatePreview()
 										fld = L"?";
 									else
 										fld = wxString::Format(L"%hd", inClass);
-									data += AddPreviewData(iLine, idx, fld);
+									data.push_back(fld);
 								}
 								break;
 								case IO_RUNS_DOGSQD:
@@ -853,7 +828,7 @@ void CWizardExport::UpdatePreview()
 										fld = L"?";
 									else
 										fld = wxString::Format(L"%hd", qd);
-									data += AddPreviewData(iLine, idx, fld);
+									data.push_back(fld);
 								}
 								break;
 								case IO_RUNS_Q:
@@ -880,19 +855,16 @@ void CWizardExport::UpdatePreview()
 									}
 									if (fld.empty())
 										fld = pRun->GetQ().str();
-									data += AddPreviewData(iLine, idx, fld);
+									data.push_back(fld);
 									break;
 								case IO_RUNS_SCORE:
 									if (pRun->GetQ().Qualified() || Q::NQ == pRun->GetQ())
 									{
-										data += AddPreviewData(
-											iLine,
-											idx,
-											ARBDouble::ToString(pRun->GetScore(pScoring)));
+										data.push_back(ARBDouble::ToString(pRun->GetScore(pScoring)));
 									}
 									else
 									{
-										data += AddPreviewData(iLine, idx, wxString());
+										data.push_back(wxString());
 									}
 									break;
 								case IO_RUNS_TITLE_POINTS:
@@ -900,11 +872,11 @@ void CWizardExport::UpdatePreview()
 									double pts = 0.0;
 									if (pRun->GetQ().Qualified())
 										pts = pRun->GetTitlePoints(pScoring);
-									data += AddPreviewData(iLine, idx, wxString::Format(L"%g", pts));
+									data.push_back(wxString::Format(L"%g", pts));
 								}
 								break;
 								case IO_RUNS_COMMENTS:
-									data += AddPreviewData(iLine, idx, pRun->GetNote());
+									data.push_back(pRun->GetNote());
 									break;
 								case IO_RUNS_FAULTS:
 								{
@@ -917,23 +889,26 @@ void CWizardExport::UpdatePreview()
 											fld += L"/";
 										fld += *iter;
 									}
-									data += AddPreviewData(iLine, idx, fld);
+									data.push_back(fld);
 								}
 								break;
 								case IO_RUNS_SPEED:
 									if (pScoring->HasSpeedPts() && pRun->GetQ().Qualified())
 										fld << pRun->GetSpeedPoints(pScoring);
-									data += AddPreviewData(iLine, idx, fld);
+									data.push_back(fld);
 									break;
 								case IO_RUNS_SUBNAME:
-									data += AddPreviewData(iLine, idx, pRun->GetSubName());
+									data.push_back(pRun->GetSubName());
 									break;
 								}
 							}
 							if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 								&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
-								m_ctrlPreview->InsertItem(iLine, data);
-							++iLine;
+								m_ctrlPreview->InsertItem(
+									std::make_shared<CWizardExportListData>(
+										GetDelim(),
+										m_ctrlPreview->GetColumnCount(),
+										data));
 						}
 					}
 				}
@@ -948,7 +923,7 @@ void CWizardExport::UpdatePreview()
 			 iterCal != m_pDoc->Book().GetCalendar().end();
 			 ++iterCal)
 		{
-			wxString data;
+			std::vector<wxString> data;
 			ARBCalendarPtr pCal = *iterCal;
 			for (long idx = 0; idx < static_cast<long>(columns[IO_TYPE_CALENDAR].size()); ++idx)
 			{
@@ -956,14 +931,16 @@ void CWizardExport::UpdatePreview()
 				switch (columns[IO_TYPE_CALENDAR][idx])
 				{
 				case IO_CAL_START_DATE:
-					data += AddPreviewData(iLine, idx, pCal->GetStartDate().GetString(format));
+					data.push_back(pCal->GetStartDate().GetString(format));
 					break;
 				case IO_CAL_END_DATE:
-					data += AddPreviewData(iLine, idx, pCal->GetEndDate().GetString(format));
+					data.push_back(pCal->GetEndDate().GetString(format));
 					break;
 				case IO_CAL_TENTATIVE:
 					if (pCal->IsTentative())
-						data += AddPreviewData(iLine, idx, L"?");
+						data.push_back(L"?");
+					else
+						data.push_back(wxString());
 					break;
 				case IO_CAL_ENTERED:
 					switch (pCal->GetEntered())
@@ -971,42 +948,48 @@ void CWizardExport::UpdatePreview()
 					case ARBCalendarEntry::Not:
 						break;
 					case ARBCalendarEntry::Entered:
-						data += AddPreviewData(iLine, idx, Localization()->CalendarEntered());
+						data.push_back(Localization()->CalendarEntered());
 						break;
 					case ARBCalendarEntry::Pending:
-						data += AddPreviewData(iLine, idx, Localization()->CalendarPending());
+						data.push_back(Localization()->CalendarPending());
 						break;
 					case ARBCalendarEntry::Planning:
-						data += AddPreviewData(iLine, idx, Localization()->CalendarPlanning());
+						data.push_back(Localization()->CalendarPlanning());
 						break;
 					}
 					break;
 				case IO_CAL_LOCATION:
-					data += AddPreviewData(iLine, idx, pCal->GetLocation());
+					data.push_back(pCal->GetLocation());
 					break;
 				case IO_CAL_CLUB:
-					data += AddPreviewData(iLine, idx, pCal->GetClub());
+					data.push_back(pCal->GetClub());
 					break;
 				case IO_CAL_VENUE:
-					data += AddPreviewData(iLine, idx, pCal->GetVenue());
+					data.push_back(pCal->GetVenue());
 					break;
 				case IO_CAL_OPENS:
 					date = pCal->GetOpeningDate();
 					if (date.IsValid())
-						data += AddPreviewData(iLine, idx, date.GetString(format));
+						data.push_back(date.GetString(format));
+					else
+						data.push_back(wxString());
 					break;
 				case IO_CAL_CLOSES:
 					date = pCal->GetClosingDate();
 					if (date.IsValid())
-						data += AddPreviewData(iLine, idx, date.GetString(format));
+						data.push_back(date.GetString(format));
+					else
+						data.push_back(wxString());
 					break;
 				case IO_CAL_NOTES:
-					data += AddPreviewData(iLine, idx, pCal->GetNote());
+					data.push_back(pCal->GetNote());
 					break;
 				case IO_CAL_DRAWS:
 					date = pCal->GetDrawDate();
 					if (date.IsValid())
-						data += AddPreviewData(iLine, idx, date.GetString(format));
+						data.push_back(date.GetString(format));
+					else
+						data.push_back(wxString());
 					break;
 				default:
 					break;
@@ -1014,8 +997,8 @@ void CWizardExport::UpdatePreview()
 			}
 			if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 				&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
-				m_ctrlPreview->InsertItem(iLine, data);
-			++iLine;
+				m_ctrlPreview->InsertItem(
+					std::make_shared<CWizardExportListData>(GetDelim(), m_ctrlPreview->GetColumnCount(), data));
 		}
 	}
 	break;
@@ -1038,7 +1021,7 @@ void CWizardExport::UpdatePreview()
 		for (std::vector<ARBCalendarPtr>::const_iterator iterCal = entries->begin(); iterCal != entries->end();
 			 ++iterCal)
 		{
-			wxString data;
+			std::vector<wxString> data;
 			ARBCalendarPtr pCal = *iterCal;
 			for (long idx = 0; idx < static_cast<long>(columns[IO_TYPE_CALENDAR_APPT].size()); ++idx)
 			{
@@ -1046,49 +1029,49 @@ void CWizardExport::UpdatePreview()
 				switch (columns[IO_TYPE_CALENDAR_APPT][idx])
 				{
 				case IO_CAL_APPT_SUBJECT:
-					data += AddPreviewData(iLine, idx, pCal->GetGenericName());
+					data.push_back(pCal->GetGenericName());
 					break;
 				case IO_CAL_APPT_START_DATE:
-					data += AddPreviewData(iLine, idx, pCal->GetStartDate().GetString(format));
+					data.push_back(pCal->GetStartDate().GetString(format));
 					break;
 				case IO_CAL_APPT_START_TIME:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_APPT_END_DATE:
-					data += AddPreviewData(iLine, idx, pCal->GetEndDate().GetString(format));
+					data.push_back(pCal->GetEndDate().GetString(format));
 					break;
 				case IO_CAL_APPT_END_TIME:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_APPT_ALLDAY:
-					data += AddPreviewData(iLine, idx, L"1");
+					data.push_back(L"1");
 					break;
 				case IO_CAL_APPT_REMINDER:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_APPT_REMINDER_DATE:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_APPT_REMINDER_TIME:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_APPT_ORGANIZER:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_APPT_REQ_ATTENDEES:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_APPT_OPT_ATTENDEES:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_APPT_RESOURCES:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_APPT_BILLING:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_APPT_CATEGORIES:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_APPT_DESCRIPTION:
 				{
@@ -1134,26 +1117,26 @@ void CWizardExport::UpdatePreview()
 						tmp += L" ";
 					}
 					tmp += pCal->GetNote();
-					data += AddPreviewData(iLine, idx, tmp);
+					data.push_back(tmp);
 				}
 				break;
 				case IO_CAL_APPT_LOCATION:
-					data += AddPreviewData(iLine, idx, pCal->GetLocation());
+					data.push_back(pCal->GetLocation());
 					break;
 				case IO_CAL_APPT_MILEAGE:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_APPT_PRIORITY:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_APPT_PRIVATE:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_APPT_SENSITIVITY:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_APPT_SHOW_TIME_AS:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				default:
 					break;
@@ -1161,8 +1144,8 @@ void CWizardExport::UpdatePreview()
 			}
 			if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 				&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
-				m_ctrlPreview->InsertItem(iLine, data);
-			++iLine;
+				m_ctrlPreview->InsertItem(
+					std::make_shared<CWizardExportListData>(GetDelim(), m_ctrlPreview->GetColumnCount(), data));
 		}
 	}
 	break;
@@ -1185,7 +1168,7 @@ void CWizardExport::UpdatePreview()
 		for (std::vector<ARBCalendarPtr>::const_iterator iterCal = entries->begin(); iterCal != entries->end();
 			 ++iterCal)
 		{
-			wxString data;
+			std::vector<wxString> data;
 			ARBCalendarPtr pCal = *iterCal;
 			if (ARBCalendarEntry::Planning != pCal->GetEntered())
 				continue;
@@ -1204,49 +1187,49 @@ void CWizardExport::UpdatePreview()
 				switch (columns[IO_TYPE_CALENDAR_TASK][idx])
 				{
 				case IO_CAL_TASK_SUBJECT:
-					data += AddPreviewData(iLine, idx, pCal->GetGenericName());
+					data.push_back(pCal->GetGenericName());
 					break;
 				case IO_CAL_TASK_START_DATE:
-					data += AddPreviewData(iLine, idx, dateStart.GetString(format));
+					data.push_back(dateStart.GetString(format));
 					break;
 				case IO_CAL_TASK_DUE_DATE:
-					data += AddPreviewData(iLine, idx, dateDue.GetString(format));
+					data.push_back(dateDue.GetString(format));
 					break;
 				case IO_CAL_TASK_REMINDER:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_TASK_REMINDER_DATE:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_TASK_REMINDER_TIME:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_TASK_COMPLETED_DATE:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_TASK_COMPLETE:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_TASK_TOTAL_WORK:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_TASK_ACTUAL_WORK:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_TASK_BILLING:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_TASK_CATEGORIES:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_TASK_COMPANIES:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_TASK_CONTACTS:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_TASK_MILEAGE:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_TASK_NOTES:
 				{
@@ -1270,26 +1253,26 @@ void CWizardExport::UpdatePreview()
 						pCal->GetStartDate().GetString(format),
 						pCal->GetEndDate().GetString(format));
 					tmp << L" " << pCal->GetNote();
-					data += AddPreviewData(iLine, idx, tmp);
+					data.push_back(tmp);
 				}
 				break;
 				case IO_CAL_TASK_PRIORITY:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_TASK_PRIVATE:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_TASK_ROLE:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_TASK_SCH_PRIORITY:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_TASK_SENSITIVITY:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				case IO_CAL_TASK_STATUS:
-					data += AddPreviewData(iLine, idx, L"");
+					data.push_back(wxString());
 					break;
 				default:
 					break;
@@ -1297,8 +1280,8 @@ void CWizardExport::UpdatePreview()
 			}
 			if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 				&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
-				m_ctrlPreview->InsertItem(iLine, data);
-			++iLine;
+				m_ctrlPreview->InsertItem(
+					std::make_shared<CWizardExportListData>(GetDelim(), m_ctrlPreview->GetColumnCount(), data));
 		}
 	}
 	break;
@@ -1309,23 +1292,23 @@ void CWizardExport::UpdatePreview()
 			 iterLog != m_pDoc->Book().GetTraining().end();
 			 ++iterLog)
 		{
-			wxString data;
+			std::vector<wxString> data;
 			ARBTrainingPtr pLog = *iterLog;
 			for (long idx = 0; idx < static_cast<long>(columns[IO_TYPE_TRAINING].size()); ++idx)
 			{
 				switch (columns[IO_TYPE_TRAINING][idx])
 				{
 				case IO_LOG_DATE:
-					data += AddPreviewData(iLine, idx, pLog->GetDate().GetString(format));
+					data.push_back(pLog->GetDate().GetString(format));
 					break;
 				case IO_LOG_NAME:
-					data += AddPreviewData(iLine, idx, pLog->GetName());
+					data.push_back(pLog->GetName());
 					break;
 				case IO_LOG_SUBNAME:
-					data += AddPreviewData(iLine, idx, pLog->GetSubName());
+					data.push_back(pLog->GetSubName());
 					break;
 				case IO_LOG_NOTES:
-					data += AddPreviewData(iLine, idx, pLog->GetNote());
+					data.push_back(pLog->GetNote());
 					break;
 				default:
 					break;
@@ -1333,8 +1316,8 @@ void CWizardExport::UpdatePreview()
 			}
 			if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 				&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
-				m_ctrlPreview->InsertItem(iLine, data);
-			++iLine;
+				m_ctrlPreview->InsertItem(
+					std::make_shared<CWizardExportListData>(GetDelim(), m_ctrlPreview->GetColumnCount(), data));
 		}
 	}
 	break;
@@ -1531,7 +1514,9 @@ bool CWizardExport::DoWizardFinish()
 			{
 				for (long iCol = 0; !bFailed && iCol < nColumnCount; ++iCol)
 				{
-					wxString line = GetListColumnText(m_ctrlPreview, i, iCol);
+					// Don't use the winapi to get data. That will trucate long lines.
+					auto data = std::dynamic_pointer_cast<CWizardExportListData, CListData>(m_ctrlPreview->GetData(i));
+					wxString line = data->OnNeedText(iCol);
 					bFailed = !pExporter->InsertData(i, iCol, line);
 					// Calc is started visibly, so steal focus back.
 					if (0 == i && 0 == iCol)
@@ -1573,7 +1558,9 @@ bool CWizardExport::DoWizardFinish()
 			{
 				for (long i = 0; i < m_ctrlPreview->GetItemCount(); ++i)
 				{
-					wxString line = GetListColumnText(m_ctrlPreview, i, 0);
+					// Don't use the winapi to get data. That will trucate long lines.
+					auto data = std::dynamic_pointer_cast<CWizardExportListData, CListData>(m_ctrlPreview->GetData(i));
+					wxString line = data->OnNeedText(0);
 					line += L"\r\n";
 					std::string utf8(line.utf8_string());
 					output.Write(utf8.c_str(), utf8.length());
