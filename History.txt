@@ -1,3 +1,5 @@
+2026-8-4: v4.0.4.<dev>
+
 2026-8-4: v4.0.3.131
 - New features / Enhancements:
   - Updated to wxWidgets 3.3.3
