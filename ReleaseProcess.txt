@@ -29,6 +29,10 @@ Files to change before marking files for release:
 Run Doxygen and fix any warnings/errors it reports.
 - cd ...\AgilityBook
 - doxygen AgilityBook.dox
+[Note: Forget about this. I can't figure out what's broken. It complains about not
+finding functions/etc that are clearly there (and correctly compile). I may just
+rip all doxygen references out in the future. DlgFind.h (for one) just doesn't seem
+to be included, yet other headers in that directory do.]
 
 Commit all changes to GitHub.
 (note: if doing this on official build machine, skip this commit and do it later)
