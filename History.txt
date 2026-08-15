@@ -1,4 +1,6 @@
-2026-8-4: v4.0.4.<dev>
+2026-8-15: v4.0.4.<dev>
+- Bug fixes:
+  - Fix menu/toolbar image scaling on hi-dpi systems.
 
 2026-8-4: v4.0.3.131
 - New features / Enhancements:
