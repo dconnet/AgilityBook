@@ -1,4 +1,6 @@
-2026-8-15: v4.0.4.<dev>
+2026-9-23: v4.1.0.<dev>
+- Notes:
+  - pre Mac-12 support dropped.
 - Bug fixes:
   - Fix menu/toolbar image scaling on hi-dpi systems.
 
