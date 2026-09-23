@@ -357,16 +357,20 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 
 	wxBoxSizer* sizerOpenDays = new wxBoxSizer(wxHORIZONTAL);
 	sizerOpenDays->AddSpacer(padding.CheckboxOffset());
-	sizerOpenDays->Add(m_ctrlOpeningNear, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerOpenDays->Add(textOpen, 0, wxALIGN_CENTER_VERTICAL);
+	sizerOpenDays->Add(
+		m_ctrlOpeningNear,
+		wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerOpenDays->Add(textOpen, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	sizerOpen->Add(sizerOpenDays, 0, wxTOP, padding.Tight());
+	sizerOpen->Add(sizerOpenDays, wxSizerFlags().Border(wxTOP, padding.Tight()));
 
 	sizerCalListItems->Add(sizerOpen);
 
 	wxBoxSizer* sizerOpenColor = new wxBoxSizer(wxHORIZONTAL);
-	sizerOpenColor->Add(m_ctrlOpeningNearColor, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerOpenColor->Add(m_ctrlOpeningNearSet, 0, wxALIGN_CENTER_VERTICAL);
+	sizerOpenColor->Add(
+		m_ctrlOpeningNearColor,
+		wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerOpenColor->Add(m_ctrlOpeningNearSet, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
 	sizerCalListItems->Add(sizerOpenColor);
 
@@ -375,62 +379,70 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 
 	wxBoxSizer* sizerCloseDays = new wxBoxSizer(wxHORIZONTAL);
 	sizerCloseDays->AddSpacer(padding.CheckboxOffset());
-	sizerCloseDays->Add(m_ctrlClosingNear, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerCloseDays->Add(textClose, 0, wxALIGN_CENTER_VERTICAL);
+	sizerCloseDays->Add(
+		m_ctrlClosingNear,
+		wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerCloseDays->Add(textClose, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	sizerClose->Add(sizerCloseDays, 0, wxTOP, padding.Tight());
+	sizerClose->Add(sizerCloseDays, wxSizerFlags().Border(wxTOP, padding.Tight()));
 
 	sizerCalListItems->Add(sizerClose);
 
 	wxBoxSizer* sizerCloseColor = new wxBoxSizer(wxHORIZONTAL);
-	sizerCloseColor->Add(m_ctrlClosingNearColor, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerCloseColor->Add(m_ctrlClosingNearSet, 0, wxALIGN_CENTER_VERTICAL);
+	sizerCloseColor->Add(
+		m_ctrlClosingNearColor,
+		wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerCloseColor->Add(m_ctrlClosingNearSet, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
 	sizerCalListItems->Add(sizerCloseColor);
 
-	sizerCalList->Add(sizerCalListItems, 0, wxALL, padding.Inner());
+	sizerCalList->Add(sizerCalListItems, wxSizerFlags().Border(wxALL, padding.Inner()));
 
-	bSizer->Add(sizerCalList, 0, wxALL, padding.Controls());
+	bSizer->Add(sizerCalList, wxSizerFlags().Border(wxALL, padding.Controls()));
 
 	wxStaticBoxSizer* sizerCalView = new wxStaticBoxSizer(boxCalView, wxHORIZONTAL);
 	wxBoxSizer* sizerCalView2 = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerDOW = new wxBoxSizer(wxHORIZONTAL);
-	sizerDOW->Add(textDOW, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerDOW->Add(m_ctrlDayOfWeek, 0, wxALIGN_CENTER_VERTICAL);
+	sizerDOW->Add(textDOW, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerDOW->Add(m_ctrlDayOfWeek, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	sizerCalView2->Add(sizerDOW, 0, wxBOTTOM, padding.Controls());
-	sizerCalView2->Add(ctrlAutoDel, 0, wxBOTTOM, padding.Controls());
-	sizerCalView2->Add(ctrlHide, 0, wxBOTTOM, padding.TightControls());
+	sizerCalView2->Add(sizerDOW, wxSizerFlags().Border(wxBOTTOM, padding.Controls()));
+	sizerCalView2->Add(ctrlAutoDel, wxSizerFlags().Border(wxBOTTOM, padding.Controls()));
+	sizerCalView2->Add(ctrlHide, wxSizerFlags().Border(wxBOTTOM, padding.TightControls()));
 
 	wxBoxSizer* sizePast = new wxBoxSizer(wxHORIZONTAL);
 	sizePast->AddSpacer(padding.CheckboxOffset());
-	sizePast->Add(textPast1, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizePast->Add(ctrlPast, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizePast->Add(textPast2, 0, wxALIGN_CENTER_VERTICAL);
+	sizePast->Add(textPast1, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizePast->Add(ctrlPast, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizePast->Add(textPast2, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	sizerCalView2->Add(sizePast, 0, wxBOTTOM, padding.Controls());
-	sizerCalView2->Add(ctrlHideEntered, 0, wxBOTTOM, padding.Controls());
-	sizerCalView2->Add(ctrlViewOpen, 0, wxBOTTOM, padding.Controls());
+	sizerCalView2->Add(sizePast, wxSizerFlags().Border(wxBOTTOM, padding.Controls()));
+	sizerCalView2->Add(ctrlHideEntered, wxSizerFlags().Border(wxBOTTOM, padding.Controls()));
+	sizerCalView2->Add(ctrlViewOpen, wxSizerFlags().Border(wxBOTTOM, padding.Controls()));
 	sizerCalView2->Add(ctrlViewClose);
 
-	sizerCalView->Add(sizerCalView2, 0, wxALL, padding.Inner());
+	sizerCalView->Add(sizerCalView2, wxSizerFlags().Border(wxALL, padding.Inner()));
 
 	wxBoxSizer* sizerCalEntries = new wxBoxSizer(wxVERTICAL);
-	sizerCalEntries->Add(textCalEntry, 0, wxBOTTOM, padding.Controls());
+	sizerCalEntries->Add(textCalEntry, wxSizerFlags().Border(wxBOTTOM, padding.Controls()));
 
 	wxBoxSizer* sizerEntryColor = new wxBoxSizer(wxHORIZONTAL);
-	sizerEntryColor->Add(m_ctrlCalEntries, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerEntryColor->Add(m_ctrlColor, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerEntryColor->Add(btnColor, 0, wxALIGN_CENTER_VERTICAL);
+	sizerEntryColor->Add(
+		m_ctrlCalEntries,
+		wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerEntryColor->Add(
+		m_ctrlColor,
+		wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerEntryColor->Add(btnColor, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	sizerCalEntries->Add(sizerEntryColor, 0, wxBOTTOM, padding.TightControls());
-	sizerCalEntries->Add(m_ctrlCalView, 1, wxEXPAND | wxBOTTOM, padding.Controls());
-	sizerCalEntries->Add(ctrlFont, 0, wxALIGN_CENTER_HORIZONTAL);
+	sizerCalEntries->Add(sizerEntryColor, wxSizerFlags().Border(wxBOTTOM, padding.TightControls()));
+	sizerCalEntries->Add(m_ctrlCalView, wxSizerFlags(1).Expand().Border(wxBOTTOM, padding.Controls()));
+	sizerCalEntries->Add(ctrlFont, wxSizerFlags().Align(wxALIGN_CENTER_HORIZONTAL));
 
-	sizerCalView->Add(sizerCalEntries, 0, wxALL, padding.Inner());
+	sizerCalView->Add(sizerCalEntries, wxSizerFlags().Border(wxALL, padding.Inner()));
 
-	bSizer->Add(sizerCalView, 0, wxALL, padding.Controls());
+	bSizer->Add(sizerCalView, wxSizerFlags().Border(wxALL, padding.Controls()));
 
 	SetSizer(bSizer);
 	Layout();

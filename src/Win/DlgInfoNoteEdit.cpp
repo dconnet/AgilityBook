@@ -94,12 +94,12 @@ CDlgInfoNoteEdit::CDlgInfoNoteEdit(
 	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(ctrlName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	bSizer->Add(ctrlVisible, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	bSizer->Add(m_ctrlNotes, 1, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(ctrlName, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	bSizer->Add(ctrlVisible, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	bSizer->Add(m_ctrlNotes, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgInfoNoteEdit::OnOk, this, wxID_OK);
 

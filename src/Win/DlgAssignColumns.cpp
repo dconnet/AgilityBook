@@ -1013,42 +1013,42 @@ CDlgAssignColumns::CDlgAssignColumns(
 	bSizer->Add(textNames, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerSettings = new wxBoxSizer(wxHORIZONTAL);
-	sizerSettings->Add(m_ctrlConfig, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerSettings->Add(btnSave, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerSettings->Add(btnDelete, 0, wxALIGN_CENTER_VERTICAL);
+	sizerSettings->Add(m_ctrlConfig, wxSizerFlags(1).Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerSettings->Add(btnSave, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerSettings->Add(btnDelete, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	bSizer->Add(sizerSettings, 0, wxEXPAND | wxLEFT | wxRIGHT, padding.Controls());
-	bSizer->Add(m_ctrlType, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizerSettings, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT, padding.Controls()));
+	bSizer->Add(m_ctrlType, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerFields = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizerAvail = new wxBoxSizer(wxVERTICAL);
 	sizerAvail->Add(textAvail);
-	sizerAvail->Add(m_ctrlAvailable, 1, wxEXPAND);
+	sizerAvail->Add(m_ctrlAvailable, wxSizerFlags(1).Expand());
 
-	sizerFields->Add(sizerAvail, 1, wxEXPAND);
+	sizerFields->Add(sizerAvail, wxSizerFlags(1).Expand());
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
 	sizerBtns->Add(textSpacer);
-	sizerBtns->Add(m_btnAdd, 0, wxEXPAND | wxBOTTOM, padding.TightControls());
-	sizerBtns->Add(m_btnRemove, 0, wxEXPAND | wxBOTTOM, padding.TightControls());
-	sizerBtns->Add(m_btnUp, 0, wxEXPAND | wxBOTTOM, padding.TightControls());
-	sizerBtns->Add(m_btnDown, 0, wxEXPAND);
+	sizerBtns->Add(m_btnAdd, wxSizerFlags().Expand().Border(wxBOTTOM, padding.TightControls()));
+	sizerBtns->Add(m_btnRemove, wxSizerFlags().Expand().Border(wxBOTTOM, padding.TightControls()));
+	sizerBtns->Add(m_btnUp, wxSizerFlags().Expand().Border(wxBOTTOM, padding.TightControls()));
+	sizerBtns->Add(m_btnDown, wxSizerFlags().Expand());
 	sizerBtns->AddStretchSpacer();
-	sizerBtns->Add(btnReset, 0, wxEXPAND);
+	sizerBtns->Add(btnReset, wxSizerFlags().Expand());
 
-	sizerFields->Add(sizerBtns, 0, wxEXPAND | wxLEFT | wxRIGHT, padding.Controls());
+	sizerFields->Add(sizerBtns, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT, padding.Controls()));
 
 	wxBoxSizer* sizerOrder = new wxBoxSizer(wxVERTICAL);
 	sizerOrder->Add(textOrder);
-	sizerOrder->Add(m_ctrlColumns, 1, wxEXPAND);
+	sizerOrder->Add(m_ctrlColumns, wxSizerFlags(1).Expand());
 
-	sizerFields->Add(sizerOrder, 1, wxEXPAND);
+	sizerFields->Add(sizerOrder, wxSizerFlags(1).Expand());
 
-	bSizer->Add(sizerFields, 1, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizerFields, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgAssignColumns::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);

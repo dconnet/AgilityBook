@@ -198,26 +198,26 @@ CDlgConfigure::CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book, 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerConfig = new wxBoxSizer(wxHORIZONTAL);
-	sizerConfig->Add(m_ctrlItems, 1, wxEXPAND | wxRIGHT, padding.Controls());
+	sizerConfig->Add(m_ctrlItems, wxSizerFlags(1).Expand().Border(wxRIGHT, padding.Controls()));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
-	sizerBtns->Add(m_ctrlNew, 0, wxEXPAND | wxBOTTOM, padding.Inner());
-	sizerBtns->Add(m_ctrlEdit, 0, wxEXPAND | wxBOTTOM, padding.Inner());
-	sizerBtns->Add(m_ctrlDelete, 0, wxEXPAND | wxBOTTOM, padding.Inner());
-	sizerBtns->Add(m_ctrlCopy, 0, wxEXPAND);
+	sizerBtns->Add(m_ctrlNew, wxSizerFlags().Expand().Border(wxBOTTOM, padding.Inner()));
+	sizerBtns->Add(m_ctrlEdit, wxSizerFlags().Expand().Border(wxBOTTOM, padding.Inner()));
+	sizerBtns->Add(m_ctrlDelete, wxSizerFlags().Expand().Border(wxBOTTOM, padding.Inner()));
+	sizerBtns->Add(m_ctrlCopy, wxSizerFlags().Expand());
 
-	sizerConfig->Add(sizerBtns, 0, wxEXPAND);
+	sizerConfig->Add(sizerBtns, wxSizerFlags().Expand());
 
-	bSizer->Add(sizerConfig, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizerConfig, wxSizerFlags(1).Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerUpdate = new wxBoxSizer(wxHORIZONTAL);
-	sizerUpdate->Add(m_textLongName, 1, wxALIGN_CENTER_VERTICAL);
-	sizerUpdate->Add(btnUpdate, 0, wxALIGN_CENTER_VERTICAL);
+	sizerUpdate->Add(m_textLongName, wxSizerFlags(1).Align(wxALIGN_CENTER_VERTICAL));
+	sizerUpdate->Add(btnUpdate, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	bSizer->Add(sizerUpdate, 0, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizerUpdate, wxSizerFlags().Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigure::OnOk, this, wxID_OK);
 
 	wxTreeItemId root = m_ctrlItems->AddRoot(L"Root");

@@ -528,14 +528,14 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, wxString c
 	sizerButtons->Add(sizerUse, 0, wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerControls = new wxBoxSizer(wxHORIZONTAL);
-	sizerControls->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, padding.Controls());
+	sizerControls->Add(m_ctrlList, wxSizerFlags(1).Expand().Border(wxRIGHT, padding.Controls()));
 	sizerControls->Add(sizerButtons);
 
-	bSizer->Add(sizerControls, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	bSizer->Add(m_textCount, 0, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizerControls, wxSizerFlags(1).Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	bSizer->Add(m_textCount, wxSizerFlags().Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgInfoNote::OnOk, this, wxID_OK);
 

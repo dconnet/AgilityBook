@@ -123,25 +123,25 @@ CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizer1 = new wxBoxSizer(wxHORIZONTAL);
-	sizer1->Add(text1, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizer1->Add(m_ctrlPrimary, 1, wxEXPAND);
+	sizer1->Add(text1, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizer1->Add(m_ctrlPrimary, wxSizerFlags(1).Expand());
 
-	bSizer->Add(sizer1, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizer1, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
-	sizer2->Add(text2, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizer2->Add(m_ctrlSecondary, 1, wxEXPAND);
+	sizer2->Add(text2, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizer2->Add(m_ctrlSecondary, wxSizerFlags(1).Expand());
 
-	bSizer->Add(sizer2, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizer2, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizer3 = new wxBoxSizer(wxHORIZONTAL);
-	sizer3->Add(text3, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizer3->Add(m_ctrlTertiary, 1, wxEXPAND);
+	sizer3->Add(text3, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizer3->Add(m_ctrlTertiary, wxSizerFlags(1).Expand());
 
-	bSizer->Add(sizer3, 1, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizer3, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 	m_ctrlOk = wxDynamicCast(FindWindowInSizer(bSizer, wxID_OK), wxButton);
 	assert(!!m_ctrlOk);
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgPointsViewSort::OnOk, this, wxID_OK);

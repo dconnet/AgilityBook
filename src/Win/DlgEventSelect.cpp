@@ -163,25 +163,25 @@ CDlgEventSelect::CDlgEventSelect(
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerDiv = new wxBoxSizer(wxHORIZONTAL);
-	sizerDiv->Add(textDiv, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerDiv->Add(m_ctrlDivisions, 1, wxEXPAND);
+	sizerDiv->Add(textDiv, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerDiv->Add(m_ctrlDivisions, wxSizerFlags(1).Expand());
 
-	bSizer->Add(sizerDiv, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizerDiv, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerLevel = new wxBoxSizer(wxHORIZONTAL);
-	sizerLevel->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerLevel->Add(m_ctrlLevels, 1, wxEXPAND);
+	sizerLevel->Add(textLevel, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerLevel->Add(m_ctrlLevels, wxSizerFlags(1).Expand());
 
-	bSizer->Add(sizerLevel, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizerLevel, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerEvent = new wxBoxSizer(wxHORIZONTAL);
-	sizerEvent->Add(textEvent, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerEvent->Add(m_ctrlEvents, 1, wxEXPAND);
+	sizerEvent->Add(textEvent, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerEvent->Add(m_ctrlEvents, wxSizerFlags(1).Expand());
 
-	bSizer->Add(sizerEvent, 1, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizerEvent, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 	m_ctrlOk = wxDynamicCast(FindWindowInSizer(bSizer, wxID_OK), wxButton);
 	assert(!!m_ctrlOk);
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgEventSelect::OnOk, this, wxID_OK);

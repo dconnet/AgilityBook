@@ -278,7 +278,7 @@ void CTabView::RecreateBook(wxDocument* doc, long inFlags, bool bOnCreate)
 		pages[sel]->ActivateView();
 	}
 
-	m_sizerFrame->Add(m_ctrlBook, 1, wxEXPAND | wxALL, 0);
+	m_sizerFrame->Add(m_ctrlBook, wxSizerFlags(1).Expand());
 	m_sizerFrame->Layout();
 }
 

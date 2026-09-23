@@ -136,16 +136,16 @@ CDlgRunPanelLinks::CDlgRunPanelLinks(
 	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* sizerLinks = new wxBoxSizer(wxVERTICAL);
-	sizerLinks->Add(m_ctrlLinks, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	sizerLinks->Add(m_ctrlLinks, wxSizerFlags(1).Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerLinkBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerLinkBtns->Add(btnLinkNew, 0, wxRIGHT, padding.Inner());
-	sizerLinkBtns->Add(m_ctrlLinkEdit, 0, wxRIGHT, padding.Inner());
-	sizerLinkBtns->Add(m_ctrlLinkDelete, 0, wxRIGHT, padding.Inner());
-	sizerLinkBtns->Add(0, 0, 1, wxEXPAND, 0);
-	sizerLinkBtns->Add(m_ctrlLinkOpen, 0, 0, 0);
+	sizerLinkBtns->Add(btnLinkNew, wxSizerFlags().Border(wxRIGHT, padding.Inner()));
+	sizerLinkBtns->Add(m_ctrlLinkEdit, wxSizerFlags().Border(wxRIGHT, padding.Inner()));
+	sizerLinkBtns->Add(m_ctrlLinkDelete, wxSizerFlags().Border(wxRIGHT, padding.Inner()));
+	sizerLinkBtns->Add(0, 0, wxSizerFlags(1).Expand());
+	sizerLinkBtns->Add(m_ctrlLinkOpen, wxSizerFlags());
 
-	sizerLinks->Add(sizerLinkBtns, 0, wxEXPAND | wxALL, padding.Controls());
+	sizerLinks->Add(sizerLinkBtns, wxSizerFlags().Expand().Border(wxALL, padding.Controls()));
 
 	SetSizer(sizerLinks);
 	Layout();

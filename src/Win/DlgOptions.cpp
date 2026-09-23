@@ -70,10 +70,10 @@ CDlgOptions::CDlgOptions(CAgilityBookDoc* pDoc, wxWindow* pParent, size_t iSelec
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
-	bSizer->Add(notebook, 1, wxEXPAND | wxALL, padding.ButtonSizer());
+	bSizer->Add(notebook, wxSizerFlags(1).Expand().Border(wxALL, padding.ButtonSizer()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgOptions::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);

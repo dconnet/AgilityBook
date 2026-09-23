@@ -148,27 +148,27 @@ CDlgRegNum::CDlgRegNum(
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
-	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
+	sizerVenue->Add(textVenue, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
 	sizerVenue->Add(m_ctrlVenues);
 
-	bSizer->Add(sizerVenue, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizerVenue, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerRegNum = new wxBoxSizer(wxHORIZONTAL);
-	sizerRegNum->Add(textRegNum, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
+	sizerRegNum->Add(textRegNum, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
 	sizerRegNum->Add(ctrlRegNum);
 
-	bSizer->Add(sizerRegNum, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizerRegNum, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerHeight = new wxBoxSizer(wxHORIZONTAL);
-	sizerHeight->Add(textHeight, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
+	sizerHeight->Add(textHeight, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
 	sizerHeight->Add(ctrlHeight);
 
-	bSizer->Add(sizerHeight, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	bSizer->Add(checkReceived, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	bSizer->Add(ctrlDesc, 1, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizerHeight, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	bSizer->Add(checkReceived, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	bSizer->Add(ctrlDesc, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgRegNum::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);

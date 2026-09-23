@@ -122,20 +122,22 @@ CDlgOtherPoint::CDlgOtherPoint(ARBConfig& config, ARBDogRunOtherPointsPtr const&
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerItems = new wxBoxSizer(wxHORIZONTAL);
-	sizerItems->Add(m_ctrlOtherPoints, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerItems->Add(ctrlNew, 0, wxALIGN_CENTER_VERTICAL);
+	sizerItems->Add(
+		m_ctrlOtherPoints,
+		wxSizerFlags(1).Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerItems->Add(ctrlNew, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	bSizer->Add(sizerItems, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	bSizer->Add(m_ctrlDesc, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizerItems, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	bSizer->Add(m_ctrlDesc, wxSizerFlags(1).Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerPoints = new wxBoxSizer(wxHORIZONTAL);
-	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerPoints->Add(ctrlPoints, 0, wxALIGN_CENTER_VERTICAL);
+	sizerPoints->Add(textPoints, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerPoints->Add(ctrlPoints, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	bSizer->Add(sizerPoints, 0, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizerPoints, wxSizerFlags().Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgOtherPoint::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);

@@ -1487,14 +1487,14 @@ bool CDlgListViewer::Create(wxString const& inCaption, wxWindow* pParent)
 	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(m_ctrlList, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(m_ctrlList, wxSizerFlags(1).Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxHORIZONTAL);
 	sizerBtns->AddStretchSpacer();
-	sizerBtns->Add(m_ctrlCopy, 0, wxRIGHT, padding.Controls());
+	sizerBtns->Add(m_ctrlCopy, wxSizerFlags().Border(wxRIGHT, padding.Controls()));
 	sizerBtns->Add(btnClose);
 
-	bSizer->Add(sizerBtns, 0, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizerBtns, wxSizerFlags().Expand().Border(wxALL, padding.Controls()));
 
 	SetSizer(bSizer);
 	Layout();

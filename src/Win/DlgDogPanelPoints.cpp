@@ -263,9 +263,9 @@ CDlgDogPanelPoints::CDlgDogPanelPoints(CAgilityBookDoc* pDoc, ARBDogPtr const& i
 	// Sizers
 	const ARBWin::CDlgPadding padding(this);
 
-	m_sizerButtons->Add(0, 0, 1, wxEXPAND, 0);
-	m_sizerButtons->Add(textPts, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	m_sizerButtons->Add(m_ctrlSelectedPts, 0, wxALIGN_CENTER_VERTICAL, padding.Controls());
+	m_sizerButtons->Add(0, 0, wxSizerFlags(1).Expand());
+	m_sizerButtons->Add(textPts, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	m_sizerButtons->Add(m_ctrlSelectedPts, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
 	Layout();
 	GetSizer()->Fit(this);

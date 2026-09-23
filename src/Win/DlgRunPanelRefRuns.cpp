@@ -274,14 +274,14 @@ CDlgRunPanelRefRuns::CDlgRunPanelRefRuns(
 	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* sizerRefRuns = new wxBoxSizer(wxVERTICAL);
-	sizerRefRuns->Add(m_ctrlRefRuns, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	sizerRefRuns->Add(m_ctrlRefRuns, wxSizerFlags(1).Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerRefBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerRefBtns->Add(btnRefNew, 0, wxRIGHT, padding.Inner());
-	sizerRefBtns->Add(m_ctrlRefAddMe, 0, wxRIGHT, padding.Inner());
-	sizerRefBtns->Add(m_ctrlRefEdit, 0, wxRIGHT, padding.Inner());
-	sizerRefBtns->Add(m_ctrlRefDelete, 0, wxRIGHT, padding.Inner());
-	sizerRefRuns->Add(sizerRefBtns, 0, wxEXPAND | wxALL, padding.Controls());
+	sizerRefBtns->Add(btnRefNew, wxSizerFlags().Border(wxRIGHT, padding.Inner()));
+	sizerRefBtns->Add(m_ctrlRefAddMe, wxSizerFlags().Border(wxRIGHT, padding.Inner()));
+	sizerRefBtns->Add(m_ctrlRefEdit, wxSizerFlags().Border(wxRIGHT, padding.Inner()));
+	sizerRefBtns->Add(m_ctrlRefDelete, wxSizerFlags().Border(wxRIGHT, padding.Inner()));
+	sizerRefRuns->Add(sizerRefBtns, wxSizerFlags().Expand().Border(wxALL, padding.Controls()));
 
 	SetSizer(sizerRefRuns);
 	Layout();

@@ -205,37 +205,37 @@ CDlgTitle::CDlgTitle(ARBConfig const& config, ARBDogTitleList& titles, ARBDogTit
 	wxBoxSizer* sizerDateVenue = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerDate = new wxBoxSizer(wxHORIZONTAL);
-	sizerDate->Add(checkEarned, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerDate->Add(m_ctrlDate, 0, wxALIGN_CENTER_VERTICAL);
+	sizerDate->Add(checkEarned, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerDate->Add(m_ctrlDate, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	sizerDateVenue->Add(sizerDate, 0, wxEXPAND);
+	sizerDateVenue->Add(sizerDate, wxSizerFlags().Expand());
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
-	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerVenue->Add(m_ctrlVenues, 0, wxALIGN_CENTER_VERTICAL);
+	sizerVenue->Add(textVenue, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerVenue->Add(m_ctrlVenues, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	sizerDateVenue->Add(sizerVenue, 0, wxEXPAND | wxTOP, padding.Controls());
+	sizerDateVenue->Add(sizerVenue, wxSizerFlags().Expand().Border(wxTOP, padding.Controls()));
 
-	sizerTop2Rows->Add(sizerDateVenue, 0, wxEXPAND | wxRIGHT, padding.Controls());
+	sizerTop2Rows->Add(sizerDateVenue, wxSizerFlags().Expand().Border(wxRIGHT, padding.Controls()));
 
 	wxBoxSizer* sizerChecks = new wxBoxSizer(wxVERTICAL);
-	sizerChecks->Add(m_ctrlHide, 0, wxBOTTOM, padding.Controls());
+	sizerChecks->Add(m_ctrlHide, wxSizerFlags().Border(wxBOTTOM, padding.Controls()));
 	sizerChecks->Add(m_ctrlReceived);
 
-	sizerTop2Rows->Add(sizerChecks, 0, wxEXPAND);
+	sizerTop2Rows->Add(sizerChecks, wxSizerFlags().Expand());
 
-	bSizer->Add(sizerTop2Rows, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizerTop2Rows, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerTitle = new wxBoxSizer(wxHORIZONTAL);
-	sizerTitle->Add(textTitle, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerTitle->Add(m_ctrlTitles, 1, wxALIGN_CENTER_VERTICAL);
+	sizerTitle->Add(textTitle, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerTitle->Add(m_ctrlTitles, wxSizerFlags(1).Align(wxALIGN_CENTER_VERTICAL));
 
-	bSizer->Add(sizerTitle, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizerTitle, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
-	bSizer->Add(m_ctrlDesc, 1, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(m_ctrlDesc, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgTitle::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);

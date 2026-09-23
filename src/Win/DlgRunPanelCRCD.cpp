@@ -393,23 +393,23 @@ CDlgRunPanelCRCD::CDlgRunPanelCRCD(
 	wxBoxSizer* sizerCRCD = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizerDisplay = new wxBoxSizer(wxVERTICAL);
-	sizerDisplay->Add(textCRCD, 0, wxEXPAND, 0);
-	sizerDisplay->Add(m_CRCDDisplay, 1, wxEXPAND | wxTOP, padding.Controls());
+	sizerDisplay->Add(textCRCD, wxSizerFlags().Expand());
+	sizerDisplay->Add(m_CRCDDisplay, wxSizerFlags(1).Expand().Border(wxTOP, padding.Controls()));
 
-	sizerCRCD->Add(sizerDisplay, 1, wxEXPAND | wxALL, padding.Controls());
+	sizerCRCD->Add(sizerDisplay, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	wxBoxSizer* sizerBtnsCRCD = new wxBoxSizer(wxVERTICAL);
 	if (m_ctrlCourse)
-		sizerBtnsCRCD->Add(m_ctrlCourse, 0, wxBOTTOM, padding.Inner());
+		sizerBtnsCRCD->Add(m_ctrlCourse, wxSizerFlags().Border(wxBOTTOM, padding.Inner()));
 	if (m_ctrlCRCDView)
-		sizerBtnsCRCD->Add(m_ctrlCRCDView, 0, wxBOTTOM, padding.Inner());
-	sizerBtnsCRCD->Add(m_ctrlCRCDCopy, 0, wxBOTTOM, padding.Inner());
+		sizerBtnsCRCD->Add(m_ctrlCRCDView, wxSizerFlags().Border(wxBOTTOM, padding.Inner()));
+	sizerBtnsCRCD->Add(m_ctrlCRCDCopy, wxSizerFlags().Border(wxBOTTOM, padding.Inner()));
 	if (m_ctrlIncImage)
-		sizerBtnsCRCD->Add(m_ctrlIncImage, 0, wxBOTTOM, padding.Inner());
+		sizerBtnsCRCD->Add(m_ctrlIncImage, wxSizerFlags().Border(wxBOTTOM, padding.Inner()));
 	if (textImageDesc)
-		sizerBtnsCRCD->Add(textImageDesc, 0, wxBOTTOM, padding.Inner());
+		sizerBtnsCRCD->Add(textImageDesc, wxSizerFlags().Border(wxBOTTOM, padding.Inner()));
 
-	sizerCRCD->Add(sizerBtnsCRCD, 0, wxEXPAND | wxRIGHT | wxTOP | wxBOTTOM, padding.Controls());
+	sizerCRCD->Add(sizerBtnsCRCD, wxSizerFlags().Expand().Border(wxRIGHT | wxTOP | wxBOTTOM, padding.Controls()));
 
 	SetSizer(sizerCRCD);
 	Layout();

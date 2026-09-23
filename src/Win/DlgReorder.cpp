@@ -168,20 +168,20 @@ void CDlgReorder::InitDlg(wxWindow* pParent)
 
 	wxBoxSizer* bSizerList = new wxBoxSizer(wxHORIZONTAL);
 	if (m_ctrlList)
-		bSizerList->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, padding.Controls());
+		bSizerList->Add(m_ctrlList, wxSizerFlags(1).Expand().Border(wxRIGHT, padding.Controls()));
 	else if (m_ctrlTree)
-		bSizerList->Add(m_ctrlTree, 1, wxEXPAND | wxRIGHT, padding.Controls());
+		bSizerList->Add(m_ctrlTree, wxSizerFlags(1).Expand().Border(wxRIGHT, padding.Controls()));
 
 	wxBoxSizer* bSizerSide = new wxBoxSizer(wxVERTICAL);
-	bSizerSide->Add(btnOk, 0, wxEXPAND | wxBOTTOM, padding.Inner());
-	bSizerSide->Add(btnCancel, 0, wxEXPAND);
+	bSizerSide->Add(btnOk, wxSizerFlags().Expand().Border(wxBOTTOM, padding.Inner()));
+	bSizerSide->Add(btnCancel, wxSizerFlags().Expand());
 	bSizerSide->AddStretchSpacer();
-	bSizerSide->Add(m_ctrlUp, 0, wxEXPAND | wxBOTTOM, padding.Inner());
-	bSizerSide->Add(m_ctrlDown, 0, wxEXPAND);
+	bSizerSide->Add(m_ctrlUp, wxSizerFlags().Expand().Border(wxBOTTOM, padding.Inner()));
+	bSizerSide->Add(m_ctrlDown, wxSizerFlags().Expand());
 
-	bSizerList->Add(bSizerSide, 0, wxEXPAND);
+	bSizerList->Add(bSizerSide, wxSizerFlags().Expand());
 
-	bSizer->Add(bSizerList, 1, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(bSizerList, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	if (m_Dogs && m_ctrlList)
 	{

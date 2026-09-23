@@ -79,9 +79,9 @@ CDlgFault::CDlgFault(std::set<wxString>& inFaults, wxString const& fault, wxWind
 	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(comboBox, 1, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(comboBox, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 
 	SetSizer(bSizer);
 	Layout();

@@ -268,8 +268,8 @@ CDlgDogPanelTitles::CDlgDogPanelTitles(CAgilityBookDoc* pDoc, ARBDogPtr const& i
 
 	// Sizers
 
-	m_sizerButtons->Add(0, 0, 1, wxEXPAND, 0);
-	m_sizerButtons->Add(ctrlHidden, 0, wxALIGN_CENTER_VERTICAL, 0);
+	m_sizerButtons->Add(0, 0, wxSizerFlags(1).Expand());
+	m_sizerButtons->Add(ctrlHidden, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
 	Layout();
 	GetSizer()->Fit(this);

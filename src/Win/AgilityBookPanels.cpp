@@ -174,7 +174,7 @@ CAgilityBookPanelRuns::CAgilityBookPanelRuns(
 	m_splitter->SplitVertically(panel1, panel2);
 
 	wxBoxSizer* sizerPanel = new wxBoxSizer(wxVERTICAL);
-	sizerPanel->Add(m_splitter, 1, wxEXPAND, 0);
+	sizerPanel->Add(m_splitter, wxSizerFlags(1).Expand());
 	SetSizer(sizerPanel);
 }
 
@@ -276,7 +276,7 @@ CAgilityBookPanelCalendar::CAgilityBookPanelCalendar(
 	m_splitter->SplitVertically(panel1, panel2);
 
 	wxBoxSizer* sizerPanel = new wxBoxSizer(wxVERTICAL);
-	sizerPanel->Add(m_splitter, 1, wxEXPAND, 0);
+	sizerPanel->Add(m_splitter, wxSizerFlags(1).Expand());
 	SetSizer(sizerPanel);
 }
 

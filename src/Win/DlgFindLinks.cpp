@@ -245,19 +245,19 @@ CDlgFindLinks::CDlgFindLinks(ARBDogList& inDogs, wxWindow* pParent)
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* bSizerList = new wxBoxSizer(wxHORIZONTAL);
-	bSizerList->Add(m_ctrlLinks, 1, wxEXPAND | wxRIGHT, padding.Controls());
+	bSizerList->Add(m_ctrlLinks, wxSizerFlags(1).Expand().Border(wxRIGHT, padding.Controls()));
 
 	wxBoxSizer* bSizerSide = new wxBoxSizer(wxVERTICAL);
-	bSizerSide->Add(btnOk, 0, wxEXPAND | wxBOTTOM, padding.Inner());
-	bSizerSide->Add(btnCancel, 0, wxEXPAND);
+	bSizerSide->Add(btnOk, wxSizerFlags().Expand().Border(wxBOTTOM, padding.Inner()));
+	bSizerSide->Add(btnCancel, wxSizerFlags().Expand());
 	bSizerSide->AddStretchSpacer();
-	bSizerSide->Add(btnCopy, 0, wxEXPAND | wxBOTTOM, padding.Inner());
-	bSizerSide->Add(m_ctrlEdit, 0, wxEXPAND | wxBOTTOM, padding.Inner());
-	bSizerSide->Add(m_ctrlOpen, 0, wxEXPAND);
+	bSizerSide->Add(btnCopy, wxSizerFlags().Expand().Border(wxBOTTOM, padding.Inner()));
+	bSizerSide->Add(m_ctrlEdit, wxSizerFlags().Expand().Border(wxBOTTOM, padding.Inner()));
+	bSizerSide->Add(m_ctrlOpen, wxSizerFlags().Expand());
 
-	bSizerList->Add(bSizerSide, 0, wxEXPAND);
+	bSizerList->Add(bSizerSide, wxSizerFlags().Expand());
 
-	bSizer->Add(bSizerList, 1, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(bSizerList, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	SetSizer(bSizer);
 	Layout();

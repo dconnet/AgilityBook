@@ -130,25 +130,25 @@ CDlgPartner::CDlgPartner(
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizer1 = new wxBoxSizer(wxHORIZONTAL);
-	sizer1->Add(textHandler, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizer1->Add(ctrlHandler, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND);
+	sizer1->Add(textHandler, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizer1->Add(ctrlHandler, wxSizerFlags(1).Expand().Align(wxALIGN_CENTER_VERTICAL));
 
-	bSizer->Add(sizer1, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizer1, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
-	sizer2->Add(textDog, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizer2->Add(ctrlDog, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND);
+	sizer2->Add(textDog, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizer2->Add(ctrlDog, wxSizerFlags(1).Expand().Align(wxALIGN_CENTER_VERTICAL));
 
-	bSizer->Add(sizer2, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizer2, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizer3 = new wxBoxSizer(wxHORIZONTAL);
-	sizer3->Add(textNumber, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizer3->Add(ctrlNumber, 1, wxALIGN_CENTER_VERTICAL | wxEXPAND);
+	sizer3->Add(textNumber, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizer3->Add(ctrlNumber, wxSizerFlags(1).Expand().Align(wxALIGN_CENTER_VERTICAL));
 
-	bSizer->Add(sizer3, 1, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizer3, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgPartner::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);

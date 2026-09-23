@@ -312,32 +312,32 @@ CDlgTrial::CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrialPtr const& inTrial, wxWin
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerDate = new wxBoxSizer(wxHORIZONTAL);
-	sizerDate->Add(textStart, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
+	sizerDate->Add(textStart, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
 	sizerDate->Add(m_ctrlStart);
 
 	wxBoxSizer* sizerLocation = new wxBoxSizer(wxHORIZONTAL);
-	sizerLocation->Add(textLocation, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerLocation->Add(m_ctrlLocation, 1, wxEXPAND);
+	sizerLocation->Add(textLocation, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerLocation->Add(m_ctrlLocation, wxSizerFlags(1).Expand());
 
 	wxBoxSizer* sizerLocationNotes = new wxBoxSizer(wxHORIZONTAL);
-	sizerLocationNotes->Add(m_ctrlLocationNotes, 0, wxALIGN_BOTTOM | wxRIGHT, padding.Inner());
-	sizerLocationNotes->Add(noteLocationNotes, 0, wxALIGN_BOTTOM);
+	sizerLocationNotes->Add(m_ctrlLocationNotes, wxSizerFlags().Align(wxALIGN_BOTTOM).Border(wxRIGHT, padding.Inner()));
+	sizerLocationNotes->Add(noteLocationNotes, wxSizerFlags().Align(wxALIGN_BOTTOM));
 
 	wxBoxSizer* sizerNote = new wxBoxSizer(wxHORIZONTAL);
-	sizerNote->Add(textNotes, 0, wxALIGN_TOP | wxRIGHT, padding.Inner());
-	sizerNote->Add(ctrlTrialNotes, 1, wxEXPAND);
+	sizerNote->Add(textNotes, wxSizerFlags().Align(wxALIGN_TOP).Border(wxRIGHT, padding.Inner()));
+	sizerNote->Add(ctrlTrialNotes, wxSizerFlags(1).Expand());
 
 	wxBoxSizer* sizerClubBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerClubBtns->Add(textClub, 0, wxALIGN_BOTTOM);
+	sizerClubBtns->Add(textClub, wxSizerFlags().Align(wxALIGN_BOTTOM));
 	sizerClubBtns->AddStretchSpacer();
-	sizerClubBtns->Add(btnNew, 0, wxRIGHT, padding.Inner());
-	sizerClubBtns->Add(m_ctrlEdit, 0, wxRIGHT, padding.Inner());
-	sizerClubBtns->Add(m_ctrlDelete, 0, wxRIGHT, padding.Inner());
-	sizerClubBtns->Add(m_ctrlUp, 0, wxRIGHT, padding.Inner());
+	sizerClubBtns->Add(btnNew, wxSizerFlags().Border(wxRIGHT, padding.Inner()));
+	sizerClubBtns->Add(m_ctrlEdit, wxSizerFlags().Border(wxRIGHT, padding.Inner()));
+	sizerClubBtns->Add(m_ctrlDelete, wxSizerFlags().Border(wxRIGHT, padding.Inner()));
+	sizerClubBtns->Add(m_ctrlUp, wxSizerFlags().Border(wxRIGHT, padding.Inner()));
 	sizerClubBtns->Add(m_ctrlDn);
 
 	wxBoxSizer* sizerClubNotes = new wxBoxSizer(wxHORIZONTAL);
-	sizerClubNotes->Add(m_ctrlClubNotes, 0, wxALIGN_BOTTOM | wxRIGHT, padding.Inner());
+	sizerClubNotes->Add(m_ctrlClubNotes, wxSizerFlags().Align(wxALIGN_BOTTOM).Border(wxRIGHT, padding.Inner()));
 	sizerClubNotes->Add(textClubNotes);
 
 	wxFlexGridSizer* sizerGrid = new wxFlexGridSizer(5, 2, 0, padding.Controls()); // rows/cols/vgap/hgap
@@ -349,25 +349,25 @@ CDlgTrial::CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrialPtr const& inTrial, wxWin
 	sizerGrid->AddGrowableRow(4);
 
 	// row 0
-	sizerGrid->Add(sizerDate, 0, wxEXPAND);
-	sizerGrid->Add(checkVerified, 0, wxEXPAND);
+	sizerGrid->Add(sizerDate, wxSizerFlags().Expand());
+	sizerGrid->Add(checkVerified, wxSizerFlags().Expand());
 	// row 1
-	sizerGrid->Add(sizerLocation, 0, wxEXPAND | wxTOP, padding.Controls());
-	sizerGrid->Add(sizerLocationNotes, 0, wxEXPAND | wxTOP, padding.Controls());
+	sizerGrid->Add(sizerLocation, wxSizerFlags().Expand().Border(wxTOP, padding.Controls()));
+	sizerGrid->Add(sizerLocationNotes, wxSizerFlags().Expand().Border(wxTOP, padding.Controls()));
 	// row 2
-	sizerGrid->Add(sizerNote, 0, wxEXPAND | wxTOP, padding.TightControls());
-	sizerGrid->Add(m_ctrlLocationInfo, 0, wxEXPAND | wxTOP, padding.TightControls());
+	sizerGrid->Add(sizerNote, wxSizerFlags().Expand().Border(wxTOP, padding.TightControls()));
+	sizerGrid->Add(m_ctrlLocationInfo, wxSizerFlags().Expand().Border(wxTOP, padding.TightControls()));
 	// row 3
-	sizerGrid->Add(sizerClubBtns, 0, wxEXPAND | wxTOP, padding.Controls());
-	sizerGrid->Add(sizerClubNotes, 0, wxEXPAND | wxTOP, padding.Controls());
+	sizerGrid->Add(sizerClubBtns, wxSizerFlags().Expand().Border(wxTOP, padding.Controls()));
+	sizerGrid->Add(sizerClubNotes, wxSizerFlags().Expand().Border(wxTOP, padding.Controls()));
 	// row 4
-	sizerGrid->Add(m_ctrlClubs, 0, wxEXPAND | wxTOP, padding.TightControls());
-	sizerGrid->Add(m_ctrlClubInfo, 0, wxEXPAND | wxTOP, padding.TightControls());
+	sizerGrid->Add(m_ctrlClubs, wxSizerFlags().Expand().Border(wxTOP, padding.TightControls()));
+	sizerGrid->Add(m_ctrlClubInfo, wxSizerFlags().Expand().Border(wxTOP, padding.TightControls()));
 
-	bSizer->Add(sizerGrid, 1, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizerGrid, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgTrial::OnOk, this, wxID_OK);
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgTrial::OnCancel, this, wxID_CANCEL);
 

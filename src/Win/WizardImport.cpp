@@ -262,14 +262,14 @@ CWizardImport::CWizardImport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerStart = new wxBoxSizer(wxHORIZONTAL);
-	sizerStart->Add(textRow, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
+	sizerStart->Add(textRow, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
 	sizerStart->Add(m_ctrlRow);
 	sizerStart->AddStretchSpacer();
-	sizerStart->Add(m_ctrlAssign, 0, wxRIGHT, padding.Controls());
-	sizerStart->Add(textFormat, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerStart->Add(m_ctrlDateFormat, 0, wxALIGN_CENTER_VERTICAL);
+	sizerStart->Add(m_ctrlAssign, wxSizerFlags().Border(wxRIGHT, padding.Controls()));
+	sizerStart->Add(textFormat, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerStart->Add(m_ctrlDateFormat, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	bSizer->Add(sizerStart, 0, wxEXPAND);
+	bSizer->Add(sizerStart, wxSizerFlags().Expand());
 
 	wxBoxSizer* sizerOptions = new wxBoxSizer(wxHORIZONTAL);
 
@@ -281,27 +281,27 @@ CWizardImport::CWizardImport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 	sizerDelim2->Add(m_ctrlTab);
 	sizerDelim2->Add(m_ctrlColon);
 	sizerDelim2->Add(m_ctrlComma);
-	sizerDelim2->Add(m_ctrlSpace, 0, wxALIGN_CENTER_VERTICAL);
-	sizerDelim2->Add(m_ctrlSemicolon, 0, wxALIGN_CENTER_VERTICAL);
+	sizerDelim2->Add(m_ctrlSpace, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
+	sizerDelim2->Add(m_ctrlSemicolon, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
 	wxBoxSizer* sizerOther = new wxBoxSizer(wxHORIZONTAL);
-	sizerOther->Add(m_ctrlOther, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerOther->Add(m_ctrlOtherChar, 0, wxALIGN_CENTER_VERTICAL);
+	sizerOther->Add(m_ctrlOther, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerOther->Add(m_ctrlOtherChar, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	sizerDelim2->Add(sizerOther, 1, wxEXPAND | wxALIGN_CENTER_VERTICAL);
+	sizerDelim2->Add(sizerOther, wxSizerFlags(1).Expand().Align(wxALIGN_CENTER_VERTICAL));
 
-	sizerDelimiters->Add(sizerDelim2, 1, wxEXPAND | wxALL, padding.Inner());
+	sizerDelimiters->Add(sizerDelim2, wxSizerFlags(1).Expand().Border(wxALL, padding.Inner()));
 
-	sizerOptions->Add(sizerDelimiters, 0, wxEXPAND);
+	sizerOptions->Add(sizerDelimiters, wxSizerFlags().Expand());
 
-	bSizer->Add(sizerOptions, 0, wxEXPAND | wxTOP, padding.Controls());
+	bSizer->Add(sizerOptions, wxSizerFlags().Expand().Border(wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerFile = new wxBoxSizer(wxHORIZONTAL);
-	sizerFile->Add(btnFile, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerFile->Add(m_ctrlPreviewFile, 0, wxALIGN_CENTER_VERTICAL);
+	sizerFile->Add(btnFile, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerFile->Add(m_ctrlPreviewFile, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	bSizer->Add(sizerFile, 0, wxEXPAND | wxTOP | wxBOTTOM, padding.Controls());
-	bSizer->Add(m_ctrlPreview, 1, wxEXPAND);
+	bSizer->Add(sizerFile, wxSizerFlags().Expand().Border(wxTOP | wxBOTTOM, padding.Controls()));
+	bSizer->Add(m_ctrlPreview, wxSizerFlags(1).Expand());
 
 	SetSizer(bSizer);
 	bSizer->Fit(this);

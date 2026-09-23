@@ -243,32 +243,32 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	bSizer->Add(textUpdates, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
 
 	wxBoxSizer* sizerBackups = new wxBoxSizer(wxHORIZONTAL);
-	sizerBackups->Add(textBackups, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerBackups->Add(ctrlBackups, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerBackups->Add(textBackupHelp, 0, wxALIGN_CENTER_VERTICAL);
+	sizerBackups->Add(textBackups, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerBackups->Add(ctrlBackups, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerBackups->Add(textBackupHelp, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	bSizer->Add(sizerBackups, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	bSizer->Add(ctrlShowDog, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	bSizer->Add(ctrlShowCoSanction, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	bSizer->Add(ctrlUseProxy, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizerBackups, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	bSizer->Add(ctrlShowDog, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	bSizer->Add(ctrlShowCoSanction, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	bSizer->Add(ctrlUseProxy, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerProxy = new wxBoxSizer(wxHORIZONTAL);
 	sizerProxy->AddSpacer(padding.CheckboxOffset());
-	sizerProxy->Add(m_ctrlProxy, 1, wxEXPAND);
-	bSizer->Add(sizerProxy, 0, wxEXPAND | wxALL, padding.Controls());
+	sizerProxy->Add(m_ctrlProxy, wxSizerFlags(1).Expand());
+	bSizer->Add(sizerProxy, wxSizerFlags().Expand().Border(wxALL, padding.Controls()));
 
 	wxStaticBoxSizer* sizerAlternating = new wxStaticBoxSizer(boxAlternating, wxVERTICAL);
-	sizerAlternating->Add(ctrlAlternatingOn, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerAlternating->Add(ctrlAlternatingOff, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerAlternating->Add(ctrlAlternatingDefault, 0, wxALL, padding.Inner());
-	bSizer->Add(sizerAlternating, 0, wxLEFT | wxRIGHT | wxBOTTOM, padding.Controls());
+	sizerAlternating->Add(ctrlAlternatingOn, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerAlternating->Add(ctrlAlternatingOff, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerAlternating->Add(ctrlAlternatingDefault, wxSizerFlags().Border(wxALL, padding.Inner()));
+	bSizer->Add(sizerAlternating, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.Controls()));
 
 #if wxCHECK_VERSION(3, 3, 0)
 	wxStaticBoxSizer* sizerDarkMode = new wxStaticBoxSizer(boxDarkMode, wxVERTICAL);
-	sizerDarkMode->Add(ctrlModeDark, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerDarkMode->Add(ctrlModeLight, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerDarkMode->Add(ctrlModeDefault, 0, wxALL, padding.Inner());
-	bSizer->Add(sizerDarkMode, 0, wxLEFT | wxRIGHT | wxBOTTOM, padding.Controls());
+	sizerDarkMode->Add(ctrlModeDark, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerDarkMode->Add(ctrlModeLight, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerDarkMode->Add(ctrlModeDefault, wxSizerFlags().Border(wxALL, padding.Inner()));
+	bSizer->Add(sizerDarkMode, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.Controls()));
 #endif
 
 	SetSizer(bSizer);

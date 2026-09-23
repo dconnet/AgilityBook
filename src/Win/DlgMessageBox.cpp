@@ -100,15 +100,17 @@ CDlgMessageBox::CDlgMessageBox(
 	wxBoxSizer* sizerText = new wxBoxSizer(wxHORIZONTAL);
 	if (ctrlIcon)
 		sizerText->Add(ctrlIcon, 0, wxRIGHT, padding.Controls());
-	sizerText->Add(ctrlText, 1, wxEXPAND);
+	sizerText->Add(ctrlText, wxSizerFlags(1).Expand());
 
-	bSizer->Add(sizerText, 1, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizerText, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	if (ctrlDetails)
-		bSizer->Add(ctrlDetails, 0, wxALIGN_RIGHT | wxLEFT | wxRIGHT | wxBOTTOM, padding.Controls());
+		bSizer->Add(
+			ctrlDetails,
+			wxSizerFlags().Align(wxALIGN_RIGHT).Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(btnFlags);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 
 	SetSizer(bSizer);
 	Layout();

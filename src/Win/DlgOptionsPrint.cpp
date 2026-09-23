@@ -252,46 +252,46 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticBoxSizer* sizerFont = new wxStaticBoxSizer(boxFont, wxVERTICAL);
-	sizerFont->Add(m_ctrlFontPrint, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	sizerFont->Add(btnFont, 0, wxALIGN_CENTER_HORIZONTAL | wxALL, padding.Controls());
-	bSizer->Add(sizerFont, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	sizerFont->Add(m_ctrlFontPrint, wxSizerFlags(1).Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	sizerFont->Add(btnFont, wxSizerFlags().Align(wxALIGN_CENTER_HORIZONTAL).Border(wxALL, padding.Controls()));
+	bSizer->Add(sizerFont, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerRadio = new wxBoxSizer(wxHORIZONTAL);
-	sizerRadio->Add(m_Orientation, 0, wxRIGHT, padding.Controls());
-	sizerRadio->Add(m_Metric, 0, wxRIGHT, padding.Controls());
+	sizerRadio->Add(m_Orientation, wxSizerFlags().Border(wxRIGHT, padding.Controls()));
+	sizerRadio->Add(m_Metric, wxSizerFlags().Border(wxRIGHT, padding.Controls()));
 
 	wxStaticBoxSizer* sizerPageSize = new wxStaticBoxSizer(boxPageSize, wxVERTICAL);
 
 	wxFlexGridSizer* sizerPage = new wxFlexGridSizer(2, 2, padding.Controls(), padding.Controls());
 	sizerPage->SetFlexibleDirection(wxBOTH);
 	sizerPage->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerPage->Add(textWidth, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
+	sizerPage->Add(textWidth, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT));
 	sizerPage->Add(ctrlWidth);
-	sizerPage->Add(textHeight, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
+	sizerPage->Add(textHeight, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT));
 	sizerPage->Add(ctrlHeight);
 
-	sizerPageSize->Add(sizerPage, 0, wxEXPAND | wxALL, padding.Inner());
-	sizerRadio->Add(sizerPageSize, 0, wxEXPAND);
+	sizerPageSize->Add(sizerPage, wxSizerFlags().Expand().Border(wxALL, padding.Inner()));
+	sizerRadio->Add(sizerPageSize, wxSizerFlags().Expand());
 
-	bSizer->Add(sizerRadio, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizerRadio, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxStaticBoxSizer* sizerMargins = new wxStaticBoxSizer(boxMargins, wxHORIZONTAL);
 
 	wxFlexGridSizer* sizerFlexMargins = new wxFlexGridSizer(2, 4, padding.Controls(), padding.Controls());
 	sizerFlexMargins->SetFlexibleDirection(wxBOTH);
 	sizerFlexMargins->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerFlexMargins->Add(textLeft, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
+	sizerFlexMargins->Add(textLeft, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT));
 	sizerFlexMargins->Add(ctrlLeft);
-	sizerFlexMargins->Add(textRight, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
+	sizerFlexMargins->Add(textRight, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT));
 	sizerFlexMargins->Add(ctrlRight);
-	sizerFlexMargins->Add(textTop, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
+	sizerFlexMargins->Add(textTop, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT));
 	sizerFlexMargins->Add(ctrlTop);
-	sizerFlexMargins->Add(textBottom, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
+	sizerFlexMargins->Add(textBottom, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT));
 	sizerFlexMargins->Add(ctrlBottom);
 
-	sizerMargins->Add(sizerFlexMargins, 1, wxEXPAND | wxALL, padding.Inner());
+	sizerMargins->Add(sizerFlexMargins, wxSizerFlags(1).Expand().Border(wxALL, padding.Inner()));
 
-	bSizer->Add(sizerMargins, 0, wxALL, padding.Controls());
+	bSizer->Add(sizerMargins, wxSizerFlags().Border(wxALL, padding.Controls()));
 
 	SetSizer(bSizer);
 	Layout();

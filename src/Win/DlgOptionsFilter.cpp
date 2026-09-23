@@ -312,61 +312,61 @@ CDlgOptionsFilter::CDlgOptionsFilter(wxWindow* parent, CAgilityBookDoc* pDoc)
 	wxBoxSizer* sizerCol1 = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticBoxSizer* sizerFilters = new wxStaticBoxSizer(boxFilters, wxVERTICAL);
-	sizerFilters->Add(m_ctrlFilters, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Inner());
+	sizerFilters->Add(m_ctrlFilters, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerBtns->Add(btnSave, 0, wxRIGHT, padding.Inner());
+	sizerBtns->Add(btnSave, wxSizerFlags().Border(wxRIGHT, padding.Inner()));
 	sizerBtns->Add(btnDelete);
 
-	sizerFilters->Add(sizerBtns, 1, wxEXPAND | wxALL, padding.Inner());
+	sizerFilters->Add(sizerBtns, wxSizerFlags(1).Expand().Border(wxALL, padding.Inner()));
 
-	sizerCol1->Add(sizerFilters, 0, wxEXPAND);
+	sizerCol1->Add(sizerFilters, wxSizerFlags().Expand());
 
 	wxStaticBoxSizer* sizerDates = new wxStaticBoxSizer(boxDates, wxVERTICAL);
-	sizerDates->Add(m_ctrlDatesAll, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerDates->Add(m_ctrlDatesSome, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
+	sizerDates->Add(m_ctrlDatesAll, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerDates->Add(m_ctrlDatesSome, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
 
 	wxFlexGridSizer* sizerDateRange = new wxFlexGridSizer(2, 2, padding.Inner(), padding.Inner());
 	sizerDateRange->SetFlexibleDirection(wxBOTH);
 	sizerDateRange->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerDateRange->Add(m_ctrlDateStartCheck, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
-	sizerDateRange->Add(m_ctrlDateStart, 0, wxALIGN_CENTER_VERTICAL);
-	sizerDateRange->Add(m_ctrlDateEndCheck, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
-	sizerDateRange->Add(m_ctrlDateEnd, 0, wxALIGN_CENTER_VERTICAL);
+	sizerDateRange->Add(m_ctrlDateStartCheck, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT));
+	sizerDateRange->Add(m_ctrlDateStart, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
+	sizerDateRange->Add(m_ctrlDateEndCheck, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT));
+	sizerDateRange->Add(m_ctrlDateEnd, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	sizerDates->Add(sizerDateRange, 1, wxEXPAND | wxALL, padding.Inner());
+	sizerDates->Add(sizerDateRange, wxSizerFlags(1).Expand().Border(wxALL, padding.Inner()));
 
-	sizerCol1->Add(sizerDates, 0, wxEXPAND | wxTOP, padding.Controls());
+	sizerCol1->Add(sizerDates, wxSizerFlags().Expand().Border(wxTOP, padding.Controls()));
 
 	wxStaticBoxSizer* sizerCal1 = new wxStaticBoxSizer(boxCal1, wxVERTICAL);
-	sizerCal1->Add(ctrlCalNot, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerCal1->Add(ctrlCalPlan, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerCal1->Add(ctrlCalEntered, 0, wxALL, padding.Inner());
-	sizerCol1->Add(sizerCal1, 0, wxEXPAND | wxTOP, padding.Controls());
+	sizerCal1->Add(ctrlCalNot, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerCal1->Add(ctrlCalPlan, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerCal1->Add(ctrlCalEntered, wxSizerFlags().Border(wxALL, padding.Inner()));
+	sizerCol1->Add(sizerCal1, wxSizerFlags().Expand().Border(wxTOP, padding.Controls()));
 
 	wxStaticBoxSizer* sizerLog = new wxStaticBoxSizer(boxLog, wxVERTICAL);
-	sizerLog->Add(m_ctrlLogAll, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerLog->Add(m_ctrlLogSome, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerLog->Add(m_ctrlNames, 0, wxEXPAND | wxALL, padding.Inner());
-	sizerCol1->Add(sizerLog, 0, wxEXPAND | wxTOP, padding.Controls());
+	sizerLog->Add(m_ctrlLogAll, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerLog->Add(m_ctrlLogSome, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerLog->Add(m_ctrlNames, wxSizerFlags().Expand().Border(wxALL, padding.Inner()));
+	sizerCol1->Add(sizerLog, wxSizerFlags().Expand().Border(wxTOP, padding.Controls()));
 
-	bSizer->Add(sizerCol1, 1, wxLEFT | wxTOP | wxBOTTOM, padding.Controls());
+	bSizer->Add(sizerCol1, wxSizerFlags(1).Expand().Border(wxLEFT | wxTOP | wxBOTTOM, padding.Controls()));
 
 	wxBoxSizer* sizerCol2 = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticBoxSizer* sizerQs = new wxStaticBoxSizer(boxQs, wxVERTICAL);
-	sizerQs->Add(m_ctrlQsAll, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerQs->Add(m_ctrlQsQs, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerQs->Add(m_ctrlQsNonQs, 0, wxALL, padding.Inner());
-	sizerCol2->Add(sizerQs, 0, wxEXPAND);
+	sizerQs->Add(m_ctrlQsAll, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerQs->Add(m_ctrlQsQs, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerQs->Add(m_ctrlQsNonQs, wxSizerFlags().Border(wxALL, padding.Inner()));
+	sizerCol2->Add(sizerQs, wxSizerFlags().Expand());
 
 	wxStaticBoxSizer* sizerVenue = new wxStaticBoxSizer(boxVenue, wxVERTICAL);
-	sizerVenue->Add(m_ctrlVenueAll, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerVenue->Add(m_ctrlVenueSome, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerVenue->Add(m_ctrlVenue, 1, wxEXPAND | wxALL, padding.Inner());
-	sizerCol2->Add(sizerVenue, 1, wxEXPAND | wxTOP, padding.Controls());
+	sizerVenue->Add(m_ctrlVenueAll, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerVenue->Add(m_ctrlVenueSome, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerVenue->Add(m_ctrlVenue, wxSizerFlags(1).Expand().Border(wxALL, padding.Inner()));
+	sizerCol2->Add(sizerVenue, wxSizerFlags(1).Expand().Border(wxTOP, padding.Controls()));
 
-	bSizer->Add(sizerCol2, 1, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizerCol2, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	FillControls();
 

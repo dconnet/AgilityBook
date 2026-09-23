@@ -241,7 +241,7 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 		sizerVenue->Add(sizerVenueBtns, wxSizerFlags().Expand().Border(wxLEFT, padding.Controls()));
 	}
 
-	bSizer->Add(sizerVenue, wxSizerFlags().Expand().Border(wxALL, padding.Controls()));
+	bSizer->Add(sizerVenue, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));

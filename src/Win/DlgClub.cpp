@@ -210,16 +210,16 @@ CDlgClub::CDlgClub(
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
-	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerName->Add(m_ctrlClubs, 1, wxEXPAND);
+	sizerName->Add(textName, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerName->Add(m_ctrlClubs, wxSizerFlags(1).Expand());
 
-	bSizer->Add(sizerName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizerName, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
-	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerVenue->Add(m_ctrlVenues, 0, wxEXPAND);
+	sizerVenue->Add(textVenue, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerVenue->Add(m_ctrlVenues, wxSizerFlags().Expand());
 
-	bSizer->Add(sizerVenue, 0, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizerVenue, wxSizerFlags().Expand().Border(wxALL, padding.Controls()));
 
 	auto flags = wxLEFT | wxRIGHT | wxBOTTOM;
 	if (ctrl)
@@ -228,11 +228,11 @@ CDlgClub::CDlgClub(
 	{
 		if (ctrl)
 			flags |= wxTOP;
-		bSizer->Add(m_ctrlPrimary, 0, wxEXPAND | flags, padding.Controls());
+		bSizer->Add(m_ctrlPrimary, wxSizerFlags().Expand().Border(flags, padding.Controls()));
 	}
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgClub::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);

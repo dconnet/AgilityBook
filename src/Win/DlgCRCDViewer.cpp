@@ -100,8 +100,8 @@ CDlgCRCDViewer::CDlgCRCDViewer(HENHMETAFILE inMetaFile, wxWindow* pParent)
 	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(textCtrl, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	bSizer->Add(btnClose, 0, wxALIGN_RIGHT | wxALL, padding.Controls());
+	bSizer->Add(textCtrl, wxSizerFlags(1).Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	bSizer->Add(btnClose, wxSizerFlags().Align(wxALIGN_RIGHT).Border(wxALL, padding.Controls()));
 
 	SetSizer(bSizer);
 	Layout();

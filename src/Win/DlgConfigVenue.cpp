@@ -372,38 +372,38 @@ CDlgConfigVenue::CDlgConfigVenue(
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
-	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerName->Add(ctrlName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerName->Add(textURL, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerName->Add(ctrlURL, 1);
+	sizerName->Add(textName, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerName->Add(ctrlName, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerName->Add(textURL, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerName->Add(ctrlURL, wxSizerFlags(1));
 
-	bSizer->Add(sizerName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizerName, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerLongName = new wxBoxSizer(wxHORIZONTAL);
-	sizerLongName->Add(textLongName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerLongName->Add(ctrlLongName, 1);
+	sizerLongName->Add(textLongName, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerLongName->Add(ctrlLongName, wxSizerFlags(1));
 
-	bSizer->Add(sizerLongName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	bSizer->Add(textDesc, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	bSizer->Add(ctrlDesc, 0, wxEXPAND | wxLEFT | wxRIGHT, padding.Controls());
+	bSizer->Add(sizerLongName, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	bSizer->Add(textDesc, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	bSizer->Add(ctrlDesc, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT, padding.Controls()));
 
 	wxBoxSizer* sizerTree = new wxBoxSizer(wxHORIZONTAL);
-	sizerTree->Add(m_ctrlItems, 1, wxEXPAND | wxRIGHT, padding.Controls());
+	sizerTree->Add(m_ctrlItems, wxSizerFlags(1).Expand().Border(wxRIGHT, padding.Controls()));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
-	sizerBtns->Add(m_ctrlNew, 0, wxEXPAND | wxBOTTOM, padding.Inner());
-	sizerBtns->Add(m_ctrlEdit, 0, wxEXPAND | wxBOTTOM, padding.Inner());
-	sizerBtns->Add(m_ctrlDelete, 0, wxEXPAND | wxBOTTOM, padding.Inner());
-	sizerBtns->Add(m_ctrlCopy, 0, wxEXPAND | wxBOTTOM, padding.Inner());
-	sizerBtns->Add(m_ctrlMoveUp, 0, wxEXPAND | wxBOTTOM, padding.Inner());
-	sizerBtns->Add(m_ctrlMoveDown, 0, wxEXPAND);
+	sizerBtns->Add(m_ctrlNew, wxSizerFlags().Expand().Border(wxBOTTOM, padding.Inner()));
+	sizerBtns->Add(m_ctrlEdit, wxSizerFlags().Expand().Border(wxBOTTOM, padding.Inner()));
+	sizerBtns->Add(m_ctrlDelete, wxSizerFlags().Expand().Border(wxBOTTOM, padding.Inner()));
+	sizerBtns->Add(m_ctrlCopy, wxSizerFlags().Expand().Border(wxBOTTOM, padding.Inner()));
+	sizerBtns->Add(m_ctrlMoveUp, wxSizerFlags().Expand().Border(wxBOTTOM, padding.Inner()));
+	sizerBtns->Add(m_ctrlMoveDown, wxSizerFlags().Expand());
 
-	sizerTree->Add(sizerBtns, 0, wxEXPAND);
+	sizerTree->Add(sizerBtns, wxSizerFlags().Expand());
 
-	bSizer->Add(sizerTree, 1, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizerTree, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigVenue::OnOk, this, wxID_OK);
 
 	wxTreeItemId root = m_ctrlItems->AddRoot(L"Root");

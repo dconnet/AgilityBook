@@ -72,13 +72,15 @@ CDlgRunPanelComments::CDlgRunPanelComments(
 	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* sizerCommentsFaults = new wxBoxSizer(wxHORIZONTAL);
-	sizerCommentsFaults->Add(ctrlComments, 1, wxEXPAND | wxALL, padding.Controls());
+	sizerCommentsFaults->Add(ctrlComments, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	wxBoxSizer* sizerFaultsList = new wxBoxSizer(wxVERTICAL);
-	sizerFaultsList->Add(m_ctrlFaultsList, 1, wxEXPAND, 0);
-	sizerFaultsList->Add(btnFaults, 0, wxTOP, padding.Controls());
+	sizerFaultsList->Add(m_ctrlFaultsList, wxSizerFlags(1).Expand());
+	sizerFaultsList->Add(btnFaults, wxSizerFlags().Border(wxTOP, padding.Controls()));
 
-	sizerCommentsFaults->Add(sizerFaultsList, 0, wxEXPAND | wxRIGHT | wxTOP | wxBOTTOM, padding.Controls());
+	sizerCommentsFaults->Add(
+		sizerFaultsList,
+		wxSizerFlags().Expand().Border(wxRIGHT | wxTOP | wxBOTTOM, padding.Controls()));
 
 	SetSizer(sizerCommentsFaults);
 	Layout();

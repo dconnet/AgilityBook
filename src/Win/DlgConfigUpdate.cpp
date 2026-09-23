@@ -92,22 +92,24 @@ CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)
 	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(m_radioDefault, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(m_radioDefault, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* bSizerRadio = new wxBoxSizer(wxHORIZONTAL);
-	bSizerRadio->Add(m_radioExisting, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	bSizerRadio->Add(m_btnPick, 0, wxALIGN_CENTER_VERTICAL);
+	bSizerRadio->Add(
+		m_radioExisting,
+		wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	bSizerRadio->Add(m_btnPick, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	bSizer->Add(bSizerRadio, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(bSizerRadio, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* bSizerWithSpace = new wxBoxSizer(wxHORIZONTAL);
 	bSizerWithSpace->AddSpacer(padding.CheckboxOffset());
-	bSizerWithSpace->Add(m_FileName, 1, wxEXPAND);
+	bSizerWithSpace->Add(m_FileName, wxSizerFlags(1).Expand());
 
-	bSizer->Add(bSizerWithSpace, 0, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(bSizerWithSpace, wxSizerFlags().Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigUpdate::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);

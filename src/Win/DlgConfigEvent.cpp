@@ -453,38 +453,42 @@ CDlgConfigEvent::CDlgConfigEvent(
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
-	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerName->Add(m_ctrlName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerName->Add(m_ctrlTable, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerName->Add(ctrlPartners, 0, wxALIGN_CENTER_VERTICAL);
+	sizerName->Add(textName, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerName->Add(m_ctrlName, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerName->Add(m_ctrlTable, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerName->Add(ctrlPartners, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
 	wxFlexGridSizer* sizerTop = new wxFlexGridSizer(2, 2, padding.Controls(), padding.Controls());
 	sizerTop->SetFlexibleDirection(wxBOTH);
 	sizerTop->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerTop->Add(sizerName, 1, wxEXPAND | wxRIGHT, padding.Controls());
-	sizerTop->Add(m_ctrlHasSubnames, 0, wxALIGN_CENTER_VERTICAL);
+	sizerTop->Add(sizerName, wxSizerFlags(1).Expand().Border(wxRIGHT, padding.Controls()));
+	sizerTop->Add(m_ctrlHasSubnames, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
 	wxBoxSizer* sizerNotes = new wxBoxSizer(wxHORIZONTAL);
-	sizerNotes->Add(textNote, 0, wxRIGHT, padding.Inner());
-	sizerNotes->Add(ctrlNote, 1, wxEXPAND);
+	sizerNotes->Add(textNote, wxSizerFlags().Border(wxRIGHT, padding.Inner()));
+	sizerNotes->Add(ctrlNote, wxSizerFlags(1).Expand());
 
-	sizerTop->Add(sizerNotes, 1, wxEXPAND);
+	sizerTop->Add(sizerNotes, wxSizerFlags(1).Expand());
 
 	wxBoxSizer* sizerSubname = new wxBoxSizer(wxHORIZONTAL);
-	sizerSubname->Add(m_ctrlSubNames, 1, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxEXPAND | wxRIGHT, padding.Controls());
+	sizerSubname->Add(
+		m_ctrlSubNames,
+		wxSizerFlags(1).ReserveSpaceEvenIfHidden().Expand().Border(wxRIGHT, padding.Controls()));
 
 	wxBoxSizer* sizerBtnSub = new wxBoxSizer(wxVERTICAL);
-	sizerBtnSub
-		->Add(m_ctrlSubNamesNew, 0, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxEXPAND | wxBOTTOM, padding.TightControls());
-	sizerBtnSub
-		->Add(m_ctrlSubNamesEdit, 0, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxEXPAND | wxBOTTOM, padding.TightControls());
-	sizerBtnSub->Add(m_ctrlSubNamesDelete, 0, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxEXPAND);
+	sizerBtnSub->Add(
+		m_ctrlSubNamesNew,
+		wxSizerFlags().ReserveSpaceEvenIfHidden().Expand().Border(wxBOTTOM, padding.TightControls()));
+	sizerBtnSub->Add(
+		m_ctrlSubNamesEdit,
+		wxSizerFlags().ReserveSpaceEvenIfHidden().Expand().Border(wxBOTTOM, padding.TightControls()));
+	sizerBtnSub->Add(m_ctrlSubNamesDelete, wxSizerFlags().ReserveSpaceEvenIfHidden().Expand());
 
-	sizerSubname->Add(sizerBtnSub, 0, wxEXPAND, wxRESERVE_SPACE_EVEN_IF_HIDDEN);
+	sizerSubname->Add(sizerBtnSub, wxSizerFlags().ReserveSpaceEvenIfHidden().Expand());
 
-	sizerTop->Add(sizerSubname, 1, wxRESERVE_SPACE_EVEN_IF_HIDDEN | wxEXPAND);
+	sizerTop->Add(sizerSubname, wxSizerFlags(1).ReserveSpaceEvenIfHidden().Expand());
 
-	bSizer->Add(sizerTop, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizerTop, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxStaticBoxSizer* sizerMethods = new wxStaticBoxSizer(boxMethods, wxVERTICAL);
 
@@ -492,52 +496,52 @@ CDlgConfigEvent::CDlgConfigEvent(
 
 	wxBoxSizer* sizerDefined = new wxBoxSizer(wxVERTICAL);
 	sizerDefined->Add(textDefined);
-	sizerDefined->Add(m_ctrlMethods, 1, wxEXPAND);
+	sizerDefined->Add(m_ctrlMethods, wxSizerFlags(1).Expand());
 
-	sizerDefinitions->Add(sizerDefined, 1, wxEXPAND | wxRIGHT, padding.Controls());
+	sizerDefinitions->Add(sizerDefined, wxSizerFlags(1).Expand().Border(wxRIGHT, padding.Controls()));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
 	sizerBtns->AddSpacer(wxDLG_UNIT_Y(this, 8));
-	sizerBtns->Add(m_ctrlNew, 0, wxEXPAND | wxBOTTOM, padding.TightControls());
-	sizerBtns->Add(m_ctrlEdit, 0, wxEXPAND | wxBOTTOM, padding.TightControls());
-	sizerBtns->Add(m_ctrlDelete, 0, wxEXPAND | wxBOTTOM, padding.TightControls());
-	sizerBtns->Add(m_ctrlCopy, 0, wxEXPAND | wxBOTTOM, padding.TightControls());
-	sizerBtns->Add(m_ctrlUp, 0, wxEXPAND | wxBOTTOM, padding.TightControls());
-	sizerBtns->Add(m_ctrlDown, 0, wxEXPAND);
+	sizerBtns->Add(m_ctrlNew, wxSizerFlags().Expand().Border(wxBOTTOM, padding.TightControls()));
+	sizerBtns->Add(m_ctrlEdit, wxSizerFlags().Expand().Border(wxBOTTOM, padding.TightControls()));
+	sizerBtns->Add(m_ctrlDelete, wxSizerFlags().Expand().Border(wxBOTTOM, padding.TightControls()));
+	sizerBtns->Add(m_ctrlCopy, wxSizerFlags().Expand().Border(wxBOTTOM, padding.TightControls()));
+	sizerBtns->Add(m_ctrlUp, wxSizerFlags().Expand().Border(wxBOTTOM, padding.TightControls()));
+	sizerBtns->Add(m_ctrlDown, wxSizerFlags().Expand());
 
-	sizerDefinitions->Add(sizerBtns, 0, wxEXPAND | wxRIGHT, padding.Controls());
+	sizerDefinitions->Add(sizerBtns, wxSizerFlags().Expand().Border(wxRIGHT, padding.Controls()));
 
 	wxBoxSizer* sizerNotDefined = new wxBoxSizer(wxVERTICAL);
 	sizerNotDefined->Add(textNotDefined);
-	sizerNotDefined->Add(m_ctrlUnused, 1, wxEXPAND);
+	sizerNotDefined->Add(m_ctrlUnused, wxSizerFlags(1).Expand());
 
-	sizerDefinitions->Add(sizerNotDefined, 1, wxEXPAND, 0);
+	sizerDefinitions->Add(sizerNotDefined, wxSizerFlags(1).Expand());
 
-	sizerMethods->Add(sizerDefinitions, 1, wxEXPAND | wxALL, padding.Inner());
+	sizerMethods->Add(sizerDefinitions, wxSizerFlags(1).Expand().Border(wxALL, padding.Inner()));
 
 	wxStaticLine* staticLine = new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL);
-	sizerMethods->Add(staticLine, 0, wxEXPAND | wxTOP | wxBOTTOM, padding.Inner());
-	sizerMethods->Add(m_ctrlInfo, 0, wxEXPAND | wxALL, padding.Inner());
+	sizerMethods->Add(staticLine, wxSizerFlags().Expand().Border(wxTOP | wxBOTTOM, padding.Inner()));
+	sizerMethods->Add(m_ctrlInfo, wxSizerFlags().Expand().Border(wxALL, padding.Inner()));
 
 	wxBoxSizer* sizerPoints = new wxBoxSizer(wxHORIZONTAL);
-	sizerPoints->Add(textTitlePoints, 0, wxRIGHT, padding.Inner());
-	sizerPoints->Add(m_ctrlPointsList, 1, wxEXPAND | wxRIGHT, padding.Controls());
+	sizerPoints->Add(textTitlePoints, wxSizerFlags().Border(wxRIGHT, padding.Inner()));
+	sizerPoints->Add(m_ctrlPointsList, wxSizerFlags(1).Expand().Border(wxRIGHT, padding.Controls()));
 
 	wxBoxSizer* sizerBtnPts = new wxBoxSizer(wxVERTICAL);
-	sizerBtnPts->Add(m_ctrlPointsNew, 0, wxEXPAND | wxBOTTOM, padding.TightControls());
-	sizerBtnPts->Add(m_ctrlPointsEdit, 0, wxEXPAND | wxBOTTOM, padding.TightControls());
-	sizerBtnPts->Add(m_ctrlPointsDelete, 0, wxEXPAND);
+	sizerBtnPts->Add(m_ctrlPointsNew, wxSizerFlags().Expand().Border(wxBOTTOM, padding.TightControls()));
+	sizerBtnPts->Add(m_ctrlPointsEdit, wxSizerFlags().Expand().Border(wxBOTTOM, padding.TightControls()));
+	sizerBtnPts->Add(m_ctrlPointsDelete, wxSizerFlags().Expand());
 
-	sizerPoints->Add(sizerBtnPts, 0, wxEXPAND | wxRIGHT, padding.Controls());
-	sizerPoints->Add(textMethodNote, 0, wxRIGHT, padding.Inner());
-	sizerPoints->Add(m_ctrlNote, 1, wxEXPAND);
+	sizerPoints->Add(sizerBtnPts, wxSizerFlags().Expand().Border(wxRIGHT, padding.Controls()));
+	sizerPoints->Add(textMethodNote, wxSizerFlags().Border(wxRIGHT, padding.Inner()));
+	sizerPoints->Add(m_ctrlNote, wxSizerFlags(1).Expand());
 
-	sizerMethods->Add(sizerPoints, 0, wxEXPAND | wxALL, padding.Inner());
+	sizerMethods->Add(sizerPoints, wxSizerFlags().Expand().Border(wxALL, padding.Inner()));
 
-	bSizer->Add(sizerMethods, 1, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizerMethods, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigEvent::OnOk, this, wxID_OK);
 
 	ShowSubNames(false);

@@ -246,26 +246,28 @@ void CDlgConfigTitlePoints::InitDlg(wxWindow* pParent)
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerValue = new wxBoxSizer(wxHORIZONTAL);
-	sizerValue->Add(m_textValue, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerValue->Add(m_ctrlValue, 1, wxALIGN_CENTER_VERTICAL);
-	bSizer->Add(sizerValue, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	sizerValue->Add(m_textValue, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerValue->Add(m_ctrlValue, wxSizerFlags(1).Align(wxALIGN_CENTER_VERTICAL));
+	bSizer->Add(sizerValue, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerPoints = new wxBoxSizer(wxHORIZONTAL);
-	sizerPoints->Add(m_ctrlSpeedPts, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerPoints->Add(m_textPoints, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerPoints->Add(m_ctrlPoints, 1, wxALIGN_CENTER_VERTICAL);
-	bSizer->Add(sizerPoints, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	sizerPoints->Add(m_ctrlSpeedPts, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerPoints->Add(m_textPoints, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerPoints->Add(m_ctrlPoints, wxSizerFlags(1).Border(wxALIGN_CENTER_VERTICAL));
+	bSizer->Add(sizerPoints, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerLTName = new wxBoxSizer(wxHORIZONTAL);
-	sizerLTName->Add(m_textLifetimeName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerLTName->Add(m_ctrlLifetimeName, 1, wxALIGN_CENTER_VERTICAL);
-	bSizer->Add(m_ctrlType, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	sizerLTName->Add(
+		m_textLifetimeName,
+		wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerLTName->Add(m_ctrlLifetimeName, wxSizerFlags(1).Align(wxALIGN_CENTER_VERTICAL));
+	bSizer->Add(m_ctrlType, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
-	bSizer->Add(m_ctrlTypeNormal, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	bSizer->Add(sizerLTName, 0, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(m_ctrlTypeNormal, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	bSizer->Add(sizerLTName, wxSizerFlags().Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigTitlePoints::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);

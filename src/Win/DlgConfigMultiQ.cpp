@@ -190,38 +190,38 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
-	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerName->Add(m_ctrlName, 1, wxALIGN_CENTER_VERTICAL);
+	sizerName->Add(textName, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerName->Add(m_ctrlName, wxSizerFlags(1).Align(wxALIGN_CENTER_VERTICAL));
 
-	bSizer->Add(sizerName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizerName, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerAbbrev = new wxBoxSizer(wxHORIZONTAL);
-	sizerAbbrev->Add(textAbbrev, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Inner());
-	sizerAbbrev->Add(ctrlAbbrev, 0, wxALIGN_CENTER_VERTICAL);
+	sizerAbbrev->Add(textAbbrev, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
+	sizerAbbrev->Add(ctrlAbbrev, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	bSizer->Add(sizerAbbrev, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizerAbbrev, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxFlexGridSizer* sizerDates = new wxFlexGridSizer(2, 2, padding.Inner(), padding.Controls());
 	sizerDates->SetFlexibleDirection(wxBOTH);
 	sizerDates->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 
-	sizerDates->Add(ctrlValidFrom, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
-	sizerDates->Add(m_ctrlDateFrom, 0, wxALIGN_CENTER_VERTICAL);
-	sizerDates->Add(ctrlValidTo, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
-	sizerDates->Add(m_ctrlDateTo, 0, wxALIGN_CENTER_VERTICAL);
+	sizerDates->Add(ctrlValidFrom, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT));
+	sizerDates->Add(m_ctrlDateFrom, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
+	sizerDates->Add(ctrlValidTo, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT));
+	sizerDates->Add(m_ctrlDateTo, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	bSizer->Add(sizerDates, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	bSizer->Add(m_ctrlItems, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizerDates, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	bSizer->Add(m_ctrlItems, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerBtns->Add(btnAdd, 0, wxRIGHT, padding.Inner());
-	sizerBtns->Add(m_ctrlEdit, 0, wxRIGHT, padding.Inner());
+	sizerBtns->Add(btnAdd, wxSizerFlags().Border(wxRIGHT, padding.Inner()));
+	sizerBtns->Add(m_ctrlEdit, wxSizerFlags().Border(wxRIGHT, padding.Inner()));
 	sizerBtns->Add(m_ctrlRemove);
 
-	bSizer->Add(sizerBtns, 0, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizerBtns, wxSizerFlags().Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgConfigMultiQ::OnOk, this, wxID_OK);
 
 	size_t n = m_pMultiQ->GetNumItems();

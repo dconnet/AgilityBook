@@ -192,21 +192,21 @@ CWizardStart::CWizardStart(CWizard* pSheet, CAgilityBookDoc* pDoc)
 
 	wxStaticBoxSizer* sizerImportExport = new wxStaticBoxSizer(boxImportExport, wxVERTICAL);
 	if (radioExcel)
-		sizerImportExport->Add(radioExcel, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
+		sizerImportExport->Add(radioExcel, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
 	if (radioCalc)
-		sizerImportExport->Add(radioCalc, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerImportExport->Add(radioSpread, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerImportExport->Add(radioArb, 0, wxALL, padding.Inner());
+		sizerImportExport->Add(radioCalc, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerImportExport->Add(radioSpread, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerImportExport->Add(radioArb, wxSizerFlags().Border(wxALL, padding.Inner()));
 	bSizer->Add(sizerImportExport, 0, padding.Inner());
 
 	wxStaticBoxSizer* sizerDesc = new wxStaticBoxSizer(boxDesc, wxVERTICAL);
-	sizerDesc->Add(m_ctrlDesc, 1, wxEXPAND);
+	sizerDesc->Add(m_ctrlDesc, wxSizerFlags(1).Expand());
 
 	wxBoxSizer* sizerAction = new wxBoxSizer(wxHORIZONTAL);
-	sizerAction->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, padding.Controls());
-	sizerAction->Add(sizerDesc, 1, wxEXPAND);
+	sizerAction->Add(m_ctrlList, wxSizerFlags(1).Expand().Border(wxRIGHT, padding.Controls()));
+	sizerAction->Add(sizerDesc, wxSizerFlags(1).Expand());
 
-	bSizer->Add(sizerAction, 1, wxEXPAND | wxTOP, padding.Controls());
+	bSizer->Add(sizerAction, wxSizerFlags(1).Expand().Border(wxTOP, padding.Controls()));
 
 	SetSizer(bSizer);
 	bSizer->Fit(this);

@@ -171,30 +171,30 @@ CDlgDogPanelProp::CDlgDogPanelProp(CAgilityBookDoc* pDoc, ARBDogPtr const& inDog
 	wxBoxSizer* sizerProp = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
-	sizerName->Add(textCallName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerName->Add(m_ctrlName, 2, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerName->Add(textBreed, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerName->Add(ctrlBreed, 3, wxALIGN_CENTER_VERTICAL, 0);
+	sizerName->Add(textCallName, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerName->Add(m_ctrlName, wxSizerFlags(2).Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerName->Add(textBreed, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerName->Add(ctrlBreed, wxSizerFlags(3).Align(wxALIGN_CENTER_VERTICAL));
 
-	sizerProp->Add(sizerName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	sizerProp->Add(sizerName, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerRegName = new wxBoxSizer(wxHORIZONTAL);
-	sizerRegName->Add(textRegName, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerRegName->Add(ctrlRegName, 1, wxALIGN_CENTER_VERTICAL, 0);
+	sizerRegName->Add(textRegName, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerRegName->Add(ctrlRegName, wxSizerFlags(1).Align(wxALIGN_CENTER_VERTICAL));
 
-	sizerProp->Add(sizerRegName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	sizerProp->Add(sizerRegName, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerAge = new wxBoxSizer(wxHORIZONTAL);
-	sizerAge->Add(textAge, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerAge->Add(m_ctrlAge, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerAge->Add(textBDay, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerAge->Add(ctrlBDay, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerAge->Add(ctrlDeceased, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizerAge->Add(m_ctrlDDay, 0, wxALIGN_CENTER_VERTICAL, 0);
+	sizerAge->Add(textAge, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerAge->Add(m_ctrlAge, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerAge->Add(textBDay, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerAge->Add(ctrlBDay, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerAge->Add(ctrlDeceased, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizerAge->Add(m_ctrlDDay, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
-	sizerProp->Add(sizerAge, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	sizerProp->Add(textNotes, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	sizerProp->Add(ctrlNotes, 1, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.Controls());
+	sizerProp->Add(sizerAge, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	sizerProp->Add(textNotes, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	sizerProp->Add(ctrlNotes, wxSizerFlags(1).Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.Controls()));
 
 	SetSizer(sizerProp);
 	Layout();
