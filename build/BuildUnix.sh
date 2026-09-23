@@ -8,6 +8,7 @@
 # Note: Found old OSX SDKs at https://github.com/phracker/MacOSX-SDKs/releases
 #
 # History
+# 2026-09-23 Min SDK for XCode27 is now 12.
 # 2024-01-17 Minor cleanup
 # 2023-06-02 If not arch given on Mac, build all (x64/arm/fat)
 #            Actually run 'make' after configuring.
@@ -44,13 +45,13 @@
 export BUILDDIR=
 export DEBUG=
 export LIBRARIES=
-export MAC_MIN_OS=10.13
+export MAC_MIN_OS=12
 export TARGETARCH=
 export TARGETSDK=
 export VERSION=
 export WXWIN=
 
-USAGE="Usage $0 <directory>|wxWidgets-<version> [debug|release] [test] [x64|arm|fat] \nex: setupwx.sh trunk debug\nNote: x64/arm arguments are only used on MacOS\nex: setupwx.sh 3.1.7 release"
+USAGE="Usage $0 <directory>|wxWidgets-<version> [debug|release] [test] [x64|arm|fat] \nex: BuildUnix.sh trunk debug\nNote: x64/arm arguments are only used on MacOS\nex: BuildUnix.sh 3.1.7 release"
 
 if [[ "x$1" = "x" ]]
 then
@@ -199,17 +200,19 @@ Darwin*)
 	BUILDDIR_ARCH="-x64"
 
 	# Leaving this in for a couple compilers for an example.
-	# Current min deployment is 10.13 (as set via wx-config)
+	# Current min deployment is 10.13 (as set via wx-config) [not anymore! Xcode27 upped that to 12]
 	if test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk; then
-		echo "Using 10.13 SDK"
-		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk
-		MIN_OS=$MAC_MIN_OS
-
-	# This was the current SDK on my Catalina machine
-	elif test -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk; then
-		echo "Using 11.1 SDK"
-		TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk
-		MIN_OS=$MAC_MIN_OS
+		case "$ARCH" in
+		x64)
+			echo "Using 10.13 SDK"
+			TARGETSDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk
+			MIN_OS=$MAC_MIN_OS
+			;;
+		*)
+			# Trying to build arm/fat, just exit
+			exit
+			;;
+		esac
 
 	# Note 12.0 added arm64 support
 	# That's where this originally changed to setting options as below.
@@ -238,7 +241,7 @@ Darwin*)
 	BUILDDIR+=$BUILDDIR_ARCH
 
 	if test "x$TARGETSDK" = "x"; then
-		echo "ERROR: Can't find an SDK - 10.13 or newer is required"
+		echo "ERROR: Can't find an SDK - 12 or newer is required"
 		echo ls -CF /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
 		ls -CF /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
 		exit
