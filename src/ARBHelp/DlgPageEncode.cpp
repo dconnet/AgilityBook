@@ -92,8 +92,8 @@ CDlgPageEncode::CDlgPageEncode(CDlgARBHelp* pParent)
 	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(text1, 0, wxEXPAND);
-	bSizer->Add(text2, 0, wxTOP, padding.Controls());
+	bSizer->Add(text1, wxSizerFlags().Expand());
+	bSizer->Add(text2, wxSizerFlags().Border(wxTOP, padding.Controls()));
 
 	SetSizer(bSizer);
 	Layout();

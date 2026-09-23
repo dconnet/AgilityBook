@@ -204,47 +204,47 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 	wxBoxSizer* sizerLocation = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizerLocationCodes = new wxBoxSizer(wxVERTICAL);
-	sizerLocationCodes->Add(textLocCodes, 0, 0, 0);
-	sizerLocationCodes->Add(m_ctrlLocations, 1, wxEXPAND | wxTOP, padding.Tight());
+	sizerLocationCodes->Add(textLocCodes, wxSizerFlags());
+	sizerLocationCodes->Add(m_ctrlLocations, wxSizerFlags(1).Expand().Border(wxTOP, padding.Tight()));
 
-	sizerLocation->Add(sizerLocationCodes, 1, wxEXPAND, 0);
+	sizerLocation->Add(sizerLocationCodes, wxSizerFlags(1).Expand());
 
 	if (m_EditCodes)
 	{
 		wxBoxSizer* sizerLocBtns = new wxBoxSizer(wxVERTICAL);
-		sizerLocBtns->Add(0, 0, 1, wxEXPAND, 0);
-		sizerLocBtns->Add(m_ctrlNewLoc, 0, 0, 0);
-		sizerLocBtns->Add(m_ctrlEditLoc, 0, wxTOP, padding.TightControls());
-		sizerLocBtns->Add(m_ctrlDeleteLoc, 0, wxTOP, padding.TightControls());
+		sizerLocBtns->Add(0, 0, wxSizerFlags(1).Expand());
+		sizerLocBtns->Add(m_ctrlNewLoc, wxSizerFlags());
+		sizerLocBtns->Add(m_ctrlEditLoc, wxSizerFlags().Border(wxTOP, padding.TightControls()));
+		sizerLocBtns->Add(m_ctrlDeleteLoc, wxSizerFlags().Border(wxTOP, padding.TightControls()));
 
-		sizerLocation->Add(sizerLocBtns, 0, wxEXPAND | wxLEFT, padding.Controls());
+		sizerLocation->Add(sizerLocBtns, wxSizerFlags().Expand().Border(wxLEFT, padding.Controls()));
 	}
 
-	bSizer->Add(sizerLocation, 1, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(sizerLocation, wxSizerFlags(1).Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizerVenueCodes = new wxBoxSizer(wxVERTICAL);
-	sizerVenueCodes->Add(textVenueCodes, 0, 0, 0);
-	sizerVenueCodes->Add(m_ctrlVenues, 1, wxEXPAND | wxTOP, padding.Tight());
+	sizerVenueCodes->Add(textVenueCodes, wxSizerFlags());
+	sizerVenueCodes->Add(m_ctrlVenues, wxSizerFlags(1).Expand().Border(wxTOP, padding.Tight()));
 
-	sizerVenue->Add(sizerVenueCodes, 1, wxEXPAND, 0);
+	sizerVenue->Add(sizerVenueCodes, wxSizerFlags(1).Expand());
 
 	if (m_EditCodes)
 	{
 		wxBoxSizer* sizerVenueBtns = new wxBoxSizer(wxVERTICAL);
-		sizerVenueBtns->Add(0, 0, 1, wxEXPAND, 0);
-		sizerVenueBtns->Add(m_ctrlNewVenue, 0, 0, 0);
-		sizerVenueBtns->Add(m_ctrlEditVenue, 0, wxTOP, padding.TightControls());
-		sizerVenueBtns->Add(m_ctrlDeleteVenue, 0, wxTOP, padding.TightControls());
+		sizerVenueBtns->Add(0, 0, wxSizerFlags(1).Expand());
+		sizerVenueBtns->Add(m_ctrlNewVenue, wxSizerFlags());
+		sizerVenueBtns->Add(m_ctrlEditVenue, wxSizerFlags().Border(wxTOP, padding.TightControls()));
+		sizerVenueBtns->Add(m_ctrlDeleteVenue, wxSizerFlags().Border(wxTOP, padding.TightControls()));
 
-		sizerVenue->Add(sizerVenueBtns, 0, wxEXPAND | wxLEFT, padding.Controls());
+		sizerVenue->Add(sizerVenueBtns, wxSizerFlags().Expand().Border(wxLEFT, padding.Controls()));
 	}
 
-	bSizer->Add(sizerVenue, 1, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizerVenue, wxSizerFlags().Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgCalendarQueryDetail::OnOk, this, wxID_OK);
 
 	SetSizer(bSizer);

@@ -91,16 +91,16 @@ CDlgPageDecode::CDlgPageDecode()
 	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(staticText, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	bSizer->Add(m_ctrlEncoded, 2, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	bSizer->Add(m_ctrlDecoded, 3, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(staticText, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	bSizer->Add(m_ctrlEncoded, wxSizerFlags(2).Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	bSizer->Add(m_ctrlDecoded, wxSizerFlags(3).Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizeBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizeBtns->Add(btnDecode, 0, wxRIGHT, padding.Controls());
-	sizeBtns->Add(0, 0, 1, wxEXPAND);
+	sizeBtns->Add(btnDecode, wxSizerFlags().Border(wxRIGHT, padding.Controls()));
+	sizeBtns->Add(0, 0, wxSizerFlags(1).Expand());
 	sizeBtns->Add(btnClose);
 
-	bSizer->Add(sizeBtns, 0, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizeBtns, wxSizerFlags().Expand().Border(wxALL, padding.Controls()));
 
 	SetSizer(bSizer);
 	Layout();

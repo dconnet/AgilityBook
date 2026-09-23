@@ -196,27 +196,27 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 
 	wxBoxSizer* sizeConfig = new wxBoxSizer(wxHORIZONTAL);
 	sizeConfig->Add(m_ctrlInit, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizeConfig->Add(sizeConfigData, 0, wxEXPAND);
-	bSizer->Add(sizeConfig, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	sizeConfig->Add(sizeConfigData, wxSizerFlags().Expand());
+	bSizer->Add(sizeConfig, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizeFile = new wxBoxSizer(wxHORIZONTAL);
-	sizeFile->Add(ctrlFile, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
-	sizeFile->Add(ctrlFind, 0, wxALIGN_CENTER_VERTICAL);
-	bSizer->Add(sizeFile, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	sizeFile->Add(ctrlFile, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
+	sizeFile->Add(ctrlFind, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
+	bSizer->Add(sizeFile, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxFlexGridSizer* sizerGrid = new wxFlexGridSizer(4, 2, padding.Inner(), padding.Inner());
 	sizerGrid->AddGrowableCol(1);
 	sizerGrid->SetFlexibleDirection(wxBOTH);
 	sizerGrid->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerGrid->Add(txtMD5, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
-	sizerGrid->Add(ctrlMD5, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND);
-	sizerGrid->Add(txtSHA1, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
-	sizerGrid->Add(ctrlSHA1, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND);
-	sizerGrid->Add(txtSHA256, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
-	sizerGrid->Add(ctrlSHA256, 0, wxALIGN_CENTER_VERTICAL | wxEXPAND);
-	sizerGrid->Add(txtSize, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT);
-	sizerGrid->Add(ctrlSize, 0, wxALIGN_CENTER_VERTICAL);
-	bSizer->Add(sizerGrid, 1, wxEXPAND | wxALL, padding.Controls());
+	sizerGrid->Add(txtMD5, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT));
+	sizerGrid->Add(ctrlMD5, wxSizerFlags().Expand().Align(wxALIGN_CENTER_VERTICAL));
+	sizerGrid->Add(txtSHA1, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT));
+	sizerGrid->Add(ctrlSHA1, wxSizerFlags().Expand().Align(wxALIGN_CENTER_VERTICAL));
+	sizerGrid->Add(txtSHA256, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT));
+	sizerGrid->Add(ctrlSHA256, wxSizerFlags().Expand().Align(wxALIGN_CENTER_VERTICAL));
+	sizerGrid->Add(txtSize, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL | wxALIGN_RIGHT));
+	sizerGrid->Add(ctrlSize, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
+	bSizer->Add(sizerGrid, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK | wxCANCEL);
 	m_ctrlCopy = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_OK), wxButton);
@@ -225,7 +225,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	m_ctrlCopy->Enable(false);
 	wxButton* cancel = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_CANCEL), wxButton);
 	cancel->SetLabel(L"Close");
-	bSizer->Add(sdbSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer());
+	bSizer->Add(sdbSizer, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxBOTTOM, padding.ButtonSizer()));
 
 	SetSizer(bSizer);
 	Layout();

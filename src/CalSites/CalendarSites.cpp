@@ -864,38 +864,32 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	wxBoxSizer* bSizer = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizerPlugins = new wxBoxSizer(wxVERTICAL);
-	sizerPlugins->Add(m_ctrlPlugins, 1, wxEXPAND | wxBOTTOM, padding.Controls());
-	sizerPlugins->Add(m_ctrlDetails, 0, wxEXPAND, 0);
+	sizerPlugins->Add(m_ctrlPlugins, wxSizerFlags(1).Expand().Border(wxBOTTOM, padding.Controls()));
+	sizerPlugins->Add(m_ctrlDetails, wxSizerFlags().Expand());
 
-	bSizer->Add(sizerPlugins, 1, wxEXPAND | wxALL, padding.Controls());
+	bSizer->Add(sizerPlugins, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
-	sizerBtns->Add(m_ctrlRead, 0, wxBOTTOM, padding.Inner());
-	sizerBtns->Add(m_ctrlAdd, 0, wxBOTTOM, padding.Inner());
+	sizerBtns->Add(m_ctrlRead, wxSizerFlags().Border(wxBOTTOM, padding.Inner()));
+	sizerBtns->Add(m_ctrlAdd, wxSizerFlags().Border(wxBOTTOM, padding.Inner()));
 	sizerBtns->Add(
 		new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL),
-		0,
-		wxEXPAND | wxBOTTOM,
-		padding.Inner());
-	sizerBtns->Add(m_ctrlEnable, 0, wxBOTTOM, padding.Inner());
-	sizerBtns->Add(m_ctrlQuery, 0, wxBOTTOM, padding.Inner());
+		wxSizerFlags().Expand().Border(wxBOTTOM, padding.Inner()));
+	sizerBtns->Add(m_ctrlEnable, wxSizerFlags().Border(wxBOTTOM, padding.Inner()));
+	sizerBtns->Add(m_ctrlQuery, wxSizerFlags().Border(wxBOTTOM, padding.Inner()));
 	sizerBtns->Add(
 		new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL),
-		0,
-		wxEXPAND | wxBOTTOM,
-		padding.Inner());
-	sizerBtns->Add(btnNew, 0, wxBOTTOM, padding.Inner());
-	sizerBtns->Add(m_ctrlEdit, 0, wxBOTTOM, padding.Inner());
-	sizerBtns->Add(m_ctrlDelete, 0, wxBOTTOM, padding.Inner());
+		wxSizerFlags().Expand().Border(wxBOTTOM, padding.Inner()));
+	sizerBtns->Add(btnNew, wxSizerFlags().Border(wxBOTTOM, padding.Inner()));
+	sizerBtns->Add(m_ctrlEdit, wxSizerFlags().Border(wxBOTTOM, padding.Inner()));
+	sizerBtns->Add(m_ctrlDelete, wxSizerFlags().Border(wxBOTTOM, padding.Inner()));
 	sizerBtns->Add(
 		new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL),
-		0,
-		wxEXPAND | wxBOTTOM,
-		padding.Inner());
-	sizerBtns->Add(0, 0, 1, wxEXPAND, 0);
+		wxSizerFlags().Expand().Border(wxBOTTOM, padding.Inner()));
+	sizerBtns->Add(0, 0, wxSizerFlags(1).Expand());
 	sizerBtns->Add(btnClose, 0, 0, 0);
 
-	bSizer->Add(sizerBtns, 0, wxEXPAND | wxRIGHT | wxTOP | wxBOTTOM, padding.Controls());
+	bSizer->Add(sizerBtns, wxSizerFlags().Expand().Border(wxRIGHT | wxTOP | wxBOTTOM, padding.Controls()));
 
 	SetSizer(bSizer);
 	Layout();

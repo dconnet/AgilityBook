@@ -56,17 +56,17 @@ CDlgPageEncodeFiles::CDlgPageEncodeFiles(CDlgARBHelp* pParent)
 	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(text1, 0, wxEXPAND);
+	bSizer->Add(text1, wxSizerFlags().Expand());
 
 	wxBoxSizer* sizerListBtns = new wxBoxSizer(wxHORIZONTAL);
-	sizerListBtns->Add(m_ctrlList, 1, wxEXPAND | wxRIGHT, padding.Controls());
+	sizerListBtns->Add(m_ctrlList, wxSizerFlags(1).Expand().Border(wxRIGHT, padding.Controls()));
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
-	sizerBtns->Add(btnAll, 0, wxEXPAND | wxBOTTOM, padding.Inner());
-	sizerBtns->Add(btnNone, 0, wxEXPAND);
+	sizerBtns->Add(btnAll, wxSizerFlags().Expand().Border(wxBOTTOM, padding.Inner()));
+	sizerBtns->Add(btnNone, wxSizerFlags().Expand());
 	sizerListBtns->Add(sizerBtns);
 
-	bSizer->Add(sizerListBtns, 1, wxEXPAND | wxTOP, padding.Controls());
+	bSizer->Add(sizerListBtns, wxSizerFlags(1).Expand().Border(wxTOP, padding.Controls()));
 
 	SetSizer(bSizer);
 	Layout();
