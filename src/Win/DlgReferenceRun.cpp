@@ -140,15 +140,15 @@ CDlgReferenceRun::CDlgReferenceRun(
 	wxStaticText* textYPS = new wxStaticText(this, wxID_ANY, _("IDC_REFRUN_YPS"), wxDefaultPosition, wxDefaultSize, 0);
 	textYPS->Wrap(-1);
 
-	// Note: the int casting is because of xcode27: haven't looked closer, but I think it's compiling by default for
-	// c++20 now and that doesn't like combining different enums bitwise.
+	// Note: the int casting is because of xcode27
+	// In c++17 mode, it won't combine the center/border bits. It will in c++20.
 	m_ctrlYPS = new wxStaticText(
 		this,
 		wxID_ANY,
 		strYPS,
 		wxDefaultPosition,
 		wxSize(wxDLG_UNIT_X(this, 25), -1),
-		(int)wxALIGN_CENTRE | (int)wxSTATIC_BORDER);
+		wxALIGN_CENTRE | static_cast<int>(wxSTATIC_BORDER));
 	m_ctrlYPS->Wrap(-1);
 
 	wxStaticText* textScore
