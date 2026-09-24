@@ -146,7 +146,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 		strYPS,
 		wxDefaultPosition,
 		wxSize(wxDLG_UNIT_X(this, 25), -1),
-		wxALIGN_CENTRE | wxSTATIC_BORDER);
+		(int)wxALIGN_CENTRE | (int)wxSTATIC_BORDER);
 	m_ctrlYPS->Wrap(-1);
 
 	wxStaticText* textScore
