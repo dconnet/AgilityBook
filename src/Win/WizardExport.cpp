@@ -319,7 +319,7 @@ CWizardExport::CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc, wxWizardPag
 
 	wxBoxSizer* sizerFormat = new wxBoxSizer(wxHORIZONTAL);
 	sizerFormat->Add(textFormat, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));
-	sizerFormat->Add(m_ctrlDateFormat, wxALIGN_CENTER_VERTICAL);
+	sizerFormat->Add(m_ctrlDateFormat, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL));
 
 	sizerAssign->Add(sizerFormat, wxSizerFlags().Align(wxALIGN_TOP));
 

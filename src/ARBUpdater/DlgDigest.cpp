@@ -187,15 +187,15 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* sizeConfigData = new wxBoxSizer(wxVERTICAL);
-	sizeConfigData->Add(m_ctrlConfig, 0, wxBOTTOM, padding.Tight());
+	sizeConfigData->Add(m_ctrlConfig, wxSizerFlags().Border(wxBOTTOM, padding.Tight()));
 
 	wxBoxSizer* sizeConfigVersion = new wxBoxSizer(wxHORIZONTAL);
-	sizeConfigVersion->Add(ctrlVersion, 0, wxRIGHT, padding.Inner());
+	sizeConfigVersion->Add(ctrlVersion, wxSizerFlags().Border(wxRIGHT, padding.Inner()));
 	sizeConfigVersion->Add(m_ctrlConfigVersion);
 	sizeConfigData->Add(sizeConfigVersion);
 
 	wxBoxSizer* sizeConfig = new wxBoxSizer(wxHORIZONTAL);
-	sizeConfig->Add(m_ctrlInit, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, padding.Controls());
+	sizeConfig->Add(m_ctrlInit, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Controls()));
 	sizeConfig->Add(sizeConfigData, wxSizerFlags().Expand());
 	bSizer->Add(sizeConfig, wxSizerFlags().Expand().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 

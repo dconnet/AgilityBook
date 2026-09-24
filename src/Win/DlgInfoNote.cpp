@@ -509,23 +509,23 @@ CDlgInfoNote::CDlgInfoNote(CAgilityBookDoc* pDoc, ARBInfoType inType, wxString c
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticBoxSizer* sizerVis = new wxStaticBoxSizer(boxVis, wxVERTICAL);
-	sizerVis->Add(ctrlVisAll, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerVis->Add(ctrlVisVis, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerVis->Add(ctrlVisHidden, 0, wxALL, padding.Inner());
+	sizerVis->Add(ctrlVisAll, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerVis->Add(ctrlVisVis, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerVis->Add(ctrlVisHidden, wxSizerFlags().Border(wxALL, padding.Inner()));
 
 	wxStaticBoxSizer* sizerUse = new wxStaticBoxSizer(boxUse, wxVERTICAL);
-	sizerUse->Add(ctrlUsageAll, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerUse->Add(ctrlUsageInUse, 0, wxLEFT | wxRIGHT | wxTOP, padding.Inner());
-	sizerUse->Add(ctrlUsageNot, 0, wxALL, padding.Inner());
+	sizerUse->Add(ctrlUsageAll, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerUse->Add(ctrlUsageInUse, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Inner()));
+	sizerUse->Add(ctrlUsageNot, wxSizerFlags().Border(wxALL, padding.Inner()));
 
 	wxBoxSizer* sizerButtons = new wxBoxSizer(wxVERTICAL);
-	sizerButtons->Add(ctrlNew, 0, wxBOTTOM, padding.Inner());
-	sizerButtons->Add(m_ctrlEdit, 0, wxBOTTOM, padding.Inner());
-	sizerButtons->Add(m_ctrlDelete, 0, wxBOTTOM, padding.Inner());
+	sizerButtons->Add(ctrlNew, wxSizerFlags().Border(wxBOTTOM, padding.Inner()));
+	sizerButtons->Add(m_ctrlEdit, wxSizerFlags().Border(wxBOTTOM, padding.Inner()));
+	sizerButtons->Add(m_ctrlDelete, wxSizerFlags().Border(wxBOTTOM, padding.Inner()));
 	sizerButtons->Add(m_ctrlCopy);
 	sizerButtons->AddStretchSpacer();
-	sizerButtons->Add(sizerVis, 0, wxTOP, padding.Controls());
-	sizerButtons->Add(sizerUse, 0, wxTOP, padding.Controls());
+	sizerButtons->Add(sizerVis, wxSizerFlags().Border(wxTOP, padding.Controls()));
+	sizerButtons->Add(sizerUse, wxSizerFlags().Border(wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerControls = new wxBoxSizer(wxHORIZONTAL);
 	sizerControls->Add(m_ctrlList, wxSizerFlags(1).Expand().Border(wxRIGHT, padding.Controls()));

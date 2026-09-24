@@ -239,8 +239,8 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(ctrlUpdates, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
-	bSizer->Add(textUpdates, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(ctrlUpdates, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
+	bSizer->Add(textUpdates, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerBackups = new wxBoxSizer(wxHORIZONTAL);
 	sizerBackups->Add(textBackups, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));

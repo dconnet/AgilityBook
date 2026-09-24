@@ -1010,7 +1010,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 	const ARBWin::CDlgPadding padding(this);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
-	bSizer->Add(textNames, 0, wxLEFT | wxRIGHT | wxTOP, padding.Controls());
+	bSizer->Add(textNames, wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP, padding.Controls()));
 
 	wxBoxSizer* sizerSettings = new wxBoxSizer(wxHORIZONTAL);
 	sizerSettings->Add(m_ctrlConfig, wxSizerFlags(1).Align(wxALIGN_CENTER_VERTICAL).Border(wxRIGHT, padding.Inner()));

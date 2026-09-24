@@ -99,7 +99,7 @@ CDlgMessageBox::CDlgMessageBox(
 
 	wxBoxSizer* sizerText = new wxBoxSizer(wxHORIZONTAL);
 	if (ctrlIcon)
-		sizerText->Add(ctrlIcon, 0, wxRIGHT, padding.Controls());
+		sizerText->Add(ctrlIcon, wxSizerFlags().Border(wxRIGHT, padding.Controls()));
 	sizerText->Add(ctrlText, wxSizerFlags(1).Expand());
 
 	bSizer->Add(sizerText, wxSizerFlags(1).Expand().Border(wxALL, padding.Controls()));
