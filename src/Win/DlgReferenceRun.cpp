@@ -140,6 +140,8 @@ CDlgReferenceRun::CDlgReferenceRun(
 	wxStaticText* textYPS = new wxStaticText(this, wxID_ANY, _("IDC_REFRUN_YPS"), wxDefaultPosition, wxDefaultSize, 0);
 	textYPS->Wrap(-1);
 
+	// Note: the int casting is because of xcode27: haven't looked closer, but I think it's compiling by default for
+	// c++20 now and that doesn't like combining different enums bitwise.
 	m_ctrlYPS = new wxStaticText(
 		this,
 		wxID_ANY,
