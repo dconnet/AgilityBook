@@ -182,8 +182,8 @@ int InfoNoteListData::OnCompare(CListDataPtr const& item, long iCol) const
 	break;
 	case k_colComment:
 	{
-		wxString s1 = m_item ? m_item->GetComment() : L"";
-		wxString s2 = pData2->m_item ? pData2->m_item->GetComment() : L"";
+		wxString s1 = m_item ? m_item->GetComment() : wxString();
+		wxString s2 = pData2->m_item ? pData2->m_item->GetComment() : wxString();
 		if (s1 < s2)
 			rc = -1;
 		else if (s1 > s2)
