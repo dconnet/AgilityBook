@@ -466,7 +466,6 @@ void CWizardExport::UpdatePreview()
 	if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle() && WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle()
 		&& 0 == delim)
 	{
-		wxString nodelim(_("IDS_NO_DELIM_SPECIFIED"));
 		m_ctrlPreview->InsertColumn(0, L"");
 		m_ctrlPreview->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
 		m_ctrlPreview->Thaw();
