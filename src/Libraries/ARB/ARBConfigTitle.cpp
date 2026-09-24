@@ -399,10 +399,9 @@ bool ARBConfigTitle::Load(ElementNodePtr const& inTree, ARBVersion const& inVers
 
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_TITLES_PREFIX, m_Prefix))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_TITLES,
-			ATTRIB_TITLES_PREFIX,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()
+				->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_PREFIX, Localization()->ValidValuesBool()));
 		return false;
 	}
 

@@ -145,10 +145,9 @@ bool ARBConfig::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion, 
 		return false;
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_CONFIG_UPDATE, m_bUpdate))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_CONFIG,
-			ATTRIB_CONFIG_UPDATE,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()
+				->ErrorInvalidAttributeValue(TREE_CONFIG, ATTRIB_CONFIG_UPDATE, Localization()->ValidValuesBool()));
 		return false;
 	}
 	inTree->GetAttrib(ATTRIB_CONFIG_VERSION, m_Version);

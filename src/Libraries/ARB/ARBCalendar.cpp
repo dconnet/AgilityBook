@@ -651,10 +651,9 @@ bool ARBCalendar::Load(ElementNodePtr const& inTree, ARBVersion const& inVersion
 
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_CAL_MAYBE, m_bTentative))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_CALENDAR,
-			ATTRIB_CAL_MAYBE,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()
+				->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_MAYBE, Localization()->ValidValuesBool()));
 		return false;
 	}
 

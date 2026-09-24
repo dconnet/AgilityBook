@@ -462,19 +462,19 @@ bool ARBConfigScoring::Load(
 
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_HAS_TABLE, m_bTable))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_EVENT,
-			ATTRIB_SCORING_HAS_TABLE,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()
+				->ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_SCORING_HAS_TABLE, Localization()->ValidValuesBool()));
 		return false;
 	}
 
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_HASSUBNAMES, m_bHasSubNames))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_EVENT,
-			ATTRIB_SCORING_HASSUBNAMES,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()->ErrorInvalidAttributeValue(
+				TREE_EVENT,
+				ATTRIB_SCORING_HASSUBNAMES,
+				Localization()->ValidValuesBool()));
 		return false;
 	}
 
@@ -483,69 +483,73 @@ bool ARBConfigScoring::Load(
 	// Not advisable, but it doesn't hurt anything either.
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_DROPFRACTIONS, m_bDropFractions))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_SCORING,
-			ATTRIB_SCORING_DROPFRACTIONS,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()->ErrorInvalidAttributeValue(
+				TREE_SCORING,
+				ATTRIB_SCORING_DROPFRACTIONS,
+				Localization()->ValidValuesBool()));
 		return false;
 	}
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q, m_bCleanQ))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_SCORING,
-			ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()->ErrorInvalidAttributeValue(
+				TREE_SCORING,
+				ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q,
+				Localization()->ValidValuesBool()));
 		return false;
 	}
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_UNDER, m_bTimeFaultsUnder))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_SCORING,
-			ATTRIB_SCORING_TIMEFAULTS_UNDER,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()->ErrorInvalidAttributeValue(
+				TREE_SCORING,
+				ATTRIB_SCORING_TIMEFAULTS_UNDER,
+				Localization()->ValidValuesBool()));
 		return false;
 	}
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_OVER, m_bTimeFaultsOver))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_SCORING,
-			ATTRIB_SCORING_TIMEFAULTS_OVER,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()->ErrorInvalidAttributeValue(
+				TREE_SCORING,
+				ATTRIB_SCORING_TIMEFAULTS_OVER,
+				Localization()->ValidValuesBool()));
 		return false;
 	}
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_TITLING_PTS, m_bTitlingPointsRawFaults))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_SCORING,
-			ATTRIB_SCORING_TIMEFAULTS_TITLING_PTS,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()->ErrorInvalidAttributeValue(
+				TREE_SCORING,
+				ATTRIB_SCORING_TIMEFAULTS_TITLING_PTS,
+				Localization()->ValidValuesBool()));
 		return false;
 	}
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_SUBTRACT_TIMEFAULTS, m_bSubtractTimeFaults))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_SCORING,
-			ATTRIB_SCORING_SUBTRACT_TIMEFAULTS,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()->ErrorInvalidAttributeValue(
+				TREE_SCORING,
+				ATTRIB_SCORING_SUBTRACT_TIMEFAULTS,
+				Localization()->ValidValuesBool()));
 		return false;
 	}
 	inTree->GetAttrib(ATTRIB_SCORING_TF_MULTIPLIER, m_TimeFaultMultiplier);
 
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_SUPERQ, m_bSuperQ))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_SCORING,
-			ATTRIB_SCORING_SUPERQ,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()
+				->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SUPERQ, Localization()->ValidValuesBool()));
 		return false;
 	}
 
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_FEO, m_bFEO))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_SCORING,
-			ATTRIB_SCORING_FEO,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()
+				->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_FEO, Localization()->ValidValuesBool()));
 		return false;
 	}
 
@@ -553,29 +557,28 @@ bool ARBConfigScoring::Load(
 	{
 		if (ARBAttribLookup::Invalid == inTree->GetAttrib(L"doubleQ", m_bDoubleQ))
 		{
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-				TREE_SCORING,
-				L"doubleQ",
-				Localization()->ValidValuesBool()));
+			ioCallback.LogMessage(
+				Localization()
+					->ErrorInvalidAttributeValue(TREE_SCORING, L"doubleQ", Localization()->ValidValuesBool()));
 			return false;
 		}
 	}
 
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_SPEEDPTS, m_bSpeedPts))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_SCORING,
-			ATTRIB_SCORING_SPEEDPTS,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()
+				->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SPEEDPTS, Localization()->ValidValuesBool()));
 		return false;
 	}
 
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_SCORING_BONUSTITLEPTS, m_bBonusTitlePts))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_SCORING,
-			ATTRIB_SCORING_BONUSTITLEPTS,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()->ErrorInvalidAttributeValue(
+				TREE_SCORING,
+				ATTRIB_SCORING_BONUSTITLEPTS,
+				Localization()->ValidValuesBool()));
 		return false;
 	}
 
@@ -586,10 +589,9 @@ bool ARBConfigScoring::Load(
 		{
 			if (ARBAttribLookup::Invalid == inTree->GetAttrib(L"machPts", m_bSpeedPts))
 			{
-				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-					TREE_SCORING,
-					L"machPts",
-					Localization()->ValidValuesBool()));
+				ioCallback.LogMessage(
+					Localization()
+						->ErrorInvalidAttributeValue(TREE_SCORING, L"machPts", Localization()->ValidValuesBool()));
 				return false;
 			}
 		}

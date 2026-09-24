@@ -161,10 +161,11 @@ bool ARBConfigPlaceInfo::Load(ElementNodePtr const& inTree, ARBVersion const& in
 	}
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_PLACE_INFO_MUSTQ, m_MustQ))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_PLACE_INFO,
-			ATTRIB_PLACE_INFO_MUSTQ,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()->ErrorInvalidAttributeValue(
+				TREE_PLACE_INFO,
+				ATTRIB_PLACE_INFO_MUSTQ,
+				Localization()->ValidValuesBool()));
 		return false;
 	}
 	return true;

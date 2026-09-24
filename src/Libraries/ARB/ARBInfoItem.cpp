@@ -159,10 +159,9 @@ bool ARBInfoItem::Load(
 	}
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_INFO_VISIBLE, m_Visible))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			inItemName,
-			ATTRIB_INFO_VISIBLE,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()
+				->ErrorInvalidAttributeValue(inItemName, ATTRIB_INFO_VISIBLE, Localization()->ValidValuesBool()));
 		return false;
 	}
 	m_Comment = inTree->GetValue();

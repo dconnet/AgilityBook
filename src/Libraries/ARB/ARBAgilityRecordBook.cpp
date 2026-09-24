@@ -209,10 +209,9 @@ bool ARBAgilityRecordBook::Load(
 		}
 		else
 		{
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-				TREE_BOOK,
-				ATTRIB_BOOK_VERSION,
-				Localization()->UnknownVersion()));
+			ioCallback.LogMessage(
+				Localization()
+					->ErrorInvalidAttributeValue(TREE_BOOK, ATTRIB_BOOK_VERSION, Localization()->UnknownVersion()));
 			return false;
 		}
 	}

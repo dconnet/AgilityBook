@@ -283,10 +283,9 @@ bool ARBDogTitle::Load(
 
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_TITLE,
-			ATTRIB_TITLE_RECEIVED,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()
+				->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_RECEIVED, Localization()->ValidValuesBool()));
 		return false;
 	}
 

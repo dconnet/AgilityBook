@@ -166,10 +166,9 @@ bool ARBConfigEvent::Load(
 
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_EVENT,
-			ATTRIB_EVENT_HASPARTNER,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()
+				->ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HASPARTNER, Localization()->ValidValuesBool()));
 		return false;
 	}
 
@@ -187,10 +186,9 @@ bool ARBConfigEvent::Load(
 
 		if (ARBAttribLookup::Invalid == inTree->GetAttrib(L"hasSubNames", bHasSubNames))
 		{
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-				TREE_EVENT,
-				L"hasSubNames",
-				Localization()->ValidValuesBool()));
+			ioCallback.LogMessage(
+				Localization()
+					->ErrorInvalidAttributeValue(TREE_EVENT, L"hasSubNames", Localization()->ValidValuesBool()));
 			return false;
 		}
 	}

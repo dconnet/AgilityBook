@@ -200,10 +200,9 @@ bool ARBDogRegNum::Load(
 
 	if (ARBAttribLookup::Invalid == inTree->GetAttrib(ATTRIB_REG_NUM_RECEIVED, m_bReceived))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-			TREE_REG_NUM,
-			ATTRIB_REG_NUM_RECEIVED,
-			Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(
+			Localization()
+				->ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_RECEIVED, Localization()->ValidValuesBool()));
 		return false;
 	}
 

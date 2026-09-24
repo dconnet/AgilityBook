@@ -376,10 +376,11 @@ bool ARBDogExistingPoints::Load(
 			}
 			if (!bConvertedQQ)
 			{
-				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(
-					TREE_EXISTING_PTS,
-					ATTRIB_EXISTING_PTS_MULTIQ,
-					Localization()->InvalidMultiqConversion()));
+				ioCallback.LogMessage(
+					Localization()->ErrorInvalidAttributeValue(
+						TREE_EXISTING_PTS,
+						ATTRIB_EXISTING_PTS_MULTIQ,
+						Localization()->InvalidMultiqConversion()));
 				return false;
 			}
 		}
