@@ -1,6 +1,8 @@
-2026-9-23: v4.1.0.<dev>
+2026-10-10: v4.1.0.<dev>
 - Notes:
   - pre Mac-12 support dropped.
+- New features / Enhancements:
+  - Updated to wxWidgets 3.3.4
 - Bug fixes:
   - Fix menu/toolbar image scaling on hi-dpi systems.
 

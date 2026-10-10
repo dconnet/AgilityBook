@@ -31,7 +31,7 @@ Currently using version 3.14.6.
 - "pip install pywin32" (currently "build 312")
 
 wxWidgets: http://www.wxwidgets.org/
-Currently using version 3.3.3. Min supported is 3.1.6.
+Currently using version 3.3.4. Min supported is 3.1.6.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in AgilityBookLibs/lang/res/fr_FR) IMPORTANT: This means the directory name
@@ -49,7 +49,7 @@ Make sure WXWIN is set to wxWidgets root directory.
   - Set wxUSE_UNSAFE_WXSTRING_CONV to 0 (currently 1)
   - Set wxUSER_PRIVATE_FONTS to 0 (currently 1)
 
-=== Changes to 3.3.3
+=== Changes to 3.3.3, 3.3.4
   (include/wx/msw/setup.h)
   - Set wxWIN_COMPATIBILITY_3_2 to 0 (currently 1)
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
@@ -318,7 +318,7 @@ OSX 10.9:
   Must reboot after modifying.
 ===
 setenv WXBASE /Users/dconnet/devtools/wx
-setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.3.3.1
+setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.3.4
 ====
 OSX 10.10+:
 - launchd.conf has been deprecated.
@@ -339,7 +339,7 @@ OSX 10.10+:
     <string>-c</string>
     <string>
     launchctl setenv WXBASE /Users/dconnet/devtools/wx
-    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.3.3.1
+    launchctl setenv WXWIN /Users/dconnet/devtools/wx/wxWidgets-3.3.4
     </string>
   </array>
   <key>RunAtLoad</key>
